@@ -1,6 +1,37 @@
-import Link from "next/link";
+import {useEffect} from "react";
+import Utils from '../../utils/utils'
 
 export default function Y5_Buy() {
+
+  useEffect(async () => {
+
+    const utils = new Utils();
+
+    let productName = "y5-canopy-tent";
+
+    const product = await utils.getProductByName(productName);
+
+    console.log("Product Name: " + product.title);
+    console.log("Product ID: " + product.id);
+
+    const variant = await utils.getVariantByOptions(product, {
+      Size: "10x10",
+      Color: "White"
+    });
+    console.log("Variant Name: " + variant.title);
+    console.log("Variant ID: " + variant.id);
+    console.log("Variant Price: " + variant.price);
+    console.log("Variant In Stock: " + variant.available);
+
+    const checkoutUrl = await utils.checkout([{
+      variantId: variant.id,
+      quantity: 1}]);
+    console.log("Checkout Items -- Variant ID: " + variant.id + ", Quantity: " + 1);
+    console.log("Checkout URL: " + checkoutUrl.webUrl);
+
+  });
+
+
   return (
     <div style={{ margin: 0, background: "#ffffff" }}>
       <input type="hidden" id="anPageName" name="page" value="y5-buy" />
