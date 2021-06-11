@@ -1,0 +1,184 @@
+:root {
+  --black: #000000;
+  --cape-cod: #414141;
+  --celeste: #cccccc;
+  --concrete: #f2f2f2;
+  --cultured-pearl: #f5f5f7;
+  --denim: #2666c3;
+  --fountain-blue: #5fbaba;
+  --gray: #7f7f7f;
+  --hint-of-red: #f9f9f9;
+  --mercury: #e5e5e5;
+  --mine-shaft: #333333;
+  --nobel: #b2b2b2;
+  --oslo-gray: #828a90;
+  --powder-blue: #aedddc;
+  --red: #ff0000;
+  --shady-lady: #aaaaaa;
+  --white: #ffffff;
+
+  --font-size-l: 10px;
+  --font-size-m: 9px;
+  --font-size-xl: 11px;
+  --font-size-xxl: 12px;
+  --font-size-xxxl: 13px;
+  --font-size-xxxxl: 14px;
+  --font-size-xxxxxl: 16px;
+
+  --font-family-roboto: "Roboto", Helvetica;
+}
+.roboto-normal-gray-10px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-gray-11px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-nobel-9px {
+  color: var(--nobel);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-white-10px {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-bold-gray-10px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+.roboto-bold-black-16px {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxxxxl);
+  font-style: normal;
+  font-weight: 700;
+}
+.roboto-normal-nobel-10px {
+  color: var(--nobel);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-gray-9px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-bold-white-10px {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 700;
+}
+.roboto-medium-black-11px {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 500;
+}
+.roboto-medium-black-14px {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxxxl);
+  font-style: normal;
+  font-weight: 500;
+}
+.roboto-bold-black-14px {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxxxl);
+  font-style: normal;
+  font-weight: 700;
+}
+.roboto-normal-white-8px {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-denim-9px {
+  color: var(--denim);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-white-9px {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-medium-gray-10px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 500;
+}
+.roboto-medium-black-13px {
+  color: var(--black);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxxl);
+  font-style: normal;
+  font-weight: 500;
+}
+.roboto-normal-white-12px {
+  color: var(--white);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-gray-12px {
+  color: var(--gray);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-normal-white-9px-2 {
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+.roboto-medium-fountain-blue-12px {
+  color: var(--fountain-blue);
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 500;
+}
+.border-2px-mine-shaft {
+  border: 2px solid var(--mine-shaft);
+}
+.border-1px-celeste {
+  border: 1px solid var(--celeste);
+}
+.border-1px-nobel {
+  border: 1px solid var(--nobel);
+}
