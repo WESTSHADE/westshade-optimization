@@ -3,6 +3,14 @@
 * {
   box-sizing: border-box;
 }
+body {
+  background-color: white !important;
+}
+.container-page {
+  /* padding-top: calc(78px + 50px); */
+  padding-top: 78px;
+  background-color: white;
+}
 .container-center-horizontal {
   pointer-events: none;
   display: flex;
@@ -14,7 +22,7 @@
   pointer-events: auto;
   flex-shrink: 0;
 }
-.screen a {
+a {
   text-decoration: none;
   display: contents;
 }

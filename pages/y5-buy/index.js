@@ -1,86 +1,151 @@
-import {useEffect} from "react";
-import Utils from '../../utils/utils'
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { makeStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
+import Utils from "../../utils/utils";
+
+const Header = dynamic(() => import("../../components/header"));
+
+const useStyles = makeStyles({
+  root: {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  icon: {
+    borderRadius: "50%",
+    width: 16,
+    height: 16,
+    boxShadow:
+      "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    backgroundColor: "#f5f8fa",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+    "$root.Mui-focusVisible &": {
+      outline: "2px auto rgba(19,124,189,.6)",
+      outlineOffset: 2,
+    },
+    "input:hover ~ &": {
+      backgroundColor: "#ebf1f5",
+    },
+    "input:disabled ~ &": {
+      boxShadow: "none",
+      background: "rgba(206,217,224,.5)",
+    },
+  },
+  checkedIcon: {
+    // backgroundColor: "#137cbd",
+    // backgroundImage:
+    //   "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    // "&:before": {
+    //   display: "block",
+    //   width: 16,
+    //   height: 16,
+    //   backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
+    //   content: '""',
+    // },
+    // "input:hover ~ &": {
+    //   backgroundColor: "#106ba3",
+    // },
+  },
+});
+
+// Inspired by blueprintjs
+function StyledRadio(props) {
+  const classes = useStyles();
+
+  return (
+    <Radio
+      className={classes.root}
+      color="default"
+      checkedIcon={
+        <div>
+          <div
+            style={{
+              border: "2px solid black",
+              position: "absolute",
+              width: "60px",
+              height: "70px",
+              borderRadius: "10px",
+              top: "0",
+              transform: "translateX(-19px)",
+            }}
+          />
+          <div
+            style={{
+              width: "24px",
+              height: "24px",
+              borderRadius: "12px",
+              backgroundColor: props.value,
+              border: "1px solid #e5e5e5",
+            }}
+          />
+        </div>
+      }
+      icon={
+        <div
+          style={{
+            width: "24px",
+            height: "24px",
+            borderRadius: "12px",
+            backgroundColor: props.value,
+            border: "1px solid #e5e5e5",
+          }}
+        />
+      }
+      {...props}
+    ></Radio>
+  );
+}
 
 export default function Y5_Buy() {
-
+  let product = {
+    options: [],
+  };
   useEffect(async () => {
-
     const utils = new Utils();
 
     let productName = "y5-canopy-tent";
 
-    const product = await utils.getProductByName(productName);
+    product = await utils.getProductByName(productName);
 
+    console.log(product.options);
     console.log("Product Name: " + product.title);
     console.log("Product ID: " + product.id);
 
     const variant = await utils.getVariantByOptions(product, {
       Size: "10x10",
-      Color: "White"
+      Color: "White",
     });
     console.log("Variant Name: " + variant.title);
     console.log("Variant ID: " + variant.id);
     console.log("Variant Price: " + variant.price);
     console.log("Variant In Stock: " + variant.available);
 
-    const checkoutUrl = await utils.checkout([{
-      variantId: variant.id,
-      quantity: 1}]);
-    console.log("Checkout Items -- Variant ID: " + variant.id + ", Quantity: " + 1);
+    const checkoutUrl = await utils.checkout([
+      {
+        variantId: variant.id,
+        quantity: 1,
+      },
+    ]);
+    console.log(
+      "Checkout Items -- Variant ID: " + variant.id + ", Quantity: " + 1
+    );
     console.log("Checkout URL: " + checkoutUrl.webUrl);
-
   });
 
-
   return (
-    <div style={{ margin: 0, background: "#ffffff" }}>
-      <input type="hidden" id="anPageName" name="page" value="y5-buy" />
+    <div className="product">
+      <Header />
       <div className="container-center-horizontal">
         <div className="y5-buy screen">
           <div className="flex-col-C61RwL">
             <div className="flex-col-0xy0vn">
-              <div className="group-1-xpmbvu">
-                <div className="rectangle-2-8lZuY2"></div>
-                <p className="sign-up-for-new-our-first-order-8lZuY2 roboto-normal-white-10px">
-                  Sign up for newsletter and get 10% off your first order
-                </p>
-                <div className="x19495228111-8lZuY2 roboto-normal-white-8px">
-                  1.949.522.8111
-                </div>
-                <div className="login-register-8lZuY2 roboto-normal-white-8px">
-                  Login/Register
-                </div>
-              </div>
-              <div className="group-2-xpmbvu">
-                <div className="rectangle-2-nA5oWf"></div>
-                <div className="westshade-nA5oWf roboto-normal-white-12px">
-                  Westshade
-                </div>
-                <div className="frame-1-nA5oWf">
-                  <div className="canopy-tent-exD24x roboto-normal-white-10px">
-                    Canopy Tent
-                  </div>
-                  <div className="custom-printing-exD24x roboto-normal-white-10px">
-                    Custom Printing
-                  </div>
-                  <div className="medical-tent-exD24x roboto-normal-white-10px">
-                    Medical Tent
-                  </div>
-                  <div className="market-umbrella-exD24x roboto-normal-white-10px">
-                    Market Umbrella
-                  </div>
-                  <div className="tilt-umbrella-exD24x roboto-normal-white-10px">
-                    Tilt Umbrella
-                  </div>
-                  <div className="cantilever-umbrella-exD24x roboto-normal-white-10px">
-                    Cantilever Umbrella
-                  </div>
-                  <div className="accessories-exD24x roboto-normal-white-10px">
-                    Accessories
-                  </div>
-                </div>
-              </div>
-              <img className="group-3-xpmbvu" src="/group-3@1x.svg" />
               <div className="frame-4-xpmbvu">
                 <div className="home-ATaxKd roboto-bold-black-16px">Home</div>
                 <div className="x-ATaxKd roboto-bold-black-16px">/</div>
@@ -110,6 +175,36 @@ export default function Y5_Buy() {
                 <p className="custom-printing-your-own-design-3xHcwy">
                   Custom printing with your own design
                 </p>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">
+                    Choose your frame color
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    defaultValue="Black"
+                    aria-label="color"
+                    name="customized-radios"
+                  >
+                    <FormControlLabel
+                      value="Black"
+                      control={<StyledRadio />}
+                      label="Black"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="Yellow"
+                      control={<StyledRadio />}
+                      label="Yellow"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="White"
+                      control={<StyledRadio />}
+                      label="White"
+                      labelPlacement="bottom"
+                    />
+                  </RadioGroup>
+                </FormControl>
                 <div className="color-3xHcwy">
                   <div className="group-38-2gwyWG">
                     <div className="black-mUMi6r roboto-normal-gray-11px">
