@@ -53,4 +53,11 @@ export default class Utils {
         const checkout = await this.client.checkout.create();
         return await this.client.checkout.addLineItems(checkout.id, items);
     }
+
+    async getVariantStock(variant) {
+        const shopifyId = parseInt(atob(variant.id).split("/").pop());
+        const stock = await fetch('http://localhost:8888/variant/stock?shopifyId=' + shopifyId);
+        const json = await stock.json();
+        return json.variant.inventory_quantity;
+    }
 }

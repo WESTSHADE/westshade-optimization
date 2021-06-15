@@ -127,6 +127,9 @@ export default function Y5_Buy() {
     console.log("Variant Price: " + variant.price);
     console.log("Variant In Stock: " + variant.available);
 
+    const stock = await utils.getVariantStock(variant);
+    console.log("Variant Stock: " + stock);
+
     const checkoutUrl = await utils.checkout([
       {
         variantId: variant.id,
