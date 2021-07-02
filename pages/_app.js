@@ -1,5 +1,9 @@
 import React from "react";
 import { CssBaseline, Container } from "@material-ui/core";
+import dynamic from "next/dynamic";
+
+const Header = dynamic(() => import("../components/header"));
+const Footer = dynamic(() => import("../components/footer"));
 
 // import App from 'next/app'
 import "../styles/globals.css";
@@ -8,20 +12,18 @@ import "../styles/homepage.css";
 import "../styles/y5-overview.css";
 import "../styles/y5-specs.css";
 import "../styles/y5-buy.css";
-import "../styles/y6-overview.css";
-import "../styles/y6-specs.css";
 import "../styles/y6-buy.css";
-import "../styles/y7-overview.css";
-import "../styles/y7-specs.css";
 import "../styles/y7-buy.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <React.Fragment>
       <CssBaseline />
+      <Header />
       <Container maxWidth="lg" className="container-page">
         <Component {...pageProps} />
       </Container>
+      <Footer />
     </React.Fragment>
   );
 }

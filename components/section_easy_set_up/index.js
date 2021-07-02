@@ -1,14 +1,7 @@
-import Link from "next/link";
-import styles from "./section.module.css";
-
+import dynamic from "next/dynamic";
 import { Box, Container } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faYoutube,
-  faFacebook,
-  faTwitter,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+
+const SectionSocialGroup = dynamic(() => import("../section_social_group"));
 
 export default function Section_Easy_Set_Up() {
   return (
@@ -19,10 +12,7 @@ export default function Section_Easy_Set_Up() {
       >
         Easy set up. Even easier to disassemble.
       </h3>
-      <p
-        className="section-content"
-        style={{ marginBottom: "20px", paddingBottom: "12px" }}
-      >
+      <p className="section-content-entend">
         Our patio canopy tents tents are designed to fold up and expand quickly
         and easily.
         <br />
@@ -35,39 +25,11 @@ export default function Section_Easy_Set_Up() {
           src="/set-up@1x.png"
         />
       </Container>
-      <p
-        className="section-content"
-        style={{ marginTop: "22px", marginBottom: "30px" }}
-      >
+      <p className="section-content-entend" style={{ marginBottom: "30px" }}>
         Follow us on social media to stay up to date with our canopy tent news
         and special offers!
       </p>
-      <div className={styles["social-group-container"]}>
-        <Link href="https://www.facebook.com/Westshadeus/">
-          <div
-            className={`${styles["social-container"]} ${styles["facebook"]}`}
-          >
-            <FontAwesomeIcon icon={faFacebook} size="2x" color="white" />
-          </div>
-        </Link>
-        <Link href="https://www.youtube.com/c/Westshade/featured">
-          <div className={`${styles["social-container"]} ${styles["youtube"]}`}>
-            <FontAwesomeIcon icon={faYoutube} size="2x" color="white" />
-          </div>
-        </Link>
-        <Link href="https://www.instagram.com/westshadeus/">
-          <div
-            className={`${styles["social-container"]} ${styles["instagram"]}`}
-          >
-            <FontAwesomeIcon icon={faInstagram} size="2x" color="white" />
-          </div>
-        </Link>
-        <Link href="https://twitter.com/westshadeus">
-          <div className={`${styles["social-container"]} ${styles["twitter"]}`}>
-            <FontAwesomeIcon icon={faTwitter} size="2x" color="white" />
-          </div>
-        </Link>
-      </div>
+      <SectionSocialGroup />
     </Box>
   );
 }

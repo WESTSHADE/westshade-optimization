@@ -1,8 +1,163 @@
 /* screen - y5-buy */
-
-.y5-buy .MuiIconButton-label input {
+.section-selection-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+}
+.section-selection-container-title {
+  color: var(--black);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.section-selection-container-description {
+  margin-top: 13px;
+  color: var(--gray);
+  font-size: 0.825rem;
+  font-weight: normal;
+}
+.section-selection-title {
+  margin-top: 18px;
+  margin-bottom: 24px;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.section-selection-title > span {
+  margin-right: 12px;
+}
+.section-selection-subtitle {
+  margin-top: 8px;
+  color: var(--denim);
+  font-size: 0.825rem;
+}
+.section-radio-group-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+fieldset {
+  margin-bottom: 16px !important;
+}
+.section-radio-border {
+  position: absolute;
+  width: 62px;
+  height: 80px;
+  border-radius: 10px;
+  top: -8px;
+  left: -10px;
+  border: 2px solid #000;
+}
+.section-selection-tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.section-price-container {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.product-price {
+  margin-right: 8px;
+}
+.product-regular-price {
+  color: var(--gray);
+  font-size: 1rem;
+}
+.product-sales-price {
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.product-ship-day {
+  color: var(--gray);
+  font-size: 0.825rem;
+}
+.section-check-butto-group {
+  border: 1px solid black;
+  margin-right: 24px;
+}
+.section-check-butto-group button {
+  padding: 6px 12px;
+}
+.section-check-butto-group svg {
+  width: 0.525rem !important;
+}
+.section-checkout-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+.product-counter {
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.section-line-button-container {
+  display: flex;
+}
+.checkout-button {
+  box-shadow: none !important;
+  background-color: #4e8d5e !important;
+  color: white !important;
+}
+.line-button-divider {
+  height: 50% !important;
+  margin: auto 12px !important;
+  background-color: var(--gray) !important;
+}
+.product .MuiIconButton-label input {
   display: none;
 }
+.product-image-container {
+  position: sticky;
+  top: 64px;
+  width: 100%;
+  aspect-ratio: 1;
+  /* min-height: 250px; */
+}
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: inherit;
+  object-fit: contain;
+}
+.tabs-desc {
+  margin-bottom: 48px;
+}
+.tabs-desc .MuiTabs-indicator {
+  background-color: black;
+}
+.section-desc-container-title {
+  color: var(--black);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.section-desc-container-content {
+  margin-top: 13px;
+  color: var(--gray);
+  font-size: 0.825rem;
+  font-weight: normal;
+}
+ul.section-desc-container-content li::before {
+  content: "\2022";
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
 .y5-buy {
   align-items: center;
   background-color: var(--white);
@@ -17,120 +172,7 @@
   position: relative;
   width: 1152px;
 }
-.y5-buy .about-us-i6133439169-xndxlP {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: 12px;
-  min-height: 12px;
-  min-width: 39px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  white-space: nowrap;
-  width: auto;
-}
-.y5-buy .accessories-exD24x {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-left: 19px;
-  min-height: 12px;
-  min-width: 57px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  width: auto;
-}
-.y5-buy .add-to-cart-Ef8U1j {
-  background-color: transparent;
-  color: var(--white);
-  font-family: var(--font-family-roboto);
-  font-size: var(--font-size-xxxxl);
-  font-style: normal;
-  font-weight: 500;
-  height: auto;
-  left: 17px;
-  letter-spacing: 0px;
-  line-height: normal;
-  mix-blend-mode: normal;
-  position: absolute;
-  text-align: left;
-  top: 8px;
-  width: auto;
-}
-.y5-buy .black-O0Pa16 {
-  background-color: transparent;
-  height: auto;
-  left: 11px;
-  letter-spacing: 0px;
-  line-height: normal;
-  mix-blend-mode: normal;
-  position: absolute;
-  text-align: center;
-  top: 40px;
-  width: auto;
-}
-.y5-buy .black-mUMi6r {
-  background-color: transparent;
-  height: auto;
-  left: 11px;
-  letter-spacing: 0px;
-  line-height: normal;
-  mix-blend-mode: normal;
-  position: absolute;
-  text-align: center;
-  top: 40px;
-  width: auto;
-}
-.y5-buy .blog-i6133439173-xndxlP {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: 12px;
-  margin-top: 12px;
-  min-height: 12px;
-  min-width: 20px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  white-space: nowrap;
-  width: auto;
-}
-.y5-buy .blue-9NvDID {
-  align-self: center;
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-top: 7px;
-  min-height: 13px;
-  min-width: 24px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: center;
-  width: auto;
-}
-.y5-buy .blue-AYV1EP {
-  align-self: center;
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-top: 7px;
-  min-height: 13px;
-  min-width: 24px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: center;
-  width: auto;
-}
+
 .y5-buy .bracket-connector-material-xJ1D0F {
   background-color: transparent;
   height: auto;
@@ -208,21 +250,7 @@
   text-align: left;
   width: auto;
 }
-.y5-buy .choose-your-frame-color-3xHcwy {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-left: 2px;
-  margin-top: 40px;
-  min-height: 15px;
-  min-width: 146px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  width: auto;
-}
+
 .y5-buy .choose-your-side-walls-xKTZor {
   background-color: transparent;
   flex-shrink: 1;
@@ -251,6 +279,8 @@
   position: relative;
   text-align: left;
   width: auto;
+  align-items: center;
+  display: flex;
 }
 .y5-buy .color-3xHcwy {
   align-items: flex-start;
@@ -365,26 +395,7 @@
   white-space: nowrap;
   width: auto;
 }
-.y5-buy .custom-printing-your-own-design-3xHcwy {
-  background-color: transparent;
-  color: var(--denim);
-  flex-shrink: 1;
-  font-family: var(--font-family-roboto);
-  font-size: var(--font-size-xl);
-  font-style: normal;
-  font-weight: 400;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-left: 2px;
-  margin-top: 8px;
-  min-height: 13px;
-  min-width: 187px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  width: auto;
-}
+
 .y5-buy .description-BdpSxK {
   background-color: transparent;
   color: var(--black);
@@ -2375,16 +2386,6 @@
   text-decoration: underline;
   width: auto;
 }
-.y5-buy .span0-xdMzlf {
-}
-.y5-buy .span1-xdMzlf {
-}
-.y5-buy .span2-xdMzlf {
-}
-.y5-buy .span3-xdMzlf {
-}
-.y5-buy .span4-xdMzlf {
-}
 .y5-buy .steel-xh7Ff7 {
   background-color: transparent;
   flex-shrink: 1;
@@ -2466,13 +2467,6 @@
   text-align: left;
   top: 0px;
   width: 380px;
-}
-.y5-buy .wall-a-ajf7fn {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: 36px;
-  position: relative;
-  width: 34px;
 }
 .y5-buy .wall-a-ohoBCS {
   align-self: center;
@@ -2877,13 +2871,8 @@
   width: auto;
 }
 .y5-buy .y5-GyJUNH {
-  background-color: transparent;
-  flex-shrink: 1;
-  height: 436px;
-  mix-blend-mode: normal;
   object-fit: cover;
   position: relative;
-  width: 436px;
 }
 .y5-buy .y5-display-GZmYSZ {
   background-color: transparent;
@@ -2912,25 +2901,7 @@
   text-align: left;
   width: auto;
 }
-.y5-buy .y5-economic-canopy-tent-3xHcwy {
-  background-color: transparent;
-  color: var(--black);
-  flex-shrink: 1;
-  font-family: var(--font-family-roboto);
-  font-size: 22px;
-  font-style: normal;
-  font-weight: 700;
-  height: auto;
-  letter-spacing: 0px;
-  line-height: normal;
-  margin-left: 2px;
-  min-height: 26px;
-  min-width: 260px;
-  mix-blend-mode: normal;
-  position: relative;
-  text-align: left;
-  width: auto;
-}
+
 .y5-buy .y5-economic-canopy-tent-ATaxKd {
   background-color: transparent;
   color: var(--gray);

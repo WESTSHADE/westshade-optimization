@@ -1,5 +1,6 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import Slider from "react-slick";
 
 import { Box, Button, Container } from "@material-ui/core";
@@ -8,13 +9,17 @@ import Grid from "@material-ui/core/Grid";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Header = dynamic(() => import("../../components/header"));
+const CanopyAccessory = dynamic(() =>
+  import("../../components/section_canopy_accessories")
+);
 const SetUp = dynamic(() => import("../../components/section_easy_set_up"));
 const CanopyCompare = dynamic(() =>
   import("../../components/section_canopy_compare")
 );
 
 export default function Y5_Overview() {
+  const router = useRouter();
+
   const settings = {
     dots: false,
     fade: true,
@@ -35,13 +40,41 @@ export default function Y5_Overview() {
   ];
 
   return (
-    <div className="canopy-tent">
-      <Header />
-      <Box className="section-container-extend background-gray">
-        <div className="section-image-container">
-          <img className="section-image" src="/y5-tent@1x.png" />
-        </div>
+    <div className="page canopy-tent">
+      <Box className="section-container-extend section-navbar-container">
+        <Container maxWidth="md">
+          <Grid container alignItems="center">
+            <Grid item xs>
+              <h2 className="section-navbar-title">Y5 Economic</h2>
+            </Grid>
+            <div className="section-navbar-item-group">
+              <div className="section-navbar-item disable">
+                <Link href="/y5-overview" disable>
+                  Overview
+                </Link>
+              </div>
+              <div className="section-navbar-item">
+                <Link href="/y5-specs">Tech Specs</Link>
+              </div>
+              <Button
+                variant="contained"
+                className="section-navbar-item section-navbar-button"
+                onClick={() => router.push("/products/y5-canopy-tent")}
+              >
+                Buy
+              </Button>
+            </div>
+          </Grid>
+        </Container>
+      </Box>
+      <Box
+        className="section-container-extend background-gray"
+        style={{ marginTop: "0" }}
+      >
         <Container maxWidth="sm">
+          <div className="section-image-container">
+            <img className="section-image" src="/y5-canopy-tent.png" />
+          </div>
           <h1 className="section-subtitle" style={{ marginTop: "24px" }}>
             Y5 Economic Classic Steel Canopy Hex45
           </h1>
@@ -65,7 +98,7 @@ export default function Y5_Overview() {
           <h3 className="section-title">
             Economical Steel Material Built for Excellent Performance.
           </h3>
-          <p className="section-content">
+          <p className="section-content-entend">
             We design our steel canopy frames to be resistant against rusts,
             stains, and mildews for better performance all year round. In
             addition, this is the
@@ -202,9 +235,10 @@ export default function Y5_Overview() {
             container
             spacing={2}
             className="section-grid-item"
-            style={{ flexDirection: "row", alignItems: "center" }}
+            alignItems="center"
+            style={{ flexDirection: "row" }}
           >
-            <Grid item xs={12} sm>
+            <Grid item xs={12} md={8}>
               <div style={{ flexDirection: "row", alignItems: "center" }}>
                 <div className="section-grid-item-inner">
                   <div className="section-subtitle">
@@ -225,7 +259,7 @@ export default function Y5_Overview() {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={12} sm>
+            <Grid item xs={12} md={4}>
               <img
                 className="section-grid-image"
                 src="/printed-canopy@1x.png"
@@ -234,262 +268,9 @@ export default function Y5_Overview() {
           </Grid>
         </Container>
       </Box>
-      <Box className="section-container">
-        <div className="section-subtitle">Accessories</div>
-        <h3
-          className="section-title"
-          style={{ fontSize: "2.125rem", lineHeight: "2.25rem" }}
-        >
-          Limitless solutions for limitless scenarios.
-        </h3>
-        <p className="section-content">
-          ifferent needs require different solutions. Our versatile accessories
-          allow you
-          <br />
-          to combine individual elements. From weight plates to side walls.
-        </p>
-        <Button variant="contained" className="section-grid-button">
-          Shop canopy accessories
-        </Button>
-      </Box>
-      <Box className="section-container-grid">
-        <Container maxWidth="md">
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
-              <div className="section-grid-item">
-                <div className="section-grid-item-inner">
-                  <div className="section-subtitle">Fabric material</div>
-                  <h3 className="section-title">
-                    500D Polyester.
-                    <br />
-                    <br />
-                    320 gsm.
-                  </h3>
-                </div>
-                <img
-                  className="section-grid-image"
-                  style={{ paddingBottom: "0" }}
-                  src="/fabric@1x.png"
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <div className="section-grid-item ">
-                <div className="section-grid-item-inner">
-                  <div className="section-subtitle">PVC coating</div>
-                  <h3 className="section-title">
-                    Known for its
-                    <br />
-                    Strength.
-                    <br />
-                    Durability.
-                    <br />
-                    Flexibility.
-                    <br />
-                    Longevity.
-                  </h3>
-                  <p className="section-content">
-                    Our PVC coating can withstand abrasion and distortion.
-                  </p>
-                </div>
-                <img className="section-grid-image" src="/pvc-1@1x.png" />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <div className="section-grid-item ">
-                <div className="section-grid-item-inner">
-                  <div className="section-subtitle">
-                    Fire, water, wind resistant
-                  </div>
-                  <h3 className="section-title">CPAI-84 certified.</h3>
-                  <p className="section-content">
-                    The fabric can withstand some of the toughest environments.
-                    From harsh winds, unexpected rain, to UV rays. It can also
-                    keep your event and marketing materials safe.
-                  </p>
-                </div>
-                <img
-                  className="section-grid-image"
-                  src="/feature-icons@1x.png"
-                />
-              </div>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+      <CanopyAccessory />
       <SetUp />
       <CanopyCompare />
-      <div>
-        <div className="y5-overview screen">
-          {/* <div className="flex-row-0xy0vn">
-              <div className="y5-economic-GyJUNH roboto-bold-black-16px">
-                Y5 Economic
-              </div>
-              <div className="group-4-GyJUNH">
-                <div className="overview-F3LVXM roboto-normal-gray-12px">
-                  <Link href="/y5-overview">Overview</Link>
-                </div>
-                <div className="tech-specs-F3LVXM">
-                  <Link href="/y5-specs">Tech Specs</Link>
-                </div>
-                <div className="overlap-group1-F3LVXM">
-                  <div className="rectangle-4-1tBXYU"></div>
-                  <div className="buy-1tBXYU">
-                    <Link href="/y5-buy">Buy</Link>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-          <div className="btm-C61RwL">
-            <div className="more-wOeUpP">
-              <p className="x1-in-stock-orde-ing-i6123939151-c4KUqp roboto-normal-gray-9px">
-                1. In-stock orders are not guaranteed to ship the same day they
-                are received. All orders received for in-stock items ship within
-                2 business days.
-                <br />
-                <br />
-                2. Any products that are determined to be found damaged after
-                opening must be reported to your Sales Representative within 1
-                day after received. Our team will work on a quick and agreeable
-                solution to any damaged product. If your shipment contains
-                extensive damage to the outer packaging upon delivery, refuse
-                the shipment and contact us immediately at 949-522-8111 or email
-                us at support@westshade.com.
-                <br />
-                <br />
-                3. For all online payments by credit, debit, or check card the
-                payment is authorized and held by your financial institution at
-                the time the order is placed to confirm the card is valid. You
-                will be charged for your Westshade purchase when the item(s) are
-                shipped. In the event the order is canceled, the authorization
-                hold will expire by the terms of your bank or financial
-                institution, typically within 5 to 7 business days.
-                <br />
-                <br />
-                4. Here at Westshade, we are taking as many precautionary steps
-                as possible to ensure the safety and wellbeing of our Westshade
-                team and Customers. With this, effective April 1, 2020, we will
-                not accept returns for products purchased for emergency response
-                efforts to combat the COVID-19 pandemic. Thank you for your
-                understanding.
-              </p>
-              <img className="line-1-c4KUqp" src="/line-1@1x.svg" />
-              <p className="more-ways-to-sh-111-i6123939152-c4KUqp roboto-normal-white-9px-2">
-                <span className="span0-21f0jx roboto-normal-gray-9px">
-                  More ways to shop:{" "}
-                </span>
-                <span className="span1-21f0jx roboto-normal-denim-9px">
-                  Pick up at our warehouse
-                </span>
-                <span className="span2-21f0jx roboto-normal-gray-9px">
-                  {" "}
-                  or{" "}
-                </span>
-                <span className="span3-21f0jx roboto-normal-denim-9px">
-                  Find us at online retailer store
-                </span>
-                <span className="span4-21f0jx roboto-normal-gray-9px">
-                  . Or call 949-522-8111.
-                </span>
-              </p>
-            </div>
-            <div className="btm-wOeUpP">
-              <div className="rectangle-12-cr0vIO"></div>
-              <img className="image-28-cr0vIO" src="/image-28@2x.png" />
-              <div className="connect-with-us-i6124039157-cr0vIO roboto-bold-white-10px">
-                CONNECT WITH US
-              </div>
-              <div className="group-24-cr0vIO">
-                <div className="product-i6124039159-1ssCxD roboto-bold-white-10px">
-                  PRODUCT
-                </div>
-                <div className="frame-2-1ssCxD">
-                  <div className="canopy-tent-i6124039161-4Uw4TU roboto-normal-nobel-9px">
-                    Canopy Tent
-                  </div>
-                  <div className="custom-printing-i6124039162-4Uw4TU roboto-normal-nobel-9px">
-                    Custom Printing
-                  </div>
-                  <div className="medical-tent-i6124039163-4Uw4TU roboto-normal-nobel-9px">
-                    Medical Tent
-                  </div>
-                  <div className="market-umbrella-i6124039164-4Uw4TU roboto-normal-nobel-9px">
-                    Market Umbrella
-                  </div>
-                  <div className="tilt-umbrella-i6124039165-4Uw4TU roboto-normal-nobel-9px">
-                    Tilt Umbrella
-                  </div>
-                </div>
-              </div>
-              <div className="group-25-cr0vIO">
-                <div className="company-i6124039167-fSWOfV roboto-bold-white-10px">
-                  COMPANY
-                </div>
-                <div className="frame-3-fSWOfV">
-                  <div className="about-us-i6124039169-xndxlP roboto-normal-nobel-9px">
-                    About Us
-                  </div>
-                  <div className="contact-us-i6124039170-xndxlP roboto-normal-nobel-9px">
-                    Contact Us
-                  </div>
-                  <div className="shipping-and-re-urn-i6124039171-xndxlP roboto-normal-nobel-9px">
-                    Shipping and Return
-                  </div>
-                  <div className="warranty-i6124039172-xndxlP roboto-normal-nobel-9px">
-                    Warranty
-                  </div>
-                  <div className="blog-i6124039173-xndxlP roboto-normal-nobel-9px">
-                    Blog
-                  </div>
-                </div>
-              </div>
-              <div className="group-26-cr0vIO">
-                <p className="sign-up-for-the-ion-i6124039176-qsbZ2f roboto-bold-white-10px">
-                  Sign Up for the latest news and promotion
-                </p>
-                <div className="flex-row-qsbZ2f">
-                  <div className="overlap-group1-mn5J3y">
-                    <div className="email-address-i6124039177-eedn4Y roboto-normal-nobel-10px">
-                      email address
-                    </div>
-                    <div className="rectangle-13-eedn4Y border-1px-nobel"></div>
-                  </div>
-                  <div className="overlap-group-mn5J3y">
-                    <div className="rectangle-14-ULg8j9"></div>
-                    <div className="subscribe-i6124039178-ULg8j9 roboto-bold-white-10px">
-                      SUBSCRIBE
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="rectangle-15-cr0vIO"></div>
-              <div className="rectangle-16-cr0vIO"></div>
-              <div className="rectangle-17-cr0vIO"></div>
-              <div className="rectangle-18-cr0vIO"></div>
-              <div className="rectangle-19-cr0vIO"></div>
-              <img className="line-2-cr0vIO" src="/line-2@1x.png" />
-              <div className="supportwestshad-com-i6124039186-cr0vIO roboto-normal-nobel-10px">
-                support@westshade.com
-              </div>
-              <p className="site-map-terms-icy-i6124039187-cr0vIO roboto-normal-white-9px">
-                Site Map | Terms &amp; Condition | Privacy Policy
-              </p>
-              <p className="x2021-westshade-ved-i6124039188-cr0vIO roboto-normal-white-9px">
-                © 2021 WESTSHADE. All rights reserved
-              </p>
-              <div className="x949-552-8111-i6124039189-cr0vIO roboto-medium-fountain-blue-12px">
-                949-552-8111
-              </div>
-              <div className="group-28-cr0vIO">
-                <img className="image-29-qlAjx4" src="/image-29@2x.png" />
-                <img className="image-30-qlAjx4" src="/image-30@2x.png" />
-                <img className="image-31-qlAjx4" src="/image-31@2x.png" />
-                <img className="image-32-qlAjx4" src="/image-32@2x.png" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

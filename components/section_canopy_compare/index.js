@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "./section.module.css";
 
 import { Box, Button, Container, Grid } from "@material-ui/core";
 
 export default function Section_Canopy_Compare() {
+  const router = useRouter();
+
   return (
     <Box className="section-container">
       <h3
@@ -13,7 +16,9 @@ export default function Section_Canopy_Compare() {
         Which pop up canopy tent is right for you?
       </h3>
       <Link href="/compare">
-        <p className="section-content">Compare all pop up canopy series &gt;</p>
+        <p className="section-content-entend">
+          Compare all pop up canopy series &gt;
+        </p>
       </Link>
       <Container maxWidth="md">
         <Grid container spacing={2}>
@@ -51,12 +56,13 @@ export default function Section_Canopy_Compare() {
                 <Button
                   variant="contained"
                   className={`${styles["section-grid-button"]}`}
+                  onClick={() => router.push("/y5-buy")}
                 >
                   Buy
                 </Button>
-                <Link href="/y5-overview">
-                  <p className="section-content">Learn more &gt;</p>
-                </Link>
+                <p className="section-content">
+                  <Link href="/y5-overview">Learn more &gt;</Link>
+                </p>
               </div>
             </div>
           </Grid>
@@ -94,12 +100,13 @@ export default function Section_Canopy_Compare() {
                 <Button
                   variant="contained"
                   className={`${styles["section-grid-button"]}`}
+                  onClick={() => router.push("/y6-buy")}
                 >
                   Buy
                 </Button>
-                <Link href="/y6-overview">
-                  <p className="section-content">Learn more &gt;</p>
-                </Link>
+                <p className="section-content">
+                  <Link href="/y6-overview">Learn more &gt;</Link>
+                </p>
               </div>
             </div>
           </Grid>
@@ -137,12 +144,13 @@ export default function Section_Canopy_Compare() {
                 <Button
                   variant="contained"
                   className={`${styles["section-grid-button"]}`}
+                  onClick={() => router.push("/y7-buy")}
                 >
                   Buy
                 </Button>
-                <Link href="/y7-overview">
-                  <p className="section-content">Learn more &gt;</p>
-                </Link>
+                <p className="section-content">
+                  <Link href="/y7-overview">Learn more &gt;</Link>
+                </p>
               </div>
             </div>
           </Grid>
