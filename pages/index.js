@@ -1,264 +1,1 @@
-import React from "react";
-import Link from "next/link";
-import Slider from "react-slick";
-
-import { Box, Container, Grid } from "@material-ui/core";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-export default class Home extends React.Component {
-  render() {
-    const settings = {
-      dots: false,
-      fade: true,
-      infinite: true,
-      autoplay: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
-
-    const slideImages = [
-      "/printed-canopy-tent-01.png",
-      "/printed-canopy-tent-02.png",
-      "/printed-canopy-tent-03.png",
-      "/printed-canopy-tent-04.png",
-      "/printed-canopy-tent-05.png",
-      "/printed-canopy-tent-06.png",
-    ];
-
-    return (
-      <div className="homepage">
-        <Box className="section-container">
-          <Container maxWidth="sm">
-            <Slider {...settings}>
-              {slideImages.map((image, index) => (
-                <img key={index} src={image} className="section-image" />
-              ))}
-            </Slider>
-            <h3 className="section-title">Custom Printed Canopy</h3>
-            <div className="section-subtitle">Custom your own design</div>
-            <p className="section-content">
-              Simple logos can be easily printed or if you want something that
-              has a “wow” factor our graphic artists can help you design a
-              fantastic 100% coverage digitally printed custom canopy.
-            </p>
-            <div className="section-link-group">
-              <div className="section-link-container">
-                <Link href="/canopy-tent" className="roboto-normal-denim-10px">
-                  Learn more &gt;
-                </Link>
-              </div>
-              <div className="section-link-container">
-                <Link href="/" className="roboto-normal-denim-10px">
-                  Buy &gt;
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Box>
-        <Box className="section-container-extend background-gray">
-          <Container maxWidth="sm">
-            <div className="section-image-container">
-              <img className="section-image" src="/y7@1x.png" />
-            </div>
-            <h3 className="section-title">Y7 Heavy Duty Canopy</h3>
-            <div className="section-subtitle">
-              Industry Leading Quality &amp; Durable
-            </div>
-            <p className="section-content">From $619/ea*</p>
-            <p className="section-content">
-              Y7 Aluminum Instant Canopy is great for business events and job
-              fairs. This canopy provides up to 400 square feet of cool shade.
-              You can also customized and it will be a great canopy to help you
-              to promote your business!
-            </p>
-            <div className="section-link-group">
-              <div className="section-link-container">
-                <Link href="/y7-overview" className="roboto-normal-denim-10px">
-                  Learn more &gt;
-                </Link>
-              </div>
-              <div className="section-link-container">
-                <Link
-                  href="/products/y7-canopy-tent"
-                  className="roboto-normal-denim-10px"
-                >
-                  Buy &gt;
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Box>
-        <Box className="section-container">
-          <Container maxWidth="sm">
-            <div className="section-image-container">
-              <img className="section-image" src="/y6@1x.png" />
-            </div>
-            <h3 className="section-title">Y6 Commercial Canopy</h3>
-            <div className="section-subtitle">Best small business solution</div>
-            <p className="section-content">From $445/ea*</p>
-            <p className="section-content">
-              Y6 Aluminum Instant Canopy is great for camping and all the other
-              outdoor activities. This outdoor canopy provides up to 200 square
-              feet of cool shade anywhere you go. A great canopy for your
-              outdoor adventures!
-            </p>
-            <div className="section-link-group">
-              <div className="section-link-container">
-                <Link href="/y6-overview" className="roboto-normal-denim-10px">
-                  Learn more &gt;
-                </Link>
-              </div>
-              <div className="section-link-container">
-                <Link
-                  href="/products/y6-canopy-tent"
-                  className="roboto-normal-denim-10px"
-                >
-                  Buy &gt;
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Box>
-        <Box className="section-container-extend background-gray">
-          <Container maxWidth="sm">
-            <div className="section-image-container">
-              <img className="section-image" src="/y5@1x.png" />
-            </div>
-            <h3 className="section-title">Y5 Economic Canopy</h3>
-            <div className="section-subtitle">
-              Affordable choice for everyone
-            </div>
-            <p className="section-content">From $395/ea*</p>
-            <p className="section-content">
-              Get immediate shade with the entry-level Y5 Steel Instant Canopy!
-              Ideal for your patio, garden or deck. This canopy provides up to
-              200 square feet of cool shade. Great for Every day use.
-            </p>
-            <div className="section-link-group">
-              <div className="section-link-container">
-                <Link href="/y5-overview" className="roboto-normal-denim-10px">
-                  Learn more &gt;
-                </Link>
-              </div>
-              <div className="section-link-container">
-                <Link
-                  href="/products/y5-canopy-tent"
-                  className="roboto-normal-denim-10px"
-                >
-                  Buy &gt;
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Box>
-        <Box className="section-container">
-          <Container maxWidth="sm">
-            <div className="section-image-container">
-              <img
-                className="section-image"
-                src="/medical-canopy-tent@1x.png"
-              />
-            </div>
-            <h3 className="section-title">Medical Canopy Tent</h3>
-            <div className="section-subtitle">
-              Highest Reliable COVID-19 Solution
-            </div>
-            <p className="section-content">Call for price only*</p>
-            <p className="section-content">
-              Ideal for creating drive-thru screening tent applications for
-              coronavirus testing. Walls with windows can be added and install
-              in minutes to create more of an enclosed medical testing
-              environment.
-            </p>
-            <div className="section-link-group">
-              <div className="section-link-container">
-                <Link href="/" className="roboto-normal-denim-10px">
-                  Learn more &gt;
-                </Link>
-              </div>
-              <div className="section-link-container">
-                <Link href="/" className="roboto-normal-denim-10px">
-                  Buy &gt;
-                </Link>
-              </div>
-            </div>
-          </Container>
-        </Box>
-        <Box className="section-container-extend" style={{ marginTop: "60px" }}>
-          <h3 className="section-title">Umbrellas</h3>
-          <Grid container justify="center" spacing={2}>
-            <Grid item xs={12} sm={4}>
-              <div className={"section-grid-item background-gray"}>
-                <div>
-                  <h3 className="section-title">Bali Umbrella-Delicate</h3>
-                  <div className="section-link-group">
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Learn more &gt;
-                      </Link>
-                    </div>
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Buy &gt;
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="section-image-container">
-                  <img className="section-image" src="/bali@1x.png" />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <div className={"section-grid-item background-gray"}>
-                <div>
-                  <h3 className="section-title">Santorini Umbrella-Deluxe</h3>
-                  <div className="section-link-group">
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Learn more &gt;
-                      </Link>
-                    </div>
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Buy &gt;
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="section-image-container">
-                  <img className="section-image" src="/santorini@1x.png" />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <div className={"section-grid-item background-gray"}>
-                <div>
-                  <h3 className="section-title">Catalina Umbrella-Oversized</h3>
-                  <div className="section-link-group">
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Learn more &gt;
-                      </Link>
-                    </div>
-                    <div className="section-link-container">
-                      <Link href="/" className="roboto-normal-denim-10px">
-                        Buy &gt;
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="section-image-container">
-                  <img className="section-image" src="/catalina@1x.png" />
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </Box>
-      </div>
-    );
-  }
-}
+import React, {useEffect, useState} from "react";import Slider from "react-slick";import "slick-carousel/slick/slick.css";import "slick-carousel/slick/slick-theme.css";import styled from 'styled-components';import Head from 'next/head'import {Box, Container, Paper, Typography} from "@material-ui/core";import CContainer from "../components/container";import CLink from "../components/link";const settings = {    dots: false,    fade: true,    infinite: true,    autoplay: true,    speed: 500,    slidesToShow: 1,    slidesToScroll: 1,};const slideImages = [    "/images/slider/printed-canopy-tent-01.png",    "/images/slider/printed-canopy-tent-02.png",    "/images/slider/printed-canopy-tent-03.png",    "/images/slider/printed-canopy-tent-04.png",    "/images/slider/printed-canopy-tent-05.png",    "/images/slider/printed-canopy-tent-06.png",];const MXContainerPaper = styled.div`    display: flex;    flex-wrap: wrap;    padding: 24px 12px;    text-align: left;`;const MXImageDisplay = styled.img`    width: 100%;    min-height: 200px;    max-height: 400px;    object-fit: contain;`;function Home() {    const [display, setDisplay] = useState(false);    useEffect(() => {        setTimeout(() => setDisplay(true), 250);    }, []);    return (        <React.Fragment>            <Head>                <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>                <meta name="description"                      content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>                <script type="text/javascript" src="/static/mailchimpFirstOrder.js" id="mcjs"/>            </Head>            <Box className="page" fontSize={14} lineHeight={1.43}>                {display ? (                    <>                        <CContainer>                            <Container maxWidth="md">                                <Slider {...settings}>                                    {slideImages.map((image, index) => (                                        <img key={index} className='section-banner-image-home' src={image} alt="custom-printed-canopy-tent"/>                                    ))}                                </Slider>                                <Typography variant="h3" classes={{h3: "information-title"}}>Custom Printed Canopy</Typography>                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}> Custom your own design </Typography>                                <Typography color="textSecondary" paragraph={true}>                                    Simple logos can be easily printed or if you want something that                                    has a “wow” factor our graphic artists can help you design a                                    fantastic 100% coverage digitally printed custom canopy.                                </Typography>                                <div className="paper-button-group-button center">                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/custom-printing"}} size="large"> Learn more &gt; </CLink>                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/custom-printing-canopy-tent"}} size="large"> Buy &gt; </CLink>                                </div>                            </Container>                        </CContainer>                        <CContainer className="extend gray">                            <Container maxWidth="md">                                <MXImageDisplay src="/images/product/y7-heavy-duty-canopy-tent/y7-canopy-tent.png" alt="y7-canopy-tent"/>                                <Typography variant="h3" classes={{h3: "information-title"}}> Y7 Heavy Duty Canopy </Typography>                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}> Industry Leading Quality &amp; Durable </Typography>                                <Typography variant="subtitle2" classes={{subtitle1: "information-subtitle"}} paragraph={true}> From $619/ea* </Typography>                                <Typography color="textSecondary" paragraph={true}>                                    Y7 Aluminum Instant Canopy is great for business events and job                                    fairs. This canopy provides up to 400 square feet of cool shade.                                    You can also customized and it will be a great canopy to help you                                    to promote your business!                                </Typography>                                <div className="paper-button-group-button center">                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y7-heavy-duty"}} size="large"> Learn more &gt; </CLink>                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y7-heavy-duty/buy"}} size="large"> Buy &gt; </CLink>                                </div>                            </Container>                        </CContainer>                        <CContainer>                            <Container maxWidth="md">                                <MXImageDisplay src="/images/product/y6-commercial-buy/y6-canopy-tent.png" alt="y6-canopy-tent"/>                                <Typography variant="h3" classes={{h3: "information-title"}}> Y6 Commercial Canopy </Typography>                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}> Best small business solution </Typography>                                <Typography variant="subtitle2" classes={{subtitle1: "information-subtitle"}} paragraph={true}> From $445/ea* </Typography>                                <Typography color="textSecondary" paragraph={true}>                                    Y6 Aluminum Instant Canopy is great for camping and all the other                                    outdoor activities. This outdoor canopy provides up to 200 square                                    feet of cool shade anywhere you go. A great canopy for your                                    outdoor adventures!                                </Typography>                                <div className="paper-button-group-button center">                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y6-commercial"}} size="large"> Learn more &gt; </CLink>                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y6-commercial/buy"}} size="large"> Buy &gt; </CLink>                                </div>                            </Container>                        </CContainer>                        <CContainer className="extend gray">                            <Container maxWidth="md">                                <MXImageDisplay src="/images/product/y5-economic-canopy-tent/y5-canopy-tent.png" alt="y5-canopy-tent"/>                                <Typography variant="h3" classes={{h3: "information-title"}}> Y5 Economic Canopy </Typography>                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}> Affordable choice for everyone </Typography>                                <Typography variant="subtitle2" classes={{subtitle1: "information-subtitle"}} paragraph={true}> From $395/ea* </Typography>                                <Typography color="textSecondary" paragraph={true}>                                    Get immediate shade with the entry-level Y5 Steel Instant Canopy!                                    Ideal for your patio, garden or deck. This canopy provides up to                                    200 square feet of cool shade. Great for Every day use.                                </Typography>                                <div className="paper-button-group-button center">                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y5-economic"}} size="large"> Learn more &gt; </CLink>                                    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/y5-economic/buy"}} size="large"> Buy &gt; </CLink>                                </div>                            </Container>                        </CContainer>                        <CContainer>                            <Typography variant="h3" classes={{h3: "information-title"}}> Umbrellas </Typography>                            <MXContainerPaper>                                <Paper classes={{root: "container-paper-item"}} elevation={0}>                                    <div>                                        <Typography variant="h5" classes={{h5: "information-title"}}> Bali Umbrella-Delicate </Typography>                                        <div className="paper-button-group-button">                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/tilt-umbrellas"}} size="large"> Learn more &gt; </CLink>                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)"                                                   href={{pathname: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'}}                                                   size="large"> Buy &gt; </CLink>                                        </div>                                    </div>                                    <div className="position-r">                                        <MXImageDisplay src="/images/bali@1x.png" alt="bali-umbrella-delicate"/>                                    </div>                                </Paper>                                <Paper classes={{root: "container-paper-item"}} elevation={0}>                                    <div>                                        <Typography variant="h5" classes={{h5: "information-title"}}> Santorini Umbrella-Deluxe </Typography>                                        <div className="paper-button-group-button">                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/market-umbrellas"}} size="large"> Learn                                                more &gt; </CLink>                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)"                                                   href={{pathname: '/products/market-umbrellas/santorini-aluminum-umbrella',}}                                                   size="large"> Buy &gt; </CLink>                                        </div>                                    </div>                                    <div className="position-r">                                        <MXImageDisplay src="/images/santorini@1x.png" alt="santorini-umbrella-deluxe"/>                                    </div>                                </Paper>                                <Paper classes={{root: "container-paper-item"}} elevation={0}>                                    <div>                                        <Typography variant="h5" classes={{h5: "information-title"}}> Catalina Umbrella-Oversize </Typography>                                        <div className="paper-button-group-button">                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/cantilever-umbrellas"}} size="large"> Learn                                                more &gt; </CLink>                                            <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: '/products/cantilever-umbrellas/catalina-umbrella'}}                                                   size="large"> Buy &gt; </CLink>                                        </div>                                    </div>                                    <div className="position-r">                                        <MXImageDisplay src="/images/catalina@1x.png" alt="catalina-umbrella-oversize"/>                                    </div>                                </Paper>                            </MXContainerPaper>                        </CContainer>                    </>                ) : null}            </Box>        </React.Fragment>    );}export default Home;

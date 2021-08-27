@@ -1,53 +1,130 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700,500");
+
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 body {
-  background-color: white !important;
+    background-color: white !important;
 }
+
 .container-page {
-  /* padding-top: calc(34px+48px+34px); */
-  padding-top: 116px;
-  background-color: white;
+    padding-top: 56px;
+    background-color: white;
 }
-.page > div:first-child {
-  margin-top: 0 !important;
-}
-.container-center-horizontal {
-  pointer-events: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-}
-.container-center-horizontal > * {
-  pointer-events: auto;
-  flex-shrink: 0;
-}
+
 a {
-  color: var(--black);
-  text-decoration: none;
-  display: contents;
+    display: contents;
+    text-decoration: none;
 }
+
 a:-webkit-any-link {
-  color: var(--black);
+    color: inherit;
 }
-p {
-  margin-bottom: 12px;
-}
+
+/*p {*/
+/*    margin-bottom: 12px;*/
+/*}*/
+
 .border-bottom {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
+
 .z-9 {
-  z-index: 9;
+    z-index: 9;
 }
+
 .z-99 {
-  z-index: 99;
+    z-index: 99;
 }
+
 .f-bold {
-  font-weight: bold;
+    font-weight: bold;
 }
+
 .h-unset {
-  height: unset !important;
+    height: unset !important;
+}
+
+.position-r {
+    position: relative;
+}
+
+.position-a {
+    position: absolute;
+}
+
+.w-100p {
+    width: 100%;
+}
+
+.w-90p {
+    width: 90%;
+}
+
+.version {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 4px 12px;
+    color: gray
+}
+
+/* ============================================================ */
+
+@media (min-width: 600px) {
+    .container-page {
+        padding-top: 64px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container-page {
+        padding-top: 122px;
+    }
+}
+
+.page {
+    min-height: calc(100vh - 120px - 550px);
+}
+
+.page > div:first-child {
+    margin-top: 0;
+}
+
+.page.product > div:first-child {
+    margin-top: 24px;
+}
+
+/*全部Breadcrumbs统一样式*/
+.root-breadcrumbs-text {
+    font-weight: 600;
+}
+
+.section-container-breadcrumbs {
+    margin: 12px auto 24px;
+    padding: 6px 0;
+}
+
+/*全部Section-Container统一样式*/
+
+.root-backdrop {
+    z-index: 9 !important;
+    position: absolute !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ============================================================ */
+
+.homepage-link {
+    padding: 0 8px !important;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+/* ============================================================ */
+
+root-listItem {
+    min-height: 42px;
 }

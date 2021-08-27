@@ -1,0 +1,15 @@
+.container {
+    position: relative;
+    margin-bottom: 12px;
+    padding: 24px 0;
+    text-align: center;
+}
+
+.container.extend {
+    width: 100vw;
+    left: calc(50% - 50vw);
+}
+
+.container.gray {
+    background-color: #edebee;
+}
