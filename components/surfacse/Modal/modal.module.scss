@@ -1,0 +1,132 @@
+.container-root {
+	height: 100vh;
+	padding-top: 24px;
+	overflow: scroll;
+	z-index: 99;
+
+	.container-dialog {
+		height: 100%;
+
+		.dialog {
+			max-width: 1170px;
+			margin: 0;
+			padding-bottom: 54px;
+			background-color: #f7f7f7;
+			border-radius: 0;
+
+			.close {
+				top: 29px;
+				right: 29px;
+				border-radius: 50%;
+
+				&:active {
+					background-color: #f0f0f0;
+				}
+			}
+
+			.container-body {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				height: 100%;
+				margin: 0 auto;
+				padding-top: 24px;
+				overflow: scroll;
+
+				@media screen and (min-width: 480px) {
+					width: 480px;
+				}
+
+				@media screen and (min-width: 960px) {
+					flex-direction: row;
+					width: 100%;
+					padding-top: 40px;
+					overflow: unset;
+				}
+			}
+
+			.container-footer {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				height: 54px;
+				margin: 0;
+				padding-right: 16px;
+				padding-left: 16px;
+				background-color: white;
+
+				.button-cancel {
+					width: 123px;
+					height: 40px;
+					background-color: transparent;
+					border: 1px solid #23a4ad;
+					font-size: 16px;
+					line-height: 24px;
+					color: #23a4ad;
+
+					&:hover {
+						border-color: #5fbdbe;
+						background-color: #5fbdbe;
+						color: white;
+					}
+
+					&:active {
+						background-color: #43878c;
+						color: white;
+					}
+				}
+
+				.button-confirm {
+					margin-left: 24px;
+					width: 123px;
+					height: 40px;
+					background-color: #23a4ad;
+					border: 1px solid #23a4ad;
+					font-size: 16px;
+					line-height: 24px;
+					color: white;
+
+					&:hover {
+						border-color: #5fbdbe;
+						background-color: #5fbdbe;
+						color: white;
+					}
+
+					&:active {
+						background-color: #43878c;
+						color: white;
+					}
+				}
+
+				@media screen and (min-width: 480px) {
+					height: 70px;
+				}
+
+				@media screen and (min-width: 960px) {
+					height: 80px;
+				}
+			}
+
+			@media screen and (min-width: 480px) {
+				padding-bottom: 70px;
+			}
+
+			@media screen and (min-width: 960px) {
+				margin-right: 5%;
+				margin-left: 5%;
+				padding-bottom: 80px;
+				border-radius: 16px 16px 0 0;
+			}
+		}
+	}
+
+	@media screen and (min-width: 480px) {
+		padding-top: 32px;
+	}
+
+	@media screen and (min-width: 960px) {
+		padding-top: 5%;
+	}
+}

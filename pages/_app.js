@@ -1,8 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {CssBaseline, Container, Hidden} from "@material-ui/core";
-import '@fontsource/roboto';
+import React, { useEffect, useState } from "react";
+import { Provider as StyletronProvider } from "styletron-react";
+import { BaseProvider, LightTheme } from "baseui";
+import { Head } from "next/document";
 
-import Head from 'next/head'
+import { CssBaseline, Container, Hidden } from "@material-ui/core";
+import "@fontsource/roboto";
+
+import { wrapper } from "../redux/store";
+import { styletron } from "../styletron";
 
 import Header from "../components/header";
 import HeaderDrawerLeft from "../components/header_mobile";
@@ -13,53 +18,85 @@ import "../styles/globals.css";
 import "../styles/styleguide.css";
 import "../styles/homepage.css";
 import "../styles/y5-buy.css";
+import "../styles/baseui.css";
 
-function MyApp({Component, pageProps}) {
-    const [isSupported, setIsSupported] = useState(false);
+// const engine = new Styletron();
 
-    useEffect(() => {
-        const jssStyles = document.querySelector('#jss-server-side')
-        if (jssStyles && jssStyles.parentElement) {
-            jssStyles.parentElement.removeChild(jssStyles)
-        }
+const breakpoints = {
+	small: 480,
+	medium: 960,
+	large: 1280,
+};
 
-        setIsSupported(window.appleBusinessChat.isSupported());
-    }, [])
+const ResponsiveTheme = Object.keys(breakpoints).reduce(
+	(acc, key) => {
+		acc.mediaQuery[key] = `@media screen and (min-width: ${breakpoints[key]}px)`;
+		return acc;
+	},
+	{ breakpoints, mediaQuery: {} }
+);
 
-    useEffect(() => {
-        if (isSupported) {
-            let elem = document.getElementById("chat-widget-container");
-            if (elem) elem.remove();
+const CustomTheme = { ...LightTheme, ...ResponsiveTheme };
 
-            setTimeout(function () {
-                createABannerPlaceholder();
-                window.appleBusinessChat.refresh();
-            }, 1000);
-        }
+function MyApp({ Component, pageProps }) {
+	const [isSupported, setIsSupported] = useState(false);
 
-    }, [isSupported]);
+	useEffect(() => {
+		const jssStyles = document.querySelector("#jss-server-side");
+		if (jssStyles && jssStyles.parentElement) {
+			jssStyles.parentElement.removeChild(jssStyles);
+		}
 
-    return (
-        <React.Fragment>
-            <Head>
-                <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-            </Head>
-            <CssBaseline/>
-            <Hidden mdDown>
-                <Header/>
-            </Hidden>
-            <Hidden lgUp>
-                <HeaderDrawerLeft/>
-            </Hidden>
-            <Container maxWidth="lg" className="container-page">
-                <Component {...pageProps} />
-                <div id="refreshPlaceholder"/>
-                <div id="modal-root"/>
-            </Container>
-            <Footer/>
-        </React.Fragment>
-    );
+		setIsSupported(window.appleBusinessChat.isSupported());
+
+		if (pageProps.noFooter) {
+			document.body.style.height = "100vh";
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.height = "unset";
+			document.body.style.overflow = "unset";
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isSupported) {
+			let elem = document.getElementById("chat-widget-container");
+			if (elem) elem.remove();
+
+			if (!pageProps.noFooter) {
+				setTimeout(function () {
+					createABannerPlaceholder();
+					window.appleBusinessChat.refresh();
+				}, 1000);
+			}
+		}
+	}, [isSupported]);
+
+	return (
+		<StyletronProvider value={styletron}>
+			<BaseProvider theme={CustomTheme}>
+				<CssBaseline />
+				{pageProps.noFooter ? (
+					<Component {...pageProps} />
+				) : (
+					<>
+						<Hidden mdDown>
+							<Header />
+						</Hidden>
+						<Hidden lgUp>
+							<HeaderDrawerLeft />
+						</Hidden>
+						<Container maxWidth="lg" className="container-page">
+							<Component {...pageProps} />
+							<div id="refreshPlaceholder" />
+							<div id="modal-root" />
+						</Container>
+						<Footer />
+					</>
+				)}
+			</BaseProvider>
+		</StyletronProvider>
+	);
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -74,4 +111,4 @@ function MyApp({Component, pageProps}) {
 //   return { ...appProps }
 // }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

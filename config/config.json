@@ -1,4 +1,5 @@
 {
-    "domain": "westshade.myshopify.com",
-    "storefrontAccessToken": "7c20830dc9286324977270d2907fe328"
+	"domain": "westshade.myshopify.com",
+	"storefrontAccessToken": "7c20830dc9286324977270d2907fe328",
+	"apiBaseUrl": "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1"
 }

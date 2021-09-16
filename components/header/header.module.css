@@ -1,17 +1,17 @@
 .menuButton_right {
-    min-width: unset;
-    padding: 0;
-    margin-left: 12px;
+	min-width: unset;
+	padding: 0;
+	margin-left: 12px;
 }
 
 .menuButton_right_label {
-    justify-content: flex-end;
+	justify-content: flex-end;
 }
 
 .menuButton_right_end {
-    margin-left: 0;
+	margin-left: 0;
 }
 
 .root-badge {
-    top: 4px !important;
+	top: 4px !important;
 }

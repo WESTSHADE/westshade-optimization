@@ -1,0 +1,123 @@
+.thumbnailClass {
+	width: 62px !important;
+	margin-top: 0 !important;
+	margin-bottom: 16px;
+}
+
+.image-gallery-thumbnail {
+	border: 1px solid white !important;
+	box-sizing: "border-box";
+}
+
+.image-gallery-thumbnail.active,
+.image-gallery-thumbnail:focus {
+	border: 1px solid #d9d9d9 !important;
+	box-sizing: "border-box";
+}
+
+.image-gallery-slide-wrapper {
+	/* width: 80%; */
+	margin: auto;
+	padding: 0 10%;
+}
+
+.image-gallery-content.left .image-gallery-slide .image-gallery-image,
+.image-gallery-content.right .image-gallery-slide .image-gallery-image {
+	max-height: calc(86vh - 68px - 48px) !important;
+}
+
+.modalGallery .image-gallery-thumbnails {
+	display: none;
+}
+
+.modalDialog {
+	max-width: 1170px;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-bottom: 54px;
+	background-color: #f7f7f7;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.modalSelectionContainer {
+	height: 100%;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-top: 24px;
+	overflow: scroll;
+}
+
+.hideScrollBar::-webkit-scrollbar {
+	display: none;
+}
+
+.hideScrollBar {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.container-selection {
+	display: flex;
+	flex-direction: column;
+	/* margin-bottom: 20px; */
+	padding-top: 32px;
+	text-align: center;
+	align-items: center;
+}
+
+@media screen and (max-width: 480px) {
+	.image-gallery-thumbnails {
+		display: none;
+	}
+
+	.image-gallery-slide-wrapper.left,
+	.image-gallery-slide-wrapper.right {
+		width: 100% !important;
+	}
+
+	.radioGroupColor {
+		grid-template-columns: auto auto auto;
+	}
+
+	.radioGroupWall {
+		grid-template-columns: repeat(auto-fill, 50%);
+	}
+}
+
+@media screen and (min-width: 480px) {
+	.modalRoot {
+		padding-top: 32px;
+	}
+
+	.modalDialog {
+		padding-bottom: 70px;
+	}
+}
+
+@media screen and (min-width: 960px) {
+	.modalRoot {
+		padding-top: 5%;
+	}
+
+	.modalDialog {
+		margin-left: 5%;
+		margin-right: 5%;
+		padding-bottom: 80px;
+		border-top-right-radius: 16px;
+		border-top-left-radius: 16px;
+	}
+
+	.modalSelectionContainer {
+		/* margin-right: 64px;
+		margin-left: 64px; */
+		padding-top: 40px;
+		overflow: unset;
+	}
+}
