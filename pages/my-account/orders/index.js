@@ -58,9 +58,10 @@ function Account_Orders() {
 		// http://34.222.1.150
 		// https://westshade.d4z4b6fa1a88b.amplifyapp.com
 		// let url = "http://34.222.1.150/checkout/order-pay/" + item.id + "/?pay_for_order=true&key=" + item.order_key;
-		let url = "https://checkout.westshade.com/checkout/order-pay/" + item.id + "/?pay_for_order=true&key=" + item.order_key;
+		// let url = "https://checkout.westshade.com/checkout/order-pay/" + item.id + "/?pay_for_order=true&key=" + item.order_key;
 		// router.push(url);
-		window.location.assign(url);
+		// window.location.assign(url);
+		router.push({ pathname: "/checkout/", query: { id: item.id } });
 	};
 
 	const changeRouter = (value) => {
@@ -175,6 +176,7 @@ function Account_Orders() {
 												{orders.map((order) => {
 													let count = 0;
 													order.line_items.map((item) => (count += item.quantity));
+													let unable = warning || order.status !== "pending";
 													return (
 														<TableRow key={order.id}>
 															<TableCell component="th" scope="row">
@@ -190,13 +192,13 @@ function Account_Orders() {
 																<div style={{ display: "flex", justifyContent: "flex-end" }}>
 																	<MXButton
 																		style={{
-																			backgroundColor: warning ? "#e0e0e0" : "#339059",
-																			color: warning ? "black" : "white",
+																			backgroundColor: unable ? "#e0e0e0" : "#339059",
+																			color: unable ? "black" : "white",
 																			margin: "auto 0",
 																		}}
 																		onClick={() => goPayment(order)}
 																		disableElevation
-																		disabled={warning}
+																		disabled={unable}
 																	>
 																		{"PAY"}
 																	</MXButton>

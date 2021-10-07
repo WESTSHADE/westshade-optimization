@@ -1,4 +1,5 @@
 import React from "react";
+import NumberFormat from "react-number-format";
 import { Block } from "baseui/block";
 import { Button, KIND, SHAPE } from "baseui/button";
 
@@ -21,7 +22,7 @@ const Quantity = (props) => {
 						props: { className: styles["button-minus"] },
 					},
 				}}
-				onClick={() => {}}
+				onClick={props.onClickMinus}
 			>
 				<CheckIndeterminate />
 			</Button>
@@ -34,7 +35,7 @@ const Quantity = (props) => {
 						props: { className: styles["button-plus"] },
 					},
 				}}
-				onClick={() => {}}
+				onClick={props.onClickPlus}
 			>
 				<Plus />
 			</Button>
@@ -64,11 +65,14 @@ const checkout = (props) => {
 							style: () => ({ width: "32px", height: "32px", backgroundColor: "white", boxShadow: "0px 2px 6px 0px rgba(0, 0, 0, 0.2)" }),
 						},
 					}}
+					onClick={props.onClick}
 				>
 					<ChevronUp color={"#808080"} size={"25px"} />
 				</Button>
 				<div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-					<div style={{ color: "#262626", fontSize: 16, fontWeight: "700" }}>${totalPrice}</div>
+					<div style={{ color: "#262626", fontSize: 16, fontWeight: "700" }}>
+						<NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"} />
+					</div>
 					<Block display={["none", "block"]}>
 						<div style={{ color: "#8C8C8C", fontSize: 12, fontWeight: "400", letterSpacing: "0.04em" }}>Free Shipping</div>
 					</Block>
@@ -77,7 +81,7 @@ const checkout = (props) => {
 					<div style={{ width: 24, border: "1px solid #e8e8e8", transform: "rotate(90deg)" }} />
 				</Block>
 				<Block display={["none", "block"]}>
-					<Quantity quantity={props.quantity} />
+					<Quantity quantity={props.quantity} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus} />
 				</Block>
 				<Block width={["116px", "148px", "160px"]}>
 					<Button
@@ -87,9 +91,9 @@ const checkout = (props) => {
 								style: () => ({ width: "100%", height: "40px", fontSize: "16px", backgroundColor: "#23A4AD" }),
 							},
 						}}
-						onClick={() => {}}
+						onClick={props.onClickAddToBag}
 					>
-						Add to bag
+						Add to cart
 					</Button>
 				</Block>
 			</Block>

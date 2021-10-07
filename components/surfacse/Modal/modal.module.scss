@@ -58,7 +58,7 @@
 				background-color: white;
 
 				.button-cancel {
-					width: 123px;
+					min-width: 85px;
 					height: 40px;
 					background-color: transparent;
 					border: 1px solid #23a4ad;
@@ -79,8 +79,8 @@
 				}
 
 				.button-confirm {
-					margin-left: 24px;
-					width: 123px;
+					margin-left: 16px;
+					min-width: 85px;
 					height: 40px;
 					background-color: #23a4ad;
 					border: 1px solid #23a4ad;
@@ -98,6 +98,10 @@
 						background-color: #43878c;
 						color: white;
 					}
+
+					@media screen and (min-width: 960px) {
+						margin-left: 24px;
+					}
 				}
 
 				@media screen and (min-width: 480px) {
@@ -106,6 +110,8 @@
 
 				@media screen and (min-width: 960px) {
 					height: 80px;
+					padding-right: 24px;
+					padding-left: 24px;
 				}
 			}
 

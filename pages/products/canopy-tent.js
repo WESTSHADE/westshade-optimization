@@ -364,7 +364,6 @@ function Canopy_Tent({ router, product, productComponent, productVariant }) {
 		});
 		// Set墙面图片
 		setWallPictures(wallPicturesList);
-
 		checkProduct_getPrice();
 	}, [selectedVariant]);
 
@@ -826,14 +825,35 @@ Canopy_Tent.getInitialProps = async (context) => {
 		component[0] = { ...product };
 		variant[0] = await utils.getVariantByWooProductId(id);
 	} else if (product.type === "composite") {
-		component = await Promise.all(product.composite_components.map(({ default_option_id }) => utils.getProductByWooId(default_option_id)));
+		// component = await Promise.all(product.composite_components.map(async ({ default_option_id }) => await utils.getProductByWooId(default_option_id)));
+		await Promise.all(
+			product.composite_components.map(async ({ default_option_id }, index) => {
+				// await utils.getProductByWooId(default_option_id);
+				const resP = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + default_option_id, {
+					method: "GET",
+					headers: {
+						"Access-Control-Allow-Headers": "*",
+						"Access-Control-Allow-Origin": "*",
+					},
+				});
+				component[index] = await resP.json();
+			})
+		);
 		// variant = await Promise.all(component.map(async ({ id }) => await utils.getVariantByWooProductId(id)));
 
 		// component = await getProducts(product.composite_components);
 		// variant = await getVariants(component);
 
 		for (let index = 0; index < component.length; index++) {
-			variant[index] = await utils.getVariantByWooProductId(component[index].id);
+			// variant[index] = await utils.getVariantByWooProductId(component[index].id);
+			const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + component[index].id, {
+				method: "GET",
+				headers: {
+					"Access-Control-Allow-Headers": "*",
+					"Access-Control-Allow-Origin": "*",
+				},
+			});
+			variant[index] = await resV.json();
 		}
 	}
 

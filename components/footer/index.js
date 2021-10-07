@@ -18,7 +18,7 @@ export default function Footer() {
 						<p>1. In-stock orders are not guaranteed to ship the same day they are received. All orders received for in-stock items ship within 2 business days.</p>
 						<p>
 							2. Any products that are determined to be found damaged after opening must be reported to your Sales Representative within 1 day after received. Our team will work on a quick and agreeable solution to any damaged product. If
-							your shipment contains extensive damage to the outer packaging upon delivery, refuse the shipment and contact us immediately at 949-522-8111 or email us at support@westshade.com.
+							your shipment contains extensive damage to the outer packaging upon delivery, refuse the shipment and contact us immediately at 949-751-1070 or email us at support@westshade.com.
 						</p>
 						<p>
 							3. For all online payments by credit, debit, or check card the payment is authorized and held by your financial institution at the time the order is placed to confirm the card is valid. You will be charged for your Westshade
@@ -35,7 +35,7 @@ export default function Footer() {
 								Pick up at our warehouse
 							</Link>
 							&nbsp;or&nbsp;
-							<Link href="/">Find us at online retailer store</Link>. Or call 949-522-8111.
+							<Link href="/">Find us at online retailer store</Link>. Or call 949-751-1070.
 						</p>
 					</Grid>
 				</Container>
@@ -132,7 +132,7 @@ export default function Footer() {
 							<List>
 								<ListItem className={`${styles["container-listItem"]} ${styles["center"]}`}>
 									<ListItemText primary="support@westshade.com" className={styles["text-bottom"]} style={{ marginRight: "12px" }} />
-									<ListItemText primary="949-522-8111" className={`${styles["text-bottom"]} ${styles["text-phone"]}`} />
+									<ListItemText primary="949-751-1070" className={`${styles["text-bottom"]} ${styles["text-phone"]}`} />
 								</ListItem>
 							</List>
 						</Grid>

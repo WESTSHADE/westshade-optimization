@@ -304,7 +304,7 @@ export default function Header() {
 					<div className="top-right">
 						<div className="header-widge">
 							<Button size="small" startIcon={<FontAwesomeIcon icon={faPhoneAlt} color="white" />} href="tel:+19495228111" disableRipple>
-								1.949.522.8111
+								1.949.751.1070
 							</Button>
 						</div>
 						<div className="header-widge tools-element">
@@ -542,7 +542,7 @@ export default function Header() {
 				<div style={{ position: "relative" }} />
 				<Box id="header-bottom-bar" className="main-bottom" boxShadow={3} ref={headerBottomBar}>
 					<div className="main-bottom-text">
-						We’ll beat any competitor with same quality product by 10% OFF | Get your <strong>LOWEST PRICE GUARANTEE</strong> by Call <strong>949-522-8111</strong> | Free U.S Nationwide Shipping on order over <strong>$149*</strong>
+						We’ll beat any competitor with same quality product by 10% OFF | Get your <strong>LOWEST PRICE GUARANTEE</strong> by Call <strong>949-751-1070</strong> | Free U.S Nationwide Shipping on order over <strong>$149*</strong>
 					</div>
 				</Box>
 			</header>

@@ -51,7 +51,6 @@ function getProducts(components) {
 function getVariants(components) {
 	return Promise.all(components.map(({ id }) => utils.getVariantByWooProductId(id)));
 }
-
 function Custom_printed_Package({ router, product, productComponent, productVariant }) {
 	const [display, setDisplay] = useState(false);
 
@@ -200,6 +199,8 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 
 	useEffect(() => {
 		setTimeout(() => setDisplay(true), 250);
+
+		console.log(product);
 
 		setProductId(product.id.toString());
 		setShippedDay(dateFn.getReceivedDay());
@@ -1036,16 +1037,33 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 Custom_printed_Package.getInitialProps = async (context) => {
 	const { query } = context;
 	const { id } = query;
-	let product = null,
+	let product = { id },
 		component = [],
 		variant = [];
 
-	product = await utils.getProductByWooId(id);
+	const resP = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + id, {
+		method: "GET",
+		headers: {
+			"Access-Control-Allow-Headers": "*",
+			"Access-Control-Allow-Origin": "*",
+		},
+	});
+	// product = await utils.getProductByWooId(id);
+	product = await resP.json();
+
 	if (product.type === "simple") {
 		component[0] = { ...product };
 	} else if (product.type === "variable") {
 		component[0] = { ...product };
-		variant[0] = await utils.getVariantByWooProductId(id);
+		// variant[0] = await utils.getVariantByWooProductId(id);
+		const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {
+			method: "GET",
+			headers: {
+				"Access-Control-Allow-Headers": "*",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+		variant[0] = await resV.json();
 	}
 
 	return {

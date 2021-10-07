@@ -140,6 +140,49 @@ export default class Utils {
 		}
 	}
 
+	async updateOrder(token, data) {
+		try {
+			const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/order", {
+				method: "PUT",
+				headers: {
+					"Access-Control-Allow-Headers": "*",
+					"Content-Type": "application/json",
+					Accept: "application/json",
+					"Access-Control-Allow-Origin": "*",
+					Authorization: "Bearer " + token,
+				},
+				body: JSON.stringify(data),
+			});
+			const json = await res.json();
+			return json;
+		} catch (error) {
+			console.error(error);
+			// expected output: ReferenceError: nonExistentFunction is not defined
+			// Note - error messages will vary depending on browser
+		}
+	}
+
+	async checkout(data) {
+		try {
+			const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/checkout", {
+				method: "POST",
+				headers: {
+					"Access-Control-Allow-Headers": "*",
+					"Content-Type": "application/json",
+					Accept: "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+				body: JSON.stringify(data),
+			});
+			const json = await res.json();
+			return json;
+		} catch (error) {
+			console.error(error);
+			// expected output: ReferenceError: nonExistentFunction is not defined
+			// Note - error messages will vary depending on browser
+		}
+	}
+
 	async getProductByWooId(pid) {
 		try {
 			const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + pid, {
@@ -203,7 +246,7 @@ export default class Utils {
 
 			return data;
 		} catch (error) {
-			// console.error(error);
+			console.error(error);
 		}
 	}
 

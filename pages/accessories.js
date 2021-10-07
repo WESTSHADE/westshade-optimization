@@ -29,8 +29,7 @@ function Accessories({ router }) {
 										Home
 									</Link>
 									<Typography variant="inherit" color="textPrimary">
-										{" "}
-										Accessories{" "}
+										Accessories
 									</Typography>
 								</Breadcrumbs>
 							</Container>

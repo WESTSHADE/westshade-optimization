@@ -567,12 +567,29 @@ Inflatable_Canopy_Tent.getInitialProps = async (context) => {
 		component = [],
 		variant = [];
 
-	product = await utils.getProductByWooId(id);
+	// product = await utils.getProductByWooId(id);
+	const resP = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + id, {
+		method: "GET",
+		headers: {
+			"Access-Control-Allow-Headers": "*",
+			"Access-Control-Allow-Origin": "*",
+		},
+	});
+	product = await resP.json();
+
 	if (product.type === "simple") {
 		component[0] = { ...product };
 	} else if (product.type === "variable") {
 		component[0] = { ...product };
-		variant[0] = await utils.getVariantByWooProductId(id);
+		// variant[0] = await utils.getVariantByWooProductId(id);
+		const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {
+			method: "GET",
+			headers: {
+				"Access-Control-Allow-Headers": "*",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+		variant[0] = await resV.json();
 	}
 
 	return {

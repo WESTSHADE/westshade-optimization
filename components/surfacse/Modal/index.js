@@ -6,7 +6,7 @@ import { Modal, ModalBody, ModalFooter, SIZE, ROLE } from "baseui/modal";
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-	const { confirmText } = props;
+	const { startEnhancer, confirmText } = props;
 
 	const [isOpen, setIsOpen] = useState(true);
 
@@ -62,8 +62,8 @@ const modal = (props) => {
 				</Block>
 			</ModalBody>
 			<ModalFooter className={styles["container-footer"]}>
-				<div style={{ fontSize: "12px", marginRight: "24px", textAlign: "left" }}>After submitting the order, we’ll contact you with a free mockup based on the information you provide us here.</div>
-				<Block display={"flex"} flexDirection={"row"}>
+				{startEnhancer()}
+				<Block display={"flex"} flexDirection={"row"} justifyContent={"flex-end"} flex={1}>
 					<Button
 						shape={SHAPE.pill}
 						overrides={{
