@@ -6,13 +6,6 @@ import styled from "styled-components";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
-import Image from "next/image";
-
-import {Block} from "baseui/block";
-import {Button, SHAPE} from "baseui/button";
-import ChevronRight from "baseui/icon/chevron-right";
-import ArrowRight from 'baseui/icon/arrow-right'
-import ArrowDown from 'baseui/icon/arrow-down'
 
 import {Box, Container, Paper, Typography} from "@material-ui/core";
 
@@ -245,47 +238,47 @@ function Home() {
     );
 }
 
-function Home_N({router}) {
-    const ref1 = useRef(null);
-    const ref2 = useRef(null);
-    const ref3 = useRef(null);
+// function Home_N({router}) {
+//     const ref1 = useRef(null);
+//     const ref2 = useRef(null);
+//     const ref3 = useRef(null);
+//
+//     const scrollDownToNextSection = (ref) => {
+//         // TODO: 滚轮下滑和button点击下滑不兼容, 未找到解决办法
+//         // if (typeof window !== "undefined") {
+//         //     let frame = window.document.getElementById("WestShadeFrame");
+//         //     frame.classList.remove("scroll-container");
+//         //     setTimeout(() => {
+//         //         window.scrollTo(0, ref.current.offsetTop);
+//         //         setTimeout(() => frame.classList.add("scroll-container"), 500)
+//         //     }, 500)
+//         // }
+//     }
+//
+//     return (
+//         <React.Fragment>
+//             <Head>
+//                 <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>
+//                 <meta name="description"
+//                       content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
+//                 <script id="mcjs" type="text/javascript" src="/static/mailchimpFirstOrder.js"/>
+//             </Head>
+//             <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="images/home/custom_printing.jpg"
+//                            router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home/>
+//             <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability."
+//                            url="images/home/tent.jpg"
+//                            router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home/>
+//             <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="images/home/umbrella.jpg"
+//                            router={router} destination="/umbrella" home/>
+//         </React.Fragment>
+//     )
+// }
+//
+// Home_N.getInitialProps = () => {
+//     return {
+//         homePage: true,
+//         newFooter: true,
+//     };
+// };
 
-    const scrollDownToNextSection = (ref) => {
-        // TODO: 滚轮下滑和button点击下滑不兼容, 未找到解决办法
-        // if (typeof window !== "undefined") {
-        //     let frame = window.document.getElementById("WestShadeFrame");
-        //     frame.classList.remove("scroll-container");
-        //     setTimeout(() => {
-        //         window.scrollTo(0, ref.current.offsetTop);
-        //         setTimeout(() => frame.classList.add("scroll-container"), 500)
-        //     }, 500)
-        // }
-    }
-
-    return (
-        <React.Fragment>
-            <Head>
-                <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>
-                <meta name="description"
-                      content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
-                <script id="mcjs" type="text/javascript" src="/static/mailchimpFirstOrder.js"/>
-            </Head>
-            <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="images/home/custom_printing.jpg"
-                           router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home/>
-            <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability."
-                           url="images/home/tent.jpg"
-                           router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home/>
-            <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="images/home/umbrella.jpg"
-                           router={router} destination="/umbrella" home/>
-        </React.Fragment>
-    )
-}
-
-Home_N.getInitialProps = () => {
-    return {
-        homePage: true,
-        newFooter: true,
-    };
-};
-
-export default withRouter(Home_N);
+export default withRouter(Home);

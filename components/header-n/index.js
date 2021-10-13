@@ -17,8 +17,7 @@ import styles from "./header.module.scss";
 import Account from "./account.svg";
 import Cart from "./cart.svg";
 
-import {Badge, Box, Container, Grid, IconButton, List, ListItem, ListItemText, Typography,} from "@material-ui/core";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import {Box, Container, Grid, IconButton, List, ListItem, ListItemText, Typography,} from "@material-ui/core";
 
 import Utils from "../../utils/utils";
 import {NumberFn} from "../../utils/tools";
@@ -28,7 +27,7 @@ const utils = new Utils();
 const numberFn = new NumberFn();
 
 function DropMenu(props) {
-    const {menuList, learnMoreUrl = "/", picUrl, content} = props;
+    const {menuList, learnMoreText = "Learn more >", learnMoreUrl = "/", picUrl, content} = props;
 
     return (
         <Block position="absolute" top="96px" right={0} left={0} minHeight="250px" backgroundColor="white" display="flex" flexDirection="row" justifyContent="center"
@@ -66,7 +65,7 @@ function DropMenu(props) {
                                     style: {paddingTop: "10px", paddingLeft: "8px", fontWeight: "500"},
                                 },
                             }}>
-                                <Link href={learnMoreUrl}>{"Learn more >"}</Link>
+                                <Link href={learnMoreUrl}>{learnMoreText}</Link>
                             </Block>
                         ) : null}
                     </div>
@@ -97,6 +96,11 @@ function Header() {
     const [style2, setStyle2] = useState({visibility: "hidden"});
     const [style3, setStyle3] = useState({visibility: "hidden"});
     const [style4, setStyle4] = useState({visibility: "hidden"});
+
+    const handleClick = (e, href) => {
+        e.preventDefault()
+        router.push(href)
+    }
 
     const fetchUserInfo = async () => {
         const token = localStorage.getItem("token");
@@ -253,13 +257,14 @@ function Header() {
                                           ]}
                                           picUrl={"/images/component/header/canopy-tent.jpg"}
                                           content={"Y7 heavy duty tent"}
+                                          learnMoreUrl={"/canopy-tent"}
                                 />
                             </NavigationItem>
                             <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
                                             onMouseEnter={(e) => setStyle2({visibility: "visible"})}
                                             onMouseLeave={(e) => setStyle2({visibility: "hidden"})}
                             >
-                                <Link href="/">UMBRELLA</Link>
+                                <Link href="/umbrella">UMBRELLA</Link>
                                 <DropMenu style={style2}
                                           menuList={[
                                               {
@@ -280,6 +285,8 @@ function Header() {
                                           ]}
                                           picUrl={"/images/component/header/canopy-tent.jpg"}
                                           content={"Santorini Fiberglass"}
+                                    // learnMoreUrl={"/umbrella"}
+                                          learnMoreUrl={"/"}
                                 />
                             </NavigationItem>
                             <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
@@ -290,15 +297,17 @@ function Header() {
                                 <DropMenu style={style3}
                                           menuList={[
                                               {
-                                                  "Canopy Tent": [
-                                                      {id: 'Umbrella', href: '//www.example.com/apple'},
-                                                      {id: 'Table Cover', href: '//www.example.com/apple'},
-                                                      {id: 'Wall', href: '//www.example.com/apple'},
+                                                  "": [
+                                                      {id: 'Canopy Tent', href: '/'},
+                                                      {id: 'Umbrella', href: '/'},
+                                                      {id: 'Table Cover', href: '/'},
+                                                      {id: 'Wall', href: '/'},
                                                   ]
                                               }
                                           ]}
                                           picUrl={"/images/component/header/canopy-tent.jpg"}
                                           content={"Custom PRINTING tent"}
+                                          learnMoreUrl={"/custom-printing"}
                                 />
                             </NavigationItem>
                             <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
@@ -310,38 +319,52 @@ function Header() {
                                           menuList={[
                                               {
                                                   ACCESSORIES: [
-                                                      {id: 'Tent Walls', href: '//www.example.com/apple'},
-                                                      {id: 'Tent Accessories', href: '//www.example.com/apple'},
-                                                      {id: 'Tent Replacement Parts', href: '//www.example.com/apple'},
-                                                      {id: 'Umbrella Accessories', href: '//www.example.com/apple'},
-                                                      {id: 'Umbrella Replacement Parts', href: '//www.example.com/apple'},
+                                                      {id: 'Tent Walls', href: '/'},
+                                                      {id: 'Tent Accessories', href: '/'},
+                                                      {id: 'Tent Replacement Parts', href: '/'},
+                                                      {id: 'Umbrella Accessories', href: '/'},
+                                                      {id: 'Umbrella Replacement Parts', href: '/'},
                                                   ]
                                               }, {
                                                   OTHER: [
-                                                      {id: 'Heater', href: '//www.example.com/apple'},
-                                                      {id: 'Led Light', href: '//www.example.com/apple'},
-                                                      {id: 'Table Cover', href: '//www.example.com/apple'},
+                                                      {id: 'Heater', href: '/'},
+                                                      {id: 'Led Light', href: '/'},
+                                                      {id: 'Table Cover', href: '/'},
                                                   ],
                                               }
                                           ]}
                                           picUrl={"/images/component/header/canopy-tent.jpg"}
                                           content={"Protective cover"}
+                                          learnMoreUrl={"/accessories"}
+                                          learnMoreText={"View all >"}
                                 />
                             </NavigationItem>
                         </NavigationList>
                         <NavigationList $align={ALIGN.right}>
                             {/*<NavigationItem style={{display: "flex"}}>*/}
-                            {/*    <Link href="/"><Image src={"/images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/></Link>*/}
+                            {/*    <a href="/" onClick={(e) => handleClick(e, "/")}>*/}
+                            {/*        <Image src={"/images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/>*/}
+                            {/*    </a>*/}
                             {/*</NavigationItem>*/}
-                            <NavigationItem style={{display: "flex"}}>
-                                <Link href="/cart">
+                            <NavigationItem style={{position: "relative", display: "flex"}}>
+                                <a href="/cart" onClick={(e) => handleClick(e, "/cart")}>
                                     <Cart style={{width: "22px", height: "22px"}} color={"#323232"}/>
-                                </Link>
+                                </a>
+                                {badge > 0 ? (
+                                    <Block display="flex" justifyContent="center" alignItems="center" position="absolute" top={"-6px"} right={"-6px"} backgroundColor={"#23A4AD"}
+                                           minWidth="18px" height="18px" font="MinXLabel12" color="MinXPrimaryTextAlt"
+                                           overrides={{
+                                               Block: {
+                                                   style: {borderRadius: "50%"},
+                                               },
+                                           }}
+                                    >{badge}</Block>
+                                ) : null}
                             </NavigationItem>
                             <NavigationItem style={{display: "flex"}}>
-                                <Link href="/my-account">
+                                <a href="/my-account" onClick={(e) => handleClick(e, "/my-account")}>
                                     <Account style={{width: "22px", height: "22px"}} color={"#323232"}/>
-                                </Link>
+                                </a>
                             </NavigationItem>
                         </NavigationList>
                     </HeaderNavigation>
@@ -380,16 +403,16 @@ function Header() {
                         <Panel title="CANOPY TENT">
                             <StatefulMenu items={{
                                 SQUARE: [
-                                    {id: '10’ x 10’', href: '//www.example.com/apple'},
-                                    {id: '13’ x 13’', href: '//www.example.com/apple'},
-                                    {id: '16’ x 16’', href: '//www.example.com/apple'},
-                                    {id: '20’ x 20’', href: '//www.example.com/apple'},
+                                    {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
+                                    {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
+                                    {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
+                                    {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
                                 ],
                                 RECTANGULAR: [
-                                    {id: '10’ x 15’', href: '//www.example.com/apple'},
-                                    {id: '10’ x 20’', href: '//www.example.com/apple'},
-                                    {id: '13’ x 20’', href: '//www.example.com/apple'},
-                                    {id: '13’ x 26’', href: '//www.example.com/apple'},
+                                    {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
+                                    {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
+                                    {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
+                                    {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
                                 ],
                             }}
                                           onItemSelect={({item}) => console.log(item)}
@@ -417,23 +440,54 @@ function Header() {
                                 <Link href={"/"}>{"Learn more >"}</Link>
                             </Block>
                         </Panel>
-                        <Panel title="UMBRELLA" onClick={() => {
-                        }}/>
-                        <Panel title="CUSTOM PRINTING" onClick={() => {
-                        }}/>
+                        <Panel title="UMBRELLA"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/")}
+                        />
+                        <Panel title="CUSTOM PRINTING"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/custom-printing")}
+
+                        />
                         <Panel title="ACCESSORIES">
                             <StatefulMenu items={{
                                 ACCESSORIES: [
-                                    {label: 'Tent walls', href: '//www.example.com/apple'},
-                                    {label: 'Tent accessories', href: '//www.example.com/apple'},
-                                    {label: 'Tent Replacement Parts', href: '//www.example.com/apple'},
-                                    {label: 'Umbrella accessories', href: '//www.example.com/apple'},
-                                    {label: 'Umbrella Replacement parts', href: '//www.example.com/apple'},
+                                    {label: 'Tent walls', href: '/'},
+                                    {label: 'Tent accessories', href: '/'},
+                                    {label: 'Tent Replacement Parts', href: '/'},
+                                    {label: 'Umbrella accessories', href: '/'},
+                                    {label: 'Umbrella Replacement parts', href: '/'},
                                 ],
                                 OTHER: [
-                                    {label: 'Heater', href: '//www.example.com/apple'},
-                                    {label: 'Led Light', href: '//www.example.com/apple'},
-                                    {label: 'Table cover', href: '//www.example.com/apple'},
+                                    {label: 'Heater', href: '/'},
+                                    {label: 'Led Light', href: '/'},
+                                    {label: 'Table cover', href: '/'},
                                 ],
                             }}
                                           onItemSelect={({item}) => console.log(item)}
@@ -456,7 +510,7 @@ function Header() {
                                     style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},
                                 },
                             }}>
-                                <Link href={"/"}>{"Learn more >"}</Link>
+                                <Link href={"/accessories"}>{"Learn more >"}</Link>
                             </Block>
                         </Panel>
                     </Accordion>
@@ -518,11 +572,10 @@ function Header() {
                         disableElevation
                         disableRipple
                     >
-                        {"View Cart"}
+                        View Cart
                     </Button>
-                    {/* <Button variant="contained" classes={{ contained: "root-product-cart-checkout" }} color="inherit" onClick={() => {}} disableElevation disableRipple>
-					{"CHECKOUT"}
-				</Button> */}
+                    {/*<Button variant="contained" classes={{contained: "root-product-cart-checkout"}} color="inherit" onClick={() => {*/}
+                    {/*}} disableElevation disableRipple>{"CHECKOUT"}</Button>*/}
                 </Drawer>
             </div>
         </React.Fragment>

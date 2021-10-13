@@ -51,7 +51,7 @@ const primitives = {
 const overrides = {
     typography: {
         MinXDisplayLarge: {fontFamily: "Roboto", fontSize: "64px", fontWeight: "bold", lineHeight: "64px", letterSpacing: 0},
-        MinXDisplayMedium: {fontFamily: "Roboto", fontSize: "48px", fontWeight: "900", lineHeight: "48px", letterSpacing: 0},
+        MinXDisplayMedium: {fontFamily: "Roboto", fontSize: "48px", fontWeight: 900, lineHeight: "48px", letterSpacing: 0},
         MinXDisplaySmall: {fontFamily: "Roboto", fontSize: "36px", fontWeight: "bold", lineHeight: "36px", letterSpacing: 0},
         MinXDisplayXSmall: {fontFamily: "Roboto", fontSize: "32px", fontWeight: "700", lineHeight: "40px", letterSpacing: 0},
         MinXHeadingXLarge: {fontFamily: "Roboto", fontSize: "38px", fontWeight: "bold", lineHeight: "46px", letterSpacing: "-2%"},
@@ -70,24 +70,25 @@ const overrides = {
         MinXTitle44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: 900, lineHeight: "52px"},
         MinXTitle64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 900, lineHeight: "80px"},
         // ========================
-        MinXSubtitle10: {fontFamily: "Roboto", fontSize: "10px", fontWeight: "400", lineHeight: "12px"},
-        MinXSubtitle12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: "400", lineHeight: "14px"},
-        MinXSubtitle14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: "400", lineHeight: "16px"},
-        MinXSubtitle16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: "500", lineHeight: "24px"},
-        MinXSubtitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: "500", lineHeight: "28px"},
-        MinXSubtitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: "500", lineHeight: "32px"},
-        MinXSubtitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: "500", lineHeight: "36px"},
+        MinXSubtitle10: {fontFamily: "Roboto", fontSize: "10px", fontWeight: 400, lineHeight: "12px"},
+        MinXSubtitle12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "14px"},
+        MinXSubtitle14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 400, lineHeight: "16px"},
+        MinXSubtitle16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px"},
+        MinXSubtitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 500, lineHeight: "28px"},
+        MinXSubtitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 500, lineHeight: "32px"},
+        MinXSubtitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 500, lineHeight: "36px"},
         // ========================
-        MinXHeading12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: "400", lineHeight: "12px"},
-        MinXHeading14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: "500", lineHeight: "22px"},
-        MinXHeading16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: "500", lineHeight: "24px"},
-        MinXHeading20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: "700", lineHeight: "28px"},
-        MinXHeading24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: "500", lineHeight: "22px"},
-        MinXHeading28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: "700", lineHeight: "36px"},
-        MinXHeading32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: "700", lineHeight: "40px"},
-        MinXHeading36: {fontFamily: "Roboto", fontSize: "36px", fontWeight: "700", lineHeight: "48px"},
-        MinXHeading44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: "700", lineHeight: "52px"},
-        MinXHeading64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: "700", lineHeight: "80px"},
+        MinXHeading12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "12px"},
+        MinXHeading14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 500, lineHeight: "22px"},
+        MinXHeading16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px"},
+        MinXHeading20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 700, lineHeight: "28px"},
+        MinXHeading24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 500, lineHeight: "22px"},
+        MinXHeading28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 700, lineHeight: "36px"},
+        MinXHeading32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 700, lineHeight: "40px"},
+        MinXHeading36: {fontFamily: "Roboto", fontSize: "36px", fontWeight: 700, lineHeight: "48px"},
+        MinXHeading44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: 700, lineHeight: "52px"},
+        MinXHeading48: {fontFamily: "Roboto", fontSize: "48px", fontWeight: 700, lineHeight: "56px"},
+        MinXHeading64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 700, lineHeight: "80px"},
         // ========================
         MinXParagraph12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "16px"},
         MinXParagraph14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 400, lineHeight: "20px"},
@@ -192,14 +193,14 @@ function MyApp({Component, pageProps}) {
                         <div id="modal-root"/>
                     </>
                 ) : pageProps.newFooter ? (
-                    <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""}>
+                    <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
                         <HeaderNew/>
-                        <Block marginTop={["48px", "48px", "96px"]}>
+                        <Block flex={1} marginTop={["48px", "48px", "96px"]}>
                             <Component {...pageProps} />
                         </Block>
                         <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"}/>
                         <div id="modal-root"/>
-                        <FooterNew containerClass={pageProps.homePage ? "for-scroll" : ""}/>
+                        <FooterNew isHomePage={pageProps.homePage}/>
                     </div>
                 ) : (
                     <>

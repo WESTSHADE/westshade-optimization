@@ -49,11 +49,7 @@ const nextConfig = {
             "/cart": {page: "/cart"},
             "/checkout": {page: "/checkout"},
             "/checkout/success": {page: "/checkout/success"},
-            // "/checkout/order-pay": { page: "/payment" },
-            "/canopy-tent": {page: "/canopy-tent"},
-            "/canopy-tent-n": {page: "/canopy-tent-n"},
             "/custom-printing": {page: "/custom-printing"},
-            "/custom-printing-n": {page: "/custom-printing-n"},
             "/custom-printing-canopy-tent": {page: "/custom-printing-canopy-tent"},
             "/compare": {page: "/compare"},
             "/warranty": {page: "/warranty"},
@@ -70,6 +66,7 @@ const nextConfig = {
             "/about-us": {page: "/about-us"},
             "/accessories": {page: "/accessories"},
             "/cantilever-umbrellas": {page: "/cantilever-umbrellas"},
+            "/umbrella": {page: "/umbrella"},
             "/10x10-canopy-tent": {page: "/10x10-canopy-tent"},
             "/10x15-canopy-tent": {page: "/10x15-canopy-tent"},
             "/10x20-canopy-tent": {page: "/10x20-canopy-tent"},
@@ -109,10 +106,22 @@ const nextConfig = {
             "/products/inflatable-canopy-tent/triangular-inflatable-canopy-tent": {page: "/products/inflatable-canopy-tent", query: {id: "51782"}},
             "/products/inflatable-canopy-tent/star-inflatable-canopy-tent": {page: "/products/inflatable-canopy-tent", query: {id: "51784"}},
             "/products/accessories": {page: "/products/accessories"},
+            "/products/accessories-n": {page: "/products/accessories-n"},
             "/products/canopy-tent-test": {page: "/products/canopy-tent-test", query: {id: "30477"}},
-            "/test": {page: "/test"},
         };
     },
+    // redirects: async function redirect() {
+    //     return [
+    //         {source: '/y5-economic/', destination: '/canopy-tent-n', permanent: true,},
+    //         {source: '/y5-economic/specs/', destination: '/canopy-tent-n/spec', permanent: true,},
+    //         {source: '/y6-commercial/', destination: '/canopy-tent-n', permanent: true,},
+    //         {source: '/y6-commercial/specs/', destination: '/canopy-tent-n/spec', permanent: true,},
+    //         {source: '/y7-heavy-duty/', destination: '/canopy-tent-n', permanent: true,},
+    //         {source: '/y7-heavy-duty/specs/', destination: '/canopy-tent-n/spec', permanent: true,},
+    //         {source: '/compare/', destination: '/canopy-tent-n/spec', permanent: true,},
+    //         {source: '/umbrella/', destination: '/', permanent: true},
+    //     ]
+    // },
 };
 
 module.exports = nextConfig;

@@ -11,7 +11,8 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import ArrowLeft from "baseui/icon/arrow-left";
 import ArrowRight from "baseui/icon/arrow-right";
 
-import {Benefit} from "../components/sections";
+import {Benefit} from "../../components/sections";
+import MButton from "../../components/button-n";
 
 const BlockGridIcon = ({src, alt, title, content, titleSize}) => {
     return (
@@ -52,7 +53,6 @@ function Custom_Printing({router}) {
         <React.Fragment>
             {/* 主要显示区域 */}
             <Block position="relative" alignItems="center" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"
-                   backgroundColor="rgba(0,0,0,0.2)"
                    overrides={{
                        Block: {
                            props: {
@@ -64,9 +64,7 @@ function Custom_Printing({router}) {
                 <div className="background-image">
                     <Image src="images/custom-printing/custom-printing-display.jpg" alt="custom printing" layout="fill" objectFit="cover" quality={100}/>
                 </div>
-                <Block marginBottom={["8px", "16px", "20px"]} font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">
-                    Custom Printing
-                </Block>
+                <Block marginBottom={["8px", "16px", "20px"]} font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
                 <Block maxWidth={["262px", "450px", "659px"]} marginBottom={["8px", "16px", "20px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText"
                        overrides={{
                            Block: {
@@ -76,48 +74,10 @@ function Custom_Printing({router}) {
                 >
                     Print any style you like
                 </Block>
-                <Block width={["165px", "232px", "240px"]} height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">
-                    <Button shape={SHAPE.pill}
-                            overrides={{
-                                BaseButton: {
-                                    style: {
-                                        width: "100%",
-                                        height: "100%",
-                                        paddingTop: "3px",
-                                        paddingRight: "3px",
-                                        paddingBottom: "3px",
-                                        paddingLeft: "3px",
-                                        color: "inherit",
-                                        fontSize: "inherit",
-                                        fontWeight: "inherit",
-                                        lineHeight: "inherit",
-                                        boxSizing: "border-box",
-                                        backgroundClip: "padding-box",
-                                        borderRadius: "38px",
-                                        background: "linear-gradient(to left, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%) border-box",
-                                        ":hover": {backgroundColor: "rgba(255,255,255,0.5)"},
-                                        ":active": {backgroundColor: "rgba(255,255,255,0.8)"},
-                                    },
-                                },
-                            }}
-                            onClick={() => {
-                            }}
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "100%",
-                                height: "100%",
-                                backgroundColor: "#C8C9CC",
-                                borderRadius: "38px",
-                            }}
-                        >
-                            Create Your Style
-                        </div>
-                    </Button>
-                </Block>
+                <MButton type="rainbow" height={["36px", "48px", "56px"]}
+                         font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" buttonBackgroundColor="#FAFBFF" text="Create Your Style"
+                         onClick={() => router.push("/custom-printing-canopy-tent")}
+                />
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
                    overrides={{

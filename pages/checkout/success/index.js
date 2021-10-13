@@ -24,33 +24,53 @@ function Success({router, orderDetail}) {
 
     const googleEvent = () => {
         if (orderDetail) {
-            let lineItems = [];
+            let lineItems_dataLayer = [];
+            let lineItems_gtag = [];
             let couponItems = [];
 
             orderDetail.coupon_lines.map((coupon) => couponItems.push(coupon.code));
-            orderDetail.line_items.map((item) =>
-                lineItems.push({
-                    item_name: item.name,
-                    item_id: item.product_id,
-                    price: item.price,
-                    item_variant: item.variation_id,
-                    quantity: item.quantity,
-                })
+            orderDetail.line_items.map((item) => {
+                    lineItems_dataLayer.push({
+                        item_name: item.name,
+                        item_id: item.product_id,
+                        price: item.price,
+                        item_variant: item.variation_id,
+                        quantity: item.quantity,
+                    });
+
+                    lineItems_gtag.push({
+                        id: item.product_id,
+                        name: item.name,
+                        variant: item.variation_id,
+                        quantity: item.quantity,
+                        price: item.price
+                    });
+                }
             );
 
-            dataLayer.push({ecommerce: null}); // Clear the previous ecommerce object.
-            dataLayer.push({
-                event: "purchase",
-                ecommerce: {
-                    transaction_id: orderDetail.id,
-                    affiliation: "Westshade",
-                    value: orderDetail.total,
-                    tax: orderDetail.total_tax,
-                    shipping: orderDetail.shipping_total,
-                    currency: orderDetail.currency,
-                    coupon: couponItems.join(),
-                    items: lineItems,
-                },
+            // dataLayer.push({ecommerce: null}); // Clear the previous ecommerce object.
+            // dataLayer.push({
+            //     event: "purchase",
+            //     ecommerce: {
+            //         transaction_id: orderDetail.id,
+            //         affiliation: "Westshade",
+            //         value: orderDetail.total,
+            //         tax: orderDetail.total_tax,
+            //         shipping: orderDetail.shipping_total,
+            //         currency: orderDetail.currency,
+            //         coupon: couponItems.join(),
+            //         items: lineItems_dataLayer,
+            //     },
+            // });
+
+            gtag('event', 'purchase', {
+                "transaction_id": orderDetail.id,
+                "affiliation": "Westshade",
+                "value": orderDetail.total,
+                "currency": orderDetail.currency,
+                "tax": orderDetail.total_tax,
+                "shipping": orderDetail.shipping_total,
+                "items": lineItems_gtag
             });
         }
     };

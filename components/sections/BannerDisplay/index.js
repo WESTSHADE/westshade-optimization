@@ -3,10 +3,11 @@ import React from "react";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Button, SHAPE} from "baseui/button";
 import ChevronRight from "baseui/icon/chevron-right";
 import ArrowRight from 'baseui/icon/arrow-right'
 import ArrowDown from 'baseui/icon/arrow-down'
+
+import MButton from "../../button-n";
 
 const banner = ({
                     refD,
@@ -30,8 +31,7 @@ const banner = ({
                 }) => {
     return (
         <Block ref={refD} position="relative" justifyContent="flex-end" alignItems="flex-start"
-               width="100%"
-               height={containerHeight ? containerHeight : ["480px", "660px", "100vh"]}
+               width="100%" height={containerHeight ? containerHeight : ["480px", "660px", "100vh"]}
                marginTop={home ? ["-48px", "-48px", "-96px"] : null}
                marginBottom={containerMarginBottom ? containerMarginBottom : ["16px", "16px", "0px"]}
                paddingBottom={["40px", "60px", "70px"]}
@@ -69,78 +69,28 @@ const banner = ({
             </Block>
             {renderButton ? renderButton : (
                 <>
-                    <Block display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width="88px" height="46px">
-                        <Button shape={SHAPE.pill}
-                                overrides={{
-                                    BaseButton: {
-                                        style: {
-                                            width: "100%",
-                                            height: "100%",
-                                            fontSize: "inherit",
-                                            fontWeight: "inherit",
-                                            lineHeight: "inherit",
-                                            color: "inherit",
-                                            borderTopWidth: "1px",
-                                            borderRightWidth: "1px",
-                                            borderBottomWidth: "1px",
-                                            borderLeftWidth: "1px",
-                                            borderTopStyle: "solid",
-                                            borderRightStyle: "solid",
-                                            borderBottomStyle: "solid",
-                                            borderLeftStyle: "solid",
-                                            borderTopColor: textColor ? textColor : "white",
-                                            borderRightColor: textColor ? textColor : "white",
-                                            borderBottomColor: textColor ? textColor : "white",
-                                            borderLeftColor: textColor ? textColor : "white",
-                                            backgroundColor: buttonBackgroundColor ? buttonBackgroundColor : "transparent",
-                                            ":hover": {backgroundColor: buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'},
-                                            ":active": {backgroundColor: buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'},
-                                        },
-                                    },
-                                    EndEnhancer: {
-                                        style: {marginLeft: "0px"}
-                                    }
-                                }}
-                                endEnhancer={() => <ArrowRight size={36} color={textColor ? textColor : "white"}/>}
-                                onClick={() => router.push(destination)}
-                        />
-                    </Block>
-                    <Block display={arrowButton ? "none" : textButton ? "block" : ["none", "none", "none", "block"]} width="240px" height="56px" font="MinXLabel20"
-                           color={textColor ? textColor : "MinXPrimaryTextAlt"}>
-                        <Button shape={SHAPE.pill}
-                                overrides={{
-                                    BaseButton: {
-                                        style: {
-                                            width: "100%",
-                                            height: "100%",
-                                            fontSize: "inherit",
-                                            fontWeight: "inherit",
-                                            lineHeight: "inherit",
-                                            color: "inherit",
-                                            borderTopWidth: "1px",
-                                            borderRightWidth: "1px",
-                                            borderBottomWidth: "1px",
-                                            borderLeftWidth: "1px",
-                                            borderTopStyle: "solid",
-                                            borderRightStyle: "solid",
-                                            borderBottomStyle: "solid",
-                                            borderLeftStyle: "solid",
-                                            borderTopColor: textColor ? textColor : "white",
-                                            borderRightColor: textColor ? textColor : "white",
-                                            borderBottomColor: textColor ? textColor : "white",
-                                            borderLeftColor: textColor ? textColor : "white",
-                                            backgroundColor: buttonBackgroundColor ? buttonBackgroundColor : "transparent",
-                                            ":hover": {backgroundColor: buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'},
-                                            ":active": {backgroundColor: buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'},
-                                        },
-                                    },
-                                }}
-                                endEnhancer={() => <ChevronRight size={24} color={textColor ? textColor : "white"}/>}
-                                onClick={() => router.push(destination)}
-                        >
-                            Learn More
-                        </Button>
-                    </Block>
+                    <MButton type="outline" display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width={["88px"]} height={["46px"]}
+                             color="MinXPrimaryTextAlt"
+                             buttonStyle={{
+                                 borderColor: `${textColor ? textColor : 'white'} !important`,
+                                 backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
+                                 ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
+                                 ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
+                             }}
+                             iconStyle={{marginLeft: "0px"}} endEnhancer={() => <ArrowRight size={36} color={textColor ? textColor : "white"}/>}
+                             onClick={() => router.push(destination)}
+                    />
+                    <MButton type="outline" display={arrowButton ? "none" : textButton ? "block" : ["none", "none", "none", "block"]} width={["240px"]} height={["56px"]}
+                             font="MinXLabel20" color={textColor ? textColor : "MinXPrimaryTextAlt"}
+                             buttonStyle={{
+                                 borderColor: `${textColor ? textColor : 'white'} !important`,
+                                 backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
+                                 ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
+                                 ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
+                             }}
+                             endEnhancer={() => <ChevronRight size={24} color={textColor ? textColor : "white"}/>}
+                             onClick={() => router.push(destination)} text={"Learn More"}
+                    />
                 </>
             )}
             {/*TODO: 滚轮下滑和button点击下滑不兼容, 未找到解决办法*/}

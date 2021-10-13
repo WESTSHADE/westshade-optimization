@@ -14,6 +14,7 @@ import ArrowRight from "baseui/icon/arrow-right";
 import Link from "next/link";
 
 import {Benefit} from "../../components/sections";
+import MButton from "../../components/button-n";
 
 const refs = [];
 
@@ -196,10 +197,7 @@ function Canopy_Tent({router}) {
                    font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                    overrides={{
                        Block: {
-                           style: ({$theme}) => ({
-                               zIndex: 2,
-                               boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px"
-                           }),
+                           style: {zIndex: 2, boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px"},
                        },
                    }}>
                 <div>Canopy Tent</div>
@@ -207,35 +205,11 @@ function Canopy_Tent({router}) {
                     <Block display="flex" justifyContent="center" alignItems="center" width="56px" height={["24px", "40px"]} marginRight="16px" marginLeft="16px"
                            font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                     >
-                        <Link href={"/"}>Spec</Link>
+                        <Link href={"spec"}>Spec</Link>
                     </Block>
-                    <Block width={["105px", "113px"]} height={["24px", "40px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]}>
-                        <Button shape={SHAPE.pill}
-                                overrides={{
-                                    BaseButton: {
-                                        style: ({$theme}) => ({
-                                            width: "100%",
-                                            height: "100%",
-                                            paddingTop: 0,
-                                            paddingRight: 0,
-                                            paddingBottom: 0,
-                                            paddingLeft: 0,
-                                            fontSize: "inherit",
-                                            fontWeight: "inherit",
-                                            lineHeight: "inherit",
-                                            backgroundColor: $theme.colors.MinXButton,
-                                            whiteSpace: "nowrap",
-                                            textOverflow: "ellipsis",
-                                            ":hover": {backgroundColor: $theme.colors.MinXButtonHover},
-                                            ":active": {backgroundColor: $theme.colors.MinXButtonActive},
-                                        }),
-                                    },
-                                }}
-                                onClick={() => goBuyingPage()}
-                        >
-                            Buy Now
-                        </Button>
-                    </Block>
+                    <MButton width={["105px", "113px"]} height={["24px", "40px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} text="Buy Now"
+                             onClick={() => goBuyingPage()}
+                    />
                 </Block>
             </Block>
             {/* 主要显示区域 */}
@@ -267,40 +241,9 @@ function Canopy_Tent({router}) {
                 >
                     There are different types of canopy tent to meet your special needs
                 </Block>
-                <Block width={["136px", "167px"]} height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
-                    <Button shape={SHAPE.pill}
-                            overrides={{
-                                BaseButton: {
-                                    style: {
-                                        width: "100%",
-                                        height: "100%",
-                                        fontSize: "inherit",
-                                        fontWeight: "inherit",
-                                        lineHeight: "inherit",
-                                        borderTopWidth: "1px",
-                                        borderRightWidth: "1px",
-                                        borderBottomWidth: "1px",
-                                        borderLeftWidth: "1px",
-                                        borderTopStyle: "solid",
-                                        borderRightStyle: "solid",
-                                        borderBottomStyle: "solid",
-                                        borderLeftStyle: "solid",
-                                        borderTopColor: "white",
-                                        borderRightColor: "white",
-                                        borderBottomColor: "white",
-                                        borderLeftColor: "white",
-                                        backgroundColor: "transparent",
-                                        ":hover": {backgroundColor: 'rgba(255,255,255,0.5)'},
-                                        ":active": {backgroundColor: 'rgba(255,255,255,0.8)'},
-                                    },
-                                },
-                            }}
-                            endEnhancer={() => <ChevronRight size={24}/>}
-                            onClick={() => goBuyingPage()}
-                    >
-                        Buy
-                    </Button>
-                </Block>
+                <MButton type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Buy"
+                         endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}
+                />
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
                    overrides={{
@@ -328,30 +271,9 @@ function Canopy_Tent({router}) {
                     <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
                                   src="images/canopy-tent/fabric_colors.jpg" alt="fabric colors"
                                   button={() => (
-                                      <Block width="100%" height="47px" maxWidth="249px" font="MinXLabel16">
-                                          <Button shape={SHAPE.pill}
-                                                  overrides={{
-                                                      BaseButton: {
-                                                          style: ({$theme}) => ({
-                                                              width: "100%",
-                                                              height: "100%",
-                                                              fontSize: "inherit",
-                                                              fontWeight: "inherit",
-                                                              lineHeight: "inherit",
-                                                              backgroundColor: $theme.colors.MinXButton,
-                                                              whiteSpace: "nowrap",
-                                                              textOverflow: "ellipsis",
-                                                              ":hover": {backgroundColor: $theme.colors.MinXButtonHover},
-                                                              ":active": {backgroundColor: $theme.colors.MinXButtonActive},
-                                                          }),
-                                                      },
-                                                  }}
-                                                  endEnhancer={() => <ChevronRight size={24}/>}
-                                                  onClick={() => goBuyingPage()}
-                                          >
-                                              Customize My Tent
-                                          </Button>
-                                      </Block>
+                                      <MButton height="48px" font="MinXLabel16" text="Customize My Tent"
+                                               endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}
+                                      />
                                   )}
                     />
                 </Block>
@@ -369,30 +291,9 @@ function Canopy_Tent({router}) {
                 <Block maxWidth="300px" marginBottom="24px" font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
                     There are 8 size options for you to meet your needs in any occasions.
                 </Block>
-                <Block width={["172px", "201px", "172px"]} height="47px" marginBottom={["32px", "32px", "40px"]} font="MinXLabel16">
-                    <Button shape={SHAPE.pill}
-                            overrides={{
-                                BaseButton: {
-                                    style: ({$theme}) => ({
-                                        width: "100%",
-                                        height: "100%",
-                                        fontSize: "inherit",
-                                        fontWeight: "inherit",
-                                        lineHeight: "inherit",
-                                        backgroundColor: $theme.colors.MinXButton,
-                                        whiteSpace: "nowrap",
-                                        textOverflow: "ellipsis",
-                                        ":hover": {backgroundColor: $theme.colors.MinXButtonHover},
-                                        ":active": {backgroundColor: $theme.colors.MinXButtonActive},
-                                    }),
-                                },
-                            }}
-                            endEnhancer={() => <ChevronRight size={24}/>}
-                            onClick={() => goBuyingPage()}
-                    >
-                        Pick My Size
-                    </Button>
-                </Block>
+                <MButton height="48px" marginBottom={["32px", "32px", "40px"]} font="MinXLabel16" text="Buy Now"
+                         endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}
+                />
                 <Block display="grid" gridTemplateColumns={["repeat(3, 33%)", "repeat(4, 25%)", "repeat(4, 25%)", "repeat(8, 12.5%)"]} justifyContent="space-between">
                     <BlockGridIcon src="/images/icon/icon-10x10.png" alt="Tent Size 10x10" title={"10’ x 10’"}/>
                     <BlockGridIcon src="/images/icon/icon-10x15.png" alt="Tent Size 10x15" title={"10’ x 15’"}/>
@@ -633,7 +534,7 @@ function Canopy_Tent({router}) {
                                                      },
                                                  }}
                                           >
-                                              {props.isSelected ? null : <div className="react-carousel-dusk"/>}
+                                              {props.isSelected ? null : <div className="react-carousel-dusk round"/>}
                                               <item.type {...item.props} {...props} />
                                           </Block>
                                           {props.isSelected ? (

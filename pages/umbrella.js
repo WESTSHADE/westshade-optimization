@@ -4,10 +4,10 @@ import {withRouter} from "next/router";
 import Head from "next/head";
 
 import {Block} from "baseui/block";
-import {Button, SHAPE} from "baseui/button";
 import ChevronRight from "baseui/icon/chevron-right";
 
 import BannerDisplay from "../components/sections/BannerDisplay";
+import MButton from "../components/button-n";
 
 const Section = ({title, content, displayList = []}) => {
     return (
@@ -62,9 +62,7 @@ function Umbrella({router}) {
                        },
                    }}
             >
-                <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">
-                    UMBRELLA SERIES
-                </Block>
+                <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA SERIES</Block>
                 <BannerDisplay title="MARCO" subtitle="Pull up umbrellas" url="images/home/custom_printing.jpg"
                                containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]}
                                router={router} destination="/custom-printing" arrowButton/>
@@ -82,34 +80,10 @@ function Umbrella({router}) {
                                containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]}
                                router={router} destination="/custom-printing" textColor={"#262626"}
                                renderButton={
-                                   <Block width={["148px", "175px"]} height="40px" font={["MinXLabel14", "MinXLabel16"]}>
-                                       <Button shape={SHAPE.pill}
-                                               overrides={{
-                                                   BaseButton: {
-                                                       style: ({$theme}) => ({
-                                                           width: "100%",
-                                                           height: "100%",
-                                                           paddingTop: 0,
-                                                           paddingRight: 0,
-                                                           paddingBottom: 0,
-                                                           paddingLeft: 0,
-                                                           fontSize: "inherit",
-                                                           fontWeight: "inherit",
-                                                           lineHeight: "inherit",
-                                                           backgroundColor: $theme.colors.MinXButton,
-                                                           whiteSpace: "nowrap",
-                                                           textOverflow: "ellipsis",
-                                                           ":hover": {backgroundColor: $theme.colors.MinXButtonHover},
-                                                           ":active": {backgroundColor: $theme.colors.MinXButtonActive},
-                                                       }),
-                                                   },
-                                               }}
-                                               endEnhancer={() => <ChevronRight size={24}/>}
-                                               onClick={() => router.push("/")}
-                                       >
-                                           Learn More
-                                       </Button>
-                                   </Block>
+                                   <MButton type="solid" height="40px" font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
+                                            endEnhancer={() => <ChevronRight size={24}/>}
+                                            onClick={() => router.push("/")}
+                                   />
                                }
                 />
             </Block>

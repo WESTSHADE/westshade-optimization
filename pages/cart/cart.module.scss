@@ -1,0 +1,61 @@
+.remove-button {
+  font-weight: 400;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.quantity-button {
+  width: 35px;
+  height: 100%;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: 1px solid #D9D9D9;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &.left {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  &.right {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &:hover {
+    background-color: #F0F0F0;
+  }
+
+  &:active {
+    background-color: #F7F7F7;
+  }
+}
+
+.quantity-display {
+  border-top: 1px solid #D9D9D9;
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.checkout-button {
+  width: 100%;
+  height: 100%;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.divider {
+  border-bottom: 1px solid #D9D9D9;
+}

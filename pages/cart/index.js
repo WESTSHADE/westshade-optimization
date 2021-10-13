@@ -1,61 +1,28 @@
 import React, {useEffect, useState} from "react";
-import styled from "styled-components";
+import clsx from "clsx";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {ButtonGroup} from "baseui/button-group";
-import {Button, KIND, SHAPE} from "baseui/button";
+import {Button, SHAPE} from "baseui/button";
 import {Input} from 'baseui/input';
 import CheckIndeterminate from 'baseui/icon/check-indeterminate'
 import Plus from 'baseui/icon/plus'
 
-import {
-    Box,
-    // Button,
-    // ButtonGroup,
-    Container,
-    Divider,
-    Grow,
-    Grid,
-    Link,
-    IconButton,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
-    TextField
-} from "@material-ui/core";
-import {Alert, AlertTitle} from "@material-ui/lab";
-import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
-import AddRoundedIcon from "@material-ui/icons/AddRounded";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import CloseIcon from "@material-ui/icons/Close";
+import styles from "./cart.module.scss";
 
-import Utils from "../utils/utils";
-import {NumberFn} from "../utils/tools";
-import {EventEmitter} from "../utils/events";
+import Utils from "../../utils/utils";
+import {NumberFn} from "../../utils/tools";
+import {EventEmitter} from "../../utils/events";
 
-import CContainer from "../components/container";
-import Cart from "../public/images/svg/cart.svg";
-import Image from "next/image";
+import Cart from "./cart.svg";
 
 const numberFn = new NumberFn();
-
 const utils = new Utils();
 
-const MXButton = styled(Button)`
-	margin: 24px auto;
-`;
-
 function Cart_Page({router}) {
-    const [display, setDisplay] = useState(false);
-
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState([]);
     const [products, setProducts] = useState([]);
@@ -124,7 +91,6 @@ function Cart_Page({router}) {
         }
 
         utils.createOrder(token, checkoutData).then((res) => {
-            console.log(res);
             if (res.message) {
                 setShowError(true);
                 setError(res.message);
@@ -134,7 +100,8 @@ function Cart_Page({router}) {
                 }, 4000);
             } else {
                 updateCart([]);
-                setTimeout(() => router.push({pathname: "/checkout/", query: {id: res.id}}), 1000);
+                router.push({pathname: "/checkout/", query: {id: res.id}})
+                // setTimeout(() => router.push({pathname: "/checkout/", query: {id: res.id}}), 250);
             }
         });
     };
@@ -150,8 +117,6 @@ function Cart_Page({router}) {
     };
 
     useEffect(() => {
-        // setTimeout(() => setDisplay(true), 250);
-
         const token = localStorage.getItem("token");
         if (token) {
             getUser();
@@ -280,196 +245,22 @@ function Cart_Page({router}) {
                 <title>Shopping Cart - Proceed to Checkout | WESTSHADE</title>
                 <meta name="description" content="Free shipping on orders over $100. Add products to your shopping cart and proceed to checkout to place your order."/>
             </Head>
-            {display ? (
-                <Box className="page" fontSize={14} lineHeight={1.43}>
-                    {!addressesDone ? (
-                        <Alert severity="warning">
-                            <AlertTitle>Warning</AlertTitle>
-                            Please go to <Link href="/my-account">My Account</Link> - <Link href="/my-account/addresses">Addresses</Link> and make sure billing / shipping address
-                            is set up.
-                        </Alert>
-                    ) : null}
-                    <CContainer>
-                        <Container maxWidth="md">
-                            <Grid container spacing={4}>
-                                <Grid item xs={12} md={8}>
-                                    <div style={{display: "flex", flexDirection: "column"}}>
-                                        <Grow in={showError} style={{left: 0, right: 0}} className={"alert-message"}>
-                                            <Alert severity="error">
-                                                <AlertTitle>Error</AlertTitle>
-                                                {error}
-                                            </Alert>
-                                        </Grow>
-                                        <TableContainer>
-                                            <Table aria-label="orders table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell/>
-                                                        <TableCell>PRODUCT</TableCell>
-                                                        <TableCell>PRICE</TableCell>
-                                                        <TableCell>QUANTITY</TableCell>
-                                                        <TableCell align="right">SUBTOTAL</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {cart.length > 0 && products.length > 0
-                                                        ? products.map((product, index) => {
-                                                            return (
-                                                                <TableRow key={index}>
-                                                                    <TableCell>
-                                                                        <IconButton
-                                                                            size="small"
-                                                                            onClick={() => {
-                                                                                let c = [...cart],
-                                                                                    p = [...products];
-                                                                                c.splice(index, 1);
-                                                                                p.splice(index, 1);
-
-                                                                                setCart(c);
-                                                                                setProducts(p);
-                                                                            }}
-                                                                        >
-                                                                            <HighlightOffIcon/>
-                                                                        </IconButton>
-                                                                    </TableCell>
-                                                                    <TableCell component="th" scope="row">
-                                                                        {product.name}
-                                                                    </TableCell>
-                                                                    <TableCell align="left">{`$` + product.price}</TableCell>
-                                                                    <TableCell align="left">
-                                                                        <ButtonGroup classes={{root: "product-cart-quantity"}} disableElevation disableRipple>
-                                                                            <Button
-                                                                                aria-label="minus"
-                                                                                onClick={() => {
-                                                                                    let p = [...cart];
-                                                                                    p[index].quantity -= 1;
-                                                                                    setCart(p);
-                                                                                }}
-                                                                            >
-                                                                                <RemoveRoundedIcon/>
-                                                                            </Button>
-                                                                            <div className={"cart-quantity"}>{cart[index].quantity}</div>
-                                                                            <Button
-                                                                                aria-label="plus"
-                                                                                onClick={() => {
-                                                                                    let p = [...cart];
-                                                                                    p[index].quantity += 1;
-                                                                                    setCart(p);
-                                                                                }}
-                                                                            >
-                                                                                <AddRoundedIcon/>
-                                                                            </Button>
-                                                                        </ButtonGroup>
-                                                                    </TableCell>
-                                                                    <TableCell align="right">
-                                                                        <strong>{`$` + product.price * cart[index].quantity}</strong>
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            );
-                                                        })
-                                                        : null}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                        <MXButton variant="contained" style={{height: 42, fontSize: 12, marginLeft: 0}} onClick={() => updateCart()} size={"small"}
-                                                  disableElevation>
-                                            {"UPDATE CART"}
-                                        </MXButton>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Paper classes={{root: "root-paper-checkout"}}>
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left" paragraph={true}>
-                                            <strong> CART TOTALS </strong>
-                                        </Typography>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                    SUBTOTAL
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                    <strong>{`$` + getSubtotal()}</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                    SHIPPING
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                    Free shipping (Approx 3-7 days)
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        {/*<Grid container>*/}
-                                        {/*    <Grid item xs>*/}
-                                        {/*        <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>*/}
-                                        {/*            Tax*/}
-                                        {/*        </Typography>*/}
-                                        {/*    </Grid>*/}
-                                        {/*    <Grid item>*/}
-                                        {/*        <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}></Typography>*/}
-                                        {/*    </Grid>*/}
-                                        {/*</Grid>*/}
-                                        {/*<Divider classes={{root: "root-divider-checkout"}}/>*/}
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="left" paragraph={true}>
-                                                    <strong>TOTAL</strong>
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="right" paragraph={true}>
-                                                    <strong>{`$` + getSubtotal()}</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <MXButton
-                                            variant="contained"
-                                            style={{
-                                                height: 48,
-                                                backgroundColor: !addressesDone || lineItem.length === 0 ? "#e0e0e0" : "#339059",
-                                                color: "white",
-                                                marginLeft: 0,
-                                            }}
-                                            onClick={checkout}
-                                            disableElevation
-                                            fullWidth
-                                            disabled={!addressesDone || lineItem.length === 0}
-                                        >
-                                            {"PROCEED TO CHECKOUT"}
-                                        </MXButton>
-                                    </Paper>
-                                </Grid>
-                            </Grid>
-                        </Container>
-                    </CContainer>
-                </Box>
-            ) : null}
-            {cart.length > 0 ? (
-                <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: "container-display"
-                               }
-                           },
-                       }}
-                >
+            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
+                   overrides={{
+                       Block: {
+                           props: {
+                               className: "container-display"
+                           }
+                       },
+                   }}
+            >
+                {cart.length > 0 ? (
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
                             <Block marginBottom={["32px", "47px"]} paddingTop="24px" font="MinXHeading20" color="MinXPrimaryText">Shopping cart</Block>
                             {cart.length > 0 && products.length > 0
                                 ? products.map((product, index) => {
-                                    console.log(cart);
                                     return (
                                         <Block key={index} display="flex" flexDirection={["column", "row"]} justifyContent="space-between" marginBottom={["16px", "16px", "22px"]}>
                                             <Block display="flex" flexDirection="row" marginBottom="16px">
@@ -478,7 +269,7 @@ function Cart_Page({router}) {
                                                         <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%"
                                                              style={{objectFit: "contain"}}/>
                                                     ) : (
-                                                        <Image src={"/images/catalina@1x.png"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                                        <Image src={"/images/default-product.jpg"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                                                     )}
                                                 </Block>
                                                 <Block>
@@ -500,7 +291,9 @@ function Cart_Page({router}) {
                                                            color="MinXPrimaryText"
                                                            overrides={{
                                                                Block: {
-                                                                   style: {fontWeight: 400, ":hover": {cursor: 'pointer'}}
+                                                                   props: {
+                                                                       className: styles["remove-button"]
+                                                                   },
                                                                },
                                                            }}
                                                            onClick={() => {
@@ -517,35 +310,13 @@ function Cart_Page({router}) {
                                                     >
                                                         Remove
                                                     </Block>
-                                                    <ButtonGroup
-                                                        overrides={{
-                                                            Root: {
-                                                                style: {width: "105px", height: "40px", borderRadius: "4px", border: "1px solid #E6E6E6"}
-                                                            }
-                                                        }}
-                                                    >
+                                                    <Block display="flex" flexDirection="row" width="105px" height="40px" font="MinXLabel14" color="MinXPrimaryText">
                                                         <Button shape={SHAPE.square}
                                                                 overrides={{
                                                                     BaseButton: {
-                                                                        style: ({$theme}) => ({
-                                                                            width: "35px",
-                                                                            height: "100%",
-                                                                            paddingTop: 0,
-                                                                            paddingRight: 0,
-                                                                            paddingBottom: 0,
-                                                                            paddingLeft: 0,
-                                                                            fontSize: "inherit",
-                                                                            fontWeight: "inherit",
-                                                                            lineHeight: "inherit",
-                                                                            backgroundColor: "transparent",
-                                                                            borderRightWidth: "1px",
-                                                                            borderRightStyle: "solid",
-                                                                            borderRightColor: $theme.colors.MinXBorder,
-                                                                            whiteSpace: "nowrap",
-                                                                            textOverflow: "ellipsis",
-                                                                            ":hover": {backgroundColor: $theme.colors.MinXDividers},
-                                                                            ":active": {backgroundColor: $theme.colors.MinXBackground},
-                                                                        }),
+                                                                        props: {
+                                                                            className: clsx([styles["quantity-button"], styles["left"]])
+                                                                        },
                                                                     },
                                                                 }}
                                                                 onClick={() => {
@@ -559,30 +330,21 @@ function Cart_Page({router}) {
                                                         >
                                                             <CheckIndeterminate/>
                                                         </Button>
-                                                        <Block display="flex" flex={1} justifyContent="center" alignItems="center" font="MinXLabel14"
-                                                               color="MinXPrimaryText">{cart[index].quantity}</Block>
+                                                        <Block display="flex" flex={1} justifyContent="center" alignItems="center" font="MinXLabel14" color="MinXPrimaryText"
+                                                               overrides={{
+                                                                   Block: {
+                                                                       props: {
+                                                                           className: styles["quantity-display"]
+                                                                       },
+                                                                   },
+                                                               }}
+                                                        >{cart[index].quantity}</Block>
                                                         <Button shape={SHAPE.square}
                                                                 overrides={{
                                                                     BaseButton: {
-                                                                        style: ({$theme}) => ({
-                                                                            width: "35px",
-                                                                            height: "100%",
-                                                                            paddingTop: 0,
-                                                                            paddingRight: 0,
-                                                                            paddingBottom: 0,
-                                                                            paddingLeft: 0,
-                                                                            fontSize: "inherit",
-                                                                            fontWeight: "inherit",
-                                                                            lineHeight: "inherit",
-                                                                            backgroundColor: "transparent",
-                                                                            borderLeftWidth: "1px",
-                                                                            borderLeftStyle: "solid",
-                                                                            borderLeftColor: $theme.colors.MinXBorder,
-                                                                            whiteSpace: "nowrap",
-                                                                            textOverflow: "ellipsis",
-                                                                            ":hover": {backgroundColor: $theme.colors.MinXDividers},
-                                                                            ":active": {backgroundColor: $theme.colors.MinXBackground},
-                                                                        }),
+                                                                        props: {
+                                                                            className: clsx([styles["quantity-button"], styles["right"]])
+                                                                        },
                                                                     },
                                                                 }}
                                                                 onClick={() => {
@@ -594,7 +356,7 @@ function Cart_Page({router}) {
                                                         >
                                                             <Plus/>
                                                         </Button>
-                                                    </ButtonGroup>
+                                                    </Block>
                                                 </Block>
                                                 <Block marginBottom={["", "12px"]} paddingLeft="20px" font="MinXLabel14" color="MinXPrimaryText"
                                                        overrides={{
@@ -615,7 +377,9 @@ function Cart_Page({router}) {
                             <Block marginBottom={["16px", "16px", "24px"]}
                                    overrides={{
                                        Block: {
-                                           style: ({$theme}) => ({borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: $theme.colors.MinXBorder})
+                                           props: {
+                                               className: styles["divider"]
+                                           }
                                        },
                                    }}
                             >
@@ -682,16 +446,11 @@ function Cart_Page({router}) {
                                 <Button shape={SHAPE.pill}
                                         overrides={{
                                             BaseButton: {
+                                                props: {
+                                                    className: styles["checkout-button"],
+                                                },
                                                 style: ({$theme}) => ({
-                                                    width: "100%",
-                                                    height: "100%",
-                                                    fontSize: "inherit",
-                                                    fontWeight: "inherit",
-                                                    lineHeight: "inherit",
-                                                    color: "inherit",
                                                     backgroundColor: !addressesDone || lineItem.length === 0 ? "#e0e0e0" : $theme.colors.MinXButton,
-                                                    whiteSpace: "nowrap",
-                                                    textOverflow: "ellipsis",
                                                     ":hover": !addressesDone || lineItem.length === 0 ? {} : {backgroundColor: $theme.colors.MinXButtonHover},
                                                     ":active": !addressesDone || lineItem.length === 0 ? {} : {backgroundColor: $theme.colors.MinXButtonActive},
                                                 }),
@@ -705,17 +464,26 @@ function Cart_Page({router}) {
                             </Block>
                         </Block>
                     </Block>
-                </Block>
-            ) : (
-                <Block display="flex" flexDirection="column" alignItems="center" height="50vh"
-                       paddingTop={["114px", "114px", "66px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                >
-                    <Block marginBottom="18px"><Cart style={{width: "24px", height: "24px"}} color={"#323232"}/></Block>
-                    <Block font="MinXParagraph16" color="MinXPrimaryText">Your shopping cart is empty</Block>
-                </Block>
-            )}
+
+                ) : (
+                    <Block display="flex" flex={1} flexDirection="column" alignItems="center" paddingTop={["114px", "114px", "66px"]}>
+                        <Block marginBottom="18px"><Cart style={{width: "24px", height: "24px"}} color={"#323232"}/></Block>
+                        <Block font="MinXParagraph16" color="MinXPrimaryText">Your shopping cart is empty</Block>
+                    </Block>
+                )}
+                {/*TODO: 相关产品模组*/}
+                {/*<Block position="relative" marginBottom="24px">*/}
+                {/*    <Block marginBottom={["32px", "47px"]} paddingTop="24px" font="MinXHeading20" color="MinXPrimaryText">Accessories might need</Block>*/}
+                {/*</Block>*/}
+            </Block>
         </React.Fragment>
     );
 }
+
+Cart_Page.getInitialProps = () => {
+    return {
+        newFooter: true,
+    };
+};
 
 export default withRouter(Cart_Page);
