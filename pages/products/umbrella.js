@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import React, {useEffect, useState} from "react";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
-import { Box, Button, Breadcrumbs, Container, Divider, Grid, Tabs, Tab, TextField, Typography } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
-
+import {withRouter} from "next/router";
+import Head from "next/head";
 import Link from "next/link";
-import { withRouter } from "next/router";
 
-import styles from "../../styles/Product.module.scss";
+import {Block} from "baseui/block";
+import {Modal, ModalBody, ROLE, SIZE} from "baseui/modal";
+import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import { DateFn, NumberFn, StringFn, UrlFn } from "../../utils/tools";
+import {Checkout, Selection} from "../../components/sections";
+
+import styles from "./Product.module.scss";
+
+import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
-
-import CBreadcrumbs from "../../components/breadcrumbs";
-import CustomAccordion from "../../components/accordion";
-import Checkout from "../../components/buttonGroup";
-import CustomButton from "../../components/button";
-import Modal from "../../components/modal";
-import SectionProductsOffered from "../../components/section_products_offered";
-import Selections from "../../components/selection_group";
+import {EventEmitter} from "../../utils/events";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -35,821 +33,634 @@ const id_attribute_umbrellaMaterial = 37;
 let checkoutProductList = [];
 
 function getProducts(components) {
-	return Promise.all(components.map(({ default_option_id }) => utils.getProductByWooId(default_option_id)));
+    return Promise.all(components.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
 }
 
 function getVariants(components) {
-	return Promise.all(components.map(({ id }) => utils.getVariantByWooProductId(id)));
+    return Promise.all(components.map(({id}) => utils.getVariantByWooProductId(id)));
 }
 
-function Umbrella({ router, product, productComponent = [], productVariant = [] }) {
-	const [display, setDisplay] = useState(false);
+function Umbrella({router, product, productComponent = [], productVariant = []}) {
+    const [productId, setProductId] = useState("");
+    const [productName, setProductName] = useState("");
+    const [productType, setProductType] = useState("");
+    const [productImage, setProductImage] = useState([]);
+    const [productImageGallery, setProductImageGallery] = useState([]);
+    const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
-	const [productId, setProductId] = useState("");
-	const [productName, setProductName] = useState("");
-	const [productType, setProductType] = useState("");
-	const [productImage, setProductImage] = useState([]);
+    const [selectedAttribute, setSelectedAttribute] = useState([]);
+    const [selectedVariant, setSelectedVariant] = useState([]);
 
-	const [selectedAttribute, setSelectedAttribute] = useState([]);
-	const [selectedVariant, setSelectedVariant] = useState([]);
+    const [initProductVariant, setInitProductVariant] = useState(false);
+    const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
 
-	const [initProductVariant, setInitProductVariant] = useState(false);
-	const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
+    const [isInStock, setIsInStock] = useState(true);
 
-	const [totalRegularPrice, setTotalRegularPrice] = useState(0);
-	const [totalSalePrice, setTotalSalePrice] = useState(0);
-	const [totalCount, setTotalCount] = useState(1);
+    const [regularPrice, setRegularPrice] = useState(0);
+    const [salePrice, setSalePrice] = useState(0);
 
-	const [message, setMessage] = useState("");
+    const [totalRegularPrice, setTotalRegularPrice] = useState(0);
+    const [totalSalePrice, setTotalSalePrice] = useState(0);
+    const [totalCount, setTotalCount] = useState(1);
 
-	const [availableToCheckout, setAvailable] = useState(false);
+    const [message, setMessage] = useState("");
 
-	const [shippedDay, setShippedDay] = useState("");
+    const [availableToCheckout, setAvailable] = useState(false);
+    const [shippedDay, setShippedDay] = useState("");
 
-	////////////////////////////////////////
+    const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
-	const [availableList, setAvailableList] = useState([{ id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true }]);
+    ////////////////////////////////////////
 
-	////////////////////////////////////////
+    const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
-	const [showSizeModal, setShowSizeModal] = useState(false);
-	const [showGetQuote, setShowGetQuote] = useState(false);
-	const [showModal, setShowModal] = useState(false);
+    ////////////////////////////////////////
 
-	const [tabDesc, setTabDesc] = useState(0);
+    const openSummaryModal = () => {
+        setSummaryIsOpen(true);
+    };
 
-	////////////////////////////////////////
+    const closeSummaryModal = () => {
+        setSummaryIsOpen(false);
+    };
 
-	const [quoteProduct, setQuoteProduct] = useState("");
-	const [quoteConfiguration, setQuoteConfiguration] = useState("");
-	const [quoteQuantity, setQuoteQuantity] = useState("");
-	const [quoteNameLast, setQuoteNameLast] = useState("");
-	const [quoteNameFirst, setQuoteNameFirst] = useState("");
-	const [quoteEmail, setQuoteEmail] = useState("");
-	const [quotePhone, setQuotePhone] = useState("");
-	const [quoteRequest, setQuoteRequest] = useState("");
-	const [quoteError, setQuoteError] = useState(false);
+    const setMainImage = (images) => {
+        if (!images || images.length === 0) return;
 
-	////////////////////////////////////////
+        function renderCustomImage(props) {
+            return (
+                <img className="image-gallery-image" src={props.original}/>
+            );
+        }
 
-	const setMainImage = (images) => {
-		if (!images) return;
+        let i = [];
+        images.map((img, index) => {
+            let url = img.src;
+            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            i[index] = {
+                original: url,
+                thumbnail: url,
+                thumbnailWidth: 60,
+                thumbnailHeight: 60,
+                originalClass: "originalClass",
+                thumbnailClass: "thumbnailClass",
+                originalAlt: img.name,
+                thumbnailAlt: img.name,
+            };
+        });
+        i[0].renderItem = renderCustomImage;
+        setProductImageGallery(i);
+    };
 
-		if (Array.isArray(images)) {
-			let urlList = images.map((image) => {
-				return { src: image.src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com") };
-			});
-			setProductImage(urlList);
-		} else {
-			let url = images.src;
-			url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+    const handleChangeRadio = (event, index, id) => {
+        // Part 1: 更改选项List信息 并 保存
+        let selection = [...selectedAttribute];
+        selection[index].forEach((attribute) => {
+            if (attribute.id === id) attribute.option = event.target.value;
+        });
+        // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
+        let selectionVariant = [...selectedVariant];
+        let selected = productVariant[index].filter((variant) => {
+            if (!variant || !variant.attributes) return false;
 
-			setProductImage([{ src: url }]);
-		}
-	};
+            let equal = true;
+            for (let i = 0; i < variant.attributes.length; i++) {
+                if (selection[index][i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
+                    equal = false;
+                    break;
+                }
+            }
+            return equal;
+        });
+        selectionVariant[index] = selected[0];
+        // Part 3: 保存更改项
+        setSelectedAttribute(selection);
+        setSelectedVariant(selectionVariant);
+    };
 
-	const handleChangeRadio = (event, index, id) => {
-		// Part 1: 更改选项List信息 并 保存
-		let selection = [...selectedAttribute];
-		selection[index].forEach((attribute) => {
-			if (attribute.id === id) attribute.option = event.target.value;
-		});
-		// Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
-		let selectionVariant = [...selectedVariant];
-		let selected = productVariant[index].filter((variant) => {
-			if (!variant || !variant.attributes) return false;
+    const checkProduct_getPrice = () => {
+        let regularPrice = 0,
+            salePrice = 0;
 
-			let equal = true;
-			for (let i = 0; i < variant.attributes.length; i++) {
-				if (selection[index][i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
-					equal = false;
-					break;
-				}
-			}
-			return equal;
-		});
-		selectionVariant[index] = selected[0];
-		// Part 3: 保存更改项
-		setSelectedAttribute(selection);
-		setSelectedVariant(selectionVariant);
-	};
+        let available = [...availableList];
 
-	const checkProduct_getPrice = () => {
-		let regularPrice = 0,
-			salePrice = 0;
+        selectedVariant.forEach((variant, index) => {
+            if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
+                available[index].status = false;
+                return;
+            }
+            // 计算售价
+            if (!variant.on_sale) {
+                regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+            } else {
+                regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
+            }
+            // 检查可用性
+            if (variant.stock_status === "instock") {
+                available[index] = {
+                    id: variant.id,
+                    status: true,
+                    quantity: variant.stock_quantity,
+                    needed: totalCount,
+                    attribute: variant.attributes,
+                    optional: false,
+                };
+            } else {
+                available[index] = {
+                    id: variant.id,
+                    status: false,
+                    quantity: 0,
+                    needed: totalCount,
+                    attribute: variant.attributes,
+                    optional: false,
+                };
+            }
+        });
+        setAvailableList(available);
 
-		let available = [...availableList];
+        setTotalRegularPrice(regularPrice);
+        setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+    };
 
-		selectedVariant.forEach((variant, index) => {
-			if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
-				available[index].status = false;
-				return;
-			}
-			// 计算售价
-			if (!variant.on_sale) {
-				regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-				salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-			} else {
-				regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-				salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
-			}
-			// 检查可用性
-			if (variant.stock_status === "instock") {
-				available[index] = {
-					id: variant.id,
-					status: true,
-					quantity: variant.stock_quantity,
-					needed: totalCount,
-					attribute: variant.attributes,
-					optional: false,
-				};
-			} else {
-				available[index] = {
-					id: variant.id,
-					status: false,
-					quantity: 0,
-					needed: totalCount,
-					attribute: variant.attributes,
-					optional: false,
-				};
-			}
-		});
-		setAvailableList(available);
+    useEffect(() => {
+        setProductId(product.id.toString());
+        setShippedDay(dateFn.getReceivedDay());
+    }, []);
 
-		setTotalRegularPrice(regularPrice);
-		setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
-	};
+    useEffect(() => {
+        if (!product) return;
 
-	const handleChangeTabDesc = (event, newValue) => setTabDesc(newValue);
+        setProductName(product.name);
+        setProductType(product.type);
 
-	useEffect(() => {
-		setTimeout(() => setDisplay(true), 250);
+        if (product.hasOwnProperty("image")) {
+            setMainImage([product.image]);
+        } else if (product.hasOwnProperty("images")) {
+            setMainImage(product.images);
+        }
 
-		console.log(product);
+        setRegularPrice(product.regular_price);
+        setSalePrice(product.sale_price);
+    }, [product]);
 
-		setProductId(product.id.toString());
-		setShippedDay(dateFn.getReceivedDay());
-	}, []);
+    useEffect(() => {
+        if (!productComponent || productComponent.length === 0) return;
+        if (product.type === "simple") {
+            setSelectedVariant(productComponent);
+        } else if (product.type === "variable") {
+            let selectedAttrList = [];
+            productComponent.map((component) => {
+                let defaultAttr = [...component.default_attributes];
 
-	useEffect(() => {
-		if (!product) return;
+                defaultAttr.forEach((attr) => {
+                    if (attr.id === id_attribute_umbrellaSize) {
+                        attr.option = stringFn.replaceDash(attr.option, 2);
+                    } else if (attr.id === id_attribute_color) {
+                        attr.option = stringFn.replaceDash(attr.option, 1);
+                    }
+                });
+                selectedAttrList.push(defaultAttr);
+            });
+            setSelectedAttribute(selectedAttrList);
+            setInitSelectedAttribute(true);
 
-		setProductName(product.name);
-		setProductType(product.type);
+            // 获取,保存各组件变体产品信息
+            setInitProductVariant(true);
+        }
+    }, [productComponent]);
 
-		if (product.hasOwnProperty("image") && product.image) {
-			setMainImage(product.image);
-		} else if (product.hasOwnProperty("images") && product.images && product.images.length > 0) {
-			setMainImage(product.images);
-		}
-	}, [product]);
+    useEffect(() => {
+        if (!initSelectedAttribute || !initProductVariant) return;
 
-	useEffect(() => {
-		if (!productComponent || productComponent.length === 0) return;
-		if (product.type === "simple") {
-			setSelectedVariant(productComponent);
-		} else if (product.type === "variable") {
-			let selectedAttrList = [];
-			productComponent.map((component) => {
-				let defaultAttr = [...component.default_attributes];
+        // 获取,保存各组件默认变体产品信息
+        let selectedVariantList = [];
+        selectedAttribute.forEach((attr, index) => {
+            if (!attr) return;
+            let selected = productVariant[index].filter((variant) => {
+                if (!variant || !variant.attributes) return false;
+                if (attr.length !== variant.attributes.length) return false;
 
-				defaultAttr.forEach((attr) => {
-					if (attr.id === id_attribute_umbrellaSize) {
-						attr.option = stringFn.replaceDash(attr.option, 2);
-					} else if (attr.id === id_attribute_color) {
-						attr.option = stringFn.replaceDash(attr.option, 1);
-					}
-				});
-				selectedAttrList.push(defaultAttr);
-			});
-			setSelectedAttribute(selectedAttrList);
-			setInitSelectedAttribute(true);
+                let equal = true;
+                for (let i = 0; i < variant.attributes.length; i++) {
+                    if (attr[i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
+                        equal = false;
+                        break;
+                    }
+                }
+                return equal;
+            });
+            selectedVariantList[index] = selected[0];
+        });
+        // 初始化数据
+        setSelectedVariant(selectedVariantList);
+    }, [initSelectedAttribute, initProductVariant]);
 
-			// 获取,保存各组件变体产品信息
-			setInitProductVariant(true);
-		}
-	}, [productComponent]);
+    useEffect(() => {
+        // 已选各产品组成变体
+        if (!selectedVariant || selectedVariant.length === 0) return;
 
-	useEffect(() => {
-		if (!initSelectedAttribute || !initProductVariant) return;
+        selectedVariant.forEach((variant, index) => {
+            if (!variant || !variant.attributes) return;
 
-		// 获取,保存各组件默认变体产品信息
-		let selectedVariantList = [];
-		selectedAttribute.forEach((attr, index) => {
-			if (!attr) return;
-			let selected = productVariant[index].filter((variant) => {
-				if (!variant || !variant.attributes) return false;
-				if (attr.length !== variant.attributes.length) return false;
+            if (index === 0) {
+                if (variant.hasOwnProperty("image") && variant.image) {
+                    setMainImage([variant.image]);
+                } else if (variant.hasOwnProperty("images") && variant.images.length > 0) {
+                    setMainImage(variant.images);
+                }
 
-				let equal = true;
-				for (let i = 0; i < variant.attributes.length; i++) {
-					if (attr[i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
-						equal = false;
-						break;
-					}
-				}
-				return equal;
-			});
-			selectedVariantList[index] = selected[0];
-		});
-		// 初始化数据
-		setSelectedVariant(selectedVariantList);
-	}, [initSelectedAttribute, initProductVariant]);
+                setRegularPrice(variant.regular_price);
+                setSalePrice(variant.sale_price);
+            }
+        });
 
-	useEffect(() => {
-		// 已选各产品组成变体
-		if (!selectedVariant || selectedVariant.length === 0) return;
+        checkProduct_getPrice();
+    }, [selectedVariant]);
 
-		selectedVariant.forEach((variant, index) => {
-			if (!variant || !variant.attributes) return;
+    useEffect(() => {
+        if (totalCount === 0) return;
 
-			if (index === 0) {
-				if (variant.hasOwnProperty("image") && variant.image) {
-					setMainImage(variant.image);
-				} else if (variant.hasOwnProperty("images") && variant.images && variant.images.length > 0) {
-					setMainImage(variant.images);
-				}
-			}
-		});
+        checkProduct_getPrice();
+    }, [totalCount]);
 
-		checkProduct_getPrice();
-	}, [selectedVariant]);
+    useEffect(() => {
+        if (selectedVariant.length === 0) return;
 
-	useEffect(() => {
-		if (totalCount === 0) return;
+        checkoutProductList = [];
 
-		checkProduct_getPrice();
-	}, [totalCount]);
+        let available = true;
+        availableList.forEach((item, index) => {
+            if (!item || !available) return;
+            // 没货 直接返回
+            if (!item.status) {
+                if (!item.optional) {
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    return;
+                } else {
+                    return;
+                }
+            }
+            // 有货 判定是否有明细
+            if (item.quantity) {
+                // 有明细 计算需求供给
+                if (item.needed > item.quantity) {
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    return;
+                }
+            }
 
-	useEffect(() => {
-		if (selectedVariant.length === 0) return;
+            const i = checkoutProductList.findIndex(({id}) => id === item.id);
+            if (i === -1) {
+                const variation = item.attribute.map((attr) => ({
+                    attribute: attr.name,
+                    value: attr.option,
+                }));
 
-		checkoutProductList = [];
+                checkoutProductList.push({
+                    id: item.id,
+                    quantity: item.needed,
+                    variation: variation,
+                });
+            } else {
+                let needed = checkoutProductList[i].quantity + item.needed;
+                if (needed > item.quantity) {
+                    checkoutProductList.splice(i, 1);
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    return;
+                } else {
+                    checkoutProductList[i].quantity = needed;
+                }
+            }
+            setIsInStock(true);
+            setMessage("");
+        });
+        setAvailable(available);
+    }, [availableList]);
 
-		let available = true;
+    const updateCart = async () => {
+        const token = localStorage.getItem("token");
+        let cart = localStorage.getItem("cart");
+        cart = cart ? JSON.parse(cart) : cart;
 
-		availableList.forEach((item, index) => {
-			if (!item || !available) return;
-			// 没货 直接返回
-			if (!item.status) {
-				if (!item.optional) {
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				} else {
-					return;
-				}
-			}
-			// 有货 判定是否有明细
-			if (item.quantity) {
-				// 有明细 计算需求供给
-				if (item.needed > item.quantity) {
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				}
-			}
+        let cl;
 
-			const i = checkoutProductList.findIndex(({ id }) => id === item.id);
-			if (i === -1) {
-				const variation = item.attribute.map((attr) => ({
-					attribute: attr.name,
-					value: attr.option,
-				}));
+        if (cart && Array.isArray(cart)) {
+            cl = [...cart];
+        } else {
+            cl = [];
+        }
 
-				checkoutProductList.push({
-					id: item.id,
-					quantity: item.needed,
-					variation: variation,
-				});
-			} else {
-				let needed = checkoutProductList[i].quantity + item.needed;
-				if (needed > item.quantity) {
-					checkoutProductList.splice(i, 1);
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				} else {
-					checkoutProductList[i].quantity = needed;
-				}
-			}
-			setMessage("");
-		});
-		setAvailable(available);
-	}, [availableList]);
+        setShowAddProgress(true);
 
-	const handleSendQuote = async () => {
-		if (quoteQuantity < 1 || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
-			setQuoteError(true);
-		} else {
-			let result = await utils.contact({
-				form_id: "2",
-				status: "active",
-				1: "New Entry: " + quoteProduct + " Enquiry",
-				2: quoteConfiguration,
-				3: quoteQuantity,
-				4.3: quoteNameFirst,
-				4.6: quoteNameLast,
-				5: quoteEmail,
-				6: quotePhone,
-				8: quoteRequest,
-			});
-			setShowGetQuote(false);
-			setTimeout(() => setShowModal(true), 250);
+        if (token) {
+            let cartList = [];
+            let data = await utils.getUser(token);
+            let result = data.meta_data.filter((data) => data.key === "cart");
+            if (result.length > 0) {
+                if (result[0].value.length > 0) {
+                    cartList = [...result[0].value];
+                    cartList = cartList.concat([...checkoutProductList]);
+                } else {
+                    cartList = [...checkoutProductList];
+                }
+            } else {
+                cartList = [...checkoutProductList];
+            }
+            cl = cl.concat([...cartList]);
 
-			if (document.location.href.match(/(^[^#]*)/).length > 0) {
-				router.replace(document.location.href.match(/(^[^#]*)/)[0] + "#sent");
-			}
-		}
-	};
+            // let newCartList = [];
+            // cartList.forEach((item, index) => {
+            //     const i = newCartList.findIndex((product) => product.id === item.id);
+            //     if (i === -1) {
+            //         newCartList.push(item);
+            //     } else {
+            //         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
+            //     }
+            // })
 
-	//////////////////////////////////////
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cl,
+                    },
+                ],
+            };
 
-	return (
-		<React.Fragment>
-			<Box className="page product" fontSize={14} lineHeight={1}>
-				{display ? (
-					<>
-						<CBreadcrumbs>
-							<Container maxWidth="md">
-								{product ? (
-									<Breadcrumbs classes={{ li: "root-breadcrumbs-text" }}>
-										<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-											Home
-										</Link>
-										<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-											Products
-										</Link>
-										<Typography variant="inherit" color="textPrimary">
-											{" "}
-											{product.name}{" "}
-										</Typography>
-									</Breadcrumbs>
-								) : null}
-							</Container>
-						</CBreadcrumbs>
-						<div className={styles["container-page"]}>
-							<Container maxWidth="lg">
-								<Grid container spacing={6}>
-									<Grid item xs={12} sm={6}>
-										<div className={styles["container-product-image"]}>
-											<Carousel showIndicators={false}>
-												{productImage.map((item, index) => (
-													<img key={index} src={item.src} />
-												))}
-											</Carousel>
-										</div>
-									</Grid>
-									<Grid item xs={12} sm={6} className="position-r">
-										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
-											<Typography variant="h1" classes={{ h1: styles["product-name"] }} color="textPrimary">
-												{productName}
-											</Typography>
-										</div>
-										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
-											{"Description："}
-											{product && product.short_description ? (
-												<Typography variant="inherit" display="block" classes={{ root: styles["product-description"] }} color="textSecondary">
-													{stringFn.modifyShortDescription(product.short_description)}
-												</Typography>
-											) : null}
-										</div>
-										<div>
-											{productComponent && productComponent[0]
-												? productComponent[0].attributes
-														.filter((attribute) => attribute.variation)
-														.map((attribute, index) => (
-															<div key={index} className={clsx(styles["container-product-section"])}>
-																<Selections
-																	label={"Choose your " + stringFn.replaceDash(attribute.name, 1) + ":"}
-																	value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
-																	onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
-																	list={attribute.options}
-																	id={attribute.id.toString()}
-																/>
-															</div>
-														))
-												: null}
-										</div>
-										<Checkout
-											onClick={() => {
-												setQuoteProduct(productName);
-												let configuration = "";
-												selectedAttribute[0].map((attribute) => (configuration += attribute.name + ": " + attribute.option + "; "));
-												setQuoteConfiguration(configuration);
-												setQuoteQuantity(1);
-												setShowGetQuote(true);
-											}}
-											type="quote"
-										/>
-										<Grid container direction="row" alignItems="center" classes={{ root: styles["button-group"] }}>
-											<CustomButton type="underline" onClick={() => setShowSizeModal(true)}>
-												Size Guide
-											</CustomButton>
-											<Divider orientation="vertical" classes={{ vertical: styles["divider-vertical"] }} />
-											<CustomButton type="underline" onClick={() => router.push("/shipping-return")}>
-												Shipping &amp; Return
-											</CustomButton>
-										</Grid>
-									</Grid>
-								</Grid>
-								<div className="section-container" style={{ textAlign: "center" }}>
-									<Divider style={{ marginBottom: 40 }} />
-									<Tabs className="tabs-desc" value={tabDesc} onChange={handleChangeTabDesc} centered>
-										<Tab label="DESCRIPTION" disableTouchRipple />
-										{/* <Tab label="REVIEWS" disableRipple /> */}
-									</Tabs>
-									<div hidden={tabDesc !== 0}>
-										{tabDesc === 0 ? (
-											<>
-												{productId === "30361" ? (
-													<img style={{ width: "100%", objectFit: "center" }} src={"/images/tent-spec/spec-bali.jpg"} />
-												) : productId === "49555" ? (
-													<img style={{ width: "100%", objectFit: "center" }} src={"/images/tent-spec/spec-marco.jpg"} />
-												) : productId === "47943" ? (
-													<img style={{ width: "100%", objectFit: "center" }} src={"/images/tent-spec/spec-santorini-alu.jpg"} />
-												) : productId === "49306" ? (
-													<img style={{ width: "100%", objectFit: "contain" }} src={"/images/tent-spec/spec-santorini-fiberglass.jpg"} />
-												) : productId === "30441" ? (
-													<img style={{ width: "100%", objectFit: "contain" }} src={"/images/tent-spec/spec-catalina.jpg"} />
-												) : null}
-												<div className="section-border" />
-												<Box className="section-container" style={{ textAlign: "center" }}>
-													<Grid container direction="row">
-														<Grid item xs={6} md={4} lg={2}>
-															<img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/stain-resistant.png"} />
-														</Grid>
-														<Grid item xs={6} md={4} lg={2}>
-															{productId == 49555 || productId == 47943 || productId == 30441 ? <img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/commercial-grade-aluminum.png"} /> : null}
-															{productId == 49306 ? <img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/heavy-duty-fiberglass.png"} /> : null}
-															{productId == 30361 ? <img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/strong-steel-frame.png"} /> : null}
-														</Grid>
-														<Grid item xs={6} md={4} lg={2}>
-															<img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/corrosion-resistant.png"} />
-														</Grid>
-														<Grid item xs={6} md={4} lg={2}>
-															<img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/upf.png"} />
-														</Grid>
-														<Grid item xs={6} md={4} lg={2}>
-															<img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/water-repellence.png"} />
-														</Grid>
-														<Grid item xs={6} md={4} lg={2}>
-															<img style={{ objectFit: "contain", width: 150 }} src={"/images/tent-spec/weather-resistant.png"} />
-														</Grid>
-													</Grid>
-												</Box>
-												<Box className="section-container" style={{ textAlign: "center" }}>
-													<Grid container spacing={6}>
-														<Grid item xs={12} md={6} className="section-custom-printed-package-container">
-															<div
-																style={{
-																	display: "flex",
-																	justifyContent: "space-evenly",
-																	alignItems: "center",
-																	width: "100%",
-																}}
-															>
-																<div className="section-desc-container-title" style={{ width: 150 }}>
-																	SDP Fabric
-																</div>
-																<img
-																	src="/images/tent-spec/sdp.png"
-																	style={{
-																		objectFit: "contain",
-																		width: 120,
-																		height: 120,
-																	}}
-																/>
-															</div>
-															<div className="section-desc-container-title" style={{ margin: 24 }}>
-																VS
-															</div>
-															<div
-																style={{
-																	display: "flex",
-																	justifyContent: "space-evenly",
-																	alignItems: "center",
-																	width: "100%",
-																}}
-															>
-																<div className="section-desc-container-title" style={{ width: 150 }}>
-																	AGORA Fabric
-																</div>
-																<img
-																	src="/images/tent-spec/agora.jpeg"
-																	style={{
-																		objectFit: "contain",
-																		width: 120,
-																		maxHeight: 120,
-																	}}
-																/>
-															</div>
-														</Grid>
-														<Grid item xs={12} md={6}>
-															<div className="section-desc-container-title">SDP vs AGORA</div>
-															<div className="section-desc-container-content">Pick the right fabric for shade</div>
-															<img
-																src="/images/tent-spec/comparison-fabrics.png"
-																style={{
-																	objectFit: "contain",
-																	width: "100%",
-																	maxHeight: 400,
-																	marginTop: 24,
-																}}
-															/>
-														</Grid>
-													</Grid>
-												</Box>
-												<Box className="section-container-extend background-gray" style={{ paddingTop: 48, paddingBottom: 48 }}>
-													<Container maxWidth="md">
-														<Grid container spacing={6}>
-															<Grid
-																item
-																xs={12}
-																md={4}
-																className="section-custom-printed-package-container"
-																style={{
-																	alignItems: "start",
-																	justifyContent: "flex-start",
-																}}
-															>
-																<h3 className="section-title" style={{ fontSize: "1.25rem" }}>
-																	Product Specs
-																</h3>
-															</Grid>
-															<Grid item xs={12} md={8} className="section-custom-printed-package-container">
-																<CustomAccordion
-																	list={[
-																		{
-																			summary: "Measurement & Dimensions",
-																			details:
-																				productId == 49555
-																					? "Roof Sizes: 6.5ft\nUmbrella Height: 7ft"
-																					: productId == 49306
-																					? "Roof Sizes: 6.5ft, 7.5ft, 9ft, 11.5ft\nUmbrella Height: 7ft"
-																					: productId == 47943
-																					? "Roof Sizes: 6.5ft, 7.5ft, 9ft, 10ft, 11.5ft\nUmbrella Height: 7ft"
-																					: productId == 30361
-																					? "Roof Sizes: 9ft, 10ft\nUmbrella Height: 7ft"
-																					: productId == 30441
-																					? "Roof Sizes: 10ft, 11.5ft, 13ft, 16.5ft\nUmbrella Height: 7ft"
-																					: "",
-																		},
-																		{
-																			summary: "Materials",
-																			details:
-																				productId == 49555 || productId == 47943
-																					? "Aluminum pole and ribs. SDP or Agora Fabric."
-																					: productId == 49306
-																					? "Fiberglass ribs, Aluminum poles. SDP Fabric."
-																					: productId == 30361
-																					? "Steel pole and ribs. SDP or Agora Fabric."
-																					: productId == 30441
-																					? "Marine grade aluminum pole and ribs. Heavy Duty PVC Fabric."
-																					: "",
-																		},
-																		{
-																			summary: "Shipping",
-																			details: "Free shipping in US on all order over $100.\nOrder typically ship out in 24h\nDelivery times takes between 2-5 days.",
-																		},
-																		{
-																			summary: "Warranty",
-																			details:
-																				productId == 49555
-																					? "3-year limited warranty on the frame.\n3-year limited warranty on SDP fabric.\n5-year limited warranty on Agora fabric."
-																					: productId == 49306 || productId == 47943
-																					? "3-year limited warranty on the frame.\n3-year limited warranty on the fabric."
-																					: productId == 30361
-																					? "3-year limited warranty on SDP fabric.\n5-year limited warranty on Agora fabric."
-																					: productId == 30441
-																					? "3-year limited warranty on the frame.\n5-year limited warranty on the fabric."
-																					: "",
-																		},
-																	]}
-																	square
-																/>
-															</Grid>
-														</Grid>
-													</Container>
-												</Box>
-												<Box className="section-container" style={{ textAlign: "center" }}>
-													<h3 className="section-title" style={{ fontSize: "1.25rem" }}>
-														How Does It Fits?
-													</h3>
-													<Grid container>
-														<Grid
-															item
-															xs={12}
-															className="section-custom-printed-package-container"
-															style={{
-																marginTop: 12,
-																flexDirection: "row",
-																justifyContent: "space-evenly",
-																flexWrap: "wrap",
-															}}
-														>
-															{productId == 49555 || productId == 49306 || productId == 47943 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/6ft.png"} /> : null}
-															{productId == 49306 || productId == 47943 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/7ft.png"} /> : null}
-															{productId == 30361 || productId == 49306 || productId == 47943 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/9ft.png"} /> : null}
-															{productId == 30441 || productId == 30361 || productId == 47943 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/10ft.png"} /> : null}
-															{productId == 30441 || productId == 49306 || productId == 47943 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/11ft.png"} /> : null}
-															{productId == 30441 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/13ft.png"} /> : null}
-															{productId == 30441 ? <img style={{ width: 180, objectFit: "contain" }} src={"/images/tent-spec/16ft.png"} /> : null}
-														</Grid>
-													</Grid>
-												</Box>
-												<SectionProductsOffered />
-											</>
-										) : null}
-									</div>
-								</div>
-							</Container>
-						</div>
-					</>
-				) : null}
-				<Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
-					<Box className="popup-section" style={{ width: "auto" }}>
-						<Container maxWidth="md">
-							<Grid container spacing={6}>
-								<Grid item xs={12}>
-									<form>
-										<div className="section-quote-input">
-											<TextField fullWidth label="Product" InputLabelProps={{ shrink: true }} InputProps={{ readOnly: true }} defaultValue={quoteProduct} />
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Configurations"
-												InputLabelProps={{
-													shrink: true,
-												}}
-												InputProps={{
-													readOnly: true,
-												}}
-												defaultValue={quoteConfiguration}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Quantity"
-												type="number"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteQuantity}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteQuantity(event.target.value);
-												}}
-												error={quoteQuantity > 0 && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input" style={{ display: "flex" }}>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="Last Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameLast}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameLast(event.target.value);
-													}}
-													error={!quoteNameLast && quoteError}
-												/>
-											</div>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="First Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameFirst}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameFirst(event.target.value);
-													}}
-													error={!quoteNameFirst && quoteError}
-												/>
-											</div>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Email"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteEmail}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteEmail(event.target.value);
-												}}
-												error={!quoteEmail && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Phone"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quotePhone}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuotePhone(event.target.value);
-												}}
-												error={!quotePhone && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Request"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												multiline
-												maxRows={6}
-												defaultValue={quoteRequest}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteRequest(event.target.value);
-												}}
-												error={!quoteRequest && quoteError}
-											/>
-										</div>
-										<div className="section-checkout-container">
-											<Button variant="contained" onClick={() => handleSendQuote()} disableRipple disableElevation>
-												Submit
-											</Button>
-										</div>
-									</form>
-								</Grid>
-							</Grid>
-						</Container>
-					</Box>
-				</Modal>
-				<Modal onClose={() => setShowSizeModal(false)} show={showSizeModal}>
-					<img className="popup-image" src="/images/tent-spec/choose-size.jpg" />
-				</Modal>
-				<Modal show={showModal} onClose={() => setShowModal(false)} backgroundColor="rgb(237, 247, 237)">
-					<Alert severity="success">
-						<AlertTitle>Success</AlertTitle>
-						Email has been sent successfully.
-					</Alert>
-				</Modal>
-			</Box>
-		</React.Fragment>
-	);
+            utils.updateUser(token, userData).then((result) => {
+                setTimeout(() => setShowAddProgress(false), 500);
+
+                localStorage.setItem("cart", "");
+
+                EventEmitter.dispatch("updateBadge");
+                EventEmitter.dispatch("handleCart", true);
+            });
+        } else {
+            setTimeout(() => setShowAddProgress(false), 500);
+
+            cl = cl.concat([...checkoutProductList]);
+            cl = JSON.stringify(cl);
+            localStorage.setItem("cart", cl);
+
+            EventEmitter.dispatch("updateBadge");
+            EventEmitter.dispatch("handleCart", true);
+        }
+    };
+
+    //////////////////////////////////////
+
+    const DataTable = () => {
+        let rowDate = [];
+
+        selectedVariant.map((variant, index) => {
+            let cell = {
+                name: productComponent[index].name,
+                quantity: 1,
+                regular_price: variant.regular_price,
+                sale_price: variant.sale_price,
+                on_sale: variant.on_sale,
+            };
+            rowDate.push(cell);
+        });
+
+        function NameCell({value}) {
+            return (
+                <Block font="MinXLabel14" overrides={{Block: {style: {fontWeight: "400"}},}}>{value}</Block>
+            );
+        }
+
+        function QuantityCell({value}) {
+            return <Block font="MinXLabel14" overrides={{Block: {style: {textAlign: "center", fontWeight: "400"}},}}>{value * totalCount}</Block>;
+        }
+
+        function PriceCell({priceRegular, priceSale, onSale}) {
+            return (
+                <Block font="MinXLabel14" overrides={{Block: {style: {textAlign: "right", fontWeight: "400"}},}}>
+                    {onSale ? (
+                        <Block display="flex" flexDirection="row">
+                            {priceSale == 0 ? <Block marginRight="10px" color="#E4458C">Free</Block> :
+                                <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
+                            <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
+                        </Block>
+                    ) : (
+                        <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"}/>
+                    )}
+                </Block>
+            );
+        }
+
+        return (
+            <Block height="100%">
+                <TableBuilder data={rowDate}
+                              overrides={{
+                                  Root: {
+                                      style: {height: "calc(100% - 44px)"},
+                                  },
+                              }}
+                >
+                    <TableBuilderColumn header="Item">{(row) => <NameCell value={row.name}/>}</TableBuilderColumn>
+                    <TableBuilderColumn header="Quantity" numeric
+                                        overrides={{
+                                            TableHeadCell: {
+                                                style: {textAlign: "center",}
+                                            },
+                                        }}
+                    >
+                        {(row) => <QuantityCell value={row.quantity}/>}
+                    </TableBuilderColumn>
+                    <TableBuilderColumn header="Price"
+                                        overrides={{
+                                            TableHeadCell: {
+                                                style: {textAlign: "right",},
+                                            },
+                                        }}
+                    >
+                        {(row) => <PriceCell priceRegular={row.regular_price} priceSale={row.sale_price} onSale={row.on_sale}/>}
+                    </TableBuilderColumn>
+                </TableBuilder>
+                <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center"
+                       paddingTop="12px" paddingRight="20px" paddingBottom="12px" paddingLeft="20px"
+                       font="MinXLabel14" overrides={{Block: {style: {fontWeight: "400", borderTop: "1px solid #d9d9d9"}},}}
+                >
+                    <div>Total:</div>
+                    <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalePrice ? totalSalePrice : totalRegularPrice} displayType={"text"} style={{fontSize: 16, fontWeight: "bold"}}/>
+                </Block>
+            </Block>
+        );
+    };
+
+    const SelectionList = ({index, data = {attributes: []}}) => {
+        let sl = data.attributes.filter((attribute) => attribute.variation);
+        return (
+            <>
+                {sl.map((attribute, i) => {
+                    return (
+                        <Block key={i} font="MinXLabel14"
+                               overrides={{
+                                   Block: {
+                                       props: {
+                                           className: styles["container-product-section"]
+                                       },
+                                   },
+                               }}
+                        >
+                            <Block marginBottom="16px" font="MinXHeading16">{attribute.name}</Block>
+                            <Selection data={attribute}
+                                       value={selectedAttribute[index] ? selectedAttribute[index][i].option.toLowerCase() : ""}
+                                       onChange={(event) => handleChangeRadio(event, index, attribute.id)}
+                            />
+                        </Block>
+                    )
+                })}
+            </>
+        )
+    }
+
+    return (
+        <React.Fragment>
+            <Head>
+                <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
+            </Head>
+            <Block display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]} height="100vh" paddingTop={["48px", "48px", "96px"]} style={{paddingTop: 146}}>
+                <Block display="flex" flexDirection={["column", "column", "row"]} width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]}>
+                    {/* 图片区域 */}
+                    <Block position={["unset", "unset", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                        <Checkout
+                            totalPrice={totalSalePrice ? totalSalePrice : totalRegularPrice}
+                            onClick={() => openSummaryModal()}
+                            onClickMinus={() => setTotalCount(totalCount - 1)}
+                            onClickPlus={() => setTotalCount(totalCount + 1)}
+                            quantity={totalCount}
+                            onClickAddToBag={() => updateCart()}
+                        />
+                    </Block>
+                    {/* 选择区域 */}
+                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}>
+                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                            <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
+                            {product && product.short_description ? (
+                                <Block font="MinXParagraph14"
+                                       overrides={{
+                                           Block: {
+                                               props: {
+                                                   className: clsx(styles["container-product-section"], styles["align-left"])
+                                               },
+                                           },
+                                       }}
+                                       dangerouslySetInnerHTML={{
+                                           __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
+                                       }}
+                                />
+                            ) : null}
+                            <SelectionList index={0} data={productComponent[0]}/>
+                        </Block>
+                    </Block>
+                </Block>
+                <Modal onClose={() => closeSummaryModal()}
+                       isOpen={summaryIsOpen}
+                       animate
+                       autoFocus
+                       size={SIZE.full}
+                       role={ROLE.dialog}
+                       overrides={{
+                           Root: {
+                               style: ({$theme}) => ({
+                                   zIndex: "99",
+                                   height: "100vh",
+                                   paddingTop: "24px",
+                                   overflowY: "hidden",
+                               }),
+                               props: {
+                                   className: "modalRoot",
+                               },
+                           },
+                           DialogContainer: {
+                               style: ({$theme}) => ({
+                                   height: "100%",
+                               }),
+                           },
+                           Dialog: {
+                               props: {className: "modalDialog modalDialog-summary"},
+                           },
+                           Close: {
+                               style: () => ({top: "29px", right: "29px"}),
+                           },
+                       }}
+                >
+                    <ModalBody className="modalSelectionContainer modalSelectionContainer-summary">
+                        <Block
+                            width={["100%", "448px", "702px"]}
+                            height={["520px", "520px", "368px"]}
+                            display={"flex"}
+                            flexDirection={"column"}
+                            marginLeft={"auto"}
+                            marginBottom={["16px", "16px", "32px"]}
+                            marginRight={"auto"}
+                            overflow={["scroll", "scroll", "hidden"]}
+                            backgroundColor={"white"}
+                            className={"modalSelectionContainer-summary-data"}
+                        >
+                            <Block flex={1} position={"relative"}>
+                                <DataTable/>
+                            </Block>
+                        </Block>
+                        <Block width={["100%", "448px", "702px"]} height={"auto"} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"}
+                               marginRight={"auto"} paddingBottom={"16px"}>
+                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
+                                <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                                <div style={{fontSize: 14, lineHeight: "17px"}}>
+                                    <div>Free shipping on orders over $149</div>
+                                    <div>Order today, shipped by {shippedDay}.</div>
+                                    <div style={{fontSize: 12, lineHeight: "20px", color: "#8C8C8C"}}>
+                                        Custom printing orders do not apply.
+                                        <span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
+                                <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
+                                <div style={{fontSize: 14, lineHeight: "17px"}}>
+                                    Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
+                                </div>
+                            </div>
+                        </Block>
+                    </ModalBody>
+                </Modal>
+            </Block>
+        </React.Fragment>
+    );
 }
 
 Umbrella.getInitialProps = async (context) => {
-	const { query } = context;
-	const { id } = query;
-	let product = null,
-		component = [],
-		variant = [];
+    const {query} = context;
+    const {id} = query;
+    let product = null,
+        component = [],
+        variant = [];
 
-	// product = await utils.getProductByWooId(id);
-	const resP = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + id, {
-		method: "GET",
-		headers: {
-			"Access-Control-Allow-Headers": "*",
-			"Access-Control-Allow-Origin": "*",
-		},
-	});
-	product = await resP.json();
+    product = await utils.getProductByWooId(id);
+    if (product.type === "simple") {
+        component[0] = {...product};
+    } else if (product.type === "variable") {
+        component[0] = {...product};
+        variant[0] = await utils.getVariantByWooProductId(id);
+    }
 
-	if (product.type === "simple") {
-		component[0] = { ...product };
-	} else if (product.type === "variable") {
-		component[0] = { ...product };
-		// variant[0] = await utils.getVariantByWooProductId(id);
-		const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {
-			method: "GET",
-			headers: {
-				"Access-Control-Allow-Headers": "*",
-				"Access-Control-Allow-Origin": "*",
-			},
-		});
-		variant[0] = await resV.json();
-	}
-
-	return {
-		product: product,
-		productComponent: component,
-		productVariant: variant,
-	};
+    return {
+        product: product,
+        productComponent: component,
+        productVariant: variant,
+        noFooter: true,
+    };
 };
 
 export default withRouter(Umbrella);

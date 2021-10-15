@@ -167,7 +167,6 @@ function Cart_Page({router}) {
 
     useEffect(() => {
         if (!user) return;
-
         if (
             !user.billing.first_name ||
             !user.billing.last_name ||

@@ -436,7 +436,7 @@ function Accessories({router}) {
                                                 <div style={{margin: "18px 0"}}>
                                                     <h3 className="section-title">Steel stakes</h3>
                                                     <p className="section-content">$7.00</p>
-                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push("/products/accessories-n?id=19256")}>
+                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push("/products/accessories?id=19256")}>
                                                         Buy
                                                     </Button>
                                                 </div>
@@ -486,7 +486,9 @@ function Accessories({router}) {
                                                 <div style={{margin: "18px 0"}}>
                                                     <h3 className="section-title">LED light</h3>
                                                     <p className="section-content">$299.00</p>
-                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push("/products/accessories?id=20510")}>
+                                                    <Button variant="contained" className="section-grid-button"
+                                                            onClick={() => router.push({pathname: '/products/accessories', query: {id: "20510"},})}
+                                                    >
                                                         Buy
                                                     </Button>
                                                 </div>

@@ -15,7 +15,10 @@ const banner = ({
                     subtitle,
                     containerHeight,
                     containerMarginBottom,
+                    containerBackground = "rgba(0,0,0,0.2)",
+                    containerBackgroundPosition = "center",
                     url,
+                    alt = "",
                     router,
                     destination,
                     showScrollDown,
@@ -24,6 +27,7 @@ const banner = ({
                     arrowButton,
                     textButton,
                     textColor,
+                    subTextColor,
                     buttonBackgroundColor,
                     buttonHoverColor,
                     buttonActiveColor,
@@ -36,7 +40,7 @@ const banner = ({
                marginBottom={containerMarginBottom ? containerMarginBottom : ["16px", "16px", "0px"]}
                paddingBottom={["40px", "60px", "70px"]}
                paddingLeft={["24px", "40px", "calc((100% + 24px)/12)"]}
-               backgroundColor="rgba(0,0,0,0.2)"
+               backgroundColor={containerBackground}
                overrides={{
                    Block: {
                        props: {
@@ -47,7 +51,7 @@ const banner = ({
                }}
         >
             <div className="background-image">
-                <Image src={url} alt="home-page-display" layout="fill" objectFit="cover" quality={100}/>
+                <Image src={url} alt={alt} layout="fill" objectFit="cover" objectPosition={containerBackgroundPosition} quality={100}/>
             </div>
             <Block maxWidth={["213px", "298px"]} marginBottom={["8px", "12px", "16px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]}
                    color={textColor ? textColor : "MinXPrimaryTextAlt"}
@@ -63,7 +67,7 @@ const banner = ({
             </Block>
             <Block maxWidth={["260px", "320px", "400px"]} marginBottom={["12px", "16px"]}
                    font={["MinXSubtitle16", "MinXSubtitle16", 'MinXSubtitle20']}
-                   color={textColor ? textColor : "MinXPrimaryTextAlt"}
+                   color={subTextColor ? subTextColor : textColor ? textColor : "MinXPrimaryTextAlt"}
             >
                 {subtitle}
             </Block>

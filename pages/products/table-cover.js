@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import React, {useEffect, useState} from "react";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 import clsx from "clsx";
 
-import { Box, Button, Breadcrumbs, Container, Grid, TextField, Typography } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
-
+import {withRouter} from "next/router";
+import Head from "next/head";
 import Link from "next/link";
-import { withRouter } from "next/router";
 
-import styles from "../../styles/Product.module.scss";
+import {Block} from "baseui/block";
 
-import { DateFn, NumberFn, StringFn, UrlFn } from "../../utils/tools";
+import {Checkout_L as Checkout, Selection} from "../../components/sections";
+
+import styles from "./Product.module.scss";
+
+import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
-
-import CBreadcrumbs from "../../components/breadcrumbs";
-import Checkout from "../../components/buttonGroup";
-import CustomButton from "../../components/button";
-import Modal from "../../components/modal";
-import Selections from "../../components/selection_group";
+import {EventEmitter} from "../../utils/events";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -26,651 +23,499 @@ const stringFn = new StringFn();
 const urlFn = new UrlFn();
 const utils = new Utils();
 
-const id_attribute_umbrellaSize = 15;
-
 let checkoutProductList = [];
 
-function getProducts(components) {
-	return Promise.all(components.map(({ default_option_id }) => utils.getProductByWooId(default_option_id)));
-}
+function Table_Cover({router, product, productComponent, productVariant}) {
+    const [uProduct, setProduct] = useState({...product});
+    const [productId, setProductId] = useState("");
+    const [productName, setProductName] = useState("");
+    const [productType, setProductType] = useState("");
+    const [productImage, setProductImage] = useState([]);
+    const [productImageGallery, setProductImageGallery] = useState([]);
+    const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
-function getVariants(components) {
-	return Promise.all(components.map(({ id }) => utils.getVariantByWooProductId(id)));
-}
+    const [uProductComponent, setProductComponent] = useState([...productComponent]);
+    const [uProductVariant, setProductVariant] = useState([...productVariant]);
+    const [selectedAttribute, setSelectedAttribute] = useState([]);
+    const [selectedVariant, setSelectedVariant] = useState([]);
 
-function Table_Cover({ router, product, productComponent = [], productVariant = [] }) {
-	const [display, setDisplay] = useState(false);
+    const [initProductVariant, setInitProductVariant] = useState(false);
+    const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
 
-	const [productId, setProductId] = useState("");
-	const [productName, setProductName] = useState("");
-	const [productType, setProductType] = useState("");
-	const [productImage, setProductImage] = useState([]);
+    const [isInStock, setIsInStock] = useState(true);
 
-	const [selectedAttribute, setSelectedAttribute] = useState([]);
-	const [selectedVariant, setSelectedVariant] = useState([]);
+    const [regularPrice, setRegularPrice] = useState(0);
+    const [salePrice, setSalePrice] = useState(0);
 
-	const [initProductVariant, setInitProductVariant] = useState(false);
-	const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
+    const [totalRegularPrice, setTotalRegularPrice] = useState(0);
+    const [totalSalePrice, setTotalSalePrice] = useState(0);
+    const [totalCount, setTotalCount] = useState(1);
 
-	const [totalRegularPrice, setTotalRegularPrice] = useState(0);
-	const [totalSalePrice, setTotalSalePrice] = useState(0);
-	const [totalCount, setTotalCount] = useState(1);
+    const [message, setMessage] = useState("");
 
-	const [message, setMessage] = useState("");
+    const [availableToCheckout, setAvailable] = useState(false);
 
-	const [availableToCheckout, setAvailable] = useState(false);
+    const [showAddProgress, setShowAddProgress] = useState(false);
+    const [shippedDay, setShippedDay] = useState("");
 
-	const [shippedDay, setShippedDay] = useState("");
+    ////////////////////////////////////////
 
-	////////////////////////////////////////
+    const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
-	const [availableList, setAvailableList] = useState([{ id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true }]);
+    ////////////////////////////////////////
 
-	////////////////////////////////////////
+    const fetchProduct = async (id) => {
+        if (!id) return;
+        return await utils.getProductByWooId(id);
+    };
 
-	const [showGetQuote, setShowGetQuote] = useState(false);
-	const [showModal, setShowModal] = useState(false);
+    const fetchProductVariant = async (id) => {
+        if (!id) return;
+        return await utils.getVariantByWooProductId(id);
+    };
 
-	////////////////////////////////////////
+    const setMainImage = (images) => {
+        if (!images || images.length === 0) return;
 
-	const [quoteProduct, setQuoteProduct] = useState("");
-	const [quoteConfiguration, setQuoteConfiguration] = useState("");
-	const [quoteQuantity, setQuoteQuantity] = useState("");
-	const [quoteNameLast, setQuoteNameLast] = useState("");
-	const [quoteNameFirst, setQuoteNameFirst] = useState("");
-	const [quoteEmail, setQuoteEmail] = useState("");
-	const [quotePhone, setQuotePhone] = useState("");
-	const [quoteRequest, setQuoteRequest] = useState("");
-	const [quoteError, setQuoteError] = useState(false);
+        function renderCustomImage(props) {
+            return (
+                <img className="image-gallery-image" src={props.original}/>
+            );
+        }
 
-	////////////////////////////////////////
+        let i = [];
+        images.map((img, index) => {
+            let url = img.src;
+            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            i[index] = {
+                original: url,
+                thumbnail: url,
+                thumbnailWidth: 60,
+                thumbnailHeight: 60,
+                originalClass: "originalClass",
+                thumbnailClass: "thumbnailClass",
+                originalAlt: img.name,
+                thumbnailAlt: img.name,
+            };
+        });
+        i[0].renderItem = renderCustomImage;
+        setProductImageGallery(i);
+    };
 
-	const setMainImage = (images) => {
-		if (!images) return;
+    const handleChangeRadio = (event, index, id) => {
+        // Part 1: 更改选项List信息 并 保存
+        let selection = [...selectedAttribute];
+        selection[index].forEach((attribute) => {
+            if (attribute.id === id) attribute.option = event.target.value;
+        });
+        // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
+        let selectionVariant = [...selectedVariant];
+        let selected = uProductVariant[index].filter((variant) => {
+            if (!variant || !variant.attributes) return false;
 
-		if (Array.isArray(images)) {
-			let urlList = images.map((image) => {
-				return { src: image.src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com") };
-			});
-			setProductImage(urlList);
-		} else {
-			let url = images.src;
-			url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            let equal = true;
+            for (let i = 0; i < variant.attributes.length; i++) {
+                if (selection[index][i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
+                    equal = false;
+                    break;
+                }
+            }
+            return equal;
+        });
+        selectionVariant[index] = selected[0];
+        // Part 3: 保存更改项
+        setSelectedAttribute(selection);
+        setSelectedVariant(selectionVariant);
+    };
 
-			setProductImage([{ src: url }]);
-		}
-	};
+    const checkProduct_getPrice = () => {
+        let regularPrice = 0,
+            salePrice = 0;
 
-	const handleChangeRadio = (event, index, id) => {
-		// Part 1: 更改选项List信息 并 保存
-		let selection = [...selectedAttribute];
-		selection[index].forEach((attribute) => {
-			if (attribute.id === id) attribute.option = event.target.value;
-		});
-		// Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
-		let selectionVariant = [...selectedVariant];
-		let selected = productVariant[index].filter((variant) => {
-			if (!variant || !variant.attributes) return false;
+        let available = [...availableList];
 
-			let equal = true;
-			for (let i = 0; i < variant.attributes.length; i++) {
-				if (selection[index][i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
-					equal = false;
-					break;
-				}
-			}
-			return equal;
-		});
-		selectionVariant[index] = selected[0];
-		// Part 3: 保存更改项
-		setSelectedAttribute(selection);
-		setSelectedVariant(selectionVariant);
-	};
+        selectedVariant.forEach((variant, index) => {
+            if ((!variant || !variant.attributes) && uProductComponent[index].type !== "simple") {
+                available[index].status = false;
+                return;
+            }
+            // 计算售价
+            if (!variant.on_sale) {
+                regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+            } else {
+                regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
+            }
+            // 检查可用性
+            if (variant.stock_status === "instock") {
+                available[index] = {
+                    id: variant.id,
+                    status: true,
+                    quantity: variant.stock_quantity,
+                    needed: totalCount,
+                    attribute: variant.attributes,
+                    optional: false,
+                };
+            } else {
+                available[index] = {
+                    id: variant.id,
+                    status: false,
+                    quantity: 0,
+                    needed: totalCount,
+                    attribute: variant.attributes,
+                    optional: false,
+                };
+            }
+        });
+        setAvailableList(available);
 
-	const checkProduct_getPrice = () => {
-		let regularPrice = 0,
-			salePrice = 0;
+        setTotalRegularPrice(regularPrice);
+        setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+    };
 
-		let available = [...availableList];
+    useEffect(async () => {
+        if (uProduct.id) {
+            setProductId(uProduct.id.toString());
+        } else {
+            let id = urlFn.getParam("id");
+            if (id) {
+                setProductId(id.toString());
+                let p = await utils.getProductByWooId(id);
+                setProduct(p);
+            } else {
+                router.push("/")
+            }
+        }
+        setShippedDay(dateFn.getReceivedDay());
+    }, []);
 
-		selectedVariant.forEach((variant, index) => {
-			if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
-				available[index].status = false;
-				return;
-			}
-			// 计算售价
-			if (!variant.on_sale) {
-				regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-				salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-			} else {
-				regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-				salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
-			}
-			// 检查可用性
-			if (variant.stock_status === "instock") {
-				available[index] = {
-					id: variant.id,
-					status: true,
-					quantity: variant.stock_quantity,
-					needed: totalCount,
-					attribute: variant.attributes,
-					optional: false,
-				};
-			} else {
-				available[index] = {
-					id: variant.id,
-					status: false,
-					quantity: 0,
-					needed: totalCount,
-					attribute: variant.attributes,
-					optional: false,
-				};
-			}
-		});
-		setAvailableList(available);
+    useEffect(() => {
+        if (!uProduct) return;
 
-		setTotalRegularPrice(regularPrice);
-		setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
-	};
+        setProductName(uProduct.name);
+        setProductType(uProduct.type);
 
-	useEffect(() => {
-		setTimeout(() => setDisplay(true), 250);
+        if (uProduct.hasOwnProperty("image")) {
+            setMainImage([uProduct.image]);
+        } else if (uProduct.hasOwnProperty("images")) {
+            setMainImage(uProduct.images);
+        }
 
-		setProductId(product.id.toString());
-		setShippedDay(dateFn.getReceivedDay());
-	}, []);
+        // 获取,保存各组件信息
+        if (uProduct.type === "simple" || uProduct.type === "variable") {
+            setProductComponent([{...uProduct}]);
+        } else if (uProduct.type === "composite") {
+            Promise.all(uProduct.composite_components.map(({default_option_id}) => fetchProduct(default_option_id))).then((responses) => setProductComponent(responses));
+        }
 
-	useEffect(() => {
-		if (!product) return;
+        setRegularPrice(uProduct.regular_price);
+        setSalePrice(uProduct.sale_price);
+    }, [uProduct]);
 
-		setProductName(product.name);
-		setProductType(product.type);
+    useEffect(() => {
+        if (!uProductComponent || uProductComponent.length === 0) return;
+        if (uProduct.type === "simple") {
+            setSelectedVariant(uProductComponent);
+            // 获取,保存各组件变体产品信息
+            // setProductVariant([uProductComponent]);
+        } else if (uProduct.type === "variable") {
+            let selectedAttrList = [];
+            Promise.all(
+                uProductComponent.map((component) => {
+                    let defaultAttr = [...component.default_attributes];
 
-		if (product.hasOwnProperty("image") && product.image) {
-			setMainImage(product.image);
-		} else if (product.hasOwnProperty("images") && product.images && product.images.length > 0) {
-			setMainImage(product.images);
-		}
-	}, [product]);
+                    selectedAttrList.push(defaultAttr);
 
-	useEffect(() => {
-		if (!productComponent || productComponent.length === 0) return;
-		if (product.type === "simple") {
-			setSelectedVariant(productComponent);
-		} else if (product.type === "variable") {
-			let selectedAttrList = [];
-			productComponent.map((component) => {
-				let defaultAttr = [...component.default_attributes];
+                    return fetchProductVariant(component.id);
+                })
+            ).then((result) => {
+                setSelectedAttribute(selectedAttrList);
+                setInitSelectedAttribute(true);
 
-				defaultAttr.forEach((attr) => {
-					if (attr.id === id_attribute_umbrellaSize) {
-						attr.option = stringFn.replaceDash(attr.option, 2);
-					}
-				});
-				selectedAttrList.push(defaultAttr);
-			});
-			setSelectedAttribute(selectedAttrList);
-			setInitSelectedAttribute(true);
+                // 获取,保存各组件变体产品信息
+                setProductVariant(result);
+                setTimeout(() => setInitProductVariant(true), 250);
+            });
+        }
+    }, [uProductComponent]);
 
-			// 获取,保存各组件变体产品信息
-			setInitProductVariant(true);
-		}
-	}, [productComponent]);
+    useEffect(() => {
+        if (!initSelectedAttribute || !initProductVariant) return;
 
-	useEffect(() => {
-		if (!initSelectedAttribute || !initProductVariant) return;
+        // 获取,保存各组件默认变体产品信息
+        let selectedVariantList = [];
+        selectedAttribute.forEach((attr, index) => {
+            if (!attr) return;
+            let selected = uProductVariant[index].filter((variant) => {
+                if (!variant || !variant.attributes) return false;
+                if (attr.length !== variant.attributes.length) return false;
+                let equal = true;
+                for (let i = 0; i < variant.attributes.length; i++) {
+                    if (attr[i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
+                        equal = false;
+                        break;
+                    }
+                }
+                return equal;
+            });
+            selectedVariantList[index] = selected[0];
+        });
+        // 初始化数据
+        setSelectedVariant(selectedVariantList);
+    }, [initSelectedAttribute, initProductVariant]);
 
-		// 获取,保存各组件默认变体产品信息
-		let selectedVariantList = [];
-		selectedAttribute.forEach((attr, index) => {
-			if (!attr) return;
-			let selected = productVariant[index].filter((variant) => {
-				if (!variant || !variant.attributes) return false;
-				if (attr.length !== variant.attributes.length) return false;
+    useEffect(() => {
+        // 已选各产品组成变体
+        if (!selectedVariant || selectedVariant.length === 0) return;
 
-				let equal = true;
-				for (let i = 0; i < variant.attributes.length; i++) {
-					if (attr[i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
-						equal = false;
-						break;
-					}
-				}
-				return equal;
-			});
-			selectedVariantList[index] = selected[0];
-		});
-		// 初始化数据
-		setSelectedVariant(selectedVariantList);
-	}, [initSelectedAttribute, initProductVariant]);
+        selectedVariant.forEach((variant, index) => {
+            if (!variant || !variant.attributes) return;
 
-	useEffect(() => {
-		// 已选各产品组成变体
-		if (!selectedVariant || selectedVariant.length === 0) return;
+            if (index === 0) {
+                if (variant.hasOwnProperty("image") && variant.image) {
+                    setMainImage([variant.image]);
+                } else if (variant.hasOwnProperty("images") && variant.images.length > 0) {
+                    setMainImage(variant.images);
+                }
 
-		selectedVariant.forEach((variant, index) => {
-			if (!variant || !variant.attributes) return;
+                setRegularPrice(variant.regular_price);
+                setSalePrice(variant.sale_price);
+            }
+        });
 
-			if (index === 0) {
-				if (variant.hasOwnProperty("image") && variant.image) {
-					setMainImage(variant.image);
-				} else if (variant.hasOwnProperty("images") && variant.images && variant.images.length > 0) {
-					setMainImage(variant.images);
-				}
-			}
-		});
+        checkProduct_getPrice();
+    }, [selectedVariant]);
 
-		checkProduct_getPrice();
-	}, [selectedVariant]);
+    useEffect(() => {
+        if (totalCount === 0) return;
 
-	useEffect(() => {
-		if (totalCount === 0) return;
+        checkProduct_getPrice();
+    }, [totalCount]);
 
-		checkProduct_getPrice();
-	}, [totalCount]);
+    useEffect(() => {
+        if (selectedVariant.length === 0) return;
 
-	useEffect(() => {
-		if (selectedVariant.length === 0) return;
+        checkoutProductList = [];
 
-		checkoutProductList = [];
+        let available = true;
+        availableList.forEach((item, index) => {
+            if (!item || !available) return;
+            // 没货 直接返回
+            if (!item.status) {
+                if (!item.optional) {
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
+                    return;
+                } else {
+                    return;
+                }
+            }
+            // 有货 判定是否有明细
+            if (item.quantity) {
+                // 有明细 计算需求供给
+                if (item.needed > item.quantity) {
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
+                    return;
+                }
+            }
 
-		let available = true;
+            const i = checkoutProductList.findIndex(({id}) => id === item.id);
+            if (i === -1) {
+                const variation = item.attribute.map((attr) => ({
+                    attribute: attr.name,
+                    value: attr.option,
+                }));
 
-		availableList.forEach((item, index) => {
-			if (!item || !available) return;
-			// 没货 直接返回
-			if (!item.status) {
-				if (!item.optional) {
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				} else {
-					return;
-				}
-			}
-			// 有货 判定是否有明细
-			if (item.quantity) {
-				// 有明细 计算需求供给
-				if (item.needed > item.quantity) {
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				}
-			}
+                checkoutProductList.push({
+                    id: item.id,
+                    quantity: item.needed,
+                    variation: variation,
+                });
+            } else {
+                let needed = checkoutProductList[i].quantity + item.needed;
+                if (needed > item.quantity) {
+                    checkoutProductList.splice(i, 1);
+                    available = false;
+                    setIsInStock(false);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
+                    return;
+                } else {
+                    checkoutProductList[i].quantity = needed;
+                }
+            }
+            setIsInStock(true);
+            setMessage("");
+        });
+        setAvailable(available);
+    }, [availableList]);
 
-			const i = checkoutProductList.findIndex(({ id }) => id === item.id);
-			if (i === -1) {
-				const variation = item.attribute.map((attr) => ({
-					attribute: attr.name,
-					value: attr.option,
-				}));
+    const updateCart = async () => {
+        const token = localStorage.getItem("token");
+        let cart = localStorage.getItem("cart");
+        cart = cart ? JSON.parse(cart) : cart;
 
-				checkoutProductList.push({
-					id: item.id,
-					quantity: item.needed,
-					variation: variation,
-				});
-			} else {
-				let needed = checkoutProductList[i].quantity + item.needed;
-				if (needed > item.quantity) {
-					checkoutProductList.splice(i, 1);
-					available = false;
-					setMessage("Insufficient stock → " + productComponent[index].name);
-					return;
-				} else {
-					checkoutProductList[i].quantity = needed;
-				}
-			}
-			setMessage("");
-		});
-		setAvailable(available);
-	}, [availableList]);
+        let cl;
 
-	const handleSendQuote = async () => {
-		if (quoteQuantity < 1 || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
-			setQuoteError(true);
-		} else {
-			let result = await utils.contact({
-				form_id: "2",
-				status: "active",
-				1: "New Entry: " + quoteProduct + " Enquiry",
-				2: quoteConfiguration,
-				3: quoteQuantity,
-				4.3: quoteNameFirst,
-				4.6: quoteNameLast,
-				5: quoteEmail,
-				6: quotePhone,
-				8: quoteRequest,
-			});
-			setShowGetQuote(false);
-			setTimeout(() => setShowModal(true), 250);
+        if (cart && Array.isArray(cart)) {
+            cl = [...cart];
+        } else {
+            cl = [];
+        }
 
-			if (document.location.href.match(/(^[^#]*)/).length > 0) {
-				router.replace(document.location.href.match(/(^[^#]*)/)[0] + "#sent");
-			}
-		}
-	};
+        setShowAddProgress(true);
 
-	//////////////////////////////////////
+        if (token) {
+            let cartList = [];
+            let data = await utils.getUser(token);
+            let result = data.meta_data.filter((data) => data.key === "cart");
+            if (result.length > 0) {
+                if (result[0].value.length > 0) {
+                    cartList = [...result[0].value];
+                    cartList = cartList.concat([...checkoutProductList]);
+                } else {
+                    cartList = [...checkoutProductList];
+                }
+            } else {
+                cartList = [...checkoutProductList];
+            }
+            cl = cl.concat([...cartList]);
 
-	return (
-		<React.Fragment>
-			<Box className="page product" fontSize={14} lineHeight={1}>
-				{display ? (
-					<>
-						<CBreadcrumbs>
-							<Container maxWidth="md">
-								{product ? (
-									<Breadcrumbs classes={{ li: "root-breadcrumbs-text" }}>
-										<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-											Home
-										</Link>
-										<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-											Products
-										</Link>
-										<Typography variant="inherit" color="textPrimary">
-											{" "}
-											{product.name}{" "}
-										</Typography>
-									</Breadcrumbs>
-								) : null}
-							</Container>
-						</CBreadcrumbs>
-						<div className={styles["container-page"]}>
-							<Container maxWidth="lg">
-								<Grid container spacing={6}>
-									<Grid item xs={12} sm={6}>
-										<div className={styles["container-product-image"]}>
-											<Carousel showIndicators={false}>
-												{productImage.map((item, index) => (
-													<img key={index} src={item.src} />
-												))}
-											</Carousel>
-										</div>
-									</Grid>
-									<Grid item xs={12} sm={6} className="position-r">
-										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
-											<Typography variant="h1" classes={{ h1: styles["product-name"] }} color="textPrimary">
-												{productName}
-											</Typography>
-										</div>
-										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
-											{"Description："}
-											<Typography variant="inherit" display="block" classes={{ root: styles["product-description"] }} color="textSecondary">
-												Feature
-												{productId === "57886" ? (
-													<>
-														<ul>
-															<li>The Fitted Table Cover Range is constructed from the same fabric as the instant canopy range.</li>
-															<li>The table cover features two zips at the back to assist with fitting the cover and an access point to store items under the table.</li>
-														</ul>
-														Material
-														<ul>
-															<li>600D Polyester with PU Coating, 288gsm.</li>
-														</ul>
-														Printing
-														<ul>
-															<li>Full color digital printing.</li>
-														</ul>
-														Size(L X W X H)
-														<ul>
-															<li>4FT Small: Length: 4’ (1230mm), Width: 2’ (620mm), Height: 2’ 4” (720mm)</li>
-															<li>6FT Medium: Length: 6’ 1” (1840mm), Width: 2’ 6” (770mm), Height: 2’ 4” (720mm)</li>
-															<li>8FT Large: Length: 8’ (2450mm), Width: 2’ 6” (770mm), Height: 2’ 4” (720mm)</li>
-														</ul>
-													</>
-												) : productId === "57917" ? (
-													<>
-														<ul>
-															<li>The Stretch Table Cover range is firm fitting and is constructed from a lightweight stretch fabric.</li>
-															<li>The cover stretches over the table and secures it’s self with pockets at the base.</li>
-														</ul>
-														Material
-														<ul>
-															<li>Stretch fabric, 229gsm.</li>
-														</ul>
-														Printing
-														<ul>
-															<li>Full color digital printing.</li>
-														</ul>
-														Size(L X W X H)
-														<ul>
-															<li>4FT Small: Length: 4’ (1230mm), Width: 2’ (620mm), Height: 2’ 4” (720mm)</li>
-															<li>6FT Medium: Length: 6’ 1” (1840mm), Width: 2’ 6” (770mm), Height: 2’ 4” (720mm)</li>
-															<li>8FT Large: Length: 8’ (2450mm), Width: 2’ 6” (770mm), Height: 2’ 4” (720mm)</li>
-														</ul>
-													</>
-												) : null}
-											</Typography>
-										</div>
-										<div>
-											{productComponent && productComponent[0]
-												? productComponent[0].attributes
-														.filter((attribute) => attribute.variation)
-														.map((attribute, index) => (
-															<div key={index} className={clsx(styles["container-product-section"])}>
-																<Selections
-																	label={"Choose your " + stringFn.replaceDash(attribute.name, 1) + ":"}
-																	value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
-																	onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
-																	list={attribute.options}
-																	id={attribute.id.toString()}
-																/>
-															</div>
-														))
-												: null}
-										</div>
-										<Checkout
-											onClick={() => {
-												setQuoteProduct(productName);
-												let configuration = "";
-												selectedAttribute[0].map((attribute) => (configuration += attribute.name + ": " + attribute.option + "; "));
-												setQuoteConfiguration(configuration);
-												setQuoteQuantity(1);
-												setShowGetQuote(true);
-											}}
-											type="quote"
-										/>
-										<Grid container direction="row" alignItems="center" classes={{ root: styles["button-group"] }}>
-											<CustomButton type="underline" onClick={() => router.push("/shipping-return")}>
-												Shipping &amp; Return
-											</CustomButton>
-										</Grid>
-									</Grid>
-								</Grid>
-							</Container>
-						</div>
-					</>
-				) : null}
-				<Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
-					<Box className="popup-section" style={{ width: "auto" }}>
-						<Container maxWidth="md">
-							<Grid container spacing={6}>
-								<Grid item xs={12}>
-									<form>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Product"
-												InputLabelProps={{
-													shrink: true,
-												}}
-												InputProps={{
-													readOnly: true,
-												}}
-												defaultValue={quoteProduct}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Configurations"
-												InputLabelProps={{
-													shrink: true,
-												}}
-												InputProps={{
-													readOnly: true,
-												}}
-												defaultValue={quoteConfiguration}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Quantity"
-												type="number"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteQuantity}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteQuantity(event.target.value);
-												}}
-												error={quoteQuantity > 0 && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input" style={{ display: "flex" }}>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="Last Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameLast}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameLast(event.target.value);
-													}}
-													error={!quoteNameLast && quoteError}
-												/>
-											</div>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="First Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameFirst}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameFirst(event.target.value);
-													}}
-													error={!quoteNameFirst && quoteError}
-												/>
-											</div>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Email"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteEmail}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteEmail(event.target.value);
-												}}
-												error={!quoteEmail && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Phone"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quotePhone}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuotePhone(event.target.value);
-												}}
-												error={!quotePhone && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Request"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												multiline
-												maxRows={6}
-												defaultValue={quoteRequest}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteRequest(event.target.value);
-												}}
-												error={!quoteRequest && quoteError}
-											/>
-										</div>
-										<div className="section-checkout-container">
-											<Button variant="contained" onClick={() => handleSendQuote()} disableRipple disableElevation>
-												Submit
-											</Button>
-										</div>
-									</form>
-								</Grid>
-							</Grid>
-						</Container>
-					</Box>
-				</Modal>
-				<Modal show={showModal} onClose={() => setShowModal(false)} backgroundColor="rgb(237, 247, 237)">
-					<Alert severity="success">
-						<AlertTitle>Success</AlertTitle>
-						Email has been sent successfully.
-					</Alert>
-				</Modal>
-			</Box>
-		</React.Fragment>
-	);
+            // let newCartList = [];
+            // cartList.forEach((item, index) => {
+            //     const i = newCartList.findIndex((product) => product.id === item.id);
+            //     if (i === -1) {
+            //         newCartList.push(item);
+            //     } else {
+            //         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
+            //     }
+            // })
+
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cl,
+                    },
+                ],
+            };
+
+            utils.updateUser(token, userData).then((result) => {
+                setTimeout(() => setShowAddProgress(false), 500);
+
+                localStorage.setItem("cart", "");
+
+                EventEmitter.dispatch("updateBadge");
+                EventEmitter.dispatch("handleCart", true);
+            });
+        } else {
+            setTimeout(() => setShowAddProgress(false), 500);
+
+            cl = cl.concat([...checkoutProductList]);
+            cl = JSON.stringify(cl);
+            localStorage.setItem("cart", cl);
+
+            EventEmitter.dispatch("updateBadge");
+            EventEmitter.dispatch("handleCart", true);
+        }
+    };
+
+    //////////////////////////////////////
+
+    const SelectionList = ({index, data = {attributes: []}}) => {
+        let sl = data.attributes.filter((attribute) => attribute.variation);
+        return (
+            <>
+                {sl.map((attribute, i) => {
+                    return (
+                        <Block key={i} font="MinXLabel14"
+                               overrides={{
+                                   Block: {
+                                       props: {
+                                           className: styles["container-product-section"]
+                                       },
+                                   },
+                               }}
+                        >
+                            <Block marginBottom="16px" font="MinXHeading16">{attribute.name}</Block>
+                            <Selection data={attribute}
+                                       value={selectedAttribute[index] ? selectedAttribute[index][i].option.toLowerCase() : ""}
+                                       onChange={(event) => handleChangeRadio(event, index, attribute.id)}
+                            />
+                        </Block>
+                    )
+                })}
+            </>
+        )
+    }
+
+    return (
+        <React.Fragment>
+            <Head>
+                <title>{productName ? productName + " - Table Cover | WESTSHADE" : ""}</title>
+            </Head>
+            <Block display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]} height="100vh" paddingTop={["48px", "48px", "96px"]} style={{paddingTop: 146}}>
+                <Block display="flex" flexDirection={["column", "column", "row"]} width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]}>
+                    {/* 图片区域 */}
+                    <Block flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                    </Block>
+                    {/* 选择区域 */}
+                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}>
+                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                            <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
+                            {uProduct && uProduct.short_description ? (
+                                <Block font="MinXParagraph14"
+                                       overrides={{
+                                           Block: {
+                                               props: {
+                                                   className: clsx(styles["container-product-section"], styles["align-left"])
+                                               },
+                                           },
+                                       }}
+                                       dangerouslySetInnerHTML={{
+                                           __html: `Description: ${stringFn.modifyShortDescription(uProduct.short_description)}`,
+                                       }}
+                                />
+                            ) : null}
+                            <SelectionList index={0} data={uProductComponent[0]}/>
+                        </Block>
+                        <Checkout totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice} quantity={totalCount} shippedDay={shippedDay}
+                                  isAvailable={availableToCheckout} isInStock={isInStock}
+                                  onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
+                        />
+                    </Block>
+                </Block>
+            </Block>
+        </React.Fragment>
+    );
 }
 
 Table_Cover.getInitialProps = async (context) => {
-	const { query } = context;
-	const { id } = query;
-	let product = null,
-		component = [],
-		variant = [];
+    const {query} = context;
+    const {id} = query;
+    let product = null,
+        component = [],
+        variant = [];
 
-	// product = await utils.getProductByWooId(id);
-	const resP = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + id, {
-		method: "GET",
-		headers: {
-			"Access-Control-Allow-Headers": "*",
-			"Access-Control-Allow-Origin": "*",
-		},
-	});
-	product = await resP.json();
+    product = await utils.getProductByWooId(id);
+    if (product.type === "simple") {
+        component[0] = {...product};
+    } else if (product.type === "variable") {
+        component[0] = {...product};
+        variant[0] = await utils.getVariantByWooProductId(id);
+    }
 
-	if (product.type === "simple") {
-		component[0] = { ...product };
-	} else if (product.type === "variable") {
-		component[0] = { ...product };
-		// variant[0] = await utils.getVariantByWooProductId(id);
-		const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {
-			method: "GET",
-			headers: {
-				"Access-Control-Allow-Headers": "*",
-				"Access-Control-Allow-Origin": "*",
-			},
-		});
-		variant[0] = await resV.json();
-	}
-
-	return {
-		product: product,
-		productComponent: component,
-		productVariant: variant,
-	};
+    return {
+        product: product,
+        productComponent: component,
+        productVariant: variant,
+        // newFooter: true,
+        noFooter: true,
+    };
 };
 
 export default withRouter(Table_Cover);

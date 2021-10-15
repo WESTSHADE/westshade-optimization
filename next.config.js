@@ -49,6 +49,7 @@ const nextConfig = {
             "/cart": {page: "/cart"},
             "/checkout": {page: "/checkout"},
             "/checkout/success": {page: "/checkout/success"},
+            "/canopy-tent": {page: "/canopy-tent"},
             "/custom-printing": {page: "/custom-printing"},
             "/custom-printing-canopy-tent": {page: "/custom-printing-canopy-tent"},
             "/compare": {page: "/compare"},
@@ -106,7 +107,7 @@ const nextConfig = {
             "/products/inflatable-canopy-tent/triangular-inflatable-canopy-tent": {page: "/products/inflatable-canopy-tent", query: {id: "51782"}},
             "/products/inflatable-canopy-tent/star-inflatable-canopy-tent": {page: "/products/inflatable-canopy-tent", query: {id: "51784"}},
             "/products/accessories": {page: "/products/accessories"},
-            "/products/accessories-n": {page: "/products/accessories-n"},
+            // "/products/[category]/[id]": {page: "/products/[category]/[id]",},
             "/products/canopy-tent-test": {page: "/products/canopy-tent-test", query: {id: "30477"}},
         };
     },

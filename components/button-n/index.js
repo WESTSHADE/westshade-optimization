@@ -21,6 +21,7 @@ const mButton = ({
                      endEnhancer,
                      onClick,
                      text,
+                     disabled,
                      ...props
                  }) => {
     return (
@@ -43,6 +44,7 @@ const mButton = ({
                     startEnhancer={startEnhancer}
                     endEnhancer={endEnhancer}
                     onClick={onClick}
+                    disabled={disabled}
             >
                 {type === "rainbow" ? (
                     <div className={styles["button-inner"]} style={{backgroundColor: buttonBackgroundColor}}>{text}</div>

@@ -120,20 +120,39 @@ function Header() {
 
         if (token) {
             let {meta_data} = await fetchUserInfo();
-            let result = meta_data.filter((data) => data.key === "cart");
-            if (result.length > 0) {
-                cl = cl.concat([...result[0].value]);
-            } else {
-                cl = [];
-            }
-            setCartList(cl);
-            Promise.all(cl.map(({id}) => fetchProduct(id))).then((responses) => {
-                setProductList(responses);
-            });
+            if (meta_data) {
+                let result = meta_data.filter((data) => data.key === "cart");
+                if (result.length > 0) {
+                    cl = cl.concat([...result[0].value]);
+                } else {
+                    cl = [];
+                }
+                setCartList(cl);
+                Promise.all(cl.map(({id}) => fetchProduct(id))).then((responses) => {
+                    setProductList(responses);
+                });
 
-            let c = 0;
-            cl.forEach(({quantity}) => (c += quantity));
-            setBadge(c);
+                let c = 0;
+                cl.forEach(({quantity}) => (c += quantity));
+                setBadge(c);
+            } else {
+                let cart = localStorage.getItem("cart");
+                cart = cart ? JSON.parse(cart) : cart;
+
+                if (cart && Array.isArray(cart)) {
+                    cl = [...cart];
+                } else {
+                    cl = [];
+                }
+                setCartList(cl);
+                Promise.all(cl.map(({id}) => fetchProduct(id))).then((responses) => {
+                    setProductList(responses);
+                });
+
+                let c = 0;
+                cl.forEach(({quantity}) => (c += quantity));
+                setBadge(c);
+            }
         } else {
             let cart = localStorage.getItem("cart");
             cart = cart ? JSON.parse(cart) : cart;

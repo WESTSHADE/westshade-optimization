@@ -21,6 +21,11 @@
     &:active {
       background-color: #43878C;
     }
+
+    &:disabled {
+      border: 1px solid #d9d9d9;
+      background-color: #F7F7F7;
+    }
   }
 
   &.outline {

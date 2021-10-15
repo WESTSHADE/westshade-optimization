@@ -945,10 +945,8 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                 {/* 主要显示区域 */}
                 <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
-                    <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <Block paddingTop={["0", "24px", "48px"]}>
-                            <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        </Block>
+                    <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
                         <Checkout
                             totalPrice={totalRegularPrice}
                             onClick={() => openSummaryModal()}
