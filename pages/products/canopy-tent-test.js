@@ -110,7 +110,7 @@ let checkoutProductList = [];
 function Canopy_Tent({router, product, productComponent, productVariant}) {
     const [display, setDisplay] = useState(false);
     const [displayTabs, setDisplayTabs] = useState(false);
-    const [activeKey, setActiveKey] = React.useState(0);
+    const [tabActiveKey, setTabActiveKey] = React.useState(0);
 
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
@@ -971,46 +971,40 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                         <div style={{fontSize: 20, fontWeight: "700", marginBottom: 16}}>{product.name}</div>
                         <div style={{marginBottom: 20, padding: "8px 24px", width: 81, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Spec</div>
                         {displayTabs ? (
-                            <Tabs
-                                activeKey={activeKey}
-                                onChange={({activeKey}) => setActiveKey(activeKey)}
-                                fill={FILL.fixed}
-                                activateOnFocus
-                                overrides={{
-                                    Root: {
-                                        style: ({$theme}) => ({width: "100%"}),
-                                    },
-                                    TabList: {
-                                        style: {
-                                            "::-webkit-scrollbar": {display: "none"},
-                                            overflowX: "scroll",
-                                        },
-                                    },
-                                    TabBorder: {
-                                        style: ({$theme}) => ({display: "none"}),
-                                    },
-                                    TabHighlight: {
-                                        style: ({$theme}) => ({
-                                            left: tabsRefs[activeKey].current ? `${(tabsRefs[activeKey].current.clientWidth - 24) / 2}px` : 0,
-                                            width: "24px",
-                                            height: "6px",
-                                            backgroundColor: "#23A4AD",
-                                            borderRadius: "3px",
-                                        }),
-                                    },
-                                }}
+                            <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
+                                  overrides={{
+                                      Root: {
+                                          style: ({$theme}) => ({width: "100%"}),
+                                      },
+                                      TabList: {
+                                          style: {
+                                              "::-webkit-scrollbar": {display: "none"},
+                                              overflowX: "scroll",
+                                          },
+                                      },
+                                      TabBorder: {
+                                          style: ({$theme}) => ({display: "none"}),
+                                      },
+                                      TabHighlight: {
+                                          style: ({$theme}) => ({
+                                              left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0,
+                                              width: "24px",
+                                              height: "6px",
+                                              backgroundColor: "#23A4AD",
+                                              borderRadius: "3px",
+                                          }),
+                                      },
+                                  }}
                             >
-                                <Tab
-                                    title="Basic"
-                                    overrides={{
-                                        TabPanel: {
-                                            style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),
-                                        },
-                                        Tab: {
-                                            style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                        },
-                                    }}
-                                    tabRef={tabsRefs[0]}
+                                <Tab title="Basic" tabRef={tabsRefs[0]}
+                                     overrides={{
+                                         TabPanel: {
+                                             style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),
+                                         },
+                                         Tab: {
+                                             style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
+                                         },
+                                     }}
                                 >
                                     <>
                                         <div className="container-selection">

@@ -66,6 +66,8 @@ const overrides = {
         MinXFootSmall: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "20px", letterSpacing: "4%"},
         // ========================
         MinXTitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 900, lineHeight: "28px"},
+        MinXTitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 900, lineHeight: "32px"},
+        MinXTitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 900, lineHeight: "36px"},
         MinXTitle32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 900, lineHeight: "40px"},
         MinXTitle44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: 900, lineHeight: "52px"},
         MinXTitle64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 900, lineHeight: "80px"},
@@ -102,7 +104,8 @@ const overrides = {
         MinXLabel16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px"},
         MinXLabel20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 500, lineHeight: "28px"},
         MinXLabel24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 500, lineHeight: "32px"},
-        MinXLabel32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 500, lineHeight: "32px"},
+        MinXLabel28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 500, lineHeight: "36px"},
+        MinXLabel32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 500, lineHeight: "40px"},
     },
     colors: {
         Test: "red",

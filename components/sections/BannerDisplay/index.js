@@ -12,11 +12,17 @@ import MButton from "../../button-n";
 const banner = ({
                     refD,
                     title,
+                    titleMarginBottom = ["8px", "12px", "16px"],
+                    titleFont = ["MinXTitle32", "MinXTitle44", "MinXTitle64"],
                     subtitle,
-                    containerHeight,
-                    containerMarginBottom,
+                    subtitleFont = ["MinXSubtitle16", "MinXSubtitle16", 'MinXSubtitle20'],
+                    containerStyle,
+                    containerHeight = ["480px", "660px", "100vh"],
+                    containerMarginBottom = ["16px", "16px", "0px"],
                     containerBackground = "rgba(0,0,0,0.2)",
                     containerBackgroundPosition = "center",
+                    backgroundColor = "transparent",
+                    imageObjectFit = "cover",
                     url,
                     alt = "",
                     router,
@@ -34,46 +40,50 @@ const banner = ({
                     renderButton
                 }) => {
     return (
-        <Block ref={refD} position="relative" justifyContent="flex-end" alignItems="flex-start"
-               width="100%" height={containerHeight ? containerHeight : ["480px", "660px", "100vh"]}
-               marginTop={home ? ["-48px", "-48px", "-96px"] : null}
-               marginBottom={containerMarginBottom ? containerMarginBottom : ["16px", "16px", "0px"]}
-               paddingBottom={["40px", "60px", "70px"]}
-               paddingLeft={["24px", "40px", "calc((100% + 24px)/12)"]}
+        <Block ref={refD} position="relative" justifyContent="flex-end" alignItems="flex-start" width="100%" height={containerHeight}
+               marginTop={home ? ["-48px", "-48px", "-96px"] : null} marginBottom={containerMarginBottom} paddingBottom={["40px", "60px", "70px"]} paddingLeft={["24px", "40px", "calc((100% + 24px)/12)"]}
                backgroundColor={containerBackground}
                overrides={{
                    Block: {
                        props: {
                            className: home ? "container-display-home scroll-section" : containerMarginBottom ? "container-display-no-margin-bottom" : "container-display"
                        },
-                       style: {":not(:first-child)": {marginTop: "0px"}, ":last-child": {marginBottom: "0px"}}
+                       style: {
+                           ...containerStyle,
+                           ":not(:first-child)": {marginTop: "0px"},
+                           ":last-child": {marginBottom: "0px"}
+                       }
                    },
                }}
         >
-            <div className="background-image">
-                <Image src={url} alt={alt} layout="fill" objectFit="cover" objectPosition={containerBackgroundPosition} quality={100}/>
+            <div className="background-image" style={{backgroundColor: backgroundColor}}>
+                <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
             </div>
-            <Block maxWidth={["213px", "298px"]} marginBottom={["8px", "12px", "16px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]}
-                   color={textColor ? textColor : "MinXPrimaryTextAlt"}
+            <Block maxWidth={["213px", "298px"]} marginBottom={titleMarginBottom}
+                   font={titleFont} color={textColor ? textColor : "MinXPrimaryTextAlt"}
                    overrides={{
                        Block: {
-                           props: {
-                               style: {lineHeight: "0.85em"}
-                           }
+                           style: {lineHeight: "0.85em"}
                        },
                    }}
             >
                 {title}
             </Block>
             <Block maxWidth={["260px", "320px", "400px"]} marginBottom={["12px", "16px"]}
-                   font={["MinXSubtitle16", "MinXSubtitle16", 'MinXSubtitle20']}
-                   color={subTextColor ? subTextColor : textColor ? textColor : "MinXPrimaryTextAlt"}
+                   font={subtitleFont} color={subTextColor ? subTextColor : textColor ? textColor : "MinXPrimaryTextAlt"}
+                   overrides={{
+                       Block: {
+                           style: {
+                               ":last-child": {marginBottom: "0 !important"}
+                           }
+                       },
+                   }}
             >
                 {subtitle}
             </Block>
             {renderButton ? renderButton : (
                 <>
-                    <MButton type="outline" display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width={["88px"]} height={["46px"]}
+                    <MButton type="outline" display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width="88px" height="46px"
                              color="MinXPrimaryTextAlt"
                              buttonStyle={{
                                  borderColor: `${textColor ? textColor : 'white'} !important`,

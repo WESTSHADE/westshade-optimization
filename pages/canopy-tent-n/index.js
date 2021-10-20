@@ -142,7 +142,7 @@ const BlockDisplay = ({title, content, src, alt, button}) => {
 };
 
 function Canopy_Tent({router}) {
-    const goBuyingPage = () => router.push({pathname: "/"});
+    const goBuyingPage = () => router.push({pathname: "/products/canopy-tent"});
 
     const onChangeCarousel = (index) => {
         if (refs.length > 0) {

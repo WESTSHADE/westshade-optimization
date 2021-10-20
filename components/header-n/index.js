@@ -274,8 +274,8 @@ function Header() {
                                                   ],
                                               }
                                           ]}
-                                          picUrl={"/images/component/header/canopy-tent.jpg"}
-                                          content={"Y7 heavy duty tent"}
+                                          picUrl={"/images/component/header/tent.jpg"}
+                                          content={"Y7 HEAVY DUTY TENT"}
                                           learnMoreUrl={"/canopy-tent"}
                                 />
                             </NavigationItem>
@@ -289,23 +289,22 @@ function Header() {
                                               {
                                                   MARKET: [
                                                       {id: 'Marco', href: '/products/market-umbrellas/marco-umbrella'},
-                                                      {id: 'Santorini Aluminum', href: '/products/market-umbrellas/santorini-aluminum-umbrella'},
-                                                      {id: 'Santorini Fiberglass', href: '/products/market-umbrellas/santorini-fiberglass-umbrella'},
-                                                  ]
+                                                      {id: 'Santorini', href: '/products/market-umbrellas/santorini-aluminum-umbrella'},
+                                                  ],
                                               }, {
                                                   TILT: [
                                                       {id: 'Bali', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-                                                  ],
+                                                      // {id: 'Kapri', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+                                                  ]
                                               }, {
-                                                  CANTILEVER: [
+                                                  OVERSIZE: [
                                                       {id: 'Catalina', href: '/products/cantilever-umbrellas/catalina-umbrella'},
                                                   ]
                                               }
                                           ]}
-                                          picUrl={"/images/component/header/canopy-tent.jpg"}
-                                          content={"Santorini Fiberglass"}
-                                    // learnMoreUrl={"/umbrella"}
-                                          learnMoreUrl={"/"}
+                                          picUrl={"/images/component/header/umbrella.jpg"}
+                                          content={"SANTORINI FIBERGLASS"}
+                                          learnMoreUrl={"/umbrella"}
                                 />
                             </NavigationItem>
                             <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
@@ -317,15 +316,14 @@ function Header() {
                                           menuList={[
                                               {
                                                   "": [
-                                                      {id: 'Canopy Tent', href: '/'},
-                                                      {id: 'Umbrella', href: '/'},
-                                                      {id: 'Table Cover', href: '/'},
-                                                      {id: 'Wall', href: '/'},
+                                                      {id: 'Canopy Tent', href: '/custom-printing/canopy-tent'},
+                                                      {id: 'Umbrella', href: '/custom-printing/umbrella'},
+                                                      {id: 'Table Cover', href: '/custom-printing/table-cover'},
                                                   ]
                                               }
                                           ]}
-                                          picUrl={"/images/component/header/canopy-tent.jpg"}
-                                          content={"Custom PRINTING tent"}
+                                          picUrl={"/images/component/header/print.jpg"}
+                                          content={"CUSTOM PRINTING TENT"}
                                           learnMoreUrl={"/custom-printing"}
                                 />
                             </NavigationItem>
@@ -338,11 +336,8 @@ function Header() {
                                           menuList={[
                                               {
                                                   ACCESSORIES: [
-                                                      {id: 'Tent Walls', href: '/'},
                                                       {id: 'Tent Accessories', href: '/'},
-                                                      {id: 'Tent Replacement Parts', href: '/'},
                                                       {id: 'Umbrella Accessories', href: '/'},
-                                                      {id: 'Umbrella Replacement Parts', href: '/'},
                                                   ]
                                               }, {
                                                   OTHER: [
@@ -352,7 +347,7 @@ function Header() {
                                                   ],
                                               }
                                           ]}
-                                          picUrl={"/images/component/header/canopy-tent.jpg"}
+                                          picUrl={"/images/component/header/accs.jpg"}
                                           content={"Protective cover"}
                                           learnMoreUrl={"/accessories"}
                                           learnMoreText={"View all >"}

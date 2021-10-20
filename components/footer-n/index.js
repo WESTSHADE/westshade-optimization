@@ -223,7 +223,7 @@ function Footer({isHomePage}) {
                             <Link href={"/terms-and-conditions"}>Term & conditions</Link>
                         </Block>
                     </Block>
-                    <Block display="flex" justifyContent="center">©YIMU international. INC</Block>
+                    <Block display="flex" justifyContent="center">©Westshade</Block>
                 </Block>
             </Block>
         </React.Fragment>

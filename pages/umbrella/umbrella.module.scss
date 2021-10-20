@@ -1,0 +1,11 @@
+.text-section-card {
+  text-align: left;
+}
+
+@media screen and (min-width: 480px) {
+  .text-section-card {
+    text-align: center;
+  }
+}
+
+
