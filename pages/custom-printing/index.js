@@ -4,6 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
+import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
@@ -51,6 +52,11 @@ const ImageSlide = ({url}) => {
 function Custom_Printing({router}) {
     return (
         <React.Fragment>
+            <Head>
+                <title>Custom Printing - WESTSHADE</title>
+                {/*    <meta name="description"*/}
+                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+            </Head>
             {/* 主要显示区域 */}
             <Block position="relative" alignItems="center" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"
                    overrides={{

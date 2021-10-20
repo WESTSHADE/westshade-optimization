@@ -194,6 +194,9 @@
     z-index: 2;
 }
 
+.react-carousel-arrow.dark {
+    background-color: rgba(0, 0, 0, 0.3);
+}
 
 .react-carousel-arrow.left {
     left: calc(50% - 40px)
@@ -208,7 +211,8 @@
 .spec-sticky-bar {
     position: sticky;
     top: 48px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(6px);
 }
 
 ul.bullet-warranty > li {
@@ -261,6 +265,11 @@ ul.bullet-warranty.sub > li {
     max-height: calc(86vh - 68px - 48px) !important;
 }
 
+.modalRoot-image {
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
 .modalGallery .image-gallery-thumbnails {
     display: none;
 }
@@ -271,6 +280,7 @@ ul.bullet-warranty.sub > li {
     padding-bottom: 54px;
     background-color: #f7f7f7;
     border-radius: 0;
+    overflow: hidden;
 }
 
 .modalSelectionContainer {

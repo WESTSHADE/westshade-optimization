@@ -74,6 +74,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
+    const [umbrellaSize, setUmbrellaSize] = useState("");
+
     ////////////////////////////////////////
 
     const openSummaryModal = () => {
@@ -187,6 +189,13 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     useEffect(() => {
         setProductId(product.id.toString());
         setShippedDay(dateFn.getReceivedDay());
+
+        if (router.query.size) {
+            setUmbrellaSize(router.query.size);
+        } else {
+            let size = urlFn.getParam("size");
+            setUmbrellaSize(size);
+        }
     }, []);
 
     useEffect(() => {
@@ -213,10 +222,16 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             let selectedAttrList = [];
             productComponent.map((component) => {
                 let defaultAttr = [...component.default_attributes];
-
+                console.log(defaultAttr);
                 defaultAttr.forEach((attr) => {
                     if (attr.id === id_attribute_umbrellaSize) {
-                        attr.option = stringFn.replaceDash(attr.option, 2);
+                        if (router.query.size) {
+                            attr.option = router.query.size;
+                        } else if (umbrellaSize) {
+                            attr.option = umbrellaSize;
+                        } else {
+                            attr.option = stringFn.replaceDash(attr.option, 2);
+                        }
                     } else if (attr.id === id_attribute_color) {
                         attr.option = stringFn.replaceDash(attr.option, 1);
                     }
