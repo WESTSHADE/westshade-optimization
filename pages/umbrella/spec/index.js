@@ -9,11 +9,11 @@ import {Select} from "baseui/select";
 
 const data = {
     display: [
-        {picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/'},
+        {picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
         {picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/'},
-        {picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/'},
-        {picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/'},
-        {picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/'},
+        {picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
+        {picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
+        {picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
     ],
     shape: [
         ["Octagon"],
@@ -163,40 +163,10 @@ const selection = [
     {index: 4, label: "Catalina",},
 ];
 
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
-
-function Canopy_Tent_Spec({router}) {
+function Canopy_Tent_Spec({router, size}) {
     const {query} = router;
 
     const [columnValue, setColumnValue] = React.useState([]);
-
-    const size = useWindowSize();
 
     let tempColumnValue = [];
 
@@ -209,7 +179,7 @@ function Canopy_Tent_Spec({router}) {
     useEffect(() => {
         if (!size.width) return;
 
-        if (size.width > 480) {
+        if (size.width > 479) {
             if (tempColumnValue.length > 0) {
                 setColumnValue([tempColumnValue[0], tempColumnValue[1], tempColumnValue[2]])
             } else {
@@ -558,11 +528,5 @@ function Canopy_Tent_Spec({router}) {
         </React.Fragment>
     );
 }
-
-Canopy_Tent_Spec.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Canopy_Tent_Spec);

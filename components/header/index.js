@@ -1,624 +1,570 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import {useRouter} from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
-import {Badge, Box, Button, Drawer, Container, Grid, IconButton, Link, List, ListItem, ListItemText, Typography, Hidden, Divider} from "@material-ui/core";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import CloseIcon from "@material-ui/icons/Close";
+import {Block} from "baseui/block";
+import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
+import {Drawer, SIZE, ANCHOR} from "baseui/drawer";
+import {Button, SHAPE} from "baseui/button";
+import {Accordion, Panel} from 'baseui/accordion';
+import {StatefulMenu} from "baseui/menu";
+import Menu from 'baseui/icon/menu'
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPhoneAlt} from "@fortawesome/free-solid-svg-icons";
+import styles from "./header.module.scss";
 
-import styles from "./header.module.css";
+import Account from "./account.svg";
+import Cart from "./cart.svg";
 
-import Utils from "../../utils/utils";
+import MButton from "../button-n";
+
 import {NumberFn} from "../../utils/tools";
 import {EventEmitter} from "../../utils/events";
 
-const utils = new Utils();
 const numberFn = new NumberFn();
 
-let navbar = null;
-
-function DropMenuSecondary(props) {
-    const router = useRouter();
-
-    return (
-        <Box className="dropdown-secondury dropdown-menu-secondury" style={{left: "100%", ...props.style}} mx="auto">
-            <Grid container alignItems="center">
-                <Grid item className="menu-item-grid-item">
-                    {props.menuListSecondary && props.menuListSecondary.length > 0 ? (
-                        <Typography className="menu-item-list-item-text" style={{paddingLeft: "16px"}}>
-                            <span>{props.menuListSecondary[0].label}</span>
-                        </Typography>
-                    ) : null}
-                    <List style={{columnCount: props.menuListSecondary.length > 4 ? "2" : "1"}}>
-                        {props.menuListSecondary &&
-                        props.menuListSecondary.map((item, index) => {
-                            if (index !== 0) {
-                                if (item.type === "link") {
-                                    return (
-                                        <ListItem
-                                            key={index}
-                                            className="menu-item-list-item"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                router.push(item.url, undefined, {shallow: true});
-                                            }}
-                                        >
-                                            <ListItemText className="menu-item-list-item-text" secondary={item.label}/>
-                                        </ListItem>
-                                    );
-                                }
-                            }
-                        })}
-                    </List>
-                </Grid>
-                <Hidden smDown>
-                    <Grid item xs className="menu-item-grid-item">
-                        <div className="menu-item-grid-item-image-container">
-                            <img src={props.menuImage} style={{height: "100%", width: "100%", objectFit: "contain"}}/>
-                        </div>
-                    </Grid>
-                </Hidden>
-            </Grid>
-        </Box>
-    );
-}
+import {getUser} from "../../redux/actions/userActions";
 
 function DropMenu(props) {
-    const router = useRouter();
-
-    // const [offsetLeft, setOffsetLeft] = useState(0);
-    // const leftGrid = useRef(null);
-
-    // useEffect(() => {
-    //   if (leftGrid.current && leftGrid.current.clientWidth) {
-    //     setOffsetLeft(leftGrid.current.clientWidth);
-    //   }
-    // }, [leftGrid.current]);
+    const {menuList, learnMoreText = "Learn more >", learnMoreUrl = "/", picUrl, content} = props;
 
     return (
-        <Box className="dropdown dropdown-menu" style={{top: props.top, ...props.style}} mx="auto">
-            <Container maxWidth="md">
-                <Grid container alignItems="center">
-                    <Grid
-                        item
-                        xs={6}
-                        container
-                        direction="column"
-                        justifyContent="space-between"
-                        className="menu-item-grid-item"
-                        // ref={leftGrid}
-                    >
-                        <List>
-                            {props.menuList.map((item, index) => {
-                                if (index === 0) {
-                                    return (
-                                        <ListItem key={index} className="menu-item-list-item">
-                                            <ListItemText className="menu-item-list-item-text" primary={item.label}/>
-                                        </ListItem>
-                                    );
-                                } else {
-                                    if (item.type === "link") {
-                                        return (
-                                            <ListItem
-                                                key={index}
-                                                className="menu-item-list-item"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    router.push(item.url, undefined, {shallow: true});
-                                                }}
-                                            >
-                                                <ListItemText className="menu-item-list-item-text" secondary={item.label}/>
-                                            </ListItem>
-                                        );
-                                    } else if (item.type === "menu") {
-                                        const [style, setStyle] = useState({visibility: "hidden"});
-
-                                        return (
-                                            <ListItem key={index} className="menu-item-list-item" onMouseEnter={(e) => setStyle({visibility: "visible"})} onMouseLeave={(e) => setStyle({visibility: "hidden"})}>
-                                                <ListItemText className="menu-item-list-item-text" secondary={item.label}/>
-                                                <DropMenuSecondary style={style} menuImage={item.menuImage} menuListSecondary={item.menuList}/>
-                                                {/* <DropMenuSecondary left={offsetLeft} style={style} /> */}
-                                            </ListItem>
-                                        );
-                                    }
-                                }
-                            })}
-                        </List>
-                        {props.buttonGroup ? props.buttonGroup : null}
-                    </Grid>
-                    <Grid item xs={6} className="menu-item-grid-item">
-                        <div className="menu-item-grid-item-image-container">
-                            <img src={props.menuImage} style={{height: "100%"}}/>
-                        </div>
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
-    );
+        <Block position="absolute" top="96px" right={0} left={0} minHeight="250px" display="flex" flexDirection="row" justifyContent="center" backgroundColor="white"
+               overrides={{
+                   Block: {
+                       style: {boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px", ...props.style}
+                   },
+               }}
+        >
+            {menuList.map((menu, index) => (
+                <div key={index} className={styles["container-nav-drop-menu-list"]}>
+                    <StatefulMenu items={menu}
+                                  overrides={{
+                                      List: {
+                                          props: {
+                                              className: styles["container-nav-drop-menu-list-inner"]
+                                          },
+                                      },
+                                      OptgroupHeader: {
+                                          props: {
+                                              className: styles["menu-list-header"]
+                                          },
+                                      },
+                                      Option: {
+                                          props: {
+                                              className: styles["menu-list-item"],
+                                              getItemLabel: item => item.id,
+                                          },
+                                      },
+                                  }}
+                    />
+                    {index + 1 === menuList.length ? (
+                        <Block font="MinXLabel14"
+                               overrides={{
+                                   Block: {
+                                       props: {
+                                           className: styles["menu-list-label"]
+                                       },
+                                   },
+                               }}
+                        >
+                            <Link href={learnMoreUrl}>{learnMoreText}</Link>
+                        </Block>
+                    ) : null}
+                </div>
+            ))}
+            <Block paddingTop={"40px"} paddingLeft={"80px"}>
+                <Block position={"relative"} width={"220px"} height={"138px"} marginBottom={"16px"}>
+                    <Image src={picUrl} alt="Menu Display" layout="fill" quality={100}/>
+                </Block>
+                <div style={{textTransform: "uppercase"}}>{content}</div>
+            </Block>
+        </Block>
+    )
 }
 
-export default function Header() {
+function Header() {
     const router = useRouter();
 
-    const [isLogin, setIsLogin] = useState(false);
-    const [badge, setBadge] = useState(0);
-    const [cartList, setCartList] = useState([]);
-    const [productList, setProductList] = useState([]);
-    const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
-    const [paddingTop, setPaddingTop] = useState(0);
+    const [isMenuDrawerOpen, setMenuDrawerOpen] = useState(false);
+    const [isCartDrawerOpen, setCartDrawerOpen] = useState(false);
 
-    const [sectionNavTop, setNavTop] = useState(0);
-    const [offsetTop, setOffsetTop] = useState(0);
     const [style1, setStyle1] = useState({visibility: "hidden"});
     const [style2, setStyle2] = useState({visibility: "hidden"});
     const [style3, setStyle3] = useState({visibility: "hidden"});
     const [style4, setStyle4] = useState({visibility: "hidden"});
-    const [style5, setStyle5] = useState({visibility: "hidden"});
-    const [style6, setStyle6] = useState({visibility: "hidden"});
 
-    const headerBar = useRef(null);
-    const headerTopBar = useRef(null);
-    const headerMainBar = useRef(null);
-    const headerBottomBar = useRef(null);
+    const dispatch = useDispatch();
 
-    const fetchUserInfo = async () => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            return await utils.getUser(token);
-        } else {
-            return;
-        }
-    };
+    const {loggedIn, token} = useSelector(({user}) => user);
+    const {badge, cart, cartProduct} = useSelector(({cart}) => cart);
 
-    const fetchProduct = async (id) => {
-        if (!id) return;
-        return await utils.getProductByWooId(id);
-    };
-
-    const handleScroll = (x) => {
-        if (window.pageYOffset > offsetTop) {
-            headerBar.current.classList.add("sticky");
-            // headerBottomBar.current.classList.add("sticky");
-            setNavTop(headerMainBar.current.clientHeight);
-
-            setPaddingTop(headerMainBar.current.clientHeight + 12);
-        } else {
-            headerBar.current.classList.remove("sticky");
-            // headerBottomBar.current.classList.remove("sticky");
-            setNavTop(headerBar.current.clientHeight - headerBottomBar.current.clientHeight);
-
-            setPaddingTop(headerBar.current.clientHeight + 12);
-        }
-    };
-
-    const handleCartDrawer = (o) => (event) => {
-        if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
-            return;
-        }
-        setCartDrawerOpen(o);
-    };
-
-    const handleBadge = async () => {
-        const token = localStorage.getItem("token");
-        let cl = [];
-
-        if (token) {
-            let {meta_data} = await fetchUserInfo();
-
-            if (meta_data) {
-                let result = meta_data.filter((data) => data.key === "cart");
-                if (result.length > 0) {
-                    cl = cl.concat([...result[0].value]);
-                } else {
-                    cl = [];
-                }
-                setCartList(cl);
-                Promise.all(cl.map((product) => fetchProduct(product.id))).then((responses) => {
-                    setProductList(responses);
-                });
-
-                let c = 0;
-                cl.forEach(({quantity}) => (c += quantity));
-                setBadge(c);
-            } else {
-                let cart = localStorage.getItem("cart");
-                cart = cart ? JSON.parse(cart) : cart;
-
-                if (cart && Array.isArray(cart)) {
-                    cl = [...cart];
-                } else {
-                    cl = [];
-                }
-                setCartList(cl);
-                Promise.all(cl.map((product) => fetchProduct(product.id))).then((responses) => {
-                    setProductList(responses);
-                });
-
-                let c = 0;
-                cl.forEach(({quantity}) => (c += quantity));
-                setBadge(c);
-            }
-        } else {
-            let cart = localStorage.getItem("cart");
-            cart = cart ? JSON.parse(cart) : cart;
-
-            if (cart && Array.isArray(cart)) {
-                cl = [...cart];
-            } else {
-                cl = [];
-            }
-            setCartList(cl);
-            Promise.all(cl.map((product) => fetchProduct(product.id))).then((responses) => {
-                setProductList(responses);
-            });
-
-            let c = 0;
-            cl.forEach(({quantity}) => (c += quantity));
-            setBadge(c);
-        }
-        setIsLogin(token ? true : false);
-    };
+    const handleClick = (e, href) => {
+        e.preventDefault();
+        router.push(href);
+        setMenuDrawerOpen(false);
+    }
 
     const getSubtotal = () => {
         let price = 0;
-        if (productList.length === cartList.length) {
-            productList.forEach((p, index) => {
-                price += numberFn.strToFloat(p.price) * cartList[index].quantity;
+        if (cartProduct.length === cart.length) {
+            cartProduct.forEach((p, index) => {
+                price += numberFn.strToFloat(p.price) * cart[index].quantity;
             });
         }
         return price;
     };
 
     useEffect(() => {
-        if (typeof document !== "undefined") {
-            navbar = document.getElementById("header-main-bar");
-            setOffsetTop(navbar.offsetTop);
-        }
-    });
-
-    useEffect(() => {
-        EventEmitter.subscribe("updateBadge", (event) => handleBadge(event));
         EventEmitter.subscribe("handleCart", (event) => setCartDrawerOpen(event));
 
-        handleBadge();
-
-        setPaddingTop(headerBar.current.clientHeight + 12);
+        if (loggedIn) {
+            dispatch(getUser(token));
+        }
     }, []);
-
-    useEffect(() => {
-        if (headerBar.current) {
-            // if (headerBar.current.clientHeight < 35) {
-            //   setNavTop(headerMainBar.current.clientHeight);
-            // } else {
-            //   setNavTop(headerMainBar.current.clientHeight);
-            // }
-            // setNavTop(44 + headerTopBar.current.clientHeight);
-
-            if (headerBar.current.classList.contains("sticky")) {
-                setNavTop(headerMainBar.current.clientHeight);
-            } else {
-                setNavTop(headerBar.current.clientHeight - headerBottomBar.current.clientHeight);
-            }
-        }
-    }, [headerBar.current]);
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.addEventListener("scroll", handleScroll);
-        }
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [handleScroll]);
 
     return (
         <React.Fragment>
-            <header id="header-bar" className="container container-background" ref={headerBar}>
-                {/* <Hidden smDown> */}
-                <div id="header-top-bar" className="top-bar-container" ref={headerTopBar}>
-                    <div className="top-left"/>
-                    <div className="top-center">
-                        <p className="top-center-text">Sign up for newsletter and get 10% off your first order</p>
-                    </div>
-                    <div className="top-right">
-                        <div className="header-widge">
-                            <Button size="small" startIcon={<FontAwesomeIcon icon={faPhoneAlt} color="white"/>} href="tel:+19495228111" disableRipple>
-                                1.949.751.1070
-                            </Button>
-                        </div>
-                        <div className="header-widge tools-element">
-                            <Button href="/my-account" disableRipple>
-                                {isLogin ? "My Account" : "Login/Register"}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-                {/* </Hidden> */}
-                <div id="header-main-bar" className="main-bar-container" ref={headerMainBar}>
-                    <div className="main-left">
-                        <div className="widget-wrap">
-                            <Button startIcon={<img src="/images/icon/logo_dark.png" height={36} width={36}/>} href="/" disableRipple>
-                                Westshade
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="main-center">
-                        <div className="header-nav">
-                            <ul>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle1({visibility: "visible"})} onMouseLeave={(e) => setStyle1({visibility: "hidden"})}>
-                                    <Link href="/canopy-tent">
-                                        <span>Canopy Tent</span>
-                                    </Link>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style1}
-                                        menuImage="/images/component/header/canopy-tent.jpg"
-                                        menuList={[
-                                            {label: "CANOPY TENT"},
-                                            {label: "Y5 Economic", type: "link", url: "/y5-economic"},
-                                            {label: "Y6 Commercial", type: "link", url: "/y6-commercial"},
-                                            {label: "Y7 Heavy Duty", type: "link", url: "/y7-heavy-duty"},
-                                            {
-                                                label: "Shop by Size",
-                                                type: "menu",
-                                                menuImage: "/images/component/header/canopy-tent.jpg",
-                                                menuList: [
-                                                    {label: "Canopy Size"},
-                                                    {label: "10x10 Canopy Tent", type: "link", url: "/10x10-canopy-tent"},
-                                                    {label: "10x15 Canopy Tent", type: "link", url: "/10x15-canopy-tent"},
-                                                    {label: "10x20 Canopy Tent", type: "link", url: "/10x20-canopy-tent"},
-                                                    {label: "16x16 Canopy Tent", type: "link", url: "/16x16-canopy-tent"},
-                                                    {label: "13x13 Canopy Tent", type: "link", url: "/13x13-canopy-tent"},
-                                                    {label: "13x20 Canopy Tent", type: "link", url: "/13x20-canopy-tent"},
-                                                    {label: "13x26 Canopy Tent", type: "link", url: "/13x26-canopy-tent"},
-                                                    {label: "20x20 Canopy Tent", type: "link", url: "/20x20-canopy-tent"},
-                                                ],
-                                            },
-                                        ]}
-                                        buttonGroup={
-                                            <Box className="menu-item-grid-item-buttom-group h-unset">
-                                                <Button variant="contained" className="menu-item-grid-item-buttom" href="/canopy-tent">
-                                                    Shop All Canopy Tent
-                                                </Button>
-                                                <Link
-                                                    href="/compare"
-                                                    style={{
-                                                        display: "block",
-                                                        color: "black",
-                                                        textDecoration: "underline",
-                                                    }}
-                                                >
-                                                    Compare Canopy Tent
-                                                </Link>
-                                            </Box>
-                                        }
-                                    />
-                                </li>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle2({visibility: "visible"})} onMouseLeave={(e) => setStyle2({visibility: "hidden"})}>
-                                    <Link href="/custom-printing">
-                                        <span>Custom Printing</span>
-                                    </Link>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style2}
-                                        menuImage="/images/component/header/custom-printing-05212021.jpg"
-                                        menuList={[
-                                            {label: "CUSTOM PRINTING"},
-                                            {
-                                                label: "Custom Print Canopy Tent",
-                                                type: "menu",
-                                                menuImage: "/images/component/header/custom-printing.jpg",
-                                                menuList: [
-                                                    {label: "Canopy Size"},
-                                                    {label: "10x10", type: "link", url: "/custom-printed-package/f1010cpp"},
-                                                    {label: "10x15", type: "link", url: "/custom-printed-package/f1015cpp"},
-                                                    {label: "10x20", type: "link", url: "/custom-printed-package/f1020cpp"},
-                                                    {label: "16x16", type: "link", url: "/custom-printed-package/f1616cpp"},
-                                                    {label: "13x13", type: "link", url: "/custom-printed-package/f1313cpp"},
-                                                    {label: "13x20", type: "link", url: "/custom-printed-package/f1320cpp"},
-                                                    {label: "13x26", type: "link", url: "/custom-printed-package/f1326cpp"},
-                                                    {label: "20x20", type: "link", url: "/custom-printed-package/f2020cpp"},
-                                                ],
-                                            },
-                                            {label: "Custom Print Umbrella", type: "link", url: "/custom-printing-umbrella"},
-                                            {
-                                                label: "Custom Print Table Cover",
-                                                type: "menu",
-                                                menuImage: "/images/component/header/table-cover.png",
-                                                menuList: [
-                                                    {label: "Table Cover"},
-                                                    {label: "Fitted Table Cover", type: "link", url: "/custom-print/table-cover/fitted-table-cover"},
-                                                    {label: "Stretch Table Cover", type: "link", url: "/custom-print/table-cover/stretch-table-cover"},
-                                                ],
-                                            },
-                                        ]}
-                                        buttonGroup={
-                                            <Box className="menu-item-grid-item-buttom-group h-unset">
-                                                <Button variant="contained" className="menu-item-grid-item-buttom" href="/custom-printing">
-                                                    See How Custom Printing Works
-                                                </Button>
-                                            </Box>
-                                        }
-                                    />
-                                </li>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle3({visibility: "visible"})} onMouseLeave={(e) => setStyle3({visibility: "hidden"})}>
-                                    <Link href="/market-umbrellas" underline="none">
-                                        <span>{"Market Umbrella"}</span>
-                                    </Link>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style3}
-                                        menuImage="/images/component/header/market-umbrella.jpg"
-                                        menuList={[
-                                            {label: "MARKET UMBRELLA"},
-                                            {label: "Marco", type: "link", url: "/products/market-umbrellas/marco-umbrella"},
-                                            {label: "Santorini Aluminum", type: "link", url: "/products/market-umbrellas/santorini-aluminum-umbrella"},
-                                            {label: "Santorini Fiberglass", type: "link", url: "/products/market-umbrellas/santorini-fiberglass-umbrella"},
-                                        ]}
-                                        buttonGroup={
-                                            <Box className="menu-item-grid-item-buttom-group h-unset">
-                                                <Button variant="contained" className="menu-item-grid-item-buttom" href="/market-umbrellas">
-                                                    Shop All Market Umbrella
-                                                </Button>
-                                                <Link
-                                                    href="/compare-market-umbrella"
-                                                    style={{
-                                                        display: "block",
-                                                        color: "black",
-                                                        textDecoration: "underline",
-                                                    }}
-                                                >
-                                                    Compare Market Umbrella
-                                                </Link>
-                                            </Box>
-                                        }
-                                    />
-                                </li>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle4({visibility: "visible"})} onMouseLeave={(e) => setStyle4({visibility: "hidden"})}>
-                                    <Link href="/tilt-umbrellas" underline="none">
-                                        <span>{"Tilt Umbrella"}</span>
-                                    </Link>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style4}
-                                        menuImage="/images/component/header/tilt-umbrella.jpg"
-                                        menuList={[{label: "TILT UMBRELLA"}, {label: "Bail", type: "link", url: "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"}]}
-                                        buttonGroup={
-                                            <Box className="menu-item-grid-item-buttom-group h-unset">
-                                                <Button variant="contained" className="menu-item-grid-item-buttom" href="/tilt-umbrellas">
-                                                    Shop All Tilt Umbrella
-                                                </Button>
-                                                <Link
-                                                    href="/compare-tilt-umbrella"
-                                                    style={{
-                                                        display: "block",
-                                                        color: "black",
-                                                        textDecoration: "underline",
-                                                    }}
-                                                >
-                                                    Compare Tilt Umbrella
-                                                </Link>
-                                            </Box>
-                                        }
-                                    />
-                                </li>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle5({visibility: "visible"})} onMouseLeave={(e) => setStyle5({visibility: "hidden"})}>
-                                    <Link href="/cantilever-umbrellas" underline="none">
-                                        <span>{"Cantilever Umbrella"}</span>
-                                    </Link>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style5}
-                                        menuImage="/images/component/header/cantilever-umbrella.jpg"
-                                        menuList={[{label: "CANTILEVER UMBRELLA"}, {label: "Catalina", type: "link", url: "/products/cantilever-umbrellas/catalina-umbrella"}]}
-                                        buttonGroup={
-                                            <Box className="menu-item-grid-item-buttom-group h-unset">
-                                                <Button variant="contained" className="menu-item-grid-item-buttom" href="/cantilever-umbrellas">
-                                                    Shop All Cantilever Umbrella
-                                                </Button>
-                                            </Box>
-                                        }
-                                    />
-                                </li>
-                                <li className="menu-item" onMouseEnter={(e) => setStyle6({visibility: "visible"})} onMouseLeave={(e) => setStyle6({visibility: "hidden"})}>
-                                    <span style={{color: "white"}}>{"Inflatable Canopy"}</span>
-                                    <DropMenu
-                                        top={sectionNavTop}
-                                        style={style6}
-                                        menuImage="/images/component/header/inflatable-canopy.jpg"
-                                        menuList={[
-                                            {label: "INFLATABLE CANOPY"},
-                                            {label: "Basic Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/basic-inflatable-canopy-tent"},
-                                            {label: "Plus Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/plus-inflatable-canopy-tent"},
-                                            {label: "Extended Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/extended-inflatable-canopy-tent"},
-                                            {label: "Hexagon Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/hexagon-inflatable-canopy-tent"},
-                                            {label: "Triangular Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/triangular-inflatable-canopy-tent"},
-                                            {label: "Star Inflatable Canopy Tent", type: "link", url: "/products/inflatable-canopy-tent/star-inflatable-canopy-tent"},
-                                        ]}
-                                    />
-                                </li>
-                                <li className="menu-item">
-                                    <Link href="/accessories" underline="none">
-                                        <span>{"Accessories"}</span>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="main-right">
-                        <Button
-                            classes={{root: styles["menuButton_right"], label: styles["menuButton_right_label"], endIcon: styles["menuButton_right_end"]}}
-                            endIcon={
-                                <Badge badgeContent={badge} color="primary" classes={{anchorOriginTopRightRectangular: styles["root-badge"]}} overlap="rectangular">
-                                    <ShoppingCartIcon color="inherit" style={{color: "white"}}/>
-                                </Badge>
-                            }
-                            onClick={() => router.push("/cart")}
-                            disableRipple
-                        />
-                    </div>
-                </div>
-                <div style={{position: "relative"}}/>
-                <Box id="header-bottom-bar" className="main-bottom" boxShadow={3} ref={headerBottomBar}>
-                    <div className="main-bottom-text">
-                        We’ll beat any competitor with same quality product by 10% OFF | Get your <strong>LOWEST PRICE GUARANTEE</strong> by Call <strong>949-751-1070</strong> | Free U.S Nationwide Shipping on order
-                        over <strong>$149*</strong>
-                    </div>
-                </Box>
-            </header>
-            <Drawer classes={{paper: "root-drawerpaper"}} anchor="right" open={cartDrawerOpen} onOpen={() => {
-            }} onClose={handleCartDrawer(false)}>
-                <div style={{flex: 1}}>
-                    <div className="root-drawer-header" style={{paddingTop: paddingTop}}>
-                        <Typography variant="h5" classes={{h5: "information-title"}}>
-                            Shopping Cart
-                        </Typography>
-                        <IconButton color="inherit" component="span" style={{padding: 2, marginLeft: "auto"}} onClick={handleCartDrawer(false)}>
-                            <CloseIcon style={{fontSize: 24}}/>
-                        </IconButton>
-                    </div>
-                    <List>
-                        {productList.length === cartList.length &&
-                        productList.map((product, index) => {
-                            return (
-                                <ListItem key={index} className="section-image-package-listItem" style={{alignItems: "flex-start"}}>
-                                    <div style={{flex: 1, paddingRight: 24}}>
-                                        <ListItemText primary={`${product.name}`}/>
-                                        {product.attributes.map((att, i) => {
-                                            return <Typography key={i} variant="subtitle2" style={{color: "gray"}}>{`${att.name}: ${att.option}`}</Typography>;
-                                        })}
-                                    </div>
-                                    <Typography variant="subtitle1">
-                                        <span style={{color: "gray"}}>{`${cartList[index].quantity} x `}</span>
-                                        {`$${product.price}`}
-                                    </Typography>
-                                </ListItem>
-                            );
-                        })}
-                    </List>
-                </div>
-                <div className="root-drawer-footer">
-                    <Typography variant="h6">Subtotal:</Typography>
-                    <Typography variant="h6">${getSubtotal()}</Typography>
-                </div>
-                <Button
-                    variant="contained"
-                    classes={{contained: "root-product-cart-checkout"}}
-                    color="inherit"
-                    onClick={() => {
-                        router.push("/cart");
-                        setCartDrawerOpen(false);
-                    }}
-                    disableElevation
-                    disableRipple
+            <div className={styles["container-nav"]}>
+                <Block position="fixed" top={0} right={0} left={0} display="flex" alignItems="center" justifyContent="center" width="100%" height={["48px", "48px", "96px"]}
+                       paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} backgroundColor="#FBFBFB"
                 >
-                    {"View Cart"}
-                </Button>
-                {/* <Button variant="contained" classes={{ contained: "root-product-cart-checkout" }} color="inherit" onClick={() => {}} disableElevation disableRipple>
-					{"CHECKOUT"}
-				</Button> */}
-            </Drawer>
+                    <Block width="100%" maxWidth="1920px">
+                        <HeaderNavigation
+                            overrides={{
+                                Root: {
+                                    style: () => ({height: "100%", borderBottomWidth: "0px", paddingTop: 0, paddingBottom: 0})
+                                }
+                            }}
+                        >
+                            <NavigationList $align={ALIGN.left} className={"nav-left-loge"}>
+                                <NavigationItem style={{position: "relative", width: "200px", paddingLeft: 0}}>
+                                    <Block overrides={{
+                                        Block: {
+                                            style: {":hover": {cursor: 'pointer'}},
+                                        },
+                                    }}
+                                           onClick={() => router.push("/")}
+                                    >
+                                        <Image src={"/images/icon/logo-site-dark-header.png"} alt="Site Logo" layout="responsive" width={200} height={40} quality={100}/>
+                                    </Block>
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList $align={ALIGN.left} className="nav-left-button">
+                                <NavigationItem style={{position: "relative", width: "24px", paddingLeft: 0, display: "flex", alignItems: "center"}}>
+                                    <Button shape={SHAPE.circle}
+                                            overrides={{
+                                                BaseButton: {
+                                                    style: {
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        backgroundColor: "transparent",
+                                                        ":hover": {backgroundColor: "transparent"},
+                                                        ":active": {backgroundColor: "transparent"},
+                                                    },
+                                                },
+                                            }}
+                                            onClick={() => setMenuDrawerOpen(true)}
+                                        // onClick={() => setCartDrawerOpen(true)}
+                                    >
+                                        <Menu size={24} color={"#323232"}/>
+                                    </Button>
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList $align={ALIGN.center} className="nav-center-loge">
+                                <NavigationItem style={{position: "relative", width: "180px", paddingLeft: 0}}>
+                                    <Block overrides={{
+                                        Block: {
+                                            style: {":hover": {cursor: 'pointer'}},
+                                        },
+                                    }}
+                                           onClick={() => router.push("/")}
+                                    >
+                                        <Image src={"/images/icon/logo-site-dark-header.png"} alt="Site Logo" layout="responsive" width={200} height={40} quality={100}/>
+                                    </Block>
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList $align={ALIGN.center} className={"nav-center-menu"}>
+                                <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
+                                                onMouseEnter={(e) => setStyle1({visibility: "visible"})}
+                                                onMouseLeave={(e) => setStyle1({visibility: "hidden"})}
+                                >
+                                    <Link href="/canopy-tent">CANOPY TENT</Link>
+                                    <DropMenu style={style1}
+                                              menuList={[
+                                                  {
+                                                      SQUARE: [
+                                                          {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
+                                                          {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
+                                                          {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
+                                                          {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
+                                                      ]
+                                                  }, {
+                                                      RECTANGULAR: [
+                                                          {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
+                                                          {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
+                                                          {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
+                                                          {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
+                                                      ],
+                                                  }
+                                              ]}
+                                              picUrl={"/images/component/header/tent.jpg"}
+                                              content={"Y7 HEAVY DUTY TENT"}
+                                              learnMoreUrl={"/canopy-tent"}
+                                    />
+                                </NavigationItem>
+                                <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
+                                                onMouseEnter={(e) => setStyle2({visibility: "visible"})}
+                                                onMouseLeave={(e) => setStyle2({visibility: "hidden"})}
+                                >
+                                    <Link href="/umbrella">UMBRELLA</Link>
+                                    <DropMenu style={style2}
+                                              menuList={[
+                                                  {
+                                                      MARKET: [
+                                                          {id: 'Marco', href: '/products/market-umbrellas/marco-umbrella'},
+                                                          {id: 'Santorini', href: '/products/market-umbrellas/santorini-umbrella'},
+                                                      ],
+                                                  }, {
+                                                      TILT: [
+                                                          {id: 'Bali', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+                                                          // {id: 'Kapri', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+                                                      ]
+                                                  }, {
+                                                      OVERSIZE: [
+                                                          {id: 'Catalina', href: '/products/cantilever-umbrellas/catalina-umbrella'},
+                                                      ]
+                                                  }
+                                              ]}
+                                              picUrl={"/images/component/header/umbrella.jpg"}
+                                              content={"SANTORINI FIBERGLASS"}
+                                              learnMoreUrl={"/umbrella"}
+                                    />
+                                </NavigationItem>
+                                <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
+                                                onMouseEnter={(e) => setStyle3({visibility: "visible"})}
+                                                onMouseLeave={(e) => setStyle3({visibility: "hidden"})}
+                                >
+                                    <Link href="/custom-printing">CUSTOM PRINTING</Link>
+                                    <DropMenu style={style3}
+                                              menuList={[
+                                                  {
+                                                      "": [
+                                                          {id: 'Canopy Tent', href: '/custom-printing/canopy-tent'},
+                                                          {id: 'Umbrella', href: '/custom-printing/umbrella'},
+                                                          {id: 'Table Cover', href: '/custom-printing/table-cover'},
+                                                      ]
+                                                  }
+                                              ]}
+                                              picUrl={"/images/component/header/print.jpg"}
+                                              content={"CUSTOM PRINTING TENT"}
+                                              learnMoreUrl={"/custom-printing"}
+                                    />
+                                </NavigationItem>
+                                <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
+                                                onMouseEnter={(e) => setStyle4({visibility: "visible"})}
+                                                onMouseLeave={(e) => setStyle4({visibility: "hidden"})}
+                                >
+                                    <Link href="/accessories">ACCESSORIES</Link>
+                                    <DropMenu style={style4}
+                                              menuList={[
+                                                  {
+                                                      ACCESSORIES: [
+                                                          {id: 'Tent Accessories', href: '/'},
+                                                          {id: 'Umbrella Accessories', href: '/'},
+                                                      ]
+                                                  }, {
+                                                      OTHER: [
+                                                          {id: 'Heater', href: '/products/accessories/?id=20491'},
+                                                          {id: 'Led Light', href: '/products/accessories/?id=20510'},
+                                                          {id: 'Table cover', href: '/custom-print/table-cover/buy'},
+
+                                                      ],
+                                                  }
+                                              ]}
+                                              picUrl={"/images/component/header/accs.jpg"}
+                                              content={"Protective cover"}
+                                              learnMoreUrl={"/accessories"}
+                                              learnMoreText={"View all >"}
+                                    />
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList $align={ALIGN.right}>
+                                {/*<NavigationItem style={{display: "flex"}}>*/}
+                                {/*    <a href="/" onClick={(e) => handleClick(e, "/")}>*/}
+                                {/*        <Image src={"/images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/>*/}
+                                {/*    </a>*/}
+                                {/*</NavigationItem>*/}
+                                <NavigationItem style={{position: "relative", display: "flex"}}>
+                                    <a href="/cart" onClick={(e) => handleClick(e, "/cart")}>
+                                        <Cart style={{width: "22px", height: "22px"}} color={"#323232"}/>
+                                    </a>
+                                    {badge > 0 ? (
+                                        <Block display="flex" justifyContent="center" alignItems="center" position="absolute" top={"-6px"} right={"-6px"} backgroundColor={"#23A4AD"}
+                                               minWidth="18px" height="18px" font="MinXLabel12" color="MinXPrimaryTextAlt"
+                                               overrides={{
+                                                   Block: {
+                                                       style: {borderRadius: "50%"},
+                                                   },
+                                               }}
+                                        >{badge}</Block>
+                                    ) : null}
+                                </NavigationItem>
+                                <NavigationItem style={{display: "flex"}}>
+                                    <a href="/my-account" onClick={(e) => handleClick(e, "/my-account")}>
+                                        <Account style={{width: "22px", height: "22px"}} color={"#323232"}/>
+                                    </a>
+                                </NavigationItem>
+                            </NavigationList>
+                        </HeaderNavigation>
+                    </Block>
+                </Block>
+                {/*小屏侧边栏*/}
+                <Drawer autoFocus isOpen={isMenuDrawerOpen}
+                        onClose={() => setMenuDrawerOpen(false)}
+                        anchor={ANCHOR.left} size={SIZE.full}
+                        overrides={{
+                            Root: {
+                                style: {zIndex: 99}
+                            },
+                            Close: {
+                                style: {right: "unset", left: "16px"}
+                            }
+                        }}
+                >
+                    <Accordion overrides={{
+                        Root: {
+                            props: {
+                                className: styles["container-drawer-menu"]
+                            },
+                        },
+                        PanelContainer: {
+                            style: {borderBottomWidth: "0px"}
+                        },
+                        Header: {
+                            style: {paddingTop: "12px", paddingBottom: "12px"}
+                        },
+                        Content: {
+                            style: {paddingTop: "0px", paddingRight: "0px", paddingBottom: "0px", paddingLeft: "0px"}
+                        }
+
+                    }}>
+                        <Panel title="CANOPY TENT">
+                            <StatefulMenu items={{
+                                SQUARE: [
+                                    {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
+                                    {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
+                                    {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
+                                    {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
+                                ],
+                                RECTANGULAR: [
+                                    {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
+                                    {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
+                                    {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
+                                    {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
+                                ],
+                            }}
+                                          onItemSelect={({item}) => console.log(item)}
+                                          overrides={{
+                                              List: {
+                                                  style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},
+                                              },
+                                              OptgroupHeader: {
+                                                  style: {marginTop: "14px"}
+                                              },
+                                              Option: {
+                                                  props: {
+                                                      getItemLabel: item => item.id,
+                                                  },
+                                              },
+                                          }}
+                            />
+                            <Block backgroundColor={"white"}
+                                   overrides={{
+                                       Block: {
+                                           style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},
+                                       },
+                                   }}
+                            >
+                                <Link href={"/canopy-tent"}>{"Learn more >"}</Link>
+                            </Block>
+                        </Panel>
+                        <Panel title="UMBRELLA"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/umbrella")}
+                        />
+                        <Panel title="CUSTOM PRINTING"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/custom-printing")}
+
+                        />
+                        <Panel title="ACCESSORIES">
+                            <StatefulMenu items={{
+                                ACCESSORIES: [
+                                    {label: 'Tent Accessories', href: '/'},
+                                    {label: 'Umbrella Accessories', href: '/'},
+                                ],
+                                OTHER: [
+                                    {label: 'Heater', href: '/products/accessories/?id=20491'},
+                                    {label: 'Led Light', href: '/products/accessories/?id=20510'},
+                                    {label: 'Table cover', href: '/custom-print/table-cover/buy'},
+                                ],
+                            }}
+                                          onItemSelect={({item}) => console.log(item)}
+                                          overrides={{
+                                              List: {
+                                                  style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},
+                                              },
+                                              OptgroupHeader: {
+                                                  style: {marginTop: "14px"}
+                                              },
+                                              Option: {
+                                                  props: {
+                                                      getItemLabel: item => item.label,
+                                                  },
+                                              },
+                                          }}
+                            />
+                            <Block backgroundColor={"white"} overrides={{
+                                Block: {
+                                    style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},
+                                },
+                            }}>
+                                <Link href={"/accessories"}>{"Learn more >"}</Link>
+                            </Block>
+                        </Panel>
+                    </Accordion>
+                </Drawer>
+                <Drawer autoFocus isOpen={isCartDrawerOpen}
+                        onClose={() => setCartDrawerOpen(false)}
+                        anchor={ANCHOR.right}
+                        overrides={{
+                            Root: {
+                                style: {zIndex: 8}
+                            },
+                            DrawerContainer: {
+                                props: {
+                                    className: styles["container-drawer-cart"]
+                                },
+                            },
+                            DrawerBody: {
+                                props: {
+                                    className: styles["container-drawer-cart-body"]
+                                },
+                            },
+                            Close: {
+                                props: {
+                                    className: styles["drawer-cart-close"]
+                                },
+                            }
+                        }}
+                >
+                    <Block flex={1} paddingTop="56px" paddingRight={["16px", "40px"]} paddingBottom="56px" paddingLeft={["16px", "40px"]}>
+                        <Block marginBottom={["32px", "40px"]} font="MinXTitle32">ITEM ADDED</Block>
+                        <Block display="grid" gridRowGap={["16px", "24px"]}>
+                            {cart.length > 0 && cartProduct.length > 0
+                                ? cartProduct.map((product, index) => {
+                                    return (
+                                        <Block key={index} display="flex" flexDirection={["column", "row"]} flex={1} justifyContent="space-between" marginBottom={["32px", "40px"]} paddingBottom={["32px", "40px"]}
+                                               overrides={{
+                                                   Block: {
+                                                       style: {borderBottom: "1px solid #e0e0e0"}
+                                                   }
+                                               }}
+                                        >
+                                            <Block display="flex" flexDirection="row" width='100%' marginBottom="16px">
+                                                <Block position="relative" width="60px" height="60px" marginRight="15px">
+                                                    {product.images.length > 0 ? (
+                                                        <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%"
+                                                             style={{objectFit: "contain"}}/>
+                                                    ) : (
+                                                        <Image src={"/images/default-product.jpg"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                                    )}
+                                                </Block>
+                                                <Block position="relative" flex={1} paddingRight="24px">
+                                                    <Block marginBottom="8px" font="MinXHeading16" color="MinXPrimaryText">{product.name}</Block>
+                                                    {cart[index].variation.length > 0 ? (
+                                                        <>{cart[index].variation.map((attr, i) => (
+                                                            <Block key={i} marginBottom="8px" font="MinXParagraph14" color="MinXPrimaryText">
+                                                                {`${attr.attribute}: ${attr.value}`}
+                                                            </Block>
+                                                        ))}</>
+                                                    ) : null}
+                                                    <Block font="MinXParagraph14" color="MinXPrimaryText">Quantity: {cart[index].quantity}</Block>
+                                                    <Block position="absolute" top={["", "0"]} right={0} bottom={["0", ""]} font="MinXLabel16" color="MinXPrimaryText"
+                                                           overrides={{
+                                                               Block: {
+                                                                   style: {fontWeight: 700}
+                                                               },
+                                                           }}
+                                                    >
+                                                        {`$` + product.price * cart[index].quantity}
+                                                    </Block>
+                                                </Block>
+                                            </Block>
+                                        </Block>
+                                    )
+                                }) : null}
+                        </Block>
+                        <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="12px" font="MinXLabel20">
+                            <Block>Subtotal:</Block><Block>${getSubtotal()}</Block>
+                        </Block>
+                        <Block marginBottom="40px" font="MinXLabel14"
+                               overrides={{
+                                   Block: {
+                                       style: {fontWeight: 400}
+                                   },
+                               }}
+                        >Excludes tax and fees</Block>
+                        <MButton type="outline" display="block" width="100%" height="52px" font="MinXLabel14" color="#23A4AD"
+                                 buttonStyle={{
+                                     paddingTop: "18px !important",
+                                     paddingBottom: "18px !important",
+                                     borderColor: `#D0D9D9 !important`,
+                                     ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
+                                     ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
+                                 }}
+                                 onClick={() => {
+                                     router.push("/cart");
+                                     setCartDrawerOpen(false);
+                                 }}
+                                 text={"View cart"}
+                        />
+                        {/*<Button variant="contained" classes={{contained: "root-product-cart-checkout"}} color="inherit" onClick={() => {*/}
+                        {/*}} disableElevation disableRipple>{"CHECKOUT"}</Button>*/}
+                    </Block>
+                </Drawer>
+            </div>
         </React.Fragment>
     );
 }
+
+export default Header;

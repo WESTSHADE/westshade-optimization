@@ -496,11 +496,6 @@ function Accessories({router}) {
                                         </div>
                                     </Grid>
                                 </Grid>
-                                {/* <div className="section-link-group">
-            <div className="section-link-container section-content">
-              <Link href="/y6-commercial">Shop heaters & lights &gt;</Link>
-            </div>
-          </div> */}
                             </Container>
                         </CContainer>
                     </>

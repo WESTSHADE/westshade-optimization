@@ -1,316 +1,1117 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, {createRef, useEffect, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux'
 
 import Head from "next/head";
-import { withRouter } from "next/router";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Box, Button, Container, Divider, Grid, Tab, Tabs, TextField, Typography } from "@material-ui/core";
+import {Block} from "baseui/block";
+import {Button, SHAPE, KIND} from "baseui/button";
+import {Tabs, Tab, ORIENTATION, FILL} from 'baseui/tabs-motion';
+import {Input, MaskedInput} from "baseui/input";
+import ArrowLeft from 'baseui/icon/arrow-left';
+import ChevronRight from 'baseui/icon/chevron-right'
+import ChevronDown from 'baseui/icon/chevron-down';
+import ChevronUp from 'baseui/icon/chevron-up'
 
-import Utils from "../../utils/utils";
-// v2
-// import { logIn, logOut, getUser } from "../../redux/actions/userActions";
+import MButton from "../../components/button-n";
 
-import CContainer from "../../components/container";
+import {register, logIn, logOut, getUser, updateUser, clearUserErrors} from "../../redux/actions/userActions";
+import {getOrder} from "../../redux/actions/orderActions";
 
-const MXButton = styled(Button)`
-	margin: 24px auto;
-`;
+function Login() {
+    const {message} = useSelector(({user}) => user);
 
-const utils = new Utils();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-function Account({ router }) {
-	// v2
-	// const dispatch = useDispatch();
-	// const { loggedIn, token, user, message } = useSelector((state) => state.user);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
-	const [display, setDisplay] = useState(false);
+    const dispatch = useDispatch();
 
-	const [user, setUser] = useState(null);
+    const handleLogIn = () => {
+        if (!email || !password) {
+            if (!email) setEmailError(true);
+            if (!password) setPasswordError(true);
+        } else {
+            dispatch(logIn({email, password}));
+        }
+    };
 
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [showRegister, setShowRegister] = useState(false);
-	const [error, setError] = useState(false);
-	const [loggedIn, setLoggedIn] = useState(false);
-	const [tab, setTab] = useState(0);
+    useEffect(() => {
+        if (message) {
+            setEmailError(true);
+            setPasswordError(true);
+        }
+    }, [message]);
 
-	const fetchRegister = async () => {
-		if (!email || !password) {
-			setError(true);
-			return;
-		}
-		return await utils.register({ username: email, email: email, password });
-	};
+    return (
+        <>
+            <Block display="flex" justifyContent="center" font="MinXLabel24">Log in with...</Block>
+            <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px" paddingTop={["40px", "60px", "80px"]}>
+                <Block display="grid" gridTemplateAreas={`"u" "p"`} gridRowGap={["16px", "24px"]}>
+                    <Block gridArea="u">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">EMAIL ADDRESS</Block>
+                        <Input value={email} clearOnEscape error={emailError}
+                               onChange={({target}) => {
+                                   if (emailError) setEmailError(false);
+                                   if (passwordError) setPasswordError(false);
+                                   dispatch(clearUserErrors());
 
-	// v2
-	// const login = () => {
-	//     if (!username || !password) {
-	//         setError(true);
-	//         return;
-	//     }
-	//     dispatch(logIn({ username, password }));
-	// };
+                                   const {value} = target;
+                                   setEmail(value);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="p">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PASSWORD</Block>
+                        <Input value={password} clearOnEscape type="password" error={passwordError}
+                               onChange={({target}) => {
+                                   if (emailError) setEmailError(false);
+                                   if (passwordError) setPasswordError(false);
+                                   dispatch(clearUserErrors());
 
-	// const logout = () => {
-	//     localStorage.setItem("token", "");
-	//     dispatch(logOut());
-	// };
-
-	const fetchLogIn = async () => {
-		if (!username || !password) {
-			setError(true);
-			return;
-		}
-		return await utils.logIn({ username, password });
-	};
-
-	const fetchUserInfo = async () => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			return await utils.getUser(token);
-		} else {
-			return;
-		}
-	};
-
-	const getUser = () => {
-		fetchUserInfo().then((data) => setUser(data));
-	};
-
-	const login = () => {
-		fetchLogIn()
-			.then((data) => getUser())
-			.catch((error) => null)
-			.finally(() => {
-				router.reload(window.location.pathname);
-			});
-	};
-
-	const logout = () => {
-		localStorage.setItem("token", "");
-		setLoggedIn(false);
-	};
-
-	const changeRouter = (value) => {
-		if (value === 0) {
-			router.push("/my-account");
-		} else if (value === 1) {
-			router.push("/my-account/orders");
-		} else if (value === 2) {
-			router.push("/my-account/addresses");
-		} else if (value === 3) {
-			router.push("/my-account/details");
-		} else if (value === 4) {
-			logout();
-		}
-	};
-
-	useEffect(() => {
-		setTimeout(() => setDisplay(true), 250);
-
-		const token = localStorage.getItem("token");
-		if (token) {
-			setLoggedIn(true);
-			getUser();
-		} else {
-			setLoggedIn(false);
-		}
-	}, []);
-
-	// v2
-	// useEffect(() => setTimeout(() => setDisplay(true), 250), []);
-	// useEffect(() => {
-	//     if (loggedIn) dispatch(getUser(token));
-	// }, [loggedIn]);
-
-	return (
-		<React.Fragment>
-			<Head>
-				<title>My Account - View Account Details | WESTSHADE</title>
-				<meta name="description" content="View your recent orders, manage shipping and billing addresses, and edit your password and account details." />
-			</Head>
-			<Box className="page" fontSize={14} lineHeight={1.43}>
-				{display ? (
-					<CContainer>
-						<Container maxWidth="md">
-							{loggedIn ? (
-								<Grid container spacing={2}>
-									<div style={{ display: "flex", marginBottom: 24, marginRight: 24 }}>
-										<div style={{ paddingRight: 24 }}>
-											<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} align="left" paragraph={true}>
-												<strong> MY ACCOUNT </strong>
-											</Typography>
-											<Divider />
-											<div className="account-tab">
-												<Tabs orientation="vertical" variant="scrollable" value={0} onChange={(event, newValue) => changeRouter(newValue)} classes={{ indicator: "account-tab-indicator" }}>
-													<Tab id={`vertical-tab-` + 0} label="Dashboard" classes={{ wrapper: "tab-wrapper" }} disableRipple />
-													<Tab id={`vertical-tab-` + 1} label="Orders" classes={{ wrapper: "tab-wrapper" }} disableRipple />
-													<Tab id={`vertical-tab-` + 2} label="Addresses" classes={{ wrapper: "tab-wrapper" }} disableRipple />
-													<Tab id={`vertical-tab-` + 3} label="Account detail" classes={{ wrapper: "tab-wrapper" }} disableRipple />
-													<Tab id={`vertical-tab-` + 4} label="Logout" classes={{ wrapper: "tab-wrapper" }} disableRipple />
-												</Tabs>
-											</div>
-										</div>
-										<Divider orientation="vertical" />
-									</div>
-									<div style={{ marginBottom: 24, flex: 1 }}>
-										<Typography variant="subtitle2" color="textSecondary" align="left">
-											Hello {user ? user.username : ""},{/*(not {user ? user.username : ""}? Log out)*/}
-											<br />
-											<br />
-											From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.
-										</Typography>
-										<div style={{ display: "flex", flexWrap: "wrap", margin: "24px auto" }}>
-											<Button variant="outlined" classes={{ root: "root-account-Paper" }} onClick={() => router.push("/my-account/orders")} disableRipple>
-												<Typography variant="subtitle1">
-													<strong> Order </strong>
-												</Typography>
-											</Button>
-											<Button variant="outlined" classes={{ root: "root-account-Paper" }} onClick={() => router.push("/my-account/addresses")} disableRipple>
-												<Typography variant="subtitle1">
-													<strong> Addresses </strong>
-												</Typography>
-											</Button>
-											<Button variant="outlined" classes={{ root: "root-account-Paper" }} onClick={() => router.push("/my-account/details")} disableRipple>
-												<Typography variant="subtitle1">
-													<strong> Account detail </strong>
-												</Typography>
-											</Button>
-											<Button variant="outlined" classes={{ root: "root-account-Paper" }} onClick={() => setTab(4)} disableRipple>
-												<Typography variant="subtitle1">
-													<strong> Logout </strong>
-												</Typography>
-											</Button>
-										</div>
-									</div>
-								</Grid>
-							) : (
-								<Grid container justifyContent="space-between" spacing={2}>
-									<Grid item xs={12} md={5}>
-										{!showRegister ? (
-											<>
-												<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} align="left" paragraph={true}>
-													<strong> LOGIN </strong>
-												</Typography>
-												<form autoComplete="off">
-													<div style={{ margin: "24px auto" }}>
-														<TextField
-															id="username-email"
-															label="Username or email"
-															variant="outlined"
-															fullWidth
-															InputLabelProps={{
-																shrink: true,
-															}}
-															required
-															onChange={(event) => {
-																setError(false);
-																setUsername(event.target.value);
-															}}
-															error={error}
-														/>
-													</div>
-													<div style={{ margin: "24px auto 0" }}>
-														<TextField
-															id="password"
-															label="Password"
-															variant="outlined"
-															fullWidth
-															type="password"
-															InputLabelProps={{
-																shrink: true,
-															}}
-															required
-															onChange={(event) => {
-																setError(false);
-																setPassword(event.target.value);
-															}}
-															error={error}
-														/>
-													</div>
-												</form>
-												<MXButton variant="contained" style={{ height: 48, backgroundColor: "#339059", color: "white" }} onClick={login} disableElevation disableRipple fullWidth>
-													{"LOG IN"}
-												</MXButton>
-												{/*<div style={{display: "flex", justifyContent: "flex-end"}}>*/}
-												{/*    <CLink className="homepage-link" color="rgba(0, 0, 0, 0.87)" href={{pathname: "/my-account/lost-password"}} size="large">*/}
-												{/*        Lost your password?*/}
-												{/*    </CLink>*/}
-												{/*</div>*/}
-											</>
-										) : (
-											<>
-												<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} align="left" paragraph={true}>
-													<strong> REGISTER </strong>
-												</Typography>
-												<form noValidate autoComplete="off">
-													<div style={{ margin: "24px auto" }}>
-														<TextField
-															id="email"
-															label="Email address"
-															variant="outlined"
-															fullWidth
-															InputLabelProps={{
-																shrink: true,
-															}}
-															required
-															onChange={(event) => {
-																setError(false);
-																setEmail(event.target.value);
-															}}
-														/>
-													</div>
-													<div style={{ margin: "24px auto" }}>
-														<TextField
-															id="password"
-															label="Password"
-															variant="outlined"
-															fullWidth
-															type="password"
-															InputLabelProps={{
-																shrink: true,
-															}}
-															required
-															onChange={(event) => {
-																setError(false);
-																setPassword(event.target.value);
-															}}
-														/>
-													</div>
-												</form>
-												<div>
-													<Typography variant="subtitle2" color="textSecondary" align="left">
-														Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.
-													</Typography>
-													<MXButton variant="contained" style={{ height: 48, backgroundColor: "#339059", color: "white" }} onClick={fetchRegister} disableElevation disableRipple fullWidth>
-														{"REGISTER"}
-													</MXButton>
-												</div>
-											</>
-										)}
-									</Grid>
-									<Divider orientation="vertical" flexItem />
-									<Grid item xs={12} md={5}>
-										<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} paragraph={true}>
-											<strong> REGISTER </strong>
-										</Typography>
-										<Typography color="textSecondary" paragraph={true}>
-											Registering for this site allows you to access your order status and history. Just fill in the fields below, and we'll get a new account set up for you in no time. We will only ask you for information necessary to make
-											the purchase process faster and easier.
-										</Typography>
-										<MXButton variant="contained" onClick={() => setShowRegister(!showRegister)} disableElevation disableRipple>
-											{showRegister ? " LOGIN" : " REGISTER"}
-										</MXButton>
-									</Grid>
-								</Grid>
-							)}
-						</Container>
-					</CContainer>
-				) : null}
-			</Box>
-		</React.Fragment>
-	);
+                                   const {value} = target;
+                                   setPassword(value)
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                </Block>
+                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Log in'
+                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
+                         onClick={handleLogIn}
+                />
+            </Block>
+        </>
+    )
 }
 
-export default withRouter(Account);
+function Signup() {
+    const {message} = useSelector(({user}) => user);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const handleSignUp = () => {
+        if (!email || !password) {
+            if (!email) setEmailError(true);
+            if (!password) setPasswordError(true)
+        } else {
+            if (password.match("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$").length > 0) {
+                dispatch(register({email, password}));
+            } else {
+                setPasswordError(true)
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (message) {
+            setEmailError(true);
+            setPasswordError(true);
+        }
+    }, [message]);
+
+    return (
+        <>
+            <Block display="flex" justifyContent="center" font="MinXLabel24">Sign up with...</Block>
+            <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px" paddingTop={["40px", "60px", "80px"]}>
+                <Block display="grid" gridTemplateAreas={`"e" "p"`} gridRowGap={["16px", "24px"]}>
+                    <Block gridArea="e">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">EMAIL ADDRESS</Block>
+                        <Input value={email} clearOnEscape error={emailError}
+                               onChange={({target}) => {
+                                   if (emailError) setEmailError(false);
+                                   if (passwordError) setPasswordError(false);
+                                   dispatch(clearUserErrors());
+
+                                   const {value} = target;
+                                   setEmail(value);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="p">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PASSWORD</Block>
+                        <Input value={password} clearOnEscape type="password" error={passwordError}
+                               onChange={({target}) => {
+                                   if (emailError) setEmailError(false);
+                                   if (passwordError) setPasswordError(false);
+                                   dispatch(clearUserErrors());
+
+                                   const {value} = target;
+                                   setPassword(value)
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                </Block>
+                <Block display="flex" flexDirection="row" font="MinXParagraph12" color="MinXSecondaryText">
+                    <Block width="16px" height="16px" display="flex" flexDirection="row" alignItems="center" justifyContent="center" marginRight="12px">
+                        <div style={{borderRadius: "50%", width: "5px", height: "5px", backgroundColor: "#23A4AD",}}/>
+                    </Block>
+                    Password must contain at least 1 number and 1 letter; it must be at least 6 characters in length.
+                </Block>
+                <Block font="MinXHeading14">
+                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions"><span className="text-sign-up-desc">Terms and Conditions</span></Link> & <Link
+                    color="inherit" href="/privacy"><span className="text-sign-up-desc">Privacy Policy</span></Link>.
+                </Block>
+                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Join Westshade'
+                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
+                         onClick={handleSignUp}
+                />
+            </Block>
+        </>
+    )
+}
+
+function OrderDetail({detail, size}) {
+    const [detailStyle, setDetailStyle] = useState({height: "0"});
+    const [collapsed, setCollapsed] = useState(true);
+
+    useEffect(() => {
+        if (collapsed) {
+            setDetailStyle({height: "0"});
+        } else {
+            if (size.width > 479) {
+                setDetailStyle({height: "347px"});
+            } else {
+                setDetailStyle({height: "483px"});
+            }
+        }
+    }, [collapsed]);
+
+    useEffect(() => {
+        if (!collapsed) {
+            if (size.width > 479 && detailStyle.height !== "347px") {
+                setDetailStyle({height: "347px"});
+            } else if (size.width < 480 && detailStyle.height === "347px") {
+                setDetailStyle({height: "483px"});
+            }
+        }
+    }, [size]);
+
+    return (
+        <Block>
+            <Block height={"58px"} display="flex" alignItems="center" justifyContent="center">
+                <Button kind={KIND.secondary} shape={SHAPE.pill}
+                        overrides={{
+                            BaseButton: {
+                                style: {
+                                    width: "148px",
+                                    height: "26px",
+                                    paddingTop: "2px",
+                                    paddingRight: "12px",
+                                    paddingBottom: "2px",
+                                    paddingLeft: "12px",
+                                    fontSize: "14px",
+                                    lingHeight: "16px",
+                                    color: "#8C8C8C"
+                                }
+                            },
+                            EndEnhancer: {
+                                style: {marginLeft: "6px"}
+                            }
+                        }}
+                        onClick={() => setCollapsed(!collapsed)}
+                        endEnhancer={() => collapsed ? <ChevronDown size={24}/> : <ChevronUp size={24}/>}
+                >
+                    Order detail
+                </Button>
+            </Block>
+            <Block overrides={{
+                Block: {
+                    style: {
+                        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1)', ...detailStyle
+                    }
+                },
+            }}
+            >
+                <Block minHeight="20px" font="MinXParagraph14" marginBottom="16px">
+                    {/*This order is unsuccessful due to some unknown issues. We have not charged.*/}
+                </Block>
+                <Block display="grid" gridTemplateColumns={["repeat(1,1fr)", "repeat(2,1fr)"]} gridRowGap="16px" gridColumnGap="12px" marginBottom="16px">
+                    <Block font="MinXParagraph14">
+                        <Block marginBottom="8px" font="MinXLabel16">Shipping Address</Block>
+                        <Block marginBottom="2px">{`${detail.shipping.first_name} ${detail.shipping.last_name}`}</Block>
+                        <Block marginBottom="2px">{detail.shipping.address_1}</Block>
+                        {detail.shipping.address_2 ? (
+                            <Block marginBottom="2px">{detail.shipping.address_2}</Block>
+                        ) : null}
+                        <Block marginBottom="2px">{`${detail.shipping.city} ${detail.shipping.state} ${detail.shipping.postcode}`}</Block>
+                        <Block marginBottom="2px">{`${detail.shipping.country}`}</Block>
+                    </Block>
+                    <Block font="MinXParagraph14">
+                        <Block marginBottom="8px" font="MinXLabel16">Billing Address</Block>
+                        <Block marginBottom="2px">{`${detail.billing.first_name} ${detail.billing.last_name}`}</Block>
+                        <Block marginBottom="2px">{detail.billing.address_1}</Block>
+                        {detail.billing.address_2 ? (
+                            <Block marginBottom="2px">{detail.billing.address_2}</Block>
+                        ) : null}
+                        <Block marginBottom="2px">{`${detail.billing.city} ${detail.billing.state} ${detail.billing.postcode}`}</Block>
+                        <Block marginBottom="2px">{`${detail.billing.country}`}</Block>
+                    </Block>
+                </Block>
+                <Block font="MinXParagraph14">
+                    <Block marginBottom="8px" font="MinXLabel16">Order summary</Block>
+                    <Block marginBottom="16px" paddingBottom="16px"
+                           overrides={{
+                               Block: {
+                                   style: {
+                                       borderBottomWidth: "1px",
+                                       borderBottomStyle: "solid",
+                                       borderBottomColor: "#F0F0F0",
+                                   }
+                               },
+                           }}
+                    >
+                        <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                            <Block marginBottom="2px">Subtotal</Block>
+                            <Block>{detail.currency_symbol + (parseFloat(detail.total) - parseFloat(detail.shipping_total) - parseFloat(detail.total_tax) + parseFloat(detail.discount_total)).toFixed(2)}</Block>
+                        </Block>
+                        <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                            <Block marginBottom="2px">Discount</Block>
+                            <Block>{"-" + detail.currency_symbol + detail.discount_total}</Block>
+                        </Block>
+                        <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                            <Block marginBottom="2px">Tax</Block>
+                            <Block>{detail.currency_symbol + detail.total_tax}</Block>
+                        </Block>
+                        <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                            <Block marginBottom="2px">Shipping</Block>
+                            <Block>{detail.currency_symbol + detail.shipping_total}</Block>
+                        </Block>
+                    </Block>
+                    <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                        <Block marginBottom="2px">Total:</Block>
+                        <Block>{detail.currency_symbol + detail.total}</Block>
+                    </Block>
+                </Block>
+            </Block>
+        </Block>
+    )
+}
+
+function Orders({size}) {
+    const {orders} = useSelector(({order}) => order);
+
+    return (
+        <>
+            <Block marginBottom={["28px", "40px"]} font="MinXTitle32">My Orders</Block>
+            <Block display="grid" gridRowGap={["16px", "16px", "24px"]}>
+                {orders.map((o, index) => {
+                    return (
+                        <div key={index} style={{background: "#FFFFFF", border: "1px solid #D9D9D9", boxSizing: "border-box", borderRadius: "16px", overflow: "hidden"}}>
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" paddingTop="16px" paddingRight="16px" paddingBottom="16px" paddingLeft="16px"
+                                   backgroundColor="MinXBackground"
+                            >
+                                <Block>Order: <strong>{o.id}</strong></Block>
+                                <Block>Date: <strong>{o.date_created}</strong></Block>
+                            </Block>
+                            <Block height="40px" display="flex" alignItems="center" justifyContent="center" font="MinXParagraph14" color="#F07C7C"
+                                   backgroundColor={(o.status === "pending" || o.status === "processing") ? "rgb(244,237,124)" : o.status === "completed" ? "rgb(153,229,178)" : "#FAF0F0"}
+                                   color={(o.status === "pending" || o.status === "processing") ? "rgb(198,173,15)" : o.status === "completed" ? "rgb(0,158,73)" : "#F07C7C"}
+                                   overrides={{
+                                       Block: {
+                                           style: {
+                                               textTransform: "capitalize"
+                                           }
+                                       },
+                                   }}
+                            >
+                                {o.status}
+                            </Block>
+                            <Block paddingRight={["8px", "16px"]} paddingBottom="16px" paddingLeft={["8px", "16px"]}>
+                                {o.line_items.map((item, i) => {
+                                    return (
+                                        <Block key={i} display="flex" flexDirection="row" paddingTop={["24px", "20px", "16px"]} paddingBottom="16px"
+                                               overrides={{
+                                                   Block: {
+                                                       style: {
+                                                           borderBottomWidth: "1px",
+                                                           borderBottomStyle: "solid",
+                                                           borderBottomColor: "#F0F0F0",
+                                                       }
+                                                   },
+                                               }}
+                                        >
+                                            <Block position="relative" width={["60px", "75px"]} height={["60px", "75px"]}>
+                                                {/*<Image src="images/umbrella/marco/roof.png" alt={item.name} layout="fill" objectFit="contain" quality={100}/>*/}
+                                                <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                            </Block>
+                                            <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>
+                                                <Block display="flex" flex={1} flexDirection={["column", "row"]} marginBottom={["12px", "20px"]}>
+                                                    <Block display="flex" flex={1} marginBottom={["12px", "0px"]}>
+                                                        <Block>{item.name}</Block>
+                                                    </Block>
+                                                    <Block display="flex" flexDirection={["row", "column"]} justifyContent="space-between" alignItems={["", "flex-end"]}>
+                                                        <Block>${o.total}</Block>
+                                                    </Block>
+                                                </Block>
+                                                {/*<Block display="flex" flexDirection={["column", "row"]}*/}
+                                                {/*       overrides={{*/}
+                                                {/*           Block: {*/}
+                                                {/*               style: {*/}
+                                                {/*                   whiteSpace: "wrap"*/}
+                                                {/*               }*/}
+                                                {/*           },*/}
+                                                {/*       }}*/}
+                                                {/*>*/}
+                                                {/*    <strong style={{whiteSpace: "nowrap", marginRight: "12px"}}>Tracking number </strong>1Z 999 AA1 01 2345 6784*/}
+                                                {/*</Block>*/}
+                                            </Block>
+                                        </Block>
+                                    )
+                                })}
+                                <OrderDetail detail={o} size={size}/>
+                            </Block>
+                        </div>
+                    )
+                })}
+            </Block>
+        </>
+    )
+}
+
+function Profile() {
+    const {token, user} = useSelector(({user}) => user);
+
+    const [userDetail, setUserDetail] = useState({...user});
+    const [userDiff, setUserDiff] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const handleSaveProfile = () => dispatch(updateUser(token, userDetail));
+
+    useEffect(() => setUserDetail({...user}), [user]);
+
+    useEffect(() => {
+        if (JSON.stringify(userDetail) !== JSON.stringify(user)) {
+            setUserDiff(true);
+        } else {
+            setUserDiff(false);
+        }
+    }, [userDetail]);
+
+    return (
+        <>
+            <Block marginBottom={["28px", "40px"]} font="MinXTitle32">My Profile</Block>
+            <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px">
+                <Block display="grid" gridTemplateAreas={`"f l" "e e" "p p"`} gridColumnGap="16px" gridRowGap={["16px", "24px"]}>
+                    <Block gridArea="f">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">FIRST NAME</Block>
+                        <Input value={userDetail.first_name} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...userDetail}
+                                   detail.first_name = value;
+                                   setUserDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="l">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">LAST NAME</Block>
+                        <Input value={userDetail.last_name} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...userDetail}
+                                   detail.last_name = value;
+                                   setUserDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="e">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">EMAIL ADDRESS</Block>
+                        <Input value={userDetail.email} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...userDetail}
+                                   detail.email = value;
+                                   setUserDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="p">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PHONE NUMBER</Block>
+                        <Input value={userDetail.billing.phone} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...userDetail}
+                                   detail.billing.phone = value;
+                                   setUserDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                </Block>
+                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
+                         buttonStyle={{
+                             paddingTop: "20px !important", paddingBottom: "20px !important",
+                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
+                         }}
+                         onClick={handleSaveProfile} disabled={!userDiff}
+                />
+            </Block>
+        </>
+    )
+}
+
+function Address() {
+    const {token, user} = useSelector(({user}) => user);
+
+    const [billingDetail, setBillingDetail] = useState({...user.billing});
+    const [billingDiff, setBillingDiff] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const handleSaveAddress = () => {
+        let temp = {...billingDetail};
+        // if (temp.phone) temp.phone = temp.phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/^[\s\d]+/, '');
+        // console.log(temp);
+        dispatch(updateUser(token, {billing: {...temp}}))
+    };
+
+    useEffect(() => setBillingDetail({...user.billing}), [user.billing]);
+
+    useEffect(() => {
+        if (JSON.stringify(billingDetail) !== JSON.stringify(user.billing)) {
+            setBillingDiff(true);
+        } else {
+            setBillingDiff(false);
+        }
+    }, [billingDetail]);
+
+    return (
+        <>
+            <Block marginBottom={["28px", "40px"]} font="MinXTitle32">Address</Block>
+            <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px">
+                <Block display="grid" gridTemplateAreas={`"f l" "a1 a1" "a2 a2" "cp cp" "c s" "z ct" "p p"`} gridColumnGap="16px" gridRowGap={["16px", "24px"]}>
+                    <Block gridArea="f">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">FIRST NAME</Block>
+                        <Input value={billingDetail.first_name} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.first_name = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="l">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">LAST NAME</Block>
+                        <Input value={billingDetail.last_name} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.last_name = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="a1">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ADDRESS LINE 1</Block>
+                        <Input value={billingDetail.address_1} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.address_1 = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="a2">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ADDRESS LINE 2 <span>(optional)</span></Block>
+                        <Input value={billingDetail.address_2} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.address_2 = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="cp">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">COMPANY <span>(optional)</span></Block>
+                        <Input value={billingDetail.company} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.company = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="c">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">CITY</Block>
+                        <Input value={billingDetail.city} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.city = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="s">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">STATE</Block>
+                        <Input value={billingDetail.state} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.state = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="z">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ZIP CODE</Block>
+                        <Input value={billingDetail.postcode} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.postcode = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="ct">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">COUNTRY</Block>
+                        <Input value={billingDetail.country} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.country = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                    </Block>
+                    <Block gridArea="p">
+                        <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PHONE NUMBER</Block>
+                        <Input value={billingDetail.phone} clearOnEscape
+                               onChange={({target}) => {
+                                   const {value} = target;
+
+                                   let detail = {...billingDetail}
+                                   detail.phone = value;
+                                   setBillingDetail(detail);
+                               }}
+                               overrides={{
+                                   Root: {
+                                       props: {
+                                           className: "container-input"
+                                       },
+                                   },
+                               }}
+                        />
+                        {/*<MaskedInput value={billingDetail.phone} mask="(999) 999-9999" clearOnEscape*/}
+                        {/*             onChange={({target}) => {*/}
+                        {/*                 const {value} = target;*/}
+                        {/*                 let detail = {...billingDetail}*/}
+                        {/*                 detail.phone = value;*/}
+                        {/*                 setBillingDetail(detail);*/}
+                        {/*             }}*/}
+                        {/*             overrides={{*/}
+                        {/*                 Root: {*/}
+                        {/*                     props: {*/}
+                        {/*                         className: "container-input"*/}
+                        {/*                     },*/}
+                        {/*                 },*/}
+                        {/*             }}*/}
+                        {/*/>*/}
+                    </Block>
+                </Block>
+                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
+                         buttonStyle={{
+                             paddingTop: "20px !important", paddingBottom: "20px !important",
+                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
+                         }}
+                         onClick={handleSaveAddress} disabled={!billingDiff}
+                />
+            </Block>
+        </>
+    )
+}
+
+function Account({size}) {
+    const [tabsRefs, setTabsRefs] = useState([]);
+    const [displayTabs, setDisplayTabs] = useState(false);
+
+    const [accountActiveTabKey, setAccountActiveTabKey] = React.useState("0");
+    const [loginActiveTabKey, setLoginActiveTabKey] = React.useState("0");
+
+    const [contentStyle, setContentStyle] = useState({marginLeft: "auto"});
+
+    const dispatch = useDispatch();
+
+    const {loggedIn, token, user} = useSelector(({user}) => user);
+
+    const handleLogout = () => {
+        dispatch(logOut());
+        setAccountActiveTabKey("0");
+    }
+
+    useEffect(() => {
+        setTabsRefs((tabsRefs) => Array(2).fill().map((_, i) => tabsRefs[i] || createRef()));
+
+        if (loggedIn) {
+            dispatch(getUser(token));
+            dispatch(getOrder(token));
+        }
+    }, [loggedIn]);
+
+    useEffect(() => {
+        if (tabsRefs.length > 0) setDisplayTabs(true);
+    }, [tabsRefs]);
+
+    useEffect(() => {
+        if (size.width > 959 && contentStyle.marginLeft !== "auto") {
+            setContentStyle({marginLeft: "auto"});
+        } else if (size.width < 960 && contentStyle.marginLeft === "auto") {
+            setContentStyle({marginLeft: "0"});
+        }
+    }, [size]);
+
+    return (
+        <React.Fragment>
+            <Head>
+                <title>My Account | WESTSHADE</title>
+                {/*<meta name="description" content="View frequently asked questions about our shipping and return policies, estimated delivery, damaged items, and refunds."/>*/}
+            </Head>
+            {loggedIn ? (
+                <>
+                    <Block position="absolute" maxWidth="1920px" height="100%" right={0} left={0} top={0} bottom={0} backgroundColor={["white", "white", "MinXBackground"]} marginRight="auto" marginLeft="auto"/>
+                    <Block position="relative" maxWidth={["auto", "auto", "960px"]} display="grid" gridTemplateColumns={["100vw 100vw", "100vw 100vw", "213px 679px"]} gridColumnGap={["0", "0", "20px"]} justifyContent={["", "", "center"]}
+                           marginRight="auto" overflow="hidden"
+                           overrides={{
+                               Block: {
+                                   style: {
+                                       transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1)', ...contentStyle
+                                   }
+                               },
+                           }}
+                    >
+                        <Block width="100%" height="max-content" paddingRight={["16px", "16px", "0px"]} paddingBottom="16px" paddingLeft={["16px", "16px", "0px"]} backgroundColor="white">
+                            <Block display="flex" flexDirection="row" paddingTop={["24px", "40px"]} paddingRight="16px" paddingBottom="20px" paddingLeft="16px">
+                                <Block display="flex" alignItems="center" justifyContent="center" width="50px" height="50px" backgroundColor="#262626" overflow="hidden" font="MinXHeading32" color="MinXPrimaryTextAlt"
+                                       overrides={{
+                                           Block: {
+                                               style: {
+                                                   borderTopRightRadius: "50%",
+                                                   borderBottomRightRadius: "50%",
+                                                   borderBottomLeftRadius: "50%",
+                                                   borderTopLeftRadius: "50%",
+                                               }
+                                           },
+                                       }}
+                                >
+                                    {user.first_name.charAt(0)}
+                                </Block>
+                                <Block display="flex" flexDirection="column" justifyContent="center" paddingLeft="16px">
+                                    <Block minHeight="20px" font="MinXParagraph14">Hi,</Block>
+                                    <Block minHeight="28px" font="MinXHeading20"
+                                           overrides={{
+                                               Block: {
+                                                   style: {
+                                                       whiteSpace: "nowrap"
+                                                   }
+                                               },
+                                           }}
+                                    >
+                                        {`${user.first_name} ${user.last_name}`}
+                                    </Block>
+                                </Block>
+                            </Block>
+                            <Tabs activeKey={accountActiveTabKey} orientation={ORIENTATION.vertical}
+                                  onChange={({activeKey}) => {
+                                      setAccountActiveTabKey(activeKey);
+                                      if (size.width < 960) {
+                                          setContentStyle({marginLeft: "-100vw"});
+                                      }
+                                  }}
+                                  overrides={{
+                                      TabList: {
+                                          style: {
+                                              width: "100%", paddingRight: 0
+                                          },
+                                      },
+                                      TabBorder: {
+                                          style: {
+                                              display: "none"
+                                          },
+                                      },
+                                      TabHighlight: {
+                                          style: {
+                                              backgroundColor: size.width < 960 ? "none" : "#23A4AD",
+                                          },
+                                      },
+                                  }}
+                            >
+                                <Tab title="My Order"
+                                     artwork={() => size.width < 960 ? <ChevronRight size={24}/> : null}
+                                     overrides={{
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 width: "100%", height: "50px", justifyContent: "flex-start", flexDirection: "row-reverse", background: $isActive ? "#F5FCFC" : "white"
+                                             })
+                                         },
+                                         TabPanel: {
+                                             style: {display: "none"}
+                                         },
+                                         ArtworkContainer: {
+                                             style: {
+                                                 marginRight: 0,
+                                                 marginLeft: "auto",
+                                             }
+                                         }
+                                     }}
+                                />
+                                <Tab title="My Profile"
+                                     artwork={() => size.width < 960 ? <ChevronRight size={24}/> : null}
+                                     overrides={{
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 width: "100%", height: "50px", justifyContent: "flex-start", flexDirection: "row-reverse", background: $isActive ? "#F5FCFC" : "white"
+                                             })
+                                         },
+                                         TabPanel: {
+                                             style: {display: "none"}
+                                         },
+                                         ArtworkContainer: {
+                                             style: {
+                                                 marginRight: 0,
+                                                 marginLeft: "auto",
+                                             }
+                                         }
+                                     }}
+                                />
+                                <Tab title="Addresses"
+                                     artwork={() => size.width < 960 ? <ChevronRight size={24}/> : null}
+                                     overrides={{
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 width: "100%", height: "50px", justifyContent: "flex-start", flexDirection: "row-reverse", background: $isActive ? "#F5FCFC" : "white"
+                                             })
+                                         },
+                                         TabPanel: {
+                                             style: {display: "none"}
+                                         },
+                                         ArtworkContainer: {
+                                             style: {
+                                                 marginRight: 0,
+                                                 marginLeft: "auto",
+                                             }
+                                         }
+                                     }}
+                                />
+                                {/*<Tab title="Change Password"*/}
+                                {/*     artwork={() => size.width < 960 ? <ChevronRight size={24}/> : null}*/}
+                                {/*     overrides={{*/}
+                                {/*         Tab: {*/}
+                                {/*             style: ({$isActive}) => ({*/}
+                                {/*                 width: "100%", height: "50px", justifyContent: "flex-start", flexDirection: "row-reverse", background: $isActive ? "#F5FCFC" : "white"*/}
+                                {/*             })*/}
+                                {/*         },*/}
+                                {/*         TabPanel: {*/}
+                                {/*             style: {display: "none"}*/}
+                                {/*         },*/}
+                                {/*         ArtworkContainer: {*/}
+                                {/*             style: {*/}
+                                {/*                 marginRight: 0,*/}
+                                {/*                 marginLeft: "auto",*/}
+                                {/*             }*/}
+                                {/*         }*/}
+                                {/*     }}*/}
+                                {/*/>*/}
+                                {/*<Tab title="Subscription"*/}
+                                {/*     artwork={() => size.width < 960 ? <ChevronRight size={24}/> : null}*/}
+                                {/*     overrides={{*/}
+                                {/*         Tab: {*/}
+                                {/*             style: ({$isActive}) => ({*/}
+                                {/*                 width: "100%", height: "50px", justifyContent: "flex-start", flexDirection: "row-reverse", background: $isActive ? "#F5FCFC" : "white"*/}
+                                {/*             })*/}
+                                {/*         },*/}
+                                {/*         TabPanel: {*/}
+                                {/*             style: {display: "none"}*/}
+                                {/*         },*/}
+                                {/*         ArtworkContainer: {*/}
+                                {/*             style: {*/}
+                                {/*                 marginRight: 0,*/}
+                                {/*                 marginLeft: "auto",*/}
+                                {/*             }*/}
+                                {/*         }*/}
+                                {/*     }}*/}
+                                {/*/>*/}
+                            </Tabs>
+                            <Button kind={KIND.minimal}
+                                    overrides={{
+                                        BaseButton: {
+                                            style: {
+                                                width: "100%",
+                                                justifyContent: "flex-start",
+                                                paddingTop: "16px",
+                                                paddingRight: "16px",
+                                                paddingBottom: "16px",
+                                                paddingLeft: "16px",
+                                                backgroundColor: "white",
+                                                fontSize: "14px",
+                                                lingHeight: "16px"
+                                            }
+                                        }
+                                    }}
+                                    onClick={() => handleLogout()}
+                            >
+                                Logout
+                            </Button>
+                        </Block>
+                        <Block width="100%" paddingTop={["24px", "40px", "50px"]} paddingRight={["16px", "16px", "32px"]} paddingBottom={["28px", "68px"]} paddingLeft={["16px", "16px", "32px"]} backgroundColor="white">
+                            <Block display={["flex", "flex", "none"]} flexDirection="row" marginBottom={["24px", "40px", "0px"]}>
+                                <Button kind={KIND.minimal} startEnhancer={() => <ArrowLeft size={28}/>}
+                                        overrides={{
+                                            BaseButton: {
+                                                style: {
+                                                    paddingTop: "0px",
+                                                    paddingRight: "5px",
+                                                    paddingBottom: "0px",
+                                                    paddingLeft: "5px",
+                                                    backgroundColor: "white",
+                                                    fontSize: "14px",
+                                                    fontWeight: 500,
+                                                    lingHeight: "22px",
+                                                    ":hover": {backgroundColor: "transparent"},
+                                                    ":active": {backgroundColor: "transparent"}
+                                                }
+                                            }
+                                        }}
+                                        onClick={() => setContentStyle({marginLeft: "0"})}>
+                                    Back
+                                </Button>
+                            </Block>
+                            {accountActiveTabKey.toString() === "0" ? (
+                                <Orders size={size}/>
+                            ) : accountActiveTabKey.toString() === "1" ? (
+                                <Profile/>
+                            ) : accountActiveTabKey.toString() === "2" ? (
+                                <Address/>
+                            ) : null}
+                        </Block>
+                    </Block>
+                </>
+            ) : (
+                <>
+                    {displayTabs ? (
+                        <Block display="flex" flexDirection="column" width={["100%", "480px"]} position="relative" alignItems="center"
+                               paddingTop="24px" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
+                               overrides={{
+                                   Block: {
+                                       props: {
+                                           className: "container-display"
+                                       }
+                                   },
+                               }}
+                        >
+                            <Block width="100%" font="MinXLabel20">
+                                <Tabs activeKey={loginActiveTabKey} fill={FILL.fixed} onChange={({activeKey}) => setLoginActiveTabKey(activeKey)}
+                                      overrides={{
+                                          Root: {
+                                              style: {width: "100%", maxWidth: "420px", marginRight: "auto", marginLeft: "auto"}
+                                          },
+                                          TabBorder: {
+                                              style: {display: "none"},
+                                          },
+                                          TabHighlight: {
+                                              style: () => ({
+                                                  left: tabsRefs[loginActiveTabKey].current ? `${(tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2}px` : 0,
+                                                  width: "24px",
+                                                  height: "6px",
+                                                  backgroundColor: "#23A4AD",
+                                                  borderRadius: "3px",
+                                              })
+                                          },
+                                      }}
+                                >
+                                    <Tab title="LOG IN" tabRef={tabsRefs[0]}
+                                         overrides={{
+                                             Tab: {
+                                                 style: ({$isActive}) => ({
+                                                     fontSize: "inherit",
+                                                     fontWeight: "inherit",
+                                                     lineHeight: "inherit",
+                                                     color: $isActive ? "#262626" : "#BFBFBF",
+                                                     paddingTop: "12px",
+                                                     paddingBottom: "12px",
+                                                     ":hover": {background: "none"}
+                                                 }),
+                                             },
+                                             TabPanel: {
+                                                 style: {paddingTop: "40px", paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                             },
+                                         }}
+                                    >
+                                        <Login/>
+                                    </Tab>
+                                    <Tab title="SIGN UP" tabRef={tabsRefs[1]}
+                                         overrides={{
+                                             Tab: {
+                                                 style: ({$isActive}) => ({
+                                                     fontSize: "inherit",
+                                                     fontWeight: "inherit",
+                                                     lineHeight: "inherit",
+                                                     color: $isActive ? "#262626" : "#BFBFBF",
+                                                     paddingTop: "12px",
+                                                     paddingBottom: "12px",
+                                                     ":hover": {background: "none"}
+                                                 }),
+                                             },
+                                             TabPanel: {
+                                                 style: {paddingTop: "40px", paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                             },
+                                         }}
+                                    >
+                                        <Signup/>
+                                    </Tab>
+                                </Tabs>
+                            </Block>
+                        </Block>
+                    ) : null}
+                </>
+            )}
+        </React.Fragment>
+    )
+}
+
+export default Account;

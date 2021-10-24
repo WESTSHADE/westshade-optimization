@@ -1,31 +1,41 @@
-import { createStore, applyMiddleware } from "redux";
-import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import {createStore, applyMiddleware} from "redux";
+import {HYDRATE, createWrapper} from "next-redux-wrapper";
+import {persistStore, persistReducer} from "redux-persist";
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import thunkMiddleware from "redux-thunk";
+
 import reducers from "./reducers/reducers";
 
-const bindMiddlware = (middlware) => {
-	if (process.env.NODE_ENE !== "production") {
-		const { composeWithDevTools } = require("redux-devtools-extension");
-		return composeWithDevTools(applyMiddleware(...middlware));
-	}
+const persistConfig = {
+    key: 'root',
+    storage,
+}
 
-	return applyMiddleware(...middlware);
+const bindMiddleware = (middleware) => {
+    if (process.env.NODE_ENE !== "production") {
+        const {composeWithDevTools} = require("redux-devtools-extension");
+        return composeWithDevTools(applyMiddleware(...middleware));
+    }
+    return applyMiddleware(...middleware);
 };
 
 const reducer = (state, action) => {
-	if (action.type === HYDRATE) {
-		const nextState = {
-			...state,
-			...action.payload,
-		};
-		return nextState;
-	} else {
-		return reducers(state, action);
-	}
+    if (action.type === HYDRATE) {
+        return {
+            ...state,
+            ...action.payload,
+        };
+    }
+    return reducers(state, action);
 };
 
-const initStore = () => {
-	return createStore(reducer, bindMiddlware([thunkMiddleware]));
-};
+const persistedReducer = persistReducer(persistConfig, reducer)
+const store = createStore(persistedReducer, bindMiddleware([thunkMiddleware]));
+const persistor = persistStore(store);
 
-export const wrapper = createWrapper(initStore);
+// const initStore = () => {
+//     return createStore(persistedReducer, bindMiddleware([thunkMiddleware]));
+// };
+// export const wrapper = createWrapper(initStore);
+
+export {store, persistor}

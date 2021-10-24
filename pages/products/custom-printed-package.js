@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import clsx from "clsx";
 
-import { Box, Button, Breadcrumbs, Container, Divider, Grid, ImageList, ImageListItem, List, ListItem, ListItemText, Tabs, Tab, TextField, Typography } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import {Box, Button, Breadcrumbs, Container, Divider, Grid, ImageList, ImageListItem, List, ListItem, ListItemText, Tabs, Tab, TextField, Typography} from "@material-ui/core";
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 import Link from "next/link";
-import { withRouter } from "next/router";
+import {withRouter} from "next/router";
 
 import styles from "../../styles/Product.module.scss";
 
-import { DateFn, NumberFn, StringFn } from "../../utils/tools";
+import {DateFn, NumberFn, StringFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
-import { EventEmitter } from "../../utils/events";
+import {EventEmitter} from "../../utils/events";
 
 import Banner from "../../components/banner";
 import CBreadcrumbs from "../../components/breadcrumbs";
@@ -22,6 +23,9 @@ import CustomButton from "../../components/button";
 import Checkout from "../../components/buttonGroup";
 import Modal from "../../components/modal";
 import Selections from "../../components/selection_group";
+
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -34,24 +38,25 @@ const id_attribute_packageNo = 35;
 const id_attribute_printingTechnique = 44;
 
 const imageGallery = [
-	{ img: "/images/rectangle-79-2@2x.png", title: "" },
-	{ img: "/images/rectangle-80-7@2x.png", title: "" },
-	{ img: "/images/rectangle-77-7@2x.png", title: "" },
-	{ img: "/images/rectangle-77-8@2x.png", title: "" },
-	{ img: "/images/rectangle-78-3@2x.png", title: "" },
-	{ img: "/images/rectangle-78-4@2x.png", title: "" },
+	{img: "/images/rectangle-79-2@2x.png", title: ""},
+	{img: "/images/rectangle-80-7@2x.png", title: ""},
+	{img: "/images/rectangle-77-7@2x.png", title: ""},
+	{img: "/images/rectangle-77-8@2x.png", title: ""},
+	{img: "/images/rectangle-78-3@2x.png", title: ""},
+	{img: "/images/rectangle-78-4@2x.png", title: ""},
 ];
 
 let checkoutProductList = [];
 
 function getProducts(components) {
-	return Promise.all(components.map(({ default_option_id }) => utils.getProductByWooId(default_option_id)));
+	return Promise.all(components.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
 }
 
 function getVariants(components) {
-	return Promise.all(components.map(({ id }) => utils.getVariantByWooProductId(id)));
+	return Promise.all(components.map(({id}) => utils.getVariantByWooProductId(id)));
 }
-function Custom_printed_Package({ router, product, productComponent, productVariant }) {
+
+function Custom_printed_Package({router, product, productComponent, productVariant}) {
 	const [display, setDisplay] = useState(false);
 
 	const [productId, setProductId] = useState("");
@@ -78,7 +83,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 
 	////////////////////////////////////////
 
-	const [availableList, setAvailableList] = useState([{ id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true }]);
+	const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
 	////////////////////////////////////////
 
@@ -107,19 +112,24 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 
 	////////////////////////////////////////
 
+	const dispatch = useDispatch();
+
+	const {loggedIn, token} = useSelector(({user}) => user);
+	const {cart} = useSelector(({cart}) => cart);
+
 	const setMainImage = (images) => {
 		if (!images) return;
 
 		if (Array.isArray(images)) {
 			let urlList = images.map((image) => {
-				return { src: image.src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com") };
+				return {src: image.src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com")};
 			});
 			setProductImage(urlList);
 		} else {
 			let url = images.src;
 			url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
 
-			setProductImage([{ src: url }]);
+			setProductImage([{src: url}]);
 		}
 	};
 
@@ -336,7 +346,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 				}
 			}
 
-			const i = checkoutProductList.findIndex(({ id }) => id === item.id);
+			const i = checkoutProductList.findIndex(({id}) => id === item.id);
 			if (i === -1) {
 				const variation = item.attribute.map((attr) => ({
 					attribute: attr.name,
@@ -365,44 +375,10 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 	}, [availableList]);
 
 	const updateCart = async () => {
-		const token = localStorage.getItem("token");
-		let cart = localStorage.getItem("cart");
-		cart = cart ? JSON.parse(cart) : cart;
-		let cl;
+		let cl = JSON.parse(JSON.stringify(cart));
+		cl = cl.concat([...checkoutProductList]);
 
-		if (cart && Array.isArray(cart)) {
-			cl = [...cart];
-		} else {
-			cl = [];
-		}
-
-		setShowAddProgress(true);
-		if (token) {
-			let cartList = [];
-			let data = await utils.getUser(token);
-			let result = data.meta_data.filter((data) => data.key === "cart");
-			if (result.length > 0) {
-				if (result[0].value.length > 0) {
-					cartList = [...result[0].value];
-					cartList = cartList.concat([...checkoutProductList]);
-				} else {
-					cartList = [...checkoutProductList];
-				}
-			} else {
-				cartList = [...checkoutProductList];
-			}
-			cl = cl.concat([...cartList]);
-
-			// let newCartList = [];
-			// cartList.forEach((item, index) => {
-			//     const i = newCartList.findIndex((product) => product.id === item.id);
-			//     if (i === -1) {
-			//         newCartList.push(item);
-			//     } else {
-			//         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
-			//     }
-			// })
-
+		if (loggedIn) {
 			let userData = {
 				meta_data: [
 					{
@@ -411,22 +387,10 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 					},
 				],
 			};
-			utils.updateUser(token, userData).then((result) => {
-				setTimeout(() => setShowAddProgress(false), 500);
-
-				localStorage.setItem("cart", "");
-
-				EventEmitter.dispatch("updateBadge");
-				EventEmitter.dispatch("handleCart", true);
-			});
+			dispatch(updateUser(token, userData));
+			EventEmitter.dispatch("handleCart", true);
 		} else {
-			setTimeout(() => setShowAddProgress(false), 500);
-
-			cl = cl.concat([...checkoutProductList]);
-			cl = JSON.stringify(cl);
-			localStorage.setItem("cart", cl);
-
-			EventEmitter.dispatch("updateBadge");
+			dispatch(modifyCart({cart: cl}))
 			EventEmitter.dispatch("handleCart", true);
 		}
 	};
@@ -464,7 +428,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 						<CBreadcrumbs>
 							<Container maxWidth="md">
 								{product ? (
-									<Breadcrumbs classes={{ li: "root-breadcrumbs-text" }}>
+									<Breadcrumbs classes={{li: "root-breadcrumbs-text"}}>
 										<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
 											Home
 										</Link>
@@ -486,21 +450,21 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 										<div className={styles["container-product-image"]}>
 											<Carousel showIndicators={false}>
 												{productImage.map((item, index) => (
-													<img key={index} src={item.src} />
+													<img key={index} src={item.src}/>
 												))}
 											</Carousel>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} className="position-r">
 										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
-											<Typography variant="h1" classes={{ h1: styles["product-name"] }} color="textPrimary">
+											<Typography variant="h1" classes={{h1: styles["product-name"]}} color="textPrimary">
 												{productName}
 											</Typography>
 										</div>
 										<div className={clsx(styles["container-product-section"], styles["b-b"])}>
 											{"Description："}
 											{product && product.short_description ? (
-												<Typography variant="inherit" display="block" classes={{ root: styles["product-description"] }} color="textSecondary">
+												<Typography variant="inherit" display="block" classes={{root: styles["product-description"]}} color="textSecondary">
 													{stringFn.modifyShortDescription(product.short_description)}
 												</Typography>
 											) : null}
@@ -508,74 +472,74 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 										<div>
 											{productComponent && productComponent[0]
 												? productComponent[0].attributes
-														.filter((attribute) => attribute.variation)
-														.map((attribute, index) => {
-															if (attribute.id !== id_attribute_frameSeries && attribute.id !== id_attribute_color) {
-																return (
-																	<div key={index} className={clsx(styles["container-product-section"])}>
-																		<Selections
-																			label={"Choose your " + stringFn.replaceDash(attribute.name, 1) + ":"}
-																			value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
-																			onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
-																			list={attribute.options}
-																			id={attribute.id.toString()}
-																		/>
-																	</div>
-																);
-															}
-														})
+													.filter((attribute) => attribute.variation)
+													.map((attribute, index) => {
+														if (attribute.id !== id_attribute_frameSeries && attribute.id !== id_attribute_color) {
+															return (
+																<div key={index} className={clsx(styles["container-product-section"])}>
+																	<Selections
+																		label={"Choose your " + stringFn.replaceDash(attribute.name, 1) + ":"}
+																		value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
+																		onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
+																		list={attribute.options}
+																		id={attribute.id.toString()}
+																	/>
+																</div>
+															);
+														}
+													})
 												: null}
 										</div>
-										<Grid container direction="row" alignItems="center" classes={{ root: styles["button-group"] }}>
+										<Grid container direction="row" alignItems="center" classes={{root: styles["button-group"]}}>
 											<CustomButton type="underline" onClick={() => setShowPrintServiceModal(true)}>
 												Compare print service
 											</CustomButton>
 										</Grid>
 										<div className={clsx(styles["container-product-section"])}>
-											<Typography variant="inherit" display="block" classes={{ root: styles["product-selection-title"] }}>
+											<Typography variant="inherit" display="block" classes={{root: styles["product-selection-title"]}}>
 												Build Your Own:
 											</Typography>
-											<Tabs classes={{ root: styles["product-selection-package-tabs"] }} value={tab} TabIndicatorProps={{ children: <span />, hidden: true }} onChange={handleChangeTab} centered>
-												{[{ label: "Frame Series" }, { label: "Color" }].map((item, index) => (
-													<Tab key={index} classes={{ root: styles["package-tab"], selected: styles["selected"] }} label={item.label} disableRipple />
+											<Tabs classes={{root: styles["product-selection-package-tabs"]}} value={tab} TabIndicatorProps={{children: <span/>, hidden: true}} onChange={handleChangeTab} centered>
+												{[{label: "Frame Series"}, {label: "Color"}].map((item, index) => (
+													<Tab key={index} classes={{root: styles["package-tab"], selected: styles["selected"]}} label={item.label} disableRipple/>
 												))}
 											</Tabs>
 											{productComponent && productComponent[0]
 												? productComponent[0].attributes
-														.filter((attribute) => attribute.variation)
-														.map((attribute, index) => {
-															if (attribute.id === id_attribute_frameSeries || attribute.id === id_attribute_color) {
-																return (
-																	<div key={index} className={styles["product-selection-package-tab-panel"]} hidden={tab !== index - 2}>
-																		<Selections
-																			value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
-																			onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
-																			list={attribute.options}
-																			id={attribute.id.toString()}
-																			direction="vertical"
-																		/>
-																	</div>
-																);
-															}
-														})
+													.filter((attribute) => attribute.variation)
+													.map((attribute, index) => {
+														if (attribute.id === id_attribute_frameSeries || attribute.id === id_attribute_color) {
+															return (
+																<div key={index} className={styles["product-selection-package-tab-panel"]} hidden={tab !== index - 2}>
+																	<Selections
+																		value={selectedAttribute[0] ? selectedAttribute[0][index].option.toLowerCase() : ""}
+																		onChange={(event) => handleChangeRadio(event, 0, attribute.id)}
+																		list={attribute.options}
+																		id={attribute.id.toString()}
+																		direction="vertical"
+																	/>
+																</div>
+															);
+														}
+													})
 												: null}
 										</div>
-										<Grid container direction="row" alignItems="center" classes={{ root: styles["button-group"] }}>
+										<Grid container direction="row" alignItems="center" classes={{root: styles["button-group"]}}>
 											<CustomButton type="underline" onClick={() => setShowGetQuote(true)}>
 												Looking For Other Design?
 											</CustomButton>
 										</Grid>
 										<Grid container direction="row" alignItems="center">
-											<Typography variant="inherit" classes={{ root: clsx(styles["product-price"], totalSalePrice ? styles["discount"] : "") }}>
+											<Typography variant="inherit" classes={{root: clsx(styles["product-price"], totalSalePrice ? styles["discount"] : "")}}>
 												{"$" + parseFloat(totalRegularPrice).toFixed(2)}
 											</Typography>
 											{totalSalePrice ? (
-												<Typography variant="inherit" classes={{ root: styles["product-price"] }}>
+												<Typography variant="inherit" classes={{root: styles["product-price"]}}>
 													{"$" + parseFloat(totalSalePrice).toFixed(2)}
 												</Typography>
 											) : null}
 										</Grid>
-										{!availableToCheckout ? <Typography classes={{ root: styles["product-message"] }}>{message}</Typography> : null}
+										{!availableToCheckout ? <Typography classes={{root: styles["product-message"]}}>{message}</Typography> : null}
 										<Checkout
 											onClickLeft={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
 											onClickRight={() => setTotalCount(totalCount + 1)}
@@ -584,12 +548,12 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 											progress={showAddProgress}
 											onClick={updateCart}
 										/>
-										<Typography classes={{ root: styles["product-shipping"] }}>Order today and get it shipped by {shippedDay}.</Typography>
-										<Grid container direction="row" alignItems="center" classes={{ root: styles["button-group"] }}>
+										<Typography classes={{root: styles["product-shipping"]}}>Order today and get it shipped by {shippedDay}.</Typography>
+										<Grid container direction="row" alignItems="center" classes={{root: styles["button-group"]}}>
 											<CustomButton type="underline" onClick={() => setShowSizeModal(true)}>
 												Size Guide
 											</CustomButton>
-											<Divider orientation="vertical" classes={{ vertical: styles["divider-vertical"] }} />
+											<Divider orientation="vertical" classes={{vertical: styles["divider-vertical"]}}/>
 											<CustomButton type="underline" onClick={() => router.push("/shipping-return")}>
 												Shipping &amp; Return
 											</CustomButton>
@@ -600,9 +564,9 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 						</div>
 						<Box className="section-container">
 							<Container maxWidth="lg">
-								<Divider style={{ marginBottom: 40 }} />
+								<Divider style={{marginBottom: 40}}/>
 								<Tabs className="tabs-desc" value={tabDesc} onChange={handleChangeTabDesc} centered>
-									<Tab label="DESCRIPTION" disableRipple />
+									<Tab label="DESCRIPTION" disableRipple/>
 									{/* <Tab label="REVIEWS" disableRipple /> */}
 								</Tabs>
 								<div hidden={tabDesc !== 0}>
@@ -610,7 +574,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 										<>
 											{productId === "40149" || productId === "40193" || productId === "40275" ? (
 												<>
-													<Banner backgroundImage={"../images/image-44@1x.png"} containerStyle={{ width: "100%", minHeight: 320, maxHeight: 320, left: 0 }}>
+													<Banner backgroundImage={"../images/image-44@1x.png"} containerStyle={{width: "100%", minHeight: 320, maxHeight: 320, left: 0}}>
 														<div className="section-grid-item-inner">
 															<h3 className="banner-title">UNLIMITED COLORS, UNLIMITED CREATIVITY</h3>
 														</div>
@@ -619,29 +583,37 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 														{productId === "40149" ? (
 															// 10x10
 															<p className="section-desc-container-content">
-																Let your own artwork and creativity speak for itself! Our custom printed 10x10 canopy packages offer the perfect solution for both commercial and recreational use with powerful and reliable, high quality
-																outdoor coverings for exceptional brand marketing and personal promotions. Our custom printed 10x10 canopy is excellent for all kinds of outdoor gathering events including Beach Parties, Expos and Trade
-																Shows, Farmers Markets, Picnics, Gardens, Patios, Team Sport Events, Business Gatherings, Community Centers, Live Demonstration Shows, Outdoor Dining, Graduation Celebrations, and more!
+																Let your own artwork and creativity speak for itself! Our custom printed 10x10 canopy packages offer the perfect solution for both commercial and recreational use with powerful
+																and reliable, high quality
+																outdoor coverings for exceptional brand marketing and personal promotions. Our custom printed 10x10 canopy is excellent for all kinds of outdoor gathering events including
+																Beach Parties, Expos and Trade
+																Shows, Farmers Markets, Picnics, Gardens, Patios, Team Sport Events, Business Gatherings, Community Centers, Live Demonstration Shows, Outdoor Dining, Graduation Celebrations,
+																and more!
 															</p>
 														) : null}
 														{productId === "40193" ? (
 															// 10x15
 															<p className="section-desc-container-content">
-																Present your stunning visuals and displays with style! With our 10x15 outdoor canopy package, we offer the perfect marketing and recreational solution for all your outdoor and promotion activity with
-																exceptional, high quality Westshade canopy units. Excellent for all kinds of outdoor gathering events including; Beach Parties, Expos and Trade Shows, Farmers Markets, Picnics, Team Sport Events, Business
+																Present your stunning visuals and displays with style! With our 10x15 outdoor canopy package, we offer the perfect marketing and recreational solution for all your outdoor and
+																promotion activity with
+																exceptional, high quality Westshade canopy units. Excellent for all kinds of outdoor gathering events including; Beach Parties, Expos and Trade Shows, Farmers Markets, Picnics,
+																Team Sport Events, Business
 																Gatherings, Community Centers, Live Demonstration Shows, Outdoor Dining, Graduation Celebrations, and more!
 															</p>
 														) : null}
 														{productId === "40275" ? (
 															// 10x20
 															<p className="section-desc-container-content">
-																Let your own artwork and creativity speak for itself! Our custom printed 10x20 canopy packages offer the perfect solution for both commercial and recreational use with powerful and reliable, high quality
-																outdoor coverings for exceptional brand marketing and personal promotions. Our custom printed 10x20 canopy is excellent for all kinds of outdoor gathering events including Beach Parties, Expos and Trade
-																Shows, Farmers Markets, Picnics, Gardens, Patios, Team Sport Events, Business Gatherings, Community Centers, Live Demonstration Shows, Outdoor Dining, Graduation Celebrations, and more!
+																Let your own artwork and creativity speak for itself! Our custom printed 10x20 canopy packages offer the perfect solution for both commercial and recreational use with powerful
+																and reliable, high quality
+																outdoor coverings for exceptional brand marketing and personal promotions. Our custom printed 10x20 canopy is excellent for all kinds of outdoor gathering events including
+																Beach Parties, Expos and Trade
+																Shows, Farmers Markets, Picnics, Gardens, Patios, Team Sport Events, Business Gatherings, Community Centers, Live Demonstration Shows, Outdoor Dining, Graduation Celebrations,
+																and more!
 															</p>
 														) : null}
 													</Box>
-													<img style={{ objectFit: "contain", width: "100%" }} src="/images/comparison-y5y6y7.jpg" />
+													<img style={{objectFit: "contain", width: "100%"}} src="/images/comparison-y5y6y7.jpg"/>
 												</>
 											) : null}
 											<Box className="section-container">
@@ -650,49 +622,57 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 														<div className="section-desc-container-title">Valance and Peek Display Packages</div>
 														{productId === "40149" ? (
 															<p className="section-desc-container-content">
-																Design your own 10x10 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 10x10 custom canopy
+																Design your own 10x10 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 10x10 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40193" ? (
 															<p className="section-desc-container-content">
-																Design your own 10x15 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 10x15 custom canopy
+																Design your own 10x15 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 10x15 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40275" ? (
 															<p className="section-desc-container-content">
-																Design your own 10x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 10x20 custom canopy
+																Design your own 10x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 10x20 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40328" ? (
 															<p className="section-desc-container-content">
-																Design your own 16x16 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 16x16 custom canopy
+																Design your own 16x16 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 16x16 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40304" ? (
 															<p className="section-desc-container-content">
-																Design your own 13x13 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 13x13 custom canopy
+																Design your own 13x13 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 13x13 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40315" ? (
 															<p className="section-desc-container-content">
-																Design your own 13x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 13x20 custom canopy
+																Design your own 13x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 13x20 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40326" ? (
 															<p className="section-desc-container-content">
-																Design your own 13x26 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 13x26 custom canopy
+																Design your own 13x26 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 13x26 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
 														{productId === "40339" ? (
 															<p className="section-desc-container-content">
-																Design your own 20x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9 different 20x20 custom canopy
+																Design your own 20x20 custom canopy in anyway way you like! Choose from a variety of display options to help present your visuals and creativity in many ways. We offer 9
+																different 20x20 custom canopy
 																combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
 															</p>
 														) : null}
@@ -713,73 +693,74 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 												<>
 													<Box className="section-container">
 														<div className="section-desc-container-title">Heavy Duty Aluminum Custom Y7 Canopy</div>
-														<p className="section-desc-container-content" style={{ textAlign: "left", fontSize: "1rem" }}>
-															The Y7 Aluminum Shelter, our signature canopy capable of hosting big gatherings and events in any weather environment. This heavy duty 13×26 aluminum pop up tent is the perfect fit for all marketing and
+														<p className="section-desc-container-content" style={{textAlign: "left", fontSize: "1rem"}}>
+															The Y7 Aluminum Shelter, our signature canopy capable of hosting big gatherings and events in any weather environment. This heavy duty 13×26 aluminum pop up tent is the perfect fit
+															for all marketing and
 															recreational solution for all your outdoor and promotion activity, made out of exceptional high quality Westshade units.
 														</p>
-														<ul className="section-desc-container-content" style={{ textAlign: "left", fontSize: "1rem" }}>
-															{productId === "40328" ? <li style={{ marginBottom: 8 }}>256 Square Feet of Shade</li> : null}
-															{productId === "40304" ? <li style={{ marginBottom: 8 }}>169 Square Feet of Shade</li> : null}
-															{productId === "40315" ? <li style={{ marginBottom: 8 }}>260 Square Feet of Shade</li> : null}
-															{productId === "40326" ? <li style={{ marginBottom: 8 }}>338 Square Feet of Shade</li> : null}
-															{productId === "40339" ? <li style={{ marginBottom: 8 }}>400 Square Feet of Shade</li> : null}
-															<li style={{ marginBottom: 8 }}>Heavy Duty Aluminum Frame</li>
-															<li style={{ marginBottom: 8 }}>Aluminum Reinforced Truss Bar and Connector</li>
-															<li style={{ marginBottom: 8 }}>One Push Button System</li>
-															<li style={{ marginBottom: 8 }}>Hexagon Shaped Structure Legs</li>
-															<li style={{ marginBottom: 8 }}>Professional Cover Top blocking 99% UV Rays</li>
+														<ul className="section-desc-container-content" style={{textAlign: "left", fontSize: "1rem"}}>
+															{productId === "40328" ? <li style={{marginBottom: 8}}>256 Square Feet of Shade</li> : null}
+															{productId === "40304" ? <li style={{marginBottom: 8}}>169 Square Feet of Shade</li> : null}
+															{productId === "40315" ? <li style={{marginBottom: 8}}>260 Square Feet of Shade</li> : null}
+															{productId === "40326" ? <li style={{marginBottom: 8}}>338 Square Feet of Shade</li> : null}
+															{productId === "40339" ? <li style={{marginBottom: 8}}>400 Square Feet of Shade</li> : null}
+															<li style={{marginBottom: 8}}>Heavy Duty Aluminum Frame</li>
+															<li style={{marginBottom: 8}}>Aluminum Reinforced Truss Bar and Connector</li>
+															<li style={{marginBottom: 8}}>One Push Button System</li>
+															<li style={{marginBottom: 8}}>Hexagon Shaped Structure Legs</li>
+															<li style={{marginBottom: 8}}>Professional Cover Top blocking 99% UV Rays</li>
 														</ul>
 													</Box>
-													<img style={{ objectFit: "contain", width: "100%" }} src="/images/frame-y7.jpg" />
-													<Box className="section-container" style={{ paddingLeft: 0, paddingRight: 0 }}>
+													<img style={{objectFit: "contain", width: "100%"}} src="/images/frame-y7.jpg"/>
+													<Box className="section-container" style={{paddingLeft: 0, paddingRight: 0}}>
 														<List>
 															<ListItem className="background-light-blue">
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Shade Sq Ft"} />
-																{productId === "40328" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"256 sq. ft"} /> : null}
-																{productId === "40304" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"169 sq. ft"} /> : null}
-																{productId === "40315" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"260 sq. ft"} /> : null}
-																{productId === "40326" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"338 sq. ft"} /> : null}
-																{productId === "40339" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"400 sq. ft"} /> : null}
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Shade Sq Ft"}/>
+																{productId === "40328" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"256 sq. ft"}/> : null}
+																{productId === "40304" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"169 sq. ft"}/> : null}
+																{productId === "40315" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"260 sq. ft"}/> : null}
+																{productId === "40326" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"338 sq. ft"}/> : null}
+																{productId === "40339" ? <ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"400 sq. ft"}/> : null}
 															</ListItem>
 															<ListItem>
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Material"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Aluminum"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Material"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Aluminum"}/>
 															</ListItem>
 															<ListItem className="background-light-blue">
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Height"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"5’2″ - 6’8″"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Height"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"5’2″ - 6’8″"}/>
 															</ListItem>
 															<ListItem>
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Shape"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Hexagon"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Shape"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Hexagon"}/>
 															</ListItem>
 															<ListItem className="background-light-blue">
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Bracket Connector Material"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Nylon"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Bracket Connector Material"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Nylon"}/>
 															</ListItem>
 															<ListItem>
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Pole Thickness"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"1.8mm"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Pole Thickness"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"1.8mm"}/>
 															</ListItem>
 															<ListItem className="background-light-blue">
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Pole Diameter"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"57mm"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Pole Diameter"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"57mm"}/>
 															</ListItem>
 															<ListItem>
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Footpad Material"} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Heavy Duty Zinc Steel"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"Footpad Material"}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Heavy Duty Zinc Steel"}/>
 															</ListItem>
 															<ListItem className="background-light-blue">
-																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"CPAI-84 Fire Retardant Certified "} />
-																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Yes"} />
+																<ListItemText className="section-image-package-listItem-subtitle section-image-package-listItem-subtitle-wrap" primary={"CPAI-84 Fire Retardant Certified "}/>
+																<ListItemText className="section-image-package-listItem-content section-image-package-listItem-subtitle-wrap" primary={"Yes"}/>
 															</ListItem>
 														</List>
 													</Box>
 												</>
 											) : null}
 											<Box className="section-container">
-												<img style={{ objectFit: "contain", width: "100%" }} src="/images/intro@1x.png" />
-												<h3 className="section-title" style={{ fontSize: "1.25rem" }}>
+												<img style={{objectFit: "contain", width: "100%"}} src="/images/intro@1x.png"/>
+												<h3 className="section-title" style={{fontSize: "1.25rem"}}>
 													Frequently Asked Questions
 												</h3>
 												<CustomAccordion
@@ -806,7 +787,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 												/>
 											</Box>
 											<Box className="section-container">
-												<h3 className="section-title" style={{ fontSize: "1.25rem" }}>
+												<h3 className="section-title" style={{fontSize: "1.25rem"}}>
 													Your Design in Action
 												</h3>
 												<div
@@ -817,10 +798,10 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 														overflow: "scroll",
 													}}
 												>
-													<ImageList style={{ flexWrap: "nowrap" }} rowHeight={280} cols={2.5}>
+													<ImageList style={{flexWrap: "nowrap"}} rowHeight={280} cols={2.5}>
 														{imageGallery.map((item, index) => (
 															<ImageListItem key={index}>
-																<img src={item.img} alt={item.title} />
+																<img src={item.img} alt={item.title}/>
 															</ImageListItem>
 														))}
 													</ImageList>
@@ -840,28 +821,28 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 								<Grid item xs={12} sm={6}>
 									<div className="popup-section-title">UV Printing</div>
 									<p className="popup-section-content">Provides high resolution service that dries and strengthens onto your canopy in an instant</p>
-									<Divider className="popup-divider" />
+									<Divider className="popup-divider"/>
 									<div className="popup-section-title gray">Fabric</div>
 									<p className="popup-section-content gray">
 										900D Polyester
-										<br />
+										<br/>
 										360 gsm
 									</p>
 									<div className="popup-section-title gray">Ink</div>
 									<p className="popup-section-content gray">Imported from Japan</p>
 									<div className="popup-section-title gray">Endurance</div>
 									<p className="popup-section-content gray">
-										<span style={{ color: "#C01616" }}>2x-3x lifespan</span> of dye sublimation printing
+										<span style={{color: "#C01616"}}>2x-3x lifespan</span> of dye sublimation printing
 									</p>
 								</Grid>
 								<Grid item xs={12} sm={6}>
 									<div className="popup-section-title">Dye Sublimation Printing</div>
 									<p className="popup-section-content">Transfers your picture onto the canopy fabric using a heat press printing technique</p>
-									<Divider className="popup-divider" />
+									<Divider className="popup-divider"/>
 									<div className="popup-section-title gray">Fabric</div>
 									<p className="popup-section-content gray">
 										600D Polyester
-										<br />
+										<br/>
 										288 gsm
 									</p>
 									<div className="popup-section-title gray">Ink</div>
@@ -877,10 +858,10 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 					</Box>
 				</Modal>
 				<Modal onClose={() => setShowSizeModal(false)} show={showSizeModal}>
-					<img className="popup-image" src="/images/tent-spec/choose-size.jpg" />
+					<img className="popup-image" src="/images/tent-spec/choose-size.jpg"/>
 				</Modal>
 				<Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
-					<Box className="popup-section" style={{ width: "auto" }}>
+					<Box className="popup-section" style={{width: "auto"}}>
 						<Container maxWidth="md">
 							<Grid container spacing={6}>
 								<Grid item xs={12} sm={6}>
@@ -894,10 +875,10 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 										}}
 										src={"/images/tent-spec/customer-service.svg"}
 									/>
-									<div className="popup-section-title" style={{ fontSize: "1rem" }}>
+									<div className="popup-section-title" style={{fontSize: "1rem"}}>
 										Call us for custom print consultation
 									</div>
-									<div className="section-checkout-container" style={{ justifyContent: "center", paddingTop: 24 }}>
+									<div className="section-checkout-container" style={{justifyContent: "center", paddingTop: 24}}>
 										<Button
 											variant="contained"
 											className="contained-button-black"
@@ -930,8 +911,8 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 												error={!quoteSubject && quoteError}
 											/>
 										</div>
-										<div className="section-quote-input" style={{ display: "flex" }}>
-											<div style={{ paddingRight: 12 }}>
+										<div className="section-quote-input" style={{display: "flex"}}>
+											<div style={{paddingRight: 12}}>
 												<TextField
 													label="Last Name"
 													required
@@ -946,7 +927,7 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 													error={!quoteNameLast && quoteError}
 												/>
 											</div>
-											<div style={{ paddingRight: 12 }}>
+											<div style={{paddingRight: 12}}>
 												<TextField
 													label="First Name"
 													required
@@ -1035,9 +1016,9 @@ function Custom_printed_Package({ router, product, productComponent, productVari
 }
 
 Custom_printed_Package.getInitialProps = async (context) => {
-	const { query } = context;
-	const { id } = query;
-	let product = { id },
+	const {query} = context;
+	const {id} = query;
+	let product = {id},
 		component = [],
 		variant = [];
 
@@ -1052,9 +1033,9 @@ Custom_printed_Package.getInitialProps = async (context) => {
 	product = await resP.json();
 
 	if (product.type === "simple") {
-		component[0] = { ...product };
+		component[0] = {...product};
 	} else if (product.type === "variable") {
-		component[0] = { ...product };
+		component[0] = {...product};
 		// variant[0] = await utils.getVariantByWooProductId(id);
 		const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {
 			method: "GET",

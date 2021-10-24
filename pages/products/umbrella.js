@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import NumberFormat from "react-number-format";
@@ -20,6 +21,9 @@ import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
+
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -29,16 +33,9 @@ const utils = new Utils();
 const id_attribute_color = 2;
 const id_attribute_umbrellaSize = 15;
 const id_attribute_umbrellaMaterial = 37;
+const id_attribute_umbrellaFrame = 48;
 
 let checkoutProductList = [];
-
-function getProducts(components) {
-    return Promise.all(components.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
-}
-
-function getVariants(components) {
-    return Promise.all(components.map(({id}) => utils.getVariantByWooProductId(id)));
-}
 
 function Umbrella({router, product, productComponent = [], productVariant = []}) {
     const [productId, setProductId] = useState("");
@@ -75,8 +72,14 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
     const [umbrellaSize, setUmbrellaSize] = useState("");
+    const [umbrellaFrame, setUmbrellaFrame] = useState("");
 
     ////////////////////////////////////////
+
+    const dispatch = useDispatch();
+
+    const {loggedIn, token} = useSelector(({user}) => user);
+    const {cart} = useSelector(({cart}) => cart);
 
     const openSummaryModal = () => {
         setSummaryIsOpen(true);
@@ -186,6 +189,27 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
 
+    const updateCart = async () => {
+        let cl = JSON.parse(JSON.stringify(cart));
+        cl = cl.concat([...checkoutProductList]);
+
+        if (loggedIn) {
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cl,
+                    },
+                ],
+            };
+            dispatch(updateUser(token, userData));
+            EventEmitter.dispatch("handleCart", true);
+        } else {
+            dispatch(modifyCart({cart: cl}))
+            EventEmitter.dispatch("handleCart", true);
+        }
+    };
+
     useEffect(() => {
         setProductId(product.id.toString());
         setShippedDay(dateFn.getReceivedDay());
@@ -195,6 +219,13 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         } else {
             let size = urlFn.getParam("size");
             setUmbrellaSize(size);
+        }
+
+        if (router.query.type) {
+            setUmbrellaFrame(router.query.type);
+        } else {
+            let type = urlFn.getParam("type");
+            setUmbrellaFrame(type);
         }
     }, []);
 
@@ -231,6 +262,12 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                             attr.option = umbrellaSize;
                         } else {
                             attr.option = stringFn.replaceDash(attr.option, 2);
+                        }
+                    } else if (attr.id === id_attribute_umbrellaFrame) {
+                        if (router.query.type) {
+                            attr.option = router.query.type;
+                        } else if (umbrellaFrame) {
+                            attr.option = umbrellaFrame.toLowerCase();
                         }
                     } else if (attr.id === id_attribute_color) {
                         attr.option = stringFn.replaceDash(attr.option, 1);
@@ -360,76 +397,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         setAvailable(available);
     }, [availableList]);
 
-    const updateCart = async () => {
-        const token = localStorage.getItem("token");
-        let cart = localStorage.getItem("cart");
-        cart = cart ? JSON.parse(cart) : cart;
-
-        let cl;
-
-        if (cart && Array.isArray(cart)) {
-            cl = [...cart];
-        } else {
-            cl = [];
-        }
-
-        setShowAddProgress(true);
-
-        if (token) {
-            let cartList = [];
-            let data = await utils.getUser(token);
-            let result = data.meta_data.filter((data) => data.key === "cart");
-            if (result.length > 0) {
-                if (result[0].value.length > 0) {
-                    cartList = [...result[0].value];
-                    cartList = cartList.concat([...checkoutProductList]);
-                } else {
-                    cartList = [...checkoutProductList];
-                }
-            } else {
-                cartList = [...checkoutProductList];
-            }
-            cl = cl.concat([...cartList]);
-
-            // let newCartList = [];
-            // cartList.forEach((item, index) => {
-            //     const i = newCartList.findIndex((product) => product.id === item.id);
-            //     if (i === -1) {
-            //         newCartList.push(item);
-            //     } else {
-            //         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
-            //     }
-            // })
-
-            let userData = {
-                meta_data: [
-                    {
-                        key: "cart",
-                        value: cl,
-                    },
-                ],
-            };
-
-            utils.updateUser(token, userData).then((result) => {
-                setTimeout(() => setShowAddProgress(false), 500);
-
-                localStorage.setItem("cart", "");
-
-                EventEmitter.dispatch("updateBadge");
-                EventEmitter.dispatch("handleCart", true);
-            });
-        } else {
-            setTimeout(() => setShowAddProgress(false), 500);
-
-            cl = cl.concat([...checkoutProductList]);
-            cl = JSON.stringify(cl);
-            localStorage.setItem("cart", cl);
-
-            EventEmitter.dispatch("updateBadge");
-            EventEmitter.dispatch("handleCart", true);
-        }
-    };
-
     //////////////////////////////////////
 
     const DataTable = () => {
@@ -544,8 +511,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             <Head>
                 <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
             </Head>
-            <Block display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]} height="100vh" paddingTop={["48px", "48px", "96px"]} style={{paddingTop: 146}}>
-                <Block display="flex" flexDirection={["column", "column", "row"]} width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]}>
+            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
+                <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
                     <Block position={["unset", "unset", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
@@ -554,8 +521,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                             onClick={() => openSummaryModal()}
                             onClickMinus={() => setTotalCount(totalCount - 1)}
                             onClickPlus={() => setTotalCount(totalCount + 1)}
-                            quantity={totalCount}
+                            quantity={totalCount} isInStock={isInStock}
                             onClickAddToBag={() => updateCart()}
+                            isAvailable={availableToCheckout}
                         />
                     </Block>
                     {/* 选择区域 */}

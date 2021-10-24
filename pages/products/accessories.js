@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import clsx from "clsx";
 
-import {Block} from "baseui/block";
-
 import {withRouter} from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+
+import {Block} from "baseui/block";
 
 import {Checkout_L as Checkout, Selection} from "../../components/sections";
 
@@ -16,6 +17,9 @@ import styles from "./Product.module.scss";
 import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
+
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -64,7 +68,6 @@ function Accessories({router, product, productComponent, productVariant}) {
 
     const [availableToCheckout, setAvailable] = useState(false);
 
-    const [showAddProgress, setShowAddProgress] = useState(false);
     const [shippedDay, setShippedDay] = useState("");
 
     ////////////////////////////////////////
@@ -74,6 +77,11 @@ function Accessories({router, product, productComponent, productVariant}) {
     const [wallType, setWallType] = useState("");
 
     ////////////////////////////////////////
+
+    const dispatch = useDispatch();
+
+    const {loggedIn, token} = useSelector(({user}) => user);
+    const {cart} = useSelector(({cart}) => cart);
 
     const fetchProduct = async (id) => {
         if (!id) return;
@@ -183,6 +191,27 @@ function Accessories({router, product, productComponent, productVariant}) {
 
         setTotalRegularPrice(regularPrice);
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+    };
+
+    const updateCart = async () => {
+        let cl = JSON.parse(JSON.stringify(cart));
+        cl = cl.concat([...checkoutProductList]);
+
+        if (loggedIn) {
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cl,
+                    },
+                ],
+            };
+            dispatch(updateUser(token, userData));
+            EventEmitter.dispatch("handleCart", true);
+        } else {
+            dispatch(modifyCart({cart: cl}))
+            EventEmitter.dispatch("handleCart", true);
+        }
     };
 
     useEffect(async () => {
@@ -375,76 +404,6 @@ function Accessories({router, product, productComponent, productVariant}) {
         setAvailable(available);
     }, [availableList]);
 
-    const updateCart = async () => {
-        const token = localStorage.getItem("token");
-        let cart = localStorage.getItem("cart");
-        cart = cart ? JSON.parse(cart) : cart;
-
-        let cl;
-
-        if (cart && Array.isArray(cart)) {
-            cl = [...cart];
-        } else {
-            cl = [];
-        }
-
-        setShowAddProgress(true);
-
-        if (token) {
-            let cartList = [];
-            let data = await utils.getUser(token);
-            let result = data.meta_data.filter((data) => data.key === "cart");
-            if (result.length > 0) {
-                if (result[0].value.length > 0) {
-                    cartList = [...result[0].value];
-                    cartList = cartList.concat([...checkoutProductList]);
-                } else {
-                    cartList = [...checkoutProductList];
-                }
-            } else {
-                cartList = [...checkoutProductList];
-            }
-            cl = cl.concat([...cartList]);
-
-            // let newCartList = [];
-            // cartList.forEach((item, index) => {
-            //     const i = newCartList.findIndex((product) => product.id === item.id);
-            //     if (i === -1) {
-            //         newCartList.push(item);
-            //     } else {
-            //         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
-            //     }
-            // })
-
-            let userData = {
-                meta_data: [
-                    {
-                        key: "cart",
-                        value: cl,
-                    },
-                ],
-            };
-
-            utils.updateUser(token, userData).then((result) => {
-                setTimeout(() => setShowAddProgress(false), 500);
-
-                localStorage.setItem("cart", "");
-
-                EventEmitter.dispatch("updateBadge");
-                EventEmitter.dispatch("handleCart", true);
-            });
-        } else {
-            setTimeout(() => setShowAddProgress(false), 500);
-
-            cl = cl.concat([...checkoutProductList]);
-            cl = JSON.stringify(cl);
-            localStorage.setItem("cart", cl);
-
-            EventEmitter.dispatch("updateBadge");
-            EventEmitter.dispatch("handleCart", true);
-        }
-    };
-
     //////////////////////////////////////
 
     const SelectionList = ({index, data = {attributes: []}}) => {
@@ -481,8 +440,8 @@ function Accessories({router, product, productComponent, productVariant}) {
             <Head>
                 <title>{productName ? productName + " - Accessories | WESTSHADE" : ""}</title>
             </Head>
-            <Block display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]} height="100vh" paddingTop={["48px", "48px", "96px"]} style={{paddingTop: 146}}>
-                <Block display="flex" flexDirection={["column", "column", "row"]} width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]}>
+            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
+                <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
@@ -539,7 +498,6 @@ Accessories.getInitialProps = async (context) => {
         product: product,
         productComponent: component,
         productVariant: variant,
-        // newFooter: true,
         noFooter: true,
     };
 };

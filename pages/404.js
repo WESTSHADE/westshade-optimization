@@ -35,7 +35,7 @@ function Custom404({router}) {
                         </Block>
                     </Block>
                 </Block>
-                <Block display="flex" flex={1} flexDirection="column">
+                <Block display="flex" flex={1} flexDirection="column" paddingBottom={["70px", "70px", "140px"]}>
                     <Block marginBottom={["20px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Were you looking for...</Block>
                     <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(3, 272px)"]} gridColumnGap={["16px", "32px", "unset"]}
                            gridRowGap="20px" justifyContent={["", "", "space-around"]}>

@@ -1,29 +1,29 @@
 .container-full-screen {
-	width: 100vw;
-	left: calc(50% - 50vw);
+    width: 100vw;
+    left: calc(50% - 50vw);
 }
 
 .container-banner {
-	position: relative;
-	min-height: 480px;
-	margin-bottom: 12px;
-	padding: 24px 0;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	align-content: center;
-	align-items: center;
-	justify-content: center;
+    position: relative;
+    min-height: 480px;
+    margin-bottom: 12px;
+    padding: 24px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .root-container {
-	z-index: 9;
+    z-index: 5;
 }
 
 .typography-title {
-	margin-bottom: 24px;
-	color: white;
-	font-size: 2rem;
-	font-style: normal;
-	font-weight: 700;
+    margin-bottom: 24px;
+    color: white;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
 }

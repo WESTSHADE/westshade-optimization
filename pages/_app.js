@@ -1,34 +1,24 @@
 import React, {useEffect, useState} from "react";
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react'
 import {Provider as StyletronProvider} from "styletron-react";
-
-import {Head} from "next/document";
 
 import {BaseProvider, LightTheme, createTheme} from "baseui";
 import {Block} from "baseui/block";
 
-import {CssBaseline, Container, Hidden} from "@material-ui/core";
 import "@fontsource/roboto";
 
-import {wrapper} from "../redux/store";
+import {store, persistor} from "../redux/store";
 import {styletron} from "../styletron";
 
 import Header from "../components/header";
-import HeaderDrawerLeft from "../components/header_mobile";
 import Footer from "../components/footer";
 
-import HeaderNew from "../components/header-n";
-import FooterNew from "../components/footer-n";
-
-import {Modal} from "../components/surfacse";
-
-// import App from 'next/app'
 import "../styles/globals.css";
 import "../styles/styleguide.css";
 import "../styles/homepage.css";
 import "../styles/y5-buy.css";
 import "../styles/baseui.css";
-
-// const engine = new Styletron();
 
 const breakpoints = {
     small: 480,
@@ -50,21 +40,6 @@ const primitives = {
 
 const overrides = {
     typography: {
-        MinXDisplayLarge: {fontFamily: "Roboto", fontSize: "64px", fontWeight: "bold", lineHeight: "64px", letterSpacing: 0},
-        MinXDisplayMedium: {fontFamily: "Roboto", fontSize: "48px", fontWeight: 900, lineHeight: "48px", letterSpacing: 0},
-        MinXDisplaySmall: {fontFamily: "Roboto", fontSize: "36px", fontWeight: "bold", lineHeight: "36px", letterSpacing: 0},
-        MinXDisplayXSmall: {fontFamily: "Roboto", fontSize: "32px", fontWeight: "700", lineHeight: "40px", letterSpacing: 0},
-        MinXHeadingXLarge: {fontFamily: "Roboto", fontSize: "38px", fontWeight: "bold", lineHeight: "46px", letterSpacing: "-2%"},
-        MinXHeadingLarge: {fontFamily: "Roboto", fontSize: "24px", fontWeight: "bold", lineHeight: "24px", letterSpacing: 0},
-        MinXHeadingMedium: {fontFamily: "Roboto", fontSize: "20px", fontWeight: "bold", lineHeight: "28px", letterSpacing: 0},
-        MinXHeadingSmall: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 400, lineHeight: "24px", letterSpacing: "4%"},
-        MinXHeadingSmallBold: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px", letterSpacing: "4%"},
-        MinXHeadingXSmall: {fontFamily: "Roboto", fontSize: "9px", fontWeight: 400, lineHeight: "11px", letterSpacing: "4%"},
-        MinXHeadingXSmallBold: {fontFamily: "Roboto", fontSize: "9px", fontWeight: 500, lineHeight: "11px", letterSpacing: "4%"},
-        MinXParagraphSmall: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 400, lineHeight: "16px", letterSpacing: "4%"},
-        MinXParagraphSmallBold: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 500, lineHeight: "16px", letterSpacing: "4%"},
-        MinXFootSmall: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "20px", letterSpacing: "4%"},
-        // ========================
         MinXTitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 900, lineHeight: "28px"},
         MinXTitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 900, lineHeight: "32px"},
         MinXTitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 900, lineHeight: "36px"},
@@ -129,8 +104,47 @@ const overrides = {
 const theme = createTheme(primitives, overrides);
 const CustomTheme = {...LightTheme, ...theme, ...ResponsiveTheme};
 
+function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    const [windowSize, setWindowSize] = useState({
+        width: undefined,
+        height: undefined,
+    });
+
+    useEffect(() => {
+        // Handler to call on window resize
+        function handleResize() {
+            // Set window width/height to state
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        }
+
+        // Add event listener
+        window.addEventListener("resize", handleResize);
+        // Call handler right away so state gets updated with initial window size
+        handleResize();
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+    return windowSize;
+}
+
 function MyApp({Component, pageProps}) {
     const [isSupported, setIsSupported] = useState(false);
+
+    const size = useWindowSize();
+
+    useEffect(() => {
+        if (pageProps.noFooter && document) {
+            document.body.style.height = "100vh";
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.height = "unset";
+            document.body.style.overflow = "unset";
+        }
+    });
 
     useEffect(() => {
         const jssStyles = document.querySelector("#jss-server-side");
@@ -139,14 +153,6 @@ function MyApp({Component, pageProps}) {
         }
 
         setIsSupported(window.appleBusinessChat.isSupported());
-
-        if (pageProps.noFooter) {
-            document.body.style.height = "100vh";
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.height = "unset";
-            document.body.style.overflow = "unset";
-        }
     }, []);
 
     useEffect(() => {
@@ -164,67 +170,27 @@ function MyApp({Component, pageProps}) {
     }, [isSupported]);
 
     return (
-        <StyletronProvider value={styletron}>
-            <BaseProvider theme={CustomTheme}>
-                <CssBaseline/>
-                {/* {pageProps.noFooter ? (
-					<Component {...pageProps} />
-				) : (
-					<>
-						<Hidden mdDown>
-							<Header />
-						</Hidden>
-						<Hidden lgUp>
-							<HeaderDrawerLeft />
-						</Hidden>
-						<Container maxWidth="lg" className="container-page">
-							<Component {...pageProps} />
-							<div id="refreshPlaceholder" />
-							<div id="modal-root" />
-						</Container>
-						<Footer />
-					</>
-				)} */}
-                {pageProps.noFooter ? (
-                    <>
-                        <Hidden mdDown>
+        <Provider store={store}>
+            <PersistGate persistor={persistor} loading={null}>
+                <StyletronProvider value={styletron}>
+                    <BaseProvider theme={CustomTheme}>
+                        <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
                             <Header/>
-                        </Hidden>
-                        <Hidden lgUp>
-                            <HeaderDrawerLeft/>
-                        </Hidden>
-                        <Component {...pageProps} />
-                        <div id="refreshPlaceholder"/>
-                        <div id="modal-root"/>
-                    </>
-                ) : pageProps.newFooter ? (
-                    <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
-                        <HeaderNew/>
-                        <Block flex={1} marginTop={["48px", "48px", "96px"]}>
-                            <Component {...pageProps} />
-                        </Block>
-                        <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"}/>
-                        <div id="modal-root"/>
-                        <FooterNew isHomePage={pageProps.homePage}/>
-                    </div>
-                ) : (
-                    <>
-                        <Hidden mdDown>
-                            <Header/>
-                        </Hidden>
-                        <Hidden lgUp>
-                            <HeaderDrawerLeft/>
-                        </Hidden>
-                        <Container maxWidth="lg" className="container-page">
-                            <Component {...pageProps} />
-                            <div id="refreshPlaceholder" style={{maxWidth: "1920px", margin: "auto"}}/>
+                            <Block position="relative" flex={1} marginTop={["48px", "48px", "96px"]}>
+                                <Component size={size} {...pageProps} />
+                            </Block>
                             <div id="modal-root"/>
-                        </Container>
-                        <Footer/>
-                    </>
-                )}
-            </BaseProvider>
-        </StyletronProvider>
+                            {!pageProps.noFooter ? (
+                                <>
+                                    <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"}/>
+                                    <Footer isHomePage={pageProps.homePage}/>
+                                </>
+                            ) : null}
+                        </div>
+                    </BaseProvider>
+                </StyletronProvider>
+            </PersistGate>
+        </Provider>
     );
 }
 
@@ -240,4 +206,5 @@ function MyApp({Component, pageProps}) {
 //   return { ...appProps }
 // }
 
-export default wrapper.withRedux(MyApp);
+// export default wrapper.withRedux(MyApp);
+export default MyApp;

@@ -46,42 +46,13 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
     )
 }
 
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
-function Custom_Printing_Table_Cover({router}) {
+function Custom_Printing_Table_Cover({router, size}) {
     const refBanner = useRef(null);
 
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const size = useWindowSize();
-
-    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/fitted-table-cover"});
+    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/buy"});
 
     useEffect(() => {
         if (refBanner && refBanner.current) {
@@ -194,11 +165,11 @@ function Custom_Printing_Table_Cover({router}) {
                 </Block>
                 <SectionCard router={router} title={"Fitted Table Cover"} content={"The fitted table cover is made of the same fabric as canopy tent and features two zips at the back."}
                              src={"images/custom-printing/table-cover/back-zip.png"} alt={"back zip table cover"}
-                             destination={"/products/market-umbrellas/santorini-aluminum-umbrella"}
+                             destination={{pathname: "/custom-print/table-cover/buy", query: {type: "fitted"}, as: "/custom-print/table-cover/buy"}}
                 />
                 <SectionCard router={router} title={"Stretch Table Cover"} content={"The stretch table cover is made of a lightweight stretch fabric. It secures itself with pocket at the bottom."}
                              src={"images/custom-printing/table-cover/self-secure.jpg"} alt={"self secure table cover"}
-                             destination={"/products/cantilever-umbrellas/catalina-umbrella"}
+                             destination={{pathname: "/custom-print/table-cover/buy", query: {type: "stretch"}, as: "/custom-print/table-cover/buy"}}
                 />
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
@@ -299,11 +270,5 @@ function Custom_Printing_Table_Cover({router}) {
         </React.Fragment>
     )
 }
-
-Custom_Printing_Table_Cover.getInitialProps = (context) => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Custom_Printing_Table_Cover);

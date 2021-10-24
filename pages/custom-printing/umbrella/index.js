@@ -47,46 +47,17 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
     )
 }
 
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
-function Custom_Printing_Umbrella({router}) {
+function Custom_Printing_Umbrella({router, size}) {
     const ref = useRef(null);
     const refBanner = useRef(null);
 
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const size = useWindowSize();
-
-    const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/santorini-aluminum-umbrella"});
+    const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/santorini-umbrella"});
 
     const goBuyingSection = () => {
-        if (window) window.scrollTo({top: size.width > 960 ? ref.current.offsetTop - 120 : ref.current.offsetTop - 72, behavior: 'smooth'});
+        if (window) window.scrollTo({top: size.width > 959 ? ref.current.offsetTop - 120 : ref.current.offsetTop - 72, behavior: 'smooth'});
     };
 
     useEffect(() => {
@@ -253,7 +224,7 @@ function Custom_Printing_Umbrella({router}) {
                 />
                 <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
                              src={"images/custom-printing/umbrella/santorini.jpg"} alt={"santorini"}
-                             destination={"/products/market-umbrellas/santorini-aluminum-umbrella"}
+                             destination={"/products/market-umbrellas/santorini-umbrella"}
                 />
                 <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
                              src={"images/custom-printing/umbrella/catalina.jpg"} alt={"catalina"}
@@ -263,11 +234,5 @@ function Custom_Printing_Umbrella({router}) {
         </React.Fragment>
     )
 }
-
-Custom_Printing_Umbrella.getInitialProps = (context) => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Custom_Printing_Umbrella);

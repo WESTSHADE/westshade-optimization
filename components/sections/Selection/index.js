@@ -24,6 +24,8 @@ const id_attribute_inflatableCanopySize = 38;
 const id_attribute_inflatableCanopyColor = 39;
 const id_attribute_inflatableFrameColor = 40;
 const id_attribute_printingTechnique = 44;
+const id_attribute_tableCoverType = 47;
+const id_attribute_umbrellaFrame = 48;
 
 export default function Selection(props) {
     let {data = {}, value, onChange} = props;
@@ -70,7 +72,7 @@ export default function Selection(props) {
         )
     }
 
-    if (data.id === id_attribute_umbrellaMaterial) {
+    if (data.id === id_attribute_umbrellaMaterial || data.id === id_attribute_umbrellaFrame) {
         return (
             <RadioGroup value={value} onChange={onChange} name={data.name} align={ALIGN.horizontal}
                         overrides={{
@@ -105,6 +107,45 @@ export default function Selection(props) {
                         }}
             >
                 {data.options.map((option, i) => <Radio key={i} value={option.toLowerCase()}>{option}</Radio>)}
+            </RadioGroup>
+        )
+    }
+
+    if (data.id === id_attribute_tableCoverType) {
+        return (
+            <RadioGroup value={value} onChange={onChange} name={data.name} align={ALIGN.horizontal}
+                        overrides={{
+                            RadioGroupRoot: {
+                                props: {
+                                    className: clsx(styles["container-radio-group"], styles["attr-tableCover"])
+                                },
+                            },
+                            Root: {
+                                props: {
+                                    className: clsx(styles["container-radio"], styles["attr-tableCover"])
+                                },
+                                style: ({$checked}) => ({
+                                    padding: $checked ? "14px 30px" : "16px 32px",
+                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                }),
+                            },
+                            RadioMarkOuter: {
+                                style: {display: "none"},
+                            },
+                            RadioMarkInner: {
+                                style: {display: "none"},
+                            },
+                            Label: {
+                                props: {
+                                    className: styles["radio-label"]
+                                },
+                                style: ({$checked}) => ({
+                                    fontWeight: $checked ? "bold" : "400",
+                                }),
+                            },
+                        }}
+            >
+                {data.options.map((option, i) => <Radio key={i} value={option.toLowerCase()}>{option + " Table Cover"}</Radio>)}
             </RadioGroup>
         )
     }

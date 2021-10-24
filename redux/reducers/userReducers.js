@@ -1,40 +1,79 @@
-import { LOG_IN_SUCCESS, LOG_IN_FAIL, LOG_OUT, USER_INFO_SUCCESS, USER_INFO_FAIL, CLEAR_ERRORS } from "../constants/userConstants";
+import {SIGN_UP_SUCCESS, SIGN_UP_FAIL, LOG_IN_SUCCESS, LOG_IN_FAIL, LOG_OUT, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL, UPDATE_USER_INFO_SUCCESS, UPDATE_USER_INFO_FAIL, CLEAR_ERRORS} from "../constants/userConstants";
 
-export const userReducer = (state = { loggedIn: false, token: "", user: {} }, action) => {
-	switch (action.type) {
-		case LOG_IN_SUCCESS:
-			return {
-				...state,
-				loggedIn: true,
-				token: action.payload.token,
-			};
-		case LOG_IN_FAIL:
-			return {
-				...state,
-				message: action.payload,
-			};
-		case LOG_OUT:
-			return {
-				loggedIn: false,
-				token: "",
-				user: {},
-			};
-		case USER_INFO_SUCCESS:
-			return {
-				...state,
-				user: action.payload.user,
-			};
-		case USER_INFO_FAIL:
-			return {
-				...state,
-				message: action.payload,
-			};
-		case CLEAR_ERRORS:
-			return {
-				...state,
-				message: null,
-			};
-		default:
-			return state;
-	}
+let defaultUser = {
+    loggedIn: false,
+    token: "",
+    user: {
+        first_name: "",
+        last_name: "",
+        billing: {
+            phone: ""
+        }
+    },
+};
+
+export const userReducer = (state = {...defaultUser}, action) => {
+    switch (action.type) {
+        case SIGN_UP_SUCCESS:
+            return {
+                ...state,
+            };
+        case SIGN_UP_FAIL:
+            return {
+                ...state,
+                message: action.payload,
+            };
+        case LOG_IN_SUCCESS:
+            return {
+                ...state,
+                loggedIn: true,
+                token: action.payload.token,
+            };
+        case LOG_IN_FAIL:
+            return {
+                ...state,
+                loggedIn: false,
+                token: "",
+                message: action.payload,
+            };
+        case LOG_OUT:
+            return {
+                loggedIn: false,
+                token: "",
+                user: {
+                    first_name: "",
+                    last_name: "",
+                    billing: {
+                        phone: ""
+                    }
+                },
+            };
+        case GET_USER_INFO_SUCCESS:
+            return {
+                ...state,
+                user: action.payload.user,
+            };
+        case GET_USER_INFO_FAIL:
+            return {
+                ...state,
+                message: action.payload,
+            };
+        case UPDATE_USER_INFO_SUCCESS:
+            return {
+                ...state,
+                user: action.payload.user,
+            };
+        case UPDATE_USER_INFO_FAIL:
+            return {
+                ...state,
+                message: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                message: null,
+            };
+        default:
+            return state;
+    }
 };

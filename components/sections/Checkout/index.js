@@ -10,14 +10,16 @@ import Plus from "baseui/icon/plus";
 import styles from "./checkout.module.scss";
 
 const Quantity = (props) => {
-    const {quantity = 1} = props;
+    const {quantity = 1, isInStock = true} = props;
 
     return (
         <div className={styles["container-quantity"]}>
             <Button kind={KIND.tertiary} shape={SHAPE.circle}
                     overrides={{
                         BaseButton: {
-                            props: {className: styles["button-minus"]},
+                            props: {
+                                className: styles["button-minus"]
+                            },
                         },
                     }}
                     onClick={props.onClickMinus}
@@ -25,14 +27,25 @@ const Quantity = (props) => {
             >
                 <CheckIndeterminate/>
             </Button>
-            <div className={styles["quantity"]}>{quantity}</div>
+            <Block font="MinXLabel16"
+                   overrides={{
+                       Block: {
+                           props: {
+                               className: styles["quantity"]
+                           },
+                       },
+                   }}
+            >{quantity}</Block>
             <Button kind={KIND.tertiary} shape={SHAPE.circle}
                     overrides={{
                         BaseButton: {
-                            props: {className: styles["button-plus"]},
+                            props: {
+                                className: styles["button-plus"]
+                            },
                         },
                     }}
                     onClick={props.onClickPlus}
+                    disabled={!isInStock}
             >
                 <Plus/>
             </Button>
@@ -41,7 +54,7 @@ const Quantity = (props) => {
 };
 
 const checkout = (props) => {
-    const {totalPrice = 0} = props;
+    const {totalPrice = 0, isAvailable = true, isInStock = true,} = props;
 
     return (
         <Block className={styles["container-checkout"]} position={["fixed", "fixed", "absolute"]} width={["100%", "100%", "560px"]} height={["94px", "68px"]} paddingRight={["24px", "16px", "32px"]} paddingLeft={["24px", "16px", "32px"]}>
@@ -78,7 +91,7 @@ const checkout = (props) => {
                     <div style={{width: 24, border: "1px solid #e8e8e8", transform: "rotate(90deg)"}}/>
                 </Block>
                 <Block display={["none", "block"]}>
-                    <Quantity quantity={props.quantity} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
+                    <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                 </Block>
                 <Block width={["116px", "148px", "160px"]}>
                     <Button
@@ -89,6 +102,7 @@ const checkout = (props) => {
                             },
                         }}
                         onClick={props.onClickAddToBag}
+                        disabled={!isAvailable}
                     >
                         Add to cart
                     </Button>

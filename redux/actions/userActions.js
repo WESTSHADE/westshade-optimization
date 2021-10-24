@@ -1,64 +1,144 @@
 import axios from "axios";
 
-import { LOG_IN_SUCCESS, LOG_IN_FAIL, LOG_OUT, USER_INFO_SUCCESS, USER_INFO_FAIL, CLEAR_ERRORS } from "../constants/userConstants";
+import {
+    SIGN_UP_SUCCESS,
+    SIGN_UP_FAIL,
+    LOG_IN_SUCCESS,
+    LOG_IN_FAIL,
+    LOG_OUT,
+    GET_USER_INFO_SUCCESS,
+    GET_USER_INFO_FAIL,
+    UPDATE_USER_INFO_SUCCESS,
+    UPDATE_USER_INFO_FAIL,
+    CLEAR_ERRORS,
+} from "../constants/userConstants";
 
-export const logIn =
-	({ username, password }) =>
-	async (dispatch) => {
-		try {
-			const { data, status } = await axios.post(process.env.apiBaseUrl + "/login", { username, password });
+import {modifyCart} from "../../redux/actions/cartActions";
 
-			if (status === 200) {
-				localStorage.setItem("token", data.token);
-			}
+export const register = ({email, password}) => async (dispatch) => {
+    try {
+        const {data, status} = await axios.post(process.env.apiBaseUrl + "/register", {username: email, email, password});
+        if (status === 200) {
+            // 成功数据："User {email} Registration was Successful"
+            dispatch({
+                type: SIGN_UP_SUCCESS,
+            });
+            setTimeout(() => dispatch(logIn({email, password})), 1000);
+        }
+    } catch (error) {
+        dispatch({
+            type: SIGN_UP_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
 
-			dispatch({
-				type: LOG_IN_SUCCESS,
-				payload: {
-					token: data.token,
-				},
-			});
-		} catch (error) {
-			dispatch({
-				type: LOG_IN_FAIL,
-				payload: error.response.data,
-			});
-		}
-	};
+export const logIn = ({email, password}) => async (dispatch) => {
+    try {
+        const {data, status} = await axios.post(process.env.apiBaseUrl + "/login", {username: email, password});
+        if (status === 200) {
+            // localStorage.setItem("token", data.token);
+            dispatch({
+                type: LOG_IN_SUCCESS,
+                payload: {
+                    token: data.token,
+                },
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: LOG_IN_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
 
 export const logOut = () => async (dispatch) => {
-	dispatch({ type: LOG_OUT });
+    dispatch({type: LOG_OUT});
 };
 
 export const getUser = (token) => async (dispatch) => {
-	try {
-		const { data } = await axios({
-			method: "get",
-			url: process.env.apiBaseUrl + "/user",
-			headers: {
-				"Access-Control-Allow-Headers": "*",
-				"Content-Type": "application/json",
-				Accept: "application/json",
-				"Access-Control-Allow-Origin": "*",
-				Authorization: "Bearer " + token,
-			},
-		});
+    try {
+        if (!token) {
+            dispatch(logOut());
+        } else {
+            const {data, status} = await axios({
+                method: "get",
+                url: process.env.apiBaseUrl + "/user",
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    Authorization: "Bearer " + token,
+                },
+            });
 
-		dispatch({
-			type: USER_INFO_SUCCESS,
-			payload: {
-				user: data,
-			},
-		});
-	} catch (error) {
-		dispatch({
-			type: USER_INFO_FAIL,
-			payload: error.response.data,
-		});
-	}
+            if (status === 200) {
+                dispatch({
+                    type: GET_USER_INFO_SUCCESS,
+                    payload: {
+                        user: data,
+                    },
+                });
+
+                let result = data.meta_data.find((data) => data.key === "cart");
+                if (result) {
+                    dispatch(modifyCart({cart: result.value}));
+                }
+            }
+        }
+    } catch (error) {
+        dispatch({
+            type: GET_USER_INFO_FAIL,
+            payload: error.response.data,
+        });
+    }
 };
 
+export const updateUser = (token, user) => async (dispatch) => {
+    try {
+        if (!token) {
+            dispatch(logOut());
+        } else {
+            const {data, status} = await axios({
+                method: "put",
+                url: process.env.apiBaseUrl + "/user",
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    Authorization: "Bearer " + token,
+                },
+                data: user,
+            });
+
+            if (status === 200) {
+                dispatch({
+                    type: UPDATE_USER_INFO_SUCCESS,
+                    payload: {
+                        user: data,
+                    },
+                });
+
+                let result = data.meta_data.find((data) => data.key === "cart");
+                if (result) {
+                    dispatch(modifyCart({cart: result.value}));
+                }
+            }
+        }
+    } catch (error) {
+        dispatch({
+            type: UPDATE_USER_INFO_FAIL,
+            payload: error.response.data,
+        });
+    }
+}
+
 // Clear Error
-export const clearErrors = () => async (dispatch) => {
-	dispatch({ type: CLEAR_ERRORS });
+export const clearUserErrors = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_ERRORS
+    });
 };

@@ -115,10 +115,4 @@ function Warranty() {
     );
 }
 
-Warranty.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
-
 export default Warranty;

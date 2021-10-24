@@ -62,8 +62,8 @@ function Custom_Printing({router}) {
                    overrides={{
                        Block: {
                            props: {
-                               className: "container-display"
-                           }
+                               className: "container-display text-center"
+                           },
                        },
                    }}
             >
@@ -71,13 +71,7 @@ function Custom_Printing({router}) {
                     <Image src="images/custom-printing/custom-printing-display.jpg" alt="custom printing" layout="fill" objectFit="cover" quality={100}/>
                 </div>
                 <Block marginBottom={["8px", "16px", "20px"]} font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
-                <Block maxWidth={["262px", "450px", "659px"]} marginBottom={["8px", "16px", "20px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText"
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
+                <Block maxWidth={["262px", "450px", "659px"]} marginBottom={["8px", "16px", "20px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">
                     Print any style you like
                 </Block>
                 <MButton type="rainbow" height={["36px", "48px", "56px"]}
@@ -332,11 +326,5 @@ function Custom_Printing({router}) {
         </React.Fragment>
     );
 }
-
-Custom_Printing.getInitialProps = (context) => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Custom_Printing);

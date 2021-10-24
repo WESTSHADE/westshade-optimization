@@ -175,6 +175,7 @@ export default class Utils {
                 body: JSON.stringify(data),
             });
             const json = await res.json();
+            console.log(json);
             return json;
         } catch (error) {
             console.error(error);
@@ -189,8 +190,6 @@ export default class Utils {
                 method: "GET",
                 headers: {
                     "Access-Control-Allow-Headers": "*",
-                    // "Content-Type": "application/json",
-                    // Accept: "application/json",
                     "Access-Control-Allow-Origin": "*",
                 },
             });

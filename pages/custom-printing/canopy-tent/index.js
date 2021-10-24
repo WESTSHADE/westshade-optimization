@@ -20,42 +20,13 @@ const ImageSlide = ({url, alt}) => {
     );
 };
 
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
-function Custom_Printing_Canopy_Tent({router}) {
+function Custom_Printing_Canopy_Tent({router, size}) {
     const refBanner = useRef(null);
 
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const size = useWindowSize();
-
-    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/fitted-table-cover"});
+    const goBuyingPage = () => router.push({pathname: "/"});
 
     const getSizeDesc = (value) => {
         let elm = null;
@@ -317,11 +288,5 @@ function Custom_Printing_Canopy_Tent({router}) {
         </React.Fragment>
     )
 }
-
-Custom_Printing_Canopy_Tent.getInitialProps = (context) => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Custom_Printing_Canopy_Tent);

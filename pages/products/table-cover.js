@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import clsx from "clsx";
@@ -17,16 +18,20 @@ import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
+
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const urlFn = new UrlFn();
 const utils = new Utils();
 
+const id_attribute_tableCoverType = 47;
+
 let checkoutProductList = [];
 
 function Table_Cover({router, product, productComponent, productVariant}) {
-    const [uProduct, setProduct] = useState({...product});
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productType, setProductType] = useState("");
@@ -58,11 +63,18 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     const [showAddProgress, setShowAddProgress] = useState(false);
     const [shippedDay, setShippedDay] = useState("");
 
+    const [tableCoverType, setTableCoverType] = useState("");
+
     ////////////////////////////////////////
 
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
     ////////////////////////////////////////
+
+    const dispatch = useDispatch();
+
+    const {loggedIn, token} = useSelector(({user}) => user);
+    const {cart} = useSelector(({cart}) => cart);
 
     const fetchProduct = async (id) => {
         if (!id) return;
@@ -174,56 +186,77 @@ function Table_Cover({router, product, productComponent, productVariant}) {
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
 
-    useEffect(async () => {
-        if (uProduct.id) {
-            setProductId(uProduct.id.toString());
+    const updateCart = async () => {
+        let cl = JSON.parse(JSON.stringify(cart));
+        cl = cl.concat([...checkoutProductList]);
+
+        if (loggedIn) {
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cl,
+                    },
+                ],
+            };
+            dispatch(updateUser(token, userData));
+            EventEmitter.dispatch("handleCart", true);
         } else {
-            let id = urlFn.getParam("id");
-            if (id) {
-                setProductId(id.toString());
-                let p = await utils.getProductByWooId(id);
-                setProduct(p);
-            } else {
-                router.push("/")
-            }
+            dispatch(modifyCart({cart: cl}))
+            EventEmitter.dispatch("handleCart", true);
+        }
+    };
+
+    useEffect(async () => {
+        if (product.id) {
+            setProductId(product.id.toString());
         }
         setShippedDay(dateFn.getReceivedDay());
+
+        if (router.query.type) {
+            setTableCoverType(router.query.type);
+        } else {
+            let size = urlFn.getParam("type");
+            setTableCoverType(size);
+        }
     }, []);
 
     useEffect(() => {
-        if (!uProduct) return;
+        if (!product) return;
 
-        setProductName(uProduct.name);
-        setProductType(uProduct.type);
+        setProductName(product.name);
+        setProductType(product.type);
 
-        if (uProduct.hasOwnProperty("image")) {
-            setMainImage([uProduct.image]);
-        } else if (uProduct.hasOwnProperty("images")) {
-            setMainImage(uProduct.images);
+        if (product.hasOwnProperty("image")) {
+            setMainImage([product.image]);
+        } else if (product.hasOwnProperty("images")) {
+            setMainImage(product.images);
         }
 
         // 获取,保存各组件信息
-        if (uProduct.type === "simple" || uProduct.type === "variable") {
-            setProductComponent([{...uProduct}]);
-        } else if (uProduct.type === "composite") {
-            Promise.all(uProduct.composite_components.map(({default_option_id}) => fetchProduct(default_option_id))).then((responses) => setProductComponent(responses));
+        if (product.type === "simple" || product.type === "variable") {
+            setProductComponent([{...product}]);
+        } else if (product.type === "composite") {
+            Promise.all(product.composite_components.map(({default_option_id}) => fetchProduct(default_option_id))).then((responses) => setProductComponent(responses));
         }
 
-        setRegularPrice(uProduct.regular_price);
-        setSalePrice(uProduct.sale_price);
-    }, [uProduct]);
+        setRegularPrice(product.regular_price);
+        setSalePrice(product.sale_price);
+    }, [product]);
 
     useEffect(() => {
         if (!uProductComponent || uProductComponent.length === 0) return;
-        if (uProduct.type === "simple") {
+        if (product.type === "simple") {
             setSelectedVariant(uProductComponent);
             // 获取,保存各组件变体产品信息
             // setProductVariant([uProductComponent]);
-        } else if (uProduct.type === "variable") {
+        } else if (product.type === "variable") {
             let selectedAttrList = [];
             Promise.all(
                 uProductComponent.map((component) => {
                     let defaultAttr = [...component.default_attributes];
+
+                    defaultAttr.forEach((attr) => (tableCoverType && attr.id === id_attribute_tableCoverType ? (attr.option = tableCoverType.toLowerCase()) : null));
 
                     selectedAttrList.push(defaultAttr);
 
@@ -353,76 +386,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
         setAvailable(available);
     }, [availableList]);
 
-    const updateCart = async () => {
-        const token = localStorage.getItem("token");
-        let cart = localStorage.getItem("cart");
-        cart = cart ? JSON.parse(cart) : cart;
-
-        let cl;
-
-        if (cart && Array.isArray(cart)) {
-            cl = [...cart];
-        } else {
-            cl = [];
-        }
-
-        setShowAddProgress(true);
-
-        if (token) {
-            let cartList = [];
-            let data = await utils.getUser(token);
-            let result = data.meta_data.filter((data) => data.key === "cart");
-            if (result.length > 0) {
-                if (result[0].value.length > 0) {
-                    cartList = [...result[0].value];
-                    cartList = cartList.concat([...checkoutProductList]);
-                } else {
-                    cartList = [...checkoutProductList];
-                }
-            } else {
-                cartList = [...checkoutProductList];
-            }
-            cl = cl.concat([...cartList]);
-
-            // let newCartList = [];
-            // cartList.forEach((item, index) => {
-            //     const i = newCartList.findIndex((product) => product.id === item.id);
-            //     if (i === -1) {
-            //         newCartList.push(item);
-            //     } else {
-            //         newCartList[i].quantity = newCartList[i].quantity + item.quantity;
-            //     }
-            // })
-
-            let userData = {
-                meta_data: [
-                    {
-                        key: "cart",
-                        value: cl,
-                    },
-                ],
-            };
-
-            utils.updateUser(token, userData).then((result) => {
-                setTimeout(() => setShowAddProgress(false), 500);
-
-                localStorage.setItem("cart", "");
-
-                EventEmitter.dispatch("updateBadge");
-                EventEmitter.dispatch("handleCart", true);
-            });
-        } else {
-            setTimeout(() => setShowAddProgress(false), 500);
-
-            cl = cl.concat([...checkoutProductList]);
-            cl = JSON.stringify(cl);
-            localStorage.setItem("cart", cl);
-
-            EventEmitter.dispatch("updateBadge");
-            EventEmitter.dispatch("handleCart", true);
-        }
-    };
-
     //////////////////////////////////////
 
     const SelectionList = ({index, data = {attributes: []}}) => {
@@ -455,10 +418,10 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     return (
         <React.Fragment>
             <Head>
-                <title>{productName ? productName + " - Table Cover | WESTSHADE" : ""}</title>
+                <title>Table Cover | WESTSHADE</title>
             </Head>
-            <Block display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]} height="100vh" paddingTop={["48px", "48px", "96px"]} style={{paddingTop: 146}}>
-                <Block display="flex" flexDirection={["column", "column", "row"]} width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]}>
+            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
+                <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
@@ -467,7 +430,7 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                     <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}>
                         <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                             <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
-                            {uProduct && uProduct.short_description ? (
+                            {product && product.short_description ? (
                                 <Block font="MinXParagraph14"
                                        overrides={{
                                            Block: {
@@ -477,7 +440,7 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                                            },
                                        }}
                                        dangerouslySetInnerHTML={{
-                                           __html: `Description: ${stringFn.modifyShortDescription(uProduct.short_description)}`,
+                                           __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
                                        }}
                                 />
                             ) : null}
@@ -497,7 +460,7 @@ function Table_Cover({router, product, productComponent, productVariant}) {
 Table_Cover.getInitialProps = async (context) => {
     const {query} = context;
     const {id} = query;
-    let product = null,
+    let product,
         component = [],
         variant = [];
 
@@ -513,7 +476,6 @@ Table_Cover.getInitialProps = async (context) => {
         product: product,
         productComponent: component,
         productVariant: variant,
-        // newFooter: true,
         noFooter: true,
     };
 };

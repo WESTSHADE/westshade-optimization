@@ -31,11 +31,11 @@ function Home({router}) {
                 <script id="mcjs" type="text/javascript" src="/static/mailchimpFirstOrder.js"/>
             </Head>
             <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="images/home/custom_printing.jpg"
-                           router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home/>
+                           router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home containerMarginBottom={"0px"}/>
             <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability." url="images/home/tent.jpg"
-                           router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home/>
+                           router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home containerMarginBottom={"0px"}/>
             <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="images/home/umbrella.jpg"
-                           router={router} destination="/umbrella" home/>
+                           router={router} destination="/umbrella" home containerMarginBottom={"0px"}/>
         </React.Fragment>
     )
 }
@@ -43,7 +43,6 @@ function Home({router}) {
 Home.getInitialProps = () => {
     return {
         homePage: true,
-        newFooter: true,
     };
 };
 

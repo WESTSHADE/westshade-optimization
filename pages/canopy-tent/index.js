@@ -4,16 +4,17 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
+import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import ChevronRight from "baseui/icon/chevron-right";
 import ArrowLeft from "baseui/icon/arrow-left";
 import ArrowRight from "baseui/icon/arrow-right";
-import Link from "next/link";
 
-import {Benefit} from "../../components/sections";
+import {Benefit, SubHeaderBar} from "../../components/sections";
 import MButton from "../../components/button-n";
 
 const refs = [];
@@ -192,26 +193,12 @@ function Canopy_Tent({router}) {
 
     return (
         <React.Fragment>
-            <Block position="sticky" top={["48px", "48px", "96px"]} display="flex" flexDirection="row" justifyContent="space-between" alignItems="center"
-                   height={["44px", "60px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} backgroundColor="white"
-                   font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
-                   overrides={{
-                       Block: {
-                           style: {zIndex: 2, boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px"},
-                       },
-                   }}>
-                <div>Canopy Tent</div>
-                <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
-                    <Block display="flex" justifyContent="center" alignItems="center" width="56px" height={["24px", "40px"]} marginRight="16px" marginLeft="16px"
-                           font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
-                    >
-                        <Link href={"spec"}>Spec</Link>
-                    </Block>
-                    <MButton width={["105px", "113px"]} height={["24px", "40px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} text="Buy Now"
-                             onClick={() => goBuyingPage()}
-                    />
-                </Block>
-            </Block>
+            <Head>
+                <title>Canopy Tent - WESTSHADE</title>
+                {/*<meta name="description"*/}
+                {/*      content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+            </Head>
+            <SubHeaderBar title={"Canopy Tent"} subTitle={"Spec"} subTitleDestination={"spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             {/* 主要显示区域 */}
             <Block position="relative" alignItems="center" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"
                    backgroundColor="rgba(0,0,0,0.2)"
@@ -559,11 +546,5 @@ function Canopy_Tent({router}) {
         </React.Fragment>
     );
 }
-
-Canopy_Tent.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Canopy_Tent);

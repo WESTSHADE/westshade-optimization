@@ -11,6 +11,21 @@ import ChevronRight from "baseui/icon/chevron-right";
 import BannerDisplay from "../../components/sections/BannerDisplay";
 import MButton from "../../components/button-n";
 
+const data = {
+    display: [
+        {title: "Bali", picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+        {title: "Kapri", picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/'},
+        {title: "Marco", picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
+        {title: "Santorini", picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
+        {title: "Catalina", picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
+    ],
+    open_system: [["Crank"], ["Crank"], ["Push up"], ["Pulley"], ["Crank"]],
+    size: [["9'"], ["6.5'", "7.5'", "9'", "10'"], ["6.5'"], ["6.5'", "7.5'", "9'", "10'", "11.5'"], ["10'", "11.5'", "13'", "16.4'"]],
+    frame: [["Steel"], ["Aluminum"], ["Aluminum"], ["Aluminum", "Fiberglass"], ["Aluminum"]],
+    fabric: [["SDP"], ["AGORA"], ["SDP", "AGORA"], ["SDP", "AGORA"], ["AGORA"]],
+    tilt: [true, true, false, true, false],
+};
+
 const Section = ({title, content, displayList = []}) => {
     return (
         <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
@@ -45,40 +60,11 @@ const Section = ({title, content, displayList = []}) => {
     )
 }
 
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-    return windowSize;
-}
-
-function Umbrella({router}) {
+function Umbrella({router, size}) {
     const ref = useRef(null);
 
     const [compareColumnWidth, setCompareColumnWidth] = useState(0);
     const [signDisplay, setSignDisplay] = useState(true);
-
-    const size = useWindowSize();
 
     useEffect(() => {
         if (ref && ref.current) {
@@ -121,7 +107,7 @@ function Umbrella({router}) {
                                                         ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
                                                         ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
                                                     }}
-                                                    onClick={() => router.push("/")} text={"Buy"}
+                                                    onClick={() => router.push("/products/market-umbrellas/marco-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
                                                <Link color="inherit" href="marco">LEARN MORE</Link>
@@ -141,7 +127,7 @@ function Umbrella({router}) {
                                                         ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
                                                         ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
                                                     }}
-                                                    onClick={() => router.push("/")} text={"Buy"}
+                                                    onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
                                                <Link color="inherit" href="santorini">LEARN MORE</Link>
@@ -160,7 +146,7 @@ function Umbrella({router}) {
                                                         ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
                                                         ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
                                                     }}
-                                                    onClick={() => router.push("/")} text={"Buy"}
+                                                    onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
                                                <Link color="inherit" href="bali">LEARN MORE</Link>
@@ -180,7 +166,7 @@ function Umbrella({router}) {
                                                         ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
                                                         ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
                                                     }}
-                                                    onClick={() => router.push("/")} text={"Buy"}
+                                                    onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
                                                <Link color="inherit" href="catalina">LEARN MORE</Link>
@@ -195,7 +181,7 @@ function Umbrella({router}) {
                                renderButton={
                                    <MButton type="solid" height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
                                             endEnhancer={() => <ChevronRight size={24}/>}
-                                            onClick={() => router.push("/")}
+                                            onClick={() => router.push("/custom-printing")}
                                    />
                                }
                 />
@@ -232,184 +218,64 @@ function Umbrella({router}) {
                                },
                            }}
                     >
-                        <Block width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px" backgroundColor="MinXBackground">
-                            <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                    <Image src="images/umbrella/spec/bali.png" alt="Bali Umbrella Spec" layout="fill" objectFit="contain" quality={100}/>
+                        {data.display.map((item, index) => {
+                            return (
+                                <Block key={index} width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px"
+                                       backgroundColor={index % 2 ? "white" : "MinXBackground"}>
+                                    <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
+                                        <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
+                                            <Image src={item.picUrl} alt={item.alt} layout="fill" objectFit="contain" quality={100}/>
+                                        </Block>
+                                        <Block>{item.title}</Block>
+                                        <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
+                                                 buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
+                                                 onClick={() => router.push(item.buyUrl)}
+                                        />
+                                    </Block>
+                                    <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                        {data.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}
+                                    </Block>
+                                    <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                        {data.size[index].map((s, i) => <Block key={i}>{s}</Block>)}
+                                    </Block>
+                                    <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                        {data.frame[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                    </Block>
+                                    <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                        {data.fabric[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                    </Block>
+                                    <Block minHeight="22px" marginBottom="32px">
+                                        <Block width="22px" height="22px">
+                                            {data.tilt[index] ? (
+                                                <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                            ) : (
+                                                <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                            )}
+                                        </Block>
+                                    </Block>
                                 </Block>
-                                <Block>Bali</Block>
-                                <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                         buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => router.push("/")}
-                                />
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">Crank</Block>
-                            <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>6.5'</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>Steel</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>SDP</Block>
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px">
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
-                        <Block width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px">
-                            <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                    <Image src="images/umbrella/spec/kapri.png" alt="Kapri Umbrella Spec" layout="fill" objectFit="contain" quality={100}/>
-                                </Block>
-                                <Block>Kapri</Block>
-                                <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                         buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => router.push("/")}
-                                />
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">Crank</Block>
-                            <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText"
-                                   overrides={{
-                                       Block: {
-                                           style: {textAlign: "right"},
-                                       },
-                                   }}
-                            >
-                                <Block>6.5'</Block>
-                                <Block>7.5'</Block>
-                                <Block>9'</Block>
-                                <Block>10'</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>Aluminum</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>AGORA</Block>
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px">
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
-                        <Block width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px" backgroundColor="MinXBackground">
-                            <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                    <Image src="images/umbrella/spec/marco.png" alt="Marco Umbrella Spec" layout="fill" objectFit="contain" quality={100}/>
-                                </Block>
-                                <Block>Marco</Block>
-                                <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                         buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => router.push("/")}
-                                />
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">Push-up</Block>
-                            <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>6.5'</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>Aluminum</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>SDP</Block>
-                                <Block>AGORA</Block>
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px">
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
-                        <Block width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px">
-                            <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                    <Image src="images/umbrella/spec/santorini.png" alt="Santorini Umbrella Spec" layout="fill" objectFit="contain" quality={100}/>
-                                </Block>
-                                <Block>Santorini</Block>
-                                <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                         buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => router.push("/")}
-                                />
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">Pulley</Block>
-                            <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText"
-                                   overrides={{
-                                       Block: {
-                                           style: {textAlign: "right"},
-                                       },
-                                   }}
-                            >
-                                <Block>6.5'</Block>
-                                <Block>7.5'</Block>
-                                <Block>9'</Block>
-                                <Block>10'</Block>
-                                <Block>11.5'</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>Aluminum</Block>
-                                <Block>Fiberglass</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>AGORA</Block>
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px">
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
-                        <Block width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px" backgroundColor="MinXBackground">
-                            <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                    <Image src="images/umbrella/spec/catalina.png" alt="Catalina Umbrella Spec" layout="fill" objectFit="contain" quality={100}/>
-                                </Block>
-                                <Block>Catalina</Block>
-                                <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                         buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => router.push("/")}
-                                />
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">Crank</Block>
-                            <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>10'</Block>
-                                <Block>11.5'</Block>
-                                <Block>13'</Block>
-                                <Block>16.4'</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>Aluminum</Block>
-                            </Block>
-                            <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                <Block>AGORA</Block>
-                            </Block>
-                            <Block minHeight="22px" marginBottom="32px">
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
+                            )
+                        })}
                     </Block>
-                    {signDisplay && size.width < 960 ? (
-                        <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
-                               marginTop="auto" marginRight="auto" marginBottom="auto" marginLeft="auto"
-                               overrides={{
-                                   Block: {
-                                       style: {
-                                           borderTopRightRadius: "8px",
-                                           borderBottomRightRadius: "8px",
-                                           borderBottomLeftRadius: "8px",
-                                           borderTopLeftRadius: "8px",
-                                           ":hover": {cursor: 'pointer'}
+                    {signDisplay && size.width < 959 ? (
+                        <Block position="absolute" width="100%" height="100%" onClick={() => setSignDisplay(false)}>
+                            <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
+                                   marginTop="auto" marginRight="auto" marginBottom="auto" marginLeft="auto"
+                                   overrides={{
+                                       Block: {
+                                           style: {
+                                               borderTopRightRadius: "8px",
+                                               borderBottomRightRadius: "8px",
+                                               borderBottomLeftRadius: "8px",
+                                               borderTopLeftRadius: "8px",
+                                               ":hover": {cursor: 'pointer'}
+                                           },
                                        },
-                                   },
-                               }}
-                               onClick={() => setSignDisplay(false)}
-                        >
-                            <Block position="relative" width="50px" height="50px">
-                                <Image src="images/umbrella/slide.png" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
+                                   }}
+                            >
+                                <Block position="relative" width="50px" height="50px">
+                                    <Image src="images/umbrella/slide.png" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
+                                </Block>
                             </Block>
                         </Block>
                     ) : null}
@@ -459,11 +325,5 @@ function Umbrella({router}) {
     )
 
 }
-
-Umbrella.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Umbrella);

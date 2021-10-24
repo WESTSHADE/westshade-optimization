@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
@@ -14,42 +15,56 @@ import Plus from 'baseui/icon/plus'
 import styles from "./cart.module.scss";
 
 import Utils from "../../utils/utils";
-import {NumberFn} from "../../utils/tools";
-import {EventEmitter} from "../../utils/events";
+import {DateFn, NumberFn} from "../../utils/tools";
 
 import Cart from "./cart.svg";
 
 const numberFn = new NumberFn();
 const utils = new Utils();
 
-function Cart_Page({router}) {
-    const [user, setUser] = useState(null);
-    const [cart, setCart] = useState([]);
-    const [products, setProducts] = useState([]);
+const dateFn = new DateFn();
 
+import {modifyCart} from "../../redux/actions/cartActions";
+import {updateUser} from "../../redux/actions/userActions";
+
+function Cart_Page({router}) {
     const [lineItem, setLineItem] = useState([]);
     const [addressesDone, setAddressesDone] = useState(true);
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
 
-    const fetchUserInfo = async () => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            return await utils.getUser(token);
+    ////////////////////////////////////////
+
+    const dispatch = useDispatch();
+
+    const {loggedIn, token, user} = useSelector(({user}) => user);
+    const {cart, cartProduct} = useSelector(({cart}) => cart);
+
+    const handlePlusToCart = (index) => {
+        let c = JSON.parse(JSON.stringify(cart));
+        c[index].quantity += 1;
+
+        handleUpdateCart(c);
+    }
+
+    const handleMinusToCart = (index) => {
+        let c = JSON.parse(JSON.stringify(cart));
+        if (c[index].quantity > 1) {
+            c[index].quantity -= 1;
+
+            handleUpdateCart(c);
         }
-    };
+    }
 
-    const fetchProduct = async (id) => {
-        if (!id) return;
-        return await utils.getProductByWooId(id);
-    };
+    const handleRemoveFromCart = (index) => {
+        let c = JSON.parse(JSON.stringify(cart));
+        c.splice(index, 1);
 
-    const getUser = () => fetchUserInfo().then((data) => setUser(data));
+        handleUpdateCart(c);
+    }
 
-    const updateCart = (c) => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            let cartList = c ? c : [...cart];
+    const handleUpdateCart = (cartList) => {
+        if (loggedIn) {
             let userData = {
                 meta_data: [
                     {
@@ -58,24 +73,23 @@ function Cart_Page({router}) {
                     },
                 ],
             };
-            localStorage.setItem("cart", "");
-            utils.updateUser(token, userData).then((res) => {
-                getUser();
-
-                EventEmitter.dispatch("updateBadge");
-            });
+            dispatch(updateUser(token, userData));
         } else {
-            let cartList = c ? c : [...cart];
-            let cl = JSON.stringify(cartList);
-            localStorage.setItem("cart", cl);
-
-            EventEmitter.dispatch("updateBadge");
+            dispatch(modifyCart({cart: cartList}))
         }
+    }
+
+    const getSubtotal = () => {
+        let price = 0;
+        if (cart.length === cartProduct.length) {
+            cartProduct.forEach((p, index) => {
+                price += numberFn.strToFloat(p.price) * cart[index].quantity;
+            });
+        }
+        return price;
     };
 
     const checkout = () => {
-        const token = localStorage.getItem("token");
-
         let checkoutData = {
             payment_method: "bacs",
             payment_method_title: "Credit Card",
@@ -99,71 +113,11 @@ function Cart_Page({router}) {
                     setError("");
                 }, 4000);
             } else {
-                updateCart([]);
+                handleUpdateCart([]);
                 router.push({pathname: "/checkout/", query: {id: res.id}})
-                // setTimeout(() => router.push({pathname: "/checkout/", query: {id: res.id}}), 250);
             }
         });
     };
-
-    const getSubtotal = () => {
-        let price = 0;
-        if (cart.length === products.length) {
-            products.forEach((p, index) => {
-                price += numberFn.strToFloat(p.price) * cart[index].quantity;
-            });
-        }
-        return price;
-    };
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            getUser();
-        } else {
-            let cart = localStorage.getItem("cart");
-            cart = cart ? JSON.parse(cart) : cart;
-            let cl;
-
-            if (cart && Array.isArray(cart)) {
-                cl = [...cart];
-            } else {
-                cl = [];
-            }
-
-            let cartList = [],
-                itemList = [];
-            cl.forEach((item, index) => {
-                const i = cartList.findIndex((product) => product.id === item.id);
-                if (i === -1) {
-                    cartList.push(item);
-                } else {
-                    cartList[i].quantity = cartList[i].quantity + item.quantity;
-                }
-            });
-            setCart(cartList);
-
-            Promise.all(cartList.map((product) => fetchProduct(product.id))).then((responses) => {
-                setProducts(responses);
-
-                responses.forEach((res, index) => {
-                    if (res.parent_id) {
-                        itemList.push({
-                            product_id: res.parent_id,
-                            variation_id: res.id,
-                            quantity: cartList[index].quantity,
-                        });
-                    } else {
-                        itemList.push({
-                            product_id: res.id,
-                            quantity: cartList[index].quantity,
-                        });
-                    }
-                });
-                setLineItem(itemList);
-            });
-        }
-    }, []);
 
     useEffect(() => {
         if (!user) return;
@@ -176,67 +130,40 @@ function Cart_Page({router}) {
             !user.billing.postcode ||
             !user.billing.country ||
             !user.billing.email ||
-            !user.billing.phone ||
-            !user.shipping.first_name ||
-            !user.shipping.last_name ||
-            !user.shipping.address_1 ||
-            !user.shipping.city ||
-            !user.shipping.state ||
-            !user.shipping.postcode ||
-            !user.shipping.country
+            !user.billing.phone
+            // !user.shipping.first_name ||
+            // !user.shipping.last_name ||
+            // !user.shipping.address_1 ||
+            // !user.shipping.city ||
+            // !user.shipping.state ||
+            // !user.shipping.postcode ||
+            // !user.shipping.country
         ) {
             setAddressesDone(false);
         } else {
             setAddressesDone(true);
         }
-
-        let cart = localStorage.getItem("cart");
-        cart = cart ? JSON.parse(cart) : cart;
-        let cl;
-
-        if (cart && Array.isArray(cart)) {
-            cl = [...cart];
-        } else {
-            cl = [];
-        }
-
-        let result = user.meta_data.filter((data) => data.key === "cart");
-        if (result.length > 0) {
-            cl = cl.concat([...result[0].value]);
-
-            let cartList = [],
-                itemList = [];
-            cl.forEach((item, index) => {
-                const i = cartList.findIndex((product) => product.id === item.id);
-                if (i === -1) {
-                    cartList.push(item);
-                } else {
-                    cartList[i].quantity = cartList[i].quantity + item.quantity;
-                }
-            });
-            setCart(cartList);
-
-            Promise.all(cartList.map((product) => fetchProduct(product.id))).then((responses) => {
-                setProducts(responses);
-
-                responses.forEach((res, index) => {
-                    if (res.parent_id) {
-                        itemList.push({
-                            product_id: res.parent_id,
-                            variation_id: res.id,
-                            quantity: cartList[index].quantity,
-                        });
-                    } else {
-                        itemList.push({
-                            product_id: res.id,
-                            quantity: cartList[index].quantity,
-                        });
-                    }
-                });
-                setLineItem(itemList);
-            });
-        }
     }, [user]);
+
+    useEffect(() => {
+        if (cartProduct.length < 1) return;
+        let itemList = [];
+        cartProduct.forEach(({parent_id, id}, index) => {
+            if (parent_id) {
+                itemList.push({
+                    product_id: parent_id,
+                    variation_id: id,
+                    quantity: cart[index].quantity,
+                });
+            } else {
+                itemList.push({
+                    product_id: id,
+                    quantity: cart[index].quantity,
+                });
+            }
+        });
+        setLineItem(itemList);
+    }, [cartProduct]);
 
     return (
         <React.Fragment>
@@ -258,8 +185,8 @@ function Cart_Page({router}) {
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
                             <Block marginBottom={["32px", "47px"]} paddingTop="24px" font="MinXHeading20" color="MinXPrimaryText">Shopping cart</Block>
-                            {cart.length > 0 && products.length > 0
-                                ? products.map((product, index) => {
+                            {cart.length > 0 && cartProduct.length > 0
+                                ? cartProduct.map((product, index) => {
                                     return (
                                         <Block key={index} display="flex" flexDirection={["column", "row"]} justifyContent="space-between" marginBottom={["16px", "16px", "22px"]}>
                                             <Block display="flex" flexDirection="row" marginBottom="16px">
@@ -295,17 +222,7 @@ function Cart_Page({router}) {
                                                                    },
                                                                },
                                                            }}
-                                                           onClick={() => {
-                                                               let c = [...cart],
-                                                                   p = [...products];
-                                                               c.splice(index, 1);
-                                                               p.splice(index, 1);
-
-                                                               setCart(c);
-                                                               setProducts(p);
-
-                                                               updateCart(c);
-                                                           }}
+                                                           onClick={() => handleRemoveFromCart(index)}
                                                     >
                                                         Remove
                                                     </Block>
@@ -318,14 +235,7 @@ function Cart_Page({router}) {
                                                                         },
                                                                     },
                                                                 }}
-                                                                onClick={() => {
-                                                                    let p = [...cart];
-                                                                    if (p[index].quantity > 1) {
-                                                                        p[index].quantity -= 1;
-                                                                        setCart(p);
-                                                                        updateCart();
-                                                                    }
-                                                                }}
+                                                                onClick={() => handleMinusToCart(index)}
                                                         >
                                                             <CheckIndeterminate/>
                                                         </Button>
@@ -346,12 +256,7 @@ function Cart_Page({router}) {
                                                                         },
                                                                     },
                                                                 }}
-                                                                onClick={() => {
-                                                                    let p = [...cart];
-                                                                    p[index].quantity += 1;
-                                                                    setCart(p);
-                                                                    updateCart();
-                                                                }}
+                                                                onClick={() => handlePlusToCart(index)}
                                                         >
                                                             <Plus/>
                                                         </Button>
@@ -441,7 +346,7 @@ function Cart_Page({router}) {
                             {/*            }}>APPLY COUPON</Button>*/}
                             {/*    </Block>*/}
                             {/*</Block>*/}
-                            <Block width="100%" height="40px" font="MinXLabel16" color="MinXPrimaryTextAlt">
+                            <Block width="100%" height="40px" marginBottom="24px" font="MinXLabel16" color="MinXPrimaryTextAlt">
                                 <Button shape={SHAPE.pill}
                                         overrides={{
                                             BaseButton: {
@@ -461,11 +366,31 @@ function Cart_Page({router}) {
                                     CHECKOUT
                                 </Button>
                             </Block>
+                            <Block display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" font="MinXParagraph14" color="MinXPrimaryText">
+                                <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
+                                    <Block position="relative" width="20px" height="20px" marginRight="12px">
+                                        <Image src="images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="cover" quality={100}/>
+                                    </Block>
+                                    <Block>
+                                        <div>Free shipping on orders over $149</div>
+                                        <div>Order today, shipped by {dateFn.getReceivedDay()}.</div>
+                                        <Block font="MinXParagraph12" color="MinXSecondaryText">
+                                            Custom printing orders do not apply.
+                                            {/*<span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>*/}
+                                        </Block>
+                                    </Block>
+                                </Block>
+                                <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
+                                    <Block position="relative" width="20px" height="20px" marginRight="12px">
+                                        <Image src="images/icon/pickup.png" alt="pick up" layout="fill" objectFit="cover" quality={100}/>
+                                    </Block>
+                                    <Block>Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span></Block>
+                                </Block>
+                            </Block>
                         </Block>
                     </Block>
-
                 ) : (
-                    <Block display="flex" flex={1} flexDirection="column" alignItems="center" paddingTop={["114px", "114px", "66px"]}>
+                    <Block display="flex" flex={1} flexDirection="column" alignItems="center" paddingTop={["114px", "114px", "66px"]} paddingBottom={["114px", "114px", "66px"]}>
                         <Block marginBottom="18px"><Cart style={{width: "24px", height: "24px"}} color={"#323232"}/></Block>
                         <Block font="MinXParagraph16" color="MinXPrimaryText">Your shopping cart is empty</Block>
                     </Block>
@@ -478,11 +403,5 @@ function Cart_Page({router}) {
         </React.Fragment>
     );
 }
-
-Cart_Page.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Cart_Page);

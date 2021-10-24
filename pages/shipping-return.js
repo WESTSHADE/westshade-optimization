@@ -42,9 +42,7 @@ function Shipping_Return() {
                 <Block marginBottom={["20px", "20px", "28px"]} font={["MinXTitle24", "MinXTitle32"]} color="MinXPrimaryText"
                        overrides={{
                            Block: {
-                               props: {
-                                   style: {textAlign: "center"}
-                               }
+                               style: {textAlign: "center"}
                            },
                        }}
                 >
@@ -55,7 +53,7 @@ function Shipping_Return() {
                         <Tabs activeKey={tabActiveKey} fill={FILL.fixed} onChange={({activeKey}) => setTabActiveKey(activeKey)}
                               overrides={{
                                   Root: {
-                                      style: {width: "100%", maxWidth: "310px", marginRight: "auto", marginLeft: "auto"}
+                                      style: {width: "100%", maxWidth: "420px", marginRight: "auto", marginLeft: "auto"}
                                   },
                                   TabHighlight: {
                                       style: () => ({
@@ -224,11 +222,5 @@ function Shipping_Return() {
         </React.Fragment>
     );
 }
-
-Shipping_Return.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Shipping_Return);

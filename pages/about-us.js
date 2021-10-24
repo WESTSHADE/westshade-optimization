@@ -141,10 +141,4 @@ function About_Us() {
 
 }
 
-About_Us.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
-
 export default About_Us;

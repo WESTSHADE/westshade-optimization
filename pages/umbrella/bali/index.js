@@ -8,7 +8,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import ChevronRight from "baseui/icon/chevron-right";
 
-import BannerDisplay from "../../../components/sections/BannerDisplay";
+import {BannerDisplay, SubHeaderBar} from "../../../components/sections";
 import MButton from "../../../components/button-n";
 import Utils from "../../../utils/utils";
 
@@ -21,10 +21,10 @@ function Bali({router}) {
 
     const goBuyingPage = () => router.push({pathname: "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"});
 
-    useEffect(async () => {
-        let products0 = await utils.getProductByWooId(19212);
-        setProductList([products0, products0, products0, products0]);
-    }, []);
+    // useEffect(async () => {
+    //     let products0 = await utils.getProductByWooId(19212);
+    //     setProductList([products0, products0, products0, products0]);
+    // }, []);
 
     const ProductItem = ({detail}) => {
         let imageSrc = '/images/default-product.jpg';
@@ -73,26 +73,7 @@ function Bali({router}) {
                 {/*    <meta name="description"*/}
                 {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
             </Head>
-            <Block position="sticky" top={["48px", "48px", "96px"]} display="flex" flexDirection="row" justifyContent="space-between" alignItems="center"
-                   height={["44px", "60px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} backgroundColor="white"
-                   font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
-                   overrides={{
-                       Block: {
-                           style: {zIndex: 2, boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px"},
-                       },
-                   }}>
-                <div>Umbrella Bali</div>
-                <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
-                    <Block display="flex" justifyContent="center" alignItems="center" width="56px" height={["24px", "40px"]} marginRight="16px" marginLeft="16px"
-                           font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
-                    >
-                        <Link href={{pathname: "/umbrella/spec", query: {primary: 0}}} as="/umbrella/spec">Spec</Link>
-                    </Block>
-                    <MButton width={["105px", "113px"]} height={["24px", "40px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} text="Buy Now"
-                             onClick={() => goBuyingPage()}
-                    />
-                </Block>
-            </Block>
+            <SubHeaderBar title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="images/umbrella/bali/bali_display.jpg" alt="bali display"
                            titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
                            containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]} containerMarginBottom={["24px", "40px", "60px"]}
@@ -368,6 +349,7 @@ function Bali({router}) {
                     </Block>
                 </Block>
             </Block>
+            <Block marginBottom="40px"/>
             {productList.length > 0 ? (
                 <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
                        overrides={{
@@ -398,11 +380,5 @@ function Bali({router}) {
         </React.Fragment>
     )
 }
-
-Bali.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
 
 export default withRouter(Bali);

@@ -117,10 +117,4 @@ function Contact_Us() {
     );
 }
 
-Contact_Us.getInitialProps = () => {
-    return {
-        newFooter: true,
-    };
-};
-
 export default Contact_Us;
