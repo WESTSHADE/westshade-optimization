@@ -171,12 +171,13 @@ function Cart_Page({router}) {
                 <title>Shopping Cart - Proceed to Checkout | WESTSHADE</title>
                 <meta name="description" content="Free shipping on orders over $100. Add products to your shopping cart and proceed to checkout to place your order."/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
+            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} marginRight="auto" marginLeft="auto"
                    overrides={{
                        Block: {
                            props: {
                                className: "container-display"
-                           }
+                           },
+                           style: {maxWidth: "1152px !important"}
                        },
                    }}
             >

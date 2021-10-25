@@ -162,7 +162,7 @@ a:-webkit-any-link {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 1920px;
+    /*max-width: 1920px;*/
     height: 236px;
     margin: auto;
     background-color: #F7F7F7;

@@ -85,7 +85,7 @@ const SocialMediaLink = ({social, link}) => {
 function Footer({isHomePage}) {
     return (
         <React.Fragment>
-            <Block width="100%" maxWidth="1920px" marginLeft="auto" marginRight="auto" paddingTop={["32px", "32px", "70px"]} paddingRight={["16px", "16px", "24px"]}
+            <Block width="100%" maxWidth={process.env.maxWidth + "px"} marginLeft="auto" marginRight="auto" paddingTop={["32px", "32px", "70px"]} paddingRight={["16px", "16px", "24px"]}
                    paddingLeft={["16px", "16px", "24px"]}
                    overrides={{
                        Block: {

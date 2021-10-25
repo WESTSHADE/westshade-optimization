@@ -335,10 +335,10 @@ function Orders({size}) {
                     return (
                         <div key={index} style={{background: "#FFFFFF", border: "1px solid #D9D9D9", boxSizing: "border-box", borderRadius: "16px", overflow: "hidden"}}>
                             <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" paddingTop="16px" paddingRight="16px" paddingBottom="16px" paddingLeft="16px"
-                                   backgroundColor="MinXBackground"
+                                   backgroundColor="MinXBackground" font="MinXParagraph14"
                             >
-                                <Block>Order: <strong>{o.id}</strong></Block>
-                                <Block>Date: <strong>{o.date_created}</strong></Block>
+                                <Block color="MinXSecondaryText">Order: <strong style={{color: "#262626"}}>{o.id}</strong></Block>
+                                <Block color="MinXSecondaryText">Date: <strong style={{color: "#262626"}}>{o.date_created}</strong></Block>
                             </Block>
                             <Block height="40px" display="flex" alignItems="center" justifyContent="center" font="MinXParagraph14" color="#F07C7C"
                                    backgroundColor={(o.status === "pending" || o.status === "processing") ? "rgb(244,237,124)" : o.status === "completed" ? "rgb(153,229,178)" : "#FAF0F0"}
@@ -368,16 +368,32 @@ function Orders({size}) {
                                                }}
                                         >
                                             <Block position="relative" width={["60px", "75px"]} height={["60px", "75px"]}>
-                                                {/*<Image src="images/umbrella/marco/roof.png" alt={item.name} layout="fill" objectFit="contain" quality={100}/>*/}
-                                                <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                {item.image ? (
+                                                    <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                ) : (
+                                                    <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                )}
                                             </Block>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>
                                                 <Block display="flex" flex={1} flexDirection={["column", "row"]} marginBottom={["12px", "20px"]}>
-                                                    <Block display="flex" flex={1} marginBottom={["12px", "0px"]}>
-                                                        <Block>{item.name}</Block>
+                                                    <Block display="flex" flex={1} flexDirection="column" marginBottom={["12px", "0px"]}>
+                                                        <Block marginBottom="2px" font="MinXLabel14">{item.name}</Block>
+                                                        {item.meta_data && item.meta_data.map((data, index) => {
+                                                            return (
+                                                                <Block key={index} marginBottom="2px" font="MinXParagraph14">{`${data.display_key}: ${data.value}`}</Block>
+                                                            )
+                                                        })}
                                                     </Block>
                                                     <Block display="flex" flexDirection={["row", "column"]} justifyContent="space-between" alignItems={["", "flex-end"]}>
-                                                        <Block>${o.total}</Block>
+                                                        <Block font="MinXLabel14"
+                                                               overrides={{
+                                                                   Block: {
+                                                                       style: {
+                                                                           fontWeight: 400
+                                                                       }
+                                                                   },
+                                                               }}
+                                                        >${o.total}</Block>
                                                     </Block>
                                                 </Block>
                                                 {/*<Block display="flex" flexDirection={["column", "row"]}*/}

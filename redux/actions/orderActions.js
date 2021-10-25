@@ -2,6 +2,10 @@ import axios from "axios";
 
 import {GET_ORDER_SUCCESS, GET_ORDER_FAIL, CLEAR_ERRORS} from "../constants/orderConstants";
 
+import Utils from "../../utils/utils";
+
+const utils = new Utils();
+
 export const getOrder = (token) => async (dispatch) => {
     try {
         if (!token) {
@@ -22,10 +26,23 @@ export const getOrder = (token) => async (dispatch) => {
                 },
             });
             if (status === 200) {
+                let orders = JSON.parse(JSON.stringify(data));
+
+                await Promise.all(orders.map(async order => {
+                    await Promise.all(order.line_items.map(async (item, index) => {
+                        let detail = await utils.getProductByWooId(item.product_id);
+                        if (detail.hasOwnProperty("image")) {
+                            item.image = detail.image;
+                        } else if (detail.hasOwnProperty("images")) {
+                            item.image = detail.images[0];
+                        }
+                    }))
+                }));
+
                 dispatch({
                     type: GET_ORDER_SUCCESS,
                     payload: {
-                        orders: data
+                        orders: orders
                     }
                 });
             }
@@ -33,7 +50,7 @@ export const getOrder = (token) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: GET_ORDER_FAIL,
-            payload: error.response.data
+            payload: error.response
         });
     }
 };

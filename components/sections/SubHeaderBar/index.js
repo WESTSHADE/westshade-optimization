@@ -13,7 +13,7 @@ const Bar = ({title, subTitle, subTitleDestination, buttonText, onClick}) => {
                font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                overrides={{
                    Block: {
-                       style: {zIndex: 2, boxShadow: "rgb(0 0 0 / 14%) 0px 4px 5px 0px"},
+                       style: {zIndex: 2},
                    },
                }}>
             <Block width="100%" maxWidth="1920px" display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">

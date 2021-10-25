@@ -131,7 +131,7 @@ function Header() {
                 <Block position="fixed" top={0} right={0} left={0} display="flex" alignItems="center" justifyContent="center" width="100%" height={["48px", "48px", "96px"]}
                        paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} backgroundColor="#FBFBFB"
                 >
-                    <Block width="100%" maxWidth="1920px" height="100%">
+                    <Block width="100%" maxWidth={process.env.maxWidth + "px"} height="100%">
                         <HeaderNavigation
                             overrides={{
                                 Root: {
