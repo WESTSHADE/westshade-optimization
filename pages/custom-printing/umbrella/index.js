@@ -7,14 +7,14 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import ArrowDown from 'baseui/icon/arrow-down'
 
+import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (
         <Block display={["grid", "grid", "flex"]} flexDirection={["column", "column", "row-reverse"]} alignItems={["", "", "center"]} justifyContent={["", "", "space-between"]}
-               gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "unset"]} gridRowGap={["20px", "24px", "unset"]} marginBottom={["16px", "16px", "20px"]} paddingTop={["32px", "48px", "20px"]} paddingRight={["16px", "24px", "0px"]}
-               paddingBottom={["32px", "48px", "0px"]}
-               paddingLeft={["16px", "24px", "40px"]}
+               gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "unset"]} gridRowGap={["20px", "24px", "unset"]}
+               marginBottom={["16px", "16px", "20px"]} paddingTop={["32px", "48px", "20px"]} paddingRight={["16px", "24px", "0px"]} paddingBottom={["32px", "48px", "0px"]} paddingLeft={["16px", "24px", "40px"]}
                overrides={{
                    Block: {
                        style: {
@@ -27,9 +27,9 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
             <Block position="relative" width="100%" maxWidth={["256px", "320px", "380px"]} marginRight={["auto", "auto", "0px"]} marginBottom={["12px", "24px", "0px"]} marginLeft="auto">
                 <Image src={src} alt={alt} layout="responsive" width={640} height={640} quality={100}/>
             </Block>
-            <Block>
-                <Block marginBottom={["12px", "12px", "16px"]} font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
-                <Block maxWidth="400px" marginBottom={["12px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
+            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", "12px", "16px"]}>
+                <Block font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
+                <Block maxWidth="400px" font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
                 <MButton type="outline" display="block" width="72px" height="32px" font="MinXLabel14" color="MinXPrimaryText"
                          buttonStyle={{
                              paddingTop: "0px !important",
@@ -53,8 +53,6 @@ function Custom_Printing_Umbrella({router, size}) {
 
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
-
-    const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/santorini-umbrella"});
 
     const goBuyingSection = () => {
         if (window) window.scrollTo({top: size.width > 959 ? ref.current.offsetTop - 120 : ref.current.offsetTop - 72, behavior: 'smooth'});
@@ -164,71 +162,41 @@ function Custom_Printing_Umbrella({router, size}) {
                 <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#F02B9B", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                 <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#7E49F2", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
             </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "24px", "40px"]}>
-                    <Block marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >DESIGNED FOR<br/>YOUR SPECIALLY</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Westshade provides free mockup service. Give us your idea and we will give you the tent you want.
-                    </Block>
-                </Block>
-                <Block position="relative" width="100%" maxWidth="1920px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                    <Image src="images/custom-printing/umbrella/custom-printing-banner.jpg" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100}/>
-                </Block>
-            </Block>
-            <Block ref={ref} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "24px", "40px"]}>
-                    <Block width={["unset", "unset", "400px"]} marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >UMBRELLA SERIES</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Westshade provides 4 series of umbrellas to fulfill your unique needs.
-                    </Block>
-                </Block>
-                {/*<SectionCard router={router} title={"Bali Tilt Umbrella"} content={"Bali umbrella is made of steel, and it comes in one size (9’) and six premade colors."}*/}
-                {/*             src={"images/custom-printing/umbrella/bali.jpg"} alt={"bali"}*/}
-                {/*             destination={"/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"}*/}
-                {/*/>*/}
-                {/*<SectionCard router={router} title={"Marco Push-Up Umbrella"} content={"Marco umbrella is made of aluminum, and it comes in one size (6.5’) and six premade colors."}*/}
-                {/*             src={"images/custom-printing/umbrella/marco.jpg"} alt={"marco"}*/}
-                {/*             destination={"/products/market-umbrellas/marco-umbrella"}*/}
-                {/*/>*/}
-                <SectionCard router={router} title={"Kapri Tilt Umbrella"} content={"Kapri umbrella is made of aluminum, and it comes in 4 sizes with height adjustment."}
-                             src={"images/custom-printing/umbrella/kapri.jpg"} alt={"kapri"}
-                             destination={"/"}
-                />
-                <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
-                             src={"images/custom-printing/umbrella/santorini.jpg"} alt={"santorini"}
-                             destination={"/products/market-umbrellas/santorini-umbrella"}
-                />
-                <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
-                             src={"images/custom-printing/umbrella/catalina.jpg"} alt={"catalina"}
-                             destination={"/products/cantilever-umbrellas/catalina-umbrella"}
+            <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
+                     subtitle={"Westshade provides free mockup service. Give us your idea and we will give you the tent you want."}
+                     content={
+                         <Block position="relative" width="100%" maxWidth="1920px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
+                             <Image src="images/custom-printing/umbrella/custom-printing-banner.jpg" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100}/>
+                         </Block>
+                     }
+            />
+            <Block ref={ref}>
+                <Section title={"UMBRELLA SERIES"}
+                         subtitle={"Westshade provides 4 series of umbrellas to fulfill your unique needs."}
+                         content={
+                             <>
+                                 {/*<SectionCard router={router} title={"Bali Tilt Umbrella"} content={"Bali umbrella is made of steel, and it comes in one size (9’) and six premade colors."}*/}
+                                 {/*             src={"images/custom-printing/umbrella/bali.jpg"} alt={"bali"}*/}
+                                 {/*             destination={"/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"}*/}
+                                 {/*/>*/}
+                                 {/*<SectionCard router={router} title={"Marco Push-Up Umbrella"} content={"Marco umbrella is made of aluminum, and it comes in one size (6.5’) and six premade colors."}*/}
+                                 {/*             src={"images/custom-printing/umbrella/marco.jpg"} alt={"marco"}*/}
+                                 {/*             destination={"/products/market-umbrellas/marco-umbrella"}*/}
+                                 {/*/>*/}
+                                 <SectionCard router={router} title={"Kapri Tilt Umbrella"} content={"Kapri umbrella is made of aluminum, and it comes in 4 sizes with height adjustment."}
+                                              src={"images/custom-printing/umbrella/kapri.jpg"} alt={"kapri"}
+                                              destination={"/"}
+                                 />
+                                 <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
+                                              src={"images/custom-printing/umbrella/santorini.jpg"} alt={"santorini"}
+                                              destination={"/products/market-umbrellas/santorini-umbrella"}
+                                 />
+                                 <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
+                                              src={"images/custom-printing/umbrella/catalina.jpg"} alt={"catalina"}
+                                              destination={"/products/cantilever-umbrellas/catalina-umbrella"}
+                                 />
+                             </>
+                         }
                 />
             </Block>
         </React.Fragment>

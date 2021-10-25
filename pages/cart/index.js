@@ -121,28 +121,28 @@ function Cart_Page({router}) {
 
     useEffect(() => {
         if (!user) return;
-        if (
-            !user.billing.first_name ||
-            !user.billing.last_name ||
-            !user.billing.address_1 ||
-            !user.billing.city ||
-            !user.billing.state ||
-            !user.billing.postcode ||
-            !user.billing.country ||
-            !user.billing.email ||
-            !user.billing.phone
-            // !user.shipping.first_name ||
-            // !user.shipping.last_name ||
-            // !user.shipping.address_1 ||
-            // !user.shipping.city ||
-            // !user.shipping.state ||
-            // !user.shipping.postcode ||
-            // !user.shipping.country
-        ) {
-            setAddressesDone(false);
-        } else {
-            setAddressesDone(true);
-        }
+        // if (
+        //     !user.billing.first_name ||
+        //     !user.billing.last_name ||
+        //     !user.billing.address_1 ||
+        //     !user.billing.city ||
+        //     !user.billing.state ||
+        //     !user.billing.postcode ||
+        //     !user.billing.country ||
+        //     !user.billing.email ||
+        //     !user.billing.phone
+        //     // !user.shipping.first_name ||
+        //     // !user.shipping.last_name ||
+        //     // !user.shipping.address_1 ||
+        //     // !user.shipping.city ||
+        //     // !user.shipping.state ||
+        //     // !user.shipping.postcode ||
+        //     // !user.shipping.country
+        // ) {
+        //     setAddressesDone(false);
+        // } else {
+        //     setAddressesDone(true);
+        // }
     }, [user]);
 
     useEffect(() => {
@@ -192,8 +192,7 @@ function Cart_Page({router}) {
                                             <Block display="flex" flexDirection="row" marginBottom="16px">
                                                 <Block position="relative" width={["60px", "120px"]} height={["60px", "120px"]} marginRight={["15px", "24px"]}>
                                                     {product.images.length > 0 ? (
-                                                        <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%"
-                                                             style={{objectFit: "contain"}}/>
+                                                        <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%" style={{objectFit: "contain"}}/>
                                                     ) : (
                                                         <Image src={"/images/default-product.jpg"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                                                     )}

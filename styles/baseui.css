@@ -206,7 +206,13 @@ ul.bullet-warranty > li {
     margin-bottom: 16px;
 }
 
-ul.bullet-warranty > li::before {
+ul.bullet-privacy > li {
+    list-style-type: none;
+    position: relative; /* It's needed for setting position to absolute in the next rule. */
+    margin-bottom: 4px;
+}
+
+ul.bullet-warranty > li::before, ul.bullet-privacy > li::before {
     content: "\2022";
     font-weight: bold;
     display: inline-block;
@@ -430,10 +436,6 @@ ul.bullet-warranty.sub > li {
         margin-bottom: 120px;
     }
 
-    .gird-display {
-        grid-template-columns: repeat(2, 49%);
-    }
-
     .modalRoot {
         padding-top: 5%;
     }
@@ -496,12 +498,6 @@ ul.bullet-warranty.sub > li {
     }
 }
 
-@media screen and (min-width: 1280px) {
-    .gird-display {
-        grid-template-columns: repeat(3, 32%);
-    }
-}
-
 /* canopy tent product */
 .button-add {
     width: 90px;
@@ -522,17 +518,6 @@ ul.bullet-warranty.sub > li {
     border: 1px dashed #23a4ad;
 }
 
-.background-image {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    z-index: -1;
-}
 
 @supports (scroll-snap-type: y mandatory) {
     @media screen and (min-width: 960px) {

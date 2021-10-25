@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
+import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
@@ -117,156 +118,91 @@ function Custom_Printing_Table_Cover({router, size}) {
                 <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#97F02B", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                 <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#2275F2", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
             </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "24px", "40px"]}>
-                    <Block marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >DESIGNED FOR<br/>YOUR SPECIALLY</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Westshade provides free mockup service. Give us your idea and we will give you the product you want.
-                    </Block>
-                </Block>
-                <Block position="relative" width="100%" maxWidth="1920px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                    <Image src="images/custom-printing/table-cover/table-covers.jpg" alt="custom printing table covers" layout="responsive" width={1440} height={400} quality={100}/>
-                </Block>
-            </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "24px", "40px"]}>
-                    <Block width={["unset", "unset", "450px"]} marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >FIT YOUR NEED AS WELL AS YOUR TABLE</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Westshade provides two types of table cover - fitted table cover and stretch table cover.
-                    </Block>
-                </Block>
-                <SectionCard router={router} title={"Fitted Table Cover"} content={"The fitted table cover is made of the same fabric as canopy tent and features two zips at the back."}
-                             src={"images/custom-printing/table-cover/back-zip.png"} alt={"back zip table cover"}
-                             destination={{pathname: "/custom-print/table-cover/buy", query: {type: "fitted"}, as: "/custom-print/table-cover/buy"}}
-                />
-                <SectionCard router={router} title={"Stretch Table Cover"} content={"The stretch table cover is made of a lightweight stretch fabric. It secures itself with pocket at the bottom."}
-                             src={"images/custom-printing/table-cover/self-secure.jpg"} alt={"self secure table cover"}
-                             destination={{pathname: "/custom-print/table-cover/buy", query: {type: "stretch"}, as: "/custom-print/table-cover/buy"}}
-                />
-            </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           },
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["32px", "40px", "72px"]}>
-                    <Block marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >FABRIC CLOSE LOOK</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Take a closer look at the two fabric and choose the one that suits your need.
-                    </Block>
-                </Block>
-                <Block display="grid" gridColumnGap={["", "16px", "20px"]} gridRowGap={["8px", "12px", "16px"]} gridTemplateAreas={[`"a1" "a2" "a3" "b1" "b2" "b3"`, `"a1 b1" "a2 b2" "a3 b3"`,]}
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
-                    <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="a1">
-                        320 gsm, 500D polyester with PVC coating
-                    </Block>
-                    <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
-                    <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
-                        <img width="100%" height="100%" src="/images/custom-printing/table-cover/fabric.png" alt="fabric" style={{objectFit: "cover"}}/>
-                    </Block>
-                    <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
-                        229 gsm stretch fabric
-                    </Block>
-                    <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
-                    <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">
-                        <img width="100%" height="100%" src="/images/custom-printing/table-cover/stretch.gif" alt="fabric" style={{objectFit: "cover"}}/>
-                    </Block>
-                </Block>
-            </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} marginBottom={["40px !important", "80px !important", "120px !important"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           },
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["32px", "40px", "72px"]}>
-                    <Block marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >MULTIPLE SIZES</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Either a table for one person or a table for two, we have a size for you.
-                    </Block>
-                </Block>
-                <Block display="grid" gridColumnGap={["", "16px", "20px"]} gridRowGap={["24px", "32px"]} gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
-                    <Block display="flex" flexDirection="column" alignItems="center">
-                        <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                            <Image src="images/custom-printing/table-cover/size-small.png" alt="size small table cover" layout="fill" objectFit="contain" quality={100}/>
-                        </Block>
-                        <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Small</Block>
-                        <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=4’, W=2’, H=2’4’’</Block>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center">
-                        <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                            <Image src="images/custom-printing/table-cover/size-medium.png" alt="size medium table cover" layout="fill" objectFit="contain" quality={100}/>
-                        </Block>
-                        <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Medium</Block>
-                        <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=6’1’’, W=2’6’’, H=2’4’’</Block>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center">
-                        <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                            <Image src="images/custom-printing/table-cover/size-large.png" alt="size large table cover" layout="fill" objectFit="contain" quality={100}/>
-                        </Block>
-                        <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Large</Block>
-                        <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=8’, W=2’6’’, H=2’4’’</Block>
-                    </Block>
-                </Block>
-            </Block>
+            <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
+                     subtitle={"Westshade provides free mockup service. Give us your idea and we will give you the product you want."}
+                     content={
+                         <Block position="relative" width="100%" maxWidth="1920px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
+                             <Image src="images/custom-printing/table-cover/table-covers.jpg" alt="custom printing table covers" layout="responsive" width={1440} height={400} quality={100}/>
+                         </Block>
+                     }
+            />
+            <Section title={<>FIT YOUR NEED<br/>AS WELL AS<br/>YOUR TABLE</>}
+                     subtitle={"Westshade provides two types of table cover - fitted table cover and stretch table cover."}
+                     content={
+                         <>
+                             <SectionCard router={router} title={"Fitted Table Cover"} content={"The fitted table cover is made of the same fabric as canopy tent and features two zips at the back."}
+                                          src={"images/custom-printing/table-cover/back-zip.png"} alt={"back zip table cover"}
+                                          destination={{pathname: "/custom-print/table-cover/buy", query: {type: "fitted"}, as: "/custom-print/table-cover/buy"}}
+                             />
+                             <SectionCard router={router} title={"Stretch Table Cover"} content={"The stretch table cover is made of a lightweight stretch fabric. It secures itself with pocket at the bottom."}
+                                          src={"images/custom-printing/table-cover/self-secure.jpg"} alt={"self secure table cover"}
+                                          destination={{pathname: "/custom-print/table-cover/buy", query: {type: "stretch"}, as: "/custom-print/table-cover/buy"}}
+                             />
+                         </>
+                     }
+            />
+            <Section title={"FABRIC CLOSE LOOK"}
+                     subtitle={"Take a closer look at the two fabric and choose the one that suits your need."}
+                     content={
+                         <Block display="grid" gridColumnGap={["", "16px", "20px"]} gridRowGap={["8px", "12px", "16px"]} gridTemplateAreas={[`"a1" "a2" "a3" "b1" "b2" "b3"`, `"a1 b1" "a2 b2" "a3 b3"`,]}
+                                overrides={{
+                                    Block: {
+                                        style: {textAlign: "center"}
+                                    },
+                                }}
+                         >
+                             <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="a1">
+                                 320 gsm, 500D polyester with PVC coating
+                             </Block>
+                             <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
+                             <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
+                                 <img width="100%" height="100%" src="/images/custom-printing/table-cover/fabric.png" alt="fabric" style={{objectFit: "cover"}}/>
+                             </Block>
+                             <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
+                                 229 gsm stretch fabric
+                             </Block>
+                             <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
+                             <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">
+                                 <img width="100%" height="100%" src="/images/custom-printing/table-cover/stretch.gif" alt="fabric" style={{objectFit: "cover"}}/>
+                             </Block>
+                         </Block>
+                     }
+            />
+            <Section title={"MULTIPLE SIZES"}
+                     subtitle={"Either a table for one person or a table for two, we have a size for you."}
+                     content={
+                         <Block display="grid" gridColumnGap={["", "16px", "20px"]} gridRowGap={["24px", "32px"]} gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
+                                overrides={{
+                                    Block: {
+                                        style: {textAlign: "center"}
+                                    },
+                                }}
+                         >
+                             <Block display="flex" flexDirection="column" alignItems="center">
+                                 <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
+                                     <Image src="images/custom-printing/table-cover/size-small.png" alt="size small table cover" layout="fill" objectFit="contain" quality={100}/>
+                                 </Block>
+                                 <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Small</Block>
+                                 <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=4’, W=2’, H=2’4’’</Block>
+                             </Block>
+                             <Block display="flex" flexDirection="column" alignItems="center">
+                                 <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
+                                     <Image src="images/custom-printing/table-cover/size-medium.png" alt="size medium table cover" layout="fill" objectFit="contain" quality={100}/>
+                                 </Block>
+                                 <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Medium</Block>
+                                 <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=6’1’’, W=2’6’’, H=2’4’’</Block>
+                             </Block>
+                             <Block display="flex" flexDirection="column" alignItems="center">
+                                 <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
+                                     <Image src="images/custom-printing/table-cover/size-large.png" alt="size large table cover" layout="fill" objectFit="contain" quality={100}/>
+                                 </Block>
+                                 <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Large</Block>
+                                 <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=8’, W=2’6’’, H=2’4’’</Block>
+                             </Block>
+                         </Block>
+                     }
+            />
+            <div/>
         </React.Fragment>
     )
 }

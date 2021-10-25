@@ -49,9 +49,9 @@ function Contact_Us() {
                        },
                    }}
             >
-                <Block display="flex" flex={1} flexDirection="column" alignItems="center" marginBottom={["40px", "60px", "80px"]} paddingTop="80px">
+                <Block width="100%" maxWidth="600px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "60px", "80px"]} marginLeft="auto" paddingTop="80px">
                     <Block marginBottom={["24px", "32px", "40px"]} font="MinXHeading20" color="MinXPrimaryText">FAQs</Block>
-                    <Block width={["100%", "100%", "602px"]} maxWidth="602px" font="MinXHeading14" color="MinXPrimaryText">
+                    <Block width="100%" font="MinXHeading14" color="MinXPrimaryText">
                         <Accordion overrides={{
                             Root: {
                                 style: {
@@ -102,7 +102,7 @@ function Contact_Us() {
                         </Accordion>
                     </Block>
                 </Block>
-                <Block display="flex" flex={1} flexDirection="column" alignItems="center" marginBottom={["40px", "06px", "80px"]} paddingTop="80px">
+                <Block width="100%" maxWidth="600px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "06px", "80px"]} marginLeft="auto" paddingTop="80px">
                     <Block marginBottom={["24px", "32px", "40px"]} font="MinXHeading20" color="MinXPrimaryText">Contact us</Block>
                     <Block display="grid" justifyContent={["center", "flex-start", "space-around"]}
                            gridTemplateColumns={["repeat(auto-fill, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap="20px"

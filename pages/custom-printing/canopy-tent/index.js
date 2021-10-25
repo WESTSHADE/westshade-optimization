@@ -10,6 +10,8 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import ArrowLeft from "baseui/icon/arrow-left";
 import ArrowRight from "baseui/icon/arrow-right";
+
+import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 
 const ImageSlide = ({url, alt}) => {
@@ -118,173 +120,123 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                     <Image src="images/custom-printing/canopy-tent/canopy-tent.png" alt="canopy tent" layout="fill" objectFit="contain" quality={100}/>
                 </Block>
             </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "32px", "40px"]}>
-                    <Block maxWidth="450px" marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >ANY STYLE MULTIPLE SIZE</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        There is no limitation on printing styles and you can configure your tent as you wish. Westshade will meet your special needs.
-                    </Block>
-                </Block>
-                <Block position="relative">
-                    <Carousel showStatus={false} showThumbs={false} showArrows={true} showIndicators={false} infiniteLoop={true} centerMode centerSlidePercentage={46}
-                              renderArrowPrev={(onClickHandler, hasPrev, label) =>
-                                  hasPrev && (
-                                      <Block position="absolute" width={"17.5%"} height={"100%"} top={0} left={0}>
-                                          <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                  onClick={onClickHandler}
-                                                  overrides={{
-                                                      BaseButton: {
-                                                          props: {
-                                                              className: "react-carousel-arrow dark left",
-                                                          },
-                                                          style: {
-                                                              fontSize: "inherit",
-                                                              fontWeight: "inherit",
-                                                              lineHeight: "inherit",
-                                                          }
-                                                      },
-                                                  }}
-                                          >
-                                              <ArrowLeft size={28} color={"white"}/>
-                                          </Button>
-                                      </Block>
-                                  )
-                              }
-                              renderArrowNext={(onClickHandler, hasNext, label) =>
-                                  hasNext && (
-                                      <Block position="absolute" width={"17.5%"} height={"100%"} top={0} right={0}>
-                                          <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                  onClick={onClickHandler}
-                                                  overrides={{
-                                                      BaseButton: {
-                                                          props: {
-                                                              className: "react-carousel-arrow dark right",
-                                                          },
-                                                          style: {
-                                                              fontSize: "inherit",
-                                                              fontWeight: "inherit",
-                                                              lineHeight: "inherit",
-                                                          }
-                                                      },
-                                                  }}
-                                          >
-                                              <ArrowRight size={28} color={"white"}/>
-                                          </Button>
-                                      </Block>
-                                  )
-                              }
-                              renderItem={(item, props) => {
-                                  return (
-                                      <Block position="relative" width={"100%"} maxWidth={"560px"} height={"100%"} display="flex" flexDirection="column" marginLeft={"auto"} marginRight={"auto"}>
-                                          <Block flex={1} marginRight="10px" marginBottom="32px" marginLeft="10px" overflow="hidden"
-                                                 style={props.isSelected ? {transition: "0.5s ease-in-out", transform: "scale(1.2)"} : {transition: "0.5s ease-in-out", transform: "scale(0.8)"}}>
-                                              <item.type {...item.props} {...props} />
-                                          </Block>
-                                          {props.isSelected ? (
-                                              <Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText"
-                                                     overrides={{
-                                                         Block: {
-                                                             style: {
-                                                                 zIndex: 1,
-                                                             }
-                                                         },
-                                                     }}
-                                              >{getSizeDesc(item.key)}</Block>
-                                          ) : <Block height="40px"/>}
-                                      </Block>
-                                  );
-                              }}
-                    >
-                        <ImageSlide key={0} url="/images/custom-printing/canopy-tent/any_style1.jpg" alt="canopy tent"/>
-                        <ImageSlide key={1} url="/images/custom-printing/canopy-tent/any_style2.jpg" alt="canopy tent"/>
-                        <ImageSlide key={2} url="/images/custom-printing/canopy-tent/any_style3.jpg" alt="canopy tent"/>
-                        <ImageSlide key={3} url="/images/custom-printing/canopy-tent/any_style4.jpg" alt="canopy tent"/>
-                        <ImageSlide key={4} url="/images/custom-printing/canopy-tent/any_style5.jpg" alt="canopy tent"/>
-                        <ImageSlide key={5} url="/images/custom-printing/canopy-tent/any_style6.jpg" alt="canopy tent"/>
-                    </Carousel>
-                </Block>
-            </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["12px", "24px", "40px"]}>
-                    <Block maxWidth="450px" marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >DESIGNED FOR YOUR SPECIAL EVENTS</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Westshade provides free mockup service and we’ll help you to make you special and stand out in important events.
-                    </Block>
-                </Block>
-                <Block position="relative" width="100%" height={["187px", "268px", "538px"]} maxWidth="1920px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                    <Image src="images/custom-printing/canopy-tent/event.jpg" alt="custom printing event" layout="fill" objectFit="cover" objectPosition="bottom" quality={100}/>
-                </Block>
-            </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} marginBottom={["40px !important", "80px !important", "120px !important"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block display="flex" flexDirection={["column", "column", "row"]} justifyContent="space-between" marginBottom={["32px", "32px", "40px"]}>
-                    <Block maxWidth="450px" marginBottom="12px" font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText"
-                           overrides={{
-                               Block: {
-                                   style: {lineHeight: "0.8 !important"}
-                               },
-                           }}
-                    >CUSTOMERS' SHOW</Block>
-                    <Block maxWidth="320px" marginBottom={["0", "0", "12px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
-                        Our customers love the tents they created with us. Check them out!
-                    </Block>
-                </Block>
-                <Block display="grid" gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["16px", "16px", "20px"]}>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer1.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer2.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer3.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer4.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer5.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                    <Block position="relative" width="100%" height={["154px", "154px", "216px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/custom-printing/canopy-tent/customer6.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
-                    </Block>
-                </Block>
-            </Block>
+            <Section title={"ANY STYLE MULTIPLE SIZE"}
+                     subtitle={"There is no limitation on printing styles and you can configure your tent as you wish. Westshade will meet your special needs."}
+                     content={
+                         <Block position="relative">
+                             <Carousel showStatus={false} showThumbs={false} showArrows={true} showIndicators={false} infiniteLoop={true} centerMode centerSlidePercentage={46}
+                                       renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                                           hasPrev && (
+                                               <Block position="absolute" width={"17.5%"} height={"100%"} top={0} left={0}>
+                                                   <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                           onClick={onClickHandler}
+                                                           overrides={{
+                                                               BaseButton: {
+                                                                   props: {
+                                                                       className: "react-carousel-arrow dark left",
+                                                                   },
+                                                                   style: {
+                                                                       fontSize: "inherit",
+                                                                       fontWeight: "inherit",
+                                                                       lineHeight: "inherit",
+                                                                   }
+                                                               },
+                                                           }}
+                                                   >
+                                                       <ArrowLeft size={28} color={"white"}/>
+                                                   </Button>
+                                               </Block>
+                                           )
+                                       }
+                                       renderArrowNext={(onClickHandler, hasNext, label) =>
+                                           hasNext && (
+                                               <Block position="absolute" width={"17.5%"} height={"100%"} top={0} right={0}>
+                                                   <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                           onClick={onClickHandler}
+                                                           overrides={{
+                                                               BaseButton: {
+                                                                   props: {
+                                                                       className: "react-carousel-arrow dark right",
+                                                                   },
+                                                                   style: {
+                                                                       fontSize: "inherit",
+                                                                       fontWeight: "inherit",
+                                                                       lineHeight: "inherit",
+                                                                   }
+                                                               },
+                                                           }}
+                                                   >
+                                                       <ArrowRight size={28} color={"white"}/>
+                                                   </Button>
+                                               </Block>
+                                           )
+                                       }
+                                       renderItem={(item, props) => {
+                                           return (
+                                               <Block position="relative" width={"100%"} maxWidth={"560px"} height={"100%"} display="flex" flexDirection="column" marginLeft={"auto"} marginRight={"auto"}>
+                                                   <Block flex={1} marginRight="10px" marginBottom="32px" marginLeft="10px" overflow="hidden"
+                                                          style={props.isSelected ? {transition: "0.5s ease-in-out", transform: "scale(1.2)"} : {transition: "0.5s ease-in-out", transform: "scale(0.8)"}}>
+                                                       <item.type {...item.props} {...props} />
+                                                   </Block>
+                                                   {props.isSelected ? (
+                                                       <Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText"
+                                                              overrides={{
+                                                                  Block: {
+                                                                      style: {
+                                                                          zIndex: 1,
+                                                                      }
+                                                                  },
+                                                              }}
+                                                       >{getSizeDesc(item.key)}</Block>
+                                                   ) : <Block height="40px"/>}
+                                               </Block>
+                                           );
+                                       }}
+                             >
+                                 <ImageSlide key={0} url="/images/custom-printing/canopy-tent/any_style1.jpg" alt="canopy tent"/>
+                                 <ImageSlide key={1} url="/images/custom-printing/canopy-tent/any_style2.jpg" alt="canopy tent"/>
+                                 <ImageSlide key={2} url="/images/custom-printing/canopy-tent/any_style3.jpg" alt="canopy tent"/>
+                                 <ImageSlide key={3} url="/images/custom-printing/canopy-tent/any_style4.jpg" alt="canopy tent"/>
+                                 <ImageSlide key={4} url="/images/custom-printing/canopy-tent/any_style5.jpg" alt="canopy tent"/>
+                                 <ImageSlide key={5} url="/images/custom-printing/canopy-tent/any_style6.jpg" alt="canopy tent"/>
+                             </Carousel>
+                         </Block>
+                     }
+            />
+            <Section title={<>DESIGNED FOR<br/>YOUR SPECIAL<br/>EVENTS</>}
+                     subtitle={"Westshade provides free mockup service and we’ll help you to make you special and stand out in important events."}
+                     content={
+                         <Block position="relative" width="100%" maxWidth="1920px" height={["187px", "268px", "538px"]} marginRight="auto" marginLeft="auto">
+                             <Image src="images/custom-printing/canopy-tent/event.jpg" alt="custom printing event" layout="fill" objectFit="cover" objectPosition="bottom" quality={100}/>
+                         </Block>
+                     }
+            />
+            <Section title={<>CUSTOMERS'<br/>SHOW</>}
+                     subtitle={"Our customers love the tents they created with us. Check them out!"}
+                     content={
+                         <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["16px", "16px", "20px"]} justifyItems="center">
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer1.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer2.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer3.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer4.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer5.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                             <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
+                                 <Image src="images/custom-printing/canopy-tent/customer6.jpg" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                             </Block>
+                         </Block>
+                     }
+            />
+            <div/>
         </React.Fragment>
     )
 }

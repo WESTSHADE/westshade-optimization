@@ -6,6 +6,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {ListHeading, ListItem} from "baseui/list";
+
 import {Input} from 'baseui/input';
 import ArrowRight from 'baseui/icon/arrow-right';
 

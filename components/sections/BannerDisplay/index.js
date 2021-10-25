@@ -56,9 +56,15 @@ const banner = ({
                    },
                }}
         >
-            <div className="background-image" style={{backgroundColor: backgroundColor}}>
+            <Block position="absolute" top={0} right={0} bottom={0} left={0}
+                   overrides={{
+                       Block: {
+                           style: {backgroundColor: backgroundColor, zIndex: "-1"}
+                       },
+                   }}
+            >
                 <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
-            </div>
+            </Block>
             <Block maxWidth={["213px", "298px"]} marginBottom={titleMarginBottom}
                    font={titleFont} color={textColor ? textColor : "MinXPrimaryTextAlt"}
                    overrides={{

@@ -9,9 +9,9 @@ import {Select} from "baseui/select";
 
 const data = {
     display: [
-        {picUrl: "images/canopy-tent/spec/y5.png", alt: "Y5 Spec", title: "Y5 Economic", subtitle: "Powder-coated steel", buyUrl: {pathname: '/products/canopy-tent', query: {id: 30477, series: "y5"}}},
-        {picUrl: "images/canopy-tent/spec/y6.png", alt: "Y6 Spec", title: "Y6 Commercial", subtitle: "Aluminum", buyUrl: {pathname: '/products/canopy-tent', query: {id: 30477, series: "y6"}}},
-        {picUrl: "images/canopy-tent/spec/y7.png", alt: "Y7 Spec", title: "Y7 Heavy Duty", subtitle: "Heavy duty aluminum", buyUrl: {pathname: '/products/canopy-tent', query: {id: 30477, series: "y7"}}}
+        {picUrl: "images/canopy-tent/spec/y5.png", alt: "Y5 Spec", title: "Y5 Economic", subtitle: "Powder-coated steel", buyUrl: {pathname: '/products/canopy-tent/buy', query: {id: 30477, series: "y5"}}},
+        {picUrl: "images/canopy-tent/spec/y6.png", alt: "Y6 Spec", title: "Y6 Commercial", subtitle: "Aluminum", buyUrl: {pathname: '/products/canopy-tent/buy', query: {id: 30477, series: "y6"}}},
+        {picUrl: "images/canopy-tent/spec/y7.png", alt: "Y7 Spec", title: "Y7 Heavy Duty", subtitle: "Heavy duty aluminum", buyUrl: {pathname: '/products/canopy-tent/buy', query: {id: 30477, series: "y7"}}}
     ],
     size: [
         ["10'x10'", "10'x15'", "10'x20'"],

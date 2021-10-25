@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
 import Head from "next/head";
+import Image from "next/image";
 
 import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
@@ -260,7 +261,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                 <img className="image-gallery-image" src={props.original}/>
                 {wallPictures.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%"}} src={pic}/>;
+                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
                 })}
             </>
         );
@@ -272,7 +273,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                 <img className="image-gallery-image" src={props.original}/>
                 {wallPicturesTemp.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%"}} src={pic}/>;
+                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
                 })}
             </>
         );
@@ -1598,42 +1599,43 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                                                                 value={option.toLowerCase()}
                                                                 overrides={{
                                                                     Label: ({$value}) => (
-                                                                        <div style={{position: "relative"}}>
-                                                                            <Button
-                                                                                kind={KIND.tertiary}
-                                                                                shape={SHAPE.circle}
-                                                                                overrides={{
-                                                                                    BaseButton: {
-                                                                                        style: ({$theme}) => ({
-                                                                                            position: "absolute",
-                                                                                            right: "-12px",
-                                                                                            top: "-12px",
-                                                                                            width: "12px",
-                                                                                            height: "12px",
-                                                                                            borderTopWidth: "1px",
-                                                                                            borderTopStyle: "solid",
-                                                                                            borderTopColor: "#B2B2B2",
-                                                                                            borderRightWidth: "1px",
-                                                                                            borderRightStyle: "solid",
-                                                                                            borderRightColor: "#B2B2B2",
-                                                                                            borderBottomWidth: "1px",
-                                                                                            borderBottomStyle: "solid",
-                                                                                            borderBottomColor: "#B2B2B2",
-                                                                                            borderLeftWidth: "1px",
-                                                                                            borderLeftStyle: "solid",
-                                                                                            borderLeftColor: "#B2B2B2",
-                                                                                            fontSize: "10px",
-                                                                                            color: "#B2B2B2",
-                                                                                        }),
-                                                                                    },
-                                                                                }}
-                                                                            >
-                                                                                ?
-                                                                            </Button>
-                                                                            <img style={{height: 39, width: 39, objectFit: "contain", marginBottom: 27}}
-                                                                                 src={"/images/icon/wall-" + option + ".png"}/>
+                                                                        <Block>
+                                                                            {/*<Button*/}
+                                                                            {/*    kind={KIND.tertiary}*/}
+                                                                            {/*    shape={SHAPE.circle}*/}
+                                                                            {/*    overrides={{*/}
+                                                                            {/*        BaseButton: {*/}
+                                                                            {/*            style: ({$theme}) => ({*/}
+                                                                            {/*                position: "absolute",*/}
+                                                                            {/*                right: "-12px",*/}
+                                                                            {/*                top: "-12px",*/}
+                                                                            {/*                width: "12px",*/}
+                                                                            {/*                height: "12px",*/}
+                                                                            {/*                borderTopWidth: "1px",*/}
+                                                                            {/*                borderTopStyle: "solid",*/}
+                                                                            {/*                borderTopColor: "#B2B2B2",*/}
+                                                                            {/*                borderRightWidth: "1px",*/}
+                                                                            {/*                borderRightStyle: "solid",*/}
+                                                                            {/*                borderRightColor: "#B2B2B2",*/}
+                                                                            {/*                borderBottomWidth: "1px",*/}
+                                                                            {/*                borderBottomStyle: "solid",*/}
+                                                                            {/*                borderBottomColor: "#B2B2B2",*/}
+                                                                            {/*                borderLeftWidth: "1px",*/}
+                                                                            {/*                borderLeftStyle: "solid",*/}
+                                                                            {/*                borderLeftColor: "#B2B2B2",*/}
+                                                                            {/*                fontSize: "10px",*/}
+                                                                            {/*                color: "#B2B2B2",*/}
+                                                                            {/*            }),*/}
+                                                                            {/*        },*/}
+                                                                            {/*    }}*/}
+                                                                            {/*>*/}
+                                                                            {/*    ?*/}
+                                                                            {/*</Button>*/}
+                                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
+                                                                                <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                                            </Block>
                                                                             <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
-                                                                        </div>
+                                                                        </Block>
                                                                     ),
                                                                 }}
                                                             />

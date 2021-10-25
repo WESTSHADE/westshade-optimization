@@ -17,11 +17,7 @@ function Shipping_Return() {
     const triggerModal = (status) => setIsModalOpen(status);
 
     useEffect(() => {
-        setTabsRefs((tabsRefs) =>
-            Array(2)
-                .fill()
-                .map((_, i) => tabsRefs[i] || createRef())
-        );
+        setTabsRefs((tabsRefs) => Array(2).fill().map((_, i) => tabsRefs[i] || createRef()));
     }, []);
 
     useEffect(() => {

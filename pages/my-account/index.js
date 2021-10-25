@@ -25,15 +25,15 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+    const [emailLoginError, setEmailLoginError] = useState(false);
+    const [passwordLoginError, setPasswordLoginError] = useState(false);
 
     const dispatch = useDispatch();
 
     const handleLogIn = () => {
         if (!email || !password) {
-            if (!email) setEmailError(true);
-            if (!password) setPasswordError(true);
+            if (!email) setEmailLoginError(true);
+            if (!password) setPasswordLoginError(true);
         } else {
             dispatch(logIn({email, password}));
         }
@@ -41,8 +41,8 @@ function Login() {
 
     useEffect(() => {
         if (message) {
-            setEmailError(true);
-            setPasswordError(true);
+            setEmailLoginError(true);
+            setPasswordLoginError(true);
         }
     }, [message]);
 
@@ -53,10 +53,10 @@ function Login() {
                 <Block display="grid" gridTemplateAreas={`"u" "p"`} gridRowGap={["16px", "24px"]}>
                     <Block gridArea="u">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">EMAIL ADDRESS</Block>
-                        <Input value={email} clearOnEscape error={emailError}
+                        <Input value={email} clearOnEscape error={emailLoginError}
                                onChange={({target}) => {
-                                   if (emailError) setEmailError(false);
-                                   if (passwordError) setPasswordError(false);
+                                   if (emailLoginError) setEmailLoginError(false);
+                                   if (passwordLoginError) setPasswordLoginError(false);
                                    dispatch(clearUserErrors());
 
                                    const {value} = target;
@@ -73,10 +73,10 @@ function Login() {
                     </Block>
                     <Block gridArea="p">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PASSWORD</Block>
-                        <Input value={password} clearOnEscape type="password" error={passwordError}
+                        <Input value={password} clearOnEscape type="password" error={passwordLoginError}
                                onChange={({target}) => {
-                                   if (emailError) setEmailError(false);
-                                   if (passwordError) setPasswordError(false);
+                                   if (emailLoginError) setEmailLoginError(false);
+                                   if (passwordLoginError) setPasswordLoginError(false);
                                    dispatch(clearUserErrors());
 
                                    const {value} = target;
@@ -107,28 +107,28 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+    const [emailSignupError, setEmailSignupError] = useState(false);
+    const [passwordSignupError, setPasswordSignupError] = useState(false);
 
     const dispatch = useDispatch();
 
     const handleSignUp = () => {
         if (!email || !password) {
-            if (!email) setEmailError(true);
-            if (!password) setPasswordError(true)
+            if (!email) setEmailSignupError(true);
+            if (!password) setPasswordSignupError(true)
         } else {
             if (password.match("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$").length > 0) {
                 dispatch(register({email, password}));
             } else {
-                setPasswordError(true)
+                setPasswordSignupError(true)
             }
         }
     };
 
     useEffect(() => {
         if (message) {
-            setEmailError(true);
-            setPasswordError(true);
+            setEmailSignupError(true);
+            setPasswordSignupError(true);
         }
     }, [message]);
 
@@ -139,10 +139,10 @@ function Signup() {
                 <Block display="grid" gridTemplateAreas={`"e" "p"`} gridRowGap={["16px", "24px"]}>
                     <Block gridArea="e">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">EMAIL ADDRESS</Block>
-                        <Input value={email} clearOnEscape error={emailError}
+                        <Input value={email} clearOnEscape error={emailSignupError}
                                onChange={({target}) => {
-                                   if (emailError) setEmailError(false);
-                                   if (passwordError) setPasswordError(false);
+                                   if (emailSignupError) setEmailSignupError(false);
+                                   if (passwordSignupError) setPasswordSignupError(false);
                                    dispatch(clearUserErrors());
 
                                    const {value} = target;
@@ -159,10 +159,10 @@ function Signup() {
                     </Block>
                     <Block gridArea="p">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PASSWORD</Block>
-                        <Input value={password} clearOnEscape type="password" error={passwordError}
+                        <Input value={password} clearOnEscape type="password" error={passwordSignupError}
                                onChange={({target}) => {
-                                   if (emailError) setEmailError(false);
-                                   if (passwordError) setPasswordError(false);
+                                   if (emailSignupError) setEmailSignupError(false);
+                                   if (passwordSignupError) setPasswordSignupError(false);
                                    dispatch(clearUserErrors());
 
                                    const {value} = target;

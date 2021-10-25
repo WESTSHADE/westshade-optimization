@@ -51,7 +51,7 @@ function Warranty() {
                        },
                    }}
             >
-                <Block maxWidth="603px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
+                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
                        overrides={{
                            Block: {
                                style: {textAlign: "center"}
@@ -61,7 +61,7 @@ function Warranty() {
                     <Block marginBottom={["12px", "16px"]} font={["MinXSubtitle10", "MinXSubtitle14"]} color="MinXPrimaryText">CUSTOMER SERVICE</Block>
                     <Block font={["MinXTitle20", "MinXTitle32", "MinXTitle44"]} color="MinXPrimaryText">WARRANTY</Block>
                 </Block>
-                <Block maxWidth="603px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Warranty Information</Block>
                     <Block font="MinXParagraph14" color="MinXPrimaryText">
                         <ul className="bullet-warranty">
@@ -81,7 +81,7 @@ function Warranty() {
                         </ul>
                     </Block>
                 </Block>
-                <Block width="100%" maxWidth="603px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Warranty Timeline Coverage</Block>
                     <Block width="100%" maxWidth="320px" font="MinXLabel14" color="MinXPrimaryText">
                         <CoverageItem title="Canopy Tent"/>
@@ -100,7 +100,7 @@ function Warranty() {
                         <CoverageItem title="Accessories" content="3 Months" textColor="#8C8C8C"/>
                     </Block>
                 </Block>
-                <Block maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Liability Notice</Block>
                     <Block font="MinXParagraph14" color="MinXPrimaryText">
                         Under no circumstances should a damaged product be used. Damaged products should be immediately packed up and removed. In purchasing any product from
