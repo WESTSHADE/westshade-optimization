@@ -23,6 +23,7 @@ import {EventEmitter} from "../../utils/events";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+import {Modal as ModalT} from "../../components/surfacse";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -556,77 +557,34 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                         </Block>
                     </Block>
                 </Block>
-                <Modal onClose={() => closeSummaryModal()}
-                       isOpen={summaryIsOpen}
-                       animate
-                       autoFocus
-                       size={SIZE.full}
-                       role={ROLE.dialog}
-                       overrides={{
-                           Root: {
-                               style: ({$theme}) => ({
-                                   zIndex: "99",
-                                   height: "100vh",
-                                   paddingTop: "24px",
-                                   overflowY: "hidden",
-                               }),
-                               props: {
-                                   className: "modalRoot",
-                               },
-                           },
-                           DialogContainer: {
-                               style: ({$theme}) => ({
-                                   height: "100%",
-                               }),
-                           },
-                           Dialog: {
-                               props: {className: "modalDialog modalDialog-summary"},
-                           },
-                           Close: {
-                               style: () => ({top: "29px", right: "29px"}),
-                           },
-                       }}
+            </Block>
+            <ModalT type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
+                <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
+                       paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
                 >
-                    <ModalBody className="modalSelectionContainer modalSelectionContainer-summary">
-                        <Block
-                            width={["100%", "448px", "702px"]}
-                            height={["520px", "520px", "368px"]}
-                            display={"flex"}
-                            flexDirection={"column"}
-                            marginLeft={"auto"}
-                            marginBottom={["16px", "16px", "32px"]}
-                            marginRight={"auto"}
-                            overflow={["scroll", "scroll", "hidden"]}
-                            backgroundColor={"white"}
-                            className={"modalSelectionContainer-summary-data"}
-                        >
-                            <Block flex={1} position={"relative"}>
-                                <DataTable/>
+                    <Block display={"flex"} flexDirection={"column"} height={["520px", "520px", "368px"]} marginBottom={["16px", "16px", "32px"]} backgroundColor={"white"} overflow="hidden"
+                           className={"modalSelectionContainer-summary-data"}
+                    >
+                        <DataTable/>
+                    </Block>
+                    <Block height={"auto"} display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2,1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft={"auto"} marginRight={"auto"}>
+                        <Block display="flex" flexDirection="row">
+                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                            <Block font="MinXParagraph14">
+                                <Block>Free shipping on orders over $149</Block>
+                                <Block>Order today, shipped by Friday.</Block>
+                                <Block marginTop="4px" font="MinXParagraph12" color="MinXSecondaryText">Custom printing orders do not apply.</Block>
                             </Block>
                         </Block>
-                        <Block width={["100%", "448px", "702px"]} height={"auto"} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"}
-                               marginRight={"auto"} paddingBottom={"16px"}>
-                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
-                                <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                                <div style={{fontSize: 14, lineHeight: "17px"}}>
-                                    <div>Free shipping on orders over $149</div>
-                                    <div>Order today, shipped by {shippedDay}.</div>
-                                    <div style={{fontSize: 12, lineHeight: "20px", color: "#8C8C8C"}}>
-                                        Custom printing orders do not apply.
-                                        <span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
-                                <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
-                                <div style={{fontSize: 14, lineHeight: "17px"}}>
-                                    Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
-                                </div>
-                            </div>
+                        <Block display="flex" flexDirection="row">
+                            <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
+                            <Block font="MinXParagraph14">
+                                Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
+                            </Block>
                         </Block>
-                    </ModalBody>
-                </Modal>
-            </Block>
+                    </Block>
+                </Block>
+            </ModalT>
         </React.Fragment>
     );
 }

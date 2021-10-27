@@ -281,10 +281,6 @@ ul.bullet-warranty.sub > li {
     overflow: scroll;
 }
 
-.modalSelectionContainer-summary {
-    padding: 62px 16px;
-}
-
 .hideScrollBar::-webkit-scrollbar {
     display: none;
 }
@@ -461,11 +457,6 @@ ul.bullet-warranty.sub > li {
         margin-left: 64px; */
         padding-top: 40px;
         overflow: unset;
-    }
-
-    .modalSelectionContainer-summary {
-        padding-top: 32px;
-        padding-bottom: 32px;
     }
 
     .modalSelectionContainer-summary-data {

@@ -39,6 +39,7 @@ import {Modal as ModalT} from "../../components/surfacse";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+import MButton from "../../components/button-n";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -154,6 +155,9 @@ function Canopy_Tent({router, products, variants}) {
     const [tentSeries, setTentSeries] = useState("");
 
     const [isInStock, setIsInStock] = useState(true);
+
+    const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+    const [frameCompareOpen, setFrameCompareOpen] = useState(false);
 
     ////////////////////////////////////////
 
@@ -842,9 +846,9 @@ function Canopy_Tent({router, products, variants}) {
                     data={rowDate}
                     overrides={{
                         Root: {
-                            style: ({$theme}) => ({
+                            style: {
                                 height: "calc(100% - 44px)",
-                            }),
+                            },
                         },
                     }}
                 >
@@ -916,7 +920,11 @@ function Canopy_Tent({router, products, variants}) {
                            }}
                     >
                         <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
-                        <div style={{marginBottom: 20, padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Spec</div>
+                        <MButton type="solid" height="auto" marginRight="auto" marginBottom="20px" marginLeft="auto" font="MinXParagraph16" text='Spec' color="MinXPrimaryText"
+                                 buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                 onClick={() => {
+                                 }}
+                        />
                         {displayTabs ? (
                             <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
                                   overrides={{
@@ -1000,7 +1008,10 @@ function Canopy_Tent({router, products, variants}) {
                                                         )))
                                                     : null}
                                             </RadioGroup>
-                                            <div style={{padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Size Guide</div>
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
+                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                                     onClick={() => setSizeGuideOpen(true)}
+                                            />
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Frame</div>
@@ -1056,7 +1067,11 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                                 <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
                                             </RadioGroup>
-                                            <div style={{padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Compare Frames</div>
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
+                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                                     onClick={() => {
+                                                     }}
+                                            />
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
@@ -1430,6 +1445,176 @@ function Canopy_Tent({router, products, variants}) {
                         ) : null}
                     </Block>
                 </Block>
+                <ModalT type="dialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} header={<Block font="MinXLabel20">Size Guide</Block>}>
+                    <Block display="grid" gridTemplateColumns="140px max-content" marginTop="48px">
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px">
+                            <div/>
+                            <Block>
+                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                            </Block>
+                            <Block>
+                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                            </Block>
+                            <Block>
+                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                            </Block>
+                        </Block>
+                        <Block width={["calc(100vw - 140px - 48px)", "calc(100vw - 140px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px" overflow={["scrollX", "scrollX", "hidden"]}
+                               overrides={{
+                                   Block: {
+                                       style: {
+                                           "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
+                                           scrollbarWidth: "none", /* for Firefox */
+                                           "::-webkit-scrollbar": {display: "none"}
+                                       }
+                                   },
+                               }}
+                        >
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-10x10.png" alt="canopy tent 10x10" layout="responsive" objectFit="contain" width={156} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 10'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-10x15.png" alt="canopy tent 10x15" layout="responsive" objectFit="contain" width={175} height={144} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 15'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-13x13.png" alt="canopy tent 13x13" layout="responsive" objectFit="contain" width={160} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 13'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-10x20.png" alt="canopy tent 10x20" layout="responsive" objectFit="contain" width={199} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 20'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-16x16.png" alt="canopy tent 16x16" layout="responsive" objectFit="contain" width={192} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">16' x 16'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-13x20.png" alt="canopy tent 13x20" layout="responsive" objectFit="contain" width={187} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 20'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-13x26.png" alt="canopy tent 13x26" layout="responsive" objectFit="contain" width={206} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 26'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                                <Block display="flex" flexDirection="column" alignItems="center">
+                                    <Block width="50px" height="50px">
+                                        <Image src="images/icon/icon-20x20.png" alt="canopy tent 20x20" layout="responsive" objectFit="contain" width={215} height={140} quality={100}/>
+                                    </Block>
+                                    <Block font="MinXParagraph14" color="MinXSecondaryText">20' x 20'</Block>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                                <Block width="22px" height="22px">
+                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                </Block>
+                            </Block>
+                        </Block>
+                    </Block>
+                </ModalT>
                 {/* <ModalT
 					startEnhancer={() => (
 						<div>
@@ -1458,9 +1643,7 @@ function Canopy_Tent({router, products, variants}) {
                                },
                            },
                            DialogContainer: {
-                               style: ({$theme}) => ({
-                                   height: "100%",
-                               }),
+                               style: {height: "100%"},
                            },
                            Dialog: {
                                props: {className: "modalDialog"},
@@ -1644,8 +1827,9 @@ function Canopy_Tent({router, products, variants}) {
                             </Block>
                         </Block>
                     </ModalBody>
-                    <Block width={"100%"} height={["54px", "70px", "80px"]} position={"fixed"} bottom={"0"} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                           justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}>
+                    <Block width={"100%"} height={["54px", "70px", "80px"]} position={"fixed"} bottom={0} right={0} left={0} backgroundColor={"white"} display={"flex"} alignItems={"center"}
+                           justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
+                    >
                         <div>
                             <Block display={["none", "block"]}>
                                 <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
@@ -1722,78 +1906,34 @@ function Canopy_Tent({router, products, variants}) {
                         </div>
                     </Block>
                 </Modal>
-                <Modal
-                    onClose={() => closeSummaryModal()}
-                    isOpen={summaryIsOpen}
-                    animate
-                    autoFocus
-                    size={ModalSize.full}
-                    role={ROLE.dialog}
-                    overrides={{
-                        Root: {
-                            style: ({$theme}) => ({
-                                zIndex: "99",
-                                height: "100vh",
-                                paddingTop: "24px",
-                                overflowY: "hidden",
-                            }),
-                            props: {
-                                className: "modalRoot",
-                            },
-                        },
-                        DialogContainer: {
-                            style: ({$theme}) => ({
-                                height: "100%",
-                            }),
-                        },
-                        Dialog: {
-                            props: {className: "modalDialog modalDialog-summary"},
-                        },
-                        Close: {
-                            style: () => ({top: "29px", right: "29px"}),
-                        },
-                    }}
+            </Block>
+            <ModalT type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
+                <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
+                       paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
                 >
-                    <ModalBody className="modalSelectionContainer modalSelectionContainer-summary">
-                        <Block
-                            width={["100%", "448px", "702px"]}
-                            height={["520px", "520px", "368px"]}
-                            display={"flex"}
-                            flexDirection={"column"}
-                            marginLeft={"auto"}
-                            marginBottom={["16px", "16px", "32px"]}
-                            marginRight={"auto"}
-                            overflow={["scroll", "scroll", "hidden"]}
-                            backgroundColor={"white"}
-                            className={"modalSelectionContainer-summary-data"}
-                        >
-                            <Block flex={1} position={"relative"}>
-                                <DataTable/>
+                    <Block display={"flex"} flexDirection={"column"} height={["520px", "520px", "368px"]} marginBottom={["16px", "16px", "32px"]} backgroundColor={"white"} overflow="hidden"
+                           className={"modalSelectionContainer-summary-data"}
+                    >
+                        <DataTable/>
+                    </Block>
+                    <Block height={"auto"} display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2,1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft={"auto"} marginRight={"auto"}>
+                        <Block display="flex" flexDirection="row">
+                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                            <Block font="MinXParagraph14">
+                                <Block>Free shipping on orders over $149</Block>
+                                <Block>Order today, shipped by Friday.</Block>
+                                <Block marginTop="4px" font="MinXParagraph12" color="MinXSecondaryText">Custom printing orders do not apply.</Block>
                             </Block>
                         </Block>
-                        <Block width={["100%", "448px", "702px"]} height={"auto"} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"}
-                               marginRight={"auto"} paddingBottom={"16px"}>
-                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
-                                <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                                <div style={{fontSize: 14, lineHeight: "17px"}}>
-                                    <div>Free shipping on orders over $149</div>
-                                    <div>Order today, shipped by Friday.</div>
-                                    <div style={{fontSize: 12, lineHeight: "20px", color: "#8C8C8C"}}>
-                                        Custom printing orders do not apply.
-                                        <span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={{display: "flex", flexDirection: "row", paddingBottom: 16, paddingRight: 16, flex: 1}}>
-                                <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
-                                <div style={{fontSize: 14, lineHeight: "17px"}}>
-                                    Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
-                                </div>
-                            </div>
+                        <Block display="flex" flexDirection="row">
+                            <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
+                            <Block font="MinXParagraph14">
+                                Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
+                            </Block>
                         </Block>
-                    </ModalBody>
-                </Modal>
-            </Block>
+                    </Block>
+                </Block>
+            </ModalT>
         </React.Fragment>
     );
 }
