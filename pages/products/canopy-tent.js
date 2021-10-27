@@ -8,6 +8,8 @@ import clsx from "clsx";
 
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
+import {withRouter} from "next/router";
 
 import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
@@ -15,11 +17,7 @@ import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, SIZE, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel, ARTWORK_SIZES} from "baseui/list";
-import Search from "baseui/icon/search";
-import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, SIZE as ModalSize, ROLE} from "baseui/modal";
-import Delete from "baseui/icon/delete";
-import ChevronDown from "baseui/icon/chevron-down";
-import Upload from "baseui/icon/upload";
+import {Search, Delete, ChevronDown, Upload} from "baseui/icon";
 import {Input} from "baseui/input";
 import {Textarea} from "baseui/textarea";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
@@ -27,19 +25,16 @@ import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, Numer
 import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import Link from "next/link";
-import {withRouter} from "next/router";
-
 import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
 import {Checkout} from "../../components/sections";
-import {Modal as ModalT} from "../../components/surfacse";
+import {Modal} from "../../components/surfacse";
+import MButton from "../../components/button-n";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import MButton from "../../components/button-n";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -911,11 +906,9 @@ function Canopy_Tent({router, products, variants}) {
                            paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingBottom={["94px", "68px", "0"]} paddingLeft={["16px", "16px", "0"]}
                            overrides={{
                                Block: {
-                                   style: {
-                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
-                                       scrollbarWidth: "none", /* for Firefox */
-                                       "::-webkit-scrollbar": {display: "none"}
-                                   }
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
                                },
                            }}
                     >
@@ -932,8 +925,10 @@ function Canopy_Tent({router, products, variants}) {
                                           style: ({$theme}) => ({width: "100%"}),
                                       },
                                       TabList: {
+                                          props: {
+                                              className: "hideScrollBar"
+                                          },
                                           style: {
-                                              "::-webkit-scrollbar": {display: "none"},
                                               overflowX: "scroll",
                                           },
                                       },
@@ -1445,469 +1440,436 @@ function Canopy_Tent({router, products, variants}) {
                         ) : null}
                     </Block>
                 </Block>
-                <ModalT type="dialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} header={<Block font="MinXLabel20">Size Guide</Block>}>
-                    <Block display="grid" gridTemplateColumns="140px max-content" marginTop="48px">
-                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px">
-                            <div/>
-                            <Block>
-                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
-                            </Block>
-                            <Block>
-                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
-                            </Block>
-                            <Block>
-                                <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                                <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
-                            </Block>
-                        </Block>
-                        <Block width={["calc(100vw - 140px - 48px)", "calc(100vw - 140px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px" overflow={["scrollX", "scrollX", "hidden"]}
-                               overrides={{
-                                   Block: {
-                                       style: {
-                                           "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
-                                           scrollbarWidth: "none", /* for Firefox */
-                                           "::-webkit-scrollbar": {display: "none"}
-                                       }
-                                   },
-                               }}
-                        >
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-10x10.png" alt="canopy tent 10x10" layout="responsive" objectFit="contain" width={156} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 10'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-10x15.png" alt="canopy tent 10x15" layout="responsive" objectFit="contain" width={175} height={144} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 15'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-13x13.png" alt="canopy tent 13x13" layout="responsive" objectFit="contain" width={160} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 13'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-10x20.png" alt="canopy tent 10x20" layout="responsive" objectFit="contain" width={199} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 20'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-16x16.png" alt="canopy tent 16x16" layout="responsive" objectFit="contain" width={192} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">16' x 16'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-13x20.png" alt="canopy tent 13x20" layout="responsive" objectFit="contain" width={187} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 20'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-13x26.png" alt="canopy tent 13x26" layout="responsive" objectFit="contain" width={206} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 26'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                            <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
-                                <Block display="flex" flexDirection="column" alignItems="center">
-                                    <Block width="50px" height="50px">
-                                        <Image src="images/icon/icon-20x20.png" alt="canopy tent 20x20" layout="responsive" objectFit="contain" width={215} height={140} quality={100}/>
-                                    </Block>
-                                    <Block font="MinXParagraph14" color="MinXSecondaryText">20' x 20'</Block>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                                <Block width="22px" height="22px">
-                                    <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                </Block>
-                            </Block>
-                        </Block>
-                    </Block>
-                </ModalT>
-                {/* <ModalT
-					startEnhancer={() => (
-						<div>
-							<Block display={["none", "block"]}>
-								<div style={{ fontSize: "12px", marginRight: "24px", textAlign: "left" }}>After submitting the order, we’ll contact you with a free mockup based on the information you provide us here.</div>
-							</Block>
-							<Block display={["block", "none"]}>
-								<StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{ zIndex: 999 }}>xxx</div>}>
-									<div style={{ width: 20, height: 20, border: "2px solid black", borderRadius: "50%", textAlign: "center", fontSize: 12, fontWeight: "bold", lineHeight: "17px", marginRight: 2, marginLeft: 2 }}>!</div>
-								</StatefulTooltip>
-							</Block>
-						</div>
-					)}
-				/> */}
-                <Modal onClose={() => closeWallModal()} isOpen={wallIsOpen} animate autoFocus size={ModalSize.full} role={ROLE.dialog}
-                       overrides={{
-                           Root: {
-                               style: ({$theme}) => ({
-                                   zIndex: "99",
-                                   height: "100vh",
-                                   paddingTop: "24px",
-                                   overflowY: "hidden",
-                               }),
-                               props: {
-                                   className: "modalRoot",
-                               },
-                           },
-                           DialogContainer: {
-                               style: {height: "100%"},
-                           },
-                           Dialog: {
-                               props: {className: "modalDialog"},
-                           },
-                           Close: {
-                               style: () => ({top: "29px", right: "29px"}),
-                           },
-                       }}
-                >
-                    <ModalBody className="modalSelectionContainer">
-                        <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"} marginRight={"auto"}
-                               overflow={["scroll", "scroll", "hidden"]}
-                        >
-                            {/* 图片区域 */}
-                            <Block flex={[0, 0, 1]} position={"relative"} className={"modalGallery"} paddingRight={["16px", "52px", "0"]} paddingLeft={["16px", "52px", "64px"]}>
-                                <ImageGallery showNav={false} items={[productImageGalleryTemp[0]]} showPlayButton={false} showFullscreenButton={false}/>
-                            </Block>
-                            <Block display={"flex"} flexDirection={"column"} alignItems={"center"} width={["100%", "100%", "424px"]}
-                                   paddingTop={["24px", "24px", "40px"]} paddingRight={["16px", "52px", "64px"]} paddingLeft={["16px", "52px", "0"]} overflow={["unset", "unset", "scroll"]}
-                            >
-                                <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%"}}>
-                                    <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Wall type</div>
-                                    <RadioGroup name="wall_type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} align={ALIGN.horizontal}
-                                                onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
-                                                overrides={{
-                                                    RadioGroupRoot: {
-                                                        style: ({$theme}) => ({
-                                                            display: "grid",
-                                                            width: "100%",
-                                                            flexWrap: "wrap",
-                                                            justifyContent: "space-between",
-                                                            gridTemplateColumns: "repeat(auto-fill, calc(100% / 3))",
-                                                        }),
-                                                        props: {
-                                                            className: "radioGroupWall",
-                                                        },
-                                                    },
-                                                    Root: {
-                                                        style: ({$checked}) => ({
-                                                            height: "142px",
-                                                            justifyContent: "center",
-                                                            padding: $checked ? "13px 0" : "15px 0",
-                                                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
-                                                            boxSizing: "border-box",
-                                                            borderRadius: "16px",
-                                                            marginTop: 0,
-                                                            marginRight: "12px",
-                                                            marginBottom: "16px",
-                                                            marginLeft: "12px",
-                                                        }),
-                                                    },
-                                                    RadioMarkOuter: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    RadioMarkInner: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    Label: {
-                                                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),
-                                                    },
-                                                }}
-                                    >
-                                        {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
-                                            options.map((option, indexWall) => (
-                                                <Radio key={indexWall} value={option.toLowerCase()}
-                                                       overrides={{
-                                                           Label: ({$value}) => (
-                                                               <Block>
-                                                                   {/*<Button*/}
-                                                                   {/*    kind={KIND.tertiary}*/}
-                                                                   {/*    shape={SHAPE.circle}*/}
-                                                                   {/*    overrides={{*/}
-                                                                   {/*        BaseButton: {*/}
-                                                                   {/*            style: ({$theme}) => ({*/}
-                                                                   {/*                position: "absolute",*/}
-                                                                   {/*                right: "-12px",*/}
-                                                                   {/*                top: "-12px",*/}
-                                                                   {/*                width: "12px",*/}
-                                                                   {/*                height: "12px",*/}
-                                                                   {/*                borderTopWidth: "1px",*/}
-                                                                   {/*                borderTopStyle: "solid",*/}
-                                                                   {/*                borderTopColor: "#B2B2B2",*/}
-                                                                   {/*                borderRightWidth: "1px",*/}
-                                                                   {/*                borderRightStyle: "solid",*/}
-                                                                   {/*                borderRightColor: "#B2B2B2",*/}
-                                                                   {/*                borderBottomWidth: "1px",*/}
-                                                                   {/*                borderBottomStyle: "solid",*/}
-                                                                   {/*                borderBottomColor: "#B2B2B2",*/}
-                                                                   {/*                borderLeftWidth: "1px",*/}
-                                                                   {/*                borderLeftStyle: "solid",*/}
-                                                                   {/*                borderLeftColor: "#B2B2B2",*/}
-                                                                   {/*                fontSize: "10px",*/}
-                                                                   {/*                color: "#B2B2B2",*/}
-                                                                   {/*            }),*/}
-                                                                   {/*        },*/}
-                                                                   {/*    }}*/}
-                                                                   {/*>*/}
-                                                                   {/*    ?*/}
-                                                                   {/*</Button>*/}
-                                                                   <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                                       <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
-                                                                   </Block>
-                                                                   <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
-                                                               </Block>
-                                                           ),
-                                                       }}
-                                                />
-                                            ))) : null}
-                                    </RadioGroup>
-                                    <div style={{marginBottom: 20}}/>
-                                </div>
-                                <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: "64px"}}>
-                                    <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
-                                    <RadioGroup name="color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} align={ALIGN.horizontal}
-                                                onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
-                                                overrides={{
-                                                    RadioGroupRoot: {
-                                                        style: ({$theme}) => ({
-                                                            display: "grid",
-                                                            width: "100%",
-                                                            flexWrap: "wrap",
-                                                            justifyContent: "space-evenly",
-                                                            gridTemplateColumns: "auto auto auto auto auto auto",
-                                                        }),
-                                                        props: {
-                                                            className: "radioGroupColor",
-                                                        },
-                                                    },
-                                                    Root: {
-                                                        style: ({$theme, $checked}) => ({
-                                                            width: "52px",
-                                                            height: "52px",
-                                                            justifyContent: "center",
-                                                            padding: $checked ? "4px" : "6px",
-                                                            border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
-                                                            boxSizing: "border-box",
-                                                            borderRadius: "50%",
-                                                            marginTop: 0,
-                                                            marginRight: "0",
-                                                            marginBottom: "16px",
-                                                            marginLeft: "0",
-                                                        }),
-                                                    },
-                                                    RadioMarkOuter: {
-                                                        style: ({$theme}) => ({display: "none"}),
-                                                    },
-                                                    RadioMarkInner: {
-                                                        style: ({$theme}) => ({display: "none"}),
-                                                    },
-                                                }}
-                                    >
-                                        {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) =>
-                                            options.map((option, index) => (
-                                                <Radio key={index} value={option.toLowerCase()}
-                                                       overrides={{
-                                                           Label: ({$value}) => (
-                                                               <div
-                                                                   style={{
-                                                                       width: "38px",
-                                                                       height: "38px",
-                                                                       borderRadius: "50%",
-                                                                       backgroundColor:
-                                                                           option.toLowerCase() === "yellow"
-                                                                               ? "#F4C84E"
-                                                                               : option.toLowerCase() === "green"
-                                                                                   ? "#275D3D"
-                                                                                   : option.toLowerCase() === "blue"
-                                                                                       ? "#1A4A8B"
-                                                                                       : option.toLowerCase() === "red"
-                                                                                           ? "#991F34"
-                                                                                           : option.toLowerCase(),
-                                                                       border: "1px solid #D9D9D9",
-                                                                   }}
-                                                               />
-                                                           ),
-                                                       }}
-                                                />
-                                            ))) : null}
-                                    </RadioGroup>
-                                </div>
-                            </Block>
-                        </Block>
-                    </ModalBody>
-                    <Block width={"100%"} height={["54px", "70px", "80px"]} position={"fixed"} bottom={0} right={0} left={0} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                           justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
-                    >
-                        <div>
-                            <Block display={["none", "block"]}>
-                                <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
-                                    the information you provide us here.
-                                </div>
-                            </Block>
-                            <Block display={["block", "none"]}>
-                                <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
-                                    <div
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                            border: "2px solid black",
-                                            borderRadius: "50%",
-                                            textAlign: "center",
-                                            fontSize: 12,
-                                            fontWeight: "bold",
-                                            lineHeight: "17px",
-                                            marginRight: 2,
-                                            marginLeft: 2,
-                                        }}
-                                    >
-                                        !
-                                    </div>
-                                </StatefulTooltip>
-                            </Block>
-                        </div>
-                        <div style={{display: "flex", flexDirection: "row"}}>
-                            <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
-                                <Button
-                                    shape={SHAPE.pill}
-                                    overrides={{
-                                        BaseButton: {
-                                            style: ({$theme}) => ({
-                                                fontSize: "16px",
-                                                width: `100%`,
-                                                height: `100%`,
-                                                backgroundColor: "transparent",
-                                                lineHeight: "24px",
-                                                color: "#8C8C8C",
-                                                borderTopStyle: "solid",
-                                                borderTopWidth: "1px",
-                                                borderTopColor: "#8C8C8C",
-                                                borderRightStyle: "solid",
-                                                borderRightWidth: "1px",
-                                                borderRightColor: "#8C8C8C",
-                                                borderBottomStyle: "solid",
-                                                borderBottomWidth: "1px",
-                                                borderBottomColor: "#8C8C8C",
-                                                borderLeftStyle: "solid",
-                                                borderLeftWidth: "1px",
-                                                borderLeftColor: "#8C8C8C",
-                                            }),
-                                        },
-                                    }}
-                                    onClick={() => closeWallModal()}
-                                >
-                                    Cancel
-                                </Button>
-                            </Block>
-                            <Block minWidth={["85px"]} height={"40px"}>
-                                <Button
-                                    shape={SHAPE.pill}
-                                    overrides={{
-                                        BaseButton: {
-                                            style: ({$theme}) => ({fontSize: "16px", width: `100%`, height: `100%`, backgroundColor: "#23A4AD", lineHeight: "24px"}),
-                                        },
-                                    }}
-                                    onClick={() => closeWallModal(true)}
-                                >
-                                    Save
-                                </Button>
-                            </Block>
-                        </div>
-                    </Block>
-                </Modal>
             </Block>
-            <ModalT type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
+            <Modal type="dialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} header={<Block font="MinXLabel20">Size Guide</Block>}>
+                <Block display="grid" gridTemplateColumns="140px max-content" marginTop="48px">
+                    <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px">
+                        <div/>
+                        <Block>
+                            <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                        </Block>
+                        <Block>
+                            <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                        </Block>
+                        <Block>
+                            <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
+                            <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                        </Block>
+                    </Block>
+                    <Block width={["calc(100vw - 140px - 48px)", "calc(100vw - 140px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px" overflow={["scrollX", "scrollX", "hidden"]}
+                           overrides={{
+                               Block: {
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
+                               },
+                           }}
+                    >
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-10x10.png" alt="canopy tent 10x10" layout="responsive" objectFit="contain" width={156} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 10'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-10x15.png" alt="canopy tent 10x15" layout="responsive" objectFit="contain" width={175} height={144} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 15'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-13x13.png" alt="canopy tent 13x13" layout="responsive" objectFit="contain" width={160} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 13'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-10x20.png" alt="canopy tent 10x20" layout="responsive" objectFit="contain" width={199} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 20'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-16x16.png" alt="canopy tent 16x16" layout="responsive" objectFit="contain" width={192} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">16' x 16'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-13x20.png" alt="canopy tent 13x20" layout="responsive" objectFit="contain" width={187} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 20'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-13x26.png" alt="canopy tent 13x26" layout="responsive" objectFit="contain" width={206} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 26'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
+                            <Block display="flex" flexDirection="column" alignItems="center">
+                                <Block width="50px" height="50px">
+                                    <Image src="images/icon/icon-20x20.png" alt="canopy tent 20x20" layout="responsive" objectFit="contain" width={215} height={140} quality={100}/>
+                                </Block>
+                                <Block font="MinXParagraph14" color="MinXSecondaryText">20' x 20'</Block>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                            <Block width="22px" height="22px">
+                                <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                    </Block>
+                </Block>
+            </Modal>
+            <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
+                   footer={
+                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
+                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
+                       >
+                           <Block>
+                               <Block display={["none", "block"]}>
+                                   <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
+                                       the information you provide us here.
+                                   </div>
+                               </Block>
+                               <Block display={["block", "none"]}>
+                                   <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
+                                       <div
+                                           style={{
+                                               width: 20,
+                                               height: 20,
+                                               border: "2px solid black",
+                                               borderRadius: "50%",
+                                               textAlign: "center",
+                                               fontSize: 12,
+                                               fontWeight: "bold",
+                                               lineHeight: "17px",
+                                               marginRight: 2,
+                                               marginLeft: 2,
+                                           }}
+                                       >
+                                           !
+                                       </div>
+                                   </StatefulTooltip>
+                               </Block>
+                           </Block>
+                           <Block display="flex" flexDirection="row">
+                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
+                                   <Button
+                                       shape={SHAPE.pill}
+                                       overrides={{
+                                           BaseButton: {
+                                               style: ({$theme}) => ({
+                                                   fontSize: "16px",
+                                                   width: `100%`,
+                                                   height: `100%`,
+                                                   backgroundColor: "transparent",
+                                                   lineHeight: "24px",
+                                                   color: "#8C8C8C",
+                                                   borderTopStyle: "solid",
+                                                   borderTopWidth: "1px",
+                                                   borderTopColor: "#8C8C8C",
+                                                   borderRightStyle: "solid",
+                                                   borderRightWidth: "1px",
+                                                   borderRightColor: "#8C8C8C",
+                                                   borderBottomStyle: "solid",
+                                                   borderBottomWidth: "1px",
+                                                   borderBottomColor: "#8C8C8C",
+                                                   borderLeftStyle: "solid",
+                                                   borderLeftWidth: "1px",
+                                                   borderLeftColor: "#8C8C8C",
+                                               }),
+                                           },
+                                       }}
+                                       onClick={() => closeWallModal()}
+                                   >
+                                       Cancel
+                                   </Button>
+                               </Block>
+                               <Block minWidth={["85px"]} height={"40px"}>
+                                   <Button
+                                       shape={SHAPE.pill}
+                                       overrides={{
+                                           BaseButton: {
+                                               style: ({$theme}) => ({fontSize: "16px", width: `100%`, height: `100%`, backgroundColor: "#23A4AD", lineHeight: "24px"}),
+                                           },
+                                       }}
+                                       onClick={() => closeWallModal(true)}
+                                   >
+                                       Save
+                                   </Button>
+                               </Block>
+                           </Block>
+                       </Block>
+                   }
+            >
+                <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"} marginRight={"auto"}>
+                    {/* 图片区域 */}
+                    <Block flex={[0, 0, 1]} position={"relative"} className={"modalGallery"} paddingRight={["16px", "52px", "0"]} paddingLeft={["16px", "52px", "64px"]}>
+                        <ImageGallery showNav={false} items={[productImageGalleryTemp[0]]} showPlayButton={false} showFullscreenButton={false}/>
+                    </Block>
+                    <Block display={"flex"} flexDirection={"column"} alignItems={"center"} width={["100%", "100%", "424px"]}
+                           paddingTop={["24px", "24px", "40px"]} paddingRight={["16px", "52px", "64px"]} paddingLeft={["16px", "52px", "0"]} overflow={["unset", "unset", "scroll"]}
+                           overrides={{
+                               Block: {
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
+                               }
+                           }}
+                    >
+                        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%"}}>
+                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Wall type</div>
+                            <RadioGroup name="wall_type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} align={ALIGN.horizontal}
+                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
+                                        overrides={{
+                                            RadioGroupRoot: {
+                                                style: ({$theme}) => ({
+                                                    display: "grid",
+                                                    width: "100%",
+                                                    flexWrap: "wrap",
+                                                    justifyContent: "space-between",
+                                                    gridTemplateColumns: "repeat(auto-fill, calc(100% / 3))",
+                                                }),
+                                                props: {
+                                                    className: "radioGroupWall",
+                                                },
+                                            },
+                                            Root: {
+                                                style: ({$checked}) => ({
+                                                    height: "142px",
+                                                    justifyContent: "center",
+                                                    padding: $checked ? "13px 0" : "15px 0",
+                                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                                    boxSizing: "border-box",
+                                                    borderRadius: "16px",
+                                                    marginTop: 0,
+                                                    marginRight: "12px",
+                                                    marginBottom: "16px",
+                                                    marginLeft: "12px",
+                                                }),
+                                            },
+                                            RadioMarkOuter: {
+                                                style: () => ({display: "none"}),
+                                            },
+                                            RadioMarkInner: {
+                                                style: () => ({display: "none"}),
+                                            },
+                                            Label: {
+                                                style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),
+                                            },
+                                        }}
+                            >
+                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
+                                    options.map((option, indexWall) => (
+                                        <Radio key={indexWall} value={option.toLowerCase()}
+                                               overrides={{
+                                                   Label: ({$value}) => (
+                                                       <Block>
+                                                           {/*<Button*/}
+                                                           {/*    kind={KIND.tertiary}*/}
+                                                           {/*    shape={SHAPE.circle}*/}
+                                                           {/*    overrides={{*/}
+                                                           {/*        BaseButton: {*/}
+                                                           {/*            style: ({$theme}) => ({*/}
+                                                           {/*                position: "absolute",*/}
+                                                           {/*                right: "-12px",*/}
+                                                           {/*                top: "-12px",*/}
+                                                           {/*                width: "12px",*/}
+                                                           {/*                height: "12px",*/}
+                                                           {/*                borderTopWidth: "1px",*/}
+                                                           {/*                borderTopStyle: "solid",*/}
+                                                           {/*                borderTopColor: "#B2B2B2",*/}
+                                                           {/*                borderRightWidth: "1px",*/}
+                                                           {/*                borderRightStyle: "solid",*/}
+                                                           {/*                borderRightColor: "#B2B2B2",*/}
+                                                           {/*                borderBottomWidth: "1px",*/}
+                                                           {/*                borderBottomStyle: "solid",*/}
+                                                           {/*                borderBottomColor: "#B2B2B2",*/}
+                                                           {/*                borderLeftWidth: "1px",*/}
+                                                           {/*                borderLeftStyle: "solid",*/}
+                                                           {/*                borderLeftColor: "#B2B2B2",*/}
+                                                           {/*                fontSize: "10px",*/}
+                                                           {/*                color: "#B2B2B2",*/}
+                                                           {/*            }),*/}
+                                                           {/*        },*/}
+                                                           {/*    }}*/}
+                                                           {/*>*/}
+                                                           {/*    ?*/}
+                                                           {/*</Button>*/}
+                                                           <Block position="relative" width="39px" height="39px" marginBottom="27px">
+                                                               <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                           </Block>
+                                                           <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
+                                                       </Block>
+                                                   ),
+                                               }}
+                                        />
+                                    ))) : null}
+                            </RadioGroup>
+                            <div style={{marginBottom: 20}}/>
+                        </div>
+                        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: "64px"}}>
+                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
+                            <RadioGroup name="color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} align={ALIGN.horizontal}
+                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
+                                        overrides={{
+                                            RadioGroupRoot: {
+                                                style: ({$theme}) => ({
+                                                    display: "grid",
+                                                    width: "100%",
+                                                    flexWrap: "wrap",
+                                                    justifyContent: "space-evenly",
+                                                    gridTemplateColumns: "auto auto auto auto auto auto",
+                                                }),
+                                                props: {
+                                                    className: "radioGroupColor",
+                                                },
+                                            },
+                                            Root: {
+                                                style: ({$theme, $checked}) => ({
+                                                    width: "52px",
+                                                    height: "52px",
+                                                    justifyContent: "center",
+                                                    padding: $checked ? "4px" : "6px",
+                                                    border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
+                                                    boxSizing: "border-box",
+                                                    borderRadius: "50%",
+                                                    marginTop: 0,
+                                                    marginRight: "0",
+                                                    marginBottom: "16px",
+                                                    marginLeft: "0",
+                                                }),
+                                            },
+                                            RadioMarkOuter: {
+                                                style: ({$theme}) => ({display: "none"}),
+                                            },
+                                            RadioMarkInner: {
+                                                style: ({$theme}) => ({display: "none"}),
+                                            },
+                                        }}
+                            >
+                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) =>
+                                    options.map((option, index) => (
+                                        <Radio key={index} value={option.toLowerCase()}
+                                               overrides={{
+                                                   Label: ({$value}) => (
+                                                       <div
+                                                           style={{
+                                                               width: "38px",
+                                                               height: "38px",
+                                                               borderRadius: "50%",
+                                                               backgroundColor:
+                                                                   option.toLowerCase() === "yellow"
+                                                                       ? "#F4C84E"
+                                                                       : option.toLowerCase() === "green"
+                                                                           ? "#275D3D"
+                                                                           : option.toLowerCase() === "blue"
+                                                                               ? "#1A4A8B"
+                                                                               : option.toLowerCase() === "red"
+                                                                                   ? "#991F34"
+                                                                                   : option.toLowerCase(),
+                                                               border: "1px solid #D9D9D9",
+                                                           }}
+                                                       />
+                                                   ),
+                                               }}
+                                        />
+                                    ))) : null}
+                            </RadioGroup>
+                        </div>
+                    </Block>
+                </Block>
+            </Modal>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
                 <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
                        paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
                 >
@@ -1933,7 +1895,7 @@ function Canopy_Tent({router, products, variants}) {
                         </Block>
                     </Block>
                 </Block>
-            </ModalT>
+            </Modal>
         </React.Fragment>
     );
 }
@@ -1955,6 +1917,7 @@ Canopy_Tent.getInitialProps = async (context) => {
         variants: variants,
         noFooter: true,
     };
-};
+}
+;
 
 export default withRouter(Canopy_Tent);
