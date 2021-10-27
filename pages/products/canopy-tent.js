@@ -187,6 +187,8 @@ function Canopy_Tent({router, products, variants}) {
     const {loggedIn, token} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
 
+    const goSpecPage = () => router.push({pathname: "/canopy-tent/spec"});
+
     const openWallModal = (index) => {
         setActiveWall(index);
 
@@ -915,8 +917,7 @@ function Canopy_Tent({router, products, variants}) {
                         <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
                         <MButton type="solid" height="auto" marginRight="auto" marginBottom="20px" marginLeft="auto" font="MinXParagraph16" text='Spec' color="MinXPrimaryText"
                                  buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                 onClick={() => {
-                                 }}
+                                 onClick={() => goSpecPage()}
                         />
                         {displayTabs ? (
                             <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
@@ -1064,8 +1065,7 @@ function Canopy_Tent({router, products, variants}) {
                                             </RadioGroup>
                                             <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => {
-                                                     }}
+                                                     onClick={() => setFrameCompareOpen(true)}
                                             />
                                         </div>
                                         <div className="container-selection">
@@ -1604,6 +1604,135 @@ function Canopy_Tent({router, products, variants}) {
                             </Block>
                             <Block width="22px" height="22px">
                                 <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                            </Block>
+                        </Block>
+                    </Block>
+                </Block>
+            </Modal>
+            <Modal type="dialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)}>
+                <Block marginTop={["64px", "64px", "30px"]}
+                       overrides={{
+                           Block: {
+                               style: {textAlign: "center"}
+                           }
+                       }}
+                >
+                    <Block display="grid" gridTemplateColumns="repeat(3, 200px)" gridColumnGap="32px" width="fit-content"
+                           marginRight={["auto", "auto", "56px"]} marginBottom="16px" marginLeft={["auto", "auto", "56px"]}
+                           paddingBottom="16px"
+                           overrides={{
+                               Block: {
+                                   style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#D9D9D9",}
+                               }
+                           }}
+                    >
+                        <Block font="MinXParagraph14">
+                            <Block>Y5 Economic steel</Block>
+                            <Block marginTop="4px" color="#23A4AD"
+                                   overrides={{
+                                       Block: {
+                                           style: {
+                                               ":hover": {cursor: 'pointer'}
+                                           }
+                                       }
+                                   }}
+                                   onClick={() => goSpecPage()}
+                            >Learn more</Block>
+                        </Block>
+                        <Block font="MinXParagraph14">
+                            <Block>Y6 Commercial Aluminum</Block>
+                            <Block marginTop="4px" color="#23A4AD"
+                                   overrides={{
+                                       Block: {
+                                           style: {
+                                               ":hover": {cursor: 'pointer'}
+                                           }
+                                       }
+                                   }}
+                                   onClick={() => goSpecPage()}
+                            >Learn more</Block>
+                        </Block>
+                        <Block font="MinXParagraph14">
+                            <Block>Y7 Heavy duty aluminum</Block>
+                            <Block marginTop="4px" color="#23A4AD"
+                                   overrides={{
+                                       Block: {
+                                           style: {
+                                               ":hover": {cursor: 'pointer'}
+                                           }
+                                       }
+                                   }}
+                                   onClick={() => goSpecPage()}
+                            >Learn more</Block>
+                        </Block>
+                    </Block>
+                    <Block display="grid" gridTemplateColumns="repeat(3, 200px)" gridColumnGap="32px" width="fit-content"
+                           marginRight={["auto", "auto", "56px"]} marginLeft={["auto", "auto", "56px"]} paddingBottom="16px"
+                    >
+                        <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px">
+                            <Block font="MinXLabel20">
+                                <Block>Steel</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>0.05"</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>45mm</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole diameter</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>3</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Size available</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>1 year</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame warranty</Block>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px">
+                            <Block font="MinXLabel20">
+                                <Block>Aluminum</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>0.06"</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>45mm</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole diameter</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>3</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Size available</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>5 years</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame warranty</Block>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px">
+                            <Block font="MinXLabel20">
+                                <Block>Aluminum</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>0.07"</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>57mm</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole diameter</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>9</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Size available</Block>
+                            </Block>
+                            <Block font="MinXLabel20">
+                                <Block>10 years</Block>
+                                <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame warranty</Block>
                             </Block>
                         </Block>
                     </Block>
