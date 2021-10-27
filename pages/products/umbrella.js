@@ -512,7 +512,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                 <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
             </Head>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
-                <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
+                <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
                     <Block position={["unset", "unset", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>

@@ -64,7 +64,7 @@ const checkout = (props) => {
                     <div className={styles["text-quantity"]}>Quantity:</div>
                 </div>
                 <Block position={"absolute"} left={0} right={0} top={0} bottom={0} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                    <Quantity quantity={props.quantity}/>
+                    <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                 </Block>
             </Block>
             <Block width={["100%", "448px", "100%"]} height={["54px", "100%"]} display={"flex"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"} margin={"auto"}>

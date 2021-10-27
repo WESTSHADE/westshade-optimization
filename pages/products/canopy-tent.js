@@ -890,7 +890,7 @@ function Canopy_Tent({router, products, variants}) {
                 <title>Canopy Tent | WESTSHADE</title>
             </Head>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
-                <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
+                <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
@@ -916,7 +916,7 @@ function Canopy_Tent({router, products, variants}) {
                            }}
                     >
                         <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
-                        <div style={{marginBottom: 20, padding: "8px 24px", width: 81, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Spec</div>
+                        <div style={{marginBottom: 20, padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Spec</div>
                         {displayTabs ? (
                             <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
                                   overrides={{
@@ -1000,9 +1000,7 @@ function Canopy_Tent({router, products, variants}) {
                                                         )))
                                                     : null}
                                             </RadioGroup>
-                                            <div style={{padding: "8px 24px", width: 119, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Size
-                                                Guide
-                                            </div>
+                                            <div style={{padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Size Guide</div>
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Frame</div>
@@ -1058,7 +1056,7 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                                 <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
                                             </RadioGroup>
-                                            <div style={{padding: "8px 24px", width: 163, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Compare Frames</div>
+                                            <div style={{padding: "6px 24px", backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Compare Frames</div>
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>

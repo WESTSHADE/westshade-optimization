@@ -190,7 +190,7 @@ function Umbrella({router, size}) {
                                renderButton={
                                    <MButton type="solid" height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
                                             endEnhancer={() => <ChevronRight size={24}/>}
-                                            onClick={() => router.push("/custom-printing")}
+                                            onClick={() => router.push("/custom-printing/umbrella")}
                                    />
                                }
                 />
