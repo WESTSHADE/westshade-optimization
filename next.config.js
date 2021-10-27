@@ -54,6 +54,7 @@ const nextConfig = {
             "/umbrella/marco": {page: "/umbrella/marco"},
             "/umbrella/santorini": {page: "/umbrella/santorini"},
             "/umbrella/bali": {page: "/umbrella/bali"},
+            "/umbrella/kapri": {page: "/umbrella/kapri"},
             "/umbrella/catalina": {page: "/umbrella/catalina"},
             "/accessories": {page: "/accessories"},
             "/contact-us": {page: "/contact-us"},
