@@ -427,7 +427,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             return (
                 <Block font="MinXLabel14" overrides={{Block: {style: {textAlign: "right", fontWeight: "400"}},}}>
                     {onSale ? (
-                        <Block display="flex" flexDirection="row">
+                        <Block display="flex" flexDirection="row" justifyContent="flex-end">
                             {priceSale == 0 ? <Block marginRight="10px" color="#E4458C">Free</Block> :
                                 <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
                             <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
@@ -461,7 +461,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     <TableBuilderColumn header="Price"
                                         overrides={{
                                             TableHeadCell: {
-                                                style: {textAlign: "right",},
+                                                style: {textAlign: "right"},
                                             },
                                         }}
                     >
@@ -516,18 +516,26 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     {/* 图片区域 */}
                     <Block position={["unset", "unset", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        <Checkout
-                            totalPrice={totalSalePrice ? totalSalePrice : totalRegularPrice}
-                            onClick={() => openSummaryModal()}
-                            onClickMinus={() => setTotalCount(totalCount - 1)}
-                            onClickPlus={() => setTotalCount(totalCount + 1)}
-                            quantity={totalCount} isInStock={isInStock}
-                            onClickAddToBag={() => updateCart()}
-                            isAvailable={availableToCheckout}
+                        <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                                  onClick={() => openSummaryModal()}
+                                  onClickMinus={() => setTotalCount(totalCount - 1)}
+                                  onClickPlus={() => setTotalCount(totalCount + 1)}
+                                  onClickAddToBag={() => updateCart()}
+                                  onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
                         />
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}>
+                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
+                           overrides={{
+                               Block: {
+                                   style: {
+                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
+                                       scrollbarWidth: "none", /* for Firefox */
+                                       "::-webkit-scrollbar": {display: "none"}
+                                   }
+                               },
+                           }}
+                    >
                         <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                             <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                             {product && product.short_description ? (

@@ -113,7 +113,7 @@ function Cart_Page({router}) {
                     setError("");
                 }, 4000);
             } else {
-                handleUpdateCart([]);
+                // handleUpdateCart([]);
                 router.push({pathname: "/checkout/", query: {id: res.id}})
             }
         });

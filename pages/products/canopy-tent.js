@@ -114,14 +114,15 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
 
-function Canopy_Tent({router, product, productComponent, productVariant}) {
+function Canopy_Tent({router, products, variants}) {
     const [displayTabs, setDisplayTabs] = useState(false);
     const [tabActiveKey, setTabActiveKey] = React.useState(0);
 
-    const [productId, setProductId] = useState("");
-    const [productName, setProductName] = useState("");
-    const [productType, setProductType] = useState("");
-    const [productImage, setProductImage] = useState("");
+    const [productComponent, setProductComponent] = useState([products[0], products[3], products[3], products[3], products[3]]);
+    const [productVariant, setProductVariant] = useState([variants[0], variants[3], variants[3], variants[3], variants[3]]);
+
+    const [selectedFrame, setSelectedFrame] = useState("y5");
+
     const [productImageGallery, setProductImageGallery] = useState([]);
     const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
@@ -139,7 +140,6 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
     const [availableToCheckout, setAvailable] = useState(false);
 
-    const [showAddProgress, setShowAddProgress] = useState(false);
     const [shippedDay, setShippedDay] = useState("");
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
@@ -166,7 +166,6 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     const [activeWall, setActiveWall] = useState(0);
 
     const [availableList, setAvailableList] = useState([
-        {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
@@ -211,7 +210,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
             let selection = JSON.parse(JSON.stringify(selectedAttribute));
             temp.forEach((attribute, index) => {
-                selection[index + 2] = attribute;
+                selection[index + 1] = attribute;
             });
             setSelectedAttribute(selection);
 
@@ -247,13 +246,9 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
         setWallIsOpen(false);
     };
 
-    const openSummaryModal = () => {
-        setSummaryIsOpen(true);
-    };
+    const openSummaryModal = () => setSummaryIsOpen(true);
 
-    const closeSummaryModal = () => {
-        setSummaryIsOpen(false);
-    };
+    const closeSummaryModal = () => setSummaryIsOpen(false);
 
     function renderCustomImage(props) {
         return (
@@ -318,9 +313,17 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     const handleChangeRadio = (event, index, id) => {
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
-        selection[index].forEach((attribute) => {
-            if (attribute.id === id) attribute.option = event.target.value;
-        });
+        if (event && id) {
+            selection[index].forEach((attribute) => {
+                if (attribute.id === id) attribute.option = event.target.value;
+            });
+        } else {
+            selection[index].forEach((attribute) => {
+                if (attribute.id === id_attribute_canopySize && selectedFrame !== "y7" && (attribute.option !== "10x10" && attribute.option !== "10x15" && attribute.option !== "10x20")) {
+                    attribute.option = "10x20";
+                }
+            });
+        }
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
         let selectionVariant = [...selectedVariant];
         let selected = productVariant[index].filter((variant) => {
@@ -345,7 +348,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
                 item.forEach((attribute) => {
                     if (attribute.id === id_attribute_canopySize) attribute.option = event.target.value;
-                    if (attribute.id === id_attribute_roofSize || attribute.id === id_attribute_wallSize) attribute.option = indexA % 2 === 0 ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
+                    if (attribute.id === id_attribute_wallSize) attribute.option = indexA % 2 === 0 ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
                 });
 
                 // 挑选出对应 Roof/Wall Variant.
@@ -378,7 +381,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
         let selectionA = JSON.parse(JSON.stringify(selectedAttribute));
         selection.forEach((attribute, index) => {
-            selectionA[index + 2] = attribute;
+            selectionA[index + 1] = attribute;
         });
         setSelectedAttribute(selectionA);
 
@@ -428,32 +431,28 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
         let size = "";
         let series = "Y5";
 
-        selectedVariant[0].attributes.map((attr) => {
-            if (attr.id === id_attribute_frameSeries) {
-                if (attr.option.toLowerCase() === "y5 economic") {
-                    product_name = "y5-economic-canopy-tent";
-                    series = "Y5";
-                } else if (attr.option.toLowerCase() === "y6 commercial") {
-                    product_name = "y6-commercial-buy";
-                    series = "Y6";
-                } else if (attr.option.toLowerCase() === "y7 heavy duty") {
-                    product_name = "y7-heavy-duty-canopy-tent";
-                    series = "Y7";
-                } else {
-                    product_name = "y5-economic-canopy-tent";
-                    series = "Y5";
-                }
-            } else if (attr.id === id_attribute_canopySize) {
-                size = attr.option.toUpperCase();
-            }
-        });
+        if (selectedFrame === "y5") {
+            product_name = "y5-economic-canopy-tent";
+            series = "Y5";
+        } else if (selectedFrame === "y6") {
+            product_name = "y6-commercial-buy";
+            series = "Y6";
+        } else if (selectedFrame === "y7") {
+            product_name = "y7-heavy-duty-canopy-tent";
+            series = "Y7";
+        } else {
+            product_name = "y5-economic-canopy-tent";
+            series = "Y5";
+        }
+
+        selectedVariant[0].attributes.map(({id, option}) => id === id_attribute_canopySize ? size = option.toUpperCase() : null);
 
         wallPlainAttributeListTemp.forEach((attribute, index) => {
             if (!attribute) {
                 wallPicturesList[index] = "";
                 return;
             }
-            let colorResult = attribute.filter((attr) => attr.id === id_attribute_canopyColor);
+            let colorResult = attribute.filter(({id}) => id === id_attribute_canopyColor);
             let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
             // 设置Wall图片
             let type = attribute.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
@@ -489,7 +488,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                 regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
                 salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
             }
-            // 检查可用性
+            // 检查可用性 26338, 26385, 26405, 26516
             if (variant.stock_status === "instock") {
                 available[index] = {
                     id: variant.id,
@@ -497,7 +496,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                     quantity: variant.stock_quantity,
                     needed: totalCount,
                     attribute: variant.attributes,
-                    optional: product.composite_components[index].optional,
+                    optional: productComponent[index].id === 26516,
                 };
             } else {
                 available[index] = {
@@ -506,7 +505,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                     quantity: 0,
                     needed: totalCount,
                     attribute: variant.attributes,
-                    optional: product.composite_components[index].optional,
+                    optional: productComponent[index].id === 26516,
                 };
             }
 
@@ -555,13 +554,25 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     //////////////////////////////////////
 
     useEffect(() => {
-        if (product.id) {
-            setProductId(product.id.toString());
-        }
         setShippedDay(dateFn.getReceivedDay());
 
-        setTabsRefs((tabsRefs) => Array(3).fill().map((_, i) => tabsRefs[i] || createRef())
-        );
+        setTabsRefs((tabsRefs) => Array(3).fill().map((_, i) => tabsRefs[i] || createRef()));
+
+        let series = router.query.series || urlFn.getParam("series");
+        if (series) {
+            setSelectedFrame(series);
+
+            if (series === "y5") {
+                setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
+                setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
+            } else if (series === "y6") {
+                setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
+                setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
+            } else if (series === "y7") {
+                setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
+                setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -569,43 +580,29 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     }, [tabsRefs]);
 
     useEffect(() => {
-        if (!product) return;
-
-        setProductName(product.name);
-        setProductType(product.type);
-
-        if (product.hasOwnProperty("image")) {
-            setMainImage([product.image]);
-        } else if (product.hasOwnProperty("images")) {
-            setMainImage(product.images);
-        }
-    }, [product]);
-
-    useEffect(() => {
         if (!productComponent || productComponent.length === 0) return;
+
+        if (productComponent[0].hasOwnProperty("image")) {
+            setMainImage([productComponent[0].image]);
+        } else if (productComponent[0].hasOwnProperty("images")) {
+            setMainImage(productComponent[0].images);
+        }
 
         let selectedAttrList = [];
         let wallPlainAttributeList = [];
         productComponent.map((component, indexA) => {
             // 修改默认选项值 与 Variant里的attr相匹配
             let defaultAttr = [...component.default_attributes];
-            defaultAttr.forEach((attr, indexB) => {
-                if (component.id === id_product_canopy_frame && attr.id === id_attribute_frameSeries) {
-                    let series = router.query.series || urlFn.getParam("series");
-                    if (series) {
-                        attr.option = series === "y5" ? "y5 economic" : series === "y6" ? "y6 commercial" : series === "y7" ? "y7 heavy duty" : "y5 economic";
-
-                        setTentSeries(series);
-                    } else {
-                        attr.option = attr.option === "y5" ? "y5 economic" : attr.option === "y6" ? "y6 commercial" : attr.option === "y7" ? "y7 heavy duty" : "y5 economic";
+            if (component.id === id_product_wall) {
+                defaultAttr.forEach((attr, indexB) => {
+                    if (attr.id === id_attribute_wallType) {
+                        attr.option = "none";
                     }
-                } else if (component.id === id_product_wall && attr.id === id_attribute_wallType) {
-                    attr.option = "none";
-                }
-            });
+                });
+            }
             selectedAttrList.push([...defaultAttr]);
 
-            if (indexA > 1) wallPlainAttributeList.push([...defaultAttr]);
+            if (indexA > 0) wallPlainAttributeList.push([...defaultAttr]);
         });
         // 初始化各产品默认变体参数
         setSelectedAttribute(selectedAttrList);
@@ -617,11 +614,16 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
     useEffect(() => {
         if (!initSelectedAttribute || !initProductVariant) return;
+
+        handleChangeRadio(null, 0)
+    }, [productVariant]);
+
+    useEffect(() => {
+        if (!initSelectedAttribute || !initProductVariant) return;
         // 获取,保存各组件默认变体产品信息
         let selectedVariantList = [];
         selectedAttribute.forEach((attr, index) => {
-            if (!attr || index > 1) return;
-
+            if (!attr || index > 0) return;
             let selected = productVariant[index].filter((variant) => {
                 if (!variant || !variant.attributes) return false;
                 let equal = true;
@@ -646,7 +648,7 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                 return equal;
             });
             selectedVariantList[index] = selected[0];
-            if (index === 1) {
+            if (index === 0) {
                 // 初始化数据
                 setSelectedVariant(selectedVariantList);
             }
@@ -662,37 +664,32 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
         let size = "";
         let series = "Y5";
 
+        // 设置Frame图片
+        if (selectedFrame === "y5") {
+            product_name = "y5-economic-canopy-tent";
+            series = "Y5";
+        } else if (selectedFrame === "y6") {
+            product_name = "y6-commercial-buy";
+            series = "Y6";
+        } else if (selectedFrame === "y7") {
+            product_name = "y7-heavy-duty-canopy-tent";
+            series = "Y7";
+        } else {
+            product_name = "y5-economic-canopy-tent";
+            series = "Y5";
+        }
+
         selectedVariant.forEach((variant, index) => {
             if (!variant || !variant.attributes) {
-                if (index > 1) wallPicturesList[index - 2] = "";
+                if (index > 0) wallPicturesList[index - 1] = "";
                 return;
             }
 
-            if (index < 2) {
-                let colorResult = variant.attributes.filter((attr) => attr.id === id_attribute_roofColor);
-                let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
+            let colorResult = variant.attributes.filter((attr) => attr.id === id_attribute_canopyColor);
+            let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
 
-                if (index === 0) {
-                    // 设置Frame图片
-                    variant.attributes.map((attr) => {
-                        if (attr.id === id_attribute_frameSeries) {
-                            if (attr.option.toLowerCase() === "y5 economic") {
-                                product_name = "y5-economic-canopy-tent";
-                                series = "Y5";
-                            } else if (attr.option.toLowerCase() === "y6 commercial") {
-                                product_name = "y6-commercial-buy";
-                                series = "Y6";
-                            } else if (attr.option.toLowerCase() === "y7 heavy duty") {
-                                product_name = "y7-heavy-duty-canopy-tent";
-                                series = "Y7";
-                            } else {
-                                product_name = "y5-economic-canopy-tent";
-                                series = "Y5";
-                            }
-                        }
-                    });
-                    size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
-                }
+            if (index < 1) {
+                size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
                 const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                 setMainImage([
                     {
@@ -700,18 +697,16 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                     },
                 ]);
             } else {
-                let colorResult = variant.attributes.filter((attr) => attr.id === id_attribute_canopyColor);
-                let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
                 // 设置Wall图片
                 let type = variant.attributes.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
                 if (type !== "none") {
                     const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
                     const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
                     const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
-                    const sideUrl = wallMap.get("side").find((w) => w.key === index - 1).value;
-                    wallPicturesList[index - 2] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
+                    wallPicturesList[index - 1] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
                 } else {
-                    wallPicturesList[index - 2] = "";
+                    wallPicturesList[index - 1] = "";
                 }
             }
         });
@@ -801,28 +796,19 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     // }, [selectedAttribute]);
 
     const DataTable = () => {
-        const columns = ["Item", "Quantity", "Price"];
         let rowDate = [];
 
-        let tent = {};
-        tent.name = selectedVariant[0].attributes[0].option + " " + selectedVariant[0].attributes[1].option + " Canopy Tent Set";
-        tent.quantity = 1;
-        tent.regular_price = parseFloat(selectedVariant[0].regular_price) + parseFloat(selectedVariant[1].regular_price);
-        tent.sale_price = parseFloat(selectedVariant[0].sale_price) + parseFloat(selectedVariant[1].sale_price);
-        tent.on_sale = selectedVariant[0].on_sale || selectedVariant[1].on_sale;
-
-        rowDate.push(tent);
-
         selectedVariant.map((variant, index) => {
-            if (!variant || index < 2) return;
-            console.log(variant);
+            if (!variant) return;
+
             let cell = {
-                name: productComponent[index].id === id_product_wall ? productComponent[index].name + ": " + variant.attributes[0].option : productComponent[index].name,
+                name: index === 0 ? selectedFrame.toUpperCase() + " Canopy Tent Set" : productComponent[index].id === id_product_wall ? productComponent[index].name + ": " + variant.attributes[0].option : productComponent[index].name,
                 quantity: 1,
                 regular_price: variant.regular_price,
                 sale_price: variant.sale_price,
-                on_sale: variant.on_sale,
-            };
+                on_sale: variant.on_sale
+            }
+
             rowDate.push(cell);
         });
 
@@ -838,11 +824,11 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
             return (
                 <div style={{textAlign: "right", fontSize: 14}}>
                     {onSale ? (
-                        <div style={{display: "flex", flexDirection: "row"}}>
+                        <Block display="flex" flexDirection="row" justifyContent="flex-end">
                             {priceSale == 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
                                 <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
                             <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                        </div>
+                        </Block>
                     ) : (
                         <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"}/>
                     )}
@@ -863,28 +849,21 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                     }}
                 >
                     <TableBuilderColumn header="Item">{(row) => <NameCell value={row.name}/>}</TableBuilderColumn>
-                    <TableBuilderColumn
-                        header="Quantity"
-                        numeric
-                        overrides={{
-                            TableHeadCell: {
-                                style: ({$theme}) => ({
-                                    textAlign: "center",
-                                }),
-                            },
-                        }}
+                    <TableBuilderColumn header="Quantity" numeric
+                                        overrides={{
+                                            TableHeadCell: {
+                                                style: {textAlign: "center"},
+                                            },
+                                        }}
                     >
                         {(row) => <QuantityCell value={row.quantity}/>}
                     </TableBuilderColumn>
-                    <TableBuilderColumn
-                        header="Price"
-                        overrides={{
-                            TableHeadCell: {
-                                style: ({$theme}) => ({
-                                    textAlign: "right",
-                                }),
-                            },
-                        }}
+                    <TableBuilderColumn header="Price"
+                                        overrides={{
+                                            TableHeadCell: {
+                                                style: {textAlign: "right"},
+                                            },
+                                        }}
                     >
                         {(row) => <PriceCell priceRegular={row.regular_price} priceSale={row.sale_price} onSale={row.on_sale}/>}
                     </TableBuilderColumn>
@@ -908,29 +887,35 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
     return (
         <React.Fragment>
             <Head>
-                <title>{productName ? productName + " - Canopy Tent | WESTSHADE" : ""}</title>
+                <title>Canopy Tent | WESTSHADE</title>
             </Head>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        <Checkout
-                            totalPrice={totalRegularPrice}
-                            onClick={() => openSummaryModal()}
-                            onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                            onClickPlus={() => setTotalCount(totalCount + 1)}
-                            quantity={totalCount} isInStock={isInStock}
-                            onClickAddToBag={() => updateCart()}
-                            isAvailable={availableToCheckout}
+                        <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                                  onClick={() => openSummaryModal()}
+                                  onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                                  onClickPlus={() => setTotalCount(totalCount + 1)}
+                                  onClickAddToBag={() => updateCart()}
+                                  onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
                         />
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"}
+                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
                            paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingBottom={["94px", "68px", "0"]} paddingLeft={["16px", "16px", "0"]}
-                           overflow={["unset", "unset", "scroll"]}
+                           overrides={{
+                               Block: {
+                                   style: {
+                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
+                                       scrollbarWidth: "none", /* for Firefox */
+                                       "::-webkit-scrollbar": {display: "none"}
+                                   }
+                               },
+                           }}
                     >
-                        <Block marginBottom="16px" font="MinXHeading20">{product.name}</Block>
+                        <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
                         <div style={{marginBottom: 20, padding: "8px 24px", width: 81, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Spec</div>
                         {displayTabs ? (
                             <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
@@ -971,66 +956,48 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                                     <>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Size</div>
-                                            <RadioGroup
-                                                value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""}
-                                                onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}
-                                                name="size"
-                                                align={ALIGN.horizontal}
-                                                overrides={{
-                                                    RadioGroupRoot: {
-                                                        style: () => ({
-                                                            display: "grid",
-                                                            width: "100%",
-                                                            flexWrap: "wrap",
-                                                            gridTemplateColumns: "repeat(auto-fill, 30% )",
-                                                            justifyContent: "space-between",
-                                                        }),
-                                                    },
-                                                    Root: {
-                                                        style: ({$checked}) => ({
-                                                            justifyContent: "center",
-                                                            padding: $checked ? "14px 0" : "16px 0",
-                                                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
-                                                            boxSizing: "border-box",
-                                                            borderRadius: "30px",
-                                                            marginTop: 0,
-                                                            marginRight: 0,
-                                                            marginBottom: "16px",
-                                                            marginLeft: 0,
-                                                        }),
-                                                    },
-                                                    RadioMarkOuter: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    RadioMarkInner: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    Label: {
-                                                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "20px"}),
-                                                    },
-                                                }}
+                                            <RadioGroup name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} align={ALIGN.horizontal}
+                                                        onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}
+                                                        overrides={{
+                                                            RadioGroupRoot: {
+                                                                style: () => ({
+                                                                    display: "grid",
+                                                                    width: "100%",
+                                                                    flexWrap: "wrap",
+                                                                    gridTemplateColumns: "repeat(auto-fill, 30% )",
+                                                                    justifyContent: "space-between",
+                                                                }),
+                                                            },
+                                                            Root: {
+                                                                style: ({$checked}) => ({
+                                                                    justifyContent: "center",
+                                                                    padding: $checked ? "14px 0" : "16px 0",
+                                                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                                                    boxSizing: "border-box",
+                                                                    borderRadius: "30px",
+                                                                    marginTop: 0,
+                                                                    marginRight: 0,
+                                                                    marginBottom: "16px",
+                                                                    marginLeft: 0,
+                                                                }),
+                                                            },
+                                                            RadioMarkOuter: {
+                                                                style: () => ({display: "none"}),
+                                                            },
+                                                            RadioMarkInner: {
+                                                                style: () => ({display: "none"}),
+                                                            },
+                                                            Label: {
+                                                                style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "20px"}),
+                                                            },
+                                                        }}
                                             >
                                                 {productComponent && productComponent[0]
                                                     ? productComponent[0].attributes
                                                         .filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation)
-                                                        .map((attribute) => {
-                                                            let series = selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : "";
-                                                            return attribute.options.map((option, index) => {
-                                                                if ((series === "y5 economic" || series === "y6 commercial") && index < 3) {
-                                                                    return (
-                                                                        <Radio key={index} value={option.toLowerCase()}>
-                                                                            {option}
-                                                                        </Radio>
-                                                                    );
-                                                                } else if (series === "y7 heavy duty") {
-                                                                    return (
-                                                                        <Radio key={index} value={option.toLowerCase()}>
-                                                                            {option}
-                                                                        </Radio>
-                                                                    );
-                                                                }
-                                                            });
-                                                        })
+                                                        .map(({options}) => options.map((option, index) => (
+                                                            <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
+                                                        )))
                                                     : null}
                                             </RadioGroup>
                                             <div style={{padding: "8px 24px", width: 119, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Size
@@ -1039,140 +1006,129 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Frame</div>
-                                            <RadioGroup
-                                                value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""}
-                                                onChange={(event) => handleChangeRadio(event, 0, id_attribute_frameSeries)}
-                                                name="frame"
-                                                align={ALIGN.horizontal}
-                                                overrides={{
-                                                    RadioGroupRoot: {
-                                                        style: ({$theme}) => ({
-                                                            display: "grid",
-                                                            width: "100%",
-                                                            flexWrap: "wrap",
-                                                            gridTemplateColumns: "repeat(auto-fill, 100%)",
-                                                            justifyContent: "space-between",
-                                                        }),
-                                                    },
-                                                    Root: {
-                                                        style: ({$theme, $checked}) => ({
-                                                            justifyContent: "center",
-                                                            padding: $checked ? "14px 0" : "16px 0",
-                                                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
-                                                            boxSizing: "border-box",
-                                                            borderRadius: "30px",
-                                                            marginTop: 0,
-                                                            marginRight: 0,
-                                                            marginBottom: "16px",
-                                                            marginLeft: 0,
-                                                        }),
-                                                    },
-                                                    RadioMarkOuter: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    RadioMarkInner: {
-                                                        style: () => ({display: "none"}),
-                                                    },
-                                                    Label: {
-                                                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "20px"}),
-                                                    },
-                                                }}
+                                            <RadioGroup name="frame" value={selectedFrame} align={ALIGN.horizontal}
+                                                        onChange={(event) => {
+                                                            setSelectedFrame(event.target.value);
+                                                            if (event.target.value === "y5") {
+                                                                setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
+                                                                setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
+                                                            } else if (event.target.value === "y6") {
+                                                                setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
+                                                                setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
+                                                            } else if (event.target.value === "y7") {
+                                                                setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
+                                                                setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
+                                                            }
+                                                        }}
+                                                        overrides={{
+                                                            RadioGroupRoot: {
+                                                                style: ({$theme}) => ({
+                                                                    display: "grid",
+                                                                    width: "100%",
+                                                                    flexWrap: "wrap",
+                                                                    gridTemplateColumns: "repeat(auto-fill, 100%)",
+                                                                    justifyContent: "space-between",
+                                                                }),
+                                                            },
+                                                            Root: {
+                                                                style: ({$theme, $checked}) => ({
+                                                                    justifyContent: "center",
+                                                                    padding: $checked ? "14px 0" : "16px 0",
+                                                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                                                    boxSizing: "border-box",
+                                                                    borderRadius: "30px",
+                                                                    marginTop: 0,
+                                                                    marginRight: 0,
+                                                                    marginBottom: "16px",
+                                                                    marginLeft: 0,
+                                                                }),
+                                                            },
+                                                            RadioMarkOuter: {
+                                                                style: () => ({display: "none"}),
+                                                            },
+                                                            RadioMarkInner: {
+                                                                style: () => ({display: "none"}),
+                                                            },
+                                                            Label: {
+                                                                style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "20px"}),
+                                                            },
+                                                        }}
                                             >
-                                                {/* <Radio value="1">Y5 Economic Steel</Radio>
-												<Radio value="2">Y6 Commercial Aluminum</Radio>
-												<Radio value="3">Y7 Heavy Duty Aluminum</Radio> */}
-                                                {productComponent && productComponent[0]
-                                                    ? productComponent[0].attributes
-                                                        .filter((attribute) => attribute.id === id_attribute_frameSeries && attribute.variation)
-                                                        .map((attribute) => {
-                                                            return attribute.options.map((option, index) => (
-                                                                <Radio key={index} value={option.toLowerCase()}>
-                                                                    {option}
-                                                                </Radio>
-                                                            ));
-                                                        })
-                                                    : null}
+                                                <Radio value="y5">Y5 Economic Steel</Radio>
+                                                <Radio value="y6">Y6 Commercial Aluminum</Radio>
+                                                <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
                                             </RadioGroup>
-                                            <div style={{padding: "8px 24px", width: 163, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Compare
-                                                Frames
-                                            </div>
+                                            <div style={{padding: "8px 24px", width: 163, height: 32, backgroundColor: "#F2F2F2", borderRadius: 16, lineHeight: "initial"}}>Compare Frames</div>
                                         </div>
                                         <div className="container-selection">
                                             <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
-                                            <RadioGroup
-                                                value={selectedAttribute[1] ? selectedAttribute[1][1].option.toLowerCase() : ""}
-                                                onChange={(event) => handleChangeRadio(event, 1, id_attribute_roofColor)}
-                                                name="color"
-                                                align={ALIGN.horizontal}
-                                                overrides={{
-                                                    RadioGroupRoot: {
-                                                        style: ({$theme}) => ({
-                                                            display: "grid",
-                                                            width: "100%",
-                                                            flexWrap: "wrap",
-                                                            justifyContent: "space-evenly",
-                                                            gridTemplateColumns: "auto auto auto auto auto auto",
-                                                        }),
-                                                        props: {
-                                                            className: "radioGroupColor",
-                                                        },
-                                                    },
-                                                    Root: {
-                                                        style: ({$theme, $checked}) => ({
-                                                            width: "52px",
-                                                            height: "52px",
-                                                            justifyContent: "center",
-                                                            padding: $checked ? "4px" : "6px",
-                                                            border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
-                                                            boxSizing: "border-box",
-                                                            borderRadius: "50%",
-                                                            marginTop: 0,
-                                                            marginRight: "0",
-                                                            marginBottom: "16px",
-                                                            marginLeft: "0",
-                                                        }),
-                                                    },
-                                                    RadioMarkOuter: {
-                                                        style: ({$theme}) => ({display: "none"}),
-                                                    },
-                                                    RadioMarkInner: {
-                                                        style: ({$theme}) => ({display: "none"}),
-                                                    },
-                                                }}
+                                            <RadioGroup name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} align={ALIGN.horizontal}
+                                                        onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopyColor)}
+                                                        overrides={{
+                                                            RadioGroupRoot: {
+                                                                style: ({$theme}) => ({
+                                                                    display: "grid",
+                                                                    width: "100%",
+                                                                    flexWrap: "wrap",
+                                                                    justifyContent: "space-evenly",
+                                                                    gridTemplateColumns: "auto auto auto auto auto auto",
+                                                                }),
+                                                                props: {
+                                                                    className: "radioGroupColor",
+                                                                },
+                                                            },
+                                                            Root: {
+                                                                style: ({$theme, $checked}) => ({
+                                                                    width: "52px",
+                                                                    height: "52px",
+                                                                    justifyContent: "center",
+                                                                    padding: $checked ? "4px" : "6px",
+                                                                    border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
+                                                                    boxSizing: "border-box",
+                                                                    borderRadius: "50%",
+                                                                    marginTop: 0,
+                                                                    marginRight: "0",
+                                                                    marginBottom: "16px",
+                                                                    marginLeft: "0",
+                                                                }),
+                                                            },
+                                                            RadioMarkOuter: {
+                                                                style: ({$theme}) => ({display: "none"}),
+                                                            },
+                                                            RadioMarkInner: {
+                                                                style: ({$theme}) => ({display: "none"}),
+                                                            },
+                                                        }}
                                             >
-                                                {productComponent && productComponent[1]
-                                                    ? productComponent[1].attributes
-                                                        .filter((attribute) => attribute.id === id_attribute_roofColor && attribute.variation)
-                                                        .map((attribute) => {
-                                                            return attribute.options.map((option, index) => (
-                                                                <Radio
-                                                                    key={index}
-                                                                    value={option.toLowerCase()}
-                                                                    overrides={{
-                                                                        Label: ({$value}) => (
-                                                                            <div
-                                                                                style={{
-                                                                                    width: "38px",
-                                                                                    height: "38px",
-                                                                                    borderRadius: "50%",
-                                                                                    backgroundColor:
-                                                                                        option.toLowerCase() === "yellow"
-                                                                                            ? "#F4C84E"
-                                                                                            : option.toLowerCase() === "green"
-                                                                                                ? "#275D3D"
-                                                                                                : option.toLowerCase() === "blue"
-                                                                                                    ? "#1A4A8B"
-                                                                                                    : option.toLowerCase() === "red"
-                                                                                                        ? "#991F34"
-                                                                                                        : option.toLowerCase(),
-                                                                                    border: "1px solid #D9D9D9",
-                                                                                }}
-                                                                            />
-                                                                        ),
-                                                                    }}
+                                                {productComponent && productComponent[0]
+                                                    ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation)
+                                                        .map(({options}) => options.map((option, index) => (
+                                                                <Radio key={index} value={option.toLowerCase()}
+                                                                       overrides={{
+                                                                           Label: ({$value}) => (
+                                                                               <div
+                                                                                   style={{
+                                                                                       width: "38px",
+                                                                                       height: "38px",
+                                                                                       borderRadius: "50%",
+                                                                                       backgroundColor:
+                                                                                           option.toLowerCase() === "yellow"
+                                                                                               ? "#F4C84E"
+                                                                                               : option.toLowerCase() === "green"
+                                                                                                   ? "#275D3D"
+                                                                                                   : option.toLowerCase() === "blue"
+                                                                                                       ? "#1A4A8B"
+                                                                                                       : option.toLowerCase() === "red"
+                                                                                                           ? "#991F34"
+                                                                                                           : option.toLowerCase(),
+                                                                                       border: "1px solid #D9D9D9",
+                                                                                   }}
+                                                                               />
+                                                                           ),
+                                                                       }}
                                                                 />
-                                                            ));
-                                                        })
+                                                            ))
+                                                        )
                                                     : null}
                                             </RadioGroup>
                                         </div>
@@ -1196,119 +1152,115 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
                                     >
                                         {wallPlainAttributeList.map((component, index) => {
                                             return (
-                                                <ListItem
-                                                    key={index}
-                                                    artwork={(props) => {
-                                                        return component[0].option !== "none" ? (
-                                                            <>
-                                                                {index === 0 ? (
-                                                                    <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
-                                                                ) : index === 1 ? (
-                                                                    <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
-                                                                ) : index === 2 ? (
-                                                                    <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
-                                                                ) : index === 3 ? (
-                                                                    <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
-                                                                ) : null}
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                {index === 0 ? (
-                                                                    <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
-                                                                ) : index === 1 ? (
-                                                                    <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
-                                                                ) : index === 2 ? (
-                                                                    <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
-                                                                ) : index === 3 ? (
-                                                                    <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
-                                                                ) : null}
-                                                            </>
-                                                        );
-                                                    }}
-                                                    overrides={{
-                                                        Root: {
-                                                            style: ({$theme}) => ({
-                                                                height: "68px",
-                                                                paddingRight: "8px",
-                                                                paddingLeft: "8px",
-                                                                backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
-                                                            }),
-                                                        },
-                                                        Content: {
-                                                            style: ({$theme}) => ({
-                                                                paddingRight: 0,
-                                                                paddingLeft: "12px",
-                                                                borderBottomWidth: 0,
-                                                            }),
-                                                        },
-                                                        ArtworkContainer: {
-                                                            style: ({$theme}) => ({
-                                                                width: "44px",
-                                                                height: "44px",
-                                                            }),
-                                                        },
-                                                    }}
-                                                    endEnhancer={() => {
-                                                        return (
-                                                            <>
-                                                                {component[0].option !== "none" ? (
-                                                                    <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                        <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                            <Button
-                                                                                shape={SHAPE.pill}
-                                                                                overrides={{
-                                                                                    BaseButton: {props: {className: "button-edit"}},
-                                                                                }}
-                                                                                onClick={() => openWallModal(index)}
-                                                                            >
-                                                                                Edit
-                                                                            </Button>
-                                                                            <Button
-                                                                                kind={KIND.tertiary}
-                                                                                shape={SHAPE.circle}
-                                                                                overrides={{
-                                                                                    BaseButton: {
-                                                                                        style: ({$theme}) => ({
-                                                                                            marginLeft: "17px",
-                                                                                            width: "20px",
-                                                                                            height: "20px",
-                                                                                            backgroundColor: "transparent",
-                                                                                        }),
-                                                                                    },
-                                                                                }}
-                                                                                onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
-                                                                            >
-                                                                                <Delete size={20}/>
-                                                                            </Button>
-                                                                        </div>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                        <Button
-                                                                            shape={SHAPE.pill}
-                                                                            overrides={{
-                                                                                BaseButton: {props: {className: "button-add"}},
-                                                                            }}
-                                                                            onClick={() => openWallModal(index)}
-                                                                        >
-                                                                            Edit
-                                                                        </Button>
-                                                                    </div>
-                                                                )}
-                                                            </>
-                                                        );
-                                                    }}
+                                                <ListItem key={index}
+                                                          artwork={(props) => {
+                                                              return component[0].option !== "none" ? (
+                                                                  <>
+                                                                      {index === 0 ? (
+                                                                          <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
+                                                                      ) : index === 1 ? (
+                                                                          <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
+                                                                      ) : index === 2 ? (
+                                                                          <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
+                                                                      ) : index === 3 ? (
+                                                                          <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
+                                                                      ) : null}
+                                                                  </>
+                                                              ) : (
+                                                                  <>
+                                                                      {index === 0 ? (
+                                                                          <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
+                                                                      ) : index === 1 ? (
+                                                                          <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
+                                                                      ) : index === 2 ? (
+                                                                          <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
+                                                                      ) : index === 3 ? (
+                                                                          <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
+                                                                      ) : null}
+                                                                  </>
+                                                              );
+                                                          }}
+                                                          overrides={{
+                                                              Root: {
+                                                                  style: ({$theme}) => ({
+                                                                      height: "68px",
+                                                                      paddingRight: "8px",
+                                                                      paddingLeft: "8px",
+                                                                      backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
+                                                                  }),
+                                                              },
+                                                              Content: {
+                                                                  style: ({$theme}) => ({
+                                                                      paddingRight: 0,
+                                                                      paddingLeft: "12px",
+                                                                      borderBottomWidth: 0,
+                                                                  }),
+                                                              },
+                                                              ArtworkContainer: {
+                                                                  style: ({$theme}) => ({
+                                                                      width: "44px",
+                                                                      height: "44px",
+                                                                  }),
+                                                              },
+                                                          }}
+                                                          endEnhancer={() => {
+                                                              return (
+                                                                  <>
+                                                                      {component[0].option !== "none" ? (
+                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                                                              <Button
+                                                                                  shape={SHAPE.pill}
+                                                                                  overrides={{
+                                                                                      BaseButton: {props: {className: "button-edit"}},
+                                                                                  }}
+                                                                                  onClick={() => openWallModal(index)}
+                                                                              >
+                                                                                  Edit
+                                                                              </Button>
+                                                                              <Button
+                                                                                  kind={KIND.tertiary}
+                                                                                  shape={SHAPE.circle}
+                                                                                  overrides={{
+                                                                                      BaseButton: {
+                                                                                          style: ({$theme}) => ({
+                                                                                              marginLeft: "17px",
+                                                                                              width: "20px",
+                                                                                              height: "20px",
+                                                                                              backgroundColor: "transparent",
+                                                                                          }),
+                                                                                      },
+                                                                                  }}
+                                                                                  onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
+                                                                              >
+                                                                                  <Delete size={20}/>
+                                                                              </Button>
+                                                                          </div>
+                                                                      ) : (
+                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                                                              <Button
+                                                                                  shape={SHAPE.pill}
+                                                                                  overrides={{
+                                                                                      BaseButton: {props: {className: "button-add"}},
+                                                                                  }}
+                                                                                  onClick={() => openWallModal(index)}
+                                                                              >
+                                                                                  Edit
+                                                                              </Button>
+                                                                          </div>
+                                                                      )}
+                                                                  </>
+                                                              );
+                                                          }}
                                                 >
-                                                    <ListItemLabel
-                                                        description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
-                                                        overrides={{
-                                                            LabelContent: {
-                                                                style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
-                                                            },
-                                                            LabelDescription: {
-                                                                style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
-                                                            },
-                                                        }}
+                                                    <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
+                                                                   overrides={{
+                                                                       LabelContent: {
+                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
+                                                                       },
+                                                                       LabelDescription: {
+                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
+                                                                       },
+                                                                   }}
                                                     >
                                                         {component[0].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[0].option, 1)}
                                                     </ListItemLabel>
@@ -1494,235 +1446,201 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 						</div>
 					)}
 				/> */}
-                <Modal
-                    onClose={() => closeWallModal()}
-                    isOpen={wallIsOpen}
-                    animate
-                    autoFocus
-                    size={ModalSize.full}
-                    role={ROLE.dialog}
-                    overrides={{
-                        Root: {
-                            style: ({$theme}) => ({
-                                zIndex: "99",
-                                height: "100vh",
-                                paddingTop: "24px",
-                                overflowY: "hidden",
-                            }),
-                            props: {
-                                className: "modalRoot",
-                            },
-                        },
-                        DialogContainer: {
-                            style: ({$theme}) => ({
-                                height: "100%",
-                            }),
-                        },
-                        Dialog: {
-                            props: {className: "modalDialog"},
-                        },
-                        Close: {
-                            style: () => ({top: "29px", right: "29px"}),
-                        },
-                    }}
+                <Modal onClose={() => closeWallModal()} isOpen={wallIsOpen} animate autoFocus size={ModalSize.full} role={ROLE.dialog}
+                       overrides={{
+                           Root: {
+                               style: ({$theme}) => ({
+                                   zIndex: "99",
+                                   height: "100vh",
+                                   paddingTop: "24px",
+                                   overflowY: "hidden",
+                               }),
+                               props: {
+                                   className: "modalRoot",
+                               },
+                           },
+                           DialogContainer: {
+                               style: ({$theme}) => ({
+                                   height: "100%",
+                               }),
+                           },
+                           Dialog: {
+                               props: {className: "modalDialog"},
+                           },
+                           Close: {
+                               style: () => ({top: "29px", right: "29px"}),
+                           },
+                       }}
                 >
                     <ModalBody className="modalSelectionContainer">
-                        <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"}
-                               marginRight={"auto"} overflow={["scroll", "scroll", "hidden"]}>
+                        <Block width={["100%", "480px", "100%"]} height={["auto", "auto", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"} marginRight={"auto"}
+                               overflow={["scroll", "scroll", "hidden"]}
+                        >
                             {/* 图片区域 */}
                             <Block flex={[0, 0, 1]} position={"relative"} className={"modalGallery"} paddingRight={["16px", "52px", "0"]} paddingLeft={["16px", "52px", "64px"]}>
                                 <ImageGallery showNav={false} items={[productImageGalleryTemp[0]]} showPlayButton={false} showFullscreenButton={false}/>
                             </Block>
-                            <Block
-                                display={"flex"}
-                                flexDirection={"column"}
-                                width={["100%", "100%", "424px"]}
-                                paddingTop={["24px", "24px", "40px"]}
-                                paddingRight={["16px", "52px", "64px"]}
-                                paddingLeft={["16px", "52px", "0"]}
-                                alignItems={"center"}
-                                overflow={["unset", "unset", "scroll"]}
+                            <Block display={"flex"} flexDirection={"column"} alignItems={"center"} width={["100%", "100%", "424px"]}
+                                   paddingTop={["24px", "24px", "40px"]} paddingRight={["16px", "52px", "64px"]} paddingLeft={["16px", "52px", "0"]} overflow={["unset", "unset", "scroll"]}
                             >
                                 <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%"}}>
                                     <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Wall type</div>
-                                    <RadioGroup
-                                        value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"}
-                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
-                                        name="wall_type"
-                                        align={ALIGN.horizontal}
-                                        overrides={{
-                                            RadioGroupRoot: {
-                                                style: ({$theme}) => ({
-                                                    display: "grid",
-                                                    width: "100%",
-                                                    flexWrap: "wrap",
-                                                    justifyContent: "space-between",
-                                                    gridTemplateColumns: "repeat(auto-fill, calc(100% / 3))",
-                                                }),
-                                                props: {
-                                                    className: "radioGroupWall",
-                                                },
-                                            },
-                                            Root: {
-                                                style: ({$checked}) => ({
-                                                    height: "142px",
-                                                    justifyContent: "center",
-                                                    padding: $checked ? "13px 0" : "15px 0",
-                                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
-                                                    boxSizing: "border-box",
-                                                    borderRadius: "16px",
-                                                    marginTop: 0,
-                                                    marginRight: "12px",
-                                                    marginBottom: "16px",
-                                                    marginLeft: "12px",
-                                                }),
-                                            },
-                                            RadioMarkOuter: {
-                                                style: () => ({display: "none"}),
-                                            },
-                                            RadioMarkInner: {
-                                                style: () => ({display: "none"}),
-                                            },
-                                            Label: {
-                                                style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),
-                                            },
-                                        }}
+                                    <RadioGroup name="wall_type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} align={ALIGN.horizontal}
+                                                onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
+                                                overrides={{
+                                                    RadioGroupRoot: {
+                                                        style: ({$theme}) => ({
+                                                            display: "grid",
+                                                            width: "100%",
+                                                            flexWrap: "wrap",
+                                                            justifyContent: "space-between",
+                                                            gridTemplateColumns: "repeat(auto-fill, calc(100% / 3))",
+                                                        }),
+                                                        props: {
+                                                            className: "radioGroupWall",
+                                                        },
+                                                    },
+                                                    Root: {
+                                                        style: ({$checked}) => ({
+                                                            height: "142px",
+                                                            justifyContent: "center",
+                                                            padding: $checked ? "13px 0" : "15px 0",
+                                                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                                            boxSizing: "border-box",
+                                                            borderRadius: "16px",
+                                                            marginTop: 0,
+                                                            marginRight: "12px",
+                                                            marginBottom: "16px",
+                                                            marginLeft: "12px",
+                                                        }),
+                                                    },
+                                                    RadioMarkOuter: {
+                                                        style: () => ({display: "none"}),
+                                                    },
+                                                    RadioMarkInner: {
+                                                        style: () => ({display: "none"}),
+                                                    },
+                                                    Label: {
+                                                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),
+                                                    },
+                                                }}
                                     >
-                                        {productComponent && productComponent[2]
-                                            ? productComponent[2].attributes
-                                                .filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation)
-                                                .map((attribute) => {
-                                                    return attribute.options.map((option, indexWall) => {
-                                                        return (
-                                                            <Radio
-                                                                key={indexWall}
-                                                                value={option.toLowerCase()}
-                                                                overrides={{
-                                                                    Label: ({$value}) => (
-                                                                        <Block>
-                                                                            {/*<Button*/}
-                                                                            {/*    kind={KIND.tertiary}*/}
-                                                                            {/*    shape={SHAPE.circle}*/}
-                                                                            {/*    overrides={{*/}
-                                                                            {/*        BaseButton: {*/}
-                                                                            {/*            style: ({$theme}) => ({*/}
-                                                                            {/*                position: "absolute",*/}
-                                                                            {/*                right: "-12px",*/}
-                                                                            {/*                top: "-12px",*/}
-                                                                            {/*                width: "12px",*/}
-                                                                            {/*                height: "12px",*/}
-                                                                            {/*                borderTopWidth: "1px",*/}
-                                                                            {/*                borderTopStyle: "solid",*/}
-                                                                            {/*                borderTopColor: "#B2B2B2",*/}
-                                                                            {/*                borderRightWidth: "1px",*/}
-                                                                            {/*                borderRightStyle: "solid",*/}
-                                                                            {/*                borderRightColor: "#B2B2B2",*/}
-                                                                            {/*                borderBottomWidth: "1px",*/}
-                                                                            {/*                borderBottomStyle: "solid",*/}
-                                                                            {/*                borderBottomColor: "#B2B2B2",*/}
-                                                                            {/*                borderLeftWidth: "1px",*/}
-                                                                            {/*                borderLeftStyle: "solid",*/}
-                                                                            {/*                borderLeftColor: "#B2B2B2",*/}
-                                                                            {/*                fontSize: "10px",*/}
-                                                                            {/*                color: "#B2B2B2",*/}
-                                                                            {/*            }),*/}
-                                                                            {/*        },*/}
-                                                                            {/*    }}*/}
-                                                                            {/*>*/}
-                                                                            {/*    ?*/}
-                                                                            {/*</Button>*/}
-                                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                                                <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
-                                                                            </Block>
-                                                                            <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
-                                                                        </Block>
-                                                                    ),
-                                                                }}
-                                                            />
-                                                        );
-                                                    });
-                                                })
-                                            : null}
+                                        {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
+                                            options.map((option, indexWall) => (
+                                                <Radio key={indexWall} value={option.toLowerCase()}
+                                                       overrides={{
+                                                           Label: ({$value}) => (
+                                                               <Block>
+                                                                   {/*<Button*/}
+                                                                   {/*    kind={KIND.tertiary}*/}
+                                                                   {/*    shape={SHAPE.circle}*/}
+                                                                   {/*    overrides={{*/}
+                                                                   {/*        BaseButton: {*/}
+                                                                   {/*            style: ({$theme}) => ({*/}
+                                                                   {/*                position: "absolute",*/}
+                                                                   {/*                right: "-12px",*/}
+                                                                   {/*                top: "-12px",*/}
+                                                                   {/*                width: "12px",*/}
+                                                                   {/*                height: "12px",*/}
+                                                                   {/*                borderTopWidth: "1px",*/}
+                                                                   {/*                borderTopStyle: "solid",*/}
+                                                                   {/*                borderTopColor: "#B2B2B2",*/}
+                                                                   {/*                borderRightWidth: "1px",*/}
+                                                                   {/*                borderRightStyle: "solid",*/}
+                                                                   {/*                borderRightColor: "#B2B2B2",*/}
+                                                                   {/*                borderBottomWidth: "1px",*/}
+                                                                   {/*                borderBottomStyle: "solid",*/}
+                                                                   {/*                borderBottomColor: "#B2B2B2",*/}
+                                                                   {/*                borderLeftWidth: "1px",*/}
+                                                                   {/*                borderLeftStyle: "solid",*/}
+                                                                   {/*                borderLeftColor: "#B2B2B2",*/}
+                                                                   {/*                fontSize: "10px",*/}
+                                                                   {/*                color: "#B2B2B2",*/}
+                                                                   {/*            }),*/}
+                                                                   {/*        },*/}
+                                                                   {/*    }}*/}
+                                                                   {/*>*/}
+                                                                   {/*    ?*/}
+                                                                   {/*</Button>*/}
+                                                                   <Block position="relative" width="39px" height="39px" marginBottom="27px">
+                                                                       <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                                   </Block>
+                                                                   <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
+                                                               </Block>
+                                                           ),
+                                                       }}
+                                                />
+                                            ))) : null}
                                     </RadioGroup>
                                     <div style={{marginBottom: 20}}/>
                                 </div>
                                 <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: "64px"}}>
                                     <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
-                                    <RadioGroup
-                                        value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][1].option.toLowerCase() : "white"}
-                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
-                                        name="color"
-                                        align={ALIGN.horizontal}
-                                        overrides={{
-                                            RadioGroupRoot: {
-                                                style: ({$theme}) => ({
-                                                    display: "grid",
-                                                    width: "100%",
-                                                    flexWrap: "wrap",
-                                                    justifyContent: "space-evenly",
-                                                    gridTemplateColumns: "auto auto auto auto auto auto",
-                                                }),
-                                                props: {
-                                                    className: "radioGroupColor",
-                                                },
-                                            },
-                                            Root: {
-                                                style: ({$theme, $checked}) => ({
-                                                    width: "52px",
-                                                    height: "52px",
-                                                    justifyContent: "center",
-                                                    padding: $checked ? "4px" : "6px",
-                                                    border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
-                                                    boxSizing: "border-box",
-                                                    borderRadius: "50%",
-                                                    marginTop: 0,
-                                                    marginRight: "0",
-                                                    marginBottom: "16px",
-                                                    marginLeft: "0",
-                                                }),
-                                            },
-                                            RadioMarkOuter: {
-                                                style: ({$theme}) => ({display: "none"}),
-                                            },
-                                            RadioMarkInner: {
-                                                style: ({$theme}) => ({display: "none"}),
-                                            },
-                                        }}
+                                    <RadioGroup name="color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} align={ALIGN.horizontal}
+                                                onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
+                                                overrides={{
+                                                    RadioGroupRoot: {
+                                                        style: ({$theme}) => ({
+                                                            display: "grid",
+                                                            width: "100%",
+                                                            flexWrap: "wrap",
+                                                            justifyContent: "space-evenly",
+                                                            gridTemplateColumns: "auto auto auto auto auto auto",
+                                                        }),
+                                                        props: {
+                                                            className: "radioGroupColor",
+                                                        },
+                                                    },
+                                                    Root: {
+                                                        style: ({$theme, $checked}) => ({
+                                                            width: "52px",
+                                                            height: "52px",
+                                                            justifyContent: "center",
+                                                            padding: $checked ? "4px" : "6px",
+                                                            border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
+                                                            boxSizing: "border-box",
+                                                            borderRadius: "50%",
+                                                            marginTop: 0,
+                                                            marginRight: "0",
+                                                            marginBottom: "16px",
+                                                            marginLeft: "0",
+                                                        }),
+                                                    },
+                                                    RadioMarkOuter: {
+                                                        style: ({$theme}) => ({display: "none"}),
+                                                    },
+                                                    RadioMarkInner: {
+                                                        style: ({$theme}) => ({display: "none"}),
+                                                    },
+                                                }}
                                     >
-                                        {productComponent && productComponent[2]
-                                            ? productComponent[2].attributes
-                                                .filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation)
-                                                .map((attribute) => {
-                                                    return attribute.options.map((option, index) => (
-                                                        <Radio
-                                                            key={index}
-                                                            value={option.toLowerCase()}
-                                                            overrides={{
-                                                                Label: ({$value}) => (
-                                                                    <div
-                                                                        style={{
-                                                                            width: "38px",
-                                                                            height: "38px",
-                                                                            borderRadius: "50%",
-                                                                            backgroundColor:
-                                                                                option.toLowerCase() === "yellow"
-                                                                                    ? "#F4C84E"
-                                                                                    : option.toLowerCase() === "green"
-                                                                                        ? "#275D3D"
-                                                                                        : option.toLowerCase() === "blue"
-                                                                                            ? "#1A4A8B"
-                                                                                            : option.toLowerCase() === "red"
-                                                                                                ? "#991F34"
-                                                                                                : option.toLowerCase(),
-                                                                            border: "1px solid #D9D9D9",
-                                                                        }}
-                                                                    />
-                                                                ),
-                                                            }}
-                                                        />
-                                                    ));
-                                                })
-                                            : null}
+                                        {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) =>
+                                            options.map((option, index) => (
+                                                <Radio key={index} value={option.toLowerCase()}
+                                                       overrides={{
+                                                           Label: ({$value}) => (
+                                                               <div
+                                                                   style={{
+                                                                       width: "38px",
+                                                                       height: "38px",
+                                                                       borderRadius: "50%",
+                                                                       backgroundColor:
+                                                                           option.toLowerCase() === "yellow"
+                                                                               ? "#F4C84E"
+                                                                               : option.toLowerCase() === "green"
+                                                                                   ? "#275D3D"
+                                                                                   : option.toLowerCase() === "blue"
+                                                                                       ? "#1A4A8B"
+                                                                                       : option.toLowerCase() === "red"
+                                                                                           ? "#991F34"
+                                                                                           : option.toLowerCase(),
+                                                                       border: "1px solid #D9D9D9",
+                                                                   }}
+                                                               />
+                                                           ),
+                                                       }}
+                                                />
+                                            ))) : null}
                                     </RadioGroup>
                                 </div>
                             </Block>
@@ -1884,21 +1802,19 @@ function Canopy_Tent({router, product, productComponent, productVariant}) {
 
 Canopy_Tent.getInitialProps = async (context) => {
     const {query} = context;
-    const {id} = query;
-    let product = null,
-        component = [],
-        variant = [];
+    const ids = [26338, 26385, 26405, 26516];
+    let products = null,
+        variants = [];
 
-    product = await utils.getProductByWooId(id);
-    if (product.type === "composite") {
-        component = await Promise.all(product.composite_components.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
-        variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
-    }
+    // product = await utils.getProductByWooId(id);
+    // if (product.type === "composite") {
+    products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+    variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+    // }
 
     return {
-        product: product,
-        productComponent: component,
-        productVariant: variant,
+        products: products,
+        variants: variants,
         noFooter: true,
     };
 };

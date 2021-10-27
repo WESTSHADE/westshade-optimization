@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 
 import {withRouter} from "next/router";
@@ -21,6 +22,8 @@ import {NumberFn, UrlFn, StringFn} from "../../utils/tools";
 import {EventEmitter} from "../../utils/events";
 
 import CContainer from "../../components/container";
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
 
 const utils = new Utils();
 const numberFn = new NumberFn();
@@ -84,6 +87,10 @@ function Checkout({router, orderID, orderDetail}) {
     const [expirationError, setExpirationError] = useState(false);
     const [codeError, setCodeError] = useState(false);
 
+    const dispatch = useDispatch();
+
+    const {loggedIn, token} = useSelector(({user}) => user);
+
     const {card} = valid.number(number);
     let codeLength;
     if (card && card.code && card.code.size) {
@@ -103,6 +110,22 @@ function Checkout({router, orderID, orderDetail}) {
     //     EventEmitter.dispatch("updateBadge");
     // };
 
+    const handleUpdateCart = (cartList) => {
+        if (loggedIn) {
+            let userData = {
+                meta_data: [
+                    {
+                        key: "cart",
+                        value: cartList,
+                    },
+                ],
+            };
+            dispatch(updateUser(token, userData));
+        } else {
+            dispatch(modifyCart({cart: cartList}))
+        }
+    }
+
     const updateCoupon = async () => {
         if (coupon) {
             let cl = [...lineCoupon];
@@ -112,6 +135,8 @@ function Checkout({router, orderID, orderDetail}) {
             setCoupon("");
 
             let result = await utils.updateOrder(null, {id: numberFn.strToInt(id), coupon_lines: cl});
+            console.log(result);
+
             if (result.message) {
                 setShowError(true);
                 setError(result.message);
@@ -202,6 +227,7 @@ function Checkout({router, orderID, orderDetail}) {
                     }
                     if (res.transactionResponse.messages) {
                         if (res.transactionResponse.messages.message[0].code === "1") {
+                            handleUpdateCart([]);
                             // 支付成功
                             router.push({pathname: "/checkout/success/", query: {id: id}});
                         }
@@ -275,7 +301,7 @@ function Checkout({router, orderID, orderDetail}) {
 
     useEffect(() => {
         if (card && card.lengths) {
-            let error = card.lengths.findIndex((l) => l === number.length) === -1 ? true : false;
+            let error = card.lengths.findIndex((l) => l === number.length) === -1;
             setNumberError(error);
         }
     }, [number]);

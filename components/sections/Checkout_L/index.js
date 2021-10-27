@@ -70,7 +70,7 @@ const Quantity = (props) => {
 };
 
 const checkout = (props) => {
-    const {totalRegularPrice = "0", totalSalePrice = "", regularPrice = "0", salePrice = "", quantity = 1, shippedDay = "Monday", isAvailable = true, isInStock = true, onClickMinus, onClickPlus, addToBag} = props;
+    const {totalRegularPrice = "0", totalSalePrice = "", regularPrice = "0", salePrice = "", quantity = 1, shippedDay = "Monday", isAvailable = true, isInStock = true, onClickMinus, onClickPlus, addToBag, buttonText = "Add to Bag"} = props;
 
     return (
         <>
@@ -126,7 +126,7 @@ const checkout = (props) => {
                         <Block>Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span></Block>
                     </Block>
                 </Block>
-                <MButton width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text="Add to Bag" onClick={addToBag} disabled={!isAvailable}/>
+                <MButton width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text={buttonText} onClick={addToBag} disabled={!isAvailable}/>
             </Block>
         </>
     );

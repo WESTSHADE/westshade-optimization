@@ -427,7 +427,17 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}>
+                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
+                           overrides={{
+                               Block: {
+                                   style: {
+                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
+                                       scrollbarWidth: "none", /* for Firefox */
+                                       "::-webkit-scrollbar": {display: "none"}
+                                   }
+                               },
+                           }}
+                    >
                         <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                             <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                             {product && product.short_description ? (
@@ -447,7 +457,7 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                             <SelectionList index={0} data={uProductComponent[0]}/>
                         </Block>
                         <Checkout totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice} quantity={totalCount} shippedDay={shippedDay}
-                                  isAvailable={availableToCheckout} isInStock={isInStock}
+                                  isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
                                   onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
                         />
                     </Block>

@@ -1,6 +1,7 @@
-import React, {useEffect, useState, createRef} from "react";
+import React, {useEffect, useState} from "react";
+
 import {withRouter} from "next/router";
-import {useStyletron} from "baseui";
+
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {PaymentCard, valid} from "baseui/payment-card";
@@ -49,7 +50,7 @@ function Payment({orderID}) {
 
     useEffect(() => {
         if (card && card.lengths) {
-            let error = card.lengths.findIndex((l) => l === number.length) === -1 ? true : false;
+            let error = card.lengths.findIndex((l) => l === number.length) === -1;
             setNumberError(error);
         }
     }, [number]);

@@ -7,10 +7,17 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import ArrowDown from 'baseui/icon/arrow-down'
 
+import {Box, Button, Container, Grid, TextField} from "@material-ui/core";
+
 import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
+import Modal from "../../../components/modal";
 
-const SectionCard = ({router, src, alt, title, content, destination}) => {
+import Utils from "../../../utils/utils";
+
+const utils = new Utils();
+
+const SectionCard = ({router, src, alt, title, content, destination, onClick, buttonText = "Buy"}) => {
     return (
         <Block display={["grid", "grid", "flex"]} flexDirection={["column", "column", "row-reverse"]} alignItems={["", "", "center"]} justifyContent={["", "", "space-between"]}
                gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "unset"]} gridRowGap={["20px", "24px", "unset"]}
@@ -40,7 +47,8 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
                              ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
                              ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
                          }}
-                         onClick={() => router.push(destination)} text={"Buy"}
+                         onClick={onClick ? onClick : () => router.push(destination)}
+                         text={buttonText}
                 />
             </Block>
         </Block>
@@ -54,8 +62,44 @@ function Custom_Printing_Umbrella({router, size}) {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
+    const [showGetQuote, setShowGetQuote] = useState(false);
+
+    const [quoteProduct, setQuoteProduct] = useState("");
+    const [quoteQuantity, setQuoteQuantity] = useState(1);
+    const [quoteNameLast, setQuoteNameLast] = useState("");
+    const [quoteNameFirst, setQuoteNameFirst] = useState("");
+    const [quoteEmail, setQuoteEmail] = useState("");
+    const [quotePhone, setQuotePhone] = useState("");
+    const [quoteRequest, setQuoteRequest] = useState("");
+    const [quoteError, setQuoteError] = useState(false);
+
     const goBuyingSection = () => {
         if (window) window.scrollTo({top: size.width > 959 ? ref.current.offsetTop - 120 : ref.current.offsetTop - 72, behavior: 'smooth'});
+    };
+
+    const handleEnquiry = () => {
+        setShowGetQuote(!showGetQuote);
+    }
+
+    const handleSendQuote = async () => {
+        if (!quoteProduct || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
+            setQuoteError(true);
+        } else {
+            let result = await utils.contact({
+                form_id: "2",
+                status: "active",
+                1: "New Entry: " + quoteProduct + " Enquiry",
+                2: "",
+                3: quoteQuantity,
+                4.3: quoteNameFirst,
+                4.6: quoteNameLast,
+                5: quoteEmail,
+                6: quotePhone,
+                8: quoteRequest,
+            });
+            console.log(result);
+            handleEnquiry();
+        }
     };
 
     useEffect(() => {
@@ -185,20 +229,169 @@ function Custom_Printing_Umbrella({router, size}) {
                                  {/*/>*/}
                                  <SectionCard router={router} title={"Kapri Tilt Umbrella"} content={"Kapri umbrella is made of aluminum, and it comes in 4 sizes with height adjustment."}
                                               src={"images/custom-printing/umbrella/kapri.jpg"} alt={"kapri"}
-                                              destination={"/"}
+                                              buttonText="Enquiry" destination={"/"}
+                                              onClick={() => {
+                                                  setQuoteProduct("Kapri Tilt Umbrella");
+                                                  handleEnquiry()
+                                              }}
                                  />
                                  <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
                                               src={"images/custom-printing/umbrella/santorini.jpg"} alt={"santorini"}
-                                              destination={"/products/market-umbrellas/santorini-umbrella"}
+                                              buttonText="Enquiry" destination={"/products/market-umbrellas/santorini-umbrella"}
+                                              onClick={() => {
+                                                  setQuoteProduct("Santorini Pulley Umbrella");
+                                                  handleEnquiry()
+                                              }}
                                  />
                                  <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
                                               src={"images/custom-printing/umbrella/catalina.jpg"} alt={"catalina"}
-                                              destination={"/products/cantilever-umbrellas/catalina-umbrella"}
+                                              buttonText="Enquiry" destination={"/products/cantilever-umbrellas/catalina-umbrella"}
+                                              onClick={() => {
+                                                  setQuoteProduct("Catalina Oversized Umbrella");
+                                                  handleEnquiry()
+                                              }}
                                  />
                              </>
                          }
                 />
             </Block>
+            <Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
+                <Box className="popup-section" style={{width: "auto"}}>
+                    <Container maxWidth="md">
+                        <Grid container spacing={6}>
+                            <Grid item xs={12} sm={6}>
+                                <div className="popup-section-title">At Westshade, We Offer Limitless Design Solution.</div>
+                                <img
+                                    style={{
+                                        width: 120,
+                                        height: 120,
+                                        objectFit: "contain",
+                                        margin: "24px auto",
+                                    }}
+                                    src={"/images/tent-spec/customer-service.svg"}
+                                />
+                                <div className="popup-section-title" style={{fontSize: "1rem"}}>
+                                    Call us for custom print consultation
+                                </div>
+                                <div className="section-checkout-container" style={{justifyContent: "center", paddingTop: 24}}>
+                                    <Button
+                                        variant="contained"
+                                        className="contained-button-black"
+                                        onClick={() => {
+                                            let a = document.createElement("a");
+                                            a.href = "tel:949-751-1070";
+                                            a.click();
+                                        }}
+                                    >
+                                        (949)751-1070
+                                    </Button>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <form>
+                                    <div className="section-quote-input">
+                                        <TextField fullWidth label="Product" required InputLabelProps={{shrink: true}} defaultValue={quoteProduct}
+                                                   onChange={(event) => {
+                                                       setQuoteError(false);
+                                                       setQuoteProduct(event.target.value);
+                                                   }}
+                                                   error={!quoteProduct && quoteError}
+                                        />
+                                    </div>
+                                    <div className="section-quote-input" style={{display: "flex"}}>
+                                        <div style={{paddingRight: 12}}>
+                                            <TextField
+                                                label="Last Name"
+                                                required
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                defaultValue={quoteNameLast}
+                                                onChange={(event) => {
+                                                    setQuoteError(false);
+                                                    setQuoteNameLast(event.target.value);
+                                                }}
+                                                error={!quoteNameLast && quoteError}
+                                            />
+                                        </div>
+                                        <div style={{paddingRight: 12}}>
+                                            <TextField
+                                                label="First Name"
+                                                required
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                defaultValue={quoteNameFirst}
+                                                onChange={(event) => {
+                                                    setQuoteError(false);
+                                                    setQuoteNameFirst(event.target.value);
+                                                }}
+                                                error={!quoteNameFirst && quoteError}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="section-quote-input">
+                                        <TextField
+                                            fullWidth
+                                            label="Email"
+                                            required
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            defaultValue={quoteEmail}
+                                            onChange={(event) => {
+                                                setQuoteError(false);
+                                                setQuoteEmail(event.target.value);
+                                            }}
+                                            error={!quoteEmail && quoteError}
+                                        />
+                                    </div>
+                                    <div className="section-quote-input">
+                                        <TextField
+                                            fullWidth
+                                            label="Phone"
+                                            required
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            defaultValue={quotePhone}
+                                            onChange={(event) => {
+                                                setQuoteError(false);
+                                                setQuotePhone(event.target.value);
+                                            }}
+                                            error={!quotePhone && quoteError}
+                                        />
+                                    </div>
+                                    <div className="section-quote-input">
+                                        <TextField
+                                            fullWidth
+                                            label="Describe What You’re Looking For"
+                                            required
+                                            InputLabelProps={{
+                                                shrink: true,
+                                                style: {width: "max-content"}
+                                            }}
+                                            multiline
+                                            maxRows={6}
+                                            defaultValue={quoteRequest}
+                                            onChange={(event) => {
+                                                setQuoteError(false);
+                                                setQuoteRequest(event.target.value);
+                                            }}
+                                            error={!quoteRequest && quoteError}
+                                        />
+                                    </div>
+                                    <div className="section-checkout-container">
+                                        <Button variant="contained" onClick={() => handleSendQuote()} disableRipple disableElevation>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Box>
+            </Modal>
         </React.Fragment>
     )
 }

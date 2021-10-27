@@ -10,7 +10,7 @@ import {Select} from "baseui/select";
 const data = {
     display: [
         {picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-        {picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/'},
+        {picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/products/tilt-umbrellas/kapri-umbrella'},
         {picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
         {picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
         {picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
@@ -286,7 +286,7 @@ function Canopy_Tent_Spec({router, size}) {
                                                 },
                                             }}
                                     />
-                                    <Block width="64px" height="24px" font="MinXLabel14" marginRight="auto" marginLeft="auto">
+                                    <Block width={"max-content"} minWidth="64px" height="24px" font="MinXLabel14" marginRight="auto" marginLeft="auto">
                                         <Button shape={SHAPE.pill}
                                                 overrides={{
                                                     BaseButton: {

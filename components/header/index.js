@@ -77,7 +77,7 @@ function DropMenu(props) {
             ))}
             <Block paddingTop={"40px"} paddingLeft={"80px"}>
                 <Block position={"relative"} width={"220px"} height={"138px"} marginBottom={"16px"}>
-                    <Image src={picUrl} alt="Menu Display" layout="fill" quality={100}/>
+                    <Image src={picUrl} alt="Menu Display" layout="fill" objectFit="cover" quality={100}/>
                 </Block>
                 <div style={{textTransform: "uppercase"}}>{content}</div>
             </Block>
@@ -188,32 +188,32 @@ function Header() {
                             </NavigationList>
                             <NavigationList $align={ALIGN.center} className={"nav-center-menu"}>
                                 <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
-                                                onMouseEnter={(e) => setStyle1({visibility: "visible"})}
-                                                onMouseLeave={(e) => setStyle1({visibility: "hidden"})}
+                                    // onMouseEnter={(e) => setStyle1({visibility: "visible"})}
+                                    // onMouseLeave={(e) => setStyle1({visibility: "hidden"})}
                                 >
                                     <Link href="/canopy-tent">CANOPY TENT</Link>
-                                    <DropMenu style={style1}
-                                              menuList={[
-                                                  {
-                                                      SQUARE: [
-                                                          {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
-                                                          {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
-                                                          {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
-                                                          {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
-                                                      ]
-                                                  }, {
-                                                      RECTANGULAR: [
-                                                          {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
-                                                          {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
-                                                          {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
-                                                          {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
-                                                      ],
-                                                  }
-                                              ]}
-                                              picUrl={"/images/component/header/tent.jpg"}
-                                              content={"Y7 HEAVY DUTY TENT"}
-                                              learnMoreUrl={"/canopy-tent"}
-                                    />
+                                    {/*<DropMenu style={style1}*/}
+                                    {/*          menuList={[*/}
+                                    {/*              {*/}
+                                    {/*                  SQUARE: [*/}
+                                    {/*                      {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},*/}
+                                    {/*                      {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},*/}
+                                    {/*                      {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},*/}
+                                    {/*                      {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},*/}
+                                    {/*                  ]*/}
+                                    {/*              }, {*/}
+                                    {/*                  RECTANGULAR: [*/}
+                                    {/*                      {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},*/}
+                                    {/*                      {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},*/}
+                                    {/*                      {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},*/}
+                                    {/*                      {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},*/}
+                                    {/*                  ],*/}
+                                    {/*              }*/}
+                                    {/*          ]}*/}
+                                    {/*          picUrl={"/images/component/header/tent.jpg"}*/}
+                                    {/*          content={"Y7 HEAVY DUTY TENT"}*/}
+                                    {/*          learnMoreUrl={"/canopy-tent"}*/}
+                                    {/*/>*/}
                                 </NavigationItem>
                                 <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
                                                 onMouseEnter={(e) => setStyle2({visibility: "visible"})}
@@ -224,17 +224,17 @@ function Header() {
                                               menuList={[
                                                   {
                                                       MARKET: [
-                                                          {id: 'Marco', href: '/products/market-umbrellas/marco-umbrella'},
-                                                          {id: 'Santorini', href: '/products/market-umbrellas/santorini-umbrella'},
+                                                          {id: 'Marco', href: '/umbrella/marco'},
+                                                          {id: 'Santorini', href: '/umbrella/santorini'},
                                                       ],
                                                   }, {
                                                       TILT: [
-                                                          {id: 'Bali', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-                                                          // {id: 'Kapri', href: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+                                                          {id: 'Bali', href: '/umbrella/bali'},
+                                                          {id: 'Kapri', href: '/umbrella/kapri'},
                                                       ]
                                                   }, {
                                                       OVERSIZE: [
-                                                          {id: 'Catalina', href: '/products/cantilever-umbrellas/catalina-umbrella'},
+                                                          {id: 'Catalina', href: '/umbrella/catalina'},
                                                       ]
                                                   }
                                               ]}
@@ -258,37 +258,37 @@ function Header() {
                                                       ]
                                                   }
                                               ]}
-                                              picUrl={"/images/component/header/print.jpg"}
+                                              picUrl={"/images/component/header/custom_printing.jpg"}
                                               content={"CUSTOM PRINTING TENT"}
                                               learnMoreUrl={"/custom-printing"}
                                     />
                                 </NavigationItem>
                                 <NavigationItem style={{height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}
-                                                onMouseEnter={(e) => setStyle4({visibility: "visible"})}
-                                                onMouseLeave={(e) => setStyle4({visibility: "hidden"})}
+                                    // onMouseEnter={(e) => setStyle4({visibility: "visible"})}
+                                    // onMouseLeave={(e) => setStyle4({visibility: "hidden"})}
                                 >
                                     <Link href="/accessories">ACCESSORIES</Link>
-                                    <DropMenu style={style4}
-                                              menuList={[
-                                                  {
-                                                      ACCESSORIES: [
-                                                          {id: 'Tent Accessories', href: '/'},
-                                                          {id: 'Umbrella Accessories', href: '/'},
-                                                      ]
-                                                  }, {
-                                                      OTHER: [
-                                                          {id: 'Heater', href: '/products/accessories/?id=20491'},
-                                                          {id: 'Led Light', href: '/products/accessories/?id=20510'},
-                                                          {id: 'Table cover', href: '/custom-print/table-cover/buy'},
+                                    {/*<DropMenu style={style4}*/}
+                                    {/*          menuList={[*/}
+                                    {/*              {*/}
+                                    {/*                  ACCESSORIES: [*/}
+                                    {/*                      {id: 'Tent Accessories', href: '/'},*/}
+                                    {/*                      {id: 'Umbrella Accessories', href: '/'},*/}
+                                    {/*                  ]*/}
+                                    {/*              }, {*/}
+                                    {/*                  OTHER: [*/}
+                                    {/*                      {id: 'Heater', href: '/products/accessories/?id=20491'},*/}
+                                    {/*                      {id: 'Led Light', href: '/products/accessories/?id=20510'},*/}
+                                    {/*                      {id: 'Table cover', href: '/custom-print/table-cover/buy'},*/}
 
-                                                      ],
-                                                  }
-                                              ]}
-                                              picUrl={"/images/component/header/accs.jpg"}
-                                              content={"Protective cover"}
-                                              learnMoreUrl={"/accessories"}
-                                              learnMoreText={"View all >"}
-                                    />
+                                    {/*                  ],*/}
+                                    {/*              }*/}
+                                    {/*          ]}*/}
+                                    {/*          picUrl={"/images/component/header/accs.jpg"}*/}
+                                    {/*          content={"Protective cover"}*/}
+                                    {/*          learnMoreUrl={"/accessories"}*/}
+                                    {/*          learnMoreText={"View all >"}*/}
+                                    {/*/>*/}
                                 </NavigationItem>
                             </NavigationList>
                             <NavigationList $align={ALIGN.right}>
@@ -351,46 +351,63 @@ function Header() {
                         }
 
                     }}>
-                        <Panel title="CANOPY TENT">
-                            <StatefulMenu items={{
-                                SQUARE: [
-                                    {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
-                                    {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
-                                    {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
-                                    {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
-                                ],
-                                RECTANGULAR: [
-                                    {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
-                                    {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
-                                    {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
-                                    {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
-                                ],
-                            }}
-                                          onItemSelect={({item}) => console.log(item)}
-                                          overrides={{
-                                              List: {
-                                                  style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},
-                                              },
-                                              OptgroupHeader: {
-                                                  style: {marginTop: "14px"}
-                                              },
-                                              Option: {
-                                                  props: {
-                                                      getItemLabel: item => item.id,
-                                                  },
-                                              },
-                                          }}
-                            />
-                            <Block backgroundColor={"white"}
-                                   overrides={{
-                                       Block: {
-                                           style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},
-                                       },
-                                   }}
-                            >
-                                <Link href={"/canopy-tent"}>{"Learn more >"}</Link>
-                            </Block>
-                        </Panel>
+                        <Panel title="CANOPY TENT"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/canopy-tent")}
+                        />
+                        {/*<Panel title="CANOPY TENT">*/}
+                        {/*    <StatefulMenu items={{*/}
+                        {/*        SQUARE: [*/}
+                        {/*            {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},*/}
+                        {/*            {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},*/}
+                        {/*            {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},*/}
+                        {/*            {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},*/}
+                        {/*        ],*/}
+                        {/*        RECTANGULAR: [*/}
+                        {/*            {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},*/}
+                        {/*            {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},*/}
+                        {/*            {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},*/}
+                        {/*            {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},*/}
+                        {/*        ],*/}
+                        {/*    }}*/}
+                        {/*                  onItemSelect={({item}) => console.log(item)}*/}
+                        {/*                  overrides={{*/}
+                        {/*                      List: {*/}
+                        {/*                          style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},*/}
+                        {/*                      },*/}
+                        {/*                      OptgroupHeader: {*/}
+                        {/*                          style: {marginTop: "14px"}*/}
+                        {/*                      },*/}
+                        {/*                      Option: {*/}
+                        {/*                          props: {*/}
+                        {/*                              getItemLabel: item => item.id,*/}
+                        {/*                          },*/}
+                        {/*                      },*/}
+                        {/*                  }}*/}
+                        {/*    />*/}
+                        {/*    <Block backgroundColor={"white"}*/}
+                        {/*           overrides={{*/}
+                        {/*               Block: {*/}
+                        {/*                   style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},*/}
+                        {/*               },*/}
+                        {/*           }}*/}
+                        {/*    >*/}
+                        {/*        <Link href={"/canopy-tent"}>{"Learn more >"}</Link>*/}
+                        {/*    </Block>*/}
+                        {/*</Panel>*/}
                         <Panel title="UMBRELLA"
                                overrides={{
                                    PanelContainer: {
@@ -426,41 +443,58 @@ function Header() {
                                onClick={(e) => handleClick(e, "/custom-printing")}
 
                         />
-                        <Panel title="ACCESSORIES">
-                            <StatefulMenu items={{
-                                ACCESSORIES: [
-                                    {label: 'Tent Accessories', href: '/'},
-                                    {label: 'Umbrella Accessories', href: '/'},
-                                ],
-                                OTHER: [
-                                    {label: 'Heater', href: '/products/accessories/?id=20491'},
-                                    {label: 'Led Light', href: '/products/accessories/?id=20510'},
-                                    {label: 'Table cover', href: '/custom-print/table-cover/buy'},
-                                ],
-                            }}
-                                          onItemSelect={({item}) => console.log(item)}
-                                          overrides={{
-                                              List: {
-                                                  style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},
-                                              },
-                                              OptgroupHeader: {
-                                                  style: {marginTop: "14px"}
-                                              },
-                                              Option: {
-                                                  props: {
-                                                      getItemLabel: item => item.label,
-                                                  },
-                                              },
-                                          }}
-                            />
-                            <Block backgroundColor={"white"} overrides={{
-                                Block: {
-                                    style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},
-                                },
-                            }}>
-                                <Link href={"/accessories"}>{"Learn more >"}</Link>
-                            </Block>
-                        </Panel>
+                        <Panel title="ACCESSORIES"
+                               overrides={{
+                                   PanelContainer: {
+                                       style: {borderBottomWidth: "0px"}
+                                   },
+                                   Header: {
+                                       style: {paddingTop: "12px", paddingBottom: "12px"}
+                                   },
+                                   ToggleIcon: {
+                                       style: {display: 'none'},
+                                   },
+                                   Content: {
+                                       style: {display: 'none'},
+                                   }
+                               }}
+                               onClick={(e) => handleClick(e, "/accessories")}
+                        />
+                        {/*<Panel title="ACCESSORIES">*/}
+                        {/*    <StatefulMenu items={{*/}
+                        {/*        ACCESSORIES: [*/}
+                        {/*            {label: 'Tent Accessories', href: '/'},*/}
+                        {/*            {label: 'Umbrella Accessories', href: '/'},*/}
+                        {/*        ],*/}
+                        {/*        OTHER: [*/}
+                        {/*            {label: 'Heater', href: '/products/accessories/?id=20491'},*/}
+                        {/*            {label: 'Led Light', href: '/products/accessories/?id=20510'},*/}
+                        {/*            {label: 'Table cover', href: '/custom-print/table-cover/buy'},*/}
+                        {/*        ],*/}
+                        {/*    }}*/}
+                        {/*                  onItemSelect={({item}) => console.log(item)}*/}
+                        {/*                  overrides={{*/}
+                        {/*                      List: {*/}
+                        {/*                          style: {paddingTop: "0px", paddingBottom: "0px", paddingLeft: "45px", boxShadow: "none"},*/}
+                        {/*                      },*/}
+                        {/*                      OptgroupHeader: {*/}
+                        {/*                          style: {marginTop: "14px"}*/}
+                        {/*                      },*/}
+                        {/*                      Option: {*/}
+                        {/*                          props: {*/}
+                        {/*                              getItemLabel: item => item.label,*/}
+                        {/*                          },*/}
+                        {/*                      },*/}
+                        {/*                  }}*/}
+                        {/*    />*/}
+                        {/*    <Block backgroundColor={"white"} overrides={{*/}
+                        {/*        Block: {*/}
+                        {/*            style: {paddingTop: "24px", paddingBottom: "32px", paddingLeft: "53px", fontWeight: "500"},*/}
+                        {/*        },*/}
+                        {/*    }}>*/}
+                        {/*        <Link href={"/accessories"}>{"Learn more >"}</Link>*/}
+                        {/*    </Block>*/}
+                        {/*</Panel>*/}
                     </Accordion>
                 </Drawer>
                 <Drawer autoFocus isOpen={isCartDrawerOpen}

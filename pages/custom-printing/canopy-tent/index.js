@@ -28,7 +28,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const goBuyingPage = () => router.push({pathname: "/"});
+    const goBuyingPage = () => router.push({pathname: "/custom-printing-canopy-tent"});
 
     const getSizeDesc = (value) => {
         let elm = null;
@@ -100,7 +100,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                },
                            }}
                     >Customize It Your Way</Block>
-                    <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["40px", "64px", "80px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below"
+                    <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["40px", "64px", "80px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
                              buttonStyle={{
                                  backgroundColor: 'transparent !important',
                                  ":hover": {backgroundColor: `rgba(255, 255, 255, 0.05) !important`},

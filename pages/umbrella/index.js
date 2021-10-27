@@ -14,7 +14,7 @@ import MButton from "../../components/button-n";
 const data = {
     display: [
         {title: "Bali", picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-        {title: "Kapri", picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/'},
+        {title: "Kapri", picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/products/tilt-umbrellas/kapri-umbrella'},
         {title: "Marco", picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
         {title: "Santorini", picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
         {title: "Catalina", picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
@@ -85,14 +85,13 @@ function Umbrella({router, size}) {
                        },
                    }}
             >
-                <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA SERIES</Block>
+                <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA RANGES</Block>
                 <Block marginBottom={["40px", "80px", "120px"]}>
                     <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="images/umbrella/series-marco.jpg" alt="series marco"
                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                    renderButton={
                                        <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
-                                                    font="MinXLabel20" color="MinXPrimaryTextAlt"
+                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font="MinXLabel20" color="MinXPrimaryTextAlt"
                                                     buttonStyle={{
                                                         borderColor: `white`,
                                                         ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
@@ -126,7 +125,7 @@ function Umbrella({router, size}) {
                                        </Block>
                                    }
                     />
-                    <BannerDisplay title="BALI" subtitle="Tilt umbrellas" url="images/umbrella/series-bali.jpg" alt="series bali"
+                    <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-bali.jpg" alt="series bali"
                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                    renderButton={
                                        <Block display="flex" flexDirection="row" alignItems="center">
@@ -141,6 +140,25 @@ function Umbrella({router, size}) {
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
                                                <Link color="inherit" href="bali">LEARN MORE</Link>
+                                           </Block>
+                                       </Block>
+                                   }
+                    />
+                    <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-kapri.png" alt="series kapri"
+                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                   renderButton={
+                                       <Block display="flex" flexDirection="row" alignItems="center">
+                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
+                                                    font="MinXLabel20" color="MinXPrimaryTextAlt"
+                                                    buttonStyle={{
+                                                        borderColor: `white`,
+                                                        ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
+                                                        ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
+                                                    }}
+                                                    onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")} text={"Buy"}
+                                           />
+                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
+                                               <Link color="inherit" href="kapri">LEARN MORE</Link>
                                            </Block>
                                        </Block>
                                    }
@@ -307,7 +325,6 @@ function Umbrella({router, size}) {
             <div/>
         </React.Fragment>
     )
-
 }
 
 export default withRouter(Umbrella);
