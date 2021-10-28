@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 
-import Link from "next/link";
-import { withRouter } from "next/router";
+import {withRouter} from "next/router";
+import Image from "next/image";
 
-import { Box, Button, Breadcrumbs, Container, Grid, List, ListItem, ListItemText, TextField, Typography } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import {Block} from "baseui/block";
+import {FormControl} from "baseui/form-control";
+import {Input} from "baseui/input";
+
+import {Box, Button, Container, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
+
+import CContainer from "../components/container";
+import CLink from "../components/link";
+import MButton from "../components/button-n";
+import {Modal} from "../components/surfacse";
 
 import Utils from "../utils/utils";
-
-import CBreadcrumbs from "../components/breadcrumbs";
-import CContainer from "../components/container";
-import Modal from "../components/modal";
-import CLink from "../components/link";
 
 const utils = new Utils();
 
@@ -23,7 +26,7 @@ const MXImageDisplay = styled.img`
 	object-fit: contain;
 `;
 
-const MXDot = styled(({ color, ...other }) => <div style={{ backgroundColor: color }} {...other} />)`
+const MXDot = styled(({color, ...other}) => <div style={{backgroundColor: color}} {...other} />)`
 	width: 14px;
 	height: 14px;
 	margin: 4px;
@@ -31,24 +34,24 @@ const MXDot = styled(({ color, ...other }) => <div style={{ backgroundColor: col
 	border: 1px solid #aaaaaa;
 `;
 
-const MXDotGroup = styled(({ ...other }) => (
+const MXDotGroup = styled(({...other}) => (
 	<div {...other}>
-		<MXDot color="black" />
-		<MXDot color="white" />
-		<MXDot color="#ff0000" />
-		<MXDot color="#3773b8" />
-		<MXDot color="#eecb45" />
-		<MXDot color="#4c9a18" />
+		<MXDot color="black"/>
+		<MXDot color="white"/>
+		<MXDot color="#ff0000"/>
+		<MXDot color="#3773b8"/>
+		<MXDot color="#eecb45"/>
+		<MXDot color="#4c9a18"/>
 	</div>
 ))`
 	display: inline-flex;
 	margin-bottom: 8px;
 `;
 
-const MXContainerBuy = ({ text, buttonText, href, backgroundColor, dot }) => {
+const MXContainerBuy = ({text, buttonText, href, backgroundColor, dot}) => {
 	return (
-		<div style={{ margin: "18px 0 36px 0", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-			{dot ? <MXDotGroup /> : null}
+		<div style={{margin: "18px 0 36px 0", display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
+			{dot ? <MXDotGroup/> : null}
 			<Typography variant="h6" display="block" color="textSecondary" paragraph={!!text}>
 				<strong>{text}</strong>
 			</Typography>
@@ -59,7 +62,7 @@ const MXContainerBuy = ({ text, buttonText, href, backgroundColor, dot }) => {
 	);
 };
 
-function Canopy_Tent_Package({ router }) {
+function Canopy_Tent_Package({router}) {
 	const [display, setDisplay] = useState(false);
 
 	const [showModal, setShowModal] = useState(false);
@@ -76,6 +79,19 @@ function Canopy_Tent_Package({ router }) {
 	const [quoteError, setQuoteError] = useState(false);
 
 	////////////////////////////////////////
+
+	const handleEnquiry = () => {
+		setShowGetQuote(!showGetQuote);
+
+		if (showGetQuote) {
+			setQuoteError(false);
+			setQuoteNameLast("");
+			setQuoteNameFirst("");
+			setQuoteEmail("");
+			setQuotePhone("");
+			setQuoteRequest("");
+		}
+	}
 
 	const handleSendQuote = async () => {
 		if (!quoteSubject || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
@@ -103,28 +119,17 @@ function Canopy_Tent_Package({ router }) {
 			<Box className="page canopy-tent-package" fontSize={14} lineHeight={1.43}>
 				{display ? (
 					<>
-						<CBreadcrumbs>
-							<Container maxWidth="md">
-								<Breadcrumbs classes={{ li: "root-breadcrumbs-text" }}>
-									<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-										Home
-									</Link>
-									<Typography variant="inherit" color="textPrimary">
-										13x20 Canopy Tent
-									</Typography>
-								</Breadcrumbs>
-							</Container>
-						</CBreadcrumbs>
 						<CContainer>
 							<Container maxWidth="md">
-								<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} paragraph={true}>
+								<Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
 									13x20 Canopy Tent
 								</Typography>
 								<Typography color="textSecondary" paragraph={true}>
-									Westshade&#39;s 13x20 instant canopy tent can accommodate large parties with up to 260 square feet of shade and UV protection! Furthermore, this 13x20 canopy tent only comes in our most durable heavy duty aluminum frame -
+									Westshade&#39;s 13x20 instant canopy tent can accommodate large parties with up to 260 square feet of shade and UV protection! Furthermore, this 13x20 canopy tent only comes in our most durable heavy duty
+									aluminum frame -
 									the Y7 series. You won&#39;t regret getting this large canopy tent for your events! This canopy tent is perfect for trade shows, parties, outdoor sports, commercial events, and more occasions.
-									<br />
-									<br />
+									<br/>
+									<br/>
 									Browse our selection of 13x20 canopy tent series available, or customize your canopy tent with our custom printing packages to make it your own!
 								</Typography>
 							</Container>
@@ -133,21 +138,21 @@ function Canopy_Tent_Package({ router }) {
 							<Container maxWidth="md">
 								<Grid container spacing={6}>
 									<Grid item xs={12} md={6}>
-										<MXImageDisplay src="/images/rectangle-42-4@2x.png" alt="y7-heavy-duty" />
+										<MXImageDisplay src="/images/rectangle-42-4@2x.png" alt="y7-heavy-duty"/>
 									</Grid>
 									<Grid item xs={12} md={6} container alignItems="center">
 										<div className="position-r">
-											<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} align="left">
+											<Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left">
 												{" "}
 												Y7 Heavy Duty{" "}
 											</Typography>
-											<Typography variant="subtitle2" color="inherit" style={{ color: "#e59010" }} align="left" paragraph={true}>
+											<Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} align="left" paragraph={true}>
 												For heavy duty use
 											</Typography>
 											<Typography variant="body2" color="textSecondary" align="left" paragraph={true}>
 												The most heavy duty aluminum frame canopy on the market with unchallenged strength and durability.
 											</Typography>
-											<MXContainerBuy text={"$1,121.00"} backgroundColor={"#2767c5"} dot href={{ pathname: "/y7-heavy-duty/buy" }} />
+											<MXContainerBuy text={"$1,121.00"} backgroundColor={"#2767c5"} dot href={{pathname: "/y7-heavy-duty/buy"}}/>
 										</div>
 									</Grid>
 								</Grid>
@@ -155,105 +160,105 @@ function Canopy_Tent_Package({ router }) {
 						</CContainer>
 						<CContainer>
 							<Container maxWidth="sm">
-								<Typography variant="h6" classes={{ h6: "information-title" }}>
+								<Typography variant="h6" classes={{h6: "information-title"}}>
 									Y7 Heavy Duty
 								</Typography>
 								<Grid container>
 									<Grid item xs={6}>
 										<List>
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }}>
-												<ListItemText className="section-image-package-listItem-title" primary={"Frame Specifications"} />
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
+												<ListItemText className="section-image-package-listItem-title" primary={"Frame Specifications"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Material"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Material"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Shape"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Shape"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Bracket Connectors"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Bracket Connectors"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Height Adjustment"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Height Adjustment"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Nuts and Bolts"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Nuts and Bolts"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Diameter"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Diameter"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Thickness"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Thickness"}/>
 											</ListItem>
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }}>
-												<ListItemText className="section-image-package-listItem-title" primary={"Fabric features"} />
-											</ListItem>
-											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Fabric"} />
-											</ListItem>
-											<ListItem style={{ minHeight: "41px" }} />
-											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Function"} />
-											</ListItem>
-											<ListItem style={{ minHeight: "41px" }} />
-											<ListItem style={{ minHeight: "41px" }} />
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }}>
-												<ListItemText className="section-image-package-listItem-title" primary={"Warrenty"} />
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
+												<ListItemText className="section-image-package-listItem-title" primary={"Fabric features"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Warranty"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Fabric"}/>
+											</ListItem>
+											<ListItem style={{minHeight: "41px"}}/>
+											<ListItem>
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Function"}/>
+											</ListItem>
+											<ListItem style={{minHeight: "41px"}}/>
+											<ListItem style={{minHeight: "41px"}}/>
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
+												<ListItemText className="section-image-package-listItem-title" primary={"Warrenty"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-subtitle" primary={"Roof Warranty"} />
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Warranty"}/>
+											</ListItem>
+											<ListItem>
+												<ListItemText className="section-image-package-listItem-subtitle" primary={"Roof Warranty"}/>
 											</ListItem>
 										</List>
 									</Grid>
 									<Grid item xs={6}>
 										<List>
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }} />
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"Push button"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"Push button"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"Stainless steel"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"Stainless steel"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"2.25 inches (57mm)"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"2.25 inches (57mm)"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"0.07 inches (1.8mm)"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"0.07 inches (1.8mm)"}/>
 											</ListItem>
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }} />
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"} />
-											</ListItem>
-											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"320gsm"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"Waterproof"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"320gsm"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"Waterproof"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"UV protection"} />
-											</ListItem>
-											<ListItem className="section-image-package-listItem" style={{ backgroundColor: "white" }} />
-											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"10 year"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"}/>
 											</ListItem>
 											<ListItem>
-												<ListItemText className="section-image-package-listItem-content" primary={"1 year"} />
+												<ListItemText className="section-image-package-listItem-content" primary={"UV protection"}/>
+											</ListItem>
+											<ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
+											<ListItem>
+												<ListItemText className="section-image-package-listItem-content" primary={"10 year"}/>
+											</ListItem>
+											<ListItem>
+												<ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
 											</ListItem>
 										</List>
 									</Grid>
@@ -265,14 +270,14 @@ function Canopy_Tent_Package({ router }) {
 								<Typography variant="h5"> Custom printing </Typography>
 								<Grid container spacing={2}>
 									<Grid item xs={12} md={6}>
-										<MXImageDisplay src="/images/rectangle-59-1@2x.png" />
+										<MXImageDisplay src="/images/rectangle-59-1@2x.png"/>
 									</Grid>
 									<Grid item xs={12} md={6} container alignContent="center">
-										<Typography variant="subtitle1" classes={{ subtitle1: "information-subtitle" }} align="left">
+										<Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left">
 											{" "}
 											Y7 Heavy Duty Custom Print{" "}
 										</Typography>
-										<Typography variant="subtitle2" color="inherit" style={{ color: "#e59010" }} align="left" paragraph={true}>
+										<Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} align="left" paragraph={true}>
 											For heavy duty use
 										</Typography>
 										<Typography variant="body2" color="textSecondary" align="left" paragraph={true}>
@@ -281,11 +286,17 @@ function Canopy_Tent_Package({ router }) {
 										<Typography variant="h6" display="block" color="textPrimary" paragraph={true}>
 											<strong>Starting at $1,857.00</strong>
 										</Typography>
-										<div style={{ display: "flex", justifyContent: "flex-start" }}>
-											<Button variant="contained" className="section-grid-button" style={{ marginRight: "24px" }} onClick={() => router.push("/custom-printed-package/f1320cpp")} disableElevation>
+										<div style={{display: "flex", justifyContent: "flex-start"}}>
+											<Button variant="contained" className="section-grid-button" style={{marginRight: "24px"}} onClick={() => router.push("/custom-printed-package/f1320cpp")} disableElevation>
 												Buy
 											</Button>
-											<Button variant="contained" className="section-grid-button" style={{ marginRight: "24px" }} onClick={() => setShowGetQuote(true)} disableElevation>
+											<Button variant="contained" className="section-grid-button" style={{marginRight: "24px"}}
+													onClick={() => {
+														setQuoteSubject("Y7 Heavy Duty Custom Print 13x20");
+														setShowGetQuote(true)
+													}}
+													disableElevation
+											>
 												Free quote & mockup
 											</Button>
 										</div>
@@ -298,42 +309,42 @@ function Canopy_Tent_Package({ router }) {
 								<Grid container spacing={2} direction="row" alignItems="center">
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP1.jpg" alt="custom-printing-13x20-package-1" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP1.jpg" alt="custom-printing-13x20-package-1"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP2.jpg" alt="custom-printing-13x20-package-2" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP2.jpg" alt="custom-printing-13x20-package-2"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP3.jpg" alt="custom-printing-13x20-package-3" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP3.jpg" alt="custom-printing-13x20-package-3"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP4.jpg" alt="custom-printing-13x20-package-4" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP4.jpg" alt="custom-printing-13x20-package-4"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP5.jpg" alt="custom-printing-13x20-package-5" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP5.jpg" alt="custom-printing-13x20-package-5"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP6.jpg" alt="custom-printing-13x20-package-6" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP6.jpg" alt="custom-printing-13x20-package-6"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP7.jpg" alt="custom-printing-13x20-package-7" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP7.jpg" alt="custom-printing-13x20-package-7"/>
 										</div>
 									</Grid>
 									<Grid item xs={12} sm={6} md={3}>
 										<div className="position-r">
-											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP8.jpg" alt="custom-printing-13x20-package-8" />
+											<MXImageDisplay src="/images/product/custom-printed-package/13x20/Y7F1320CPP8.jpg" alt="custom-printing-13x20-package-8"/>
 										</div>
 									</Grid>
 								</Grid>
@@ -341,156 +352,210 @@ function Canopy_Tent_Package({ router }) {
 						</CContainer>
 					</>
 				) : null}
-				<Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
-					<Box className="popup-section" style={{ width: "auto" }}>
-						<Container maxWidth="md">
-							<Grid container spacing={6}>
-								<Grid item xs={12} sm={6}>
-									<div className="popup-section-title">At Westshade, We Offer Limitless Design Solution.</div>
-									<img
-										style={{
-											width: 120,
-											height: 120,
-											objectFit: "contain",
-											margin: "24px auto",
-										}}
-										src={"/images/tent-spec/customer-service.svg"}
-									/>
-									<div className="popup-section-title" style={{ fontSize: "1rem" }}>
-										Call us for custom print consultation
-									</div>
-									<div className="section-checkout-container" style={{ justifyContent: "center", paddingTop: 24 }}>
-										<Button
-											variant="contained"
-											className="contained-button-black"
-											onClick={() => {
-												let a = document.createElement("a");
-												a.href = "tel:949-751-1070";
-												a.click();
-											}}
-											disableRipple
-											disableElevation
-										>
-											(949)751-1070
-										</Button>
-									</div>
-								</Grid>
-								<Grid item xs={12} sm={6}>
-									<form>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Subject"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteSubject}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteSubject(event.target.value);
-												}}
-												error={!quoteSubject && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input" style={{ display: "flex" }}>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="Last Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameLast}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameLast(event.target.value);
-													}}
-													error={!quoteNameLast && quoteError}
-												/>
-											</div>
-											<div style={{ paddingRight: 12 }}>
-												<TextField
-													label="First Name"
-													required
-													InputLabelProps={{
-														shrink: true,
-													}}
-													defaultValue={quoteNameFirst}
-													onChange={(event) => {
-														setQuoteError(false);
-														setQuoteNameFirst(event.target.value);
-													}}
-													error={!quoteNameFirst && quoteError}
-												/>
-											</div>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Email"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quoteEmail}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteEmail(event.target.value);
-												}}
-												error={!quoteEmail && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Phone"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												defaultValue={quotePhone}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuotePhone(event.target.value);
-												}}
-												error={!quotePhone && quoteError}
-											/>
-										</div>
-										<div className="section-quote-input">
-											<TextField
-												fullWidth
-												label="Describe What You’re Looking For"
-												required
-												InputLabelProps={{
-													shrink: true,
-												}}
-												multiline
-												maxRows={6}
-												defaultValue={quoteRequest}
-												onChange={(event) => {
-													setQuoteError(false);
-													setQuoteRequest(event.target.value);
-												}}
-												error={!quoteRequest && quoteError}
-											/>
-										</div>
-										<div className="section-checkout-container">
-											<Button variant="contained" onClick={() => handleSendQuote()} disableRipple disableElevation>
-												Submit
-											</Button>
-										</div>
-									</form>
-								</Grid>
-							</Grid>
-						</Container>
-					</Box>
+				<Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
+					<Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
+						   display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
+					>
+						<Block display="flex" flexDirection="column" justifyContent="center" alignItems="center"
+							   overrides={{
+								   Block: {
+									   style: {textAlign: "center"}
+								   }
+							   }}
+						>
+							<Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
+							<Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
+								<Image src={"images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
+							</Block>
+							<Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
+							<MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(949)751-1070' color="white"
+									 buttonStyle={{
+										 backgroundColor: "rgba(0, 0, 0, 0.87) !important",
+										 paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
+										 borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+									 }}
+									 onClick={() => window.open(`tel:949-751-1070`, '_self')}
+							/>
+						</Block>
+						<Block>
+							<FormControl label={() => "Product*"}>
+								<Input value={quoteSubject} clearOnEscape error={!quoteSubject && quoteError} required
+									   overrides={{
+										   Root: {
+											   props: {
+												   className: "container-input-enquiry"
+											   },
+											   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+										   },
+										   InputContainer: {
+											   props: {
+												   className: "container-inner-input-enquiry"
+											   }
+										   },
+										   Input: {
+											   props: {
+												   className: "input-enquiry"
+											   },
+										   },
+									   }}
+									   onChange={(event) => {
+										   setQuoteError(false);
+										   setQuoteSubject(event.target.value);
+									   }}
+								/>
+							</FormControl>
+							<Block display="grid" gridTemplateColumns="1fr 1fr" gridColumnGap="24px">
+								<Block>
+									<FormControl label={() => "Last Name*"}>
+										<Input value={quoteNameLast} clearOnEscape error={!quoteNameLast && quoteError} required
+											   overrides={{
+												   Root: {
+													   props: {
+														   className: "container-input-enquiry"
+													   },
+													   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+												   },
+												   InputContainer: {
+													   props: {
+														   className: "container-inner-input-enquiry"
+													   }
+												   },
+												   Input: {
+													   props: {
+														   className: "input-enquiry"
+													   },
+												   },
+											   }}
+											   onChange={(event) => {
+												   setQuoteError(false);
+												   setQuoteNameLast(event.target.value);
+											   }}
+										/>
+									</FormControl>
+								</Block>
+								<Block>
+									<FormControl label={() => "First Name*"}>
+										<Input value={quoteNameFirst} clearOnEscape error={!quoteNameFirst && quoteError} required
+											   overrides={{
+												   Root: {
+													   props: {
+														   className: "container-input-enquiry"
+													   },
+													   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+												   },
+												   InputContainer: {
+													   props: {
+														   className: "container-inner-input-enquiry"
+													   }
+												   },
+												   Input: {
+													   props: {
+														   className: "input-enquiry"
+													   },
+												   },
+											   }}
+											   onChange={(event) => {
+												   setQuoteError(false);
+												   setQuoteNameFirst(event.target.value);
+											   }}
+										/>
+									</FormControl>
+								</Block>
+							</Block>
+							<FormControl label={() => "Email*"}>
+								<Input value={quoteEmail} clearOnEscape error={!quoteEmail && quoteError} required
+									   overrides={{
+										   Root: {
+											   props: {
+												   className: "container-input-enquiry"
+											   },
+											   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+										   },
+										   InputContainer: {
+											   props: {
+												   className: "container-inner-input-enquiry"
+											   }
+										   },
+										   Input: {
+											   props: {
+												   className: "input-enquiry"
+											   },
+										   },
+									   }}
+									   onChange={(event) => {
+										   setQuoteError(false);
+										   setQuoteEmail(event.target.value);
+									   }}
+								/>
+							</FormControl>
+							<FormControl label={() => "Phone*"}>
+								<Input value={quotePhone} clearOnEscape error={!quotePhone && quoteError} required
+									   overrides={{
+										   Root: {
+											   props: {
+												   className: "container-input-enquiry"
+											   },
+											   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+										   },
+										   InputContainer: {
+											   props: {
+												   className: "container-inner-input-enquiry"
+											   }
+										   },
+										   Input: {
+											   props: {
+												   className: "input-enquiry"
+											   },
+										   },
+									   }}
+									   onChange={(event) => {
+										   setQuoteError(false);
+										   setQuotePhone(event.target.value);
+									   }}
+								/>
+							</FormControl>
+							<FormControl label={() => "Describe What You’re Looking For*"}>
+								<Input value={quoteRequest} clearOnEscape error={!quoteRequest && quoteError} required
+									   overrides={{
+										   Root: {
+											   props: {
+												   className: "container-input-enquiry"
+											   },
+											   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+										   },
+										   InputContainer: {
+											   props: {
+												   className: "container-inner-input-enquiry"
+											   },
+										   },
+										   Input: {
+											   props: {
+												   className: "input-enquiry"
+											   },
+										   },
+									   }}
+									   onChange={(event) => {
+										   setQuoteError(false);
+										   setQuoteRequest(event.target.value);
+									   }}
+								/>
+							</FormControl>
+							<MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
+									 buttonStyle={{
+										 backgroundColor: "#e0e0e0 !important",
+										 paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
+										 borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+									 }}
+									 onClick={() => handleSendQuote()}
+							/>
+						</Block>
+					</Block>
 				</Modal>
-				<Modal show={showModal} onClose={() => setShowModal(false)} backgroundColor="rgb(237, 247, 237)">
-					<Alert severity="success">
-						<AlertTitle>Success</AlertTitle>
-						Email has been sent successfully.
-					</Alert>
+				<Modal type="alertdialog" isOpen={showModal} onClose={() => setShowModal(false)} backgroundColor="rgb(237, 247, 237)"
+					   dialogStyles={{backgroundColor: "rgb(237, 247, 237)"}}
+					   header={<Block color="rgb(102, 187, 106)">Success</Block>}
+				>
+					<Block marginTop="32px" marginBottom="32px" color="rgb(102, 187, 106)">Email has been sent successfully.</Block>
 				</Modal>
 			</Box>
 		</React.Fragment>

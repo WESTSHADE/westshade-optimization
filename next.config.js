@@ -15,7 +15,7 @@ const nextConfig = {
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
         maxWidth: 1440,
-        version: "2.0.4"
+        version: "2.0.5"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -39,6 +39,10 @@ const nextConfig = {
     images: {
         deviceSizes: [600, 960, 1280, 1920],
         loader: "imgix",
+        domains: [
+            'checkout.westshade.com',
+            '54.212.246.17',
+        ],
         path: "/",
     },
     exportPathMap: async function () {
@@ -91,7 +95,6 @@ const nextConfig = {
             "/market-umbrellas": {page: "/market-umbrellas"},
             "/tilt-umbrellas": {page: "/tilt-umbrellas"},
             "/cantilever-umbrellas": {page: "/cantilever-umbrellas"},
-            "/custom-printing-umbrella": {page: "/custom-printing-umbrella"},
             "/compare-tilt-umbrella": {page: "/compare-tilt-umbrella"},
             "/compare-market-umbrella": {page: "/compare-market-umbrella"},
             "/10x10-canopy-tent": {page: "/10x10-canopy-tent"},
@@ -125,7 +128,6 @@ const nextConfig = {
             {source: '/market-umbrellas/', destination: '/umbrella/santorini', permanent: true,},
             {source: '/tilt-umbrellas/', destination: '/umbrella/bali', permanent: true,},
             {source: '/cantilever-umbrellas/', destination: '/umbrella/catalina', permanent: true,},
-            {source: '/custom-printing-umbrella/', destination: '/custom-printing/umbrella', permanent: true,},
             {source: '/compare/', destination: '/canopy-tent/spec', permanent: true,},
             {source: '/compare-tilt-umbrella/', destination: '/umbrella/spec', permanent: true,},
             {source: '/compare-market-umbrella/', destination: '/umbrella/spec', permanent: true,},

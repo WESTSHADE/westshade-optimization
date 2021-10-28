@@ -14,9 +14,9 @@ import {withRouter} from "next/router";
 import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
-import {Button, SIZE, KIND, SHAPE} from "baseui/button";
+import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
-import {ListItem, ListItemLabel, ARTWORK_SIZES} from "baseui/list";
+import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Delete, ChevronDown, Upload} from "baseui/icon";
 import {Input} from "baseui/input";
 import {Textarea} from "baseui/textarea";
@@ -114,10 +114,10 @@ function Canopy_Tent({router, products, variants}) {
     const [displayTabs, setDisplayTabs] = useState(false);
     const [tabActiveKey, setTabActiveKey] = React.useState(0);
 
-    const [productComponent, setProductComponent] = useState([products[0], products[3], products[3], products[3], products[3]]);
-    const [productVariant, setProductVariant] = useState([variants[0], variants[3], variants[3], variants[3], variants[3]]);
+    const [productComponent, setProductComponent] = useState([products[2], products[3], products[3], products[3], products[3]]);
+    const [productVariant, setProductVariant] = useState([variants[2], variants[3], variants[3], variants[3], variants[3]]);
 
-    const [selectedFrame, setSelectedFrame] = useState("y5");
+    const [selectedFrame, setSelectedFrame] = useState("y7");
 
     const [productImageGallery, setProductImageGallery] = useState([]);
     const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
@@ -442,8 +442,8 @@ function Canopy_Tent({router, products, variants}) {
             product_name = "y7-heavy-duty-canopy-tent";
             series = "Y7";
         } else {
-            product_name = "y5-economic-canopy-tent";
-            series = "Y5";
+            product_name = "y7-heavy-duty-canopy-tent";
+            series = "Y7";
         }
 
         selectedVariant[0].attributes.map(({id, option}) => id === id_attribute_canopySize ? size = option.toUpperCase() : null);
@@ -676,8 +676,8 @@ function Canopy_Tent({router, products, variants}) {
             product_name = "y7-heavy-duty-canopy-tent";
             series = "Y7";
         } else {
-            product_name = "y5-economic-canopy-tent";
-            series = "Y5";
+            product_name = "y7-heavy-duty-canopy-tent";
+            series = "Y7";
         }
 
         selectedVariant.forEach((variant, index) => {
@@ -1059,9 +1059,9 @@ function Canopy_Tent({router, products, variants}) {
                                                             },
                                                         }}
                                             >
-                                                <Radio value="y5">Y5 Economic Steel</Radio>
-                                                <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                                 <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
+                                                <Radio value="y6">Y6 Commercial Aluminum</Radio>
+                                                <Radio value="y5">Y5 Economic Steel</Radio>
                                             </RadioGroup>
                                             <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
@@ -2046,7 +2046,6 @@ Canopy_Tent.getInitialProps = async (context) => {
         variants: variants,
         noFooter: true,
     };
-}
-;
+};
 
 export default withRouter(Canopy_Tent);

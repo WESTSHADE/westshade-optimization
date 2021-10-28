@@ -430,11 +430,9 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                     <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
                            overrides={{
                                Block: {
-                                   style: {
-                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
-                                       scrollbarWidth: "none", /* for Firefox */
-                                       "::-webkit-scrollbar": {display: "none"}
-                                   }
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
                                },
                            }}
                     >

@@ -6,7 +6,8 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
-import {Modal, ModalBody, ROLE, SIZE as ModalSize} from "baseui/modal";
+
+import {Modal} from "../components/surfacse";
 
 function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);
@@ -174,46 +175,10 @@ function Shipping_Return() {
                     ) : null}
                 </Block>
             </Block>
-            <Modal onClose={() => triggerModal(false)} isOpen={isModalOpen} animate size={ModalSize.full} role={ROLE.dialog}
-                   overrides={{
-                       Root: {
-                           style: {
-                               zIndex: "99",
-                               height: "auto",
-                               paddingTop: "24px",
-                               overflowY: "hidden",
-                           },
-                           props: {
-                               className: "modalRoot modalRoot-image",
-                           },
-                       },
-                       DialogContainer: {
-                           style: {height: "100%",},
-                       },
-                       Dialog: {
-                           style: {
-                               height: "fit-content",
-                               maxWidth: "600px !important",
-                               paddingBottom: "0px !important",
-                               borderTopRightRadius: "32px !important",
-                               borderBottomRightRadius: "32px !important",
-                               borderBottomLeftRadius: "32px !important",
-                               borderTopLeftRadius: "32px !important",
-                           },
-                           props: {
-                               className: "modalDialog"
-                           },
-                       },
-                       Close: {
-                           style: {top: "29px", right: "29px"},
-                       },
-                   }}
-            >
-                <ModalBody style={{backgroundColor: "white", padding: "72px 12px 36px", height: "auto"}} className="modalSelectionContainer">
-                    <Block position="relative">
-                        <Image src="images/fedex-ground-shipment.jpg" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475} quality={100}/>
-                    </Block>
-                </ModalBody>
+            <Modal type="alertdialog" isOpen={isModalOpen} onClose={() => triggerModal(false)}>
+                <Block position="relative" width="80vw" maxWidth="600px" height="auto">
+                    <Image src="images/fedex-ground-shipment.jpg" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475} quality={100}/>
+                </Block>
             </Modal>
         </React.Fragment>
     );

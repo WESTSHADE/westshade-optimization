@@ -450,11 +450,9 @@ function Accessories({router, product, productComponent, productVariant}) {
                     <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
                            overrides={{
                                Block: {
-                                   style: {
-                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
-                                       scrollbarWidth: "none", /* for Firefox */
-                                       "::-webkit-scrollbar": {display: "none"}
-                                   }
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
                                },
                            }}
                     >
@@ -462,7 +460,7 @@ function Accessories({router, product, productComponent, productVariant}) {
                             <Block marginBottom="16px" font="MinXHeading20">
                                 {wallType ? getProductName(productName) + " - " + stringFn.changeCase(wallType, 1) : productName}
                             </Block>
-                            {uProduct && uProduct.short_description ? (
+                            {uProduct && uProduct.description ? (
                                 <Block font="MinXParagraph14"
                                        overrides={{
                                            Block: {
@@ -472,7 +470,7 @@ function Accessories({router, product, productComponent, productVariant}) {
                                            },
                                        }}
                                        dangerouslySetInnerHTML={{
-                                           __html: `Description: ${stringFn.modifyShortDescription(uProduct.short_description)}`,
+                                           __html: `Description: ${stringFn.modifyShortDescription(uProduct.description)}`,
                                        }}
                                 />
                             ) : null}

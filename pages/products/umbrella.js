@@ -7,13 +7,12 @@ import clsx from "clsx";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
-import Link from "next/link";
 
 import {Block} from "baseui/block";
-import {Modal, ModalBody, ROLE, SIZE} from "baseui/modal";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
 import {Checkout, Selection} from "../../components/sections";
+import {Modal} from "../../components/surfacse";
 
 import styles from "./Product.module.scss";
 
@@ -23,7 +22,6 @@ import {EventEmitter} from "../../utils/events";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Modal as ModalT} from "../../components/surfacse";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -529,11 +527,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
                            overrides={{
                                Block: {
-                                   style: {
-                                       "-ms-overflow-style": "none", /* for Internet Explorer, Edge */
-                                       scrollbarWidth: "none", /* for Firefox */
-                                       "::-webkit-scrollbar": {display: "none"}
-                                   }
+                                   props: {
+                                       className: "hideScrollBar"
+                                   },
                                },
                            }}
                     >
@@ -558,7 +554,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     </Block>
                 </Block>
             </Block>
-            <ModalT type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
                 <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
                        paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
                 >
@@ -584,7 +580,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                         </Block>
                     </Block>
                 </Block>
-            </ModalT>
+            </Modal>
         </React.Fragment>
     );
 }

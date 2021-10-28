@@ -347,6 +347,26 @@ ul.bullet-warranty.sub > li {
     border-radius: 8px
 }
 
+.container-input-enquiry {
+    padding-right: 0;
+    padding-left: 0;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    border-left: none;
+    background-color: transparent
+}
+
+.container-inner-input-enquiry {
+    background-color: transparent
+}
+
+.input-enquiry {
+    padding-right: 0;
+    padding-left: 0;
+    background-color: transparent
+}
+
 @media screen and (max-width: 480px) {
     .image-gallery-thumbnails {
         display: none;
@@ -527,4 +547,8 @@ ul.bullet-warranty.sub > li {
             display: none;
         }
     }
+}
+
+.text-ellipsis * {
+    text-overflow: ellipsis;
 }

@@ -8,14 +8,14 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, SIZE, ROLE} from "baseui/mod
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {startEnhancer, confirmText, isOpen = false, onClose, size = SIZE.full, role = ROLE.dialog, type, header, children, footer} = props;
+    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles} = props;
 
     return (
-        <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={role}
+        <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
                overrides={{
                    Root: {
                        props: {
-                           className: type === "dialog" ? clsx(styles["container-root-dialog"], "hideScrollBar") : clsx(styles["container-root"], "hideScrollBar"),
+                           className: type === "alertdialog" ? styles["container-root-alert"] : type === "dialog" ? clsx(styles["container-root-dialog"], "hideScrollBar") : clsx(styles["container-root"], "hideScrollBar"),
                        },
                    },
                    DialogContainer: {
@@ -25,8 +25,9 @@ const modal = (props) => {
                    },
                    Dialog: {
                        props: {
-                           className: styles["dialog"],
+                           className: clsx(styles["dialog"], dialogClassName),
                        },
+                       style: {...dialogStyles}
                    },
                    Close: {
                        props: {

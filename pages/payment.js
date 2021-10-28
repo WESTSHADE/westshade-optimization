@@ -95,7 +95,7 @@ function Payment({orderID}) {
                                     error={numberError}
                                     value={number}
                                     onChange={(event) => setNumber(event.currentTarget.value)}
-                                    placeholder="Cridit Card number"
+                                    placeholder="Credit Card number"
                                     overrides={{
                                         Root: {
                                             style: ({$theme}) => ({

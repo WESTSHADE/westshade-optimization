@@ -1,3 +1,28 @@
+.container-root-alert {
+  height: 100vh;
+  z-index: 99;
+
+  .container-dialog {
+
+    .dialog {
+      align-self: center;
+      width: fit-content;
+      height: fit-content;
+      transform: translateY(-15vh);
+
+      .close {
+        top: 29px;
+        right: 29px;
+        border-radius: 50%;
+
+        &:active {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+}
+
 .container-root-dialog {
   height: 100vh;
   z-index: 99;

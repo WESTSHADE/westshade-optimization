@@ -5,13 +5,13 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import ArrowDown from 'baseui/icon/arrow-down'
-
-import {Box, Button, Container, Grid, TextField} from "@material-ui/core";
+import {FormControl} from "baseui/form-control";
+import {Input} from "baseui/input";
+import {ArrowDown} from 'baseui/icon'
 
 import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
-import Modal from "../../../components/modal";
+import {Modal} from "../../../components/surfacse";
 
 import Utils from "../../../utils/utils";
 
@@ -79,7 +79,17 @@ function Custom_Printing_Umbrella({router, size}) {
 
     const handleEnquiry = () => {
         setShowGetQuote(!showGetQuote);
+
+        if (showGetQuote) {
+            setQuoteError(false);
+            setQuoteNameLast("");
+            setQuoteNameFirst("");
+            setQuoteEmail("");
+            setQuotePhone("");
+            setQuoteRequest("");
+        }
     }
+
 
     const handleSendQuote = async () => {
         if (!quoteProduct || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
@@ -97,7 +107,6 @@ function Custom_Printing_Umbrella({router, size}) {
                 6: quotePhone,
                 8: quoteRequest,
             });
-            console.log(result);
             handleEnquiry();
         }
     };
@@ -255,142 +264,204 @@ function Custom_Printing_Umbrella({router, size}) {
                          }
                 />
             </Block>
-            <Modal onClose={() => setShowGetQuote(false)} show={showGetQuote}>
-                <Box className="popup-section" style={{width: "auto"}}>
-                    <Container maxWidth="md">
-                        <Grid container spacing={6}>
-                            <Grid item xs={12} sm={6}>
-                                <div className="popup-section-title">At Westshade, We Offer Limitless Design Solution.</div>
-                                <img
-                                    style={{
-                                        width: 120,
-                                        height: 120,
-                                        objectFit: "contain",
-                                        margin: "24px auto",
-                                    }}
-                                    src={"/images/tent-spec/customer-service.svg"}
-                                />
-                                <div className="popup-section-title" style={{fontSize: "1rem"}}>
-                                    Call us for custom print consultation
-                                </div>
-                                <div className="section-checkout-container" style={{justifyContent: "center", paddingTop: 24}}>
-                                    <Button
-                                        variant="contained"
-                                        className="contained-button-black"
-                                        onClick={() => {
-                                            let a = document.createElement("a");
-                                            a.href = "tel:949-751-1070";
-                                            a.click();
-                                        }}
-                                    >
-                                        (949)751-1070
-                                    </Button>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <form>
-                                    <div className="section-quote-input">
-                                        <TextField fullWidth label="Product" required InputLabelProps={{shrink: true}} defaultValue={quoteProduct}
-                                                   onChange={(event) => {
-                                                       setQuoteError(false);
-                                                       setQuoteProduct(event.target.value);
-                                                   }}
-                                                   error={!quoteProduct && quoteError}
-                                        />
-                                    </div>
-                                    <div className="section-quote-input" style={{display: "flex"}}>
-                                        <div style={{paddingRight: 12}}>
-                                            <TextField
-                                                label="Last Name"
-                                                required
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                defaultValue={quoteNameLast}
-                                                onChange={(event) => {
-                                                    setQuoteError(false);
-                                                    setQuoteNameLast(event.target.value);
-                                                }}
-                                                error={!quoteNameLast && quoteError}
-                                            />
-                                        </div>
-                                        <div style={{paddingRight: 12}}>
-                                            <TextField
-                                                label="First Name"
-                                                required
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                defaultValue={quoteNameFirst}
-                                                onChange={(event) => {
-                                                    setQuoteError(false);
-                                                    setQuoteNameFirst(event.target.value);
-                                                }}
-                                                error={!quoteNameFirst && quoteError}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="section-quote-input">
-                                        <TextField
-                                            fullWidth
-                                            label="Email"
-                                            required
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            defaultValue={quoteEmail}
-                                            onChange={(event) => {
-                                                setQuoteError(false);
-                                                setQuoteEmail(event.target.value);
-                                            }}
-                                            error={!quoteEmail && quoteError}
-                                        />
-                                    </div>
-                                    <div className="section-quote-input">
-                                        <TextField
-                                            fullWidth
-                                            label="Phone"
-                                            required
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            defaultValue={quotePhone}
-                                            onChange={(event) => {
-                                                setQuoteError(false);
-                                                setQuotePhone(event.target.value);
-                                            }}
-                                            error={!quotePhone && quoteError}
-                                        />
-                                    </div>
-                                    <div className="section-quote-input">
-                                        <TextField
-                                            fullWidth
-                                            label="Describe What You’re Looking For"
-                                            required
-                                            InputLabelProps={{
-                                                shrink: true,
-                                                style: {width: "max-content"}
-                                            }}
-                                            multiline
-                                            maxRows={6}
-                                            defaultValue={quoteRequest}
-                                            onChange={(event) => {
-                                                setQuoteError(false);
-                                                setQuoteRequest(event.target.value);
-                                            }}
-                                            error={!quoteRequest && quoteError}
-                                        />
-                                    </div>
-                                    <div className="section-checkout-container">
-                                        <Button variant="contained" onClick={() => handleSendQuote()} disableRipple disableElevation>
-                                            Submit
-                                        </Button>
-                                    </div>
-                                </form>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </Box>
+            <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
+                <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
+                       display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
+                >
+                    <Block display="flex" flexDirection="column" justifyContent="center" alignItems="center"
+                           overrides={{
+                               Block: {
+                                   style: {textAlign: "center"}
+                               }
+                           }}
+                    >
+                        <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
+                        <Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
+                            <Image src={"images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
+                        </Block>
+                        <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
+                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(949)751-1070' color="white"
+                                 buttonStyle={{
+                                     backgroundColor: "rgba(0, 0, 0, 0.87) !important",
+                                     paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
+                                     borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+                                 }}
+                                 onClick={() => window.open(`tel:949-751-1070`, '_self')}
+                        />
+                    </Block>
+                    <Block>
+                        <FormControl label={() => "Product*"}>
+                            <Input value={quoteProduct} clearOnEscape error={!quoteProduct && quoteError} required
+                                   overrides={{
+                                       Root: {
+                                           props: {
+                                               className: "container-input-enquiry"
+                                           },
+                                           style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                       },
+                                       InputContainer: {
+                                           props: {
+                                               className: "container-inner-input-enquiry"
+                                           }
+                                       },
+                                       Input: {
+                                           props: {
+                                               className: "input-enquiry"
+                                           },
+                                       },
+                                   }}
+                                   onChange={(event) => {
+                                       setQuoteError(false);
+                                       setQuoteProduct(event.target.value);
+                                   }}
+                            />
+                        </FormControl>
+                        <Block display="grid" gridTemplateColumns="1fr 1fr" gridColumnGap="24px">
+                            <Block>
+                                <FormControl label={() => "Last Name*"}>
+                                    <Input value={quoteNameLast} clearOnEscape error={!quoteNameLast && quoteError} required
+                                           overrides={{
+                                               Root: {
+                                                   props: {
+                                                       className: "container-input-enquiry"
+                                                   },
+                                                   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                               },
+                                               InputContainer: {
+                                                   props: {
+                                                       className: "container-inner-input-enquiry"
+                                                   }
+                                               },
+                                               Input: {
+                                                   props: {
+                                                       className: "input-enquiry"
+                                                   },
+                                               },
+                                           }}
+                                           onChange={(event) => {
+                                               setQuoteError(false);
+                                               setQuoteNameLast(event.target.value);
+                                           }}
+                                    />
+                                </FormControl>
+                            </Block>
+                            <Block>
+                                <FormControl label={() => "First Name*"}>
+                                    <Input value={quoteNameFirst} clearOnEscape error={!quoteNameFirst && quoteError} required
+                                           overrides={{
+                                               Root: {
+                                                   props: {
+                                                       className: "container-input-enquiry"
+                                                   },
+                                                   style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                               },
+                                               InputContainer: {
+                                                   props: {
+                                                       className: "container-inner-input-enquiry"
+                                                   }
+                                               },
+                                               Input: {
+                                                   props: {
+                                                       className: "input-enquiry"
+                                                   },
+                                               },
+                                           }}
+                                           onChange={(event) => {
+                                               setQuoteError(false);
+                                               setQuoteNameFirst(event.target.value);
+                                           }}
+                                    />
+                                </FormControl>
+                            </Block>
+                        </Block>
+                        <FormControl label={() => "Email*"}>
+                            <Input value={quoteEmail} clearOnEscape error={!quoteEmail && quoteError} required
+                                   overrides={{
+                                       Root: {
+                                           props: {
+                                               className: "container-input-enquiry"
+                                           },
+                                           style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                       },
+                                       InputContainer: {
+                                           props: {
+                                               className: "container-inner-input-enquiry"
+                                           }
+                                       },
+                                       Input: {
+                                           props: {
+                                               className: "input-enquiry"
+                                           },
+                                       },
+                                   }}
+                                   onChange={(event) => {
+                                       setQuoteError(false);
+                                       setQuoteEmail(event.target.value);
+                                   }}
+                            />
+                        </FormControl>
+                        <FormControl label={() => "Phone*"}>
+                            <Input value={quotePhone} clearOnEscape error={!quotePhone && quoteError} required
+                                   overrides={{
+                                       Root: {
+                                           props: {
+                                               className: "container-input-enquiry"
+                                           },
+                                           style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                       },
+                                       InputContainer: {
+                                           props: {
+                                               className: "container-inner-input-enquiry"
+                                           }
+                                       },
+                                       Input: {
+                                           props: {
+                                               className: "input-enquiry"
+                                           },
+                                       },
+                                   }}
+                                   onChange={(event) => {
+                                       setQuoteError(false);
+                                       setQuotePhone(event.target.value);
+                                   }}
+                            />
+                        </FormControl>
+                        <FormControl label={() => "Describe What You’re Looking For*"}>
+                            <Input value={quoteRequest} clearOnEscape error={!quoteRequest && quoteError} required
+                                   overrides={{
+                                       Root: {
+                                           props: {
+                                               className: "container-input-enquiry"
+                                           },
+                                           style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
+                                       },
+                                       InputContainer: {
+                                           props: {
+                                               className: "container-inner-input-enquiry"
+                                           },
+                                       },
+                                       Input: {
+                                           props: {
+                                               className: "input-enquiry"
+                                           },
+                                       },
+                                   }}
+                                   onChange={(event) => {
+                                       setQuoteError(false);
+                                       setQuoteRequest(event.target.value);
+                                   }}
+                            />
+                        </FormControl>
+                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
+                                 buttonStyle={{
+                                     backgroundColor: "#e0e0e0 !important",
+                                     paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
+                                     borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+                                 }}
+                                 onClick={() => handleSendQuote()}
+                        />
+                    </Block>
+                </Block>
             </Modal>
         </React.Fragment>
     )
