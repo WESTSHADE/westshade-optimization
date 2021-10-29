@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import clsx from "clsx";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SHAPE} from "baseui/button";
 import {Modal, ModalHeader, ModalBody, ModalFooter, SIZE, ROLE} from "baseui/modal";
+
+import FrameCompare from "./frame_compare";
+import SizeGuide from "./size_guide";
 
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles} = props;
+    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles, content = ""} = props;
 
     return (
         <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
@@ -36,64 +38,17 @@ const modal = (props) => {
                    },
                }}
         >
-            {header ? (
+            {content ? content === "size" ? (
+                <ModalHeader className={styles["container-header"]}><Block font="MinXLabel20">Size Guide</Block></ModalHeader>
+            ) : null : header ? (
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
             <ModalBody className={clsx(styles["container-body"], "hideScrollBar")}>
-                {children}
-                {/*    <Block flex={[0, 0, 1]} position={"relative"} paddingRight={["16px", "52px", "0"]} paddingLeft={["16px", "52px", "64px"]}></Block>*/}
-                {/*    <Block*/}
-                {/*        display={"flex"}*/}
-                {/*        flexDirection={"column"}*/}
-                {/*        width={["100%", "100%", "424px"]}*/}
-                {/*        paddingTop={["24px", "24px", "40px"]}*/}
-                {/*        paddingRight={["16px", "52px", "64px"]}*/}
-                {/*        paddingLeft={["16px", "52px", "0"]}*/}
-                {/*        alignItems={"center"}*/}
-                {/*        overflow={["unset", "unset", "scroll"]}*/}
-                {/*    >*/}
-                {/*        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%"}}>*/}
-                {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Wall type</div>*/}
-                {/*        </div>*/}
-                {/*        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: "64px"}}>*/}
-                {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>*/}
-                {/*        </div>*/}
-                {/*    </Block>*/}
+                {content ? content === "frame" ? <FrameCompare/> : content === "size" ? <SizeGuide/> : null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={styles["container-footer"]}>
                     {footer}
-                    {/*    {startEnhancer()}*/}
-                    {/*    <Block display={"flex"} flexDirection={"row"} justifyContent={"flex-end"} flex={1}>*/}
-                    {/*        <Button*/}
-                    {/*            shape={SHAPE.pill}*/}
-                    {/*            overrides={{*/}
-                    {/*                BaseButton: {*/}
-                    {/*                    props: {*/}
-                    {/*                        className: styles["button-cancel"],*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*            }}*/}
-                    {/*            // onClick={() => setIsOpen(false)}*/}
-                    {/*        >*/}
-                    {/*            Cancel*/}
-                    {/*        </Button>*/}
-                    {/*        {confirmText ? (*/}
-                    {/*            <Button*/}
-                    {/*                shape={SHAPE.pill}*/}
-                    {/*                overrides={{*/}
-                    {/*                    BaseButton: {*/}
-                    {/*                        props: {*/}
-                    {/*                            className: styles["button-confirm"],*/}
-                    {/*                        },*/}
-                    {/*                    },*/}
-                    {/*                }}*/}
-                    {/*                onClick={() => setPrintIsOpen(true)}*/}
-                    {/*            >*/}
-                    {/*                {confirmText}*/}
-                    {/*            </Button>*/}
-                    {/*        ) : null}*/}
-                    {/*    </Block>*/}
                 </ModalFooter>
             ) : null}
         </Modal>

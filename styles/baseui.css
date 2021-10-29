@@ -1,3 +1,12 @@
+:root {
+    --color-white: white;
+    --color-black: black;
+    --color-red: #991F34;
+    --color-yellow: #F4C84E;
+    --color-blue: #1A4A8B;
+    --color-green: #275D3D;
+}
+
 .nav-container {
     position: relative;
     z-index: 9;
@@ -555,4 +564,22 @@ ul.bullet-warranty.sub > li {
     display: -webkit-box;
     -webkit-line-clamp: 4; /* number of lines to show */
     -webkit-box-orient: vertical;
+}
+
+.radio-dot {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #D9D9D9;
+    border-radius: 50%;
+}
+
+.button-linear-gradient {
+    width: 100%;
+    height: 52px;
+    padding: 3px;
+    color: #262626;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    background: linear-gradient(to left, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
 }

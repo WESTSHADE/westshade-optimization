@@ -69,6 +69,7 @@ const nextConfig = {
             "/westshade-privacy": {page: "/privacy"},
             // 购买页
             "/products/canopy-tent/buy": {page: "/products/canopy-tent"},
+            "/products/custom-printed-canopy-tent/buy": {page: "/products/custom-printed-canopy-tent"},
             "/custom-printed-package/f1010cpp": {page: "/products/custom-printed-package", query: {id: "40149", frame: "y5"}},
             "/custom-printed-package/f1015cpp": {page: "/products/custom-printed-package", query: {id: "40193", frame: "y5"}},
             "/custom-printed-package/f1020cpp": {page: "/products/custom-printed-package", query: {id: "40275", frame: "y5"}},
