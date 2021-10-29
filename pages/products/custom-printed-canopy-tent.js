@@ -930,7 +930,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                 <Tab title="Basic" tabRef={tabsRefs[0]}
                                      overrides={{
                                          TabPanel: {
-                                             style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),
+                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
                                          },
                                          Tab: {
                                              style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
@@ -939,27 +939,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                 >
                                     <>
                                         <div className="container-selection">
-                                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Size</div>
+                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Size</Block>
                                             <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                                                {productComponent && productComponent[0]
-                                                    ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map((attribute) => {
-                                                        let series = selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : "";
-                                                        return attribute.options.map((option, index) => {
-                                                            if ((series === "y5 economic" || series === "y6 commercial") && index < 3) {
-                                                                return (
-                                                                    <Radio key={index} value={option.toLowerCase()}>
-                                                                        {option}
-                                                                    </Radio>
-                                                                );
-                                                            } else if (series === "y7 heavy duty") {
-                                                                return (
-                                                                    <Radio key={index} value={option.toLowerCase()}>
-                                                                        {option}
-                                                                    </Radio>
-                                                                );
-                                                            }
-                                                        });
-                                                    }) : null}
+                                                {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map((attribute) => {
+                                                    let series = selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : "";
+                                                    return attribute.options.map((option, index) => {
+                                                        if ((series === "y5 economic" || series === "y6 commercial") && index < 3) {
+                                                            return (
+                                                                <Radio key={index} value={option.toLowerCase()}>
+                                                                    {option}
+                                                                </Radio>
+                                                            );
+                                                        } else if (series === "y7 heavy duty") {
+                                                            return (
+                                                                <Radio key={index} value={option.toLowerCase()}>
+                                                                    {option}
+                                                                </Radio>
+                                                            );
+                                                        }
+                                                    });
+                                                }) : null}
                                             </Selection>
                                             <MButton type="solid" height="auto" marginTop="16px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
@@ -967,7 +966,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                             />
                                         </div>
                                         <div className="container-selection">
-                                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Frame</div>
+                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Frame</Block>
                                             <Selection name="frame" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""}
                                                        onChange={(event) => {
                                                            selectedFrame = event.target.value;
@@ -982,7 +981,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                             />
                                         </div>
                                         <div className="container-selection">
-                                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
+                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Color</Block>
                                             <Selection name="color" value={selectedRoofColor} onChange={(event) => setSelectedRoofColor(event.target.value)} id={id_attribute_canopyColor}>
                                                 {selectionColor.map((color, index) => (
                                                         <Radio key={index} value={color.toLowerCase()}
@@ -1046,12 +1045,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                          },
                                      }}
                                 >
-                                    <ul
-                                        className={css({
-                                            paddingLeft: 0,
-                                            paddingRight: 0,
-                                        })}
-                                    >
+                                    <ul className={css({paddingLeft: 0, paddingRight: 0,})}>
                                         {wallPlainAttributeList.map((component, index) => {
                                             return (
                                                 <ListItem key={index}
@@ -1092,17 +1086,10 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                                   }),
                                                               },
                                                               Content: {
-                                                                  style: ({$theme}) => ({
-                                                                      paddingRight: 0,
-                                                                      paddingLeft: "12px",
-                                                                      borderBottomWidth: 0,
-                                                                  }),
+                                                                  style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
                                                               },
                                                               ArtworkContainer: {
-                                                                  style: ({$theme}) => ({
-                                                                      width: "44px",
-                                                                      height: "44px",
-                                                                  }),
+                                                                  style: {width: "44px", height: "44px"},
                                                               },
                                                           }}
                                                           endEnhancer={() => {
@@ -1110,12 +1097,11 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                                   <>
                                                                       {component[0].option !== "none" ? (
                                                                           <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                              <Button
-                                                                                  shape={SHAPE.pill}
-                                                                                  overrides={{
-                                                                                      BaseButton: {props: {className: "button-edit"}},
-                                                                                  }}
-                                                                                  onClick={() => openWallModal(index)}
+                                                                              <Button shape={SHAPE.pill}
+                                                                                      overrides={{
+                                                                                          BaseButton: {props: {className: "button-edit"}},
+                                                                                      }}
+                                                                                      onClick={() => openWallModal(index)}
                                                                               >
                                                                                   Edit
                                                                               </Button>
