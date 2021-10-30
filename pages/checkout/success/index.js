@@ -113,7 +113,7 @@ function Success({router, orderDetail}) {
                 <Block height={"100vh"} paddingTop={["48px", "48px", "96px"]} display={"flex"} justifyContent={"center"} overflow={"scroll"} style={{paddingTop: 146}}>
                     {/* 主要显示区域 */}
                     <Block width={["100%", "480px"]} display={"flex"} flexDirection={"column"}>
-                        <div className="container-selection" style={{width: "100%", paddingLeft: 16, paddingRight: 16, marginBottom: "60px"}}>
+                        <div className="container-selection" style={{paddingLeft: 16, paddingRight: 16, marginBottom: "60px", alignItems: "center"}}>
                             <div style={{
                                 width: 80,
                                 height: 80,
@@ -134,7 +134,7 @@ function Success({router, orderDetail}) {
                                 <div>{orderDetail.date_paid ? new Date(orderDetail.date_paid).toLocaleDateString() : ""}</div>
                             </div>
                         </div>
-                        <div className="container-selection" style={{width: "100%", paddingLeft: 16, paddingRight: 16, alignItems: "flex-start"}}>
+                        <div className="container-selection" style={{paddingLeft: 16, paddingRight: 16, alignItems: "flex-start"}}>
                             <div style={{fontSize: "20px", fontWeight: "bold", lineHeight: "28px", marginBottom: "24px"}}>Order summary</div>
                             {orderDetail.line_items ? (
                                 <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%", alignItems: "center", marginBottom: "4px"}}>

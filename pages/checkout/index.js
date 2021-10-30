@@ -1,69 +1,72 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import styled from "styled-components";
 
 import {withRouter} from "next/router";
+import Image from 'next/image'
 
-import {Box, Button, Checkbox, Container, Divider, Grow, Grid, List, ListItem, ListItemText, IconButton, Paper, Typography, TextField} from "@material-ui/core";
+import {Grow} from "@material-ui/core";
 import {Alert, AlertTitle} from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
 
 import {Block} from "baseui/block";
-import {Button as ButtonB, KIND, SHAPE} from "baseui/button";
+import {Button, KIND, SIZE, SHAPE} from "baseui/button";
 import {PaymentCard, valid} from "baseui/payment-card";
-import {MaskedInput} from "baseui/input";
+import {MaskedInput, Input} from "baseui/input";
 import {FormControl} from "baseui/form-control";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
-import {Checkbox as CheckboxB, LABEL_PLACEMENT} from "baseui/checkbox";
+import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
+import Delete from 'baseui/icon/delete'
 
 import Utils from "../../utils/utils";
+import {NumberFn, UrlFn} from "../../utils/tools";
 
-import {NumberFn, UrlFn, StringFn} from "../../utils/tools";
-import {EventEmitter} from "../../utils/events";
-
-import CContainer from "../../components/container";
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+import {Modal} from "../../components/surfacse";
+import MButton from "../../components/button-n";
 
 const utils = new Utils();
 const numberFn = new NumberFn();
 const urlFn = new UrlFn();
-const stringFn = new StringFn();
 
-const MXButton = styled(Button)`
-	margin: 24px auto;
-`;
+let HEIGHT = 0;
+
+const InputField = (props) => {
+    const {value, placeholder, error, onChange} = props;
+
+    return (
+        <Input value={value} placeholder={placeholder} clearOnEscape error={error}  {...props}
+               overrides={{
+                   Root: {
+                       props: {
+                           className: "container-input"
+                       },
+                   },
+                   InputContainer: {
+                       props: {
+                           className: "container-inner-input"
+                       }
+                   },
+                   Input: {
+                       props: {
+                           className: "input-address"
+                       },
+                   },
+               }}
+               onChange={onChange}
+        />
+    )
+}
 
 function Checkout({router, orderID, orderDetail}) {
-    const [display, setDisplay] = useState(false);
+    const dispatch = useDispatch();
+
+    const {loggedIn, token, user} = useSelector(({user}) => user);
 
     const [id, setOrderID] = useState(numberFn.strToInt(orderID));
     const [order, setOrderDetail] = useState(orderDetail);
 
-    const [billingAddress, setBillingAddress] = useState({
-        first_name: "",
-        last_name: "",
-        company: "",
-        address_1: "",
-        address_2: "",
-        city: "",
-        state: "",
-        postcode: "",
-        country: "US",
-        email: "",
-        phone: "",
-    });
-    const [shippingAddress, setShippingAddress] = useState({
-        first_name: "",
-        last_name: "",
-        company: "",
-        address_1: "",
-        address_2: "",
-        city: "",
-        state: "",
-        postcode: "",
-        country: "US",
-    });
+    const [billingAddress, setBillingAddress] = useState({...user.billing});
+    const [shippingAddress, setShippingAddress] = useState({...user.shipping});
     const [different, setDifferent] = useState(false);
 
     const [coupon, setCoupon] = useState("");
@@ -87,9 +90,10 @@ function Checkout({router, orderID, orderDetail}) {
     const [expirationError, setExpirationError] = useState(false);
     const [codeError, setCodeError] = useState(false);
 
-    const dispatch = useDispatch();
+    const [addressHeight, setAddressHeight] = useState(0);
 
-    const {loggedIn, token} = useSelector(({user}) => user);
+    const [showLoading, setShowLoading] = useState(false);
+
 
     const {card} = valid.number(number);
     let codeLength;
@@ -104,11 +108,6 @@ function Checkout({router, orderID, orderDetail}) {
         }
         return price;
     };
-
-    // const updateCart = () => {
-    //     localStorage.setItem("cart", []);
-    //     EventEmitter.dispatch("updateBadge");
-    // };
 
     const handleUpdateCart = (cartList) => {
         if (loggedIn) {
@@ -128,14 +127,12 @@ function Checkout({router, orderID, orderDetail}) {
 
     const updateCoupon = async () => {
         if (coupon) {
-            let cl = [...lineCoupon];
-            cl.push({
-                code: coupon,
-            });
+            let cl = [];
+            lineCoupon.map(c => cl.push({code: c.code,}));
+            cl.push({code: coupon});
             setCoupon("");
 
             let result = await utils.updateOrder(null, {id: numberFn.strToInt(id), coupon_lines: cl});
-            console.log(result);
 
             if (result.message) {
                 setShowError(true);
@@ -155,7 +152,10 @@ function Checkout({router, orderID, orderDetail}) {
         let cl = [...lineCoupon];
         cl.splice(index, 1);
 
-        let result = await utils.updateOrder(null, {id: id, coupon_lines: cl});
+        let cll = [];
+        cl.map(c => cll.push({code: c.code,}))
+
+        let result = await utils.updateOrder(null, {id: id, coupon_lines: cll});
         if (result.message) {
             setShowError(true);
             setError(result.message);
@@ -166,17 +166,17 @@ function Checkout({router, orderID, orderDetail}) {
         } else {
             setOrderDetail(result);
         }
-
         setLineCoupon(cl);
     };
 
     const pay = () => {
+        setShowLoading(true);
+
         let checkoutData = {
             id: id,
             payment_method: "bacs",
             payment_method_title: "Credit Card",
-            billing: null,
-            shipping: {
+            billing: {
                 first_name: "",
                 last_name: "",
                 company: "",
@@ -186,29 +186,26 @@ function Checkout({router, orderID, orderDetail}) {
                 state: "",
                 postcode: "",
                 country: "US",
+                email: "",
+                phone: ""
             },
+            shipping: null,
             line_items: null,
         };
 
-        checkoutData.billing = {...billingAddress};
+        checkoutData.shipping = {...shippingAddress};
         if (!different) {
-            checkoutData.shipping.first_name = billingAddress.first_name;
-            checkoutData.shipping.last_name = billingAddress.last_name;
-            checkoutData.shipping.company = billingAddress.company;
-            checkoutData.shipping.address_1 = billingAddress.address_1;
-            checkoutData.shipping.address_2 = billingAddress.address_2;
-            checkoutData.shipping.city = billingAddress.city;
-            checkoutData.shipping.state = billingAddress.state;
-            checkoutData.shipping.postcode = billingAddress.postcode;
-            checkoutData.shipping.country = billingAddress.country;
+            checkoutData.billing = {...shippingAddress};
         } else {
-            checkoutData.shipping = {...shippingAddress};
+            checkoutData.billing = {...billingAddress};
         }
         // checkoutData.line_items = order.line_items;
         // checkoutData.coupon_lines = [...lineCoupon];
 
         utils.updateOrder(null, checkoutData).then((res) => {
             if (res.message) {
+                setShowLoading(false);
+
                 setShowError(true);
                 setError(res.message);
                 setTimeout(function () {
@@ -217,6 +214,8 @@ function Checkout({router, orderID, orderDetail}) {
                 }, 4000);
             } else {
                 utils.checkout({id: numberFn.strToInt(id), cc: number, exp: expiration, cvv: code}).then((res) => {
+                    setShowLoading(false);
+
                     if (res.transactionResponse.errors) {
                         setShowError(true);
                         setError(res.transactionResponse.errors.error[0].errorText);
@@ -238,8 +237,6 @@ function Checkout({router, orderID, orderDetail}) {
     };
 
     useEffect(async () => {
-        setTimeout(() => setDisplay(true), 250);
-
         let i = null;
         if (!id) {
             i = urlFn.getParam("id");
@@ -259,8 +256,11 @@ function Checkout({router, orderID, orderDetail}) {
                 router.push("/");
             } else {
                 setOrderDetail(result);
-                if (result.billing) {
-                    setBillingAddress(result.billing);
+                // if (result.billing) {
+                //     setBillingAddress(result.billing);
+                // }
+                if (result.shipping) {
+                    setShippingAddress(result.shipping);
                 }
             }
         }
@@ -274,23 +274,13 @@ function Checkout({router, orderID, orderDetail}) {
     }, [order]);
 
     useEffect(() => {
-        if (
-            !billingAddress.first_name ||
-            !billingAddress.last_name ||
-            !billingAddress.address_1 ||
-            !billingAddress.city ||
-            !billingAddress.state ||
-            !billingAddress.postcode ||
-            !billingAddress.country ||
-            !billingAddress.email ||
-            !billingAddress.phone
-        ) {
+        if (!shippingAddress.first_name || !shippingAddress.last_name || !shippingAddress.address_1 || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postcode || !shippingAddress.country || !shippingAddress.email || !shippingAddress.phone) {
             setAddressesDone(false);
         } else {
             if (!different) {
                 setAddressesDone(true);
             } else {
-                if (!shippingAddress.first_name || !shippingAddress.last_name || !shippingAddress.address_1 || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postcode || !shippingAddress.country) {
+                if (!billingAddress.first_name || !billingAddress.last_name || !billingAddress.address_1 || !billingAddress.city || !billingAddress.state || !billingAddress.postcode || !billingAddress.country || !billingAddress.email || !billingAddress.phone) {
                     setAddressesDone(false);
                 } else {
                     setAddressesDone(true);
@@ -318,827 +308,428 @@ function Checkout({router, orderID, orderDetail}) {
 
     return (
         <React.Fragment>
-            {display && order && order.id ? (
-                <Box className="page" fontSize={14} lineHeight={1.43}>
-                    <CContainer>
-                        <Container maxWidth="md">
-                            <Grow in={showError} style={{left: 0, right: 0}} className={"alert-message"}>
-                                <Alert severity="error">
-                                    <AlertTitle>Error</AlertTitle>
-                                    {error}
-                                </Alert>
-                            </Grow>
-                            <Grid container spacing={4}>
-                                <Grid item xs={12} md={6}>
-                                    <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left" paragraph={true}>
-                                        <strong> BILLING ADDRESS </strong>
-                                    </Typography>
-                                    <div style={{display: "flex", flexDirection: "column"}}>
-                                        <form autoComplete="off">
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="billing-first-name"
-                                                            value={billingAddress.first_name}
-                                                            label="First name"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, first_name: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="billing-last-name"
-                                                            value={billingAddress.last_name}
-                                                            label="Last name"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, last_name: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="company-name"
-                                                            value={billingAddress.company}
-                                                            label="Company name (optional)"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, company: event.target.value});
-                                                            }}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="country"
-                                                            value={billingAddress.country}
-                                                            label="Country / Region"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                            required
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                            defaultValue={"United States (US)"}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="street-address-1"
-                                                            value={billingAddress.address_1}
-                                                            label="Street address"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, address_1: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="street-address-2"
-                                                            value={billingAddress.address_2}
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, address_2: event.target.value});
-                                                            }}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="town-city"
-                                                            value={billingAddress.city}
-                                                            label="Town / City"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, city: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                            autoComplete
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="state"
-                                                            value={billingAddress.state}
-                                                            label="State"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, state: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="zip"
-                                                            value={billingAddress.postcode}
-                                                            label="ZIP"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, postcode: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="phone"
-                                                            value={billingAddress.phone}
-                                                            label="Phone"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, phone: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <div style={{margin: "24px auto 0"}}>
-                                                        <TextField
-                                                            id="email-address"
-                                                            value={billingAddress.email}
-                                                            label="Email address"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            InputLabelProps={{shrink: true}}
-                                                            required
-                                                            onChange={(event) => {
-                                                                setErrorAccountBilling(false);
-                                                                setBillingAddress({...billingAddress, email: event.target.value});
-                                                            }}
-                                                            error={errorAccountBilling}
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </form>
-                                        <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", margin: "24px 0 12px 0"}}>
-                                            <Checkbox checked={different} color="default" onChange={(event) => setDifferent(event.target.checked)}/>
-                                            <Typography variant="subtitle1">Ship to a different address?</Typography>
-                                        </div>
-                                        {different ? (
-                                            <form autoComplete="off">
-                                                <Grid container spacing={2}>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="billing-first-name"
-                                                                label="First name"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, first_name: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.first_name}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="billing-last-name"
-                                                                label="Last name"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, last_name: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.last_name}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="company-name"
-                                                                label="Company name (optional)"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, company: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.company}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField id="country" label="Country / Region" variant="outlined" fullWidth InputLabelProps={{shrink: true}} required
-                                                                       InputProps={{readOnly: true}} defaultValue={"United States (US)"}/>
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="street-address-1"
-                                                                label="Street address"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, address_1: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.address_1}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="street-address-2"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, address_2: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.address_2}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="town-city"
-                                                                label="Town / City"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, city: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.city}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="state"
-                                                                label="State"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, state: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.state}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div style={{margin: "24px auto 0"}}>
-                                                            <TextField
-                                                                id="zip"
-                                                                label="ZIP"
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                InputLabelProps={{shrink: true}}
-                                                                required
-                                                                onChange={(event) => {
-                                                                    setErrorAccountShipping(false);
-                                                                    setShippingAddress({...shippingAddress, postcode: event.target.value});
-                                                                }}
-                                                                defaultValue={shippingAddress.postcode}
-                                                                error={errorAccountShipping}
-                                                            />
-                                                        </div>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        ) : null}
+            <Grow in={showError} style={{left: 0, right: 0}} className={"alert-message"}>
+                <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    {error}
+                </Alert>
+            </Grow>
+            {order && order.id ? (
+                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="60px" gridRowGap="40px" maxWidth="996px"
+                       marginTop={["24px", "32px", "40px"]} marginRight="auto" marginLeft="auto" paddingRight={["16px", "24px", "32px"]} paddingLeft={["16px", "24px", "32px"]}
+                >
+                    <Block display={"grid"} gridRowGap="32px">
+                        <Block overrides={{Block: {props: {className: "container-input-address"}}}}
+                               ref={(ref) => {
+                                   if (ref && ref.clientHeight) HEIGHT = ref.clientHeight;
+                               }}
+                        >
+                            <Block font="MinXHeading20">SHIPPING ADDRESS</Block>
+                            <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
+                                <InputField value={shippingAddress.first_name} placeholder="First name" error={errorAccountShipping} required
+                                            onChange={(event) => {
+                                                setErrorAccountShipping(false);
+                                                setShippingAddress({...shippingAddress, first_name: event.target.value});
+                                            }}
+                                />
+                                <InputField value={shippingAddress.last_name} placeholder="Last name" error={errorAccountShipping} required
+                                            onChange={(event) => {
+                                                setErrorAccountShipping(false);
+                                                setShippingAddress({...shippingAddress, last_name: event.target.value});
+                                            }}
+                                />
+                            </Block>
+                            <InputField value={shippingAddress.company} placeholder="Company name (optional)" error={errorAccountShipping}
+                                        onChange={(event) => {
+                                            setErrorAccountShipping(false);
+                                            setShippingAddress({...shippingAddress, company: event.target.value});
+                                        }}
+                            />
+                            <InputField value={shippingAddress.address_1} placeholder="Address line 1" error={errorAccountShipping} required
+                                        onChange={(event) => {
+                                            setErrorAccountShipping(false);
+                                            setShippingAddress({...shippingAddress, address_1: event.target.value});
+                                        }}
+                            />
+                            <InputField value={shippingAddress.address_2} placeholder="Address line 2" error={errorAccountShipping}
+                                        onChange={(event) => {
+                                            setErrorAccountShipping(false);
+                                            setShippingAddress({...shippingAddress, address_2: event.target.value});
+                                        }}
+                            />
+                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                <InputField value={shippingAddress.city} placeholder="City" error={errorAccountShipping} required
+                                            onChange={(event) => {
+                                                setErrorAccountShipping(false);
+                                                setShippingAddress({...shippingAddress, city: event.target.value});
+                                            }}
+                                />
+                                <InputField value={shippingAddress.state} placeholder="State" error={errorAccountShipping} required
+                                            onChange={(event) => {
+                                                setErrorAccountShipping(false);
+                                                setShippingAddress({...shippingAddress, state: event.target.value});
+                                            }}
+                                />
+                            </Block>
+                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                <InputField value={shippingAddress.postcode} placeholder="Zip code" error={errorAccountShipping} required
+                                            onChange={(event) => {
+                                                setErrorAccountShipping(false);
+                                                setShippingAddress({...shippingAddress, postcode: event.target.value});
+                                            }}
+                                />
+                                <InputField value={"United States"} disabled/>
+                            </Block>
+                            <InputField value={shippingAddress.phone} placeholder="Phone Number" error={errorAccountShipping} required
+                                        onChange={(event) => {
+                                            setErrorAccountShipping(false);
+                                            setShippingAddress({...shippingAddress, phone: event.target.value});
+                                        }}
+                            />
+                            <InputField value={shippingAddress.email} placeholder="Email" error={errorAccountShipping} required
+                                        onChange={(event) => {
+                                            setErrorAccountShipping(false);
+                                            setShippingAddress({...shippingAddress, email: event.target.value});
+                                        }}
+                            />
+                            <Checkbox checked={different} labelPlacement={LABEL_PLACEMENT.right} onChange={(e) => {
+                                setDifferent(e.target.checked);
+                                console.log(e.target.checked);
+                                if (e.target.checked) {
+                                    setAddressHeight(HEIGHT);
+                                } else {
+                                    setAddressHeight(0)
+                                }
+                            }}
+                                      overrides={{
+                                          Checkmark: {
+                                              props: {
+                                                  className: "checkbox-address"
+                                              }
+                                          },
+                                          Label: {
+                                              style: ({$theme}) => ({fontSize: "14px", fontWeight: 400}),
+                                          },
+                                      }}
+                            >
+                                A different billing address
+                            </Checkbox>
+                        </Block>
+                        <Block overflow="hidden"
+                               overrides={{
+                                   Block: {
+                                       props: {className: "container-input-address"},
+                                       style: {height: addressHeight + "px", transition: "height 500ms ease-out, height 500ms ease-out"}
+                                   }
+                               }}
+                        >
+                            <Block font="MinXHeading20">BILLING ADDRESS</Block>
+                            <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
+                                <InputField value={billingAddress.first_name} placeholder="First name" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBillingAddress({...billingAddress, first_name: event.target.value});
+                                            }}
+                                />
+                                <InputField value={billingAddress.last_name} placeholder="Last name" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBillingAddress({...billingAddress, last_name: event.target.value});
+                                            }}
+                                />
+                            </Block>
+                            <InputField value={billingAddress.company} placeholder="Company name (optional)" error={errorAccountBilling}
+                                        onChange={(event) => {
+                                            setErrorAccountBilling(false);
+                                            setBillingAddress({...billingAddress, company: event.target.value});
+                                        }}
+                            />
+                            <InputField value={billingAddress.address_1} placeholder="Address line 1" error={errorAccountBilling} required
+                                        onChange={(event) => {
+                                            setErrorAccountBilling(false);
+                                            setBillingAddress({...billingAddress, address_1: event.target.value});
+                                        }}
+                            />
+                            <InputField value={billingAddress.address_2} placeholder="Address line 2" error={errorAccountBilling}
+                                        onChange={(event) => {
+                                            setErrorAccountBilling(false);
+                                            setBillingAddress({...billingAddress, address_2: event.target.value});
+                                        }}
+                            />
+                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                <InputField value={billingAddress.city} placeholder="City" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBillingAddress({...billingAddress, city: event.target.value});
+                                            }}
+                                />
+                                <InputField value={billingAddress.state} placeholder="State" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBillingAddress({...billingAddress, state: event.target.value});
+                                            }}
+                                />
+                            </Block>
+                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                <InputField value={billingAddress.postcode} placeholder="Zip code" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBillingAddress({...billingAddress, postcode: event.target.value});
+                                            }}
+                                />
+                                <InputField value={"United States"} disabled/>
+                            </Block>
+                            <InputField value={billingAddress.phone} placeholder="Phone Number" error={errorAccountBilling} required
+                                        onChange={(event) => {
+                                            setErrorAccountBilling(false);
+                                            setBillingAddress({...billingAddress, phone: event.target.value});
+                                        }}
+                            />
+                            <InputField value={billingAddress.email} placeholder="Email" error={errorAccountBilling} required
+                                        onChange={(event) => {
+                                            setErrorAccountBilling(false);
+                                            setBillingAddress({...billingAddress, email: event.target.value});
+                                        }}
+                            />
+                        </Block>
+                        <Block marginBottom="40px">
+                            <Block marginBottom="24px" font="MinXLabel24">Pay with...</Block>
+                            <Block marginBottom="16px" paddingBottom="16px"
+                                   overrides={{
+                                       Block: {
+                                           style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}
+                                       }
+                                   }}
+                            >
+                                <Block display="flex" justifyContent="space-between" marginBottom="16px">
+                                    <Block paddingRight="12px" font="MinXParagraph16">We accept these credit cards</Block>
+                                    <Block position="relative" display="grid" gridTemplateColumns="repeat(4, 34px)" gridTemplateRows="24px" gridColumnGap="12px">
+                                        <Block position="relative">
+                                            <Image src="images/component/footer/icon_visa.png" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                        <Block position="relative">
+                                            <Image src="images/component/footer/icon_master.png" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                        <Block position="relative">
+                                            <Image src="images/component/footer/icon_amex.png" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                        <Block position="relative">
+                                            <Image src="images/component/footer/icon_discover.png" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                    </Block>
+                                </Block>
+                                <Block paddingBottom="12px" font="MinXParagraph16">Card information</Block>
+                                <div style={{width: "100%"}}>
+                                    <FormControl>
+                                        <PaymentCard value={number} error={numberError}
+                                                     onChange={(event) => setNumber(event.currentTarget.value)}
+                                                     placeholder="Credit Card Number"
+                                                     overrides={{
+                                                         Root: {
+                                                             style: ({$theme}) => ({
+                                                                 borderTopWidth: "1px",
+                                                                 borderRightWidth: "1px",
+                                                                 borderBottomWidth: "1px",
+                                                                 borderLeftWidth: "1px",
+                                                                 borderTopLeftRadius: "8px",
+                                                                 borderTopRightRadius: "8px",
+                                                                 borderBottomLeftRadius: "8px",
+                                                                 borderBottomRightRadius: "8px",
+                                                             }),
+                                                         },
+                                                         InputContainer: {
+                                                             style: ({$theme}) => ({backgroundColor: "white"}),
+                                                         },
+                                                         Input: {
+                                                             style: ({$theme}) => ({fontSize: 14}),
+                                                         },
+                                                     }}
+                                                     onBlur={() => setNumberError(false)}
+                                        />
+                                    </FormControl>
+                                    <div style={{display: "flex", flexDirection: "row", alignItems: "center", position: "relative"}}>
+                                        <FormControl overrides={{ControlContainer: {style: {marginRight: "15px", marginBottom: 0},},}}>
+                                            <MaskedInput value={expiration} error={expirationError}
+                                                         onChange={(event) => setExpiration(event.currentTarget.value)}
+                                                         placeholder="Expiration MM/YY" mask="99/99"
+                                                         overrides={{
+                                                             Root: {
+                                                                 style: ({$theme}) => ({
+                                                                     borderTopWidth: "1px",
+                                                                     borderRightWidth: "1px",
+                                                                     borderBottomWidth: "1px",
+                                                                     borderLeftWidth: "1px",
+                                                                     borderTopLeftRadius: "8px",
+                                                                     borderTopRightRadius: "8px",
+                                                                     borderBottomLeftRadius: "8px",
+                                                                     borderBottomRightRadius: "8px",
+                                                                 }),
+                                                             },
+                                                             InputContainer: {
+                                                                 style: ({$theme}) => ({backgroundColor: "white"}),
+                                                             },
+                                                             Input: {
+                                                                 style: ({$theme}) => ({fontSize: 14}),
+                                                             },
+                                                         }}
+                                                         onBlur={() => setExpirationError(false)}
+                                            />
+                                        </FormControl>
+                                        <FormControl overrides={{ControlContainer: {style: {marginRight: "32px", marginBottom: 0}}}}>
+                                            <MaskedInput value={code} error={codeError}
+                                                         onChange={(event) => setCode(event.currentTarget.value)}
+                                                         placeholder="CVC" mask={codeLength ? "9".repeat(codeLength) : "999"}
+                                                         overrides={{
+                                                             Root: {
+                                                                 style: ({$theme}) => ({
+                                                                     borderTopWidth: "1px",
+                                                                     borderRightWidth: "1px",
+                                                                     borderBottomWidth: "1px",
+                                                                     borderLeftWidth: "1px",
+                                                                     borderTopLeftRadius: "8px",
+                                                                     borderTopRightRadius: "8px",
+                                                                     borderBottomLeftRadius: "8px",
+                                                                     borderBottomRightRadius: "8px",
+                                                                 }),
+                                                             },
+                                                             InputContainer: {
+                                                                 style: ({$theme}) => ({backgroundColor: "white"}),
+                                                             },
+                                                             Input: {
+                                                                 style: ({$theme}) => ({fontSize: 14}),
+                                                             },
+                                                         }}
+                                                         onBlur={() => setCodeError(false)}
+                                            />
+                                        </FormControl>
+                                        <StatefulTooltip placement={PLACEMENT.topRight} triggerType={TRIGGER_TYPE.click} autoFocus
+                                                         content={() => (
+                                                             <div style={{zIndex: 999}}>
+                                                                 <img src="/images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
+                                                             </div>
+                                                         )}
+                                                         overrides={{
+                                                             Body: {style: ({$theme}) => ({boxShadow: "none", backgroundColor: "transparent",})},
+                                                             Inner: {style: ({$theme}) => ({backgroundColor: "transparent", paddingRight: 0, paddingLeft: 0}),},
+                                                         }}
+                                        >
+                                            <div
+                                                style={{
+                                                    position: "absolute",
+                                                    right: 0,
+                                                    width: 18,
+                                                    height: 18,
+                                                    border: "1px solid #8C8C8C",
+                                                    backgroundColor: "#8C8C8C",
+                                                    color: "white",
+                                                    borderTopLeftRadius: "50%",
+                                                    borderTopRightRadius: "50%",
+                                                    borderBottomLeftRadius: "50%",
+                                                    borderBottomRightRadius: "50%",
+                                                    textAlign: "center",
+                                                    fontSize: 12,
+                                                    fontWeight: "bold",
+                                                    lineHeight: "1rem"
+                                                }}
+                                            >
+                                                ?
+                                            </div>
+                                        </StatefulTooltip>
                                     </div>
-                                </Grid>
-                                <Grid item xs={12} md={6}>
-                                    <Paper classes={{root: "root-paper-checkout"}}>
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                            <strong> YOUR ORDER</strong>
-                                        </Typography>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="left" paragraph={true}>
-                                                    <strong>PRODUCT</strong>
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="right" paragraph={true}>
-                                                    <strong>SUBTOTAL</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        <List style={{marginBottom: 16}}>
-                                            {/* {productList.length === lineItem.length &&
-												productList.map((product, index) => {
-													return (
-														<ListItem key={index} className="section-image-package-listItem" style={{ alignItems: "flex-start" }}>
-															<div style={{ flex: 1, paddingRight: 24 }}>
-																<ListItemText primary={`${product.name} x ${lineItem[index].quantity}`} />
-																{lineItem[index].meta_data &&
-																	lineItem[index].meta_data.map((att, i) => {
-																		return <Typography key={i} variant="subtitle2" style={{ color: "gray" }}>{`${stringFn.replaceDash(att.display_key, 1)}: ${att.display_value}`}</Typography>;
-																	})}
-															</div>
-															<Typography variant="subtitle1">{`$${product.price}`}</Typography>
-														</ListItem>
-													);
-												})} */}
-                                            {lineItem.length > 0 &&
-                                            lineItem.map((product, index) => {
-                                                return (
-                                                    <ListItem key={index} className="section-image-package-listItem" style={{alignItems: "flex-start"}}>
-                                                        <div style={{flex: 1, paddingRight: 24}}>
-                                                            <ListItemText primary={`${product.name} x ${product.quantity}`}/>
-                                                            {product.meta_data &&
-                                                            product.meta_data.map((att, i) => {
-                                                                return <Typography key={i} variant="subtitle2"
-                                                                                   style={{color: "gray"}}>{`${stringFn.replaceDash(att.display_key, 1)}: ${att.display_value}`}</Typography>;
-                                                            })}
-                                                        </div>
-                                                        <Typography variant="subtitle1">{`$${product.price}`}</Typography>
-                                                    </ListItem>
-                                                );
-                                            })}
-                                        </List>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                    SUBTOTAL
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                    <strong>{`$` + getSubtotal()}</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        {order.discount_total && order.discount_total !== "0.00" ? (
-                                            <>
-                                                <Grid container>
-                                                    <Grid item xs>
-                                                        <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                            DISCOUNT
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                            <strong>{`-$` + order.discount_total}</strong>
-                                                        </Typography>
-                                                    </Grid>
-                                                </Grid>
-                                                <Divider classes={{root: "root-divider-checkout"}}/>
-                                            </>
-                                        ) : null}
-                                        {lineCoupon.length > 0 ? (
-                                            <>
-                                                <Grid container>
-                                                    <Grid item xs>
-                                                        <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                            Applied Coupon
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        {lineCoupon.map((coupon, index) => (
-                                                            <div key={index} style={{display: "flex", justifyContent: "flex-end"}}>
-                                                                <Typography key={index} component="h6" classes={{root: "root-typography-checkout"}} color="textSecondary"
-                                                                            align="right" paragraph={true}>
-                                                                    {coupon.code}
-                                                                </Typography>
-                                                                <IconButton color="inherit" component="span" style={{padding: 2, margin: "0 4px 16px 4px"}}
-                                                                            onClick={() => removeCoupon(index)}>
-                                                                    <CloseIcon style={{fontSize: 12}}/>
-                                                                </IconButton>
-                                                            </div>
-                                                        ))}
-                                                    </Grid>
-                                                </Grid>
-                                                <Divider classes={{root: "root-divider-checkout"}}/>
-                                            </>
-                                        ) : null}
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                    SHIPPING
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                    Free shipping (Approx 3-7 days)
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="left" paragraph={true}>
-                                                    TAX
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout"}} align="right" paragraph={true}>
-                                                    <strong>{`$` + order.total_tax || 0}</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider classes={{root: "root-divider-checkout"}}/>
-                                        <Grid container>
-                                            <Grid item xs>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="left" paragraph={true}>
-                                                    <strong>TOTAL</strong>
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography component="h6" classes={{root: "root-typography-checkout-total"}} align="right" paragraph={true}>
-                                                    <strong>{`$` + order.total || 0}</strong>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid container spacing={1}>
-                                            <Grid item xs>
-                                                <TextField
-                                                    id="coupon"
-                                                    variant="outlined"
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    InputProps={{
-                                                        classes: {root: "root-cart-coupon", input: "root-cart-coupon-input"},
-                                                    }}
-                                                    value={coupon}
-                                                    onChange={(event) => setCoupon(event.target.value)}
-                                                    fullWidth
-                                                    placeholder={"Coupon code"}
-                                                />
-                                            </Grid>
-                                            <Grid item xs>
-                                                <MXButton
-                                                    variant="contained"
-                                                    style={{
-                                                        height: 48,
-                                                        color: "black",
-                                                        margin: 0,
-                                                        fontSize: 14,
-                                                    }}
-                                                    onClick={() => updateCoupon()}
-                                                    fullWidth
-                                                    disableElevation
-                                                >
-                                                    {"APPLY"}
-                                                </MXButton>
-                                            </Grid>
-                                        </Grid>
-                                        {/* <MXButton
-											variant="contained"
-											style={{
-												height: 48,
-												backgroundColor: !addressesDone || lineItem.length === 0 ? "#e0e0e0" : "#339059",
-												color: "white",
-												marginLeft: 0,
-											}}
-											onClick={checkout}
-											disableElevation
-											fullWidth
-											disabled={!addressesDone || lineItem.length === 0}
-										>
-											{"PROCEED TO CHECKOUT"}
-										</MXButton> */}
-                                    </Paper>
-                                    <Paper classes={{root: "root-paper-checkout"}}>
-                                        <div className="container-selection"
-                                             style={{width: "100%", alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60}}>
-                                            <div style={{fontSize: 20, fontWeight: "bold", lineHeight: "28px", marginBottom: 24}}>Pay with credit card</div>
-                                            <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>We accept these credit cards</div>
-                                            <div style={{display: "flex", flexDirection: "row", marginBottom: 24}}>
-                                                <div style={{width: 34, height: 24, marginRight: 12}}>
-                                                    <img src="/images/component/footer/icon_visa.png" style={{height: "100%", objectFit: "cover"}}/>
-                                                </div>
-                                                <div style={{width: 34, height: 24, marginRight: 12}}>
-                                                    <img src="/images/component/footer/icon_master.png" style={{height: "100%", objectFit: "cover"}}/>
-                                                </div>
-                                                <div style={{width: 34, height: 24, marginRight: 12}}>
-                                                    <img src="/images/component/footer/icon_amex.png" style={{height: "100%", objectFit: "cover"}}/>
-                                                </div>
-                                                <div style={{width: 34, height: 24, marginRight: 12}}>
-                                                    <img src="/images/component/footer/icon_discover.png" style={{height: "100%", objectFit: "cover"}}/>
-                                                </div>
-                                            </div>
-                                            <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>Card information</div>
-                                            <div style={{width: "100%"}}>
-                                                <FormControl>
-                                                    <PaymentCard
-                                                        error={numberError}
-                                                        value={number}
-                                                        onChange={(event) => setNumber(event.currentTarget.value)}
-                                                        placeholder="Credit Card number"
-                                                        overrides={{
-                                                            Root: {
-                                                                style: ({$theme}) => ({
-                                                                    borderTopWidth: "1px",
-                                                                    borderRightWidth: "1px",
-                                                                    borderBottomWidth: "1px",
-                                                                    borderLeftWidth: "1px",
-                                                                    borderTopLeftRadius: "8px",
-                                                                    borderTopRightRadius: "8px",
-                                                                    borderBottomLeftRadius: "8px",
-                                                                    borderBottomRightRadius: "8px",
-                                                                }),
-                                                            },
-                                                            InputContainer: {
-                                                                style: ({$theme}) => ({backgroundColor: "white"}),
-                                                            },
-                                                            Input: {
-                                                                style: ({$theme}) => ({fontSize: 14}),
-                                                            },
-                                                        }}
-                                                        onBlur={() => setNumberError(false)}
-                                                    />
-                                                </FormControl>
-                                                <div style={{display: "flex", flexDirection: "row", alignItems: "center", position: "relative"}}>
-                                                    <FormControl
-                                                        overrides={{
-                                                            ControlContainer: {
-                                                                style: {
-                                                                    marginRight: "15px",
-                                                                    marginBottom: 0,
-                                                                },
-                                                            },
-                                                        }}
-                                                    >
-                                                        <MaskedInput
-                                                            error={expirationError}
-                                                            value={expiration}
-                                                            onChange={(event) => setExpiration(event.currentTarget.value)}
-                                                            placeholder="Expiration MM/YY"
-                                                            mask="99/99"
-                                                            overrides={{
-                                                                Root: {
-                                                                    style: ({$theme}) => ({
-                                                                        borderTopWidth: "1px",
-                                                                        borderRightWidth: "1px",
-                                                                        borderBottomWidth: "1px",
-                                                                        borderLeftWidth: "1px",
-                                                                        borderTopLeftRadius: "8px",
-                                                                        borderTopRightRadius: "8px",
-                                                                        borderBottomLeftRadius: "8px",
-                                                                        borderBottomRightRadius: "8px",
-                                                                    }),
-                                                                },
-                                                                InputContainer: {
-                                                                    style: ({$theme}) => ({backgroundColor: "white"}),
-                                                                },
-                                                                Input: {
-                                                                    style: ({$theme}) => ({fontSize: 14}),
-                                                                },
-                                                            }}
-                                                            onBlur={() => setExpirationError(false)}
-                                                        />
-                                                    </FormControl>
-                                                    <FormControl
-                                                        overrides={{
-                                                            ControlContainer: {
-                                                                style: {
-                                                                    marginRight: "32px",
-                                                                    marginBottom: 0,
-                                                                },
-                                                            },
-                                                        }}
-                                                    >
-                                                        <MaskedInput
-                                                            error={codeError}
-                                                            value={code}
-                                                            onChange={(event) => setCode(event.currentTarget.value)}
-                                                            placeholder="CVC"
-                                                            mask={codeLength ? "9".repeat(codeLength) : "999"}
-                                                            overrides={{
-                                                                Root: {
-                                                                    style: ({$theme}) => ({
-                                                                        borderTopWidth: "1px",
-                                                                        borderRightWidth: "1px",
-                                                                        borderBottomWidth: "1px",
-                                                                        borderLeftWidth: "1px",
-                                                                        borderTopLeftRadius: "8px",
-                                                                        borderTopRightRadius: "8px",
-                                                                        borderBottomLeftRadius: "8px",
-                                                                        borderBottomRightRadius: "8px",
-                                                                    }),
-                                                                },
-                                                                InputContainer: {
-                                                                    style: ({$theme}) => ({backgroundColor: "white"}),
-                                                                },
-                                                                Input: {
-                                                                    style: ({$theme}) => ({fontSize: 14}),
-                                                                },
-                                                            }}
-                                                            onBlur={() => setCodeError(false)}
-                                                        />
-                                                    </FormControl>
-                                                    <StatefulTooltip
-                                                        placement={PLACEMENT.topRight}
-                                                        triggerType={TRIGGER_TYPE.click}
-                                                        autoFocus
-                                                        content={() => (
-                                                            <div style={{zIndex: 999}}>
-                                                                <img src="/images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
-                                                            </div>
-                                                        )}
-                                                        overrides={{
-                                                            Body: {
-                                                                style: ({$theme}) => ({
-                                                                    boxShadow: "none",
-                                                                    backgroundColor: "transparent",
-                                                                }),
-                                                            },
-                                                            Inner: {
-                                                                style: ({$theme}) => ({
-                                                                    backgroundColor: "transparent",
-                                                                    paddingRight: 0,
-                                                                    paddingLeft: 0,
-                                                                }),
-                                                            },
-                                                        }}
-                                                    >
-                                                        <div
-                                                            style={{
-                                                                position: "absolute",
-                                                                right: 0,
-                                                                width: 18,
-                                                                height: 18,
-                                                                border: "1px solid #8C8C8C",
-                                                                backgroundColor: "#8C8C8C",
-                                                                color: "white",
-                                                                borderTopLeftRadius: "50%",
-                                                                borderTopRightRadius: "50%",
-                                                                borderBottomLeftRadius: "50%",
-                                                                borderBottomRightRadius: "50%",
-                                                                textAlign: "center",
-                                                                fontSize: 12,
-                                                                fontWeight: "bold",
-                                                            }}
-                                                        >
-                                                            ?
-                                                        </div>
-                                                    </StatefulTooltip>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container-selection"
-                                             style={{width: "100%", paddingLeft: 16, paddingRight: 16, borderTop: "1px solid #F0F0F0", paddingTop: 16, paddingBottom: 60}}>
-                                            <div style={{fontSize: 14, lineHeight: "22px", marginBottom: 16, textAlign: "left"}}>
-                                                Your personal data will be used to process your order, support your experience throughout this website, and for other purposes
-                                                described in our <strong>privacy policy</strong>
-                                            </div>
-                                            <CheckboxB
-                                                checked={checked}
-                                                onChange={(e) => setChecked(e.target.checked)}
-                                                labelPlacement={LABEL_PLACEMENT.right}
-                                                overrides={{
-                                                    Checkmark: {
-                                                        style: ({$theme}) => ({
-                                                            borderTopWidth: "1px",
-                                                            borderRightWidth: "1px",
-                                                            borderBottomWidth: "1px",
-                                                            borderLeftWidth: "1px",
-                                                            borderTopLeftRadius: "2px",
-                                                            borderTopRightRadius: "2px",
-                                                            borderBottomLeftRadius: "2px",
-                                                            borderBottomRightRadius: "2px",
-                                                        }),
-                                                    },
-                                                    Label: {
-                                                        style: ({$theme}) => ({fontSize: 14, lineHeight: "22px", letterSpacing: "4%", marginBottom: 16}),
-                                                    },
-                                                }}
-                                            >
-                                                I have read and agree to the website <strong>terms and conditions</strong> <span style={{color: "red"}}>*</span>
-                                            </CheckboxB>
-                                            <ButtonB
-                                                shape={SHAPE.pill}
-                                                overrides={{
-                                                    BaseButton: {
-                                                        style: () => ({
-                                                            width: "100%",
-                                                            height: "56px",
-                                                            fontSize: "16px",
-                                                            // backgroundColor: "#23A4AD",
-                                                            backgroundColor: "#339059",
-                                                            marginTop: "8px",
-                                                            marginBottom: "8px",
-                                                            borderTopLeftRadius: "4px",
-                                                            borderTopRightRadius: "4px",
-                                                            borderBottomLeftRadius: "4px",
-                                                            borderBottomRightRadius: "4px",
-                                                        }),
-                                                    },
-                                                }}
-                                                onClick={() => pay()}
-                                                disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
-                                            >
-                                                PAY NOW
-                                            </ButtonB>
-                                            <div style={{display: "flex", flexDirection: "row"}}>
-                                                <img src="/images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
-                                                <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You
-                                                    can shop at Westshade with confidence. We have partnered with Authorize.Net.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Paper>
-                                </Grid>
-                            </Grid>
-                        </Container>
-                    </CContainer>
-                </Box>
+                                </div>
+                            </Block>
+                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
+                                <div style={{fontSize: 14, lineHeight: "22px", textAlign: "left"}}>
+                                    Your personal data will be used to process your order, support your experience throughout this website, and for other purposes
+                                    described in our <strong>privacy policy</strong>
+                                </div>
+                                <Checkbox checked={checked} labelPlacement={LABEL_PLACEMENT.right} onChange={(e) => setChecked(e.target.checked)}
+                                          overrides={{
+                                              Checkmark: {
+                                                  props: {
+                                                      className: "checkbox-address"
+                                                  }
+                                              },
+                                              Label: {
+                                                  style: ({$theme}) => ({fontSize: "14px", fontWeight: 400}),
+                                              },
+                                          }}
+                                >
+                                    I have read and agree to the website <strong>terms and conditions</strong> <span style={{color: "red"}}>*</span>
+                                </Checkbox>
+                                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel12" text='PAY NOW'
+                                         buttonStyle={{paddingTop: "8px !important", paddingRight: "20px !important", paddingBottom: "8px !important", paddingLeft: "20px !important"}}
+                                         onClick={() => pay()}
+                                         disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
+                                />
+                                <Block display="flex" flexDirection="row" alignItems="center">
+                                    <img src="/images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                                    <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You
+                                        can shop at Westshade with confidence. We have partnered with Authorize.Net.
+                                    </div>
+                                </Block>
+                            </Block>
+                        </Block>
+                    </Block>
+                    <Block marginBottom="40px">
+                        <Block position={["relative", "relative", "sticky"]} top={["unset", "unset", "108px"]}>
+                            <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
+                            <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                    <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal()}</Block>
+                                </Block>
+                                {order.discount_total && order.discount_total !== "0.00" ? (
+                                    <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                        <Block font="MinXParagraph14">Discount</Block>
+                                        <Block font="MinXParagraph14">{`-$` + order.discount_total}</Block>
+                                    </Block>
+                                ) : null}
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                    <Block font="MinXParagraph14">Shipping</Block>
+                                    <Block font="MinXParagraph14">{order.shipping_total === "0.00" ? "Free shipping (Approx 3-7 days)" : `$` + order.shipping_total}</Block>
+                                </Block>
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                    <Block font="MinXParagraph14">Estimated Tax</Block>
+                                    <Block font="MinXParagraph14">{`$` + order.total_tax || 0}</Block>
+                                </Block>
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                    <Block font="MinXParagraph14"><strong>Total</strong></Block>
+                                    <Block font="MinXParagraph14"><strong>{`$` + order.total || 0}</strong></Block>
+                                </Block>
+                            </Block>
+                            {lineCoupon.length > 0 ? (
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="16px" paddingBottom="16px">
+                                    <Block font="MinXParagraph14">Applied Coupon</Block>
+                                    <Block>
+                                        {lineCoupon.map((coupon, index) => (
+                                            <Block key={index} display="flex" justifyContent="flex-end" marginBottom="16px">
+                                                <Block font="MinXParagraph14" marginRight="16px">{coupon.code}</Block>
+                                                <Button kind={KIND.tertiary} shape={SHAPE.circle} size={SIZE.mini} overrides={{BaseButton: {style: {width: "20px", height: "20px"}}}} onClick={() => removeCoupon(index)}>
+                                                    <Delete size={12}/>
+                                                </Button>
+                                            </Block>
+                                        ))}
+                                    </Block>
+                                </Block>
+                            ) : null}
+                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="16px">
+                                <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
+                                <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD"
+                                         buttonStyle={{
+                                             borderColor: "#23A4AD !important",
+                                             backgroundColor: 'transparent !important',
+                                             ":hover": {backgroundColor: `#5FBDBE !important`, color: "white !important"},
+                                             ":active": {backgroundColor: `#43878C !important`, color: "white !important"}
+                                         }}
+                                         overrides={{Block: {style: {zIndex: 1}}}}
+                                         onClick={() => updateCoupon()}
+                                />
+                            </Block>
+                        </Block>
+                    </Block>
+                </Block>
             ) : null}
+            <Modal type="alertdialog" isOpen={showLoading} onClose={() => setShowLoading(false)} content="loading"/>
         </React.Fragment>
     );
 }

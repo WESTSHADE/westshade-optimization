@@ -5,11 +5,12 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
-import CheckIndeterminate from "baseui/icon/check-indeterminate";
-import Plus from "baseui/icon/plus";
+import {CheckIndeterminate, Plus} from "baseui/icon";
+
+import MButton from "../../button-n";
+import Shipping from "../../sections/ShippingNote";
 
 import styles from "./checkout.module.scss";
-import MButton from "../../button-n";
 
 const Quantity = (props) => {
     const {quantity = 1, isInStock = true, onClickMinus, onClickPlus} = props;
@@ -105,27 +106,7 @@ const checkout = (props) => {
                     </Block>
                     <Block display="flex" flexDirection="row" marginBottom="20px" font="MinXParagraph14">{`Qty: ${quantity}`}</Block>
                 </Block>
-                <Block display="flex" flexDirection="column" marginRight="auto" marginBottom="20px" marginLeft="auto" font="MinXParagraph14" color="MinXPrimaryText">
-                    <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
-                        <Block position="relative" width="20px" height="20px" marginRight="12px">
-                            <Image src="images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="cover" quality={100}/>
-                        </Block>
-                        <Block>
-                            <div>Free shipping on orders over $149</div>
-                            <div>Order today, shipped by {shippedDay}.</div>
-                            <Block font="MinXParagraph12" color="MinXSecondaryText">
-                                Custom printing orders do not apply.
-                                {/*<span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>*/}
-                            </Block>
-                        </Block>
-                    </Block>
-                    <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
-                        <Block position="relative" width="20px" height="20px" marginRight="12px">
-                            <Image src="images/icon/pickup.png" alt="pick up" layout="fill" objectFit="cover" quality={100}/>
-                        </Block>
-                        <Block>Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span></Block>
-                    </Block>
-                </Block>
+                <Shipping direction="column" marginBottom="20px"/>
                 <MButton width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text={buttonText} onClick={addToBag} disabled={!isAvailable}/>
             </Block>
         </>

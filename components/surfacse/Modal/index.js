@@ -6,11 +6,13 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, SIZE, ROLE} from "baseui/mod
 
 import FrameCompare from "./frame_compare";
 import SizeGuide from "./size_guide";
+import OrderSummary from "./order_summary";
+import Loading from "./loading";
 
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles, content = ""} = props;
+    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles, content = "", dataTable} = props;
 
     return (
         <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
@@ -44,7 +46,7 @@ const modal = (props) => {
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
             <ModalBody className={clsx(styles["container-body"], "hideScrollBar")}>
-                {content ? content === "frame" ? <FrameCompare/> : content === "size" ? <SizeGuide/> : null : children}
+                {content ? content === "frame" ? <FrameCompare/> : content === "size" ? <SizeGuide/> : content === "summary" ? <OrderSummary dataTable={dataTable}/> : content === "loading" ? <Loading/> : null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={styles["container-footer"]}>

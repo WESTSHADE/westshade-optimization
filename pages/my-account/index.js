@@ -369,7 +369,8 @@ function Orders({size}) {
                                         >
                                             <Block position="relative" width={["60px", "75px"]} height={["60px", "75px"]}>
                                                 {item.image ? (
-                                                    <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                    <img src={item.image.src} alt={item.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
+                                                    // <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 ) : (
                                                     <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 )}
@@ -537,28 +538,28 @@ function Profile() {
 
 function Address() {
     const {token, user} = useSelector(({user}) => user);
-
-    const [billingDetail, setBillingDetail] = useState({...user.billing});
-    const [billingDiff, setBillingDiff] = useState(false);
+    console.log(user);
+    const [shippingDetail, setShippingDetail] = useState({...user.shipping});
+    const [shippingDiff, setShippingDiff] = useState(false);
 
     const dispatch = useDispatch();
 
     const handleSaveAddress = () => {
-        let temp = {...billingDetail};
+        let temp = {...shippingDetail};
         // if (temp.phone) temp.phone = temp.phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/^[\s\d]+/, '');
         // console.log(temp);
-        dispatch(updateUser(token, {billing: {...temp}}))
+        dispatch(updateUser(token, {shipping: {...temp}}))
     };
 
-    useEffect(() => setBillingDetail({...user.billing}), [user.billing]);
+    useEffect(() => setShippingDetail({...user.shipping}), [user.shipping]);
 
     useEffect(() => {
-        if (JSON.stringify(billingDetail) !== JSON.stringify(user.billing)) {
-            setBillingDiff(true);
+        if (JSON.stringify(shippingDetail) !== JSON.stringify(user.shipping)) {
+            setShippingDiff(true);
         } else {
-            setBillingDiff(false);
+            setShippingDiff(false);
         }
-    }, [billingDetail]);
+    }, [shippingDetail]);
 
     return (
         <>
@@ -567,13 +568,13 @@ function Address() {
                 <Block display="grid" gridTemplateAreas={`"f l" "a1 a1" "a2 a2" "cp cp" "c s" "z ct" "p p"`} gridColumnGap="16px" gridRowGap={["16px", "24px"]}>
                     <Block gridArea="f">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">FIRST NAME</Block>
-                        <Input value={billingDetail.first_name} clearOnEscape
+                        <Input value={shippingDetail.first_name} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.first_name = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -586,13 +587,13 @@ function Address() {
                     </Block>
                     <Block gridArea="l">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">LAST NAME</Block>
-                        <Input value={billingDetail.last_name} clearOnEscape
+                        <Input value={shippingDetail.last_name} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.last_name = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -605,13 +606,13 @@ function Address() {
                     </Block>
                     <Block gridArea="a1">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ADDRESS LINE 1</Block>
-                        <Input value={billingDetail.address_1} clearOnEscape
+                        <Input value={shippingDetail.address_1} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.address_1 = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -624,13 +625,13 @@ function Address() {
                     </Block>
                     <Block gridArea="a2">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ADDRESS LINE 2 <span>(optional)</span></Block>
-                        <Input value={billingDetail.address_2} clearOnEscape
+                        <Input value={shippingDetail.address_2} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.address_2 = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -643,13 +644,13 @@ function Address() {
                     </Block>
                     <Block gridArea="cp">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">COMPANY <span>(optional)</span></Block>
-                        <Input value={billingDetail.company} clearOnEscape
+                        <Input value={shippingDetail.company} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.company = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -662,13 +663,13 @@ function Address() {
                     </Block>
                     <Block gridArea="c">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">CITY</Block>
-                        <Input value={billingDetail.city} clearOnEscape
+                        <Input value={shippingDetail.city} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.city = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -681,13 +682,13 @@ function Address() {
                     </Block>
                     <Block gridArea="s">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">STATE</Block>
-                        <Input value={billingDetail.state} clearOnEscape
+                        <Input value={shippingDetail.state} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.state = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -700,13 +701,13 @@ function Address() {
                     </Block>
                     <Block gridArea="z">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">ZIP CODE</Block>
-                        <Input value={billingDetail.postcode} clearOnEscape
+                        <Input value={shippingDetail.postcode} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.postcode = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -719,13 +720,13 @@ function Address() {
                     </Block>
                     <Block gridArea="ct">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">COUNTRY</Block>
-                        <Input value={billingDetail.country} clearOnEscape
+                        <Input value={shippingDetail.country} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.country = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -738,13 +739,13 @@ function Address() {
                     </Block>
                     <Block gridArea="p">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">PHONE NUMBER</Block>
-                        <Input value={billingDetail.phone} clearOnEscape
+                        <Input value={shippingDetail.phone} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
 
-                                   let detail = {...billingDetail}
+                                   let detail = {...shippingDetail}
                                    detail.phone = value;
-                                   setBillingDetail(detail);
+                                   setShippingDetail(detail);
                                }}
                                overrides={{
                                    Root: {
@@ -754,12 +755,12 @@ function Address() {
                                    },
                                }}
                         />
-                        {/*<MaskedInput value={billingDetail.phone} mask="(999) 999-9999" clearOnEscape*/}
+                        {/*<MaskedInput value={shippingDetail.phone} mask="(999) 999-9999" clearOnEscape*/}
                         {/*             onChange={({target}) => {*/}
                         {/*                 const {value} = target;*/}
-                        {/*                 let detail = {...billingDetail}*/}
+                        {/*                 let detail = {...shippingDetail}*/}
                         {/*                 detail.phone = value;*/}
-                        {/*                 setBillingDetail(detail);*/}
+                        {/*                 setShippingDetail(detail);*/}
                         {/*             }}*/}
                         {/*             overrides={{*/}
                         {/*                 Root: {*/}
@@ -776,7 +777,7 @@ function Address() {
                              paddingTop: "20px !important", paddingBottom: "20px !important",
                              ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
                          }}
-                         onClick={handleSaveAddress} disabled={!billingDiff}
+                         onClick={handleSaveAddress} disabled={!shippingDiff}
                 />
             </Block>
         </>

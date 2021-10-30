@@ -71,7 +71,7 @@ function Payment({orderID}) {
             <Block height={"100vh"} paddingTop={["48px", "48px", "96px"]} display={"flex"} justifyContent={"center"} overflow={"scroll"} style={{paddingTop: 146}}>
                 {/* 主要显示区域 */}
                 <Block width={["100%", "480px"]} display={"flex"} flexDirection={"column"}>
-                    <div className="container-selection" style={{width: "100%", alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60}}>
+                    <div className="container-selection" style={{alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60}}>
                         <div style={{fontSize: 20, fontWeight: "bold", lineHeight: "28px", marginBottom: 24}}>Pay with credit card</div>
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>We accept these credit cards</div>
                         <div style={{display: "flex", flexDirection: "row", marginBottom: 24}}>
@@ -244,7 +244,7 @@ function Payment({orderID}) {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="container-selection" style={{ width: "100%", alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60 }}>
+                    {/* <div className="container-selection" style={{ alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60 }}>
 						<div style={{ fontSize: 20, fontWeight: "bold", lineHeight: "28px", marginBottom: 24 }}>Pay with other methods</div>
 						<Button
 							shape={SHAPE.pill}
@@ -323,7 +323,7 @@ function Payment({orderID}) {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="container-selection" style={{ width: "100%", paddingLeft: 16, paddingRight: 16 }}>
+                    {/* <div className="container-selection" style={{ paddingLeft: 16, paddingRight: 16 }}>
 						<div style={{ width: 80, height: 80, border: "3px solid #00d459", borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>
 							<Check size={64} color={"#00d459"} />
 						</div>

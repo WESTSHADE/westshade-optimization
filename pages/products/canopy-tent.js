@@ -25,19 +25,19 @@ import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, Numer
 import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
+import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
 import {Checkout} from "../../components/sections";
 import {Modal} from "../../components/surfacse";
 import MButton from "../../components/button-n";
+import SelectionArea from "../../components/selection_area";
+import Selection from "../../components/selection-n";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import Selection from "../../components/selection-n";
 
-const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const utils = new Utils();
@@ -136,8 +136,6 @@ function Canopy_Tent({router, products, variants}) {
     const [message, setMessage] = useState("");
 
     const [availableToCheckout, setAvailable] = useState(false);
-
-    const [shippedDay, setShippedDay] = useState("");
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
     const [printIsOpen, setPrintIsOpen] = useState(false);
@@ -556,8 +554,6 @@ function Canopy_Tent({router, products, variants}) {
     //////////////////////////////////////
 
     useEffect(() => {
-        setShippedDay(dateFn.getReceivedDay());
-
         setTabsRefs((tabsRefs) => Array(3).fill().map((_, i) => tabsRefs[i] || createRef()));
 
         let series = router.query.series || urlFn.getParam("series");
@@ -958,20 +954,18 @@ function Canopy_Tent({router, products, variants}) {
                                      }}
                                 >
                                     <>
-                                        <div className="container-selection">
-                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Size</Block>
+                                        <SelectionArea title="Size">
                                             <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
                                                 {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => (
                                                     <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                                 ))) : null}
                                             </Selection>
-                                            <MButton type="solid" height="auto" marginTop="16px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
                                                      onClick={() => setSizeGuideOpen(true)}
                                             />
-                                        </div>
-                                        <div className="container-selection">
-                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Frame</Block>
+                                        </SelectionArea>
+                                        <SelectionArea title="Frame">
                                             <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
                                                        onChange={(event) => {
                                                            setSelectedFrame(event.target.value);
@@ -991,13 +985,12 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                                 <Radio value="y5">Y5 Economic Steel</Radio>
                                             </Selection>
-                                            <MButton type="solid" height="auto" marginTop="16px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
                                                      onClick={() => setFrameCompareOpen(true)}
                                             />
-                                        </div>
-                                        <div className="container-selection">
-                                            <Block marginBottom="16px" font={"MinXLabel16"} color="MinXPrimaryText">Color</Block>
+                                        </SelectionArea>
+                                        <SelectionArea title="Color">
                                             <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}
                                                        onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopyColor)}
                                             >
@@ -1015,7 +1008,7 @@ function Canopy_Tent({router, products, variants}) {
                                                     )
                                                     : null}
                                             </Selection>
-                                        </div>
+                                        </SelectionArea>
                                     </>
                                 </Tab>
                                 <Tab title="+Wall" tabRef={tabsRefs[1]}
@@ -1386,8 +1379,7 @@ function Canopy_Tent({router, products, variants}) {
                                }
                            }}
                     >
-                        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: 20}}>
-                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Wall type</div>
+                        <SelectionArea title="Wall Type">
                             <Selection name="wall-type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} id={id_attribute_wallType}
                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
                             >
@@ -1438,9 +1430,8 @@ function Canopy_Tent({router, products, variants}) {
                                         />
                                     ))) : null}
                             </Selection>
-                        </div>
-                        <div style={{display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center", width: "100%", marginBottom: "64px"}}>
-                            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>Color</div>
+                        </SelectionArea>
+                        <SelectionArea title="Color">
                             <Selection name="wall-color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} id={id_attribute_canopyColor}
                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
                             >
@@ -1457,37 +1448,11 @@ function Canopy_Tent({router, products, variants}) {
                                         />
                                     ))) : null}
                             </Selection>
-                        </div>
+                        </SelectionArea>
                     </Block>
                 </Block>
             </Modal>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
-                <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
-                       paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
-                >
-                    <Block display={"flex"} flexDirection={"column"} height={["520px", "520px", "368px"]} marginBottom={["16px", "16px", "32px"]} backgroundColor={"white"} overflow="hidden"
-                           className={"modalSelectionContainer-summary-data"}
-                    >
-                        <DataTable/>
-                    </Block>
-                    <Block height={"auto"} display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2,1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft={"auto"} marginRight={"auto"}>
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                            <Block font="MinXParagraph14">
-                                <Block>Free shipping on orders over $149</Block>
-                                <Block>Order today, shipped by Friday.</Block>
-                                <Block marginTop="4px" font="MinXParagraph12" color="MinXSecondaryText">Custom printing orders do not apply.</Block>
-                            </Block>
-                        </Block>
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
-                            <Block font="MinXParagraph14">
-                                Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
-                            </Block>
-                        </Block>
-                    </Block>
-                </Block>
-            </Modal>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
         </React.Fragment>
     );
 }

@@ -9,29 +9,31 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Button, SHAPE} from "baseui/button";
 import {Input} from 'baseui/input';
-import CheckIndeterminate from 'baseui/icon/check-indeterminate'
-import Plus from 'baseui/icon/plus'
+import {CheckIndeterminate, Plus} from 'baseui/icon'
 
-import styles from "./cart.module.scss";
+import Shipping from "../../components/sections/ShippingNote";
 
 import Utils from "../../utils/utils";
-import {DateFn, NumberFn} from "../../utils/tools";
-
-import Cart from "./cart.svg";
+import {NumberFn} from "../../utils/tools";
 
 const numberFn = new NumberFn();
 const utils = new Utils();
 
-const dateFn = new DateFn();
+import styles from "./cart.module.scss";
 
 import {modifyCart} from "../../redux/actions/cartActions";
 import {updateUser} from "../../redux/actions/userActions";
+
+import Cart from "./cart.svg";
+import {Modal} from "../../components/surfacse";
 
 function Cart_Page({router}) {
     const [lineItem, setLineItem] = useState([]);
     const [addressesDone, setAddressesDone] = useState(true);
     const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
+
+    const [showLoading, setShowLoading] = useState(false);
 
     ////////////////////////////////////////
 
@@ -90,6 +92,8 @@ function Cart_Page({router}) {
     };
 
     const checkout = () => {
+        setShowLoading(true);
+
         let checkoutData = {
             payment_method: "bacs",
             payment_method_title: "Credit Card",
@@ -105,6 +109,8 @@ function Cart_Page({router}) {
         }
 
         utils.createOrder(token, checkoutData).then((res) => {
+            setShowLoading(false);
+
             if (res.message) {
                 setShowError(true);
                 setError(res.message);
@@ -366,27 +372,7 @@ function Cart_Page({router}) {
                                     CHECKOUT
                                 </Button>
                             </Block>
-                            <Block display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" font="MinXParagraph14" color="MinXPrimaryText">
-                                <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
-                                    <Block position="relative" width="20px" height="20px" marginRight="12px">
-                                        <Image src="images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="cover" quality={100}/>
-                                    </Block>
-                                    <Block>
-                                        <div>Free shipping on orders over $149</div>
-                                        <div>Order today, shipped by {dateFn.getReceivedDay()}.</div>
-                                        <Block font="MinXParagraph12" color="MinXSecondaryText">
-                                            Custom printing orders do not apply.
-                                            {/*<span style={{color: "rgb(35, 164, 173)", marginLeft: "4px"}}>{`Learn More >`}</span>*/}
-                                        </Block>
-                                    </Block>
-                                </Block>
-                                <Block display="flex" flexDirection="row" flex={1} marginBottom="16px">
-                                    <Block position="relative" width="20px" height="20px" marginRight="12px">
-                                        <Image src="images/icon/pickup.png" alt="pick up" layout="fill" objectFit="cover" quality={100}/>
-                                    </Block>
-                                    <Block>Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span></Block>
-                                </Block>
-                            </Block>
+                            <Shipping direction="column"/>
                         </Block>
                     </Block>
                 ) : (
@@ -400,6 +386,7 @@ function Cart_Page({router}) {
                 {/*    <Block marginBottom={["32px", "47px"]} paddingTop="24px" font="MinXHeading20" color="MinXPrimaryText">Accessories might need</Block>*/}
                 {/*</Block>*/}
             </Block>
+            <Modal type="alertdialog" isOpen={showLoading} onClose={() => setShowLoading(false)} content="loading"/>
         </React.Fragment>
     );
 }

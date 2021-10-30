@@ -554,33 +554,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     </Block>
                 </Block>
             </Block>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()}>
-                <Block width={["100%", "448px", "702px"]} marginTop={["62px", "62px", "32px"]} marginRight={"auto"} marginBottom="32px" marginLeft={"auto"}
-                       paddingRight={["0px", "0px", "56px"]} paddingBottom={["62px", "62px", "0px"]} paddingLeft={["0px", "0px", "56px"]}
-                >
-                    <Block display={"flex"} flexDirection={"column"} height={["520px", "520px", "368px"]} marginBottom={["16px", "16px", "32px"]} backgroundColor={"white"} overflow="hidden"
-                           className={"modalSelectionContainer-summary-data"}
-                    >
-                        <DataTable/>
-                    </Block>
-                    <Block height={"auto"} display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2,1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft={"auto"} marginRight={"auto"}>
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                            <Block font="MinXParagraph14">
-                                <Block>Free shipping on orders over $149</Block>
-                                <Block>Order today, shipped by Friday.</Block>
-                                <Block marginTop="4px" font="MinXParagraph12" color="MinXSecondaryText">Custom printing orders do not apply.</Block>
-                            </Block>
-                        </Block>
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
-                            <Block font="MinXParagraph14">
-                                Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
-                            </Block>
-                        </Block>
-                    </Block>
-                </Block>
-            </Modal>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
         </React.Fragment>
     );
 }

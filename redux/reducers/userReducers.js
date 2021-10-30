@@ -7,7 +7,30 @@ let defaultUser = {
         first_name: "",
         last_name: "",
         billing: {
-            phone: ""
+            first_name: "",
+            last_name: "",
+            company: "",
+            address_1: "",
+            address_2: "",
+            city: "",
+            state: "",
+            postcode: "",
+            country: "US",
+            email: "",
+            phone: "",
+        },
+        shipping: {
+            first_name: "",
+            last_name: "",
+            company: "",
+            address_1: "",
+            address_2: "",
+            city: "",
+            state: "",
+            postcode: "",
+            country: "US",
+            email: "",
+            phone: "",
         }
     },
 };
@@ -44,7 +67,30 @@ export const userReducer = (state = {...defaultUser}, action) => {
                     first_name: "",
                     last_name: "",
                     billing: {
-                        phone: ""
+                        first_name: "",
+                        last_name: "",
+                        company: "",
+                        address_1: "",
+                        address_2: "",
+                        city: "",
+                        state: "",
+                        postcode: "",
+                        country: "US",
+                        email: "",
+                        phone: "",
+                    },
+                    shipping: {
+                        first_name: "",
+                        last_name: "",
+                        company: "",
+                        address_1: "",
+                        address_2: "",
+                        city: "",
+                        state: "",
+                        postcode: "",
+                        country: "US",
+                        email: "",
+                        phone: "",
                     }
                 },
             };
