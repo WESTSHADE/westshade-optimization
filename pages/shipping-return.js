@@ -7,7 +7,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 
-import {Modal} from "../components/surfacse";
+import {Modal} from "../components/surfaces";
 
 function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);
@@ -53,13 +53,10 @@ function Shipping_Return() {
                                       style: {width: "100%", maxWidth: "420px", marginRight: "auto", marginLeft: "auto"}
                                   },
                                   TabHighlight: {
-                                      style: () => ({
-                                          left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0,
-                                          width: "24px",
-                                          height: "6px",
-                                          backgroundColor: "#23A4AD",
-                                          borderRadius: "3px",
-                                      })
+                                      props: {
+                                          className: "tab-highlight-horizon"
+                                      },
+                                      style: {left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0}
                                   },
                                   TabBorder: {
                                       style: ({$theme}) => ({display: "none"}),

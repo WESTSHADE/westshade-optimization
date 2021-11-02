@@ -24,7 +24,7 @@ export default function content() {
                     <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
                 </Block>
             </Block>
-            <Block width={["calc(100vw - 140px - 48px)", "calc(100vw - 140px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px"
+            <Block width={["calc(100vw - 140px - 48px - 48px)", "calc(100vw - 140px - 48px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px"
                    overflow={["scrollX", "scrollX", "hidden"]}
                    overrides={{
                        Block: {

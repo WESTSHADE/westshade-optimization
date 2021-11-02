@@ -1,5 +1,6 @@
 .container-root-alert {
   height: 100vh;
+  overflow-x: hidden;
   z-index: 99;
 
   .container-dialog {
@@ -8,6 +9,7 @@
       align-self: center;
       width: fit-content;
       height: fit-content;
+      max-width: calc(100vw - 48px);
       transform: translateY(-15vh);
 
       .close {
@@ -18,6 +20,10 @@
         &:active {
           background-color: #f0f0f0;
         }
+      }
+
+      .container-body {
+        overflow-x: scroll;
       }
     }
   }

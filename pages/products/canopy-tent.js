@@ -4,6 +4,8 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import clsx from "clsx";
 
 import Head from "next/head";
@@ -17,7 +19,7 @@ import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
-import {Search, Delete, ChevronDown, Upload} from "baseui/icon";
+import {Search, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
 import {Input} from "baseui/input";
 import {Textarea} from "baseui/textarea";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
@@ -29,14 +31,16 @@ import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
-import {Checkout} from "../../components/sections";
-import {Modal} from "../../components/surfacse";
+import {Checkout_N as Checkout} from "../../components/sections";
+import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
 import Selection from "../../components/selection-n";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+import {Accordion, Panel} from "baseui/accordion";
+import styles from "../../components/surfaces/Modal/modal.module.scss";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -111,9 +115,177 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
 
+const feature_1_pic = [
+    "images/product/canopy-tent/feature-fabric.jpg",
+    "images/product/canopy-tent/feature-fire.png",
+    "images/product/canopy-tent/feature-uv.jpg"
+]
+
+const feature_2_pic = [
+    "images/product/canopy-tent/feature-steel.png", "images/product/canopy-tent/feature-aluminum.png"
+]
+
+const feature_1 = [{
+    tabTitle: "Water Resistant",
+    tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions."
+}, {
+    tabTitle: "Fire Retardant",
+    tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84."
+}, {
+    tabTitle: "UV Protection",
+    tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days."
+}]
+
+const feature_2 = [{
+    tabTitle: "Steel",
+    tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck."
+}, {
+    tabTitle: "Aluminum",
+    tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions."
+}]
+
+const anatomyPart = [
+    {url: "/top-corner-connector.png", title: "TOP CORNER CONNECTOR", content: ""},
+    {url: "/truss-bar.png", title: "TRUSS BAR", content: ""},
+    {url: "/leg-height-connector.png", title: "HEIGHT ADJUST CONNECTOR", content: ""},
+    {url: "/foot-plate.png", title: "FOOT PLATE", content: ""},
+    {url: "/leg-pole.png", title: "LEG POLE", content: ""},
+];
+
+function SectionCard({gridTemplateColumns = ["1fr", "1fr", "684px 1fr"], gridTemplateAreas = [`"a" "b"`, `"a" "b"`, `"a b"`], title = "", tabPicList = [], tabList = [], objectFit = "cover"}) {
+    const [iHeight, setIHeight] = useState(315);
+    const [tabActiveKey, setTabActiveKey] = useState(0);
+
+    return (
+        <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto"
+               display="grid" gridTemplateColumns={gridTemplateColumns} gridTemplateRows={["auto auto", "auto auto", "auto"]} gridTemplateAreas={gridTemplateAreas}
+               overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}
+        >
+            <Block gridArea="a">
+                <Carousel autoPlay={false} selectedItem={tabActiveKey} showStatus={false} showThumbs={false} showArrows={false} showIndicators={true} swipeable={true} dynamicHeight={true}
+                          renderArrowPrev={(onClick, disabled) => (
+                              <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                      onClick={onClick}
+                                      overrides={{
+                                          BaseButton: {
+                                              props: {
+                                                  className: "react-image-gallery-arrow left",
+                                              },
+                                              style: {
+                                                  fontSize: "inherit",
+                                                  fontWeight: "inherit",
+                                                  lineHeight: "inherit",
+                                              }
+                                          },
+                                      }}
+                                      disabled={disabled}
+                              >
+                                  <ChevronLeft size={28} color={"white"}/>
+                              </Button>
+                          )}
+                          renderArrowNext={(onClick, disabled) => (
+                              <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                      onClick={onClick}
+                                      overrides={{
+                                          BaseButton: {
+                                              props: {
+                                                  className: "react-image-gallery-arrow right",
+                                              },
+                                              style: {
+                                                  fontSize: "inherit",
+                                                  fontWeight: "inherit",
+                                                  lineHeight: "inherit",
+                                              }
+                                          },
+                                      }}
+                                      disabled={disabled}
+                              >
+                                  <ChevronRight size={28} color={"white"}/>
+                              </Button>
+                          )}
+                          renderItem={(item) => {
+                              return (
+                                  <Block position="relative" width="100%" height={["100%", "100%", iHeight + 64 + "px"]}>{item}</Block>
+                              );
+                          }}
+                          onChange={(index) => setTabActiveKey(index)}
+                >
+                    {tabPicList.length > 0 && tabPicList.map((pic, index) => {
+                        return (
+                            <Block key={index} backgroundColor="#F5FCFC" width="100%" height="100%">
+                                <Block display={["block", "block", "none"]}>
+                                    <Image src={pic} alt="feature" layout="responsive" width={2500} height={1316} objectFit={objectFit}/>
+                                </Block>
+                                <Block display={["none", "none", "block"]}>
+                                    <Image src={pic} alt="feature" layout="fill" objectFit={objectFit}/>
+                                </Block>
+                            </Block>
+                        )
+                    })}
+                </Carousel>
+            </Block>
+            <Block gridArea="b" paddingTop={["16px", "16px", "32px"]} paddingRight={["16px", "16px", "40px"]} paddingBottom={["16px", "16px", "32px"]} paddingLeft={["16px", "16px", "40px"]} backgroundColor={"#F7F7F7"}>
+                <Block ref={(r) => {
+                    if (r && r.clientHeight && r.clientHeight > 315) {
+                        setIHeight(r.clientHeight)
+                    }
+                }}>
+                    <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
+                    <Tabs activeKey={tabActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
+                          overrides={{
+                              TabList: {
+                                  props: {
+                                      className: "hideScrollBar"
+                                  },
+                                  style: {
+                                      flexWrap: "wrap",
+                                      overflowX: "scroll",
+                                  },
+                              },
+                              TabBorder: {props: {hidden: true}},
+                              TabHighlight: {props: {hidden: true}},
+                          }}
+                    >
+                        {tabList.map((item, index) => {
+                            return (
+                                <Tab key={index} title={item.tabTitle}
+                                     overrides={{
+                                         TabPanel: {
+                                             style: {paddingTop: "12px", paddingRight: 0, paddingBottom: "12px", paddingLeft: 0},
+                                         },
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 background: $isActive ? "#23A4AD" : "#F0F0F0",
+                                                 color: $isActive ? "white" : "#8C8C8C",
+                                                 marginRight: "12px",
+                                                 marginBottom: "12px",
+                                                 paddingTop: "8px",
+                                                 paddingBottom: "8px",
+                                                 paddingRight: "8px",
+                                                 paddingLeft: "8px",
+                                                 borderRadius: "4px",
+                                                 ":hover": {background: $isActive ? "#5FBDBE" : "transparent"},
+                                             }),
+                                         },
+                                     }}
+                                >
+                                    <Block font="MinXParagraph14">{item.tabContent}</Block>
+                                </Tab>
+                            )
+                        })}
+                    </Tabs>
+                </Block>
+            </Block>
+        </Block>
+    )
+}
+
 function Canopy_Tent({router, products, variants}) {
     const [displayTabs, setDisplayTabs] = useState(false);
-    const [tabActiveKey, setTabActiveKey] = React.useState(0);
+    const [tabSelectionActiveKey, setTabSelectionActiveKey] = useState(0);
+
+    const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
+
 
     const [productComponent, setProductComponent] = useState([products[2], products[3], products[3], products[3], products[3]]);
     const [productVariant, setProductVariant] = useState([variants[2], variants[3], variants[3], variants[3], variants[3]]);
@@ -177,7 +349,11 @@ function Canopy_Tent({router, products, variants}) {
     const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
 
     const [tabsRefs, setTabsRefs] = useState([]);
-    const [value3, setValue3] = React.useState("1");
+    const [value3, setValue3] = useState("1");
+
+    const [displayIntro, setDisplayIntro] = useState(false);
+    const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
+    const [frameIntroPosition, setFrameIntroPosition] = useState(0);
 
     ////////////////////////////////////////
 
@@ -823,7 +999,7 @@ function Canopy_Tent({router, products, variants}) {
                 <div style={{textAlign: "right", fontSize: 14}}>
                     {onSale ? (
                         <Block display="flex" flexDirection="row" justifyContent="flex-end">
-                            {priceSale == 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
+                            {priceSale === 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
                                 <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
                             <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
                         </Block>
@@ -887,18 +1063,128 @@ function Canopy_Tent({router, products, variants}) {
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
             </Head>
-            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
+            <Block height="auto" display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]} marginBottom="40px">
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                                  onClick={() => openSummaryModal()}
-                                  onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                                  onClickPlus={() => setTotalCount(totalCount + 1)}
-                                  onClickAddToBag={() => updateCart()}
-                                  onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
-                        />
+                        <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
+                              overrides={{
+                                  Root: {
+                                      style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
+                                  },
+                                  TabList: {
+                                      props: {
+                                          className: "hideScrollBar"
+                                      },
+                                      style: {
+                                          display: "grid",
+                                          gridTemplateColumns: " repeat(3,auto)",
+                                          gridColumnGap: "12px",
+                                          justifyContent: "center",
+                                          overflowX: "scroll",
+                                      },
+                                  },
+                                  TabBorder: {props: {hidden: true}},
+                                  TabHighlight: {props: {hidden: true}},
+                              }}
+                        >
+                            <Tab title="Photo"
+                                 overrides={{
+                                     TabPanel: {
+                                         style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                     },
+                                     Tab: {
+                                         style: ({$isActive}) => ({
+                                             background: $isActive ? "black" : "transparent",
+                                             color: $isActive ? "white" : "black",
+                                             paddingTop: "5px",
+                                             paddingBottom: "5px",
+                                             paddingRight: "24px",
+                                             paddingLeft: "24px",
+                                             borderRadius: "24px",
+                                             ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                         }),
+                                     },
+                                 }}
+                            >
+                                <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
+                                              renderLeftNav={(onClick, disabled) => (
+                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                          onClick={onClick}
+                                                          overrides={{
+                                                              BaseButton: {
+                                                                  props: {
+                                                                      className: "react-image-gallery-arrow left",
+                                                                  },
+                                                                  style: {
+                                                                      fontSize: "inherit",
+                                                                      fontWeight: "inherit",
+                                                                      lineHeight: "inherit",
+                                                                  }
+                                                              },
+                                                          }}
+                                                          disabled={disabled}
+                                                  >
+                                                      <ChevronLeft size={28} color={"white"}/>
+                                                  </Button>
+                                              )}
+                                              renderRightNav={(onClick, disabled) => (
+                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                          onClick={onClick}
+                                                          overrides={{
+                                                              BaseButton: {
+                                                                  props: {
+                                                                      className: "react-image-gallery-arrow right",
+                                                                  },
+                                                                  style: {
+                                                                      fontSize: "inherit",
+                                                                      fontWeight: "inherit",
+                                                                      lineHeight: "inherit",
+                                                                  }
+                                                              },
+                                                          }}
+                                                          disabled={disabled}
+                                                  >
+                                                      <ChevronRight size={28} color={"white"}/>
+                                                  </Button>
+                                              )}
+                                />
+                            </Tab>
+                            <Tab title="Video" overrides={{
+                                TabPanel: {
+                                    style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                },
+                                Tab: {
+                                    style: ({$isActive}) => ({
+                                        background: $isActive ? "black" : "transparent",
+                                        color: $isActive ? "white" : "black",
+                                        paddingTop: "5px",
+                                        paddingBottom: "5px",
+                                        paddingRight: "24px",
+                                        paddingLeft: "24px",
+                                        borderRadius: "24px",
+                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                    }),
+                                },
+                            }}/>
+                            <Tab title="3D" overrides={{
+                                TabPanel: {
+                                    style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                },
+                                Tab: {
+                                    style: ({$isActive}) => ({
+                                        background: $isActive ? "black" : "transparent",
+                                        color: $isActive ? "white" : "black",
+                                        paddingTop: "5px",
+                                        paddingBottom: "5px",
+                                        paddingRight: "24px",
+                                        paddingLeft: "24px",
+                                        borderRadius: "24px",
+                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                    }),
+                                },
+                            }}/>
+                        </Tabs>
                     </Block>
                     {/* 选择区域 */}
                     <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
@@ -916,7 +1202,7 @@ function Canopy_Tent({router, products, variants}) {
                             <Link color="inherit" href={"/canopy-tent/spec"}>Spec</Link>
                         </Block>
                         {displayTabs ? (
-                            <Tabs activeKey={tabActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
+                            <Tabs activeKey={tabSelectionActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabSelectionActiveKey(parseInt(activeKey))}
                                   overrides={{
                                       Root: {
                                           style: ({$theme}) => ({width: "100%"}),
@@ -929,17 +1215,12 @@ function Canopy_Tent({router, products, variants}) {
                                               overflowX: "scroll",
                                           },
                                       },
-                                      TabBorder: {
-                                          style: ({$theme}) => ({display: "none"}),
-                                      },
+                                      TabBorder: {props: {hidden: true}},
                                       TabHighlight: {
-                                          style: ({$theme}) => ({
-                                              left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0,
-                                              width: "24px",
-                                              height: "6px",
-                                              backgroundColor: "#23A4AD",
-                                              borderRadius: "3px",
-                                          }),
+                                          props: {
+                                              className: "tab-highlight-horizon"
+                                          },
+                                          style: {left: tabsRefs[tabSelectionActiveKey].current ? `${(tabsRefs[tabSelectionActiveKey].current.clientWidth - 24) / 2}px` : 0},
                                       },
                                   }}
                             >
@@ -968,6 +1249,7 @@ function Canopy_Tent({router, products, variants}) {
                                         <SelectionArea title="Frame">
                                             <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
                                                        onChange={(event) => {
+                                                           console.log(event.target.value);
                                                            setSelectedFrame(event.target.value);
                                                            if (event.target.value === "y5") {
                                                                setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
@@ -1295,8 +1577,256 @@ function Canopy_Tent({router, products, variants}) {
                     </Block>
                 </Block>
             </Block>
-            <Modal type="dialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
-            <Modal type="dialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
+                <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
+                {selectedFrame === "y5" ? (
+                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
+                        <Image src="images/product/canopy-tent/anatomy-y5.png" alt="anatomy y5 frame" objectFit="contain" layout="fill"/>
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["10px", "20px", "22px"]} left={["4px", "9px", "9px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(0);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["56px", "85px", "110px"]} right={["2px", "10px", "8px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(1);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["100px", "165px", "210px"]} left={["4px", "6px", "8px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(2);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["114px", "178px", "220px"]} right={["10px", "12px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(3);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["54px", "90px", "100px"]} right={["62px", "98px", "125px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(4);
+                               }}
+                        />
+                    </Block>
+                ) : (selectedFrame === "y6") ? (
+                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
+                        <Image src="images/product/canopy-tent/anatomy-y6.png" alt="anatomy y6 frame" objectFit="contain" layout="fill"/>
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["52px", "88px", "108px"]} left={["2px", "2px", "2px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(0);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "140px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(1);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["110px", "165px", "210px"]} left={["14px", "22px", "26px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(2);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["140px", "214px", "272px"]} right={["10px", "18px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(3);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["58px", "100px", "120px"]} right={["108px", "164px", "205px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(4);
+                               }}
+                        />
+                    </Block>
+                ) : (selectedFrame === "y7") ? (
+                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
+                        <Image src={"images/product/canopy-tent/anatomy-" + selectedFrame + ".png"} alt={"anatomy " + selectedFrame + " frame"} objectFit="contain" layout="fill"/>
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(0);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "136px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(1);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["104px", "156px", "190px"]} left={["12px", "20px", "22px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(2);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["130px", "206px", "248px"]} right={["6px", "14px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(3);
+                               }}
+                        />
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["62px", "88px", "120px"]} right={["86px", "138px", "175px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                               onClick={() => {
+                                   setDisplayIntro(true);
+                                   setFrameIntroIsModal(true);
+                                   setFrameIntroPosition(4);
+                               }}
+                        />
+                    </Block>
+                ) : null}
+                <Block position="absolute" top={0} right={0} bottom={0} left={0} alignItems="center" justifyContent="center" flexDirection="column"
+                       overrides={{
+                           Block: {
+                               props: {
+                                   className: clsx(displayIntro ? "displayFlex" : "displayNone", frameIntroIsModal ? "frame-intro-background-in" : "frame-intro-background-out")
+                               },
+                               style: {textAlign: "center", transition: "opacity 800ms ease-in-out"}
+                           },
+                       }}
+                >
+                    <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px" justifyItems="center" marginBottom="32px">
+                        <Block position="relative" width={["150px", "200px", "250px"]} height={["150px", "200px", "250px"]}
+                               overrides={{
+                                   Block: {
+                                       props: {
+                                           className: "frame-intro"
+                                       }
+                                   },
+                               }}
+                        >
+                            <Image src={"images/product/canopy-tent/" + selectedFrame + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
+                        </Block>
+                        <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
+                        <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
+                    </Block>
+                    <Button kind={KIND.secondary} shape={SHAPE.circle} onClick={() => {
+                        setFrameIntroIsModal(false);
+                        setTimeout(() => setDisplayIntro(false), 800);
+                    }}
+                            overrides={{
+                                BaseButton: {
+                                    style: {backgroundColor: "rgba(0, 0, 0, 0.3)"}
+                                }
+                            }}
+                    >
+                        <Delete size={24} color={"white"}/>
+                    </Button>
+                </Block>
+            </Block>
+            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Features</Block>
+                <Block display="grid" gridTemplateColumns="1fr" gridRowGap="24px">
+                    <SectionCard title={"Roof Top"} tabPicList={feature_1_pic} tabList={feature_1}/>
+                    <SectionCard gridTemplateColumns={["1fr", "1fr", "1fr 684px"]} gridTemplateAreas={[`"a" "b"`, `"a" "b"`, `"b a"`]} title={"Frame"} tabPicList={feature_2_pic} tabList={feature_2} objectFit="contain"/>
+                </Block>
+            </Block>
+            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Versatile Tent</Block>
+                <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
+                    <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(3, 1fr)"]} gridTemplateRows={["repeat(3, 220px)", "repeat(3, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
+                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
+                            <Image src="images/product/canopy-tent/Versatile_tent_1.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Shade in the backyard</Block>
+                        </Block>
+                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
+                            <Image src="images/product/canopy-tent/Versatile_tent_2.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Parking canopy</Block>
+                        </Block>
+                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
+                            <Image src="images/product/canopy-tent/Versatile_tent_3.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor picnic</Block>
+                        </Block>
+                    </Block>
+                    <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 220px)", "repeat(2, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
+                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
+                            <Image src="images/product/canopy-tent/Versatile_tent_4.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor dining</Block>
+                        </Block>
+                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
+                            <Image src="images/product/canopy-tent/Versatile_tent_5.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Mobile store</Block>
+                        </Block>
+                    </Block>
+                </Block>
+            </Block>
+            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Let’s answer your questions</Block>
+                <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" font="MinXHeading14" color="MinXPrimaryText">
+                    <Accordion overrides={{
+                        Root: {
+                            style: {
+                                borderBottomColor: "#F0F0F0"
+                            }
+                        },
+                        Header: {
+                            props: {
+                                className: "accordion-header"
+                            },
+                            style: {
+                                minHeight: "48px",
+                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
+                                fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit"
+                            }
+                        },
+                        Content: {
+                            style: {
+                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
+                                fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
+                                backgroundColor: "translate"
+                            }
+                        },
+                    }}>
+                        <Panel title="Do your canopies set up in seconds?">
+                            They sure do! Our canopies can be set up in less than 60 seconds with just two people.
+                        </Panel>
+                        <Panel title="Do you have a video showing proper setup and take down?">
+                            Yes! Check out this one minute video <Link href="https://www.youtube.com/watch?v=J9ygFXvOVn4">https://www.youtube.com/watch?v=J9ygFXvOVn4</Link>
+                        </Panel>
+                        <Panel title="Can my canopy withstand wind and at what point are weight bags or steel stakes required?">
+                            We recommend using weight bags or steel stakes in all types of weather environments. White stakes are ideal to keep your canopy secure during all outdoor activities, our professional weight bags hold up to 30lbs
+                            of sand, or anything similar material, and easily attach to your shelter for additional stability.
+                        </Panel>
+                        <Panel title="Can I use my canopy anywhere?">
+                            Yes, our canopies stand securely on grass, dirt, or pavement without ropes and poles. In windy conditions, however, we recommend using our weight bags to anchor and prevent your canopy from tipping over.
+                        </Panel>
+                        <Panel title="I bought a canopy from another company,  will your replacement fit my current frame?">
+                            Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product.
+                        </Panel>
+                    </Accordion>
+                </Block>
+            </Block>
+            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                      onClick={() => openSummaryModal()}
+                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                      onClickPlus={() => setTotalCount(totalCount + 1)}
+                      onClickAddToBag={() => updateCart()}
+                      onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            />
+            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
             <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
                    footer={
                        <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
@@ -1472,7 +2002,6 @@ Canopy_Tent.getInitialProps = async (context) => {
     return {
         products: products,
         variants: variants,
-        noFooter: true,
     };
 };
 

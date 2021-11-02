@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {withRouter} from "next/router";
 
-import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, KIND, SHAPE} from "baseui/button";
@@ -30,7 +29,7 @@ import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
 import {Checkout} from "../../components/sections";
-import {Modal} from "../../components/surfacse";
+import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
 import Selection from "../../components/selection-n";
@@ -54,6 +53,7 @@ const id_attribute_canopyColor = 3;
 const id_attribute_canopySize = 4;
 const id_attribute_wallType = 11;
 const id_attribute_wallSize = 14;
+const id_attribute_wallPrintedType = 16;
 const id_attribute_roofColor = 21;
 const id_attribute_roofSize = 31;
 const id_attribute_frameSeries = 34;
@@ -111,19 +111,23 @@ const selectionWallType = ["None", "Full", "Half", "Mesh", "PVC", "Rollup"];
 const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
-let selectedFrame = "";
+let selectedFrame = "y7 heavy duty", selectedSize = "10x10", selectedColor = "white";
 
-function Custom_Printed_Canopy_Tent({router, product, productComponent, productVariant}) {
+function arrayEquals(a, b) {
+    if (a.length < b.length) {
+        return Array.isArray(a) && Array.isArray(b) && a.every((val, index) => val.id === b[index].id && val.option.toLowerCase() === b[index].option.toLowerCase());
+    } else {
+        return Array.isArray(a) && Array.isArray(b) && b.every((val, index) => val.id === a[index].id && val.option.toLowerCase() === a[index].option.toLowerCase());
+    }
+}
+
+function Custom_Printed_Canopy_Tent({router, product, productComponent = [], productVariant = []}) {
     const [displayTabs, setDisplayTabs] = useState(false);
     const [tabActiveKey, setTabActiveKey] = React.useState(0);
-
-    const [productImageGallery, setProductImageGallery] = useState([]);
-    const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
     const [selectedAttribute, setSelectedAttribute] = useState([]);
     const [selectedVariant, setSelectedVariant] = useState([]);
 
-    const [initProductVariant, setInitProductVariant] = useState(false);
     const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
 
     const [totalRegularPrice, setTotalRegularPrice] = useState(0);
@@ -132,35 +136,24 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
 
     const [message, setMessage] = useState("");
 
+    const [isInStock, setIsInStock] = useState(true);
     const [availableToCheckout, setAvailable] = useState(false);
 
-    const [selectedRoofColor, setSelectedRoofColor] = useState("white");
-
-    const [wallIsOpen, setWallIsOpen] = useState(false);
-    const [printIsOpen, setPrintIsOpen] = useState(false);
-    const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
-
-    const [activeRoofSlide, setActiveRoofSlide] = useState(0);
-    const [isPeakOrValance, setIsPeakOrValance] = useState(0);
-
-    const [summaryIsOpen, setSummaryIsOpen] = useState(false);
-
-    const [tentSeries, setTentSeries] = useState("");
-
-    const [isInStock, setIsInStock] = useState(true);
-
-    const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
-    const [frameCompareOpen, setFrameCompareOpen] = useState(false);
-
     ////////////////////////////////////////
 
-    const [css, theme] = useStyletron();
+    const [productImageGallery, setProductImageGallery] = useState([]);
+    const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
-    ////////////////////////////////////////
-
-    const [wallPlainAttributeList, setWallPlainAttributeList] = useState([]);
-    const [wallPlainAttributeListTemp, setWallPlainAttributeListTemp] = useState([]);
     const [activeWall, setActiveWall] = useState(0);
+    const [wallAttributeList, setWallAttributeList] = useState([]);
+    const [wallAttributeListTemp, setWallAttributeListTemp] = useState([]);
+    const [wallColors, setWallColors] = useState(["white", "white", "white", "white"]);
+    const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
+    const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
+
+    const [tabsRefs, setTabsRefs] = useState([]);
+
+    ////////////////////////////////////////
 
     const [availableList, setAvailableList] = useState([
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
@@ -173,11 +166,17 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
 
     ////////////////////////////////////////
 
-    const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
-    const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
+    const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
+    const [activeRoofSlide, setActiveRoofSlide] = useState(0);
+    const [isPeakOrValance, setIsPeakOrValance] = useState(0);
 
-    const [tabsRefs, setTabsRefs] = useState([]);
-    const [value3, setValue3] = React.useState("1");
+    const [wallIsOpen, setWallIsOpen] = useState(false);
+    const [printIsOpen, setPrintIsOpen] = useState(false);
+    const [summaryIsOpen, setSummaryIsOpen] = useState(false);
+
+    const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+    const [frameCompareOpen, setFrameCompareOpen] = useState(false);
+    const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
 
     ////////////////////////////////////////
 
@@ -186,11 +185,23 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
     const {loggedIn, token} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
 
+    function renderCustomImage(props, wallPics = []) {
+        return (
+            <>
+                <img className="image-gallery-image" src={props.original} alt={props.originalAlt}/>
+                {wallPics.map((pic, index) => {
+                    if (!pic) return;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+                })}
+            </>
+        );
+    }
+
     const openWallModal = (index) => {
         setActiveWall(index);
 
-        const temp = JSON.parse(JSON.stringify(wallPlainAttributeList));
-        setWallPlainAttributeListTemp(temp);
+        const temp = JSON.parse(JSON.stringify(wallAttributeList));
+        setWallAttributeListTemp(temp);
 
         const imageGalleryTemp = JSON.parse(JSON.stringify(productImageGallery));
         setProductImageGalleryTemp(imageGalleryTemp);
@@ -203,74 +214,33 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
 
     const closeWallModal = (save) => {
         if (save) {
-            const temp = JSON.parse(JSON.stringify(wallPlainAttributeListTemp));
-            setWallPlainAttributeList(temp);
+            const temp = JSON.parse(JSON.stringify(wallAttributeListTemp));
+            setWallAttributeList(temp);
 
             let selection = JSON.parse(JSON.stringify(selectedAttribute));
             temp.forEach((attribute, index) => {
-                selection[index + 1] = attribute;
+                selection[index + 2] = attribute;
             });
             setSelectedAttribute(selection);
 
             let selectedVariantList = [];
-            selection.forEach((attr, index) => {
-                let selected = productVariant[index].filter((variant) => {
-                    if (!variant || !variant.attributes) return false;
-                    let equal = true;
-                    const initSelectedVariant = (a, b, indexA, indexB) => {
-                        let indexC = indexB;
-                        for (let i = indexA; i < a.length; i++) {
-                            if (indexC < b.length) {
-                                if (a[i].id === b[indexC].id) {
-                                    if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
-                                        equal = false;
-                                        break;
-                                    }
-                                    indexC++;
-                                } else {
-                                    initSelectedVariant(a, b, i + 1, indexC);
-                                    break;
-                                }
-                            }
-                        }
-                    };
-                    initSelectedVariant(attr, variant.attributes, 0, 0);
-                    return equal;
-                });
-                selectedVariantList[index] = selected[0];
-            });
+            selection.forEach((attr, index) => selectedVariantList[index] = productVariant[index].filter(({attributes}) => arrayEquals(selection, attributes))[0]);
             setSelectedVariant(selectedVariantList);
         }
         setWallIsOpen(false);
     };
 
+    const openCustomPrintingModal = () => {
+        setPrintIsOpen(true)
+    }
+
+    const closeCustomPrintingModal = () => {
+        setPrintIsOpen(false)
+    }
+
     const openSummaryModal = () => setSummaryIsOpen(true);
 
     const closeSummaryModal = () => setSummaryIsOpen(false);
-
-    function renderCustomImage(props) {
-        return (
-            <>
-                <img className="image-gallery-image" src={props.original}/>
-                {wallPictures.map((pic, index) => {
-                    if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
-                })}
-            </>
-        );
-    }
-
-    function renderCustomImageTemp(props) {
-        return (
-            <>
-                <img className="image-gallery-image" src={props.original}/>
-                {wallPicturesTemp.map((pic, index) => {
-                    if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
-                })}
-            </>
-        );
-    }
 
     const setMainImage = (images) => {
         if (!images || images.length === 0) return;
@@ -288,78 +258,77 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                 thumbnailClass: "thumbnailClass",
                 originalAlt: img.name,
                 thumbnailAlt: img.name,
+                renderItem: (props) => renderCustomImage(props, wallPictures)
             };
         });
-        i[0].renderItem = renderCustomImage;
         setProductImageGallery(i);
     };
 
-    useEffect(() => {
-        if (!productImageGallery || productImageGallery.length === 0) return;
-        let images = [...productImageGallery];
-        images[0].renderItem = renderCustomImage;
-        setProductImageGallery(images);
-    }, [wallPictures]);
-
-    useEffect(() => {
-        if (!productImageGalleryTemp || productImageGalleryTemp.length === 0) return;
-        let images = [...productImageGalleryTemp];
-        images[0].renderItem = renderCustomImageTemp;
-        setProductImageGalleryTemp(images);
-    }, [wallPicturesTemp]);
-
     const handleChangeRadio = (event, index, id) => {
+        if (id === id_attribute_canopySize) {
+            selectedSize = event.target.value;
+        } else if (id === id_attribute_frameSeries) {
+            selectedFrame = event.target.value
+        } else if (id === id_attribute_canopyColor) {
+            selectedColor = event.target.value;
+        }
+
         // Part 1: 更改选项List信息 并 保存
-        let selection = [...selectedAttribute];
+        let selection = JSON.parse(JSON.stringify(selectedAttribute));
         selection[index].forEach((attribute) => {
             if (attribute.id === id) attribute.option = event.target.value;
-            if (attribute.id === id_attribute_canopySize && id !== id_attribute_canopySize && selectedFrame !== "y7" && (attribute.option !== "10x10" && attribute.option !== "10x15" && attribute.option !== "10x20")) {
+            if (id !== id_attribute_canopySize && event.target.value !== "y7" && attribute.id === id_attribute_canopySize && (attribute.option !== "10x10" && attribute.option !== "10x15" && attribute.option !== "10x20")) {
                 attribute.option = "10x20";
+                selectedSize = "10x20";
             }
         });
-        // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
-        let selectionVariant = [...selectedVariant];
-        let selected = productVariant[index].filter((variant) => {
-            if (!variant || !variant.attributes) return false;
 
-            let equal = true;
-            for (let i = 0; i < variant.attributes.length; i++) {
-                if (selection[index][i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
-                    equal = false;
-                    break;
-                }
-            }
-            return equal;
-        });
-        selectionVariant[index] = selected[0];
+        // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
+        let selectionVariant = JSON.parse(JSON.stringify(selectedVariant));
+        selectionVariant[index] = productVariant[index].filter(({attributes}) => arrayEquals(selection[index], attributes))[0];
+
         // Part 2.5: Canopy Tent订制选项，根据Tent Size变更Wall Size, Roof Size
         if (index === 0 && id === id_attribute_canopySize) {
             let sizes = event.target.value.split("x");
-            let wallPicturesList = [...wallPictures];
             selection.forEach((item, indexA) => {
                 if (indexA < 1) return;
-
-                item.forEach((attribute) => {
-                    if (attribute.id === id_attribute_canopySize) attribute.option = event.target.value;
-                    if (attribute.id === id_attribute_wallSize) attribute.option = indexA % 2 === 0 ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
-                });
+                if (indexA === 1) {
+                    item.forEach((attribute, indexB) => {
+                        if (indexB === 0) {
+                            attribute.option = sizes[0] + "ft";
+                        } else if (indexB === 1) {
+                            attribute.option = sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
+                        }
+                    });
+                } else if (indexA > 1) {
+                    item.forEach((attribute) => {
+                        if (attribute.id === id_attribute_canopySize) {
+                            attribute.option = event.target.value;
+                        } else if (attribute.id === id_attribute_wallSize) {
+                            attribute.option = (indexA === 2 || indexA === 3) ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
+                        }
+                    });
+                }
 
                 // 挑选出对应 Roof/Wall Variant.
-                let selectedWall = productVariant[indexA].filter((variant) => {
-                    if (!variant.attributes) return false;
-
-                    let equal = true;
-                    for (let i = 0; i < variant.attributes.length; i++) {
-                        if (!item[i] || variant.attributes[i].option.toLowerCase() !== item[i].option.toLowerCase()) {
-                            equal = false;
-                            break;
+                console.log(selection);
+                selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
+            });
+        } else if (index === 2 && id === id_attribute_printing_tech) {
+            selection.forEach((item, indexA) => {
+                if (indexA < 2) return;
+                if (indexA > 1) {
+                    item.forEach((attribute) => {
+                        if (attribute.id === id_attribute_printing_tech) {
+                            attribute.option = event.target.value;
                         }
-                    }
-                    return equal;
-                });
-                selectionVariant[indexA] = selectedWall[0];
+                    });
+                }
+                console.log(selection);
+                selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
             });
         }
+
         // Part 3: 保存更改项
         setSelectedAttribute(selection);
         setSelectedVariant(selectionVariant);
@@ -367,105 +336,53 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
 
     const handleChangeWallRadio = (event, index, id) => {
         // Part 1: 更改选项List信息 并 保存
-        let selection = JSON.parse(JSON.stringify(wallPlainAttributeList));
-        selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
-        // Part 2: 保存更改项
-        setWallPlainAttributeList(selection);
-
+        let selection = JSON.parse(JSON.stringify(wallAttributeList));
         let selectionA = JSON.parse(JSON.stringify(selectedAttribute));
-        selection.forEach((attribute, index) => {
-            selectionA[index + 1] = attribute;
-        });
-        setSelectedAttribute(selectionA);
+        let selectedVariantList = JSON.parse(JSON.stringify(selectedVariant));
 
-        let selectedVariantList = [];
-        selectionA.forEach((attr, index) => {
-            let selected = productVariant[index].filter((variant) => {
-                if (!variant || !variant.attributes) return false;
-                let equal = true;
-                const initSelectedVariant = (a, b, indexA, indexB) => {
-                    let indexC = indexB;
-                    for (let i = indexA; i < a.length; i++) {
-                        if (indexC < b.length) {
-                            if (a[i].id === b[indexC].id) {
-                                if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
-                                    equal = false;
-                                    break;
-                                }
-                                indexC++;
-                            } else {
-                                initSelectedVariant(a, b, i + 1, indexC);
-                                break;
-                            }
-                        }
-                    }
-                };
-                initSelectedVariant(attr, variant.attributes, 0, 0);
-                return equal;
-            });
-            selectedVariantList[index] = selected[0];
+        selection.forEach((attribute, indexA) => {
+            if (index === indexA) {
+                attribute.forEach((attr) => (attr.id === id ? (attr.option = event.target.value) : null));
+            }
+            selectionA[indexA + 2] = attribute
+            selectedVariantList[indexA + 2] = productVariant[indexA + 2].filter(({attributes}) => arrayEquals(selectionA, attributes))[0];
         });
+
+        // Part 2: 保存更改项
+        setWallAttributeList(selection);
+        setSelectedAttribute(selectionA);
         setSelectedVariant(selectedVariantList);
     };
 
     const handleChangeWallRadioTemp = (event, index, id) => {
-        // Part 1: 更改选项List信息 并 保存
-        let selection = JSON.parse(JSON.stringify(wallPlainAttributeListTemp));
-        selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
-        // Part 2: 保存更改项
-        setWallPlainAttributeListTemp(selection);
-    };
-
-    useEffect(() => {
-        if (!wallPlainAttributeListTemp || wallPlainAttributeListTemp.length === 0) return;
-        let wallPicturesList = JSON.parse(JSON.stringify(wallPicturesTemp));
-
-        let product_name = "";
-        let size = "";
-        let series = "Y5";
-
-        if (selectedFrame === "y5") {
-            product_name = "y5-economic-canopy-tent";
-            series = "Y5";
-        } else if (selectedFrame === "y6") {
-            product_name = "y6-commercial-buy";
-            series = "Y6";
-        } else if (selectedFrame === "y7") {
-            product_name = "y7-heavy-duty-canopy-tent";
-            series = "Y7";
-        } else {
-            product_name = "y7-heavy-duty-canopy-tent";
-            series = "Y7";
+        let colors = [...wallColors];
+        if (id === id_attribute_canopyColor) {
+            colors[index] = event.target.value;
+            setWallColors(colors);
         }
 
-        selectedVariant[0].attributes.map(({id, option}) => id === id_attribute_canopySize ? size = option.toUpperCase() : null);
+        // Part 1: 更改选项List信息 并 保存
+        let selection = JSON.parse(JSON.stringify(wallAttributeListTemp));
+        selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
 
-        wallPlainAttributeListTemp.forEach((attribute, index) => {
-            if (!attribute) {
-                wallPicturesList[index] = "";
-                return;
+        selection.forEach((item, indexA) => {
+            if (id === id_attribute_printing_tech) {
+                item.forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
+            } else {
+                if (index === indexA) {
+                    item.forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null))
+                }
             }
-            let color = selectedRoofColor.toLowerCase() || "white";
-            // 设置Wall图片
-            let type = attribute.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
-            if (type === "none") return;
-            const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
-            const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
-            const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
-            const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
         });
-        // Set墙面图片
-        setWallPicturesTemp(wallPicturesList);
-    }, [wallPlainAttributeListTemp]);
+        // Part 2: 保存更改项
+        setWallAttributeListTemp(selection);
+    };
 
     const checkProduct_getPrice = () => {
         let regularPrice = 0,
             salePrice = 0;
 
         let available = [...availableList];
-
-        let size = "";
 
         selectedVariant.forEach((variant, index) => {
             if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
@@ -488,7 +405,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                     quantity: variant.stock_quantity,
                     needed: totalCount,
                     attribute: variant.attributes,
-                    optional: productComponent[index].id === 26516,
+                    optional: productComponent[index].id === id_product_printed_wall,
                 };
             } else {
                 available[index] = {
@@ -497,23 +414,19 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                     quantity: 0,
                     needed: totalCount,
                     attribute: variant.attributes,
-                    optional: productComponent[index].id === 26516,
+                    optional: productComponent[index].id === id_product_printed_wall,
                 };
             }
 
-            if (index === 0) {
-                size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
-            } else {
-                if (size === "13x26" && (index === 2 || index === 4)) {
-                    if (!variant.on_sale) {
-                        regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-                        salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-                    } else {
-                        regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
-                        salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
-                    }
-                    available[index].needed = totalCount * 2;
+            if (selectedSize === "13x26" && (index === 4 || index === 5)) {
+                if (!variant.on_sale) {
+                    regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                    salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                } else {
+                    regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
+                    salePrice += numberFn.strToFloat(variant.sale_price) * totalCount;
                 }
+                available[index].needed = totalCount * 2;
             }
         });
         setAvailableList(available);
@@ -546,10 +459,12 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
     //////////////////////////////////////
 
     useEffect(() => {
-        setTabsRefs((tabsRefs) => Array(3).fill().map((_, i) => tabsRefs[i] || createRef()));
+        selectedSize = router.query.size || urlFn.getParam("size") || "10x10";
 
-        let series = router.query.series || urlFn.getParam("series");
-        if (series) selectedFrame = series;
+        let paramSeries = router.query.series || urlFn.getParam("series") || "y7";
+        selectedFrame = paramSeries === "y5" ? "y5 economic" : paramSeries === "y6" ? "y6 commercial" : paramSeries === "y7" ? "y7 heavy duty" : "y7 heavy duty"
+
+        setTabsRefs((tabsRefs) => Array(3).fill(null).map((_, i) => tabsRefs[i] || createRef()));
     }, []);
 
     useEffect(() => {
@@ -557,147 +472,132 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
     }, [tabsRefs]);
 
     useEffect(() => {
-        if (!productComponent || productComponent.length === 0) return;
+        if (productComponent.length < 1) return;
 
-        if (productComponent[0].hasOwnProperty("image")) {
-            setMainImage([productComponent[0].image]);
-        } else if (productComponent[0].hasOwnProperty("images")) {
+        if (productComponent[0].hasOwnProperty("images")) {
             setMainImage(productComponent[0].images);
+        } else if (productComponent[0].hasOwnProperty("image")) {
+            setMainImage([productComponent[0].image]);
         }
 
-        let selectedAttrList = [];
-        let wallPlainAttributeList = [];
-        productComponent.map((component, indexA) => {
-            // 修改默认选项值 与 Variant里的attr相匹配
-            let defaultAttr = [...component.default_attributes];
-            defaultAttr.forEach((attr, indexB) => {
-                if (component.id === id_product_canopy_frame && attr.id === id_attribute_frameSeries) {
-                    attr.option = attr.option === "y5" ? "y5 economic" : attr.option === "y6" ? "y6 commercial" : attr.option === "y7" ? "y7 heavy duty" : "y5 economic";
-                }
-                if (component.id === id_product_printed_wall && attr.id === id_attribute_wallType) {
-                    attr.option = "none";
-                }
-            });
-            selectedAttrList.push([...defaultAttr]);
-
-            if (indexA > 1) wallPlainAttributeList.push([...defaultAttr]);
-        });
-        // 初始化各产品默认变体参数
-        console.log(selectedAttrList);
-        setSelectedAttribute(selectedAttrList);
-        setWallPlainAttributeList(wallPlainAttributeList);
-        setInitSelectedAttribute(true);
-        // 获取,保存各组件变体产品信息
-        setInitProductVariant(true);
+        setSelectedAttribute(productComponent.map(({default_attributes}) => default_attributes) || []);
     }, [productComponent]);
 
     useEffect(() => {
-        if (!initSelectedAttribute || !initProductVariant) return;
+        if (selectedAttribute.length < 1) return;
 
-        handleChangeRadio(null, 0)
-    }, [productVariant]);
-
-    useEffect(() => {
-        if (!initSelectedAttribute || !initProductVariant) return;
-        // 获取,保存各组件默认变体产品信息
         let selectedVariantList = [];
-        selectedAttribute.forEach((attr, index) => {
-            if (!attr || index > 0) return;
-            let selected = productVariant[index].filter((variant) => {
-                if (!variant || !variant.attributes) return false;
-                let equal = true;
-                const initSelectedVariant = (a, b, indexA, indexB) => {
-                    let indexC = indexB;
-                    for (let i = indexA; i < a.length; i++) {
-                        if (indexC < b.length) {
-                            if (a[i].id === b[indexC].id) {
-                                if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
-                                    equal = false;
-                                    break;
-                                }
-                                indexC++;
-                            } else {
-                                initSelectedVariant(a, b, i + 1, indexC);
-                                break;
-                            }
+        selectedAttribute.forEach((attribute, index) => {
+            if (!attribute && attribute.length > 0) return;
+
+            attribute.map((attr) => {
+                if (!attr) return;
+
+                if (!initSelectedAttribute) {
+                    if (attr.id === id_attribute_frameSeries) {
+                        if (selectedFrame) {
+                            attr.option = selectedFrame;
+                        } else {
+                            attr.option = attr.option === "y5" ? "y5 economic" : attr.option === "y6" ? "y6 commercial" : attr.option === "y7" ? "y7 heavy duty" : "y7 heavy duty";
                         }
+                    } else if (attr.id === id_attribute_canopySize) {
+                        if (selectedSize) {
+                            attr.option = selectedSize;
+                        }
+                    } else if (attr.id === id_attribute_wallType) {
+                        attr.option = "none";
+                    } else if (attr.id === id_attribute_wallPrintedType || attr.id === id_attribute_printing_tech) {
+                        attr.option = stringFn.replaceDash(attr.option, 1);
                     }
-                };
-                initSelectedVariant(attr, variant.attributes, 0, 0);
-                return equal;
+                }
             });
+
+            let selected = productVariant[index].filter(({attributes}) => arrayEquals(attribute, attributes));
             selectedVariantList[index] = selected[0];
-            if (index === 0) {
-                // 初始化数据
-                setSelectedVariant(selectedVariantList);
-            }
         });
-    }, [initSelectedAttribute, initProductVariant]);
+
+        setInitSelectedAttribute(true);
+        setSelectedVariant(selectedVariantList);
+
+        setWallAttributeList(selectedAttribute.filter((attribute, index) => index > 1) || []);
+    }, [selectedAttribute]);
 
     useEffect(() => {
         // 已选各产品组成变体
-        if (!selectedVariant || selectedVariant.length === 0) return;
-        let wallPicturesList = [...wallPictures];
+        if (selectedVariant.length < 1) return;
+        let wallPicturesList = JSON.parse(JSON.stringify(wallPictures));
 
-        let product_name = "";
-        let size = "";
-        let series = "Y5";
+        let product_name = selectedFrame === "y5 economic" ? "y5-economic-canopy-tent" : selectedFrame === "y6 commercial" ? "y6-commercial-buy" : selectedFrame === "y7 heavy duty" ? "y7-heavy-duty-canopy-tent" : "y7-heavy-duty-canopy-tent";
+        let series = selectedFrame === "y5 economic" ? "Y5" : selectedFrame === "y6 commercial" ? "Y6" : selectedFrame === "y7 heavy duty" ? "Y7" : "Y7";
+        let size = selectedSize;
+        let color = wallMap.get("color").find((w) => w.key === selectedColor.toLowerCase()).value;
+        let wallColor = "";
 
+        // 设置Frame图片
+        setMainImage([{src: "/images/product/" + product_name + "/frame/" + series + "-" + size + "-" + color + ".png",}]);
+
+        const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
         selectedVariant.forEach((variant, index) => {
             if (!variant || !variant.attributes) {
-                if (index > 0) wallPicturesList[index - 1] = "";
-                return;
-            }
-
-            let color = selectedRoofColor.toLowerCase() || "white";
-            if (index < 1) {
-                // 设置Frame图片
-                variant.attributes.map((attr) => {
-                    if (attr.id === id_attribute_frameSeries) {
-                        if (attr.option.toLowerCase() === "y5 economic") {
-                            product_name = "y5-economic-canopy-tent";
-                            series = "Y5";
-                        } else if (attr.option.toLowerCase() === "y6 commercial") {
-                            product_name = "y6-commercial-buy";
-                            series = "Y6";
-                        } else if (attr.option.toLowerCase() === "y7 heavy duty") {
-                            product_name = "y7-heavy-duty-canopy-tent";
-                            series = "Y7";
-                        } else {
-                            product_name = "y5-economic-canopy-tent";
-                            series = "Y5";
-                        }
-                    }
-                });
-                size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
-                const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
-                setMainImage([
-                    {
-                        src: "/images/product/" + product_name + "/frame/" + series + "-" + size + "-" + colorUrl + ".png",
-                    },
-                ]);
+                if (index > 1) wallPicturesList[index - 2] = "";
             } else if (index > 1) {
                 // 设置Wall图片
-                let type = variant.attributes.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
+                wallColor = wallMap.get("color").find((w) => w.key === wallColors[index - 2].toLowerCase()).value;
+                const sideUrl = wallMap.get("side").find((w) => w.key === (index - 1)).value;
+                const type = variant.attributes.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
                 if (type !== "none") {
                     const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
-                    const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
-                    const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
-                    const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
-                    wallPicturesList[index - 1] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    wallPicturesList[index - 2] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + wallColor + "-" + sideUrl + ".png";
                 } else {
-                    wallPicturesList[index - 1] = "";
+                    wallPicturesList[index - 2] = "";
                 }
             }
         });
         // Set墙面图片
         setWallPictures(wallPicturesList);
+        // 计算价格
         checkProduct_getPrice();
     }, [selectedVariant]);
 
     useEffect(() => {
-        if (totalCount === 0) return;
+        if (!wallAttributeListTemp || wallAttributeListTemp.length === 0) return;
+        let wallPicturesTempList = JSON.parse(JSON.stringify(wallPicturesTemp));
 
+        let product_name = selectedFrame === "y5 economic" ? "y5-economic-canopy-tent" : selectedFrame === "y6 commercial" ? "y6-commercial-buy" : selectedFrame === "y7 heavy duty" ? "y7-heavy-duty-canopy-tent" : "y7-heavy-duty-canopy-tent";
+        let series = selectedFrame === "y5 economic" ? "Y5" : selectedFrame === "y6 commercial" ? "Y6" : selectedFrame === "y7 heavy duty" ? "Y7" : "Y7";
+        let size = selectedSize.toLowerCase();
+        let color = "";
+        let type = "";
+
+        const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
+        wallAttributeListTemp.forEach((attribute, index) => {
+            if (!attribute) {
+                wallPicturesTempList[index] = "";
+                return;
+            }
+            // 设置Wall图片
+            attribute.map(attr => {
+                if (attr.id === id_attribute_wallType) {
+                    type = attr.option.toLowerCase();
+                } else if (attr.id === id_attribute_canopyColor) {
+                    color = attr.option.toLowerCase();
+                }
+            })
+            if (type !== "none") {
+                const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
+                const colorUrl = wallMap.get("color").find((w) => w.key === color.toLowerCase()).value;
+                const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
+                wallPicturesTempList[index] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            } else {
+                wallPicturesTempList[index] = "";
+            }
+        });
+        // Set墙面图片
+        setWallPicturesTemp(wallPicturesTempList);
+    }, [wallAttributeListTemp]);
+
+    useEffect(() => {
+        // 计算价格
         checkProduct_getPrice();
     }, [totalCount]);
 
@@ -761,28 +661,37 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
         setAvailable(available);
     }, [availableList]);
 
-    // useEffect(() => {
-    // 	if (totalRegularPrice === 0) return;
-    // 	console.log(totalRegularPrice);
-    // }, [totalRegularPrice]);
+    useEffect(() => {
+        if (!productImageGallery || productImageGallery.length === 0) return;
+        let images = [...productImageGallery];
+        images[0] = {
+            ...productImageGallery[0],
+            renderItem: (props) => renderCustomImage(props, wallPictures)
+        }
+        setProductImageGallery(images);
+    }, [wallPictures]);
 
-    // useEffect(() => {
-    // 	if (totalSalePrice === 0) return;
-    // 	console.log(totalSalePrice);
-    // }, [totalSalePrice]);
-
-    // useEffect(() => {
-    // 	console.log(selectedAttribute);
-    // }, [selectedAttribute]);
+    useEffect(() => {
+        if (!productImageGalleryTemp || productImageGalleryTemp.length === 0) return;
+        let images = [...productImageGalleryTemp];
+        images[0] = {
+            ...productImageGalleryTemp[0],
+            renderItem: (props) => renderCustomImage(props, wallPicturesTemp)
+        }
+        setProductImageGalleryTemp(images);
+    }, [wallPicturesTemp]);
 
     const DataTable = () => {
         let rowDate = [];
 
         selectedVariant.map((variant, index) => {
             if (!variant) return;
+            console.log(variant);
 
             let cell = {
-                name: index === 0 ? selectedFrame.toUpperCase() + " Canopy Tent Set" : productComponent[index].id === id_product_wall ? productComponent[index].name + ": " + variant.attributes[0].option : productComponent[index].name,
+                name: index === 0 ? selectedFrame.toUpperCase() + " Canopy Tent Set" :
+                    productComponent[index].id === id_product_printed_wall ? productComponent[index].name + ": " + variant.attributes[0].option + ", " + variant.attributes[1].option + ", " + variant.attributes[2].option + ", " + variant.attributes[3].option + ", " + variant.attributes[4].option :
+                        productComponent[index].name,
                 quantity: 1,
                 regular_price: variant.regular_price,
                 sale_price: variant.sale_price,
@@ -805,7 +714,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                 <div style={{textAlign: "right", fontSize: 14}}>
                     {onSale ? (
                         <Block display="flex" flexDirection="row" justifyContent="flex-end">
-                            {priceSale == 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
+                            {priceSale === 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
                                 <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
                             <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
                         </Block>
@@ -909,24 +818,19 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                               overflowX: "scroll",
                                           },
                                       },
-                                      TabBorder: {
-                                          style: ({$theme}) => ({display: "none"}),
-                                      },
+                                      TabBorder: {props: {hidden: true}},
                                       TabHighlight: {
-                                          style: ({$theme}) => ({
-                                              left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0,
-                                              width: "24px",
-                                              height: "6px",
-                                              backgroundColor: "#23A4AD",
-                                              borderRadius: "3px",
-                                          }),
+                                          props: {
+                                              className: "tab-highlight-horizon"
+                                          },
+                                          style: {left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0},
                                       },
                                   }}
                             >
                                 <Tab title="Basic" tabRef={tabsRefs[0]}
                                      overrides={{
                                          TabPanel: {
-                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: "40px", paddingLeft: 0},
                                          },
                                          Tab: {
                                              style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
@@ -936,26 +840,20 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                     <>
                                         <SelectionArea title="Size">
                                             <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                                                {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map((attribute) => {
-                                                    let series = selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : "";
-                                                    return attribute.options.map((option, index) => {
-                                                        if ((series === "y5 economic" || series === "y6 commercial") && index < 3) {
+                                                {productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize).map((attribute) => attribute.options.map((option, index) => {
+                                                        if ((selectedFrame === "y5 economic" || selectedFrame === "y6 commercial") && index < 3) {
                                                             return (
-                                                                <Radio key={index} value={option.toLowerCase()}>
-                                                                    {option}
-                                                                </Radio>
+                                                                <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                                             );
-                                                        } else if (series === "y7 heavy duty") {
+                                                        } else if (selectedFrame === "y7 heavy duty") {
                                                             return (
-                                                                <Radio key={index} value={option.toLowerCase()}>
-                                                                    {option}
-                                                                </Radio>
+                                                                <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                                             );
                                                         }
-                                                    });
-                                                }) : null}
+                                                    })
+                                                ) : null}
                                             </Selection>
-                                            <MButton type="solid" height="auto" marginTop="16px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
                                                      onClick={() => setSizeGuideOpen(true)}
                                             />
@@ -966,32 +864,21 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                            selectedFrame = event.target.value;
                                                            handleChangeRadio(event, 0, id_attribute_frameSeries)
                                                        }}
-                                                       attributes={productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_frameSeries && attribute.variation) : []}
-                                                       id={id_attribute_frameSeries}
+                                                       id={id_attribute_frameSeries} attributes={productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_frameSeries) : []}
                                             />
-                                            <MButton type="solid" height="auto" marginTop="16px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
                                                      onClick={() => setFrameCompareOpen(true)}
                                             />
                                         </SelectionArea>
                                         <SelectionArea title="Color">
-                                            <Selection name="color" value={selectedRoofColor} onChange={(event) => setSelectedRoofColor(event.target.value)} id={id_attribute_canopyColor}>
-                                                {selectionColor.map((color, index) => (
-                                                        <Radio key={index} value={color.toLowerCase()}
-                                                               overrides={{
-                                                                   Label: ({$value}) => (
-                                                                       <div className="radio-dot"
-                                                                            style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
-                                                                       />
-                                                                   ),
-                                                               }}
-                                                        />
-                                                    )
-                                                )}
-                                            </Selection>
-                                            <div style={{maxWidth: 315, lineHeight: "22px", fontSize: 14, margin: "auto"}}>
+                                            <Selection name="color" value={selectedColor}
+                                                       onChange={(event) => handleChangeRadio(event, 1, id_attribute_canopyColor)}
+                                                       id={id_attribute_canopyColor} attributes={productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor) : []}
+                                            />
+                                            <Block maxWidth="315px" marginRight="auto" marginLeft="auto" font="MinXParagraph14">
                                                 You can also print any color or any designs with our <span style={{color: "#23A4AD"}}>custom printing</span> service
-                                            </div>
+                                            </Block>
                                             <Button shape={SHAPE.pill}
                                                     overrides={{
                                                         BaseButton: {
@@ -1001,22 +888,32 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                         },
                                                     }}
                                                     onClick={() => {
-                                                        let selection = [...selectedAttribute];
-                                                        selection.forEach((product, index) => {
-                                                            if (index > 1 && index < 6) {
-                                                                product.forEach((attribute) => {
-                                                                    if (attribute.id === id_attribute_roofColor) attribute.option = selectedVariant[1].attributes[1].option.toLowerCase();
-                                                                });
-                                                            }
-                                                        });
-                                                        setSelectedAttribute(selection);
-                                                        setPrintIsOpen(true);
+                                                        // let selection = [...selectedAttribute];
+                                                        // selection.forEach((product, index) => {
+                                                        //     if (index > 1 && index < 6) {
+                                                        //         product.forEach((attribute) => {
+                                                        //             if (attribute.id === id_attribute_roofColor) attribute.option = selectedVariant[1].attributes[1].option.toLowerCase();
+                                                        //         });
+                                                        //     }
+                                                        // });
+                                                        // setSelectedAttribute(selection);
+                                                        openCustomPrintingModal();
                                                     }}
                                             >
                                                 <div style={{width: "100%", height: "100%", backgroundColor: "white", borderRadius: "38px", lineHeight: "46px",}}>
                                                     Custom print my tent
                                                 </div>
                                             </Button>
+                                        </SelectionArea>
+                                        <SelectionArea title="Printing Technology">
+                                            <Selection name="printing_tech" value={selectedAttribute[2] ? selectedAttribute[2][3].option.toLowerCase() : ""}
+                                                       onChange={(event) => handleChangeRadio(event, 2, id_attribute_printing_tech)}
+                                                       id={id_attribute_printing_tech} attributes={productComponent[2] ? productComponent[2].attributes.filter((attribute) => attribute.id === id_attribute_printing_tech) : []}
+                                            />
+                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Technology' color="MinXPrimaryText"
+                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                                     onClick={() => setTechnologyCompareOpen(true)}
+                                            />
                                         </SelectionArea>
                                     </>
                                 </Tab>
@@ -1030,36 +927,14 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                          },
                                      }}
                                 >
-                                    <ul className={css({paddingLeft: 0, paddingRight: 0,})}>
-                                        {wallPlainAttributeList.map((component, index) => {
+                                    <ul>
+                                        {wallAttributeList.map((component, index) => {
                                             return (
                                                 <ListItem key={index}
                                                           artwork={(props) => {
-                                                              return component[0].option !== "none" ? (
-                                                                  <>
-                                                                      {index === 0 ? (
-                                                                          <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
-                                                                      ) : index === 1 ? (
-                                                                          <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
-                                                                      ) : index === 2 ? (
-                                                                          <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
-                                                                      ) : index === 3 ? (
-                                                                          <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
-                                                                      ) : null}
-                                                                  </>
-                                                              ) : (
-                                                                  <>
-                                                                      {index === 0 ? (
-                                                                          <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
-                                                                      ) : index === 1 ? (
-                                                                          <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
-                                                                      ) : index === 2 ? (
-                                                                          <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
-                                                                      ) : index === 3 ? (
-                                                                          <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
-                                                                      ) : null}
-                                                                  </>
-                                                              );
+                                                              let side = index === 0 ? "left" : index === 1 ? "right" : index === 2 ? "front" : index === 3 ? "back" : "";
+                                                              let added = component[1].option !== "none" ? "-added" : "";
+                                                              return <img src={"/images/icon/icon-wall-" + side + added + ".png"} alt={"icon-wall-" + side}/>;
                                                           }}
                                                           overrides={{
                                                               Root: {
@@ -1067,7 +942,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                                       height: "68px",
                                                                       paddingRight: "8px",
                                                                       paddingLeft: "8px",
-                                                                      backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
+                                                                      backgroundColor: component[1].option !== "none" ? "#F5FCFC" : "transparent",
                                                                   }),
                                                               },
                                                               Content: {
@@ -1080,7 +955,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                           endEnhancer={() => {
                                                               return (
                                                                   <>
-                                                                      {component[0].option !== "none" ? (
+                                                                      {component[1].option !== "none" ? (
                                                                           <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
                                                                               <Button shape={SHAPE.pill}
                                                                                       overrides={{
@@ -1132,10 +1007,10 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                                        },
                                                                    }}
                                                     >
-                                                        {component[0].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[0].option, 1)}
+                                                        {component[1].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[1].option, 1)}
                                                     </ListItemLabel>
                                                 </ListItem>
-                                            );
+                                            )
                                         })}
                                     </ul>
                                 </Tab>
@@ -1303,8 +1178,9 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                     </Block>
                 </Block>
             </Block>
-            <Modal type="dialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
-            <Modal type="dialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={technologyCompareOpen} onClose={() => setTechnologyCompareOpen(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
             <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
                    footer={
                        <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
@@ -1318,67 +1194,22 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                </Block>
                                <Block display={["block", "none"]}>
                                    <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
-                                       <div style={{
-                                           width: 20,
-                                           height: 20,
-                                           border: "2px solid black",
-                                           borderRadius: "50%",
-                                           textAlign: "center",
-                                           fontSize: 12,
-                                           fontWeight: "bold",
-                                           lineHeight: "17px",
-                                           marginRight: 2,
-                                           marginLeft: 2,
-                                       }}
-                                       >
-                                           !
-                                       </div>
+                                       <div className="container-icon-custom-printing-note">!</div>
                                    </StatefulTooltip>
                                </Block>
                            </Block>
                            <Block display="flex" flexDirection="row">
                                <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
-                                   <Button shape={SHAPE.pill}
-                                           overrides={{
-                                               BaseButton: {
-                                                   style: ({$theme}) => ({
-                                                       fontSize: "16px",
-                                                       width: `100%`,
-                                                       height: `100%`,
-                                                       backgroundColor: "transparent",
-                                                       lineHeight: "24px",
-                                                       color: "#8C8C8C",
-                                                       borderTopStyle: "solid",
-                                                       borderTopWidth: "1px",
-                                                       borderTopColor: "#8C8C8C",
-                                                       borderRightStyle: "solid",
-                                                       borderRightWidth: "1px",
-                                                       borderRightColor: "#8C8C8C",
-                                                       borderBottomStyle: "solid",
-                                                       borderBottomWidth: "1px",
-                                                       borderBottomColor: "#8C8C8C",
-                                                       borderLeftStyle: "solid",
-                                                       borderLeftWidth: "1px",
-                                                       borderLeftColor: "#8C8C8C",
-                                                   }),
-                                               },
-                                           }}
-                                           onClick={() => closeWallModal()}
-                                   >
-                                       Cancel
-                                   </Button>
+                                   <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD !important"}}
+                                            onClick={() => closeWallModal()}
+                                   />
                                </Block>
                                <Block minWidth={["85px"]} height={"40px"}>
-                                   <Button shape={SHAPE.pill}
-                                           overrides={{
-                                               BaseButton: {
-                                                   style: ({$theme}) => ({fontSize: "16px", width: `100%`, height: `100%`, backgroundColor: "#23A4AD", lineHeight: "24px"}),
-                                               },
-                                           }}
-                                           onClick={() => closeWallModal(true)}
-                                   >
-                                       Save
-                                   </Button>
+                                   <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                            onClick={() => closeWallModal(true)}
+                                   />
                                </Block>
                            </Block>
                        </Block>
@@ -1399,48 +1230,17 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                }
                            }}
                     >
+                        <SelectionArea title="Printing Side">
+                            <Selection name="printing_side" value={wallAttributeListTemp[activeWall] ? wallAttributeListTemp[activeWall][0].option.toLowerCase() : "outside"}
+                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallPrintedType)}
+                                       id={id_attribute_wallPrintedType} attributes={productComponent[2] ? productComponent[2].attributes.filter((attribute) => attribute.id === id_attribute_wallPrintedType) : []}
+                            />
+                        </SelectionArea>
                         <SelectionArea title="Wall Type">
-                            <RadioGroup name="wall_type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} align={ALIGN.horizontal}
-                                        onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
-                                        overrides={{
-                                            RadioGroupRoot: {
-                                                style: ({$theme}) => ({
-                                                    display: "grid",
-                                                    width: "100%",
-                                                    flexWrap: "wrap",
-                                                    justifyContent: "space-between",
-                                                    gridTemplateColumns: "repeat(auto-fill, calc(100% / 3))",
-                                                }),
-                                                props: {
-                                                    className: "radioGroupWall",
-                                                },
-                                            },
-                                            Root: {
-                                                style: ({$checked}) => ({
-                                                    height: "142px",
-                                                    justifyContent: "center",
-                                                    padding: $checked ? "13px 0" : "15px 0",
-                                                    border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
-                                                    boxSizing: "border-box",
-                                                    borderRadius: "16px",
-                                                    marginTop: 0,
-                                                    marginRight: "12px",
-                                                    marginBottom: "16px",
-                                                    marginLeft: "12px",
-                                                }),
-                                            },
-                                            RadioMarkOuter: {
-                                                style: () => ({display: "none"}),
-                                            },
-                                            RadioMarkInner: {
-                                                style: () => ({display: "none"}),
-                                            },
-                                            Label: {
-                                                style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),
-                                            },
-                                        }}
+                            <Selection name="wall_type" value={wallAttributeListTemp[activeWall] ? wallAttributeListTemp[activeWall][1].option.toLowerCase() : "none"} id={id_attribute_wallType}
+                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
                             >
-                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
+                                {productComponent && productComponent[2] ? productComponent[2].attributes.filter((attribute) => attribute.id === id_attribute_wallType).map(({options}) =>
                                     options.map((option, indexWall) => (
                                         <Radio key={indexWall} value={option.toLowerCase()}
                                                overrides={{
@@ -1486,26 +1286,58 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent, productV
                                                }}
                                         />
                                     ))) : null}
-                            </RadioGroup>
-                        </SelectionArea>
-                        <SelectionArea title="Color">
-                            <Selection name="wall-color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} id={id_attribute_canopyColor}
-                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
-                            >
-                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) =>
-                                    options.map((option, index) => (
-                                        <Radio key={index} value={color.toLowerCase()}
-                                               overrides={{
-                                                   Label: ({$value}) => (
-                                                       <div className="radio-dot"
-                                                            style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
-                                                       />
-                                                   ),
-                                               }}
-                                        />
-                                    ))) : null}
                             </Selection>
                         </SelectionArea>
+                        <SelectionArea title="Color">
+                            <Selection name="wall-color" value={wallAttributeListTemp[activeWall] ? wallAttributeListTemp[activeWall][4].option.toLowerCase() : "white"}
+                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
+                                       id={id_attribute_canopyColor} attributes={productComponent[2] ? productComponent[2].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor) : []}
+                            />
+                        </SelectionArea>
+                    </Block>
+                </Block>
+            </Modal>
+            <Modal isOpen={printIsOpen} onClose={() => closeCustomPrintingModal()}
+                   footer={
+                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
+                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
+                       >
+                           <Block>
+                               <Block display={["none", "block"]}>
+                                   <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
+                                       the information you provide us here.
+                                   </div>
+                               </Block>
+                               <Block display={["block", "none"]}>
+                                   <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
+                                       <div className="container-icon-custom-printing-note">!</div>
+                                   </StatefulTooltip>
+                               </Block>
+                           </Block>
+                           <Block display="flex" flexDirection="row">
+                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
+                                   <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD !important"}}
+                                            onClick={() => closeCustomPrintingModal()}
+                                   />
+                               </Block>
+                               <Block minWidth={["85px"]} height={"40px"}>
+                                   <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                            onClick={() => closeCustomPrintingModal()}
+                                   />
+                               </Block>
+                           </Block>
+                       </Block>
+                   }
+            >
+                <Block width="100%" display={"flex"} flexDirection="column" marginTop={["32px", "40px", "60px"]} marginRight={"auto"} marginLeft={"auto"} paddingRight={[0, 0, "76px"]} paddingLeft={[0, 0, "76px"]}>
+                    <Block marginBottom="12px" font="MinXLabel16" color="MinXPrimaryText">Custom printing note</Block>
+                    <Block marginBottom={["32px", "42px", "64px"]} font="MinXParagraph14" color="MinXPrimaryText">
+                        This is Westshade custom printing service. The default color is white. Please choose the color you like for each part. You can also add prints to each part.
+                    </Block>
+                    <Block width="100%" display="flex" flexDirection={["column", "column", "row"]} marginRight={"auto"} marginLeft={"auto"}>
+
                     </Block>
                 </Block>
             </Modal>

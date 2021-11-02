@@ -886,11 +886,7 @@ function Account({size}) {
                                               width: "100%", paddingRight: 0
                                           },
                                       },
-                                      TabBorder: {
-                                          style: {
-                                              display: "none"
-                                          },
-                                      },
+                                      TabBorder: {props: {hidden: true}},
                                       TabHighlight: {
                                           style: {
                                               backgroundColor: size.width < 960 ? "none" : "#23A4AD",
@@ -1067,17 +1063,12 @@ function Account({size}) {
                                           Root: {
                                               style: {width: "100%", maxWidth: "420px", marginRight: "auto", marginLeft: "auto"}
                                           },
-                                          TabBorder: {
-                                              style: {display: "none"},
-                                          },
+                                          TabBorder: {props: {hidden: true}},
                                           TabHighlight: {
-                                              style: () => ({
-                                                  left: tabsRefs[loginActiveTabKey].current ? `${(tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2}px` : 0,
-                                                  width: "24px",
-                                                  height: "6px",
-                                                  backgroundColor: "#23A4AD",
-                                                  borderRadius: "3px",
-                                              })
+                                              props: {
+                                                  className: "tab-highlight-horizon"
+                                              },
+                                              style: {left: tabsRefs[loginActiveTabKey].current ? `${(tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2}px` : 0}
                                           },
                                       }}
                                 >

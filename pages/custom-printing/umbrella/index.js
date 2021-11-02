@@ -11,7 +11,7 @@ import {ArrowDown} from 'baseui/icon'
 
 import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
-import {Modal} from "../../../components/surfacse";
+import {Modal} from "../../../components/surfaces";
 
 import Utils from "../../../utils/utils";
 
@@ -280,13 +280,13 @@ function Custom_Printing_Umbrella({router, size}) {
                             <Image src={"images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
                         </Block>
                         <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(949)751-1070' color="white"
+                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
                                  buttonStyle={{
                                      backgroundColor: "rgba(0, 0, 0, 0.87) !important",
                                      paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
                                      borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
                                  }}
-                                 onClick={() => window.open(`tel:949-751-1070`, '_self')}
+                                 onClick={() => window.open(`tel:877-702-1872`, '_self')}
                         />
                     </Block>
                     <Block>

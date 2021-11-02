@@ -1,4 +1,5 @@
 import React from "react";
+// import ReactDOM from "react-dom";
 import clsx from "clsx";
 
 import {Block} from "baseui/block";
@@ -7,6 +8,7 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, SIZE, ROLE} from "baseui/mod
 import FrameCompare from "./frame_compare";
 import SizeGuide from "./size_guide";
 import OrderSummary from "./order_summary";
+import Technique from "./printing_technique";
 import Loading from "./loading";
 
 import styles from "./modal.module.scss";
@@ -46,7 +48,12 @@ const modal = (props) => {
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
             <ModalBody className={clsx(styles["container-body"], "hideScrollBar")}>
-                {content ? content === "frame" ? <FrameCompare/> : content === "size" ? <SizeGuide/> : content === "summary" ? <OrderSummary dataTable={dataTable}/> : content === "loading" ? <Loading/> : null : children}
+                {content ? content === "frame" ? <FrameCompare/> :
+                    content === "size" ? <SizeGuide/> :
+                        content === "summary" ? <OrderSummary dataTable={dataTable}/> :
+                            content === "loading" ? <Loading/> :
+                                content === "technique" ? <Technique/> :
+                                    null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={styles["container-footer"]}>
@@ -58,3 +65,5 @@ const modal = (props) => {
 };
 
 export default modal;
+
+// ReactDOM.createPortal(modalContent, document.getElementById("modal-root"));

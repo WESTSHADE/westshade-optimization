@@ -13,7 +13,10 @@ export default function content() {
         <Block marginTop={["64px", "64px", "30px"]}
                overrides={{
                    Block: {
-                       style: {textAlign: "center"}
+                       props: {
+                           className: "hideScrollBar"
+                       },
+                       style: {textAlign: "center", overflowX: "scroll"}
                    }
                }}
         >

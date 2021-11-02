@@ -25,7 +25,7 @@ import {modifyCart} from "../../redux/actions/cartActions";
 import {updateUser} from "../../redux/actions/userActions";
 
 import Cart from "./cart.svg";
-import {Modal} from "../../components/surfacse";
+import {Modal} from "../../components/surfaces";
 
 function Cart_Page({router}) {
     const [lineItem, setLineItem] = useState([]);

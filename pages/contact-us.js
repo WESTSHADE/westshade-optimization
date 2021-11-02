@@ -49,7 +49,7 @@ function Contact_Us() {
                        },
                    }}
             >
-                <Block width="100%" maxWidth="600px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "60px", "80px"]} marginLeft="auto" paddingTop="80px">
+                <Block width="100%" maxWidth="660px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "60px", "80px"]} marginLeft="auto" paddingTop="80px">
                     <Block marginBottom={["24px", "32px", "40px"]} font="MinXHeading20" color="MinXPrimaryText">FAQs</Block>
                     <Block width="100%" font="MinXHeading14" color="MinXPrimaryText">
                         <Accordion overrides={{
@@ -81,7 +81,7 @@ function Contact_Us() {
                                 recommend using our Weight Bags to anchor and prevent your canopy from tipping over.
                             </Panel>
                             <Panel title="Can I buy a replacement canopy covering?">
-                                Yes, we offer many replacement cover options. Please call customer service at 949-751-1070 or contact us
+                                Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us
                                 online.
                             </Panel>
                             <Panel title="Do you have any accessories available?">
@@ -108,7 +108,7 @@ function Contact_Us() {
                            gridTemplateColumns={["repeat(auto-fill, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap="20px"
                     >
                         <SectionBlock url={"images/contact-us/online-chat.png"} alt="Online Chat" title="ONLINE CHAT" content="Chat now"/>
-                        <SectionBlock url={"images/contact-us/call-us.png"} alt="Call us" title="CALL US" content="949-751-1070"/>
+                        <SectionBlock url={"images/contact-us/call-us.png"} alt="Call us" title="CALL US" content="877-702-1872"/>
                         <SectionBlock url={"images/contact-us/email-us.png"} alt="Email us" title="EMAIL US" content="support@westshade.com"/>
                     </Block>
                 </Block>

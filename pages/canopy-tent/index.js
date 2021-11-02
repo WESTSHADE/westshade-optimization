@@ -9,9 +9,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
-import ChevronRight from "baseui/icon/chevron-right";
-import ArrowLeft from "baseui/icon/arrow-left";
-import ArrowRight from "baseui/icon/arrow-right";
+import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
 import {Benefit, Section, SubHeaderBar} from "../../components/sections";
 import MButton from "../../components/button-n";

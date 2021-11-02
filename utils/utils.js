@@ -91,8 +91,6 @@ export default class Utils {
                 method: "GET",
                 headers: {
                     "Access-Control-Allow-Headers": "*",
-                    // "Content-Type": "application/json",
-                    // Accept: "application/json",
                     "Access-Control-Allow-Origin": "*",
                 },
             });
@@ -111,8 +109,6 @@ export default class Utils {
                 method: "GET",
                 headers: {
                     "Access-Control-Allow-Headers": "*",
-                    // "Content-Type": "application/json",
-                    // Accept: "application/json",
                     "Access-Control-Allow-Origin": "*",
                 },
             });
@@ -142,8 +138,6 @@ export default class Utils {
             // 	method: "GET",
             // 	headers: {
             // 		"Access-Control-Allow-Headers": "*",
-            // 		// "Content-Type": "application/json",
-            // 		// Accept: "application/json",
             // 		"Access-Control-Allow-Origin": "*",
             // 	},
             // });

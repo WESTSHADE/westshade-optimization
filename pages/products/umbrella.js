@@ -12,7 +12,7 @@ import {Block} from "baseui/block";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
 import {Checkout, Selection} from "../../components/sections";
-import {Modal} from "../../components/surfacse";
+import {Modal} from "../../components/surfaces";
 
 import styles from "./Product.module.scss";
 

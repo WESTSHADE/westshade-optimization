@@ -131,7 +131,7 @@ function Terms_and_Conditions() {
                         Email Address: support@westshade.com
                         <br/>
                         <br/>
-                        Telephone number: 949-751-1070
+                        Telephone number: 877-702-1872
                         <br/>
                         <br/>
                         Effective as of October 05, 2020

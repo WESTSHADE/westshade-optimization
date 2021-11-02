@@ -21,7 +21,7 @@ import {NumberFn, UrlFn} from "../../utils/tools";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Modal} from "../../components/surfacse";
+import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 
 const utils = new Utils();
