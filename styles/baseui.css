@@ -416,6 +416,22 @@ ul.bullet-warranty.sub > li {
     background-color: transparent;
 }
 
+.container-input.password {
+    padding-right: 0;
+}
+
+.container-input-select {
+    border-width: 0px;
+    border-radius: 8px;
+    background-color: rgb(238, 238, 238);
+    height: 46px;
+}
+
+.container-input-select-dropdown {
+    max-height: 300px;
+    z-index: 9;
+}
+
 .container-inner-input {
     background-color: transparent
 }
@@ -829,12 +845,14 @@ ul.bullet-warranty.sub > li {
 .frame-intro-background-in {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(10px);
     animation: fadeIn 800ms;
 }
 
 .frame-intro-background-out {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(10px);
     animation: fadeOut 800ms;
 }
 

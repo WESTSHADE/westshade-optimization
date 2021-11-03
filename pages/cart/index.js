@@ -19,6 +19,8 @@ import {NumberFn} from "../../utils/tools";
 const numberFn = new NumberFn();
 const utils = new Utils();
 
+import {removeFromCart, beginCheckout} from "../../redux/actions/gtagActions";
+
 import styles from "./cart.module.scss";
 
 import {modifyCart} from "../../redux/actions/cartActions";
@@ -60,6 +62,9 @@ function Cart_Page({router}) {
 
     const handleRemoveFromCart = (index) => {
         let c = JSON.parse(JSON.stringify(cart));
+
+        removeFromCart(cartProduct[index], c[index].quantity)
+
         c.splice(index, 1);
 
         handleUpdateCart(c);
@@ -103,14 +108,15 @@ function Cart_Page({router}) {
             line_items: lineItem,
         };
 
-        if (token) {
-            checkoutData.billing = {...user.billing};
-            checkoutData.shipping = {...user.shipping};
-        }
+        // if (token) {
+        //     checkoutData.billing = {...user.billing};
+        //     checkoutData.shipping = {...user.shipping};
+        // }
+
+        beginCheckout(cartProduct, lineItem);
 
         utils.createOrder(token, checkoutData).then((res) => {
             setShowLoading(false);
-
             if (res.message) {
                 setShowError(true);
                 setError(res.message);
@@ -119,7 +125,8 @@ function Cart_Page({router}) {
                     setError("");
                 }, 4000);
             } else {
-                // handleUpdateCart([]);
+                beginCheckout(cartProduct, lineItem);
+
                 router.push({pathname: "/checkout/", query: {id: res.id}})
             }
         });

@@ -16,6 +16,8 @@ import {Modal} from "../../components/surfaces";
 
 import styles from "./Product.module.scss";
 
+import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+
 import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
@@ -207,6 +209,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             dispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
+
+        addToCart(productComponent, selectedVariant, totalCount);
     };
 
     useEffect(() => {
@@ -230,6 +234,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
     useEffect(() => {
         if (!product) return;
+
+        viewItem(product);
 
         setProductName(product.name);
         setProductType(product.type);

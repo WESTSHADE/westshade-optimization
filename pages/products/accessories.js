@@ -14,6 +14,8 @@ import {Checkout_L as Checkout, Selection} from "../../components/sections";
 
 import styles from "./Product.module.scss";
 
+import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+
 import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
@@ -212,6 +214,8 @@ function Accessories({router, product, productComponent, productVariant}) {
             dispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
+
+        addToCart(uProductComponent, selectedVariant, totalCount);
     };
 
     useEffect(async () => {
@@ -239,6 +243,8 @@ function Accessories({router, product, productComponent, productVariant}) {
 
     useEffect(() => {
         if (!uProduct) return;
+
+        viewItem(uProduct);
 
         setProductName(uProduct.name);
         setProductType(uProduct.type);

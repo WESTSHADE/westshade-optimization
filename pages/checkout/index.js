@@ -16,6 +16,8 @@ import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Delete from 'baseui/icon/delete'
 
+import {viewPromotion} from "../../redux/actions/gtagActions";
+
 import Utils from "../../utils/utils";
 import {NumberFn, UrlFn} from "../../utils/tools";
 
@@ -226,6 +228,8 @@ function Checkout({router, orderID, orderDetail}) {
                     }
                     if (res.transactionResponse.messages) {
                         if (res.transactionResponse.messages.message[0].code === "1") {
+                            viewPromotion(lineCoupon);
+
                             handleUpdateCart([]);
                             // 支付成功
                             router.push({pathname: "/checkout/success/", query: {id: id}});
@@ -394,7 +398,6 @@ function Checkout({router, orderID, orderDetail}) {
                             />
                             <Checkbox checked={different} labelPlacement={LABEL_PLACEMENT.right} onChange={(e) => {
                                 setDifferent(e.target.checked);
-                                console.log(e.target.checked);
                                 if (e.target.checked) {
                                     setAddressHeight(HEIGHT);
                                 } else {

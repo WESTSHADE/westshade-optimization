@@ -28,6 +28,8 @@ import Checkout from "../../components/buttonGroup";
 import Selections from "../../components/selection_group";
 import {Modal} from "../../components/surfaces";
 
+import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 
@@ -228,6 +230,8 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     useEffect(() => {
         if (!product) return;
 
+        viewItem(product);
+
         setProductName(product.name);
         setProductType(product.type);
 
@@ -397,6 +401,8 @@ function Custom_printed_Package({router, product, productComponent, productVaria
             dispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
+
+        addToCart(productComponent, selectedVariant, totalCount);
     };
 
     const handleSendQuote = async () => {

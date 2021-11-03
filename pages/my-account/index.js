@@ -9,15 +9,67 @@ import {Block} from "baseui/block";
 import {Button, SHAPE, KIND} from "baseui/button";
 import {Tabs, Tab, ORIENTATION, FILL} from 'baseui/tabs-motion';
 import {Input, MaskedInput} from "baseui/input";
-import ArrowLeft from 'baseui/icon/arrow-left';
-import ChevronRight from 'baseui/icon/chevron-right'
-import ChevronDown from 'baseui/icon/chevron-down';
-import ChevronUp from 'baseui/icon/chevron-up'
+import {Select} from 'baseui/select';
+import {ArrowLeft, ChevronRight, ChevronDown, ChevronUp} from 'baseui/icon';
 
 import MButton from "../../components/button-n";
 
 import {register, logIn, logOut, getUser, updateUser, clearUserErrors} from "../../redux/actions/userActions";
 import {getOrder} from "../../redux/actions/orderActions";
+
+const USState = [
+    {id: "AL", label: "Alabama"},
+    {id: "AK", label: "Alaska"},
+    {id: "AZ", label: "Arizona"},
+    {id: "AR", label: "Arkansas"},
+    {id: "CA", label: "California"},
+    {id: "CO", label: "Colorado"},
+    {id: "CT", label: "Connecticut"},
+    {id: "DE", label: "Delaware"},
+    {id: "DC", label: "District of Columbia"},
+    {id: "FL", label: "Florida"},
+    {id: "GA", label: "Georgia"},
+    {id: "HI", label: "Hawaii"},
+    {id: "ID", label: "Idaho"},
+    {id: "IL", label: "Illinois"},
+    {id: "IN", label: "Indiana"},
+    {id: "IA", label: "Iowa"},
+    {id: "KS", label: "Kansas"},
+    {id: "KY", label: "Kentucky"},
+    {id: "LA", label: "Louisiana"},
+    {id: "ME", label: "Maine"},
+    {id: "MD", label: "Maryland"},
+    {id: "MA", label: "Massachusetts"},
+    {id: "MI", label: "Michigan"},
+    {id: "MN", label: "Minnesota"},
+    {id: "MS", label: "Mississippi"},
+    {id: "MO", label: "Missouri"},
+    {id: "MT", label: "Montana"},
+    {id: "NE", label: "Nebraska"},
+    {id: "NV", label: "Nevada"},
+    {id: "NH", label: "New Hampshire"},
+    {id: "NJ", label: "New Jersey"},
+    {id: "NM", label: "New Mexico"},
+    {id: "NY", label: "New York"},
+    {id: "NC", label: "North Carolina"},
+    {id: "ND", label: "North Dakota"},
+    {id: "OH", label: "Ohio"},
+    {id: "OK", label: "Oklahoma"},
+    {id: "OR", label: "Oregon"},
+    {id: "PA", label: "Pennsylvania"},
+    {id: "RI", label: "Rhode Island"},
+    {id: "SC", label: "South Carolina"},
+    {id: "SD", label: "South Dakota"},
+    {id: "TN", label: "Tennessee"},
+    {id: "TX", label: "Texas"},
+    {id: "UT", label: "Utah"},
+    {id: "VT", label: "Vermont"},
+    {id: "VA", label: "Virginia"},
+    {id: "WA", label: "Washington"},
+    {id: "WV", label: "West Virginia"},
+    {id: "WI", label: "Wisconsin"},
+    {id: "WY", label: "Wyoming"},
+];
 
 function Login() {
     const {message} = useSelector(({user}) => user);
@@ -35,6 +87,8 @@ function Login() {
             if (!email) setEmailLoginError(true);
             if (!password) setPasswordLoginError(true);
         } else {
+            console.log(email);
+            console.log(password);
             dispatch(logIn({email, password}));
         }
     };
@@ -85,7 +139,7 @@ function Login() {
                                overrides={{
                                    Root: {
                                        props: {
-                                           className: "container-input"
+                                           className: "container-input password"
                                        },
                                    },
                                }}
@@ -117,7 +171,7 @@ function Signup() {
             if (!email) setEmailSignupError(true);
             if (!password) setPasswordSignupError(true)
         } else {
-            if (password.match("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$").length > 0) {
+            if (password.match("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$")) {
                 dispatch(register({email, password}));
             } else {
                 setPasswordSignupError(true)
@@ -171,7 +225,7 @@ function Signup() {
                                overrides={{
                                    Root: {
                                        props: {
-                                           className: "container-input"
+                                           className: "container-input password"
                                        },
                                    },
                                }}
@@ -430,7 +484,17 @@ function Profile() {
 
     const dispatch = useDispatch();
 
-    const handleSaveProfile = () => dispatch(updateUser(token, userDetail));
+    const handleSaveProfile = () => {
+        let detail = {
+            id: userDetail.id,
+            first_name: userDetail.first_name,
+            last_name: userDetail.last_name,
+            email: userDetail.email,
+            billing: {phone: userDetail.billing.phone}
+        };
+
+        dispatch(updateUser(token, detail));
+    };
 
     useEffect(() => setUserDetail({...user}), [user]);
 
@@ -542,6 +606,8 @@ function Address() {
     const [shippingDetail, setShippingDetail] = useState({...user.shipping});
     const [shippingDiff, setShippingDiff] = useState(false);
 
+    const [selectedState, setSelectedState] = useState([]);
+
     const dispatch = useDispatch();
 
     const handleSaveAddress = () => {
@@ -551,7 +617,12 @@ function Address() {
         dispatch(updateUser(token, {shipping: {...temp}}))
     };
 
-    useEffect(() => setShippingDetail({...user.shipping}), [user.shipping]);
+    useEffect(() => {
+        setShippingDetail({...user.shipping});
+
+        let state = USState.find(s => s.id === user.shipping.state);
+        if (state) setSelectedState([state]);
+    }, [user.shipping]);
 
     useEffect(() => {
         if (JSON.stringify(shippingDetail) !== JSON.stringify(user.shipping)) {
@@ -682,21 +753,44 @@ function Address() {
                     </Block>
                     <Block gridArea="s">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">STATE</Block>
-                        <Input value={shippingDetail.state} clearOnEscape
-                               onChange={({target}) => {
-                                   const {value} = target;
+                        {/*<Input value={shippingDetail.state} clearOnEscape*/}
+                        {/*       onChange={({target}) => {*/}
+                        {/*           const {value} = target;*/}
 
-                                   let detail = {...shippingDetail}
-                                   detail.state = value;
-                                   setShippingDetail(detail);
-                               }}
-                               overrides={{
-                                   Root: {
-                                       props: {
-                                           className: "container-input"
-                                       },
-                                   },
-                               }}
+                        {/*           let detail = {...shippingDetail}*/}
+                        {/*           detail.state = value;*/}
+                        {/*           setShippingDetail(detail);*/}
+                        {/*       }}*/}
+                        {/*       overrides={{*/}
+                        {/*           Root: {*/}
+                        {/*               props: {*/}
+                        {/*                   className: "container-input"*/}
+                        {/*               },*/}
+                        {/*           },*/}
+                        {/*       }}*/}
+                        {/*/>*/}
+                        <Select labelKey="label" valueKey="id" value={selectedState} options={USState} clearable={false}
+                                onChange={({value}) => {
+                                    if (value.length > 0) {
+                                        setSelectedState(value);
+
+                                        let detail = {...shippingDetail}
+                                        detail.state = value[0].id;
+                                        setShippingDetail(detail);
+                                    }
+                                }}
+                                overrides={{
+                                    ControlContainer: {
+                                        props: {
+                                            className: "container-input-select"
+                                        },
+                                    },
+                                    Dropdown: {
+                                        props: {
+                                            className: "container-input-select-dropdown"
+                                        },
+                                    },
+                                }}
                         />
                     </Block>
                     <Block gridArea="z">
@@ -704,7 +798,6 @@ function Address() {
                         <Input value={shippingDetail.postcode} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
-
                                    let detail = {...shippingDetail}
                                    detail.postcode = value;
                                    setShippingDetail(detail);
@@ -720,14 +813,7 @@ function Address() {
                     </Block>
                     <Block gridArea="ct">
                         <Block marginBottom="4px" font="MinXHeading12" color="MinXSecondaryText">COUNTRY</Block>
-                        <Input value={shippingDetail.country} clearOnEscape
-                               onChange={({target}) => {
-                                   const {value} = target;
-
-                                   let detail = {...shippingDetail}
-                                   detail.country = value;
-                                   setShippingDetail(detail);
-                               }}
+                        <Input value="United States" disabled
                                overrides={{
                                    Root: {
                                        props: {
@@ -755,21 +841,6 @@ function Address() {
                                    },
                                }}
                         />
-                        {/*<MaskedInput value={shippingDetail.phone} mask="(999) 999-9999" clearOnEscape*/}
-                        {/*             onChange={({target}) => {*/}
-                        {/*                 const {value} = target;*/}
-                        {/*                 let detail = {...shippingDetail}*/}
-                        {/*                 detail.phone = value;*/}
-                        {/*                 setShippingDetail(detail);*/}
-                        {/*             }}*/}
-                        {/*             overrides={{*/}
-                        {/*                 Root: {*/}
-                        {/*                     props: {*/}
-                        {/*                         className: "container-input"*/}
-                        {/*                     },*/}
-                        {/*                 },*/}
-                        {/*             }}*/}
-                        {/*/>*/}
                     </Block>
                 </Block>
                 <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
@@ -787,6 +858,7 @@ function Address() {
 function Account({size}) {
     const [tabsRefs, setTabsRefs] = useState([]);
     const [displayTabs, setDisplayTabs] = useState(false);
+    const [tabLeft, setTabLeft] = useState(0);
 
     const [accountActiveTabKey, setAccountActiveTabKey] = React.useState("0");
     const [loginActiveTabKey, setLoginActiveTabKey] = React.useState("0");
@@ -803,17 +875,29 @@ function Account({size}) {
     }
 
     useEffect(() => {
-        setTabsRefs((tabsRefs) => Array(2).fill().map((_, i) => tabsRefs[i] || createRef()));
+        setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef()));
+    }, []);
 
+    useEffect(() => {
         if (loggedIn) {
             dispatch(getUser(token));
             dispatch(getOrder(token));
+        } else {
+            if (displayTabs) {
+                setTabLeft((tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2)
+            }
         }
     }, [loggedIn]);
 
     useEffect(() => {
         if (tabsRefs.length > 0) setDisplayTabs(true);
     }, [tabsRefs]);
+
+    useEffect(() => {
+        if (displayTabs && !loggedIn) {
+            setTabLeft((tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2)
+        }
+    }, [displayTabs]);
 
     useEffect(() => {
         if (size.width > 959 && contentStyle.marginLeft !== "auto") {
@@ -1068,7 +1152,7 @@ function Account({size}) {
                                               props: {
                                                   className: "tab-highlight-horizon"
                                               },
-                                              style: {left: tabsRefs[loginActiveTabKey].current ? `${(tabsRefs[loginActiveTabKey].current.clientWidth - 24) / 2}px` : 0}
+                                              style: {left: tabLeft + "px"}
                                           },
                                       }}
                                 >

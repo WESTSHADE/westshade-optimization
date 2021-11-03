@@ -37,6 +37,8 @@ import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
 import Selection from "../../components/selection-n";
 
+import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 import {Accordion, Panel} from "baseui/accordion";
@@ -725,12 +727,14 @@ function Canopy_Tent({router, products, variants}) {
             dispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
+
+        addToCart(productComponent, selectedVariant, totalCount);
     };
 
     //////////////////////////////////////
 
     useEffect(() => {
-        setTabsRefs((tabsRefs) => Array(3).fill().map((_, i) => tabsRefs[i] || createRef()));
+        setTabsRefs((tabsRefs) => Array(3).fill(null).map((_, i) => tabsRefs[i] || createRef()));
 
         let series = router.query.series || urlFn.getParam("series");
         if (series) {
@@ -747,6 +751,8 @@ function Canopy_Tent({router, products, variants}) {
                 setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
             }
         }
+
+        viewItem({id: 30477, name: "Canopy Tent", categories: [{name: "Canopy Tents"}]});
     }, []);
 
     useEffect(() => {
@@ -954,20 +960,6 @@ function Canopy_Tent({router, products, variants}) {
         });
         setAvailable(available);
     }, [availableList]);
-
-    // useEffect(() => {
-    // 	if (totalRegularPrice === 0) return;
-    // 	console.log(totalRegularPrice);
-    // }, [totalRegularPrice]);
-
-    // useEffect(() => {
-    // 	if (totalSalePrice === 0) return;
-    // 	console.log(totalSalePrice);
-    // }, [totalSalePrice]);
-
-    // useEffect(() => {
-    // 	console.log(selectedAttribute);
-    // }, [selectedAttribute]);
 
     const DataTable = () => {
         let rowDate = [];
@@ -1249,7 +1241,6 @@ function Canopy_Tent({router, products, variants}) {
                                         <SelectionArea title="Frame">
                                             <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
                                                        onChange={(event) => {
-                                                           console.log(event.target.value);
                                                            setSelectedFrame(event.target.value);
                                                            if (event.target.value === "y5") {
                                                                setProductComponent([products[0], products[3], products[3], products[3], products[3]]);

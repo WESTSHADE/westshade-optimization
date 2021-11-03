@@ -5,6 +5,8 @@ import {withRouter} from "next/router";
 import {Block} from "baseui/block";
 import Check from "baseui/icon/check";
 
+import {purchase} from "../../../redux/actions/gtagActions";
+
 import Utils from "../../../utils/utils";
 import {NumberFn} from "../../../utils/tools";
 
@@ -22,59 +24,6 @@ function Success({router, orderDetail}) {
         return price;
     };
 
-    const googleEvent = () => {
-        if (orderDetail) {
-            let lineItems_dataLayer = [];
-            let lineItems_gtag = [];
-            let couponItems = [];
-
-            orderDetail.coupon_lines.map((coupon) => couponItems.push(coupon.code));
-            orderDetail.line_items.map((item) => {
-                    lineItems_dataLayer.push({
-                        item_name: item.name,
-                        item_id: item.product_id,
-                        price: item.price,
-                        item_variant: item.variation_id,
-                        quantity: item.quantity,
-                    });
-
-                    lineItems_gtag.push({
-                        id: item.product_id,
-                        name: item.name,
-                        variant: item.variation_id,
-                        quantity: item.quantity,
-                        price: item.price
-                    });
-                }
-            );
-
-            // dataLayer.push({ecommerce: null}); // Clear the previous ecommerce object.
-            // dataLayer.push({
-            //     event: "purchase",
-            //     ecommerce: {
-            //         transaction_id: orderDetail.id,
-            //         affiliation: "Westshade",
-            //         value: orderDetail.total,
-            //         tax: orderDetail.total_tax,
-            //         shipping: orderDetail.shipping_total,
-            //         currency: orderDetail.currency,
-            //         coupon: couponItems.join(),
-            //         items: lineItems_dataLayer,
-            //     },
-            // });
-
-            gtag('event', 'purchase', {
-                "transaction_id": orderDetail.id,
-                "affiliation": "Westshade",
-                "value": orderDetail.total,
-                "currency": orderDetail.currency,
-                "tax": orderDetail.total_tax,
-                "shipping": orderDetail.shipping_total,
-                "items": lineItems_gtag
-            });
-        }
-    };
-
     useEffect(async () => {
         if (!orderDetail) {
             // 直接进入页面， 无order数据 退至主页
@@ -82,7 +31,7 @@ function Success({router, orderDetail}) {
         } else {
             setDisplay(true);
             // 有order数据，从支付页过来，显示结果，触发Google event
-            googleEvent();
+            purchase(orderDetail);
             // Tracks the purchase event in Oribi
             let products = [];
             orderDetail.line_items.map(item => products.push({
