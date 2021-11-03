@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 
-import Link from "next/link";
 import {withRouter} from "next/router";
 
-import {Box, Button, Breadcrumbs, Container, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
+import {Box, Button, Container, Grid, List, ListItem, ListItemText} from "@material-ui/core";
 
-import CBreadcrumbs from "../components/breadcrumbs";
 import CContainer from "../components/container";
 
 function Compare_Market_Umbrella({router}) {
@@ -18,18 +16,6 @@ function Compare_Market_Umbrella({router}) {
             <Box className="page canopy-tent" fontSize={14} lineHeight={1.43}>
                 {display ? (
                     <>
-                        <CBreadcrumbs>
-                            <Container maxWidth="md">
-                                <Breadcrumbs classes={{li: "root-breadcrumbs-text"}}>
-                                    <Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-                                        Home
-                                    </Link>
-                                    <Typography variant="inherit" color="textPrimary">
-                                        Compare Market Umbrellas
-                                    </Typography>
-                                </Breadcrumbs>
-                            </Container>
-                        </CBreadcrumbs>
                         <CContainer>
                             <Container maxWidth="md">
                                 <h3 className="section-title" style={{marginTop: "0"}}>

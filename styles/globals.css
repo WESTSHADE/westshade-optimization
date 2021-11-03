@@ -107,16 +107,6 @@ a:-webkit-any-link {
     margin-top: 24px;
 }
 
-/*全部Breadcrumbs统一样式*/
-.root-breadcrumbs-text {
-    font-weight: 600;
-}
-
-.section-container-breadcrumbs {
-    margin: 12px auto 24px;
-    padding: 6px 0;
-}
-
 /*全部Section-Container统一样式*/
 
 .root-backdrop {

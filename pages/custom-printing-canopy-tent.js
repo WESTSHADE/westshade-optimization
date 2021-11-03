@@ -3,12 +3,10 @@ import styled from "styled-components";
 import clsx from "clsx";
 
 import Head from "next/head";
-import Link from "next/link";
 
-import {Box, Breadcrumbs, Container, Grid, Typography} from "@material-ui/core";
+import {Box, Container, Grid, Typography} from "@material-ui/core";
 
 import Banner from "../components/banner";
-import CBreadcrumbs from "../components/breadcrumbs";
 import CContainer from "../components/container";
 import CLink from "../components/link";
 
@@ -36,22 +34,6 @@ function Custom_Printing_Canopy_Tent() {
                 {display ? (
                     <>
                         <Banner backgroundImage={"/images/banner/2000-700-1-1-1@1x.png"} title="Canopy Tent Custom Printing Packages"/>
-                        {/*<CBreadcrumbs>*/}
-                        {/*	<Container maxWidth="md">*/}
-                        {/*		<Breadcrumbs classes={{ li: "root-breadcrumbs-text" }}>*/}
-                        {/*			<Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>*/}
-                        {/*				Home*/}
-                        {/*			</Link>*/}
-                        {/*			<Link color="inherit" href="/custom-printing" onClick={(event) => event.preventDefault()}>*/}
-                        {/*				Custom Printing*/}
-                        {/*			</Link>*/}
-                        {/*			<Typography variant="inherit" color="textPrimary">*/}
-                        {/*				{" "}*/}
-                        {/*				Canopy Tent{" "}*/}
-                        {/*			</Typography>*/}
-                        {/*		</Breadcrumbs>*/}
-                        {/*	</Container>*/}
-                        {/*</CBreadcrumbs>*/}
                         <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>

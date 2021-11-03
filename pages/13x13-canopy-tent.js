@@ -119,18 +119,6 @@ function Canopy_Tent_Package({router}) {
             <Box className="page canopy-tent-package" fontSize={14} lineHeight={1.43}>
                 {display ? (
                     <>
-                        <CBreadcrumbs>
-                            <Container maxWidth="md">
-                                <Breadcrumbs classes={{li: "root-breadcrumbs-text"}}>
-                                    <Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-                                        Home
-                                    </Link>
-                                    <Typography variant="inherit" color="textPrimary">
-                                        13x13 Canopy Tent
-                                    </Typography>
-                                </Breadcrumbs>
-                            </Container>
-                        </CBreadcrumbs>
                         <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>

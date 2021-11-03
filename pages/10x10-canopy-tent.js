@@ -4,12 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 
-import Link from "next/link";
 import {withRouter} from "next/router";
 
-import {Box, Button, Breadcrumbs, Container, Divider, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
+import {Box, Button, Container, Divider, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
-import CBreadcrumbs from "../components/breadcrumbs";
 import CContainer from "../components/container";
 import CLink from "../components/link";
 
@@ -88,18 +86,6 @@ function Canopy_Tent_Package({router}) {
             <Box className="page canopy-tent-package" fontSize={14} lineHeight={1.43}>
                 {display ? (
                     <>
-                        <CBreadcrumbs>
-                            <Container maxWidth="md">
-                                <Breadcrumbs classes={{li: "root-breadcrumbs-text"}}>
-                                    <Link color="inherit" href="/" onClick={(event) => event.preventDefault()}>
-                                        Home
-                                    </Link>
-                                    <Typography variant="inherit" color="textPrimary">
-                                        10x10 Canopy Tent
-                                    </Typography>
-                                </Breadcrumbs>
-                            </Container>
-                        </CBreadcrumbs>
                         <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
