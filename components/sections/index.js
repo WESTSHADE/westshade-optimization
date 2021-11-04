@@ -6,6 +6,8 @@ import Checkout_N from "./Checkout_N";
 import Selection from "./Selection";
 import Section from "./Section";
 import SubHeaderBar from "./SubHeaderBar";
+import TentSizeDisplay from "./TentSizeDisplay";
+import OrderProcess from "./OrderProcess";
 
 module.exports = {
     BannerDisplay,
@@ -15,5 +17,7 @@ module.exports = {
     Checkout_N,
     Section,
     Selection,
-    SubHeaderBar
+    SubHeaderBar,
+    OrderProcess,
+    TentSizeDisplay
 };

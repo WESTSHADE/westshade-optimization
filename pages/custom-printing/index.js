@@ -12,26 +12,10 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import ArrowLeft from "baseui/icon/arrow-left";
 import ArrowRight from "baseui/icon/arrow-right";
 
-import {Benefit, Section} from "../../components/sections";
-import MButton from "../../components/button-n";
+import {Benefit, OrderProcess, Section} from "../../components/sections";
+import Sandwich from "../../components/sandwich";
 
-const BlockGridIcon = ({src, alt, title, content}) => {
-    return (
-        <Block display={"grid"} gridTemplateColumns="1fr" gridRowGap={["8px", "12px", "24px"]} justifyItems="center"
-               overrides={{
-                   Block: {
-                       style: {textAlign: "center"},
-                   },
-               }}
-        >
-            <Block position="relative" width={["114px", "170px", "220px"]} height={["114px", "170px", "220px"]}>
-                <Image src={src} alt={alt} layout="fill" objectFit="contain" quality={100}/>
-            </Block>
-            <Block font={["MinXLabel16", "MinXLabel24"]} color="MinXPrimaryText">{title}</Block>
-            <Block maxWidth={["184px", "184px", "280px"]} font="MinXParagraph14" color="MinXPrimaryText">{content}</Block>
-        </Block>
-    );
-};
+import MButton from "../../components/button-n";
 
 const ImageSlide = ({url}) => {
     return (
@@ -50,8 +34,9 @@ function Custom_Printing({router}) {
                 {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
             </Head>
             {/* 主要显示区域 */}
-            <Block position="relative" alignItems="center" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"
-                   backgroundImage={"url(\"/images/custom-printing/custom-printing-display.jpg\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
+            <Block position="relative" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"
+                   display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", "16px", "20px"]} alignItems="center"
+                   backgroundImage={"url(\"/images/custom-printing/custom-printing-display.jpg\")"} backgroundSize="cover" backgroundPosition="center" backgroundRepeat="no-repeat"
                    overrides={{
                        Block: {
                            props: {
@@ -60,8 +45,8 @@ function Custom_Printing({router}) {
                        },
                    }}
             >
-                <Block marginBottom={["8px", "16px", "20px"]} font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
-                <Block maxWidth={["262px", "450px", "659px"]} marginBottom={["8px", "16px", "20px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">
+                <Block font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
+                <Block maxWidth={["262px", "450px", "659px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">
                     Print any style you like
                 </Block>
                 <MButton type="rainbow" height={["36px", "48px", "56px"]}
@@ -188,24 +173,7 @@ function Custom_Printing({router}) {
             <Section upperContainerDirection={"column"}
                      title={"HOW IT WORKS"}
                      subtitle={"2 people can set up the tent in a few minutes by following these steps."}
-                     content={
-                         <Block width={"100%"} minHeight={["336px"]} display={"grid"} gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]}
-                                gridColumnGap={["16px", "16px", '100px']} gridRowGap={["26px", "18px", '40px']} justifyItems="center"
-                         >
-                             <BlockGridIcon src="/images/icon/icon-order-online.png" alt="Order Online"
-                                            title="1. Order Online" content="Upload images and information and place an order online."
-                             />
-                             <BlockGridIcon src="/images/icon/icon-get-free-mockup.png" alt="Get Free Mockup"
-                                            title="2. Get Free Mockup" content="After you place your order, we’ll send a free mockup to your email."
-                             />
-                             <BlockGridIcon src="/images/icon/icon-confirm-mockup.png" alt="Confirm Mockup"
-                                            title="3. Confirm Mockup" content="Let us know how do you like it and changes you’d like to make."
-                             />
-                             <BlockGridIcon src="/images/icon/icon-print-ship.png" alt="Print & Ship"
-                                            title="4. Print & Ship" content="We’ll print it when you are satisfied with the design and ship it to you."
-                             />
-                         </Block>
-                     }
+                     content={<OrderProcess/>}
             />
             <Section upperContainerDirection={"column"}
                      title={"PRINTING TECH"}

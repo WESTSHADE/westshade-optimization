@@ -11,19 +11,10 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
-import {Benefit, Section, SubHeaderBar} from "../../components/sections";
+import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "../../components/sections";
 import MButton from "../../components/button-n";
 
 const refs = [];
-
-const BlockGridIcon = ({src, alt, title}) => {
-    return (
-        <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", "12px", "24px"]} justifyItems="center">
-            <img src={src} alt={alt} className="icon-tent-size"/>
-            <Block font="MinXLabel12" color="MinXSecondaryText">{title}</Block>
-        </Block>
-    );
-};
 
 const BlockVideo = ({src, type, isSelected, step}) => {
     const refBlockVideo = useRef(null);
@@ -41,13 +32,9 @@ const BlockVideo = ({src, type, isSelected, step}) => {
             // 全部显现
             if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
                 if (isSelected) {
-                    if (box.paused) {
-                        box.play();
-                    }
+                    if (box.paused) box.play();
                 } else {
-                    if (!box.paused) {
-                        box.pause();
-                    }
+                    if (!box.paused) box.pause();
                 }
             }
             // 全部不显示
@@ -243,22 +230,19 @@ function Canopy_Tent({router}) {
                          <MButton marginTop="12px" height="48px" font="MinXLabel16" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                      }
                      content={
-                         <Block display="grid" gridTemplateColumns={["repeat(3, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)", "repeat(8, 1fr)"]} gridColumnGap="8px" gridRowGap="24px" justifyItems="center">
-                             <BlockGridIcon src="/images/icon/icon-10x10.png" alt="Tent Size 10x10" title={"10’ x 10’"}/>
-                             <BlockGridIcon src="/images/icon/icon-10x15.png" alt="Tent Size 10x15" title={"10’ x 15’"}/>
-                             <BlockGridIcon src="/images/icon/icon-13x13.png" alt="Tent Size 13x13" title={"13’ x 13’"}/>
-                             <BlockGridIcon src="/images/icon/icon-10x20.png" alt="Tent Size 10x20" title={"10’ x 20’"}/>
-                             <BlockGridIcon src="/images/icon/icon-16x16.png" alt="Tent Size 16x16" title={"16’ x 16’"}/>
-                             <BlockGridIcon src="/images/icon/icon-13x20.png" alt="Tent Size 13x20" title={"13’ x 20’"}/>
-                             <BlockGridIcon src="/images/icon/icon-13x26.png" alt="Tent Size 13x26" title={"13’ x 26’"}/>
-                             <BlockGridIcon src="/images/icon/icon-20x20.png" alt="Tent Size 20x20" title={"20’ x 20’"}/>
-                         </Block>
+                         <TentSizeDisplay/>
                      }
             />
             <Section containerStyles={{maxWidth: process.env.maxWidth + "px !important"}}
                      title={"STRONG STRUCTURE"}
                      content={
-                         <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px">
+                         <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px"
+                                overrides={{
+                                    Block: {
+                                        style: {textAlign: "center"},
+                                    },
+                                }}
+                         >
                              <Block position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]}
                                     paddingTop="40px" paddingRight="18px" paddingBottom={["40px", "12px"]} paddingLeft="18px"
                                     overflow="hidden" backgroundColor="MinXBackground"
@@ -270,22 +254,8 @@ function Canopy_Tent({router}) {
                                         },
                                     }}
                              >
-                                 <Block marginBottom="16px" font={["MinXHeading28", "MinXHeading36"]} color="MinXPrimaryText"
-                                        overrides={{
-                                            Block: {
-                                                style: {textAlign: "center"},
-                                            },
-                                        }}
-                                 >
-                                     Built-in stability
-                                 </Block>
-                                 <Block maxWidth={["250px", "346px"]} font="MinXParagraph14" color="MinXPrimaryText"
-                                        overrides={{
-                                            Block: {
-                                                style: {textAlign: "center"},
-                                            },
-                                        }}
-                                 >
+                                 <Block marginBottom="16px" font={["MinXHeading28", "MinXHeading36"]} color="MinXPrimaryText">Built-in stability</Block>
+                                 <Block maxWidth={["250px", "346px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                      The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
                                  </Block>
                                  <Block position="relative" display="flex" height={["259px", "307px", "307px", "331px"]} marginBottom="auto">
@@ -309,22 +279,8 @@ function Canopy_Tent({router}) {
                                         },
                                     }}
                              >
-                                 <Block marginBottom="16px" font={["MinXHeading28", "MinXHeading36"]} color="MinXPrimaryText"
-                                        overrides={{
-                                            Block: {
-                                                style: {textAlign: "center"},
-                                            },
-                                        }}
-                                 >
-                                     Strong Support
-                                 </Block>
-                                 <Block maxWidth={["250px", "346px"]} marginBottom={["20px", "24px", "14px"]} font="MinXParagraph14" color="MinXPrimaryText"
-                                        overrides={{
-                                            Block: {
-                                                style: {textAlign: "center"},
-                                            },
-                                        }}
-                                 >
+                                 <Block marginBottom="16px" font={["MinXHeading28", "MinXHeading36"]} color="MinXPrimaryText">Strong Support</Block>
+                                 <Block maxWidth={["250px", "346px"]} marginBottom={["20px", "24px", "14px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                      The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
                                  </Block>
                                  <Block width={["100%", "100%", "110%", "100%"]} height={["331px", "395px", "446px", "429px"]}>
@@ -341,9 +297,7 @@ function Canopy_Tent({router}) {
                      content={
                          <>
                              <Block display={["block", "block", "none"]}>
-                                 <Block display="flex" flexDirection="column" alignItems="center"
-                                        paddingBottom={["36px", "60px"]}
-                                        overflow="hidden" backgroundColor={"MinXBackground"}
+                                 <Block display="flex" flexDirection="column" alignItems="center" paddingBottom={["36px", "60px"]} overflow="hidden" backgroundColor={"MinXBackground"}
                                         overrides={{
                                             Block: {
                                                 props: {

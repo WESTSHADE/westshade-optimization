@@ -147,11 +147,15 @@ const feature_2 = [{
 }]
 
 const anatomyPart = [
-    {url: "/top-corner-connector.png", title: "TOP CORNER CONNECTOR", content: ""},
-    {url: "/truss-bar.png", title: "TRUSS BAR", content: ""},
-    {url: "/leg-height-connector.png", title: "HEIGHT ADJUST CONNECTOR", content: ""},
-    {url: "/foot-plate.png", title: "FOOT PLATE", content: ""},
-    {url: "/leg-pole.png", title: "LEG POLE", content: ""},
+    {url: "/top-corner-connector.png", title: "TOP CORNER CONNECTOR", content: "The top corner connectors help connect together the canopy to provide stability and durability."},
+    {url: "/truss-bar.png", title: "TRUSS BAR", content: "Truss bar is the middle connector between the leg pole and helps stabilize the canopy."},
+    {url: "/leg-height-connector.png", title: "HEIGHT ADJUST CONNECTOR", content: "Adjust the shade as needed throughout the day with leg height adjustments."},
+    {
+        url: "/foot-plate.png",
+        title: "FOOT PLATE",
+        content: "Footplates are heavy weights that rest on the feet of the pop up tent legs to offer additional anchoring in conjunction with staking kits or they can operate alone when stakes are not necessary."
+    },
+    {url: "/leg-pole.png", title: "LEG POLE", content: "Our leg poles are stable and are going to provide the most coverage without taking up too much space."},
 ];
 
 function SectionCard({gridTemplateColumns = ["1fr", "1fr", "684px 1fr"], gridTemplateAreas = [`"a" "b"`, `"a" "b"`, `"a b"`], title = "", tabPicList = [], tabList = [], objectFit = "cover"}) {
@@ -1056,7 +1060,7 @@ function Canopy_Tent({router, products, variants}) {
                 <title>Canopy Tent | WESTSHADE</title>
             </Head>
             <Block height="auto" display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]} marginBottom="40px">
-                <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
+                <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom="40px">
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
@@ -1180,7 +1184,7 @@ function Canopy_Tent({router, products, variants}) {
                     </Block>
                     {/* 选择区域 */}
                     <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
-                           paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingBottom={["94px", "68px", "0"]} paddingLeft={["16px", "16px", "0"]}
+                           paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
                            overrides={{
                                Block: {
                                    props: {

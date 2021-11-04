@@ -10,6 +10,7 @@ import {Button, SHAPE, KIND} from "baseui/button";
 import {Tabs, Tab, ORIENTATION, FILL} from 'baseui/tabs-motion';
 import {Input, MaskedInput} from "baseui/input";
 import {Select} from 'baseui/select';
+import {Avatar} from 'baseui/avatar';
 import {ArrowLeft, ChevronRight, ChevronDown, ChevronUp} from 'baseui/icon';
 
 import MButton from "../../components/button-n";
@@ -102,7 +103,7 @@ function Login() {
 
     return (
         <>
-            <Block display="flex" justifyContent="center" font="MinXLabel24">Log in with...</Block>
+            {/*<Block display="flex" justifyContent="center" font="MinXLabel24">Log in with...</Block>*/}
             <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px" paddingTop={["40px", "60px", "80px"]}>
                 <Block display="grid" gridTemplateAreas={`"u" "p"`} gridRowGap={["16px", "24px"]}>
                     <Block gridArea="u">
@@ -188,7 +189,7 @@ function Signup() {
 
     return (
         <>
-            <Block display="flex" justifyContent="center" font="MinXLabel24">Sign up with...</Block>
+            {/*<Block display="flex" justifyContent="center" font="MinXLabel24">Sign up with...</Block>*/}
             <Block display="grid" gridTemplateColumns="repeat(1, 1fr)" gridRowGap={["16px", "24px"]} marginBottom="56px" paddingTop={["40px", "60px", "80px"]}>
                 <Block display="grid" gridTemplateAreas={`"e" "p"`} gridRowGap={["16px", "24px"]}>
                     <Block gridArea="e">
@@ -928,20 +929,13 @@ function Account({size}) {
                     >
                         <Block width="100%" height="max-content" paddingRight={["16px", "16px", "0px"]} paddingBottom="16px" paddingLeft={["16px", "16px", "0px"]} backgroundColor="white">
                             <Block display="flex" flexDirection="row" paddingTop={["24px", "40px"]} paddingRight="16px" paddingBottom="20px" paddingLeft="16px">
-                                <Block display="flex" alignItems="center" justifyContent="center" width="50px" height="50px" backgroundColor="#262626" overflow="hidden" font="MinXHeading32" color="MinXPrimaryTextAlt"
-                                       overrides={{
-                                           Block: {
-                                               style: {
-                                                   borderTopRightRadius: "50%",
-                                                   borderBottomRightRadius: "50%",
-                                                   borderBottomLeftRadius: "50%",
-                                                   borderTopLeftRadius: "50%",
-                                               }
-                                           },
-                                       }}
-                                >
-                                    {user.first_name.charAt(0)}
-                                </Block>
+                                <Avatar name={user.first_name} size="50px"
+                                        overrides={{
+                                            Initials: {
+                                                style: {fontSize: "32px", fontWeight: "bold"}
+                                            }
+                                        }}
+                                />
                                 <Block display="flex" flexDirection="column" justifyContent="center" paddingLeft="16px">
                                     <Block minHeight="20px" font="MinXParagraph14">Hi,</Block>
                                     <Block minHeight="28px" font="MinXHeading20"

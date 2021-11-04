@@ -22,7 +22,7 @@ const setImage = (images) => {
 
 const Product = ({name, product, showDesc = true}) => {
     const [url, setUrl] = useState("");
-
+    console.log(product);
     useEffect(() => {
         let urlPic;
         if (product.hasOwnProperty("images")) {
@@ -48,7 +48,7 @@ const Product = ({name, product, showDesc = true}) => {
                     <Image src="/images/default-product.jpg" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                 )}
             </Block>
-            <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]}>
+            <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
                 <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} font={["MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">
                     <Block>{name ? name : product.name}</Block>
                     {showDesc ? (
@@ -63,25 +63,28 @@ const Product = ({name, product, showDesc = true}) => {
                     ) : null}
                 </Block>
                 <Block display="flex" flexDirection="row" justifyContent="space-between" font="MinXParagraph16" color="MinXButton">
-                    {product.onSale ? (
-                        <Block display="flex" flexDirection="row" justifyContent="flex-start" color="MinXPrimaryText">
-                            {product.sale_price === 0 ? <Block marginRight="10px" color="#F07C7C">Free</Block> :
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={product.sale_price} displayType={"text"} style={{color: "#F07C7C", marginRight: 10}}/>}
-                            {product.regular_price ? (
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={product.regular_price} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                            ) : (
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={product.price} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                            )}
-                        </Block>
-                    ) : (
-                        <Block font="MinXParagraph16" color="MinXPrimaryText">
-                            {product.regular_price ? (
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={product.regular_price} displayType={"text"}/>
-                            ) : (
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={product.price} displayType={"text"}/>
-                            )}
-                        </Block>
-                    )}
+                    <Block font="MinXParagraph16" color="MinXPrimaryText">
+                        {product.type !== "simple" ? "From " : ""}
+                        {product.onSale ? (
+                            <Block display="flex" flexDirection="row" justifyContent="flex-start">
+                                {product.sale_price === 0 ? <Block marginRight="10px" color="#F07C7C">Free</Block> :
+                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.sale_price} displayType={"text"} style={{color: "#F07C7C", marginRight: 10}}/>}
+                                {product.regular_price ? (
+                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.regular_price} displayType={"text"} style={{textDecoration: "line-through"}}/>
+                                ) : (
+                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.price} displayType={"text"} style={{textDecoration: "line-through"}}/>
+                                )}
+                            </Block>
+                        ) : (
+                            <>
+                                {product.regular_price ? (
+                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.regular_price} displayType={"text"}/>
+                                ) : (
+                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.price} displayType={"text"}/>
+                                )}
+                            </>
+                        )}
+                    </Block>
                     <Link color="inherit" onClick={(event) => event.preventDefault()}
                           href={product.id === 26553 ? {pathname: "/products/accessories/", query: {id: "26516", type: "half"}} :
                               product.id === 26523 ? {pathname: "/products/accessories/", query: {id: "26516", type: "full"}} :
@@ -122,26 +125,25 @@ function Accessories({router, products}) {
                        }}
                 >
                     <Block marginBottom="12px" font="MinXSubtitle14" color="MinXSecondaryText">CANOPY TENT</Block>
-                    <Block marginBottom="24px" font={["MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">ACCESSORY & REPLACEMENT</Block>
-                    <Block font="MinXSubtitle16" color="MinXSecondaryText" maxWidth={["280px", "400px", "420px", "890px"]}>
+                    <Block marginBottom="24px" font={["MinXTitle44", "MinXTitle44"]} color="MinXPrimaryText">ACCESSORY & REPLACEMENT</Block>
+                    <Block font="MinXSubtitle20" color="MinXSecondaryText" maxWidth={["280px", "400px", "420px", "615px"]}>
                         Westshade's selection of versatile accessories allows you to customize and combine individual elements depending on your personal or business needs.
                     </Block>
                 </Block>
             </Block>
-            <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>SIDE WALL</Block>}
-                     subtitle={"All sidewalls can be personalized with your logo or marketing messages to promote your products through our custom printing service."}
-                     subtitleMoreText={"Learn about Custom Printing >"}
-                     subtitleMoreDestination={"/custom-printing"}
-                     content={
-                         <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
-                             {products[0].map((product, index) =>
-                                 <Product key={index} name={index === 0 ? "Half Wall" : index === 1 ? "Full Wall" : index === 2 ? "Roll-Up Door Wall" : index === 3 ? "PVC Window Wall" : index === 4 ? "Mesh Window Wall" : ""}
-                                          product={product}
-                                 />
-                             )}
-                         </Block>
-                     }
-            />
+            <Block marginBottom={["60px", "80px", "120px"]} overrides={{
+                Block: {style: {textAlign: "center"}}
+            }}>
+                <Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>
+                <Block marginBottom={["24px", "40px", "64px"]} font="MinXHeading24">SIDE WALL</Block>
+                <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
+                    {products[0].map((product, index) =>
+                        <Product key={index} name={index === 0 ? "Half Wall" : index === 1 ? "Full Wall" : index === 2 ? "Roll-Up Door Wall" : index === 3 ? "PVC Window Wall" : index === 4 ? "Mesh Window Wall" : ""}
+                                 product={product}
+                        />
+                    )}
+                </Block>
+            </Block>
             <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
                      content={
                          <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
@@ -152,8 +154,10 @@ function Accessories({router, products}) {
             <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>REPLACEMENT PART</Block>}
                      content={
                          <>
-                             <Block position="relative" width="100%" marginBottom="32px">
-                                 <Image src="/images/accessory/replacement-part.png" alt="replacement part" layout="responsive" objectFit="contain" width={1152} height={632} quality={100}/>
+                             <Block backgroundColor="#F2F2F2" marginBottom="32px" paddingTop="45px" paddingRight="16px" paddingBottom="45px" paddingLeft="16px">
+                                 <Block position="relative" width="100%" maxWidth="800px" marginRight="auto" marginLeft="auto">
+                                     <Image src="/images/accessory/replacement-part.png" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
+                                 </Block>
                              </Block>
                              <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]} marginBottom="32px">
                                  {products[2].map((product, index) => <Product key={index} product={product} showDesc={false}/>)}

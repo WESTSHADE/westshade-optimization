@@ -3,9 +3,7 @@ import React from "react";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import ChevronRight from "baseui/icon/chevron-right";
-import ArrowRight from 'baseui/icon/arrow-right'
-import ArrowDown from 'baseui/icon/arrow-down'
+import {ChevronRight, ArrowRight, ArrowDown} from 'baseui/icon'
 
 import MButton from "../../button-n";
 
