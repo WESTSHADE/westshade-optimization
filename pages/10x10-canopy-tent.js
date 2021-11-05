@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import {Block} from "baseui/block";
 import {FILL, Tab, Tabs} from "baseui/tabs-motion";
@@ -12,153 +13,6 @@ import MButton from "../components/button-n";
 import {Carousel} from "react-responsive-carousel";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {ChevronLeft, ChevronRight} from "baseui/icon";
-
-const feature_1 = [{
-    tabTitle: "Water Resistant",
-    tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions."
-}, {
-    tabTitle: "Fire Retardant",
-    tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84."
-}, {
-    tabTitle: "UV Protection",
-    tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days."
-}]
-
-const feature_2 = [{
-    tabTitle: "Steel",
-    tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck."
-}, {
-    tabTitle: "Aluminum",
-    tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions."
-}]
-
-function SectionCard({gridTemplateColumns = ["1fr", "1fr", "684px 1fr"], gridTemplateAreas = [`"a" "b"`, `"a" "b"`, `"a b"`], title = "", tabPicList = [], tabList = [], objectFit = "cover"}) {
-    const [iHeight, setIHeight] = useState(315);
-    const [tabActiveKey, setTabActiveKey] = useState(0);
-
-    return (
-        <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto"
-               display="grid" gridTemplateColumns={gridTemplateColumns} gridTemplateRows={["auto auto", "auto auto", "auto"]} gridTemplateAreas={gridTemplateAreas}
-               overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}
-        >
-            <Block gridArea="a">
-                <Carousel autoPlay={false} selectedItem={tabActiveKey} showStatus={false} showThumbs={false} showArrows={false} showIndicators={true} swipeable={true} dynamicHeight={true}
-                          renderArrowPrev={(onClick, disabled) => (
-                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                      onClick={onClick}
-                                      overrides={{
-                                          BaseButton: {
-                                              props: {
-                                                  className: "react-image-gallery-arrow left",
-                                              },
-                                              style: {
-                                                  fontSize: "inherit",
-                                                  fontWeight: "inherit",
-                                                  lineHeight: "inherit",
-                                              }
-                                          },
-                                      }}
-                                      disabled={disabled}
-                              >
-                                  <ChevronLeft size={28} color={"white"}/>
-                              </Button>
-                          )}
-                          renderArrowNext={(onClick, disabled) => (
-                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                      onClick={onClick}
-                                      overrides={{
-                                          BaseButton: {
-                                              props: {
-                                                  className: "react-image-gallery-arrow right",
-                                              },
-                                              style: {
-                                                  fontSize: "inherit",
-                                                  fontWeight: "inherit",
-                                                  lineHeight: "inherit",
-                                              }
-                                          },
-                                      }}
-                                      disabled={disabled}
-                              >
-                                  <ChevronRight size={28} color={"white"}/>
-                              </Button>
-                          )}
-                          renderItem={(item) => {
-                              return (
-                                  <Block position="relative" width="100%" height={["100%", "100%", iHeight + 64 + "px"]}>{item}</Block>
-                              );
-                          }}
-                          onChange={(index) => setTabActiveKey(index)}
-                >
-                    {tabPicList.length > 0 && tabPicList.map((pic, index) => {
-                        return (
-                            <Block key={index} backgroundColor="#F5FCFC" width="100%" height="100%">
-                                <Block display={["block", "block", "none"]}>
-                                    <Image src={pic} alt="feature" layout="responsive" width={2500} height={1316} objectFit={objectFit}/>
-                                </Block>
-                                <Block display={["none", "none", "block"]}>
-                                    <Image src={pic} alt="feature" layout="fill" objectFit={objectFit}/>
-                                </Block>
-                            </Block>
-                        )
-                    })}
-                </Carousel>
-            </Block>
-            <Block gridArea="b" paddingTop={["16px", "16px", "32px"]} paddingRight={["16px", "16px", "40px"]} paddingBottom={["16px", "16px", "32px"]} paddingLeft={["16px", "16px", "40px"]} backgroundColor={"#F7F7F7"}>
-                <Block ref={(r) => {
-                    if (r && r.clientHeight && r.clientHeight > 315) {
-                        setIHeight(r.clientHeight)
-                    }
-                }}>
-                    <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
-                    <Tabs activeKey={tabActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
-                          overrides={{
-                              TabList: {
-                                  props: {
-                                      className: "hideScrollBar"
-                                  },
-                                  style: {
-                                      flexWrap: "wrap",
-                                      overflowX: "scroll",
-                                  },
-                              },
-                              TabBorder: {props: {hidden: true}},
-                              TabHighlight: {props: {hidden: true}},
-                          }}
-                    >
-                        {tabList.map((item, index) => {
-                            return (
-                                <Tab key={index} title={item.tabTitle}
-                                     overrides={{
-                                         TabPanel: {
-                                             style: {paddingTop: "12px", paddingRight: 0, paddingBottom: "12px", paddingLeft: 0},
-                                         },
-                                         Tab: {
-                                             style: ({$isActive}) => ({
-                                                 background: $isActive ? "#23A4AD" : "#F0F0F0",
-                                                 color: $isActive ? "white" : "#8C8C8C",
-                                                 marginRight: "12px",
-                                                 marginBottom: "12px",
-                                                 paddingTop: "8px",
-                                                 paddingBottom: "8px",
-                                                 paddingRight: "8px",
-                                                 paddingLeft: "8px",
-                                                 borderRadius: "4px",
-                                                 ":hover": {background: $isActive ? "#5FBDBE" : "transparent"},
-                                             }),
-                                         },
-                                     }}
-                                >
-                                    <Block font="MinXParagraph14">{item.tabContent}</Block>
-                                </Tab>
-                            )
-                        })}
-                    </Tabs>
-                </Block>
-            </Block>
-        </Block>
-    )
-}
 
 function Canopy_Tent({router, size}) {
     const [tabsRefs, setTabsRefs] = useState([]);
@@ -236,9 +90,6 @@ function Canopy_Tent({router, size}) {
                                                  paddingBottom: "12px",
                                                  ":hover": {background: "transparent"}
                                              }),
-                                         },
-                                         ArtworkContainer: {
-                                             style: {backgroundColor: "red"}
                                          },
                                          TabPanel: {
                                              style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
@@ -334,7 +185,8 @@ function Canopy_Tent({router, size}) {
                                                 </Block>
                                             </Block>
                                             <Block font="MinXParagraph16" color="MinXSecondaryText">
-                                                Your comfort and safety is our first priority. The fabric Westshade uses for plain canopy tent is 500D, 320gsm, PVC coated polyester. It’s water-resistant, fading resistant, fire resistant, and it
+                                                Your comfort and safety is our first priority. The fabric Westshade uses for plain canopy tent is 500D, 320gsm, PVC coated polyester. It’s water-resistant, fading resistant, fire resistant,
+                                                and it
                                                 provides
                                                 UV
                                                 protection.
@@ -357,9 +209,34 @@ function Canopy_Tent({router, size}) {
                                              }}
                                     />
                                 </Block>
-                                <Block width="100%" maxWidth={process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto" paddingRight="16px" paddingLeft="16px">
-                                    <Block position="relative" width="100%" maxWidth="1152px" height={["234px", "234px", "600px"]} marginRight="auto" marginLeft="auto" overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}>
+                                <Block display="grid" gridColumnGap="20px" gridRowGap="20px" gridTemplateAreas={[`"a" "b" "c"`, `"a" "b" "c"`, `"a a" "b c"`]}
+                                       maxWidth="1152px" marginRight="auto" marginLeft="auto" paddingRight="16px" paddingLeft="16px"
+                                >
+                                    <Block gridArea="a" position="relative" width="100%" height={["234px", "234px", "600px"]} marginRight="auto" marginLeft="auto"
+                                           overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}>
                                         <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=ud5m8ET8sE8&ab_channel=Westshade'/>
+                                    </Block>
+                                    <Block gridArea="b" backgroundColor="white" overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}>
+                                        <Block padding={["24px 16px", "24px", "40px"]}>
+                                            <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Fabric for custom printed tent</Block>
+                                            <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We adopt 600D, 360 gsm, PU coated polyester fabric for custom printed canopy tent. It’s light but
+                                                strong. </Block>
+                                            <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                        </Block>
+                                        <Block position="relative" width="100%" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                            <Image src="images/canopy-tent/10x10-tent/600D-polyester.jpg" alt="600D polyester" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                    </Block>
+                                    <Block gridArea="c" backgroundColor="white" overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}>
+                                        <Block padding={["24px 16px", "24px", "40px"]}>
+                                            <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Ink for printing</Block>
+                                            <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We use ink imported from Korea for dye sublimation printing and use ink imported from Japan for UV
+                                                printing.</Block>
+                                            <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                        </Block>
+                                        <Block position="relative" width="100%" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                            <Image src="images/canopy-tent/10x10-tent/imported-from-korea.jpg" alt="imported from korea" layout="fill" objectFit="contain"/>
+                                        </Block>
                                     </Block>
                                 </Block>
                             </>

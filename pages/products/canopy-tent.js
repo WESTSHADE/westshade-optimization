@@ -36,13 +36,13 @@ import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
 import Selection from "../../components/selection-n";
+import CardTabs from "../../components/card_tabs";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 import {Accordion, Panel} from "baseui/accordion";
-import styles from "../../components/surfaces/Modal/modal.module.scss";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -117,33 +117,28 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
 
-const feature_1_pic = [
-    "images/product/canopy-tent/feature-fabric.jpg",
-    "images/product/canopy-tent/feature-fire.png",
-    "images/product/canopy-tent/feature-uv.jpg"
-]
-
-const feature_2_pic = [
-    "images/product/canopy-tent/feature-steel.png", "images/product/canopy-tent/feature-aluminum.png"
-]
-
 const feature_1 = [{
     tabTitle: "Water Resistant",
-    tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions."
+    tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
+    url: "images/product/canopy-tent/feature-fabric.jpg",
 }, {
     tabTitle: "Fire Retardant",
-    tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84."
+    tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84.",
+    url: "images/product/canopy-tent/feature-fire.png",
 }, {
     tabTitle: "UV Protection",
-    tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days."
+    tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days.",
+    url: "images/product/canopy-tent/feature-uv.jpg",
 }]
 
 const feature_2 = [{
     tabTitle: "Steel",
-    tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck."
+    tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck.",
+    url: "images/product/canopy-tent/feature-steel.png",
 }, {
     tabTitle: "Aluminum",
-    tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions."
+    tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions.",
+    url: "images/product/canopy-tent/feature-aluminum.png",
 }]
 
 const anatomyPart = [
@@ -157,134 +152,6 @@ const anatomyPart = [
     },
     {url: "/leg-pole.png", title: "LEG POLE", content: "Our leg poles are stable and are going to provide the most coverage without taking up too much space."},
 ];
-
-function SectionCard({gridTemplateColumns = ["1fr", "1fr", "684px 1fr"], gridTemplateAreas = [`"a" "b"`, `"a" "b"`, `"a b"`], title = "", tabPicList = [], tabList = [], objectFit = "cover"}) {
-    const [iHeight, setIHeight] = useState(315);
-    const [tabActiveKey, setTabActiveKey] = useState(0);
-
-    return (
-        <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto"
-               display="grid" gridTemplateColumns={gridTemplateColumns} gridTemplateRows={["auto auto", "auto auto", "auto"]} gridTemplateAreas={gridTemplateAreas}
-               overrides={{Block: {style: {borderRadius: "16px", overflow: "hidden"}}}}
-        >
-            <Block gridArea="a">
-                <Carousel autoPlay={false} selectedItem={tabActiveKey} showStatus={false} showThumbs={false} showArrows={false} showIndicators={true} swipeable={true} dynamicHeight={true}
-                          renderArrowPrev={(onClick, disabled) => (
-                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                      onClick={onClick}
-                                      overrides={{
-                                          BaseButton: {
-                                              props: {
-                                                  className: "react-image-gallery-arrow left",
-                                              },
-                                              style: {
-                                                  fontSize: "inherit",
-                                                  fontWeight: "inherit",
-                                                  lineHeight: "inherit",
-                                              }
-                                          },
-                                      }}
-                                      disabled={disabled}
-                              >
-                                  <ChevronLeft size={28} color={"white"}/>
-                              </Button>
-                          )}
-                          renderArrowNext={(onClick, disabled) => (
-                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                      onClick={onClick}
-                                      overrides={{
-                                          BaseButton: {
-                                              props: {
-                                                  className: "react-image-gallery-arrow right",
-                                              },
-                                              style: {
-                                                  fontSize: "inherit",
-                                                  fontWeight: "inherit",
-                                                  lineHeight: "inherit",
-                                              }
-                                          },
-                                      }}
-                                      disabled={disabled}
-                              >
-                                  <ChevronRight size={28} color={"white"}/>
-                              </Button>
-                          )}
-                          renderItem={(item) => {
-                              return (
-                                  <Block position="relative" width="100%" height={["100%", "100%", iHeight + 64 + "px"]}>{item}</Block>
-                              );
-                          }}
-                          onChange={(index) => setTabActiveKey(index)}
-                >
-                    {tabPicList.length > 0 && tabPicList.map((pic, index) => {
-                        return (
-                            <Block key={index} backgroundColor="#F5FCFC" width="100%" height="100%">
-                                <Block display={["block", "block", "none"]}>
-                                    <Image src={pic} alt="feature" layout="responsive" width={2500} height={1316} objectFit={objectFit}/>
-                                </Block>
-                                <Block display={["none", "none", "block"]}>
-                                    <Image src={pic} alt="feature" layout="fill" objectFit={objectFit}/>
-                                </Block>
-                            </Block>
-                        )
-                    })}
-                </Carousel>
-            </Block>
-            <Block gridArea="b" paddingTop={["16px", "16px", "32px"]} paddingRight={["16px", "16px", "40px"]} paddingBottom={["16px", "16px", "32px"]} paddingLeft={["16px", "16px", "40px"]} backgroundColor={"#F7F7F7"}>
-                <Block ref={(r) => {
-                    if (r && r.clientHeight && r.clientHeight > 315) {
-                        setIHeight(r.clientHeight)
-                    }
-                }}>
-                    <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
-                    <Tabs activeKey={tabActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey))}
-                          overrides={{
-                              TabList: {
-                                  props: {
-                                      className: "hideScrollBar"
-                                  },
-                                  style: {
-                                      flexWrap: "wrap",
-                                      overflowX: "scroll",
-                                  },
-                              },
-                              TabBorder: {props: {hidden: true}},
-                              TabHighlight: {props: {hidden: true}},
-                          }}
-                    >
-                        {tabList.map((item, index) => {
-                            return (
-                                <Tab key={index} title={item.tabTitle}
-                                     overrides={{
-                                         TabPanel: {
-                                             style: {paddingTop: "12px", paddingRight: 0, paddingBottom: "12px", paddingLeft: 0},
-                                         },
-                                         Tab: {
-                                             style: ({$isActive}) => ({
-                                                 background: $isActive ? "#23A4AD" : "#F0F0F0",
-                                                 color: $isActive ? "white" : "#8C8C8C",
-                                                 marginRight: "12px",
-                                                 marginBottom: "12px",
-                                                 paddingTop: "8px",
-                                                 paddingBottom: "8px",
-                                                 paddingRight: "8px",
-                                                 paddingLeft: "8px",
-                                                 borderRadius: "4px",
-                                                 ":hover": {background: $isActive ? "#5FBDBE" : "transparent"},
-                                             }),
-                                         },
-                                     }}
-                                >
-                                    <Block font="MinXParagraph14">{item.tabContent}</Block>
-                                </Tab>
-                            )
-                        })}
-                    </Tabs>
-                </Block>
-            </Block>
-        </Block>
-    )
-}
 
 function Canopy_Tent({router, products, variants}) {
     const [displayTabs, setDisplayTabs] = useState(false);
@@ -1734,8 +1601,8 @@ function Canopy_Tent({router, products, variants}) {
             <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
                 <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Features</Block>
                 <Block display="grid" gridTemplateColumns="1fr" gridRowGap="24px">
-                    <SectionCard title={"Roof Top"} tabPicList={feature_1_pic} tabList={feature_1}/>
-                    <SectionCard gridTemplateColumns={["1fr", "1fr", "1fr 684px"]} gridTemplateAreas={[`"a" "b"`, `"a" "b"`, `"b a"`]} title={"Frame"} tabPicList={feature_2_pic} tabList={feature_2} objectFit="contain"/>
+                    <CardTabs title="Roof Top" tabList={feature_1}/>
+                    <CardTabs title="Frame" tabList={feature_2} objectFit="contain" reverse/>
                 </Block>
             </Block>
             <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>

@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  max-width: 1152px;
+  margin: auto;
+  border-radius: 16px;
+  overflow: hidden;
+
+  .root-tabList {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    .root-tab {
+      padding: 8px;
+      border-radius: 4px;
+    }
+  }
+
+  .root-tabPanel {
+    padding: 12px 0;
+  }
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: calc(50% - 28px);
+  width: 56px;
+  height: 56px;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  z-index: 2;
+
+  &.left {
+    left: 16px;
+  }
+
+  &.right {
+    right: 16px;
+  }
+}
+
+
