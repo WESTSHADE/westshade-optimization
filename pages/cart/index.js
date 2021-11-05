@@ -113,8 +113,6 @@ function Cart_Page({router}) {
         //     checkoutData.shipping = {...user.shipping};
         // }
 
-        beginCheckout(cartProduct, lineItem);
-
         utils.createOrder(token, checkoutData).then((res) => {
             setShowLoading(false);
             if (res.message) {

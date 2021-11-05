@@ -1,6 +1,6 @@
 export const viewItem = (detail) => {
     if (typeof gtag !== 'undefined') {
-        const {id, name, categories, price} = detail;
+        const {sku, name, categories, price} = detail;
 
         let category = "";
 
@@ -11,7 +11,7 @@ export const viewItem = (detail) => {
         gtag('event', 'view_item', {
             "items": [
                 {
-                    "id": id,
+                    "id": sku,
                     "name": name,
                     "brand": "Westshade",
                     "category": category,
@@ -25,7 +25,7 @@ export const viewItem = (detail) => {
 export const addToCart = (products = [], variants = [], count,) => {
     if (typeof gtag !== 'undefined') {
         products.map((product, index) => {
-            const {id, name, categories, type, price} = product;
+            const {sku, name, categories, type, price} = product;
 
             let variant = "", category = "";
 
@@ -41,7 +41,7 @@ export const addToCart = (products = [], variants = [], count,) => {
             gtag('event', 'add_to_cart', {
                 "items": [
                     {
-                        "id": id,
+                        "id": sku,
                         "name": name,
                         "brand": "Westshade",
                         "category": category,
@@ -57,7 +57,7 @@ export const addToCart = (products = [], variants = [], count,) => {
 
 export const removeFromCart = (detail, count) => {
     if (typeof gtag !== 'undefined') {
-        const {id, name, attributes, categories, price} = detail;
+        const {sku, name, attributes, categories, price} = detail;
 
         let variant = "", category = "";
 
@@ -71,7 +71,7 @@ export const removeFromCart = (detail, count) => {
         gtag('event', 'remove_from_cart', {
             "items": [
                 {
-                    "id": id,
+                    "id": sku,
                     "name": name,
                     "brand": "Westshade",
                     "category": category,
@@ -90,7 +90,7 @@ export const beginCheckout = (products, lineItem) => {
         let items = [];
 
         products.map((product, index) => {
-            const {id, name, attributes, categories, price} = product;
+            const {sku, name, attributes, categories, price} = product;
 
             let variant = "", category = "", count = 0;
 
@@ -105,7 +105,7 @@ export const beginCheckout = (products, lineItem) => {
             }
 
             items.push({
-                "id": id,
+                "id": sku,
                 "name": name,
                 "brand": "Westshade",
                 "category": category,
@@ -141,18 +141,26 @@ export const viewPromotion = (coupons) => {
 
 export const purchase = (detail) => {
     if (typeof gtag !== 'undefined') {
-        
+
         const {id, currency, coupon_lines, line_items, shipping_total, total_tax, total} = detail;
 
         let lineItems_gtag = [];
         let couponItems = [];
 
         coupon_lines.map((coupon) => couponItems.push(coupon.code));
-        line_items.map((item) => lineItems_gtag.push({id: item.product_id, name: item.name, variant: item.variation_id, quantity: item.quantity, price: item.price}));
+        line_items.map((item) => {
+            let variant = "";
+
+            if (item.meta_data.length > 0) {
+                variant = item.meta_data.reduce((v, p, index) => index === 0 ? p.key !== "_reduced_stock" ? (p.display_key + ": " + p.display_value) : "" : p.key !== "_reduced_stock" ? (v + "; " + p.display_key + ": " + p.display_value) : v, "");
+            }
+
+            lineItems_gtag.push({id: item.sku, name: item.name, brand: "Westshade", variant: variant, quantity: item.quantity, price: item.price})
+        });
 
         gtag('event', 'purchase', {
             "transaction_id": id,
-            "affiliation": "Westshade",
+            // "affiliation": "Westshade",
             "value": total,
             "currency": currency,
             "tax": total_tax,

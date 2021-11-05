@@ -22,7 +22,7 @@ const setImage = (images) => {
 
 const Product = ({name, product, showDesc = true}) => {
     const [url, setUrl] = useState("");
-    console.log(product);
+
     useEffect(() => {
         let urlPic;
         if (product.hasOwnProperty("images")) {
@@ -107,7 +107,7 @@ function Accessories({router, products}) {
                 {/*    <meta name="description"*/}
                 {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
             </Head>
-            <Block position="relative" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center"
+            <Block position="relative" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center" maxWidth="unset !important"
                    overrides={{
                        Block: {
                            props: {
@@ -131,7 +131,7 @@ function Accessories({router, products}) {
                     </Block>
                 </Block>
             </Block>
-            <Block marginBottom={["60px", "80px", "120px"]} overrides={{
+            <Block maxWidth={process.env.maxWidth + "px"} marginRight="auto" marginBottom={["60px", "80px", "120px"]} marginLeft="auto" overrides={{
                 Block: {style: {textAlign: "center"}}
             }}>
                 <Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>
@@ -144,14 +144,14 @@ function Accessories({router, products}) {
                     )}
                 </Block>
             </Block>
-            <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
+            <Section containerStyles={{maxWidth: process.env.maxWidth + "px !important"}} title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
                      content={
                          <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
                              {products[1].map((product, index) => <Product key={index} product={product}/>)}
                          </Block>
                      }
             />
-            <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>REPLACEMENT PART</Block>}
+            <Section containerStyles={{maxWidth: process.env.maxWidth + "px !important"}} title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>REPLACEMENT PART</Block>}
                      content={
                          <>
                              <Block backgroundColor="#F2F2F2" marginBottom="32px" paddingTop="45px" paddingRight="16px" paddingBottom="45px" paddingLeft="16px">
@@ -179,6 +179,7 @@ Accessories.getInitialProps = async () => {
 
     return {
         products: products,
+        fullPage: true
     };
 };
 

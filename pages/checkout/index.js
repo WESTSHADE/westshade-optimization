@@ -204,12 +204,12 @@ function Checkout({router, orderID, orderDetail}) {
         // checkoutData.line_items = order.line_items;
         // checkoutData.coupon_lines = [...lineCoupon];
 
-        utils.updateOrder(null, checkoutData).then((res) => {
-            if (res.message) {
+        utils.updateOrder(null, checkoutData).then((result) => {
+            if (result.message) {
                 setShowLoading(false);
 
                 setShowError(true);
-                setError(res.message);
+                setError(result.message);
                 setTimeout(function () {
                     setShowError(false);
                     setError("");
@@ -260,9 +260,6 @@ function Checkout({router, orderID, orderDetail}) {
                 router.push("/");
             } else {
                 setOrderDetail(result);
-                // if (result.billing) {
-                //     setBillingAddress(result.billing);
-                // }
                 if (result.shipping) {
                     setShippingAddress(result.shipping);
                 }
@@ -677,9 +674,24 @@ function Checkout({router, orderID, orderDetail}) {
                     <Block marginBottom="40px">
                         <Block position={["relative", "relative", "sticky"]} top={["unset", "unset", "108px"]}>
                             <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
+                            {lineItem.length > 0 ? (
+                                <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
+                                    {lineItem.map((item, index) => {
+                                        return (
+                                            <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                                <Block font="MinXParagraph14">
+                                                    {item.name}
+                                                    <Block marginLeft="2em">{item.meta_data.map((data, i) => <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block>)}</Block>
+                                                </Block>
+                                                <Block font="MinXParagraph14">{`$` + item.subtotal}</Block>
+                                            </Block>
+                                        )
+                                    })}
+                                </Block>
+                            ) : null}
                             <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
                                 <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal()}</Block>
+                                    <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal().toFixed(2)}</Block>
                                 </Block>
                                 {order.discount_total && order.discount_total !== "0.00" ? (
                                     <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
