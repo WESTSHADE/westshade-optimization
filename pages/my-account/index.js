@@ -240,8 +240,8 @@ function Signup() {
                     Password must contain at least 1 number and 1 letter; it must be at least 6 characters in length.
                 </Block>
                 <Block font="MinXHeading14">
-                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions"><span className="text-sign-up-desc">Terms and Conditions</span></Link> & <Link
-                    color="inherit" href="/privacy"><span className="text-sign-up-desc">Privacy Policy</span></Link>.
+                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions"><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
+                    color="inherit" href="/privacy"><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
                 </Block>
                 <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Join Westshade'
                          buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}

@@ -7,12 +7,13 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
-import {Tab, Tabs} from "baseui/tabs-motion";
 import {ChevronLeft, ChevronRight} from "baseui/icon";
+
+import {Button as TabsB, Tag as TabsT} from "./tabs"
 
 import styles from "./card.module.scss";
 
-const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = ["200px", "226px", "380px"], objectFit = "cover"}) => {
+const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = ["200px", "226px", "380px"], objectFit = "cover", tabType = "tag", linkText, containerProps, containerStyles, containerImageProps, containerTabsProps, carouselProps}) => {
     const [tabActiveKey, setTabActiveKey] = useState(0);
 
     return (
@@ -22,11 +23,13 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                    Block: {
                        props: {
                            className: styles["container"]
-                       }
+                       },
+                       style: {...containerStyles}
                    }
                }}
+               {...containerProps}
         >
-            <Block gridArea="a">
+            <Block gridArea="a" {...containerImageProps}>
                 <Carousel selectedItem={tabActiveKey} autoPlay={false} showStatus={false} showThumbs={false} showArrows={false} emulateTouch dynamicHeight infiniteLoop
                           renderArrowPrev={(onClick, disabled) => (
                               <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClick} disabled={disabled}
@@ -55,59 +58,27 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                               </Button>
                           )}
                           onChange={(index) => setTabActiveKey(index)}
+                          {...carouselProps}
                 >
                     {tabList.length > 0 && tabList.map((item, index) =>
-                        <Block key={index} position="relative" width="100%" height="auto" minHeight={imageMinHeight} backgroundColor="#F5FCFC">
+                        <Block key={index} position="relative" width="100%" height="auto" minHeight={imageMinHeight}>
                             <Image src={item.url} alt="feature" layout="fill" objectFit={objectFit}/>
                         </Block>
                     )}
                 </Carousel>
             </Block>
-            <Block gridArea="b" padding={["16px", "16px", "32px 40px"]}>
-                <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
-                <Tabs activeKey={tabActiveKey + ""} activateOnFocus onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))}
-                      overrides={{
-                          TabList: {
-                              props: {
-                                  className: styles["root-tabList"]
-                              },
-                          },
-                          TabBorder: {
-                              props: {
-                                  hidden: true
-                              }
-                          },
-                          TabHighlight: {
-                              props: {
-                                  hidden: true
-                              }
-                          },
-                      }}
-                >
-                    {tabList.length > 0 && tabList.map((item, index) =>
-                        <Tab key={index} title={item.tabTitle}
-                             overrides={{
-                                 Tab: {
-                                     props: {
-                                         className: styles["root-tab"]
-                                     },
-                                     style: ({$isActive}) => ({
-                                         background: $isActive ? "#23A4AD" : "#F0F0F0",
-                                         color: $isActive ? "white" : "#8C8C8C",
-                                         ":hover": {background: $isActive ? "#5FBDBE" : "#F0F0F0"},
-                                     }),
-                                 },
-                                 TabPanel: {
-                                     props: {
-                                         className: styles["root-tabPanel"]
-                                     },
-                                 },
-                             }}
-                        >
-                            <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">{item.tabContent}</Block>
-                        </Tab>
-                    )}
-                </Tabs>
+            <Block gridArea="b" padding={["16px", "16px", "32px 40px"]} {...containerTabsProps}>
+                {tabType === "tag" ? (
+                    <>
+                        <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
+                        <TabsT activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList}/>
+                    </>
+                ) : tabType === "button" ? (
+                    <>
+                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">{title}</Block>
+                        <TabsB activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList} linkText={linkText}/>
+                    </>
+                ) : null}
             </Block>
         </Block>
     )

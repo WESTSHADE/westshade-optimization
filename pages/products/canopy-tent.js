@@ -26,6 +26,7 @@ import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, NumericalColumn, StringColumn, COLUMNS, NUMERICAL_FORMATS} from "baseui/data-table";
 import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
+import {Accordion, Panel} from "baseui/accordion";
 
 import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
@@ -42,7 +43,6 @@ import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Accordion, Panel} from "baseui/accordion";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -164,6 +164,7 @@ function Canopy_Tent({router, products, variants}) {
     const [productVariant, setProductVariant] = useState([variants[2], variants[3], variants[3], variants[3], variants[3]]);
 
     const [selectedFrame, setSelectedFrame] = useState("y7");
+    const [selectedSize, setSelectedSize] = useState("10x10");
 
     const [productImageGallery, setProductImageGallery] = useState([]);
     const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
@@ -623,6 +624,11 @@ function Canopy_Tent({router, products, variants}) {
             }
         }
 
+        let size = router.query.size || urlFn.getParam("size");
+        if (size) {
+            setSelectedSize(size);
+        }
+
         viewItem({id: 30477, name: "Canopy Tent", categories: [{name: "Canopy Tents"}]});
     }, []);
 
@@ -644,13 +650,15 @@ function Canopy_Tent({router, products, variants}) {
         productComponent.map((component, indexA) => {
             // 修改默认选项值 与 Variant里的attr相匹配
             let defaultAttr = [...component.default_attributes];
-            if (component.id === id_product_wall) {
-                defaultAttr.forEach((attr, indexB) => {
-                    if (attr.id === id_attribute_wallType) {
-                        attr.option = "none";
-                    }
-                });
-            }
+            defaultAttr.forEach((attr, indexB) => {
+                if (attr.id === id_attribute_wallType && component.id === id_product_wall) {
+                    attr.option = "none";
+                } else if (attr.id === id_attribute_canopySize) {
+                    let size = router.query.size || urlFn.getParam("size");
+
+                    if (size) attr.option = size;
+                }
+            });
             selectedAttrList.push([...defaultAttr]);
 
             if (indexA > 0) wallPlainAttributeList.push([...defaultAttr]);
@@ -977,13 +985,8 @@ function Canopy_Tent({router, products, variants}) {
                                                           overrides={{
                                                               BaseButton: {
                                                                   props: {
-                                                                      className: "react-image-gallery-arrow left",
+                                                                      className: "cursor react-image-gallery-arrow left",
                                                                   },
-                                                                  style: {
-                                                                      fontSize: "inherit",
-                                                                      fontWeight: "inherit",
-                                                                      lineHeight: "inherit",
-                                                                  }
                                                               },
                                                           }}
                                                           disabled={disabled}
@@ -997,13 +1000,8 @@ function Canopy_Tent({router, products, variants}) {
                                                           overrides={{
                                                               BaseButton: {
                                                                   props: {
-                                                                      className: "react-image-gallery-arrow right",
+                                                                      className: "cursor react-image-gallery-arrow right",
                                                                   },
-                                                                  style: {
-                                                                      fontSize: "inherit",
-                                                                      fontWeight: "inherit",
-                                                                      lineHeight: "inherit",
-                                                                  }
                                                               },
                                                           }}
                                                           disabled={disabled}
@@ -1444,35 +1442,35 @@ function Canopy_Tent({router, products, variants}) {
                 {selectedFrame === "y5" ? (
                     <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
                         <Image src="images/product/canopy-tent/anatomy-y5.png" alt="anatomy y5 frame" objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["10px", "20px", "22px"]} left={["4px", "9px", "9px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["10px", "20px", "22px"]} left={["4px", "9px", "9px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(0);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["56px", "85px", "110px"]} right={["2px", "10px", "8px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["56px", "85px", "110px"]} right={["2px", "10px", "8px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(1);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["100px", "165px", "210px"]} left={["4px", "6px", "8px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["100px", "165px", "210px"]} left={["4px", "6px", "8px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(2);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["114px", "178px", "220px"]} right={["10px", "12px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["114px", "178px", "220px"]} right={["10px", "12px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(3);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["54px", "90px", "100px"]} right={["62px", "98px", "125px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["54px", "90px", "100px"]} right={["62px", "98px", "125px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
@@ -1483,35 +1481,35 @@ function Canopy_Tent({router, products, variants}) {
                 ) : (selectedFrame === "y6") ? (
                     <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
                         <Image src="images/product/canopy-tent/anatomy-y6.png" alt="anatomy y6 frame" objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["52px", "88px", "108px"]} left={["2px", "2px", "2px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["52px", "88px", "108px"]} left={["2px", "2px", "2px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(0);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "140px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "140px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(1);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["110px", "165px", "210px"]} left={["14px", "22px", "26px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["110px", "165px", "210px"]} left={["14px", "22px", "26px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(2);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["140px", "214px", "272px"]} right={["10px", "18px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["140px", "214px", "272px"]} right={["10px", "18px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(3);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["58px", "100px", "120px"]} right={["108px", "164px", "205px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["58px", "100px", "120px"]} right={["108px", "164px", "205px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
@@ -1522,35 +1520,35 @@ function Canopy_Tent({router, products, variants}) {
                 ) : (selectedFrame === "y7") ? (
                     <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
                         <Image src={"images/product/canopy-tent/anatomy-" + selectedFrame + ".png"} alt={"anatomy " + selectedFrame + " frame"} objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(0);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "136px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "136px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(1);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["104px", "156px", "190px"]} left={["12px", "20px", "22px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["104px", "156px", "190px"]} left={["12px", "20px", "22px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(2);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["130px", "206px", "248px"]} right={["6px", "14px", "18px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["130px", "206px", "248px"]} right={["6px", "14px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
                                    setFrameIntroPosition(3);
                                }}
                         />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["62px", "88px", "120px"]} right={["86px", "138px", "175px"]} overrides={{Block: {props: {className: "feature-frame-dot"}}}}
+                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["62px", "88px", "120px"]} right={["86px", "138px", "175px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
                                    setFrameIntroIsModal(true);
@@ -1601,8 +1599,8 @@ function Canopy_Tent({router, products, variants}) {
             <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
                 <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Features</Block>
                 <Block display="grid" gridTemplateColumns="1fr" gridRowGap="24px">
-                    <CardTabs title="Roof Top" tabList={feature_1}/>
-                    <CardTabs title="Frame" tabList={feature_2} objectFit="contain" reverse/>
+                    <CardTabs title="Roof Top" tabList={feature_1} containerImageProps={{backgroundColor: "#F5FCFC"}}/>
+                    <CardTabs title="Frame" tabList={feature_2} objectFit="contain" containerImageProps={{backgroundColor: "#F5FCFC"}} reverse/>
                 </Block>
             </Block>
             <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>

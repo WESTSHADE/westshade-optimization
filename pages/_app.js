@@ -183,7 +183,7 @@ function MyApp({Component, pageProps}) {
                             <div id="modal-root"/>
                             {!pageProps.noFooter ? (
                                 <>
-                                    <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"} style={{maxWidth: process.env.maxWidth + "px"}}/>
+                                    <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"} style={{maxWidth: pageProps.fullPage ? "100vw" : process.env.maxWidth + "px"}}/>
                                     <Footer isHomePage={pageProps.homePage}/>
                                 </>
                             ) : null}

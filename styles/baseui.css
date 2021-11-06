@@ -207,8 +207,10 @@
     top: calc(50% - 28px);
     width: 56px;
     height: 56px;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
     background-color: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
     z-index: 2;
 }
 
@@ -225,8 +227,10 @@
     top: calc(50% - 24px);
     width: 48px;
     height: 48px;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
     background-color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
     z-index: 2;
 }
 
@@ -278,7 +282,6 @@ ul.bullet-warranty.sub > li {
     margin-bottom: 0;
     margin-left: 1.5em;
 }
-
 
 .originalClass {
     height: 100%;
@@ -405,11 +408,6 @@ ul.bullet-warranty.sub > li {
     text-decoration: underline;
 }
 
-.text-sign-up-desc:hover {
-    cursor: pointer;
-}
-
-
 .container-input-address > div {
     margin-bottom: 16px;
 }
@@ -467,6 +465,23 @@ ul.bullet-warranty.sub > li {
 .checkbox-address {
     border-width: 1px;
     border-radius: 2px;
+}
+
+.canopy-tent-tab {
+    padding: 12px;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.canopy-tent-tab:hover {
+    background: transparent;
+}
+
+.cursor:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 480px) {
@@ -605,6 +620,18 @@ ul.bullet-warranty.sub > li {
     .spec-sticky-bar {
         top: 96px
     }
+
+    .card-radius-right {
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        overflow: hidden;
+    }
+
+    .card-radius-left {
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+        overflow: hidden;
+    }
 }
 
 /* canopy tent product */
@@ -626,7 +653,6 @@ ul.bullet-warranty.sub > li {
     line-height: 22px;
     border: 1px dashed #23a4ad;
 }
-
 
 @supports (scroll-snap-type: y mandatory) {
     @media screen and (min-width: 960px) {
@@ -734,7 +760,6 @@ ul.bullet-warranty.sub > li {
     }
 }
 
-
 .loader-circle {
     color: #23A4AD;
     font-size: 36px;
@@ -825,11 +850,6 @@ ul.bullet-warranty.sub > li {
     background: #23A4AD;
     border-radius: 50%;
     animation: breathe 2.5s linear infinite;
-}
-
-
-.feature-frame-dot:hover {
-    cursor: pointer;
 }
 
 .frame-intro {

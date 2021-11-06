@@ -1,3 +1,12 @@
+import Utils from "../../utils/utils";
+
+const utils = new Utils();
+
+const fetchProduct = async (id) => {
+    if (!id) return;
+    return await utils.getProductByWooId(id);
+};
+
 export const viewItem = (detail) => {
     if (typeof gtag !== 'undefined') {
         const {sku, name, categories, price} = detail;
@@ -148,14 +157,20 @@ export const purchase = (detail) => {
         let couponItems = [];
 
         coupon_lines.map((coupon) => couponItems.push(coupon.code));
-        line_items.map((item) => {
-            let variant = "";
+        line_items.map(async (item) => {
+            let variant = "", category = "";
+
+            let product = await fetchProduct(item.product_id);
+
+            if (product && product.categories.length > 0) {
+                category = product.categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
+            }
 
             if (item.meta_data.length > 0) {
                 variant = item.meta_data.reduce((v, p, index) => index === 0 ? p.key !== "_reduced_stock" ? (p.display_key + ": " + p.display_value) : "" : p.key !== "_reduced_stock" ? (v + "; " + p.display_key + ": " + p.display_value) : v, "");
             }
 
-            lineItems_gtag.push({id: item.sku, name: item.name, brand: "Westshade", variant: variant, quantity: item.quantity, price: item.price})
+            lineItems_gtag.push({id: item.sku, name: item.name, brand: "Westshade", category: category, variant: variant, quantity: item.quantity, price: item.price})
         });
 
         gtag('event', 'purchase', {

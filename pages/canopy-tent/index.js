@@ -365,12 +365,7 @@ function Canopy_Tent({router}) {
                                                                overrides={{
                                                                    BaseButton: {
                                                                        props: {
-                                                                           className: "react-carousel-arrow left",
-                                                                       },
-                                                                       style: {
-                                                                           fontSize: "inherit",
-                                                                           fontWeight: "inherit",
-                                                                           lineHeight: "inherit",
+                                                                           className: "cursor react-carousel-arrow left",
                                                                        }
                                                                    },
                                                                }}
@@ -388,12 +383,7 @@ function Canopy_Tent({router}) {
                                                                overrides={{
                                                                    BaseButton: {
                                                                        props: {
-                                                                           className: "react-carousel-arrow right",
-                                                                       },
-                                                                       style: {
-                                                                           fontSize: "inherit",
-                                                                           fontWeight: "inherit",
-                                                                           lineHeight: "inherit",
+                                                                           className: "cursor react-carousel-arrow right",
                                                                        }
                                                                    },
                                                                }}

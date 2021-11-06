@@ -133,12 +133,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                                            overrides={{
                                                                BaseButton: {
                                                                    props: {
-                                                                       className: "react-carousel-arrow dark left",
-                                                                   },
-                                                                   style: {
-                                                                       fontSize: "inherit",
-                                                                       fontWeight: "inherit",
-                                                                       lineHeight: "inherit",
+                                                                       className: "cursor react-carousel-arrow dark left",
                                                                    }
                                                                },
                                                            }}
@@ -156,12 +151,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                                            overrides={{
                                                                BaseButton: {
                                                                    props: {
-                                                                       className: "react-carousel-arrow dark right",
-                                                                   },
-                                                                   style: {
-                                                                       fontSize: "inherit",
-                                                                       fontWeight: "inherit",
-                                                                       lineHeight: "inherit",
+                                                                       className: "cursor react-carousel-arrow dark right",
                                                                    }
                                                                },
                                                            }}

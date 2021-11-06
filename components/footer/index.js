@@ -186,7 +186,7 @@ function Footer({isHomePage}) {
                                 dataList={[
                                     {title: "Custom printing", url: "/custom-printing"},
                                     {title: "Canopy tents", url: "/canopy-tent"},
-                                    {title: "Umbrellas", url: "/umbrellas"},
+                                    {title: "Umbrellas", url: "/umbrella"},
                                     {title: "Accessories", url: "/accessories"}
                                 ]}
                             />

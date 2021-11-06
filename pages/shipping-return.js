@@ -11,8 +11,11 @@ import {Modal} from "../components/surfaces";
 
 function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);
-    const [tabActiveKey, setTabActiveKey] = React.useState("0");
+    const [activeTabKey, setActiveTabKey] = useState("0");
+    const [tabLeft, setTabLeft] = useState(0);
+
     const [displayTabs, setDisplayTabs] = useState(false);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const triggerModal = (status) => setIsModalOpen(status);
@@ -24,6 +27,10 @@ function Shipping_Return() {
     useEffect(() => {
         if (tabsRefs.length > 0) setDisplayTabs(true);
     }, [tabsRefs]);
+
+    useEffect(() => {
+        if (displayTabs) setTabLeft((tabsRefs[activeTabKey].current.clientWidth - 24) / 2);
+    }, [displayTabs]);
 
     return (
         <React.Fragment>
@@ -47,63 +54,47 @@ function Shipping_Return() {
                 </Block>
                 {displayTabs ? (
                     <Block width="100%" font="MinXLabel20">
-                        <Tabs activeKey={tabActiveKey} fill={FILL.fixed} onChange={({activeKey}) => setTabActiveKey(activeKey)}
+                        <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}
                               overrides={{
                                   Root: {
                                       style: {width: "100%", maxWidth: "420px", marginRight: "auto", marginLeft: "auto"}
                                   },
+                                  TabBorder: {props: {hidden: true}},
                                   TabHighlight: {
                                       props: {
                                           className: "tab-highlight-horizon"
                                       },
-                                      style: {left: tabsRefs[tabActiveKey].current ? `${(tabsRefs[tabActiveKey].current.clientWidth - 24) / 2}px` : 0}
-                                  },
-                                  TabBorder: {
-                                      style: ({$theme}) => ({display: "none"}),
+                                      style: {left: tabLeft + "px"}
                                   },
                               }}
                         >
                             <Tab title="Delivery" tabRef={tabsRefs[0]}
                                  overrides={{
                                      Tab: {
-                                         style: ({$isActive}) => ({
-                                             fontSize: "inherit",
-                                             fontWeight: "inherit",
-                                             lineHeight: "inherit",
-                                             color: $isActive ? "#262626" : "#BFBFBF",
-                                             paddingTop: "12px",
-                                             paddingBottom: "12px",
-                                             background: "transparent",
-                                         }),
+                                         props: {
+                                             className: "canopy-tent-tab"
+                                         },
+                                         style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF"}),
                                      },
-                                     TabPanel: {
-                                         style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                     },
+                                     TabPanel: {props: {hidden: true}}
                                  }}
                             />
                             <Tab title="Return" tabRef={tabsRefs[1]}
                                  overrides={{
                                      Tab: {
-                                         style: ({$isActive}) => ({
-                                             fontSize: "inherit",
-                                             fontWeight: "inherit",
-                                             lineHeight: "inherit",
-                                             color: $isActive ? "#262626" : "#BFBFBF",
-                                             paddingTop: "12px",
-                                             paddingBottom: "12px",
-                                             background: "transparent",
-                                         }),
+                                         props: {
+                                             className: "canopy-tent-tab"
+                                         },
+                                         style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF"}),
                                      },
-                                     TabPanel: {
-                                         style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                     },
+                                     TabPanel: {props: {hidden: true}}
                                  }}
                             />
                         </Tabs>
                     </Block>
                 ) : null}
             </Block>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
+            <Block padding={["0 16px", "0 16px", "0 24px"]}
                    overrides={{
                        Block: {
                            props: {
@@ -113,7 +104,7 @@ function Shipping_Return() {
                    }}
             >
                 <Block width="100%" maxWidth="600px" marginRight="auto" marginLeft="auto">
-                    {tabActiveKey === "0" ? (
+                    {activeTabKey === "0" ? (
                         <>
                             <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Basic Shipping Information</Block>
                             <Block marginBottom={["32px", "40px"]} font="MinXParagraph14" color="MinXPrimaryText">
@@ -156,7 +147,7 @@ function Shipping_Return() {
                                 </ul>
                             </Block>
                         </>
-                    ) : tabActiveKey === "1" ? (
+                    ) : activeTabKey === "1" ? (
                         <>
                             <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Return Policy</Block>
                             <Block marginBottom={["32px", "40px"]} font="MinXParagraph14" color="MinXPrimaryText">
