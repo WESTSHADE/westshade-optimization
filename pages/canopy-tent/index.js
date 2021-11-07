@@ -202,6 +202,9 @@ function Canopy_Tent({router}) {
                     There are different types of canopy tent to meet your special needs
                 </Block>
                 <MButton type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Buy"
+                         buttonStyle={{
+                             borderColor: "white"
+                         }}
                          endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}
                 />
             </Block>

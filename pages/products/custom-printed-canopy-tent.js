@@ -1201,7 +1201,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                            <Block display="flex" flexDirection="row">
                                <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
                                    <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD !important"}}
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
                                             onClick={() => closeWallModal()}
                                    />
                                </Block>
@@ -1317,7 +1317,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                            <Block display="flex" flexDirection="row">
                                <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
                                    <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD !important"}}
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
                                             onClick={() => closeCustomPrintingModal()}
                                    />
                                </Block>

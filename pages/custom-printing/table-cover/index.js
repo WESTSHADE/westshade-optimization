@@ -36,7 +36,7 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
                              paddingRight: "0px !important",
                              paddingBottom: "0px !important",
                              paddingLeft: "0px !important",
-                             borderColor: `#262626 !important`,
+                             borderColor: `#262626`,
                              ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
                              ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
                          }}
@@ -93,12 +93,7 @@ function Custom_Printing_Table_Cover({router, size}) {
                 </Block>
                 <MButton type="outline" width={["200px", "238px", "289px"]} height={["30px", "44px", "52px"]} marginBottom={["40px", "64px", "80px"]}
                          font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create My Table Cover"
-                         buttonStyle={{
-                             borderColor: `#262626 !important`,
-                             backgroundColor: 'transparent !important',
-                             ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
-                             ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
-                         }}
+                         buttonStyle={{borderColor: "#262626"}}
                          overrides={{
                              Block: {
                                  style: {zIndex: 1}

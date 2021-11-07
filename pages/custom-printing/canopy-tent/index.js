@@ -101,11 +101,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                            }}
                     >Customize It Your Way</Block>
                     <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["40px", "64px", "80px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
-                             buttonStyle={{
-                                 backgroundColor: 'transparent !important',
-                                 ":hover": {backgroundColor: `rgba(255, 255, 255, 0.05) !important`},
-                                 ":active": {backgroundColor: `rgba(255, 255, 255, 0.1) !important`}
-                             }}
+                             buttonStyle={{borderColor: "white"}}
                              overrides={{
                                  Block: {
                                      style: {zIndex: 1}

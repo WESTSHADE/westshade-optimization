@@ -731,7 +731,7 @@ function Checkout({router, orderID, orderDetail}) {
                                 <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
                                 <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD"
                                          buttonStyle={{
-                                             borderColor: "#23A4AD !important",
+                                             borderColor: "#23A4AD",
                                              backgroundColor: 'transparent !important',
                                              ":hover": {backgroundColor: `#5FBDBE !important`, color: "white !important"},
                                              ":active": {backgroundColor: `#43878C !important`, color: "white !important"}

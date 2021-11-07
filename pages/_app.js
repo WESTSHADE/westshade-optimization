@@ -19,6 +19,7 @@ import "../styles/styleguide.css";
 import "../styles/homepage.css";
 import "../styles/y5-buy.css";
 import "../styles/baseui.css";
+import "../styles/apple-business.css";
 
 const breakpoints = {
     small: 480,
@@ -181,12 +182,7 @@ function MyApp({Component, pageProps}) {
                                 <Component size={size} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
-                            {!pageProps.noFooter ? (
-                                <>
-                                    <div id="refreshPlaceholder" className={pageProps.homePage ? "apple-refreshPlaceholder for-scroll" : "apple-refreshPlaceholder"} style={{maxWidth: pageProps.fullPage ? "100vw" : process.env.maxWidth + "px"}}/>
-                                    <Footer isHomePage={pageProps.homePage}/>
-                                </>
-                            ) : null}
+                            {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}
                         </div>
                     </BaseProvider>
                 </StyletronProvider>

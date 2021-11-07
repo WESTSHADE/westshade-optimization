@@ -92,11 +92,7 @@ function Umbrella({router, size}) {
                                    renderButton={
                                        <Block display="flex" flexDirection="row" alignItems="center">
                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{
-                                                        borderColor: `white`,
-                                                        ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
-                                                        ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
-                                                    }}
+                                                    buttonStyle={{borderColor: "white"}}
                                                     onClick={() => router.push("/products/market-umbrellas/marco-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
@@ -112,11 +108,7 @@ function Umbrella({router, size}) {
                                        <Block display="flex" flexDirection="row" alignItems="center">
                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
                                                     font="MinXLabel20" color="MinXPrimaryText"
-                                                    buttonStyle={{
-                                                        borderColor: `#262626 !important`,
-                                                        ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
-                                                        ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
-                                                    }}
+                                                    buttonStyle={{borderColor: "#262626"}}
                                                     onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
@@ -131,11 +123,7 @@ function Umbrella({router, size}) {
                                        <Block display="flex" flexDirection="row" alignItems="center">
                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
                                                     font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{
-                                                        borderColor: `white`,
-                                                        ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
-                                                        ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
-                                                    }}
+                                                    buttonStyle={{borderColor: "white"}}
                                                     onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
@@ -150,11 +138,7 @@ function Umbrella({router, size}) {
                                        <Block display="flex" flexDirection="row" alignItems="center">
                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
                                                     font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{
-                                                        borderColor: `white`,
-                                                        ":hover": {backgroundColor: `rgba(255, 255, 255, 0.5)`},
-                                                        ":active": {backgroundColor: `rgba(255, 255, 255, 0.8)`}
-                                                    }}
+                                                    buttonStyle={{borderColor: "white"}}
                                                     onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
@@ -170,11 +154,7 @@ function Umbrella({router, size}) {
                                        <Block display="flex" flexDirection="row" alignItems="center">
                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
                                                     font="MinXLabel20" color="MinXPrimaryText"
-                                                    buttonStyle={{
-                                                        borderColor: `#262626 !important`,
-                                                        ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
-                                                        ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
-                                                    }}
+                                                    buttonStyle={{borderColor: "#262626"}}
                                                     onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")} text={"Buy"}
                                            />
                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">

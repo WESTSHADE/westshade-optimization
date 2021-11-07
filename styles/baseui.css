@@ -5,30 +5,28 @@
     --color-yellow: #F4C84E;
     --color-blue: #1A4A8B;
     --color-green: #275D3D;
+
+    --color-placeholder: #8C8C8C;
+
+    --primary-background: white;
+    --secondary-background: #F7F7F7;
+
+    --maximum-display-width: 1440px;
 }
 
-.nav-container {
-    position: relative;
-    z-index: 9;
-}
-
-.nav-left-loge {
+.nav-center.menu {
     display: none;
-}
-
-.nav-left-button {
-    padding: 0;
-}
-
-.nav-center-loge {
-    display: flex;
-}
-
-.nav-center-menu {
-    display: none;
-    font-size: 14px;
-    font-weight: 500;
     letter-spacing: 0.1em
+}
+
+.nav-left > li, .nav-center > li, .nav-right > li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-left > li:first-child, .nav-center > li:first-child, .nav-right > li:first-child {
+    padding-left: 0;
 }
 
 /* ================== home ================== */
@@ -549,20 +547,12 @@ ul.bullet-warranty.sub > li {
 }
 
 @media screen and (min-width: 960px) {
-    .nav-left-loge {
+    .nav-center.menu {
         display: flex;
     }
 
-    .nav-left-button {
+    .nav-center.loge {
         display: none;
-    }
-
-    .nav-center-loge {
-        display: none;
-    }
-
-    .nav-center-menu {
-        display: flex;
     }
 
     .container-display {

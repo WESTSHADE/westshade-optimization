@@ -6,8 +6,45 @@
 }
 
 body {
-    background-color: white !important;
+    background-color: var(--primary-background);
 }
+
+.m-footer-wrap {
+    max-width: var(--maximum-display-width);
+    margin: auto;
+}
+
+.m-wrap-side {
+    padding: 0 16px
+}
+
+@media (min-width: 480px) {
+    .m-wrap-side {
+        padding: 0 16px
+    }
+}
+
+@media (min-width: 960px) {
+    .m-wrap-side {
+        padding: 0 32px
+    }
+}
+
+.divider {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-inherit {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+/* ============================================================ */
 
 .container-page {
     padding-top: 56px;
@@ -91,33 +128,4 @@ a:-webkit-any-link {
     margin-top: 24px;
 }
 
-/* ============================================================ */
 
-.apple-pay-button {
-    display: inline-block;
-    -webkit-appearance: -apple-pay-button;
-    -apple-pay-button-type: pay;
-}
-
-.apple-pay-button-black {
-    -apple-pay-button-style: black;
-}
-
-.apple-pay-button-white {
-    -apple-pay-button-style: white;
-}
-
-.apple-pay-button-white-with-line {
-    -apple-pay-button-style: white-outline;
-}
-
-.apple-refreshPlaceholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /*max-width: 1920px;*/
-    height: 236px;
-    margin: auto;
-    background-color: #F7F7F7;
-}
