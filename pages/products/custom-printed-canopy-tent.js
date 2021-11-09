@@ -115,6 +115,14 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 let checkoutProductList = [];
 let selectedFrame = "y7 heavy duty", selectedSize = "10x10", selectedColor = "white";
 
+function arrayEquals(a, b) {
+    if (a.length < b.length) {
+        return Array.isArray(a) && Array.isArray(b) && a.every((val, index) => val.id === b[index].id && val.option.toLowerCase() === b[index].option.toLowerCase());
+    } else {
+        return Array.isArray(a) && Array.isArray(b) && b.every((val, index) => val.id === a[index].id && val.option.toLowerCase() === a[index].option.toLowerCase());
+    }
+}
+
 const CPSubtitle = ({color, side}) => {
     return (
         <span className="cs-block-container">
@@ -122,14 +130,6 @@ const CPSubtitle = ({color, side}) => {
             <span className="cs-subtitle">{side === 0 ? "Left" : side === 1 ? "Right" : side === 2 ? "Front" : side === 3 ? "Back" : ""}</span>
         </span>
     )
-}
-
-function arrayEquals(a, b) {
-    if (a.length < b.length) {
-        return Array.isArray(a) && Array.isArray(b) && a.every((val, index) => val.id === b[index].id && val.option.toLowerCase() === b[index].option.toLowerCase());
-    } else {
-        return Array.isArray(a) && Array.isArray(b) && b.every((val, index) => val.id === a[index].id && val.option.toLowerCase() === a[index].option.toLowerCase());
-    }
 }
 
 function Custom_Printed_Canopy_Tent({router, product, productComponent = [], productVariant = []}) {
@@ -247,10 +247,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         setWallIsOpen(false);
     };
 
-    const openCustomPrintingModal = () => {
-        setPrintIsOpen(true)
-    }
-
+    const openCustomPrintingModal = () => setPrintIsOpen(true);
     const closeCustomPrintingModal = (save) => {
         if (save) {
 
@@ -260,9 +257,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
     const openCustomPrintingDetailModal = (part) => {
         setSelectedSidePart(part);
-        setPrintDetailIsOpen(true)
+        setPrintDetailIsOpen(true);
     }
-
     const closeCustomPrintingDetailModal = (save) => {
         if (save) {
 
@@ -271,7 +267,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     }
 
     const openSummaryModal = () => setSummaryIsOpen(true);
-
     const closeSummaryModal = () => setSummaryIsOpen(false);
 
     const setMainImage = (images) => {
@@ -823,8 +818,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                         />
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
-                           paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingBottom={["94px", "68px", "0"]} paddingLeft={["16px", "16px", "0"]}
+                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]} padding={["24px 16px 94px", "24px 16px 68px", "24px 24px 0 0"]}
                            overrides={{
                                Block: {
                                    props: {
@@ -1215,9 +1209,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
             <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
                    footer={
-                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
-                       >
+                       <Block width="100%" height={["54px", "70px", "80px"]} backgroundColor="white" display="flex" alignItems="center" justifyContent="space-between" padding="0 16px">
                            <Block>
                                <Block display={["none", "block"]}>
                                    <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
@@ -1230,19 +1222,15 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                    </StatefulTooltip>
                                </Block>
                            </Block>
-                           <Block display="flex" flexDirection="row">
-                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
-                                   <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
-                                            onClick={() => closeWallModal()}
-                                   />
-                               </Block>
-                               <Block minWidth={["85px"]} height={"40px"}>
-                                   <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                            onClick={() => closeWallModal(true)}
-                                   />
-                               </Block>
+                           <Block display="grid" gridTemplateColumns="repeat(2, minmax(85px, auto))" gridColumnGap="24px">
+                               <MButton type="outline" width="100%" height="40px" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
+                                        onClick={() => closeWallModal()}
+                               />
+                               <MButton type="solid" width="100%" height="40px" font="MinXParagraph16" text='Save' color="white"
+                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important"}}
+                                        onClick={() => closeWallModal(true)}
+                               />
                            </Block>
                        </Block>
                    }
@@ -1331,9 +1319,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             </Modal>
             <Modal isOpen={printIsOpen} onClose={() => closeCustomPrintingModal()} bodyClassName={"modal-dialog-body"} dialogStyles={{backgroundColor: "white !important"}}
                    footer={
-                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
-                       >
+                       <Block width="100%" height={["54px", "70px", "80px"]} backgroundColor="white" display="flex" alignItems="center" justifyContent="space-between" padding="0 16px">
                            <Block>
                                <Block display={["none", "block"]}>
                                    <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
@@ -1346,19 +1332,15 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                    </StatefulTooltip>
                                </Block>
                            </Block>
-                           <Block display="flex" flexDirection="row">
-                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
-                                   <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
-                                            onClick={() => closeCustomPrintingModal()}
-                                   />
-                               </Block>
-                               <Block minWidth={["85px"]} height={"40px"}>
-                                   <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
-                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                            onClick={() => closeCustomPrintingModal(true)}
-                                   />
-                               </Block>
+                           <Block display="grid" gridTemplateColumns="repeat(2, minmax(85px, auto))" gridColumnGap="24px">
+                               <MButton type="outline" width="100%" height="40px" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
+                                        onClick={() => closeCustomPrintingModal()}
+                               />
+                               <MButton type="solid" width="100%" height="40px" font="MinXParagraph16" text='Save' color="white"
+                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important"}}
+                                        onClick={() => closeCustomPrintingModal(true)}
+                               />
                            </Block>
                        </Block>
                    }
@@ -1390,10 +1372,14 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                             </Block>
                         </Block>
                         <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]} width="100%" maxWidth="724px" margin="auto">
-                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Front' color="#262626" buttonClassName={["cs-side-button", selectedSide === 2 ? "selected" : null]} onClick={() => setSelectedSide(2)}/>
-                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Back' color="#262626" buttonClassName={["cs-side-button", selectedSide === 3 ? "selected" : null]} onClick={() => setSelectedSide(3)}/>
-                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Left' color="#262626" buttonClassName={["cs-side-button", selectedSide === 0 ? "selected" : null]} onClick={() => setSelectedSide(0)}/>
-                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Right' color="#262626" buttonClassName={["cs-side-button", selectedSide === 1 ? "selected" : null]} onClick={() => setSelectedSide(1)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Front' color="#262626" buttonClassName={["cs-side-button", selectedSide === 2 ? "selected" : null]}
+                                     onClick={() => setSelectedSide(2)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Back' color="#262626" buttonClassName={["cs-side-button", selectedSide === 3 ? "selected" : null]}
+                                     onClick={() => setSelectedSide(3)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Left' color="#262626" buttonClassName={["cs-side-button", selectedSide === 0 ? "selected" : null]}
+                                     onClick={() => setSelectedSide(0)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Right' color="#262626" buttonClassName={["cs-side-button", selectedSide === 1 ? "selected" : null]}
+                                     onClick={() => setSelectedSide(1)}/>
                         </Block>
                     </Block>
                     <Block width="100%" height="inherit" backgroundColor="#F7F7F7" padding={["24px 16px", "32px 16px", "40px 16px"]}>
