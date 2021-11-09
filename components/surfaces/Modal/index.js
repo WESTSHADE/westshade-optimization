@@ -14,8 +14,8 @@ import Loading from "./loading";
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogClassName, dialogStyles, content = "", dataTable} = props;
-
+    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogContainerStyles, dialogClassName, dialogStyles, bodyClassName, content = "", dataTable} = props;
+    console.log(bodyClassName);
     return (
         <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
                overrides={{
@@ -28,6 +28,7 @@ const modal = (props) => {
                        props: {
                            className: styles["container-dialog"],
                        },
+                       style: {...dialogContainerStyles}
                    },
                    Dialog: {
                        props: {
@@ -47,7 +48,7 @@ const modal = (props) => {
             ) : null : header ? (
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
-            <ModalBody className={clsx(styles["container-body"], "hideScrollBar")}>
+            <ModalBody className={clsx(styles["container-body"], "hideScrollBar", bodyClassName)}>
                 {content ? content === "frame" ? <FrameCompare/> :
                     content === "size" ? <SizeGuide/> :
                         content === "summary" ? <OrderSummary dataTable={dataTable}/> :

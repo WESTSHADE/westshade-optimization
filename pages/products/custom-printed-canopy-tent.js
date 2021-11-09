@@ -23,6 +23,7 @@ import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, NumericalColumn, StringColumn, COLUMNS, NUMERICAL_FORMATS} from "baseui/data-table";
 import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
+import {FileUploader} from "baseui/file-uploader";
 
 import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
@@ -36,6 +37,7 @@ import Selection from "../../components/selection-n";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+import {Accordion, Panel} from "baseui/accordion";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -113,6 +115,15 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 let checkoutProductList = [];
 let selectedFrame = "y7 heavy duty", selectedSize = "10x10", selectedColor = "white";
 
+const CPSubtitle = ({color, side}) => {
+    return (
+        <span className="cs-block-container">
+            <span className="cs-block" style={{backgroundColor: color}}/>
+            <span className="cs-subtitle">{side === 0 ? "Left" : side === 1 ? "Right" : side === 2 ? "Front" : side === 3 ? "Back" : ""}</span>
+        </span>
+    )
+}
+
 function arrayEquals(a, b) {
     if (a.length < b.length) {
         return Array.isArray(a) && Array.isArray(b) && a.every((val, index) => val.id === b[index].id && val.option.toLowerCase() === b[index].option.toLowerCase());
@@ -147,6 +158,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [activeWall, setActiveWall] = useState(0);
     const [wallAttributeList, setWallAttributeList] = useState([]);
     const [wallAttributeListTemp, setWallAttributeListTemp] = useState([]);
+
     const [wallColors, setWallColors] = useState(["white", "white", "white", "white"]);
     const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
     const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
@@ -165,6 +177,10 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     ]);
 
     ////////////////////////////////////////
+    const [selectedSide, setSelectedSide] = useState(null);
+    const [selectedSidePart, setSelectedSidePart] = useState(null);
+    const [wallColorSelectedList, setWallColorSelectedList] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
+    const [wallColorSelectedListTemp, setWallColorSelectedListTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
 
     const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
     const [activeRoofSlide, setActiveRoofSlide] = useState(0);
@@ -172,6 +188,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
     const [printIsOpen, setPrintIsOpen] = useState(false);
+    const [printDetailIsOpen, setPrintDetailIsOpen] = useState(false);
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
     const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -234,8 +251,23 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         setPrintIsOpen(true)
     }
 
-    const closeCustomPrintingModal = () => {
+    const closeCustomPrintingModal = (save) => {
+        if (save) {
+
+        }
         setPrintIsOpen(false)
+    }
+
+    const openCustomPrintingDetailModal = (part) => {
+        setSelectedSidePart(part);
+        setPrintDetailIsOpen(true)
+    }
+
+    const closeCustomPrintingDetailModal = (save) => {
+        if (save) {
+
+        }
+        setPrintDetailIsOpen(false)
     }
 
     const openSummaryModal = () => setSummaryIsOpen(true);
@@ -686,7 +718,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
         selectedVariant.map((variant, index) => {
             if (!variant) return;
-            console.log(variant);
 
             let cell = {
                 name: index === 0 ? selectedFrame.toUpperCase() + " Canopy Tent Set" :
@@ -1181,6 +1212,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
             <Modal type="alertdialog" isOpen={technologyCompareOpen} onClose={() => setTechnologyCompareOpen(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
             <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
                    footer={
                        <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
@@ -1297,7 +1329,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     </Block>
                 </Block>
             </Modal>
-            <Modal isOpen={printIsOpen} onClose={() => closeCustomPrintingModal()}
+            <Modal isOpen={printIsOpen} onClose={() => closeCustomPrintingModal()} bodyClassName={"modal-dialog-body"} dialogStyles={{backgroundColor: "white !important"}}
                    footer={
                        <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
                               justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
@@ -1324,24 +1356,513 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                <Block minWidth={["85px"]} height={"40px"}>
                                    <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
                                             buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                            onClick={() => closeCustomPrintingModal()}
+                                            onClick={() => closeCustomPrintingModal(true)}
                                    />
                                </Block>
                            </Block>
                        </Block>
                    }
             >
-                <Block width="100%" display={"flex"} flexDirection="column" marginTop={["32px", "40px", "60px"]} marginRight={"auto"} marginLeft={"auto"} paddingRight={[0, 0, "76px"]} paddingLeft={[0, 0, "76px"]}>
-                    <Block marginBottom="12px" font="MinXLabel16" color="MinXPrimaryText">Custom printing note</Block>
-                    <Block marginBottom={["32px", "42px", "64px"]} font="MinXParagraph14" color="MinXPrimaryText">
-                        This is Westshade custom printing service. The default color is white. Please choose the color you like for each part. You can also add prints to each part.
+                <Block width="100%" height="-webkit-fill-available" display="flex" flexDirection="column" marginRight="auto" marginLeft="auto">
+                    <Block display="flex" flexDirection="column" alignItems="center" justifyContent="center" paddingTop={["32px", "64px", "80px"]} paddingRight="16px" paddingBottom={["32px", "64px", "80px"]} paddingLeft="16px"
+                           $style={{textAlign: "center"}}
+                    >
+                        <Block position="relative" width={["282px", "282px", "324px"]} height={["282px", "282px", "324px"]} marginBottom={["32px", "64px", "48px"]}>
+                            <Block position="absolute" top={["75px", "75px", "85px"]} right={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(90deg)"}}>
+                                <Block font="MinXParagraph14" color="MinXPrimaryText">RIGHT</Block>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
+                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
+                            </Block>
+                            <Block position="absolute" top={["75px", "75px", "85px"]} left={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(-90deg)"}}>
+                                <Block font="MinXParagraph14" color="MinXPrimaryText">LEFT</Block>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
+                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
+                            </Block>
+                            <Block position="absolute" bottom={0} right={0} left={0} width={["130px", "130px", "150px"]} marginRight="auto" marginLeft="auto">
+                                <div className="triangle-curved bottom" style={{borderBottomColor: "#F0F0F0"}}/>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
+                                <div font="MinXParagraph14" color="MinXPrimaryText">FRONT</div>
+                            </Block>
+                            <Block position="absolute" top={0} right={0} left={0} width={["130px", "130px", "150px"]} marginRight="auto" marginLeft="auto">
+                                <Block font="MinXParagraph14" color="MinXPrimaryText">BACK</Block>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
+                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
+                            </Block>
+                        </Block>
+                        <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]} width="100%" maxWidth="724px" margin="auto">
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Front' color="#262626" buttonClassName={["cs-side-button", selectedSide === 2 ? "selected" : null]} onClick={() => setSelectedSide(2)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Back' color="#262626" buttonClassName={["cs-side-button", selectedSide === 3 ? "selected" : null]} onClick={() => setSelectedSide(3)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Left' color="#262626" buttonClassName={["cs-side-button", selectedSide === 0 ? "selected" : null]} onClick={() => setSelectedSide(0)}/>
+                            <MButton type="outline" width="100%" height="48px" font="MinXParagraph16" text='Print Right' color="#262626" buttonClassName={["cs-side-button", selectedSide === 1 ? "selected" : null]} onClick={() => setSelectedSide(1)}/>
+                        </Block>
                     </Block>
-                    <Block width="100%" display="flex" flexDirection={["column", "column", "row"]} marginRight={"auto"} marginLeft={"auto"}>
-
+                    <Block width="100%" height="inherit" backgroundColor="#F7F7F7" padding={["24px 16px", "32px 16px", "40px 16px"]}>
+                        <Block width="100%" maxWidth="550px" margin="auto">
+                            {selectedSide === 0 ? (
+                                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-peak-left.png" alt="peak-left"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
+                                    </ListItem>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-valance-left.png" alt="valance-left"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Valance</ListItemLabel>
+                                    </ListItem>
+                                </Block>
+                            ) : selectedSide === 1 ? (
+                                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-peak-right.png" alt="peak-right"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
+                                    </ListItem>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-valance-right.png" alt="valance-right"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Valance</ListItemLabel>
+                                    </ListItem>
+                                </Block>
+                            ) : selectedSide === 2 ? (
+                                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-peak-front.png" alt="peak-front"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
+                                    </ListItem>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-valance-front.png" alt="valance-front"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Valance</ListItemLabel>
+                                    </ListItem>
+                                </Block>
+                            ) : selectedSide === 3 ? (
+                                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-peak-back.png" alt="peak-back"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
+                                    </ListItem>
+                                    <ListItem artwork={() => <img src="/images/icon/icon-valance-back.png" alt="valance-back"/>}
+                                              overrides={{
+                                                  Root: {props: {className: "cs-listItem-root"}},
+                                                  Content: {props: {className: "cs-listItem-content"}},
+                                                  ArtworkContainer: {props: {className: "cs-listItem-artwork"}},
+                                              }}
+                                              endEnhancer={() => (
+                                                  <Block display="flex" flexDirection="row" alignItems="center">
+                                                      <>
+                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                   onClick={() => {
+                                                                   }}
+                                                          />
+                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                  overrides={{
+                                                                      BaseButton: {
+                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                      },
+                                                                  }}
+                                                                  onClick={() => {
+                                                                  }}
+                                                          >
+                                                              <Delete size={20}/>
+                                                          </Button>
+                                                      </>
+                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                  </Block>
+                                              )}
+                                    >
+                                        <ListItemLabel description={<CPSubtitle color="" side={selectedSide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Valance</ListItemLabel>
+                                    </ListItem>
+                                </Block>
+                            ) : (
+                                <Block font="MinXLabel20">Pick a side above</Block>
+                            )}
+                        </Block>
                     </Block>
                 </Block>
             </Modal>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
+            <Modal isOpen={printDetailIsOpen} onClose={() => closeCustomPrintingDetailModal()}
+                   footer={
+                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
+                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
+                       >
+                           <Block>
+                               <Block display={["none", "block"]}>
+                                   <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
+                                       the information you provide us here.
+                                   </div>
+                               </Block>
+                               <Block display={["block", "none"]}>
+                                   <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
+                                       <div className="container-icon-custom-printing-note">!</div>
+                                   </StatefulTooltip>
+                               </Block>
+                           </Block>
+                           <Block display="flex" flexDirection="row">
+                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
+                                   <MButton type="outline" width="100%" height="100%" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
+                                            onClick={() => closeCustomPrintingDetailModal()}
+                                   />
+                               </Block>
+                               <Block minWidth={["85px"]} height={"40px"}>
+                                   <MButton type="solid" width="100%" height="100%" font="MinXParagraph16" text='Save' color="white"
+                                            buttonStyle={{paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                            onClick={() => closeCustomPrintingDetailModal(true)}
+                                   />
+                               </Block>
+                           </Block>
+                       </Block>
+                   }
+            >
+                <Block width="100%" maxWidth="448px" display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" paddingTop={["32px", "40px"]}>
+                    <Block font="MinXLabel28">{selectedSide === 0 ? "Left " : selectedSide === 1 ? "Right " : selectedSide === 2 ? "Front " : selectedSide === 3 ? "Back " : ""}{selectedSidePart === 0 ? "peak" : "valance"}</Block>
+                    <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" paddingTop="44px" font="MinXHeading14" color="MinXPrimaryText">
+                        <Accordion overrides={{
+                            PanelContainer: {
+                                style: {
+                                    borderBottomWidth: 0
+                                }
+                            },
+                            Header: {
+                                style: {
+                                    minHeight: "48px",
+                                    paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
+                                    fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit", backgroundColor: "transparent"
+                                }
+                            },
+                            Content: {
+                                style: {
+                                    paddingTop: "28px", paddingRight: "0px", paddingBottom: "28px", paddingLeft: "0px",
+                                    fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
+                                    backgroundColor: "translate"
+                                }
+                            },
+                        }}>
+                            <Panel title="Background">
+                                <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="16px" marginBottom="16px">
+                                    <MButton type="outline" height="48px" font="MinXParagraph16" text='Color' color="#262626"
+                                             buttonStyle={{borderColor: "#23A4AD"}}
+                                             onClick={() => {
+                                             }}
+                                    />
+                                    <MButton type="outline" height="48px" font="MinXParagraph16" text='Image' color="#262626" buttonClassName={["cs-side-button", selectedSide === 2 ? "selected" : null]}
+                                             onClick={() => {
+                                             }}/>
+                                </Block>
+                                <Block display="flex">
+                                    <Block marginRight="20px">Pantone Color</Block>
+                                    <Input value={""} placeholder="e.g. 7408 C"
+                                           onChange={(e) => {
+                                           }}
+                                           overrides={{
+                                               Root: {
+                                                   style: {
+                                                       borderTopRightRadius: "8px",
+                                                       borderTopLeftRadius: "8px",
+                                                       borderBottomRightRadius: "8px",
+                                                       borderBottomLeftRadius: "8px",
+                                                   },
+                                               },
+                                               Input: {
+                                                   style: {
+                                                       fontSize: "14px",
+                                                       lineHeight: "22px",
+                                                       "::placeholder": {color: "#BFBFBF"},
+                                                   }
+                                               },
+                                           }}
+                                    />
+                                </Block>
+                            </Panel>
+                            <Panel title="Logo">
+                                <FileUploader/>
+                            </Panel>
+                            <Panel title="Text">
+                                <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
+                                    <Block display="flex" alignItems="center">
+                                        <Block minWidth="60px" marginRight="20px">Content</Block>
+                                        <Input value={""} placeholder="The text you want to print"
+                                               onChange={(e) => {
+                                               }}
+                                               overrides={{
+                                                   Root: {
+                                                       style: {
+                                                           borderTopRightRadius: "8px",
+                                                           borderTopLeftRadius: "8px",
+                                                           borderBottomRightRadius: "8px",
+                                                           borderBottomLeftRadius: "8px",
+                                                       },
+                                                   },
+                                                   Input: {
+                                                       style: {
+                                                           fontSize: "14px",
+                                                           lineHeight: "22px",
+                                                           "::placeholder": {color: "#BFBFBF"},
+                                                       }
+                                                   },
+                                               }}
+                                        />
+                                    </Block>
+                                    <Block display="flex" alignItems="center">
+                                        <Block minWidth="60px" marginRight="20px">Font</Block>
+                                        <Input value={""} placeholder="e.g. Roboto"
+                                               onChange={(e) => {
+                                               }}
+                                               overrides={{
+                                                   Root: {
+                                                       style: {
+                                                           borderTopRightRadius: "8px",
+                                                           borderTopLeftRadius: "8px",
+                                                           borderBottomRightRadius: "8px",
+                                                           borderBottomLeftRadius: "8px",
+                                                       },
+                                                   },
+                                                   Input: {
+                                                       style: {
+                                                           fontSize: "14px",
+                                                           lineHeight: "22px",
+                                                           "::placeholder": {color: "#BFBFBF"},
+                                                       }
+                                                   },
+                                               }}
+                                        />
+                                    </Block>
+                                    <Block display="flex" alignItems="center">
+                                        <Block minWidth="60px" marginRight="20px">Color</Block>
+                                        <Input value={""} placeholder="e.g. #3C3C3C"
+                                               onChange={(e) => {
+                                               }}
+                                               overrides={{
+                                                   Root: {
+                                                       style: {
+                                                           borderTopRightRadius: "8px",
+                                                           borderTopLeftRadius: "8px",
+                                                           borderBottomRightRadius: "8px",
+                                                           borderBottomLeftRadius: "8px",
+                                                       },
+                                                   },
+                                                   Input: {
+                                                       style: {
+                                                           fontSize: "14px",
+                                                           lineHeight: "22px",
+                                                           "::placeholder": {color: "#BFBFBF"},
+                                                       }
+                                                   },
+                                               }}
+                                        />
+                                    </Block>
+                                </Block>
+                            </Panel>
+                            <Panel title="Print Instruction">
+                                <Block overrides={{
+                                    Block: {
+                                        style: {
+                                            overflow: "hidden",
+                                            borderTopRightRadius: "8px",
+                                            borderTopLeftRadius: "8px",
+                                            borderBottomRightRadius: "8px",
+                                            borderBottomLeftRadius: "8px",
+                                        },
+                                    },
+                                }}>
+                                    <Textarea placeholder="Tell us how do you want to get these text and image printed."
+                                              value={""}
+                                              onChange={() => {
+                                              }}
+                                              clearOnEscape
+
+                                    />
+                                </Block>
+                            </Panel>
+                        </Accordion>
+                    </Block>
+                </Block>
+            </Modal>
         </React.Fragment>
     );
 }

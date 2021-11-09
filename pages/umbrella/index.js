@@ -132,7 +132,7 @@ function Umbrella({router, size}) {
                                        </Block>
                                    }
                     />
-                    <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-kapri.png" alt="series kapri"
+                    <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="images/umbrella/series-kapri.png" alt="series kapri"
                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                    renderButton={
                                        <Block display="flex" flexDirection="row" alignItems="center">

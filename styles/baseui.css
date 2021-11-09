@@ -901,3 +901,92 @@ ul.bullet-warranty.sub > li {
         opacity: 0;
     }
 }
+
+.modal-dialog-white {
+    background-color: white !important;
+}
+
+.modal-dialog-body {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.cs-listItem-root {
+    height: 68px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: transparent;
+}
+
+.cs-listItem-content {
+    padding-left: 12px;
+    padding-right: 0;
+    border-bottom: none;
+}
+
+.cs-listItem-artwork {
+    width: 44px;
+    height: 44px;
+}
+
+.cs-side-button {
+    border: 2px solid #D0D9D9;
+}
+
+.cs-side-button.selected {
+    border-color: rgba(35, 164, 173);
+}
+
+.cs-block-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 12px;
+    align-items: center;
+}
+
+.cs-block {
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+
+.cs-title {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 4px;
+}
+
+.cs-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #808080
+}
+
+.triangle-curved {
+    width: 0;
+    height: 0;
+    border-top-width: 68px;
+    border-top-style: solid;
+    border-right: 65px solid transparent;
+    border-left: 65px solid transparent;
+}
+
+.triangle-curved.bottom {
+    border-top: none;
+    border-bottom-width: 68px;
+    border-bottom-style: solid;
+}
+
+@media screen and (min-width: 960px) {
+    .triangle-curved {
+        border-top-width: 80px;
+        border-right: 75px solid transparent;
+        border-left: 75px solid transparent;
+    }
+
+    .triangle-curved.bottom {
+        border-bottom-width: 80px;
+    }
+}

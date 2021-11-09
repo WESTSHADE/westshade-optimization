@@ -14,6 +14,7 @@ const mButton = ({
                      height = ["40px"],
                      font,
                      color = "white",
+                     buttonClassName,
                      buttonStyle,
                      buttonBackgroundColor = "",
                      iconStyle,
@@ -30,7 +31,7 @@ const mButton = ({
                     overrides={{
                         BaseButton: {
                             props: {
-                                className: clsx([styles["button-base"], styles[type]])
+                                className: clsx([styles["button-base"], styles[type], buttonClassName])
                             },
                             style: {...buttonStyle},
                         },
