@@ -1019,3 +1019,14 @@ ul.bullet-warranty.sub > li {
         border-bottom-width: 80px;
     }
 }
+
+.custom-printing-roof-modal-body {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    background-color: white !important;
+}
+
+.custom-printing-roof-modal-footer {
+    margin: 0;
+    padding: 0;
+}

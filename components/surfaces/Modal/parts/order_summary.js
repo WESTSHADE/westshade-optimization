@@ -2,9 +2,9 @@ import React from "react";
 
 import {Block} from "baseui/block";
 
-import styles from "./modal.module.scss";
+import styles from "./parts.module.scss";
 
-import Shipping from "../../sections/ShippingNote";
+import Shipping from "../../../sections/ShippingNote";
 
 export default function content({dataTable}) {
     return (

@@ -5,16 +5,37 @@ import clsx from "clsx";
 import {Block} from "baseui/block";
 import {Modal, ModalHeader, ModalBody, ModalFooter, SIZE, ROLE} from "baseui/modal";
 
-import FrameCompare from "./frame_compare";
-import SizeGuide from "./size_guide";
-import OrderSummary from "./order_summary";
-import Technique from "./printing_technique";
-import Loading from "./loading";
+import FrameCompare from "./parts/frame_compare";
+import SizeGuide from "./parts/size_guide";
+import OrderSummary from "./parts/order_summary";
+import Technique from "./parts/printing_technique";
+import Loading from "./parts/loading";
+import CustomPrintingRoof from "./parts/custom_printing_roof";
+import CustomPrintingRoofDetail from "./parts/custom_printing_roof_detail";
 
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogContainerStyles, dialogClassName, dialogStyles, bodyClassName, footerClassName, content = "", dataTable} = props;
+    const {
+        isOpen = false,
+        onClose,
+        size = SIZE.full,
+        type,
+        header,
+        children,
+        footer,
+        dialogContainerStyles,
+        dialogClassName,
+        dialogStyles,
+        bodyClassName,
+        footerClassName = "",
+        content = "",
+        dataTable,
+        selectedRoofList,
+        selectedRoofListTemp,
+        selectedRoofListTempTemp,
+        openDetailModal
+    } = props;
 
     return (
         <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
@@ -54,10 +75,13 @@ const modal = (props) => {
                         content === "summary" ? <OrderSummary dataTable={dataTable}/> :
                             content === "loading" ? <Loading/> :
                                 content === "technique" ? <Technique/> :
-                                    null : children}
+                                    content === "customPrintingRoof" ?
+                                        <CustomPrintingRoof selectedList={selectedRoofList} selectedListTemp={selectedRoofListTemp} selectedListTempTemp={selectedRoofListTempTemp} openDetailModal={openDetailModal}/> :
+                                        content === "customPrintingRoofDetail" ? <CustomPrintingRoofDetail/> :
+                                            null : children}
             </ModalBody>
             {footer ? (
-                <ModalFooter className={clsx[styles["container-footer"], footerClassName]}>
+                <ModalFooter className={clsx([styles["container-footer"], footerClassName])}>
                     {footer}
                 </ModalFooter>
             ) : null}
