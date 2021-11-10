@@ -14,6 +14,8 @@ const banner = ({
                     titleFont = ["MinXTitle32", "MinXTitle44", "MinXTitle64"],
                     subtitle,
                     subtitleFont = ["MinXSubtitle16", "MinXSubtitle16", 'MinXSubtitle20'],
+                    content,
+                    contentFont = ["MinXSubtitle16", "MinXSubtitle16", 'MinXSubtitle20'],
                     containerStyle,
                     containerHeight = ["480px", "660px", "100vh"],
                     containerMarginBottom = ["16px", "16px", "0px"],
@@ -35,8 +37,97 @@ const banner = ({
                     buttonBackgroundColor,
                     buttonHoverColor,
                     buttonActiveColor,
-                    renderButton
+                    renderButton,
+                    newPart
                 }) => {
+    if (newPart) {
+        return (
+            <Block ref={refD} position="relative" width="100%" height={containerHeight}
+                   marginTop={home ? ["-48px", "-48px", "-96px"] : null} marginBottom={containerMarginBottom} display="flex" alignItems="center" justifyContent="center"
+                   backgroundColor={containerBackground}
+                   overrides={{
+                       Block: {
+                           props: {
+                               className: home ? "container-display-home scroll-section" : containerMarginBottom ? "container-display-no-margin-bottom" : "container-display"
+                           },
+                           style: {
+                               ...containerStyle,
+                               ":not(:first-child)": {marginTop: "0px"},
+                               ":last-child": {marginBottom: "0px"}
+                           }
+                       },
+                   }}
+            >
+                <Block position="absolute" top={0} right={0} bottom={0} left={0}
+                       overrides={{
+                           Block: {
+                               style: {backgroundColor: backgroundColor, zIndex: "-1"}
+                           },
+                       }}
+                >
+                    <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
+                </Block>
+                <Block position="absolute" top={"42%"} width="100%" maxWidth="1152px" display="flex" flexDirection={["column", "column", "row"]} justifyContent={["", "", "space-between"]} paddingLeft={["16px"]} paddingRight={["16px"]}>
+                    <Block marginBottom={"24px"}>
+                        <Block maxWidth={["260px", "320px", "400px"]}
+                               font={subtitleFont} color={subTextColor ? subTextColor : textColor ? textColor : "MinXPrimaryTextAlt"}
+                               overrides={{
+                                   Block: {
+                                       style: {
+                                           ":last-child": {marginBottom: "0 !important"}
+                                       }
+                                   },
+                               }}
+                        >
+                            {subtitle}
+                        </Block>
+                        <Block maxWidth={["213px", "298px"]} marginBottom={titleMarginBottom}
+                               font={titleFont} color={textColor ? textColor : "MinXPrimaryTextAlt"}
+                               overrides={{
+                                   Block: {
+                                       style: {lineHeight: "0.85em"}
+                                   },
+                               }}
+                        >
+                            {title}
+                        </Block>
+                        {renderButton ? renderButton : (
+                            <>
+                                <MButton type="outline" display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width="88px" height="46px"
+                                         color="MinXPrimaryTextAlt"
+                                         buttonStyle={{
+                                             borderColor: `${textColor ? textColor : 'white'} !important`,
+                                             backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
+                                             ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
+                                             ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
+                                         }}
+                                         iconStyle={{marginLeft: "0px"}} endEnhancer={() => <ArrowRight size={36} color={textColor ? textColor : "white"}/>}
+                                         onClick={() => router.push(destination)}
+                                />
+                                <MButton type="outline" display={arrowButton ? "none" : textButton ? "block" : ["none", "none", "none", "block"]} width={["240px"]} height={["56px"]}
+                                         font="MinXLabel20" color={textColor ? textColor : "MinXPrimaryTextAlt"}
+                                         buttonStyle={{
+                                             borderColor: `${textColor ? textColor : 'white'} !important`,
+                                             backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
+                                             ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
+                                             ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
+                                         }}
+                                         endEnhancer={() => <ChevronRight size={24} color={textColor ? textColor : "white"}/>}
+                                         onClick={() => router.push(destination)} text={"Learn More"}
+                                />
+                            </>
+                        )}
+                    </Block>
+                    <Block height="100%">
+                        <Block maxWidth={["260px"]} font={"MinXParagraph16"} color={textColor ? textColor : "MinXPrimaryTextAlt"}>
+                            {content}
+                        </Block>
+                    </Block>
+                </Block>
+            </Block>
+        );
+    }
+
     return (
         <Block ref={refD} position="relative" justifyContent="flex-end" alignItems="flex-start" width="100%" height={containerHeight}
                marginTop={home ? ["-48px", "-48px", "-96px"] : null} marginBottom={containerMarginBottom} paddingBottom={["40px", "60px", "70px"]} paddingLeft={["24px", "40px", "calc((100% + 24px)/12)"]}

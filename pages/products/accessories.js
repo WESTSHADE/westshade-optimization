@@ -351,7 +351,7 @@ function Accessories({router, product, productComponent, productVariant}) {
     }, [totalCount]);
 
     useEffect(() => {
-        if (selectedVariant.length === 0) return;
+        if (!selectedVariant || selectedVariant.length === 0) return;
 
         checkoutProductList = [];
 

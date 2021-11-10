@@ -781,7 +781,7 @@ function Canopy_Tent({router, products, variants}) {
     }, [totalCount]);
 
     useEffect(() => {
-        if (selectedVariant.length === 0) return;
+        if (!selectedVariant || selectedVariant.length === 0) return;
 
         checkoutProductList = [];
 

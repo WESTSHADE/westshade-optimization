@@ -1,3 +1,47 @@
+.empty-button {
+  width: auto;
+  padding: 0 8px;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 14px;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &:active {
+    background-color: transparent;
+  }
+}
+
+.confirm-empty-button {
+  padding: 12px 24px;
+  background-color: #F07C7C;
+  color: white;
+
+  &:hover {
+    background-color: rgba(240, 124, 124, 0.65);
+  }
+
+  &:active {
+    background-color: rgba(240, 124, 124, 0.45);
+  }
+}
+
+.cancel-empty-button {
+  padding: 12px 24px;
+  background-color: #BFBFBF;
+  color: white;
+
+  &:hover {
+    background-color: rgba(191, 191, 191, 0.65);
+  }
+
+  &:active {
+    background-color: rgba(191, 191, 191, 0.45);
+  }
+}
+
 .remove-button {
   font-weight: 400;
 

@@ -465,6 +465,19 @@ ul.bullet-warranty.sub > li {
     border-radius: 2px;
 }
 
+.checkbox-whole-side {
+    width: 16px;
+    height: 16px;
+    margin: 4px 0;
+    border-width: 1px;
+    border-radius: 2px;
+}
+
+.modal-empty-footer {
+    display: flex;
+    justify-content: center;
+}
+
 .canopy-tent-tab {
     padding: 12px;
     font-size: inherit;
@@ -475,6 +488,22 @@ ul.bullet-warranty.sub > li {
 }
 
 .canopy-tent-tab:hover {
+    background: transparent;
+}
+
+.custom-printing-canopy-tent-tab {
+    padding: 12px;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    white-space: nowrap;
+    background: transparent;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 38px;
+}
+
+.custom-printing-canopy-tent-tab:hover {
     background: transparent;
 }
 

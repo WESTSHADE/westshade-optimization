@@ -326,7 +326,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     }, [totalCount]);
 
     useEffect(() => {
-        if (selectedVariant.length === 0) return;
+        if (!selectedVariant || selectedVariant.length === 0) return;
 
         checkoutProductList = [];
 

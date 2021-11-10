@@ -13,7 +13,7 @@ export const viewItem = (detail) => {
 
         let category = "";
 
-        if (categories.length > 0) {
+        if (categories && categories.length > 0) {
             category = categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
         }
 
@@ -38,7 +38,7 @@ export const addToCart = (products = [], variants = [], count,) => {
 
             let variant = "", category = "";
 
-            if (categories.length > 0) {
+            if (categories && categories.length > 0) {
                 category = categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
             }
             if (variants[index]) {
@@ -70,7 +70,7 @@ export const removeFromCart = (detail, count) => {
 
         let variant = "", category = "";
 
-        if (categories.length > 0) {
+        if (categories && categories.length > 0) {
             category = categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
         }
         if (attributes.length > 0) {
@@ -93,6 +93,40 @@ export const removeFromCart = (detail, count) => {
     }
 }
 
+export const clearCart = (productList, cartList) => {
+    if (typeof gtag !== 'undefined') {
+        let itemList = [];
+
+        productList.map((product, index) => {
+            const {sku, name, attributes, categories, price} = product;
+
+            let variant = "", category = "";
+
+            if (categories && categories.length > 0) {
+                category = categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
+            }
+            if (attributes && attributes.length > 0) {
+                variant = attributes.reduce((v, p, index) => index === 0 ? (p.name + ": " + p.option) : (v + "; " + p.name + ": " + p.option), "");
+            }
+
+            itemList.push({
+                "id": sku,
+                "name": name,
+                "brand": "Westshade",
+                "category": category,
+                "variant": variant,
+                "quantity": cartList[index].quantity,
+                "price": price
+            })
+        })
+
+
+        gtag('event', 'remove_from_cart', {
+            "items": itemList
+        });
+    }
+}
+
 export const beginCheckout = (products, lineItem) => {
     if (typeof gtag !== 'undefined') {
 
@@ -103,10 +137,10 @@ export const beginCheckout = (products, lineItem) => {
 
             let variant = "", category = "", count = 0;
 
-            if (categories.length > 0) {
+            if (categories && categories.length > 0) {
                 category = categories.reduce((c, p, index) => index === 0 ? p.name : c + "/" + p.name, "");
             }
-            if (attributes.length > 0) {
+            if (attributes && attributes.length > 0) {
                 variant = attributes.reduce((v, p, index) => index === 0 ? (p.name + ": " + p.option) : (v + "; " + p.name + ": " + p.option), "");
             }
             if (lineItem[index]) {

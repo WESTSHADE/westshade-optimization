@@ -672,7 +672,7 @@ function Checkout({router, orderID, orderDetail}) {
                         </Block>
                     </Block>
                     <Block marginBottom="40px">
-                        <Block position={["relative", "relative", "sticky"]} top={["unset", "unset", "108px"]}>
+                        <Block position={["relative", "relative", "sticky"]} top={["", "", "108px"]}>
                             <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
                             {lineItem.length > 0 ? (
                                 <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>

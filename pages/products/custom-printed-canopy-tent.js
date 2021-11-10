@@ -18,12 +18,13 @@ import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Delete, ChevronDown, Upload} from "baseui/icon";
 import {Input} from "baseui/input";
-import {Textarea} from "baseui/textarea";
+import {StatefulTextarea, Textarea} from "baseui/textarea";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, NumericalColumn, StringColumn, COLUMNS, NUMERICAL_FORMATS} from "baseui/data-table";
 import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 import {FileUploader} from "baseui/file-uploader";
+import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
 import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
@@ -123,6 +124,11 @@ function arrayEquals(a, b) {
     }
 }
 
+function isEmpty(obj) {
+    console.log(obj)
+    return Object.keys(obj).length === 0;
+}
+
 const CPSubtitle = ({color, side}) => {
     return (
         <span className="cs-block-container">
@@ -178,13 +184,17 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
     ////////////////////////////////////////
     const [selectedSide, setSelectedSide] = useState(null);
-    const [selectedSidePart, setSelectedSidePart] = useState(null);
-    const [wallColorSelectedList, setWallColorSelectedList] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
-    const [wallColorSelectedListTemp, setWallColorSelectedListTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
+    const [selectedSidePart, setSelectedSidePart] = useState(0);
+    const [roofColorSelectedList, setRoofColorSelectedList] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
+    const [roofColorSelectedListTemp, setRoofColorSelectedListTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
+    const [roofColorSelectedListTempTemp, setRoofColorSelectedListTempTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
+    const [applyToWholeSide, setApplyToWholeSide] = useState([false, false]);
 
     const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
     const [activeRoofSlide, setActiveRoofSlide] = useState(0);
     const [isPeakOrValance, setIsPeakOrValance] = useState(0);
+
+    const [activeTabKey, setActiveTabKey] = useState("0");
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
     const [printIsOpen, setPrintIsOpen] = useState(false);
@@ -247,21 +257,36 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         setWallIsOpen(false);
     };
 
-    const openCustomPrintingModal = () => setPrintIsOpen(true);
+    const openCustomPrintingModal = () => {
+        const temp = JSON.parse(JSON.stringify(roofColorSelectedList));
+        setRoofColorSelectedListTemp(temp);
+
+        setPrintIsOpen(true)
+    };
     const closeCustomPrintingModal = (save) => {
         if (save) {
+            const temp = JSON.parse(JSON.stringify(roofColorSelectedListTemp));
+            setRoofColorSelectedList(temp);
 
+            let selection = JSON.parse(JSON.stringify(selectedAttribute));
+            // TODO: 更改Roof Attr参数
+            setSelectedAttribute(selection);
         }
-        setPrintIsOpen(false)
+        setPrintIsOpen(false);
+        setSelectedSide(null);
     }
 
     const openCustomPrintingDetailModal = (part) => {
+        const temp = JSON.parse(JSON.stringify(roofColorSelectedListTemp));
+        setRoofColorSelectedListTempTemp(temp)
+
         setSelectedSidePart(part);
         setPrintDetailIsOpen(true);
     }
     const closeCustomPrintingDetailModal = (save) => {
         if (save) {
-
+            const temp = JSON.parse(JSON.stringify(roofColorSelectedListTempTemp));
+            setRoofColorSelectedListTemp(temp);
         }
         setPrintDetailIsOpen(false)
     }
@@ -1350,25 +1375,33 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                            $style={{textAlign: "center"}}
                     >
                         <Block position="relative" width={["282px", "282px", "324px"]} height={["282px", "282px", "324px"]} marginBottom={["32px", "64px", "48px"]}>
-                            <Block position="absolute" top={["75px", "75px", "85px"]} right={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(90deg)"}}>
-                                <Block font="MinXParagraph14" color="MinXPrimaryText">RIGHT</Block>
-                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
-                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
-                            </Block>
-                            <Block position="absolute" top={["75px", "75px", "85px"]} left={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(-90deg)"}}>
-                                <Block font="MinXParagraph14" color="MinXPrimaryText">LEFT</Block>
-                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
-                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
-                            </Block>
                             <Block position="absolute" bottom={0} right={0} left={0} width={["130px", "130px", "150px"]} marginRight="auto" marginLeft="auto">
-                                <div className="triangle-curved bottom" style={{borderBottomColor: "#F0F0F0"}}/>
-                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
+                                <div className="triangle-curved bottom" style={{borderBottomColor: isEmpty(roofColorSelectedListTemp[2].peek) ? "#F0F0F0" : "#CDECEC"}}/>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px"
+                                       backgroundColor={isEmpty(roofColorSelectedListTemp[2].valance) ? "#F0F0F0" : "#CDECEC"}
+                                />
                                 <div font="MinXParagraph14" color="MinXPrimaryText">FRONT</div>
                             </Block>
                             <Block position="absolute" top={0} right={0} left={0} width={["130px", "130px", "150px"]} marginRight="auto" marginLeft="auto">
                                 <Block font="MinXParagraph14" color="MinXPrimaryText">BACK</Block>
-                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px" backgroundColor={"#F0F0F0"}/>
-                                <div className="triangle-curved" style={{borderTopColor: "#F0F0F0"}}/>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px"
+                                       backgroundColor={isEmpty(roofColorSelectedListTemp[3].valance) ? "#F0F0F0" : "#CDECEC"}
+                                />
+                                <div className="triangle-curved" style={{borderTopColor: isEmpty(roofColorSelectedListTemp[3].peek) ? "#F0F0F0" : "#CDECEC"}}/>
+                            </Block>
+                            <Block position="absolute" top={["75px", "75px", "85px"]} left={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(-90deg)"}}>
+                                <Block font="MinXParagraph14" color="MinXPrimaryText">LEFT</Block>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px"
+                                       backgroundColor={isEmpty(roofColorSelectedListTemp[0].valance) ? "#F0F0F0" : "#CDECEC"}
+                                />
+                                <div className="triangle-curved" style={{borderTopColor: isEmpty(roofColorSelectedListTemp[0].peek) ? "#F0F0F0" : "#CDECEC"}}/>
+                            </Block>
+                            <Block position="absolute" top={["75px", "75px", "85px"]} right={0} width={["130px", "130px", "150px"]} $style={{transform: "rotate(90deg)"}}>
+                                <Block font="MinXParagraph14" color="MinXPrimaryText">RIGHT</Block>
+                                <Block width={["130px", "130px", "150px"]} height={["24px", "24px", "28px"]} marginTop="12px" marginBottom="12px"
+                                       backgroundColor={isEmpty(roofColorSelectedListTemp[1].valance) ? "#F0F0F0" : "#CDECEC"}
+                                />
+                                <div className="triangle-curved" style={{borderTopColor: isEmpty(roofColorSelectedListTemp[1].peek) ? "#F0F0F0" : "#CDECEC"}}/>
                             </Block>
                         </Block>
                         <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]} width="100%" maxWidth="724px" margin="auto">
@@ -1394,24 +1427,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[0].peek) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(0)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1425,24 +1460,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[0].valance) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(1)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1459,24 +1496,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[1].peek) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(0)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1490,24 +1529,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[1].valance) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(1)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1524,24 +1565,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[2].peek) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(0)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1555,24 +1598,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[2].valance) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(1)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1589,24 +1634,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[3].peek) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(0)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(0)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1620,24 +1667,26 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                               }}
                                               endEnhancer={() => (
                                                   <Block display="flex" flexDirection="row" alignItems="center">
-                                                      <>
-                                                          <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
-                                                                   onClick={() => {
-                                                                   }}
-                                                          />
-                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                  overrides={{
-                                                                      BaseButton: {
-                                                                          style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
-                                                                      },
-                                                                  }}
-                                                                  onClick={() => {
-                                                                  }}
-                                                          >
-                                                              <Delete size={20}/>
-                                                          </Button>
-                                                      </>
-                                                      <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      {isEmpty(roofColorSelectedListTemp[3].valance) ? (
+                                                          <MButton type="dashed" width="90px" height="32px" font="MinXLabel14" text='+Add' color="#8C8C8C" onClick={() => openCustomPrintingDetailModal(1)}/>
+                                                      ) : (
+                                                          <>
+                                                              <MButton type="solid" width="90px" height="32px" font="MinXLabel14" text='Edit' color="white"
+                                                                       onClick={() => openCustomPrintingDetailModal(1)}
+                                                              />
+                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                      overrides={{
+                                                                          BaseButton: {
+                                                                              style: ({$theme}) => ({marginLeft: "17px", width: "20px", height: "20px", backgroundColor: "transparent"}),
+                                                                          },
+                                                                      }}
+                                                                      onClick={() => {
+                                                                      }}
+                                                              >
+                                                                  <Delete size={20}/>
+                                                              </Button>
+                                                          </>
+                                                      )}
                                                   </Block>
                                               )}
                                     >
@@ -1653,9 +1702,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             </Modal>
             <Modal isOpen={printDetailIsOpen} onClose={() => closeCustomPrintingDetailModal()}
                    footer={
-                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
-                       >
+                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}>
                            <Block>
                                <Block display={["none", "block"]}>
                                    <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
@@ -1710,43 +1757,123 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                             },
                         }}>
                             <Panel title="Background">
-                                <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="16px" marginBottom="16px">
-                                    <MButton type="outline" height="48px" font="MinXParagraph16" text='Color' color="#262626"
-                                             buttonStyle={{borderColor: "#23A4AD"}}
-                                             onClick={() => {
-                                             }}
-                                    />
-                                    <MButton type="outline" height="48px" font="MinXParagraph16" text='Image' color="#262626" buttonClassName={["cs-side-button", selectedSide === 2 ? "selected" : null]}
-                                             onClick={() => {
-                                             }}/>
-                                </Block>
-                                <Block display="flex">
-                                    <Block marginRight="20px">Pantone Color</Block>
-                                    <Input value={""} placeholder="e.g. 7408 C"
-                                           onChange={(e) => {
-                                           }}
-                                           overrides={{
-                                               Root: {
-                                                   style: {
-                                                       borderTopRightRadius: "8px",
-                                                       borderTopLeftRadius: "8px",
-                                                       borderBottomRightRadius: "8px",
-                                                       borderBottomLeftRadius: "8px",
-                                                   },
-                                               },
-                                               Input: {
-                                                   style: {
-                                                       fontSize: "14px",
-                                                       lineHeight: "22px",
-                                                       "::placeholder": {color: "#BFBFBF"},
-                                                   }
-                                               },
-                                           }}
-                                    />
-                                </Block>
+                                <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}
+                                      overrides={{
+                                          TabList: {
+                                              style: {
+                                                  display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridColumnGap: "16px", marginBottom: "16px"
+                                              }
+                                          },
+                                          TabBorder: {props: {hidden: true}},
+                                          TabHighlight: {props: {hidden: true}},
+                                      }}
+                                >
+                                    <Tab title="Color"
+                                         artwork={() => (
+                                             <Block position="relative" width="20px" height="20px">
+                                                 <Image src="images/icon/icon_pantone.png" layout="responsive" width={60} height={60} quality={100}/>
+                                             </Block>
+                                         )}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "custom-printing-canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({borderColor: $isActive ? "#23A4AD" : "#D0D9D9"}),
+                                             },
+                                             TabPanel: {style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}
+                                         }}
+                                    >
+                                        <Block display="flex" alignItems="center" marginBottom="8px">
+                                            <Block minWidth="100px" marginRight="20px">Pantone Color</Block>
+                                            <Input value={""} placeholder="e.g. 7408 C"
+                                                   onChange={(e) => {
+                                                   }}
+                                                   overrides={{
+                                                       Root: {
+                                                           style: {
+                                                               borderTopRightRadius: "8px",
+                                                               borderTopLeftRadius: "8px",
+                                                               borderBottomRightRadius: "8px",
+                                                               borderBottomLeftRadius: "8px",
+                                                           },
+                                                       },
+                                                       Input: {
+                                                           style: {
+                                                               fontSize: "14px",
+                                                               lineHeight: "22px",
+                                                               "::placeholder": {color: "#BFBFBF"},
+                                                           }
+                                                       },
+                                                   }}
+                                            />
+                                        </Block>
+                                        <Block font="MinXParagraph12" color="rgba(0,0,0,0.45)" $style={{textAlign: "right", textDecoration: "underline", textTransform: "capitalize"}}>
+                                            <a target="_blank" href="https://www.pantone.com/color-finder" rel="noopener noreferrer">
+                                                Go to "Pantone Color Finder"
+                                            </a>
+                                        </Block>
+                                    </Tab>
+                                    <Tab title="Image"
+                                         artwork={() => (
+                                             <Block position="relative" width="20px" height="20px">
+                                                 <Image src="images/icon/icon_picture.png" layout="responsive" width={60} height={60} quality={100}/>
+                                             </Block>
+                                         )}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "custom-printing-canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({borderColor: $isActive ? "#23A4AD" : "#D0D9D9"}),
+                                             },
+                                             TabPanel: {style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}
+                                         }}
+                                    >
+                                        <FileUploader
+                                            overrides={{
+                                                FileDragAndDrop: {
+                                                    style: {
+                                                        flexDirection: "column-reverse"
+                                                    }
+                                                },
+                                                ButtonComponent: {
+                                                    props: {
+                                                        overrides: {
+                                                            BaseButton: {
+                                                                style: {
+                                                                    marginBottom: "12px"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    </Tab>
+                                </Tabs>
                             </Panel>
                             <Panel title="Logo">
-                                <FileUploader/>
+                                <FileUploader
+                                    overrides={{
+                                        FileDragAndDrop: {
+                                            style: {
+                                                flexDirection: "column-reverse"
+                                            }
+                                        },
+                                        ButtonComponent: {
+                                            props: {
+                                                overrides: {
+                                                    BaseButton: {
+                                                        style: {
+                                                            marginBottom: "12px"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }}
+                                />
                             </Panel>
                             <Panel title="Text">
                                 <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
@@ -1825,28 +1952,63 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                 </Block>
                             </Panel>
                             <Panel title="Print Instruction">
-                                <Block overrides={{
-                                    Block: {
-                                        style: {
-                                            overflow: "hidden",
-                                            borderTopRightRadius: "8px",
-                                            borderTopLeftRadius: "8px",
-                                            borderBottomRightRadius: "8px",
-                                            borderBottomLeftRadius: "8px",
-                                        },
-                                    },
-                                }}>
-                                    <Textarea placeholder="Tell us how do you want to get these text and image printed."
-                                              value={""}
-                                              onChange={() => {
-                                              }}
-                                              clearOnEscape
-
-                                    />
-                                </Block>
+                                <Textarea placeholder="Tell us how do you want to get these text and image printed."
+                                          value={selectedSide !== null ?
+                                              selectedSidePart === 0 ?
+                                                  roofColorSelectedListTempTemp[selectedSide].peek.instruction ?
+                                                      roofColorSelectedListTempTemp[selectedSide].peek.instruction : "" :
+                                                  roofColorSelectedListTempTemp[selectedSide].valance.instruction ?
+                                                      roofColorSelectedListTempTemp[selectedSide].valance.instruction : "" :
+                                              ""}
+                                          onChange={(e) => {
+                                              let temp = JSON.parse(JSON.stringify(roofColorSelectedListTempTemp));
+                                              if (selectedSidePart === 0) {
+                                                  temp[selectedSide].peek.instruction = e.target.value;
+                                              } else if (selectedSidePart === 1) {
+                                                  temp[selectedSide].valance.instruction = e.target.value;
+                                              }
+                                              setRoofColorSelectedListTempTemp(temp);
+                                          }}
+                                          clearOnEscape
+                                          overrides={{
+                                              Root: {
+                                                  style: {
+                                                      overflow: "hidden",
+                                                      borderTopRightRadius: "8px",
+                                                      borderTopLeftRadius: "8px",
+                                                      borderBottomRightRadius: "8px",
+                                                      borderBottomLeftRadius: "8px",
+                                                  }
+                                              },
+                                          }}
+                                />
                             </Panel>
                         </Accordion>
                     </Block>
+                    <Checkbox checked={applyToWholeSide[selectedSidePart]} labelPlacement={LABEL_PLACEMENT.right}
+                              onChange={(e) => {
+                                  let temp = JSON.parse(JSON.stringify(applyToWholeSide));
+                                  temp[selectedSidePart] = !temp[selectedSidePart];
+                                  setApplyToWholeSide(temp);
+                              }}
+                              overrides={{
+                                  Root: {
+                                      style: {
+                                          marginTop: "16px"
+                                      }
+                                  },
+                                  Checkmark: {
+                                      props: {
+                                          className: "checkbox-whole-side"
+                                      }
+                                  },
+                                  Label: {
+                                      style: ({$theme}) => ({fontSize: "12px", fontWeight: 400}),
+                                  },
+                              }}
+                    >
+                        Apply it to the whole side
+                    </Checkbox>
                 </Block>
             </Modal>
         </React.Fragment>

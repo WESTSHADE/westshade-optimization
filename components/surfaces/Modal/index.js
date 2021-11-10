@@ -14,8 +14,8 @@ import Loading from "./loading";
 import styles from "./modal.module.scss";
 
 const modal = (props) => {
-    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogContainerStyles, dialogClassName, dialogStyles, bodyClassName, content = "", dataTable} = props;
-    console.log(bodyClassName);
+    const {isOpen = false, onClose, size = SIZE.full, type, header, children, footer, dialogContainerStyles, dialogClassName, dialogStyles, bodyClassName, footerClassName, content = "", dataTable} = props;
+
     return (
         <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
                overrides={{
@@ -32,7 +32,7 @@ const modal = (props) => {
                    },
                    Dialog: {
                        props: {
-                           className: clsx(styles["dialog"], dialogClassName),
+                           className: clsx([styles["dialog"], dialogClassName]),
                        },
                        style: {...dialogStyles}
                    },
@@ -48,7 +48,7 @@ const modal = (props) => {
             ) : null : header ? (
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
-            <ModalBody className={clsx(styles["container-body"], "hideScrollBar", bodyClassName)}>
+            <ModalBody className={clsx([styles["container-body"], "hideScrollBar", bodyClassName])}>
                 {content ? content === "frame" ? <FrameCompare/> :
                     content === "size" ? <SizeGuide/> :
                         content === "summary" ? <OrderSummary dataTable={dataTable}/> :
@@ -57,7 +57,7 @@ const modal = (props) => {
                                     null : children}
             </ModalBody>
             {footer ? (
-                <ModalFooter className={styles["container-footer"]}>
+                <ModalFooter className={clsx[styles["container-footer"], footerClassName]}>
                     {footer}
                 </ModalFooter>
             ) : null}
