@@ -117,26 +117,17 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 let checkoutProductList = [];
 let selectedFrame = "y7 heavy duty", selectedSize = "10x10", selectedColor = "white";
 
+
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
 function arrayEquals(a, b) {
     if (a.length < b.length) {
         return Array.isArray(a) && Array.isArray(b) && a.every((val, index) => val.id === b[index].id && val.option.toLowerCase() === b[index].option.toLowerCase());
     } else {
         return Array.isArray(a) && Array.isArray(b) && b.every((val, index) => val.id === a[index].id && val.option.toLowerCase() === a[index].option.toLowerCase());
     }
-}
-
-function isEmpty(obj) {
-    console.log(obj)
-    return Object.keys(obj).length === 0;
-}
-
-const CPSubtitle = ({color, side}) => {
-    return (
-        <span className="cs-block-container">
-            <span className="cs-block" style={{backgroundColor: color}}/>
-            <span className="cs-subtitle">{side === 0 ? "Left" : side === 1 ? "Right" : side === 2 ? "Front" : side === 3 ? "Back" : ""}</span>
-        </span>
-    )
 }
 
 function Custom_Printed_Canopy_Tent({router, product, productComponent = [], productVariant = []}) {
@@ -184,22 +175,10 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     ]);
 
     ////////////////////////////////////////
-    const [selectedSide, setSelectedSide] = useState(null);
-    const [selectedSidePart, setSelectedSidePart] = useState(0);
-    const [roofColorSelectedList, setRoofColorSelectedList] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
-    const [roofColorSelectedListTemp, setRoofColorSelectedListTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
-    const [roofColorSelectedListTempTemp, setRoofColorSelectedListTempTemp] = useState([{peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}, {peek: {}, valance: {}}]);
-    const [applyToWholeSide, setApplyToWholeSide] = useState([false, false]);
-
-    const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
-    const [activeRoofSlide, setActiveRoofSlide] = useState(0);
-    const [isPeakOrValance, setIsPeakOrValance] = useState(0);
-
-    const [activeTabKey, setActiveTabKey] = useState("0");
+    const [roofColorSelectedList, setRoofColorSelectedList] = useState([{peak: {}, valance: {}}, {peak: {}, valance: {}}, {peak: {}, valance: {}}, {peak: {}, valance: {}}]);
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
     const [printIsOpen, setPrintIsOpen] = useState(false);
-    const [printDetailIsOpen, setPrintDetailIsOpen] = useState(false);
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
     const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -258,38 +237,61 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         setWallIsOpen(false);
     };
 
-    const openCustomPrintingModal = () => {
-        const temp = JSON.parse(JSON.stringify(roofColorSelectedList));
-        setRoofColorSelectedListTemp(temp);
+    const openCustomPrintingModal = () => setPrintIsOpen(true);
 
-        setPrintIsOpen(true)
-    };
-    const closeCustomPrintingModal = (save) => {
+    const closeCustomPrintingModal = (save, tempList) => {
         if (save) {
-            const temp = JSON.parse(JSON.stringify(roofColorSelectedListTemp));
+            const temp = JSON.parse(JSON.stringify(tempList));
             setRoofColorSelectedList(temp);
 
-            let selection = JSON.parse(JSON.stringify(selectedAttribute));
-            // TODO: 更改Roof Attr参数
-            setSelectedAttribute(selection);
+            let selectionA = JSON.parse(JSON.stringify(selectedAttribute));
+            let selectedVariantList = JSON.parse(JSON.stringify(selectedVariant));
+
+            let sizesResult = selectedVariant[0].attributes.find(item => item.id === id_attribute_canopySize);
+            let sizesList = sizesResult.option.split("x");
+
+            let target = [
+                {id: 31, name: 'Roof Size', option: sizesList[0] + "ft"}, //左右
+                {id: 0, name: 'Roof Size II', option: sizesList[1] + "ft"}, //前后
+                {id: 0, name: 'Number', option: 0}, //左右
+                {id: 0, name: 'Number II', option: 0} //前后
+            ]
+
+            temp.map((item, index) => {
+                if (index < 2) {
+                    if (!isEmpty(item.peak) || !isEmpty(item.valance)) {
+                        target[2].option += 1;
+                    }
+                } else {
+                    if (!isEmpty(item.peak) || !isEmpty(item.valance)) {
+                        target[3].option += 1;
+                    }
+                }
+            })
+
+            if (target[0].option === target[1].option) {
+                if (target[2].option === 1 && target[3].option === 0) {
+                    target[2].option = 0;
+                    target[3].option = 1;
+                } else if ((target[2].option === 2 && target[3].option === 0) || (target[2].option === 0 && target[3].option === 2)) {
+                    target[2].option = 1;
+                    target[3].option = 1;
+                }
+            }
+
+            target[2].option = target[2].option + "";
+            target[3].option = target[3].option + "";
+
+            selectedVariantList[1] = productVariant[1].filter(({attributes}) => arrayEquals(target, attributes))[0];
+            selectionA[1] = target;
+
+            console.log(selectionA);
+            console.log(selectedVariantList);
+
+            setSelectedAttribute(selectionA);
+            setSelectedVariant(selectedVariantList);
         }
         setPrintIsOpen(false);
-        setSelectedSide(null);
-    }
-
-    const openCustomPrintingDetailModal = (part) => {
-        const temp = JSON.parse(JSON.stringify(roofColorSelectedListTemp));
-        setRoofColorSelectedListTempTemp(temp)
-
-        setSelectedSidePart(part);
-        setPrintDetailIsOpen(true);
-    }
-    const closeCustomPrintingDetailModal = (save) => {
-        if (save) {
-            const temp = JSON.parse(JSON.stringify(roofColorSelectedListTempTemp));
-            setRoofColorSelectedListTemp(temp);
-        }
-        setPrintDetailIsOpen(false)
     }
 
     const openSummaryModal = () => setSummaryIsOpen(true);
@@ -398,7 +400,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 attribute.forEach((attr) => (attr.id === id ? (attr.option = event.target.value) : null));
             }
             selectionA[indexA + 2] = attribute
-            selectedVariantList[indexA + 2] = productVariant[indexA + 2].filter(({attributes}) => arrayEquals(selectionA, attributes))[0];
+            console.log(selectionA);
+            selectedVariantList[indexA + 2] = productVariant[indexA + 2].filter(({attributes}) => arrayEquals(selectionA[indexA + 2], attributes))[0];
         });
 
         // Part 2: 保存更改项
@@ -484,6 +487,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         });
         setAvailableList(available);
 
+
+        console.log(available);
         setTotalRegularPrice(regularPrice);
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
@@ -1249,11 +1254,11 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                </Block>
                            </Block>
                            <Block display="grid" gridTemplateColumns="repeat(2, minmax(85px, auto))" gridColumnGap="24px">
-                               <MButton type="outline" width="100%" height="40px" font="MinXParagraph16" text='Cancel' color="MinXButton"
+                               <MButton type="outline" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Cancel' color="MinXButton"
                                         buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
                                         onClick={() => closeWallModal()}
                                />
-                               <MButton type="solid" width="100%" height="40px" font="MinXParagraph16" text='Save' color="white"
+                               <MButton type="solid" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Save' color="white"
                                         buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important"}}
                                         onClick={() => closeWallModal(true)}
                                />
@@ -1343,8 +1348,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     </Block>
                 </Block>
             </Modal>
-            <CustomPrintingRoof isOpen={printIsOpen} onClose={() => closeCustomPrintingModal()} selectedRoofList={roofColorSelectedList} selectedRoofListTemp={roofColorSelectedListTemp}
-                                selectedRoofListTempTemp={roofColorSelectedListTempTemp}/>
+            <CustomPrintingRoof isOpen={printIsOpen} onClose={closeCustomPrintingModal} selectedRoofList={roofColorSelectedList}/>
         </React.Fragment>
     );
 }

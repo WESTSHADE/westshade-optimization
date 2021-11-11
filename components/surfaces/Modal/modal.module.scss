@@ -11,6 +11,7 @@
       height: fit-content;
       max-width: calc(100vw - 48px);
       transform: translateY(-15vh);
+      overflow: hidden;
 
       .close {
         top: 29px;
@@ -45,6 +46,7 @@
       margin: auto auto 0 auto;
       background-color: #f7f7f7;
       border-radius: 0;
+      overflow: hidden;
 
       .close {
         top: 29px;
@@ -97,6 +99,7 @@
       margin: 0 auto 0 auto;
       background-color: #f7f7f7;
       border-radius: 0;
+      overflow: hidden;
 
       .close {
         top: 29px;

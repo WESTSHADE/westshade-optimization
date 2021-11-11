@@ -31,10 +31,10 @@ const modal = (props) => {
         footerClassName = "",
         content = "",
         dataTable,
-        selectedRoofList,
-        selectedRoofListTemp,
-        selectedRoofListTempTemp,
-        openDetailModal
+        selectedRoofListTemp, setSelectedRoofListTemp,
+        openDetailModal, removeDetail,
+        selectedRoofSlide, selectedSlidePart, onSelectedRoofSlide, onSelectedSlidePart,
+        applyToFullSide, setApplyToFullSide
     } = props;
 
     return (
@@ -76,9 +76,14 @@ const modal = (props) => {
                             content === "loading" ? <Loading/> :
                                 content === "technique" ? <Technique/> :
                                     content === "customPrintingRoof" ?
-                                        <CustomPrintingRoof selectedList={selectedRoofList} selectedListTemp={selectedRoofListTemp} selectedListTempTemp={selectedRoofListTempTemp} openDetailModal={openDetailModal}/> :
-                                        content === "customPrintingRoofDetail" ? <CustomPrintingRoofDetail/> :
-                                            null : children}
+                                        <CustomPrintingRoof selectedListTemp={selectedRoofListTemp} openDetailModal={openDetailModal} removeDetail={removeDetail}
+                                                            selectedRoofSlide={selectedRoofSlide} onSelectedRoofSlide={onSelectedRoofSlide}
+                                        /> :
+                                        content === "customPrintingRoofDetail" ?
+                                            <CustomPrintingRoofDetail selectedListTemp={selectedRoofListTemp} setSelectedRoofListTemp={setSelectedRoofListTemp}
+                                                                      selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
+                                                                      applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}
+                                            /> : null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={clsx([styles["container-footer"], footerClassName])}>

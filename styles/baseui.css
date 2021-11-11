@@ -1021,6 +1021,8 @@ ul.bullet-warranty.sub > li {
 }
 
 .custom-printing-roof-modal-body {
+    margin-top: 0 !important;
+    padding-top: 16px !important;
     padding-right: 0 !important;
     padding-left: 0 !important;
     background-color: white !important;

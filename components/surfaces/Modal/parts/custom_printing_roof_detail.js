@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 
-import {useRouter} from 'next/router'
 import Image from "next/image";
 
 import {Block} from "baseui/block";
@@ -15,31 +14,49 @@ import {FileUploader} from "baseui/file-uploader";
 import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
-import MButton from "../../../button-n";
-import {Modal} from "../../index";
+export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, selectedRoofSlide, selectedSlidePart, applyToFullSide, setApplyToFullSide}) {
+    if (!selectedListTemp) return null;
 
-function isEmpty(obj) {
-    return Object.keys(obj).length === 0;
-}
+    const [activeTabKey, setActiveTabKey] = useState("0");
 
-const CPSubtitle = ({color, side}) => {
-    return (
-        <span className="cs-block-container">
-            <span className="cs-block" style={{backgroundColor: color}}/>
-            <span className="cs-subtitle">{side === 0 ? "Left" : side === 1 ? "Right" : side === 2 ? "Front" : side === 3 ? "Back" : ""}</span>
-        </span>
-    )
-}
+    function inputValue(key) {
+        return selectedRoofSlide !== null ?
+            selectedSlidePart === 0 ?
+                selectedListTemp[selectedRoofSlide].peak[key] ? selectedListTemp[selectedRoofSlide].peak[key] : "" :
+                selectedSlidePart === 1 ?
+                    selectedListTemp[selectedRoofSlide].valance[key] ? selectedListTemp[selectedRoofSlide].valance[key] : "" :
+                    "" : ""
+    }
 
-export default function roof_detail({selectedListTempTemp}) {
-    const [selectedRoofSlide, setSelectedRoofSlide] = useState(null);
-    const [selectedSlidePart, setSelectedSlidePart] = useState(0);
+    function inputOnChange(e, key) {
+        let temp = JSON.parse(JSON.stringify(selectedListTemp));
 
-    if (!selectedListTempTemp) return null;
+        let peak = temp[selectedRoofSlide].peak;
+        let valance = temp[selectedRoofSlide].valance;
+
+        temp.map((item, index) => {
+            if (applyToFullSide[selectedSlidePart]) {
+                if (selectedSlidePart === 0) {
+                    item.peak = peak;
+                    item.peak[key] = e.target.value;
+                } else if (selectedSlidePart === 1) {
+                    item.peak = valance;
+                    item.valance[key] = e.target.value;
+                }
+            } else {
+                if (selectedSlidePart === 0) {
+                    if (index === selectedRoofSlide) item.peak[key] = e.target.value;
+                } else if (selectedSlidePart === 1) {
+                    if (index === selectedRoofSlide) item.valance[key] = e.target.value;
+                }
+            }
+        })
+        setSelectedRoofListTemp(temp);
+    }
 
     return (
         <Block width="100%" maxWidth="448px" display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" paddingTop={["32px", "40px"]}>
-            <Block font="MinXLabel28">{selectedSide === 0 ? "Left " : selectedSide === 1 ? "Right " : selectedSide === 2 ? "Front " : selectedSide === 3 ? "Back " : ""}{selectedSidePart === 0 ? "peak" : "valance"}</Block>
+            <Block font="MinXLabel28">{selectedRoofSlide === 0 ? "Left " : selectedRoofSlide === 1 ? "Right " : selectedRoofSlide === 2 ? "Front " : selectedRoofSlide === 3 ? "Back " : ""}{selectedSlidePart === 0 ? "peak" : "valance"}</Block>
             <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" paddingTop="44px" font="MinXHeading14" color="MinXPrimaryText">
                 <Accordion overrides={{
                     PanelContainer: {
@@ -92,9 +109,9 @@ export default function roof_detail({selectedListTempTemp}) {
                             >
                                 <Block display="flex" alignItems="center" marginBottom="8px">
                                     <Block minWidth="100px" marginRight="20px">Pantone Color</Block>
-                                    <Input value={""} placeholder="e.g. 7408 C"
-                                           onChange={(e) => {
-                                           }}
+                                    <Input placeholder="e.g. 7408 C"
+                                           value={inputValue("backgroundColor")}
+                                           onChange={(e) => inputOnChange(e, "backgroundColor")}
                                            overrides={{
                                                Root: {
                                                    style: {
@@ -185,9 +202,9 @@ export default function roof_detail({selectedListTempTemp}) {
                         <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
                             <Block display="flex" alignItems="center">
                                 <Block minWidth="60px" marginRight="20px">Content</Block>
-                                <Input value={""} placeholder="The text you want to print"
-                                       onChange={(e) => {
-                                       }}
+                                <Input placeholder="The text you want to print"
+                                       value={inputValue("content")}
+                                       onChange={(e) => inputOnChange(e, "content")}
                                        overrides={{
                                            Root: {
                                                style: {
@@ -209,9 +226,9 @@ export default function roof_detail({selectedListTempTemp}) {
                             </Block>
                             <Block display="flex" alignItems="center">
                                 <Block minWidth="60px" marginRight="20px">Font</Block>
-                                <Input value={""} placeholder="e.g. Roboto"
-                                       onChange={(e) => {
-                                       }}
+                                <Input placeholder="e.g. Roboto"
+                                       value={inputValue("fontFamily")}
+                                       onChange={(e) => inputOnChange(e, "fontFamily")}
                                        overrides={{
                                            Root: {
                                                style: {
@@ -233,9 +250,9 @@ export default function roof_detail({selectedListTempTemp}) {
                             </Block>
                             <Block display="flex" alignItems="center">
                                 <Block minWidth="60px" marginRight="20px">Color</Block>
-                                <Input value={""} placeholder="e.g. #3C3C3C"
-                                       onChange={(e) => {
-                                       }}
+                                <Input placeholder="e.g. #3C3C3C"
+                                       value={inputValue("fontColor")}
+                                       onChange={(e) => inputOnChange(e, "fontColor")}
                                        overrides={{
                                            Root: {
                                                style: {
@@ -259,22 +276,8 @@ export default function roof_detail({selectedListTempTemp}) {
                     </Panel>
                     <Panel title="Print Instruction">
                         <Textarea placeholder="Tell us how do you want to get these text and image printed."
-                                  value={selectedSide !== null ?
-                                      selectedSidePart === 0 ?
-                                          roofColorSelectedListTempTemp[selectedSide].peek.instruction ?
-                                              roofColorSelectedListTempTemp[selectedSide].peek.instruction : "" :
-                                          roofColorSelectedListTempTemp[selectedSide].valance.instruction ?
-                                              roofColorSelectedListTempTemp[selectedSide].valance.instruction : "" :
-                                      ""}
-                                  onChange={(e) => {
-                                      let temp = JSON.parse(JSON.stringify(roofColorSelectedListTempTemp));
-                                      if (selectedSidePart === 0) {
-                                          temp[selectedSide].peek.instruction = e.target.value;
-                                      } else if (selectedSidePart === 1) {
-                                          temp[selectedSide].valance.instruction = e.target.value;
-                                      }
-                                      setRoofColorSelectedListTempTemp(temp);
-                                  }}
+                                  value={inputValue("instruction")}
+                                  onChange={(e) => inputOnChange(e, "instruction")}
                                   clearOnEscape
                                   overrides={{
                                       Root: {
@@ -291,11 +294,11 @@ export default function roof_detail({selectedListTempTemp}) {
                     </Panel>
                 </Accordion>
             </Block>
-            <Checkbox checked={applyToWholeSide[selectedSidePart]} labelPlacement={LABEL_PLACEMENT.right}
+            <Checkbox checked={applyToFullSide[selectedSlidePart]} labelPlacement={LABEL_PLACEMENT.right}
                       onChange={(e) => {
-                          let temp = JSON.parse(JSON.stringify(applyToWholeSide));
-                          temp[selectedSidePart] = !temp[selectedSidePart];
-                          setApplyToWholeSide(temp);
+                          let temp = JSON.parse(JSON.stringify(applyToFullSide));
+                          temp[selectedSlidePart] = !temp[selectedSlidePart];
+                          setApplyToFullSide(temp);
                       }}
                       overrides={{
                           Root: {
@@ -313,7 +316,7 @@ export default function roof_detail({selectedListTempTemp}) {
                           },
                       }}
             >
-                Apply it to the whole side
+                Apply it to all four sides
             </Checkbox>
         </Block>
     )

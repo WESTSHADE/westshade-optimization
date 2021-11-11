@@ -10,18 +10,18 @@ export default function content() {
                 <div/>
                 <Block>
                     <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'8"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 11'</Block>
                 </Block>
                 <Block>
                     <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'8"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'10"</Block>
                 </Block>
                 <Block>
                     <Block font="MinXLabel14" color="MinXPrimaryText">Y5 Economic steel</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'10"</Block>
-                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'15"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Clearance Height 6'8"-6'10"</Block>
+                    <Block font="MinXParagraph12" color="MinXSecondaryText">Overall Height 10'10"-12'10"</Block>
                 </Block>
             </Block>
             <Block width={["calc(100vw - 140px - 48px - 48px)", "calc(100vw - 140px - 48px - 48px)", "auto"]} display="grid" gridTemplateColumns="repeat(8, 70px)" gridColumnGap="24px"

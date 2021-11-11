@@ -276,7 +276,7 @@ function Santorini({router}) {
                                  >
                                      <Image src="images/umbrella/santorini/size2.png" alt="santorini size 7.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                  </Block>
-                                 <Block font="MinXLabel16" color="MinXPrimaryText">7.5’ Square</Block>
+                                 <Block font="MinXLabel16" color="MinXPrimaryText">7.5’ Octagon</Block>
                                  <MButton type="solid" height="40px" font="MinXLabel16" text='Buy'
                                           buttonStyle={{paddingTop: "12px !important", paddingRight: "32px !important", paddingBottom: "12px !important", paddingLeft: "32px !important"}}
                                           endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "7.5ft"}})}
@@ -292,7 +292,7 @@ function Santorini({router}) {
                                  >
                                      <Image src="images/umbrella/santorini/size3.png" alt="santorini size 9'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                  </Block>
-                                 <Block font="MinXLabel16" color="MinXPrimaryText">9’ Square</Block>
+                                 <Block font="MinXLabel16" color="MinXPrimaryText">9’ Octagon</Block>
                                  <MButton type="solid" height="40px" font="MinXLabel16" text='Buy'
                                           buttonStyle={{paddingTop: "12px !important", paddingRight: "32px !important", paddingBottom: "12px !important", paddingLeft: "32px !important"}}
                                           endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "9ft"}})}
@@ -324,7 +324,7 @@ function Santorini({router}) {
                                  >
                                      <Image src="images/umbrella/santorini/size5.png" alt="santorini size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                  </Block>
-                                 <Block font="MinXLabel16" color="MinXPrimaryText">11.5’ Square</Block>
+                                 <Block font="MinXLabel16" color="MinXPrimaryText">11.5’ Octagon</Block>
                                  <MButton type="solid" height="40px" font="MinXLabel16" text='Buy'
                                           buttonStyle={{paddingTop: "12px !important", paddingRight: "32px !important", paddingBottom: "12px !important", paddingLeft: "32px !important"}}
                                           endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "11.5ft"}})}
