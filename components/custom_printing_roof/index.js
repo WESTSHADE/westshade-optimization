@@ -110,7 +110,7 @@ export default function custom_printing_roof({isOpen, onClose, selectedRoofList}
                        </Block>
                    }
             />
-            <Modal isOpen={printDetailIsOpen} onClose={closePrintingDetail} content="customPrintingRoofDetail"
+            <Modal isOpen={printDetailIsOpen} onClose={() => closePrintingDetail()} content="customPrintingRoofDetail"
                    selectedRoofListTemp={tempTempList} setSelectedRoofListTemp={setTempTempList}
                    selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
                    applyToFullSide={applyToFullSideTemp} setApplyToFullSide={setApplyToFullSideTemp}

@@ -55,7 +55,16 @@ const BlockVideo = ({src, type, isSelected, step}) => {
 
     return (
         <div ref={refBlockVideo} style={{height: "100%"}}>
-            <ReactPlayer className="react-player" width="100%" height="100%" url={src} loop/>
+            <ReactPlayer className="react-player" width="100%" height="100%" url={src} loop
+                         config={{
+                             file: {
+                                 attributes: {
+                                     crossorigin: "anonymous",
+                                     controlsList: "nofullscreen",
+                                     disablepictureinpicture: "true"
+                                 },
+                             },
+                         }}/>
         </div>
     )
 

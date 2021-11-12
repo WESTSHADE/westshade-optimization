@@ -52,7 +52,8 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
 
     return (
         <Block width="100%" maxWidth="448px" display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" paddingTop={["32px", "40px"]}>
-            <Block font="MinXLabel28">{selectedRoofSlide === 0 ? "Left " : selectedRoofSlide === 1 ? "Right " : selectedRoofSlide === 2 ? "Front " : selectedRoofSlide === 3 ? "Back " : ""}{selectedSlidePart === 0 ? "peak" : "valance"}</Block>
+            <Block
+                font="MinXLabel28">{selectedRoofSlide === 0 ? "Left " : selectedRoofSlide === 1 ? "Right " : selectedRoofSlide === 2 ? "Front " : selectedRoofSlide === 3 ? "Back " : ""}{selectedSlidePart === 0 ? "peak" : "valance"}</Block>
             <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" paddingTop="44px" font="MinXHeading14" color="MinXPrimaryText">
                 <Accordion overrides={{
                     PanelContainer: {
@@ -150,6 +151,33 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                                  }}
                             >
                                 <FileUploader
+                                    onDrop={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDragEnter={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDragLeave={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDragOver={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDragStart={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDropAccepted={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onDropRejected={(e) => {
+                                        console.log(e)
+                                    }}
+                                    onFileDialogCancel={(e) => {
+                                        console.log(e)
+                                    }}
+                                    // progressAmount={(e) => {
+                                    //     console.log(e)
+                                    // }}
                                     overrides={{
                                         FileDragAndDrop: {
                                             style: {
