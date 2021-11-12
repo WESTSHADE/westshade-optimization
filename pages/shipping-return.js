@@ -36,7 +36,7 @@ function Shipping_Return() {
         <React.Fragment>
             <Head>
                 <title>Shipping and Return Policy - FAQs | WESTSHADE</title>
-                <meta name="description" content="View frequently asked questions about our shipping and return policies, estimated delivery, damaged items, and refunds."/>
+                <meta name="description" content="Shipping and return policy about Westshade's canopy, umbrella and accessories."/>
             </Head>
             <Block display="flex" flexDirection="column" maxWidth="1920px" position="relative" alignItems="center" height={["184px", "200px", "216px"]}
                    marginBottom={["32px", "32px", "40px"]} paddingTop={["32px", "40px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}

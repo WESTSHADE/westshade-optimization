@@ -37,8 +37,7 @@ function Contact_Us() {
         <React.Fragment>
             <Head>
                 <title>Contact Us - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Frequently asked question about Westshade's canopy, umbrella and accessories."/>
             </Head>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
                    overrides={{

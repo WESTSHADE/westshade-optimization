@@ -69,8 +69,7 @@ function Kapri({router}) {
         <React.Fragment>
             <Head>
                 <title>Umbrella Kapri - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Crank lift tilt umbrella with height adjustment. Feature with UPF 50+ protected premium fabric cover. Wind resistant which the umbrella stands in 50-70-km/h wind."/>
             </Head>
             <SubHeaderBar title={"Umbrella Kapri"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="images/umbrella/kapri/kapri_display.png" alt="kapri display" imageObjectFit="contain"

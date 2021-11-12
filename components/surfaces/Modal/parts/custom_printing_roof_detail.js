@@ -3,10 +3,6 @@ import React, {useState} from "react";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {ListItem, ListItemLabel} from "baseui/list";
-import {Button, KIND, SHAPE} from "baseui/button";
-import {Delete} from "baseui/icon";
-import {PLACEMENT, StatefulTooltip, TRIGGER_TYPE} from "baseui/tooltip";
 import {Accordion, Panel} from "baseui/accordion";
 import {FILL, Tab, Tabs} from "baseui/tabs-motion";
 import {Input} from "baseui/input";

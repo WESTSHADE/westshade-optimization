@@ -122,8 +122,8 @@ function Custom_Printing_Umbrella({router, size}) {
         <React.Fragment>
             <Head>
                 <title>Custom Printing Umbrella - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description"
+                      content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
             <Block ref={refBanner} position="relative" alignItems="center" paddingTop={["32px", "40px", "64px"]} paddingRight="16px" paddingBottom={["32px", "40px", "64px"]} paddingLeft="16px"
                    overflow="hidden"

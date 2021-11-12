@@ -104,8 +104,7 @@ function Accessories({router, products}) {
         <React.Fragment>
             <Head>
                 <title>Accessories - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Westshade's selection of versatile accessories are perfect with Westshade's canopy and umbrella."/>
             </Head>
             <Block position="relative" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center" maxWidth="unset !important"
                    overrides={{
@@ -131,9 +130,7 @@ function Accessories({router, products}) {
                     </Block>
                 </Block>
             </Block>
-            <Block maxWidth={process.env.maxWidth + "px"} marginRight="auto" marginBottom={["60px", "80px", "120px"]} marginLeft="auto" overrides={{
-                Block: {style: {textAlign: "center"}}
-            }}>
+            <Block maxWidth={process.env.maxWidth + "px"} marginRight="auto" marginBottom={["60px", "80px", "120px"]} marginLeft="auto" $style={{textAlign: "center"}}>
                 <Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>
                 <Block marginBottom={["24px", "40px", "64px"]} font="MinXHeading24">SIDE WALL</Block>
                 <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>

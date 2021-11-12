@@ -1,6 +1,4 @@
-import React, {useState} from "react";
-
-import {useRouter} from 'next/router'
+import React from "react";
 
 import {Block} from "baseui/block";
 import {ListItem, ListItemLabel} from "baseui/list";

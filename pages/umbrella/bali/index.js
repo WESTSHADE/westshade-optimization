@@ -69,8 +69,7 @@ function Bali({router}) {
         <React.Fragment>
             <Head>
                 <title>Umbrella Bali - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Push-button tilt & crank lift umbrella. Safe to enjoy the out door. Feature with UPF 50+ protected premium fabric cover. Wind resistant which the umbrella stands in 50-70-km/h wind."/>
             </Head>
             <SubHeaderBar title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="images/umbrella/bali/bali_display.jpg" alt="bali display"

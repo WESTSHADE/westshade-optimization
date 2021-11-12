@@ -49,19 +49,24 @@ function Selection({id, name, value, onChange, attributes = [], children}) {
                         },
                     }}
         >
-            {attributes.length > 0 ? attributes.map(({options}) => {
+            {children ? children : attributes.length > 0 ? attributes.map(({options}) => {
                 let optionList = id === id_attribute_frameSeries ? options.reverse() : options;
+
                 return optionList.map((option, index) => (
                     <Radio key={index} value={option.toLowerCase()}
                            overrides={{
                                Label: id === id_attribute_canopyColor ? ({$value}) => {
                                    let color = $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value;
                                    return (<div className={styles["radio-dot"]} style={{backgroundColor: color}}/>)
-                               } : null
+                               } : {
+                                   props: {
+                                       className: styles["radio"]
+                                   }
+                               }
                            }}
                     >{option}</Radio>
                 ))
-            }) : children ? children : null}
+            }) : null}
         </RadioGroup>
     )
 }

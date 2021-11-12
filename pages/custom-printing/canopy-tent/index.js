@@ -68,8 +68,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
         <React.Fragment>
             <Head>
                 <title>Custom Printing Canopy Tent - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
             </Head>
             <Block ref={refBanner} position="relative"
                    overrides={{

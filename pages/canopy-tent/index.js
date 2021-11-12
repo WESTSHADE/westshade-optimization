@@ -25,7 +25,7 @@ const BlockVideo = ({src, type, isSelected, step}) => {
 
     const handleScroll = (x) => {
         if (refBlockVideo.current) {
-            const box = refBlockVideo.current.children[0];
+            const box = refBlockVideo.current.children[0].children[0];
             const rect = box.getBoundingClientRect();
             box.muted = true; // without this line it's not working although I have "muted" in HTML
 
@@ -53,19 +53,25 @@ const BlockVideo = ({src, type, isSelected, step}) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [handleScroll]);
 
+    return (
+        <div ref={refBlockVideo} style={{height: "100%"}}>
+            <ReactPlayer className="react-player" width="100%" height="100%" url={src} loop/>
+        </div>
+    )
+
     // return (
-    // 	<video ref={refBlockVideo} width="100%" height="100%" loop>
-    // 		<source src={src} type={type} />
-    // 	</video>
+    //     <video ref={refBlockVideo} width="100%" height="100%" loop>
+    //         <source src={src} type={type}/>
+    //     </video>
     // );
 
-    return (
-        <div ref={refBlockVideo} style={{height: "100%"}}
-             dangerouslySetInnerHTML={{
-                 __html: `<video width="100%" height="100%" loop><source src=${src} type=${type} /></video>`,
-             }}
-        />
-    );
+    // return (
+    //     <div ref={refBlockVideo} style={{height: "100%"}}
+    //          dangerouslySetInnerHTML={{
+    //              __html: `<video width="100%" height="100%" loop><source src=${src} type=${type} /></video>`,
+    //          }}
+    //     />
+    // );
 };
 
 // const VideoSlide = ({ url, isSelected }) => <ReactPlayer className="react-player" width="100%" height="100%" url={url} playing={isSelected} loop />;
@@ -108,7 +114,7 @@ function Canopy_Tent({router}) {
     const onChangeCarousel = (index) => {
         if (refs.length > 0) {
             refs.forEach((ref, i) => {
-                const box = ref.current.children[0];
+                const box = ref.current.children[0].children[0];
                 if (i === index) {
                     if (box.paused) box.play();
                 } else {
@@ -155,8 +161,7 @@ function Canopy_Tent({router}) {
         <React.Fragment>
             <Head>
                 <title>Canopy Tent - WESTSHADE</title>
-                {/*<meta name="description"*/}
-                {/*      content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Different types of canopy tent to meet your special needs. Safe shade, long-lasting fabric and unlimited color."/>
             </Head>
             <SubHeaderBar title={"Canopy Tent"} subTitle={"Spec"} subTitleDestination={"spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()} maxWidth={process.env.maxWidth + "px"}/>
             {/* 主要显示区域 */}

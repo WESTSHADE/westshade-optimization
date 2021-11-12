@@ -167,15 +167,15 @@ function Header() {
                                         <Menu size={24} color="#323232"/>
                                     </Button>
                                 </Block>
-                                <Block position="relative" display={["none", "", "block"]} width="200px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site-dark-header.png"} alt="Site Logo" layout="responsive" width={200} height={40} quality={100}/>
+                                <Block position="relative" display={["none", "", "block"]} width="206px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
+                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
                                 </Block>
                             </NavigationItem>
                         </NavigationList>
                         <NavigationList $align={ALIGN.center} className="nav-center loge">
                             <NavigationItem>
-                                <Block position="relative" width="180px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site-dark-header.png"} alt="Site Logo" layout="responsive" width={200} height={40} quality={100}/>
+                                <Block position="relative" width="110px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
+                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
                                 </Block>
                             </NavigationItem>
                         </NavigationList>

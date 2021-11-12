@@ -69,8 +69,7 @@ function Catalina({router}) {
         <React.Fragment>
             <Head>
                 <title>Umbrella Catalina - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content='Oversized Telescopic Umbrella. Heavy duty welded PVC fabric. The fabric is super strong and heavy duty. 1/4" thickness. 1/850 gsm. Self-cleaning finishing.'/>
             </Head>
             <SubHeaderBar title={"Umbrella Catalina"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="images/umbrella/catalina/catalina_display.jpg" alt="catalina display"

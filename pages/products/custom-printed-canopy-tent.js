@@ -16,7 +16,7 @@ import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
-import {Search, Delete, ChevronDown, Upload} from "baseui/icon";
+import {Search, Delete, ChevronDown, Upload, ChevronLeft, ChevronRight} from "baseui/icon";
 import {Input} from "baseui/input";
 import {StatefulTextarea, Textarea} from "baseui/textarea";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
@@ -30,7 +30,7 @@ import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
-import {Checkout} from "../../components/sections";
+import {Checkout_N as Checkout} from "../../components/sections";
 import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
@@ -160,6 +160,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [wallColors, setWallColors] = useState(["white", "white", "white", "white"]);
     const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
     const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
+
+    const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
     const [tabsRefs, setTabsRefs] = useState([]);
 
@@ -834,22 +836,126 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         <React.Fragment>
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
+                <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             </Head>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}
                     <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                                  onClick={() => openSummaryModal()}
-                                  onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                                  onClickPlus={() => setTotalCount(totalCount + 1)}
-                                  onClickAddToBag={() => updateCart()}
-                                  onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
-                        />
+                        <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey + ""))}
+                              overrides={{
+                                  Root: {
+                                      style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
+                                  },
+                                  TabList: {
+                                      props: {
+                                          className: "hideScrollBar"
+                                      },
+                                      style: {
+                                          display: "grid",
+                                          gridTemplateColumns: " repeat(3,auto)",
+                                          gridColumnGap: "12px",
+                                          justifyContent: "center",
+                                          overflowX: "scroll",
+                                      },
+                                  },
+                                  TabBorder: {props: {hidden: true}},
+                                  TabHighlight: {props: {hidden: true}},
+                              }}
+                        >
+                            <Tab title="Photo"
+                                 overrides={{
+                                     TabPanel: {
+                                         style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                     },
+                                     Tab: {
+                                         style: ({$isActive}) => ({
+                                             background: $isActive ? "black" : "transparent",
+                                             color: $isActive ? "white" : "black",
+                                             paddingTop: "5px",
+                                             paddingBottom: "5px",
+                                             paddingRight: "24px",
+                                             paddingLeft: "24px",
+                                             borderRadius: "24px",
+                                             ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                         }),
+                                     },
+                                 }}
+                            >
+                                <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
+                                              renderLeftNav={(onClick, disabled) => (
+                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                          onClick={onClick}
+                                                          overrides={{
+                                                              BaseButton: {
+                                                                  props: {
+                                                                      className: "cursor react-image-gallery-arrow left",
+                                                                  },
+                                                              },
+                                                          }}
+                                                          disabled={disabled}
+                                                  >
+                                                      <ChevronLeft size={28} color={"white"}/>
+                                                  </Button>
+                                              )}
+                                              renderRightNav={(onClick, disabled) => (
+                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                          onClick={onClick}
+                                                          overrides={{
+                                                              BaseButton: {
+                                                                  props: {
+                                                                      className: "cursor react-image-gallery-arrow right",
+                                                                  },
+                                                              },
+                                                          }}
+                                                          disabled={disabled}
+                                                  >
+                                                      <ChevronRight size={28} color={"white"}/>
+                                                  </Button>
+                                              )}
+                                />
+                            </Tab>
+                            <Tab title="Video" overrides={{
+                                TabPanel: {
+                                    style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                },
+                                Tab: {
+                                    style: ({$isActive}) => ({
+                                        background: $isActive ? "black" : "transparent",
+                                        color: $isActive ? "white" : "black",
+                                        paddingTop: "5px",
+                                        paddingBottom: "5px",
+                                        paddingRight: "24px",
+                                        paddingLeft: "24px",
+                                        borderRadius: "24px",
+                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                    }),
+                                },
+                            }}>
+                            </Tab>
+                            <Tab title="3D" overrides={{
+                                TabPanel: {
+                                    style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                },
+                                Tab: {
+                                    style: ({$isActive}) => ({
+                                        background: $isActive ? "black" : "transparent",
+                                        color: $isActive ? "white" : "black",
+                                        paddingTop: "5px",
+                                        paddingBottom: "5px",
+                                        paddingRight: "24px",
+                                        paddingLeft: "24px",
+                                        borderRadius: "24px",
+                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                    }),
+                                },
+                            }}>
+                                {/*<model-viewer camera-controls alt="A 3D model of an astronaut" src="/images/3D/umbrella.glb"></model-viewer>*/}
+                            </Tab>
+                        </Tabs>
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]} padding={["24px 16px 94px", "24px 16px 68px", "24px 24px 0 0"]}
+                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]} padding={["24px 16px 94px", "24px 16px 68px", "24px 24px 68px 0"]}
                            overrides={{
                                Block: {
                                    props: {
@@ -1234,6 +1340,13 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     </Block>
                 </Block>
             </Block>
+            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                      onClick={() => openSummaryModal()}
+                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                      onClickPlus={() => setTotalCount(totalCount + 1)}
+                      onClickAddToBag={() => updateCart()}
+                      onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            />
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
             <Modal type="alertdialog" isOpen={technologyCompareOpen} onClose={() => setTechnologyCompareOpen(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>

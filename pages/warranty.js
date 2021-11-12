@@ -39,8 +39,7 @@ function Warranty() {
         <React.Fragment>
             <Head>
                 <title>Warranty - WESTSHADE</title>
-                <meta name="description"
-                      content="Warranty Warranty InformationAll products and accessories purchased from Westshade Canopy & Umbrellas are covered by manufacture's default defects."/>
+                <meta name="description" content="Warranty information, Warranty Timeline Coverage and Liability Notice of Westshade."/>
             </Head>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
                    overrides={{

@@ -69,8 +69,7 @@ function Marco({router}) {
         <React.Fragment>
             <Head>
                 <title>Umbrella Marco - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Marco-push up outdoor umbrella. Safe choice to enjoy out door activities. UPF 50+ protected premium waterproof fabric cover. Choose from two fabrics."/>
             </Head>
             <SubHeaderBar title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="MARCO" subtitle="Push up outdoor umbrella" url="images/umbrella/marco/marco_display.png" alt="marco display" imageObjectFit="contain"

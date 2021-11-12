@@ -66,8 +66,7 @@ function Custom_Printing_Table_Cover({router, size}) {
         <React.Fragment>
             <Head>
                 <title>Custom Printing Table Cover - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Customize your table covers for any occasions. Print your logo, icon and choose any color! Choose fabric from fitted and stretched table covers!"/>
             </Head>
             <Block ref={refBanner} position="relative" alignItems="center" paddingTop={["32px", "40px", "64px"]} paddingRight="30px" paddingBottom={["32px", "40px", "64px"]} paddingLeft="30px"
                    overflow="hidden"

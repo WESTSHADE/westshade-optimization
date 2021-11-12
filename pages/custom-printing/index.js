@@ -1,7 +1,6 @@
 import React from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
@@ -30,8 +29,7 @@ function Custom_Printing({router}) {
         <React.Fragment>
             <Head>
                 <title>Custom Printing - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
             <Block position="relative" height={["480px", "660px", "900px"]} paddingTop={["60px", "80px", "160px"]} paddingRight="30px" paddingLeft="30px"

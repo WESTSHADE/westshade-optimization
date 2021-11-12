@@ -69,8 +69,7 @@ function Santorini({router}) {
         <React.Fragment>
             <Head>
                 <title>Umbrella Santorini - WESTSHADE</title>
-                {/*    <meta name="description"*/}
-                {/*          content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>*/}
+                <meta name="description" content="SANTORINI-Pully outdoor umbrella. Safe choice to enjoy out door activities. UPF 50+ protected premium waterproof fabric cover. Choose from two fabric."/>
             </Head>
             <SubHeaderBar title={"Umbrella Santorini"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <BannerDisplay title="SANTORINI" subtitle="Pully outdoor umbrella" url="images/umbrella/santorini/santorini_display.jpeg" alt="santorini display"

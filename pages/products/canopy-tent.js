@@ -933,6 +933,7 @@ function Canopy_Tent({router, products, variants}) {
         <React.Fragment>
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
+                <meta name="description" content="Customized your own canopy. Buy it with desired frames, Heavy Duty Aluminum, Commercial Aluminum, Economic Steel and more!"/>
             </Head>
             <Block height="auto" display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]} marginBottom="40px">
                 <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom="40px">

@@ -9,8 +9,10 @@ import Head from "next/head";
 import Link from "next/link";
 
 import {Block} from "baseui/block";
+import {ALIGN, Radio, RadioGroup} from "baseui/radio";
 
-import {Checkout_L as Checkout, Selection} from "../../components/sections";
+import {Checkout_L as Checkout} from "../../components/sections";
+import Selection from "../../components/selection-n";
 
 import styles from "./Product.module.scss";
 
@@ -31,7 +33,9 @@ const utils = new Utils();
 
 const id_product_wall = 26516;
 
+const id_attribute_canopySize = 4;
 const id_attribute_wallType = 11;
+const id_attribute_frameSeries = 34;
 
 function getProductName(text) {
     if (!text) return "";
@@ -128,6 +132,9 @@ function Accessories({router, product, productComponent, productVariant}) {
         let selection = [...selectedAttribute];
         selection[index].forEach((attribute) => {
             if (attribute.id === id) attribute.option = event.target.value;
+            if (id === id_attribute_frameSeries && event.target.value !== "y7" && attribute.id === id_attribute_canopySize && (attribute.option !== "10x10" && attribute.option !== "10x15" && attribute.option !== "10x20")) {
+                attribute.option = "10x20";
+            }
         });
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
         let selectionVariant = [...selectedVariant];
@@ -249,10 +256,10 @@ function Accessories({router, product, productComponent, productVariant}) {
         setProductName(uProduct.name);
         setProductType(uProduct.type);
 
-        if (uProduct.hasOwnProperty("image")) {
-            setMainImage([uProduct.image]);
-        } else if (uProduct.hasOwnProperty("images")) {
+        if (uProduct.hasOwnProperty("images")) {
             setMainImage(uProduct.images);
+        } else if (uProduct.hasOwnProperty("image")) {
+            setMainImage([uProduct.image]);
         }
 
         // 获取,保存各组件信息
@@ -279,9 +286,14 @@ function Accessories({router, product, productComponent, productVariant}) {
                 uProductComponent.map((component) => {
                     let defaultAttr = [...component.default_attributes];
 
-                    if (component.id === id_product_wall) {
-                        defaultAttr.forEach((attr) => (wallType && attr.id === id_attribute_wallType ? (attr.option = wallType) : null));
-                    }
+                    defaultAttr.forEach((attr) => {
+                        if (component.id === id_product_wall && wallType && attr.id === id_attribute_wallType) {
+                            attr.option = wallType
+                        } else if (attr.id === id_attribute_frameSeries) {
+                            attr.option = attr.option === "y5" ? "y5 economic" : attr.option === "y6" ? "y6 commercial" : attr.option === "y7" ? "y7 heavy duty" : "y7 heavy duty";
+                        }
+                    });
+
                     selectedAttrList.push(defaultAttr);
 
                     return fetchProductVariant(component.id);
@@ -330,10 +342,10 @@ function Accessories({router, product, productComponent, productVariant}) {
             if (!variant || !variant.attributes) return;
 
             if (index === 0) {
-                if (variant.hasOwnProperty("image") && variant.image) {
-                    setMainImage([variant.image]);
-                } else if (variant.hasOwnProperty("images") && variant.images.length > 0) {
+                if (variant.hasOwnProperty("images") && variant.images.length > 0) {
                     setMainImage(variant.images);
+                } else if (variant.hasOwnProperty("image") && variant.image) {
+                    setMainImage([variant.image]);
                 }
 
                 setRegularPrice(variant.regular_price);
@@ -419,6 +431,7 @@ function Accessories({router, product, productComponent, productVariant}) {
                 {sl.map((attribute, i) => {
                     if (attribute.id === id_attribute_wallType && wallType) return;
 
+
                     return (
                         <Block key={i} font="MinXLabel14"
                                overrides={{
@@ -430,10 +443,17 @@ function Accessories({router, product, productComponent, productVariant}) {
                                }}
                         >
                             <Block marginBottom="16px" font="MinXHeading16">{attribute.name}</Block>
-                            <Selection data={attribute}
+                            <Selection id={attribute.id} attributes={[attribute]}
                                        value={selectedAttribute[index] ? selectedAttribute[index][i].option.toLowerCase() : ""}
                                        onChange={(event) => handleChangeRadio(event, index, attribute.id)}
-                            />
+                            >
+                                {attribute.id === id_attribute_canopySize && selectedAttribute.length > 0 ? attribute.options.map((option, index) => {
+                                    let selectedFrame = selectedAttribute[0].filter((attribute) => attribute.id === id_attribute_frameSeries);
+                                    if ((selectedFrame[0].option === "y5 economic" || selectedFrame[0].option === "y6 commercial") && index > 2) return null;
+
+                                    return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
+                                }) : null}
+                            </Selection>
                         </Block>
                     )
                 })}

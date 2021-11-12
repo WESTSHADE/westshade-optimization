@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Block} from "baseui/block";
 import {PLACEMENT, StatefulTooltip, TRIGGER_TYPE} from "baseui/tooltip";

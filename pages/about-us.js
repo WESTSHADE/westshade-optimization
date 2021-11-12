@@ -48,7 +48,8 @@ function About_Us() {
         <React.Fragment>
             <Head>
                 <title>About Us - WESTSHADE</title>
-                <meta name="description" content="Industry Leading Dependable Canopies & Umbrellas Welcome to the #1 dependable canopy manufacturer in the U.S! We are your exclusive supplier of indoor."/>
+                <meta name="description"
+                      content="Our goal is to bring comfort, quality, and convenience in enhancing our customers outdoor and indoor experience. In addition to our recreational and optimal business solution shelters, we also provide full custom-printing services in creating the ideal advertising method for your next product & service promotion!"/>
             </Head>
             <Block maxWidth="960px" marginRight="auto" marginLeft="auto">
                 <Block display="flex" flexDirection="column" position="relative" alignItems="flex-start" justifyContent={"flex-end"} height={["181px", "272px", "517px"]}
