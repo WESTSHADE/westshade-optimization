@@ -20,7 +20,7 @@ const Quantity = (props) => {
                overrides={{
                    Block: {
                        props: {
-                           className: clsx(styles["container-product-section"], styles["quantity"])
+                           className: clsx([styles["container-product-section"], styles["quantity"]])
                        },
                    },
                }}
@@ -44,7 +44,7 @@ const Quantity = (props) => {
                        overrides={{
                            Block: {
                                props: {
-                                   className: clsx(styles["button-quantity"], styles["display"])
+                                   className: clsx([styles["button-quantity"], styles["display"]])
                                },
                            },
                        }}

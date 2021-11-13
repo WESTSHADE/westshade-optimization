@@ -139,6 +139,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             return equal;
         });
         selectionVariant[index] = selected[0];
+        if (selectionVariant.length === 1 && !selectionVariant[0]) {
+            selectionVariant = [];
+        }
         // Part 3: 保存更改项
         setSelectedAttribute(selection);
         setSelectedVariant(selectionVariant);
@@ -185,7 +188,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             }
         });
         setAvailableList(available);
-
         setTotalRegularPrice(regularPrice);
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
@@ -258,7 +260,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             let selectedAttrList = [];
             productComponent.map((component) => {
                 let defaultAttr = [...component.default_attributes];
-                console.log(defaultAttr);
+
                 defaultAttr.forEach((attr) => {
                     if (attr.id === id_attribute_umbrellaSize) {
                         if (router.query.size) {
@@ -317,6 +319,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     useEffect(() => {
         // 已选各产品组成变体
         if (!selectedVariant || selectedVariant.length === 0) return;
+        console.log(selectedVariant)
 
         selectedVariant.forEach((variant, index) => {
             if (!variant || !variant.attributes) return;
@@ -519,7 +522,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
-                    <Block position={["unset", "unset", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <Block position={["", "", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
                         <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
                                   onClick={() => openSummaryModal()}
@@ -530,7 +533,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                         />
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
+                    <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]}
                            overrides={{
                                Block: {
                                    props: {
@@ -539,7 +542,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                                },
                            }}
                     >
-                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom="156px" paddingLeft={["16px", "16px", "24px"]}>
                             <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                             {product && product.short_description ? (
                                 <Block font="MinXParagraph14"

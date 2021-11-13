@@ -603,7 +603,7 @@ function Profile() {
 
 function Address() {
     const {token, user} = useSelector(({user}) => user);
-    console.log(user);
+
     const [shippingDetail, setShippingDetail] = useState({...user.shipping});
     const [shippingDiff, setShippingDiff] = useState(false);
 

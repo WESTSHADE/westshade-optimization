@@ -10,6 +10,13 @@ import {FileUploader} from "baseui/file-uploader";
 import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
 export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, selectedRoofSlide, selectedSlidePart, applyToFullSide, setApplyToFullSide}) {
     if (!selectedListTemp) return null;
 
@@ -44,6 +51,32 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                     if (index === selectedRoofSlide) item.peak[key] = e.target.value;
                 } else if (selectedSlidePart === 1) {
                     if (index === selectedRoofSlide) item.valance[key] = e.target.value;
+                }
+            }
+        })
+        setSelectedRoofListTemp(temp);
+    }
+
+    function uploadOnChange(file, key) {
+        let temp = JSON.parse(JSON.stringify(selectedListTemp));
+
+        let peak = temp[selectedRoofSlide].peak;
+        let valance = temp[selectedRoofSlide].valance;
+
+        temp.map((item, index) => {
+            if (applyToFullSide[selectedSlidePart]) {
+                if (selectedSlidePart === 0) {
+                    item.peak = peak;
+                    item.peak[key] = file;
+                } else if (selectedSlidePart === 1) {
+                    item.peak = valance;
+                    item.valance[key] = file;
+                }
+            } else {
+                if (selectedSlidePart === 0) {
+                    if (index === selectedRoofSlide) item.peak[key] = file;
+                } else if (selectedSlidePart === 1) {
+                    if (index === selectedRoofSlide) item.valance[key] = file;
                 }
             }
         })
@@ -166,8 +199,10 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                                     onDragStart={(e) => {
                                         console.log(e)
                                     }}
-                                    onDropAccepted={(e) => {
-                                        console.log(e)
+                                    onDropAccepted={async (acceptedOrRejected, event) => {
+                                        console.log(acceptedOrRejected);
+                                        let base64 = await toBase64(acceptedOrRejected[0])
+                                        uploadOnChange(base64, "backgroundImage");
                                     }}
                                     onDropRejected={(e) => {
                                         console.log(e)
@@ -202,6 +237,11 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                     </Panel>
                     <Panel title="Logo">
                         <FileUploader
+                            onDropAccepted={async (acceptedOrRejected, event) => {
+                                console.log(acceptedOrRejected);
+                                let base64 = await toBase64(acceptedOrRejected[0])
+                                uploadOnChange(base64, "logo");
+                            }}
                             overrides={{
                                 FileDragAndDrop: {
                                     style: {

@@ -6,7 +6,7 @@ import {PLACEMENT, StatefulTooltip, TRIGGER_TYPE} from "baseui/tooltip";
 import {Modal} from "../surfaces";
 import MButton from "../button-n";
 
-export default function custom_printing_roof({isOpen, onClose, selectedRoofList}) {
+export default function custom_printing_roof({isOpen, onClose, selectedRoofList, applyToFullSide, setApplyToFullSide}) {
     const [printDetailIsOpen, setPrintDetailIsOpen] = useState(false);
 
     const [selectedRoofSlide, setSelectedRoofSlide] = useState(null);
@@ -15,11 +15,13 @@ export default function custom_printing_roof({isOpen, onClose, selectedRoofList}
     const [tempList, setTempList] = useState(JSON.parse(JSON.stringify(selectedRoofList)));
     const [tempTempList, setTempTempList] = useState(JSON.parse(JSON.stringify(selectedRoofList)));
 
-    const [applyToFullSide, setApplyToFullSide] = useState([false, false]);
     const [applyToFullSideTemp, setApplyToFullSideTemp] = useState([false, false]);
 
     useEffect(() => {
-        if (isOpen) setTempList(JSON.parse(JSON.stringify(selectedRoofList)))
+        if (isOpen) {
+            setTempList(JSON.parse(JSON.stringify(selectedRoofList)));
+            setApplyToFullSideTemp(JSON.parse(JSON.stringify(applyToFullSide)))
+        }
     }, [isOpen]);
 
     const openPrintingDetail = (part) => {
@@ -70,7 +72,7 @@ export default function custom_printing_roof({isOpen, onClose, selectedRoofList}
         }
         setTempList(temp);
 
-        const tempFull = JSON.parse(JSON.stringify(applyToFullSideTemp));
+        const tempFull = JSON.parse(JSON.stringify(applyToFullSide));
         tempFull[selectedSlidePart] = false;
         setApplyToFullSide(tempFull);
     }

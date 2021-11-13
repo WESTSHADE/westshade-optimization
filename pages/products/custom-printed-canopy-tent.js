@@ -40,6 +40,7 @@ import CustomPrintingRoof from "../../components/custom_printing_roof";
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 import {Accordion, Panel} from "baseui/accordion";
+import styles from "../cart/cart.module.scss";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -117,6 +118,20 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 let checkoutProductList = [];
 let selectedFrame = "y7 heavy duty", selectedSize = "10x10", selectedColor = "white";
 
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+function dataURLtoFile(dataurl, filename) {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type: mime});
+}
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
@@ -148,6 +163,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [isInStock, setIsInStock] = useState(true);
     const [availableToCheckout, setAvailable] = useState(false);
 
+    const [addCustomPrinted, setAddCustomPrinted] = useState(false);
+
     ////////////////////////////////////////
 
     const [productImageGallery, setProductImageGallery] = useState([]);
@@ -170,14 +187,15 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [availableList, setAvailableList] = useState([
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
-        {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
-        {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
-        {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
-        {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
+        // {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
+        // {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
+        // {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
+        // {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
     ]);
 
     ////////////////////////////////////////
     const [roofColorSelectedList, setRoofColorSelectedList] = useState([{peak: {}, valance: {}}, {peak: {}, valance: {}}, {peak: {}, valance: {}}, {peak: {}, valance: {}}]);
+    const [applyToFullSide, setApplyToFullSide] = useState([false, false]);
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
     const [printIsOpen, setPrintIsOpen] = useState(false);
@@ -187,12 +205,15 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [frameCompareOpen, setFrameCompareOpen] = useState(false);
     const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
 
+    const [showCustomInfoInput, setShowCustomInfoInput] = useState(false);
+
     ////////////////////////////////////////
 
     const dispatch = useDispatch();
 
-    const {loggedIn, token} = useSelector(({user}) => user);
+    const {loggedIn, token, user} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
+    console.log(user);
 
     function renderCustomImage(props, wallPics = []) {
         return (
@@ -205,6 +226,30 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             </>
         );
     }
+
+    const handleSendCustomPrinting = async (request) => {
+        console.log(request);
+
+        let result = await utils.contact({
+            form_id: "3",
+            status: "active",
+            1: "Custom Printing canopy tent request",
+            5: "Peak: " + (request[0].peak.backgroundColor || "") + "; " + "Valance: " + (request[0].valance.backgroundColor || "") + "; ",
+            6: "Peak: " + (request[0].peak.content || "") + "; " + "Valance: " + (request[0].valance.content || "") + "; ",
+            7: "Peak: " + (request[0].peak.fontFamily || "") + ", " + (request[0].peak.fontColor || "") + "; " + "Valance: " + (request[0].valance.fontFamily || "") + ", " + (request[0].valance.fontColor || "") + "; ",
+            8: "Peak: " + (request[0].peak.instruction || "") + "; " + "Valance: " + (request[0].valance.instruction || "") + "; ",
+            4: request[0].peak.backgroundImage,
+            28: request[0].peak.backgroundImage,
+            9: request[0].peak.logo,
+            29: request[0].valance.logo,
+            3.1: applyToFullSide[0] ? "Apply to four sides peak" : "",
+            3.2: applyToFullSide[1] ? "Apply to four sides valance" : "",
+            36.1: user.first_name,
+            36.2: user.last_name,
+            37: "8563169367"
+        });
+        console.log(result);
+    };
 
     const openWallModal = (index) => {
         setActiveWall(index);
@@ -244,19 +289,24 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const closeCustomPrintingModal = (save, tempList) => {
         if (save) {
             const temp = JSON.parse(JSON.stringify(tempList));
+
+            handleSendCustomPrinting(temp);
+
             setRoofColorSelectedList(temp);
 
             let selectionA = JSON.parse(JSON.stringify(selectedAttribute));
+
             let selectedVariantList = JSON.parse(JSON.stringify(selectedVariant));
 
             let sizesResult = selectedVariant[0].attributes.find(item => item.id === id_attribute_canopySize);
             let sizesList = sizesResult.option.split("x");
 
             let target = [
-                {id: 31, name: 'Roof Size', option: sizesList[0] + "ft"}, //左右
-                {id: 0, name: 'Roof Size II', option: sizesList[1] + "ft"}, //前后
-                {id: 0, name: 'Number', option: 0}, //左右
-                {id: 0, name: 'Number II', option: 0} //前后
+                {...selectionA[1][0], option: sizesList[0] + "ft"}, //左右
+                {...selectionA[1][1], option: sizesList[1] + "ft"}, //前后
+                {...selectionA[1][2], option: 0}, //左右
+                {...selectionA[1][3], option: 0}, //前后
+                {...selectionA[1][4]}
             ]
 
             temp.map((item, index) => {
@@ -371,17 +421,16 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 console.log(selection);
                 selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
             });
-        } else if (index === 2 && id === id_attribute_printing_tech) {
+        } else if (index === 1 && id === id_attribute_printing_tech) {
             selection.forEach((item, indexA) => {
-                if (indexA < 2) return;
-                if (indexA > 1) {
-                    item.forEach((attribute) => {
-                        if (attribute.id === id_attribute_printing_tech) {
-                            attribute.option = event.target.value;
-                        }
-                    });
-                }
-                console.log(selection);
+                if (indexA < 1) return;
+
+                item.forEach((attribute) => {
+                    if (attribute.id === id_attribute_printing_tech) {
+                        attribute.option = event.target.value;
+                    }
+                });
+
                 selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
             });
         }
@@ -495,6 +544,19 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
 
+    const sendRequest = () => {
+        if (loggedIn) {
+            if (user.first_name && user.last_name && user.shipping.phone) {
+
+
+            } else {
+                setShowCustomInfoInput(true);
+            }
+        } else {
+            setShowCustomInfoInput(true);
+        }
+    }
+
     const updateCart = async () => {
         let cl = JSON.parse(JSON.stringify(cart));
         cl = cl.concat([...checkoutProductList]);
@@ -539,6 +601,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         } else if (productComponent[0].hasOwnProperty("image")) {
             setMainImage([productComponent[0].image]);
         }
+        console.log(productComponent);
 
         setSelectedAttribute(productComponent.map(({default_attributes}) => default_attributes) || []);
     }, [productComponent]);
@@ -718,6 +781,14 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             setIsInStock(true);
             setMessage("");
         });
+
+        if (!selectedVariant[1]) {
+            available = false;
+            setAddCustomPrinted(false);
+        } else {
+            setAddCustomPrinted(true);
+        }
+
         setAvailable(available);
     }, [availableList]);
 
@@ -1034,12 +1105,12 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                             />
                                         </SelectionArea>
                                         <SelectionArea title="Color">
-                                            <Selection name="color" value={selectedColor}
-                                                       onChange={(event) => handleChangeRadio(event, 1, id_attribute_canopyColor)}
-                                                       id={id_attribute_canopyColor} attributes={productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor) : []}
-                                            />
+                                            {/*<Selection name="color" value={selectedColor}*/}
+                                            {/*           onChange={(event) => handleChangeRadio(event, 1, id_attribute_canopyColor)}*/}
+                                            {/*           id={id_attribute_canopyColor} attributes={productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor) : []}*/}
+                                            {/*/>*/}
                                             <Block maxWidth="315px" marginRight="auto" marginLeft="auto" font="MinXParagraph14">
-                                                You can also print any color or any designs with our <span style={{color: "#23A4AD"}}>custom printing</span> service
+                                                You can print any color or any designs with our <span style={{color: "#23A4AD"}}>custom printing</span> service
                                             </Block>
                                             <Button shape={SHAPE.pill}
                                                     overrides={{
@@ -1068,9 +1139,9 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                             </Button>
                                         </SelectionArea>
                                         <SelectionArea title="Printing Technology">
-                                            <Selection name="printing_tech" value={selectedAttribute[2] ? selectedAttribute[2][3].option.toLowerCase() : ""}
-                                                       onChange={(event) => handleChangeRadio(event, 2, id_attribute_printing_tech)}
-                                                       id={id_attribute_printing_tech} attributes={productComponent[2] ? productComponent[2].attributes.filter((attribute) => attribute.id === id_attribute_printing_tech) : []}
+                                            <Selection name="printing_tech" value={selectedAttribute[1] ? selectedAttribute[1][4].option.toLowerCase() : ""}
+                                                       onChange={(event) => handleChangeRadio(event, 1, id_attribute_printing_tech)}
+                                                       id={id_attribute_printing_tech} attributes={productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_printing_tech) : []}
                                             />
                                             <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Technology' color="MinXPrimaryText"
                                                      buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
@@ -1079,103 +1150,103 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                         </SelectionArea>
                                     </>
                                 </Tab>
-                                <Tab title="+Wall" tabRef={tabsRefs[1]}
-                                     overrides={{
-                                         TabPanel: {
-                                             style: {paddingRight: 0, paddingLeft: 0},
-                                         },
-                                         Tab: {
-                                             style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                         },
-                                     }}
-                                >
-                                    <ul>
-                                        {wallAttributeList.map((component, index) => {
-                                            return (
-                                                <ListItem key={index}
-                                                          artwork={(props) => {
-                                                              let side = index === 0 ? "left" : index === 1 ? "right" : index === 2 ? "front" : index === 3 ? "back" : "";
-                                                              let added = component[1].option !== "none" ? "-added" : "";
-                                                              return <img src={"/images/icon/icon-wall-" + side + added + ".png"} alt={"icon-wall-" + side}/>;
-                                                          }}
-                                                          overrides={{
-                                                              Root: {
-                                                                  style: ({$theme}) => ({
-                                                                      height: "68px",
-                                                                      paddingRight: "8px",
-                                                                      paddingLeft: "8px",
-                                                                      backgroundColor: component[1].option !== "none" ? "#F5FCFC" : "transparent",
-                                                                  }),
-                                                              },
-                                                              Content: {
-                                                                  style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
-                                                              },
-                                                              ArtworkContainer: {
-                                                                  style: {width: "44px", height: "44px"},
-                                                              },
-                                                          }}
-                                                          endEnhancer={() => {
-                                                              return (
-                                                                  <>
-                                                                      {component[1].option !== "none" ? (
-                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                              <Button shape={SHAPE.pill}
-                                                                                      overrides={{
-                                                                                          BaseButton: {props: {className: "button-edit"}},
-                                                                                      }}
-                                                                                      onClick={() => openWallModal(index)}
-                                                                              >
-                                                                                  Edit
-                                                                              </Button>
-                                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                                      overrides={{
-                                                                                          BaseButton: {
-                                                                                              style: ({$theme}) => ({
-                                                                                                  marginLeft: "17px",
-                                                                                                  width: "20px",
-                                                                                                  height: "20px",
-                                                                                                  backgroundColor: "transparent",
-                                                                                              }),
-                                                                                          },
-                                                                                      }}
-                                                                                      onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
-                                                                              >
-                                                                                  <Delete size={20}/>
-                                                                              </Button>
-                                                                          </div>
-                                                                      ) : (
-                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                              <Button shape={SHAPE.pill}
-                                                                                      overrides={{
-                                                                                          BaseButton: {props: {className: "button-add"}},
-                                                                                      }}
-                                                                                      onClick={() => openWallModal(index)}
-                                                                              >
-                                                                                  Edit
-                                                                              </Button>
-                                                                          </div>
-                                                                      )}
-                                                                  </>
-                                                              );
-                                                          }}
-                                                >
-                                                    <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
-                                                                   overrides={{
-                                                                       LabelContent: {
-                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
-                                                                       },
-                                                                       LabelDescription: {
-                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
-                                                                       },
-                                                                   }}
-                                                    >
-                                                        {component[1].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[1].option, 1)}
-                                                    </ListItemLabel>
-                                                </ListItem>
-                                            )
-                                        })}
-                                    </ul>
-                                </Tab>
+                                {/*<Tab title="+Wall" tabRef={tabsRefs[1]}*/}
+                                {/*     overrides={{*/}
+                                {/*         TabPanel: {*/}
+                                {/*             style: {paddingRight: 0, paddingLeft: 0},*/}
+                                {/*         },*/}
+                                {/*         Tab: {*/}
+                                {/*             style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},*/}
+                                {/*         },*/}
+                                {/*     }}*/}
+                                {/*>*/}
+                                {/*    <ul>*/}
+                                {/*        {wallAttributeList.map((component, index) => {*/}
+                                {/*            return (*/}
+                                {/*                <ListItem key={index}*/}
+                                {/*                          artwork={(props) => {*/}
+                                {/*                              let side = index === 0 ? "left" : index === 1 ? "right" : index === 2 ? "front" : index === 3 ? "back" : "";*/}
+                                {/*                              let added = component[1].option !== "none" ? "-added" : "";*/}
+                                {/*                              return <img src={"/images/icon/icon-wall-" + side + added + ".png"} alt={"icon-wall-" + side}/>;*/}
+                                {/*                          }}*/}
+                                {/*                          overrides={{*/}
+                                {/*                              Root: {*/}
+                                {/*                                  style: ({$theme}) => ({*/}
+                                {/*                                      height: "68px",*/}
+                                {/*                                      paddingRight: "8px",*/}
+                                {/*                                      paddingLeft: "8px",*/}
+                                {/*                                      backgroundColor: component[1].option !== "none" ? "#F5FCFC" : "transparent",*/}
+                                {/*                                  }),*/}
+                                {/*                              },*/}
+                                {/*                              Content: {*/}
+                                {/*                                  style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},*/}
+                                {/*                              },*/}
+                                {/*                              ArtworkContainer: {*/}
+                                {/*                                  style: {width: "44px", height: "44px"},*/}
+                                {/*                              },*/}
+                                {/*                          }}*/}
+                                {/*                          endEnhancer={() => {*/}
+                                {/*                              return (*/}
+                                {/*                                  <>*/}
+                                {/*                                      {component[1].option !== "none" ? (*/}
+                                {/*                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>*/}
+                                {/*                                              <Button shape={SHAPE.pill}*/}
+                                {/*                                                      overrides={{*/}
+                                {/*                                                          BaseButton: {props: {className: "button-edit"}},*/}
+                                {/*                                                      }}*/}
+                                {/*                                                      onClick={() => openWallModal(index)}*/}
+                                {/*                                              >*/}
+                                {/*                                                  Edit*/}
+                                {/*                                              </Button>*/}
+                                {/*                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}*/}
+                                {/*                                                      overrides={{*/}
+                                {/*                                                          BaseButton: {*/}
+                                {/*                                                              style: ({$theme}) => ({*/}
+                                {/*                                                                  marginLeft: "17px",*/}
+                                {/*                                                                  width: "20px",*/}
+                                {/*                                                                  height: "20px",*/}
+                                {/*                                                                  backgroundColor: "transparent",*/}
+                                {/*                                                              }),*/}
+                                {/*                                                          },*/}
+                                {/*                                                      }}*/}
+                                {/*                                                      onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}*/}
+                                {/*                                              >*/}
+                                {/*                                                  <Delete size={20}/>*/}
+                                {/*                                              </Button>*/}
+                                {/*                                          </div>*/}
+                                {/*                                      ) : (*/}
+                                {/*                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>*/}
+                                {/*                                              <Button shape={SHAPE.pill}*/}
+                                {/*                                                      overrides={{*/}
+                                {/*                                                          BaseButton: {props: {className: "button-add"}},*/}
+                                {/*                                                      }}*/}
+                                {/*                                                      onClick={() => openWallModal(index)}*/}
+                                {/*                                              >*/}
+                                {/*                                                  Edit*/}
+                                {/*                                              </Button>*/}
+                                {/*                                          </div>*/}
+                                {/*                                      )}*/}
+                                {/*                                  </>*/}
+                                {/*                              );*/}
+                                {/*                          }}*/}
+                                {/*                >*/}
+                                {/*                    <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}*/}
+                                {/*                                   overrides={{*/}
+                                {/*                                       LabelContent: {*/}
+                                {/*                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),*/}
+                                {/*                                       },*/}
+                                {/*                                       LabelDescription: {*/}
+                                {/*                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),*/}
+                                {/*                                       },*/}
+                                {/*                                   }}*/}
+                                {/*                    >*/}
+                                {/*                        {component[1].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[1].option, 1)}*/}
+                                {/*                    </ListItemLabel>*/}
+                                {/*                </ListItem>*/}
+                                {/*            )*/}
+                                {/*        })}*/}
+                                {/*    </ul>*/}
+                                {/*</Tab>*/}
                                 {/*<Tab title="+Accessory" tabRef={tabsRefs[2]}*/}
                                 {/*    overrides={{*/}
                                 {/*        TabPanel: {*/}
@@ -1340,7 +1411,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     </Block>
                 </Block>
             </Block>
-            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={addCustomPrinted ? isInStock ? "Add to Bag" : "Out of Stock" : "No customizations added"} isAvailable={availableToCheckout}
                       onClick={() => openSummaryModal()}
                       onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
                       onClickPlus={() => setTotalCount(totalCount + 1)}
@@ -1461,7 +1532,40 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     </Block>
                 </Block>
             </Modal>
-            <CustomPrintingRoof isOpen={printIsOpen} onClose={closeCustomPrintingModal} selectedRoofList={roofColorSelectedList}/>
+            <Modal type="alertdialog" isOpen={showCustomInfoInput} onClose={() => setShowCustomInfoInput(false)} header="Please Input your Information"
+                   dialogStyles={{padding: "0px 40px 20px"}}
+                   footer={
+                       <Block display="grid" gridTemplateColumns="repeat(2, 94px)" gridColumnGap="40px" height="40px" justifyContent="center">
+                           <Button kind={KIND.minimal} shape={SHAPE.pill}
+                                   overrides={{
+                                       BaseButton: {
+                                           props: {
+                                               className: clsx([styles["confirm-empty-button"]])
+                                           },
+                                       },
+                                   }}
+                                   onClick={() => handleClearCart()}
+                           >
+                               Empty
+                           </Button>
+                           <Button kind={KIND.minimal} shape={SHAPE.pill}
+                                   overrides={{
+                                       BaseButton: {
+                                           props: {
+                                               className: clsx([styles["cancel-empty-button"]])
+                                           },
+                                       },
+                                   }}
+                                   onClick={() => setShowClear(false)}
+                           >
+                               Cancel
+                           </Button>
+                       </Block>
+                   }
+            >
+                <Block font="MinXParagraph12">After submitting the order, we’ll contact you based on the information you provide us here.</Block>
+            </Modal>
+            <CustomPrintingRoof isOpen={printIsOpen} onClose={closeCustomPrintingModal} selectedRoofList={roofColorSelectedList} applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}/>
         </React.Fragment>
     );
 }
@@ -1473,17 +1577,18 @@ Custom_Printed_Canopy_Tent.getInitialProps = async (context) => {
 
     product = await utils.getProductByWooId(61289);
     if (product.type === "composite") {
-        let cc = [product.composite_components[0], product.composite_components[1], product.composite_components[2]];
+        let cc = [product.composite_components[0], product.composite_components[1]];
         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
     }
 
     return {
         product: product,
-        productComponent: [component[0], component[1], component[2], component[2], component[2], component[2]],
-        productVariant: [variant[0], variant[1], variant[2], variant[2], variant[2], variant[2]],
+        productComponent: [component[0], component[1]],
+        productVariant: [variant[0], variant[1]],
         noFooter: true,
     };
-};
+}
+;
 
 export default withRouter(Custom_Printed_Canopy_Tent);

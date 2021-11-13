@@ -74,7 +74,7 @@ function Cart_Page({router}) {
 
     const handleClearCart = () => {
         setShowClear(false);
-        
+
         let c = JSON.parse(JSON.stringify(cart));
 
         clearCart(cartProduct, c)
@@ -208,7 +208,8 @@ function Cart_Page({router}) {
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top="96px" display="flex" alignItems="center" justifyContent="space-between" height="72px" backgroundColor="white" font="MinXHeading20" color="MinXPrimaryText" $style={{zIndex: "9"}}>
+                            <Block position="sticky" top={["48px", "48px", "96px"]} display="flex" alignItems="center" justifyContent="space-between" height="72px" backgroundColor="white" font="MinXHeading20" color="MinXPrimaryText"
+                                   $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
                                 <Button shape={SHAPE.square} kind={KIND.minimal}
                                         startEnhancer={() => (

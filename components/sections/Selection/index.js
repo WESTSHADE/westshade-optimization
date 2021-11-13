@@ -36,12 +36,12 @@ export default function Selection(props) {
                         overrides={{
                             RadioGroupRoot: {
                                 props: {
-                                    className: clsx(styles["container-radio-group"], styles["attr-color"])
+                                    className: clsx([styles["container-radio-group"], styles["attr-color"]])
                                 },
                             },
                             Root: {
                                 props: {
-                                    className: clsx(styles["container-radio"], styles["attr-color"])
+                                    className: clsx([styles["container-radio"], styles["attr-color"]])
                                 },
                                 style: ({$checked}) => ({
                                     padding: $checked ? "4px" : "6px",
@@ -78,12 +78,12 @@ export default function Selection(props) {
                         overrides={{
                             RadioGroupRoot: {
                                 props: {
-                                    className: clsx(styles["container-radio-group"], styles["attr-material"])
+                                    className: clsx([styles["container-radio-group"], styles["attr-material"]])
                                 },
                             },
                             Root: {
                                 props: {
-                                    className: clsx(styles["container-radio"], styles["attr-material"])
+                                    className: clsx([styles["container-radio"], styles["attr-material"]])
                                 },
                                 style: ({$checked}) => ({
                                     padding: $checked ? "14px 30px" : "16px 32px",
@@ -117,12 +117,12 @@ export default function Selection(props) {
                         overrides={{
                             RadioGroupRoot: {
                                 props: {
-                                    className: clsx(styles["container-radio-group"], styles["attr-tableCover"])
+                                    className: clsx([styles["container-radio-group"], styles["attr-tableCover"]])
                                 },
                             },
                             Root: {
                                 props: {
-                                    className: clsx(styles["container-radio"], styles["attr-tableCover"])
+                                    className: clsx([styles["container-radio"], styles["attr-tableCover"]])
                                 },
                                 style: ({$checked}) => ({
                                     padding: $checked ? "14px 30px" : "16px 32px",

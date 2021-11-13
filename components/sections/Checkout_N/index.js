@@ -10,6 +10,7 @@ import Plus from "baseui/icon/plus";
 import styles from "./checkout.module.scss";
 
 import {DateFn} from "../../../utils/tools";
+import MButton from "../../button-n";
 
 const dateFn = new DateFn();
 
@@ -107,19 +108,22 @@ const checkout = (props) => {
                         <Block display={["none", "block"]}>
                             <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                         </Block>
-                        <Block width={["116px", "148px", "160px"]}>
-                            <Button shape={SHAPE.pill}
-                                    overrides={{
-                                        BaseButton: {
-                                            style: () => ({width: "100%", height: "40px", fontSize: "16px", backgroundColor: "#23A4AD"}),
-                                        },
-                                    }}
-                                    onClick={props.onClickAddToBag}
-                                    disabled={!isAvailable}
-                            >
-                                {buttonText}
-                            </Button>
-                        </Block>
+                        {/*<Block width={["116px", "148px", "160px"]}>*/}
+                        {/*<Button shape={SHAPE.pill}*/}
+                        {/*        overrides={{*/}
+                        {/*            BaseButton: {*/}
+                        {/*                style: () => ({width: "100%", height: "40px", fontSize: "16px", backgroundColor: "#23A4AD"}),*/}
+                        {/*            },*/}
+                        {/*        }}*/}
+                        {/*        onClick={props.onClickAddToBag}*/}
+                        {/*        disabled={!isAvailable}*/}
+                        {/*>*/}
+                        {/*    {buttonText}*/}
+                        {/*</Button>*/}
+                        {/*</Block>*/}
+                        <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" disabled={!isAvailable}
+                                 onClick={props.onClickAddToBag}
+                        />
                     </Block>
 
                 </Block>
