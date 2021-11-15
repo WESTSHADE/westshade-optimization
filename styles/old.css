@@ -1,0 +1,167 @@
+.position-r {
+    position: relative;
+}
+
+.w-100p {
+    width: 100%;
+}
+
+.page {
+    min-height: calc(100vh - 120px - 550px);
+}
+
+.page > div:first-child {
+    margin-top: 0;
+}
+
+.page.product > div:first-child {
+    margin-top: 24px;
+}
+
+.information-title {
+    font-weight: bold !important;
+}
+
+.information-subtitle {
+    font-size: 1.625rem !important;
+}
+
+.homepage .section-grid-item {
+    height: 100%;
+    /* margin: 16px; */
+    padding: 16px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.section-content {
+    margin-bottom: 12px;
+    line-height: 1rem;
+    color: var(--gray);
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.section-content-entend {
+    margin: 20px auto;
+    line-height: 1.25rem;
+    color: var(--gray);
+    font-size: 0.825rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.banner-title {
+    margin-bottom: 24px;
+    color: white;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.section-container-extend {
+    position: relative;
+    text-align: center;
+    width: 100vw;
+    left: calc(50% - 50vw);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px 16px;
+}
+
+.section-title {
+    margin-bottom: 12px;
+    color: var(--black);
+    font-size: 2.125rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.section-container {
+    position: relative;
+    /*width: 100vw;*/
+    /*left: -24px;*/
+    /*left: calc(50% - 50vw);*/
+    margin-bottom: 12px;
+    padding: 24px 0;
+}
+
+ul.section-content li::before {
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.popup-image {
+    width: 80vw;
+    height: auto;
+    max-width: 480px;
+    object-fit: contain;
+}
+
+.section-grid-item-inner {
+    padding: 20px 12px;
+    /* text-align: left; */
+}
+
+.canopy-tent-package .section-title {
+    font-size: 1.25rem;
+}
+
+.canopy-tent-package .section-content {
+    font-size: 0.725rem;
+}
+
+.canopy-tent-package .section-grid-button {
+    background-color: var(--lapis-lazuli) !important;
+    color: white !important;
+    font-size: 0.625rem !important;
+    font-style: normal;
+}
+
+.section-desc-container-title {
+    color: var(--black);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.section-desc-container-content {
+    margin-top: 13px;
+    color: var(--gray);
+    font-size: 0.825rem;
+    font-weight: normal;
+}
+
+ul.section-desc-container-content li::before {
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.section-image-package-specs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.section-image-package-specs {
+    object-fit: contain;
+    height: 100px;
+    margin-bottom: 12px;
+}
+
+.background-gray {
+    background-color: #edebee;
+}
+
+.background-light-blue {
+    background-color: #fbfbfd;
+}

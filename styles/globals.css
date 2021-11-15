@@ -9,19 +9,14 @@ body {
     background-color: var(--primary-background);
 }
 
-.m-footer-wrap {
+.m-subheader-wrap, .m-body-section-wrap, .m-footer-wrap {
+    width: 100%;
     max-width: var(--maximum-display-width);
     margin: auto;
 }
 
 .m-wrap-side {
     padding: 0 16px
-}
-
-@media (min-width: 480px) {
-    .m-wrap-side {
-        padding: 0 16px
-    }
 }
 
 @media (min-width: 960px) {
@@ -38,18 +33,57 @@ body {
     text-align: center;
 }
 
+.text-left {
+    text-align: left;
+}
+
 .text-inherit {
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
 }
 
-/* ============================================================ */
-
-.container-page {
-    padding-top: 56px;
-    background-color: white;
+.glassmorphism {
+    background: rgba(255, 255, 255, .8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
+
+.banner-display {
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.banner-display:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.section-round-corner {
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.section-round-corner-s {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* ============================================================ */
 
 a {
     display: contents;
@@ -64,33 +98,6 @@ a:-webkit-any-link {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.z-9 {
-    z-index: 9;
-}
-
-.z-99 {
-    z-index: 99;
-}
-
-.f-bold {
-    font-weight: bold;
-}
-
-.h-unset {
-    height: unset !important;
-}
-
-.position-r {
-    position: relative;
-}
-
-.position-a {
-    position: absolute;
-}
-
-.w-100p {
-    width: 100%;
-}
 
 /* ============================================================ */
 
@@ -100,32 +107,9 @@ a:-webkit-any-link {
     top: 64px;
 }
 
-@media (min-width: 600px) {
-    .container-page {
-        padding-top: 64px;
-    }
-}
-
 @media (min-width: 1280px) {
-    .container-page {
-        padding-top: 122px;
-    }
-
     .alert-message {
         top: 122px;
     }
 }
-
-.page {
-    min-height: calc(100vh - 120px - 550px);
-}
-
-.page > div:first-child {
-    margin-top: 0;
-}
-
-.page.product > div:first-child {
-    margin-top: 24px;
-}
-
 

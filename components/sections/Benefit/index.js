@@ -4,9 +4,17 @@ import {Block} from "baseui/block";
 
 import Sandwich from "../../sandwich";
 
-const Benefit = () => {
+const Benefit = ({containerClassName}) => {
     return (
-        <Block display="flex" backgroundColor="MinXPrimaryText" alignItems="center" paddingTop={["42px", "56px", "122px"]} paddingBottom={["42px", "56px", "122px"]}>
+        <Block display="flex" backgroundColor="MinXPrimaryText" alignItems="center" paddingTop={["42px", "56px", "122px"]} paddingBottom={["42px", "56px", "122px"]}
+               overrides={{
+                   Block: {
+                       props: {
+                           className: containerClassName
+                       },
+                   },
+               }}
+        >
             <Block width="100%" display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="16px" gridRowGap="36px">
                 <Sandwich src="/images/icon/icon-free-shipping.png" alt="Free Shipping" title="Free Shipping" content="Free US nationwide shipping on orders over $149*"
                           containerImageProps={{width: ["60px", "80px", "100px"], marginBottom: "24px"}} containerTextProps={{maxWidth: ["135px", "216px", "260px"]}} titleColor="MinXBackground" contentColor="MinXBackground"

@@ -103,8 +103,6 @@ const Cart = ({isOpen, onClose}) => {
                 <Button type="outline" width="100%" height="52px" marginBottom="16px" font="MinXLabel14" color="#23A4AD" buttonStyle={{borderColor: "#D0D9D9"}} text="View cart"
                         onClick={() => router.push("/cart").then(() => onClose())}
                 />
-                {/*<Button variant="contained" classes={{contained: "root-product-cart-checkout"}} color="inherit" onClick={() => {*/}
-                {/*}} disableElevation disableRipple>{"CHECKOUT"}</Button>*/}
             </Block>
         </Drawer>
     )

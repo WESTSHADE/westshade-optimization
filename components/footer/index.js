@@ -48,7 +48,7 @@ function Footer({isHomePage}) {
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "1fr auto"]} gridRowGap={["32px", "32px", "40px"]} width="100%" paddingLeft={["0px", "0px", "calc((100% + 24px)/12)"]}>
-                        <Block display="grid" gridTemplateColumns={"repeat(2, max-content)"} gridColumnGap="22px" flex={1} marginBottom={["32px", ""]}>
+                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="22px" flex={1} marginBottom={["32px", "0px"]}>
                             {menuList.map((menu, index) => <Menu key={index} title={menu.title} dataList={menu.list}/>)}
                         </Block>
                         <Block display="grid" gridTemplateColumns="repeat(5, max-content)" gridColumnGap="22px" paddingTop={["0", "0", "16px"]} paddingLeft="16px">
@@ -62,12 +62,12 @@ function Footer({isHomePage}) {
                 </Block>
             </div>
             <div className="divider"/>
-            <div className={clsx("m-footer-wrap", "m-wrap-side")}>
+            <div className={clsx(["m-footer-wrap", "m-wrap-side"])}>
                 <Block display="flex" flexDirection={["column", "column", "row-reverse"]} alignItems={["", "", "center"]} justifyContent={["flex-start", "flex-start", "space-between"]} minHeight="86px" paddingTop={["24px", "24px", "32px"]}
                        paddingBottom={["24px", "24px", "32px"]} font="MinXParagraph12" color="MinXSecondaryText">
-                    <Block display="grid" gridTemplateColumns={"repeat(2, auto)"} gridColumnGap="40px" gridRowGap="8px" width="fit-content" marginBottom={["16px", "24px", "0"]}>
-                        <Block><Link href={"/privacy"}>Privacy & security</Link></Block>
-                        <Block><Link href={"/terms-and-conditions"}>Term & conditions</Link></Block>
+                    <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="40px" marginBottom={["16px", "24px", "0"]}>
+                        <div><Link href={"/privacy"}>Privacy & security</Link></div>
+                        <div><Link href={"/terms-and-conditions"}>Term & conditions</Link></div>
                     </Block>
                     <div className="text-center">©Westshade</div>
                 </Block>

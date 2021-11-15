@@ -11,7 +11,6 @@ import Link from "next/link";
 import {Section} from "../../components/sections";
 
 import Utils from "../../utils/utils";
-import MButton from "../../components/button-n";
 
 const utils = new Utils();
 
@@ -45,7 +44,7 @@ const Product = ({name, product, showDesc = true}) => {
                 {url ? (
                     <img src={url} alt={product.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                 ) : (
-                    <Image src="/images/default-product.jpg" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                    <Image src="images/default-product.jpg" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                 )}
             </Block>
             <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
@@ -106,62 +105,69 @@ function Accessories({router, products}) {
                 <title>Accessories - WESTSHADE</title>
                 <meta name="description" content="Westshade's selection of versatile accessories are perfect with Westshade's canopy and umbrella."/>
             </Head>
-            <Block position="relative" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center" maxWidth="unset !important"
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display text-center"
-                           },
-                       },
-                   }}
-            >
-                <Block position="absolute" width={["353px", "439px", "620px", "1152px"]} height={["353px", "439px", "620px", "1152px"]} display="flex" flexDirection="column" justifyContent="center" alignItems="center"
-                       backgroundColor="white"
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
+                <Block position="relative" width="100%" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center"
                        overrides={{
                            Block: {
-                               style: {borderRadius: "50%", aspectRatio: 1},
+                               props: {
+                                   className: "text-center"
+                               }
                            }
                        }}
                 >
-                    <Block marginBottom="12px" font="MinXSubtitle14" color="MinXSecondaryText">CANOPY TENT</Block>
-                    <Block marginBottom="24px" font={["MinXTitle44", "MinXTitle44"]} color="MinXPrimaryText">ACCESSORY & REPLACEMENT</Block>
-                    <Block font="MinXSubtitle20" color="MinXSecondaryText" maxWidth={["280px", "400px", "420px", "615px"]}>
-                        Westshade's selection of versatile accessories allows you to customize and combine individual elements depending on your personal or business needs.
+                    <Block position="absolute" width={["353px", "439px", "620px", "1152px"]} height={["353px", "439px", "620px", "1152px"]} display="flex" flexDirection="column" justifyContent="center" alignItems="center"
+                           padding="12px 24px"
+                           backgroundColor="white"
+                           overrides={{
+                               Block: {
+                                   style: {borderRadius: "50%", aspectRatio: 1},
+                               }
+                           }}
+                    >
+                        <Block marginBottom="12px" font="MinXSubtitle14" color="MinXSecondaryText">CANOPY TENT</Block>
+                        <Block marginBottom="24px" font={["MinXTitle44", "MinXTitle44"]} color="MinXPrimaryText">ACCESSORY & REPLACEMENT</Block>
+                        <Block font="MinXSubtitle20" color="MinXSecondaryText" maxWidth={["280px", "400px", "420px", "615px"]}>
+                            Westshade's selection of versatile accessories allows you to customize and combine individual elements depending on your personal or business needs.
+                        </Block>
                     </Block>
                 </Block>
-            </Block>
-            <Block maxWidth={process.env.maxWidth + "px"} marginRight="auto" marginBottom={["60px", "80px", "120px"]} marginLeft="auto" $style={{textAlign: "center"}}>
-                <Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>
-                <Block marginBottom={["24px", "40px", "64px"]} font="MinXHeading24">SIDE WALL</Block>
-                <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
-                    {products[0].map((product, index) =>
-                        <Product key={index} name={index === 0 ? "Half Wall" : index === 1 ? "Full Wall" : index === 2 ? "Roll-Up Door Wall" : index === 3 ? "PVC Window Wall" : index === 4 ? "Mesh Window Wall" : ""}
-                                 product={product}
-                        />
-                    )}
-                </Block>
-            </Block>
-            <Section containerStyles={{maxWidth: process.env.maxWidth + "px !important"}} title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
-                     content={
-                         <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
-                             {products[1].map((product, index) => <Product key={index} product={product}/>)}
-                         </Block>
-                     }
-            />
-            <Section containerStyles={{maxWidth: process.env.maxWidth + "px !important"}} title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>REPLACEMENT PART</Block>}
-                     content={
-                         <>
-                             <Block backgroundColor="#F2F2F2" marginBottom="32px" paddingTop="45px" paddingRight="16px" paddingBottom="45px" paddingLeft="16px">
-                                 <Block position="relative" width="100%" maxWidth="800px" marginRight="auto" marginLeft="auto">
-                                     <Image src="/images/accessory/replacement-part.png" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
+                <Section upperContainerProps={{hidden: true}}
+                         content={
+                             <Block overrides={{Block: {props: {className: "text-center"}}}}>
+                                 <Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>
+                                 <Block marginBottom={["24px", "40px"]} font="MinXHeading24">SIDE WALL</Block>
+                                 <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
+                                     {products[0].map((product, index) =>
+                                         <Product key={index} name={index === 0 ? "Half Wall" : index === 1 ? "Full Wall" : index === 2 ? "Roll-Up Door Wall" : index === 3 ? "PVC Window Wall" : index === 4 ? "Mesh Window Wall" : ""}
+                                                  product={product}
+                                         />
+                                     )}
                                  </Block>
                              </Block>
-                             <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]} marginBottom="32px">
-                                 {products[2].map((product, index) => <Product key={index} product={product} showDesc={false}/>)}
+                         }
+                />
+                <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
+                         content={
+                             <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
+                                 {products[1].map((product, index) => <Product key={index} product={product}/>)}
                              </Block>
-                         </>
-                     }
-            />
+                         }
+                />
+                <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>REPLACEMENT PART</Block>}
+                         content={
+                             <>
+                                 <Block backgroundColor="#F2F2F2" marginBottom="32px" padding="45px 16px">
+                                     <Block position="relative" width="100%" maxWidth="800px" marginRight="auto" marginLeft="auto">
+                                         <Image src="/images/accessory/replacement-part.png" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
+                                     </Block>
+                                 </Block>
+                                 <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]}>
+                                     {products[2].map((product, index) => <Product key={index} product={product} showDesc={false}/>)}
+                                 </Block>
+                             </>
+                         }
+                />
+            </Block>
         </React.Fragment>
     )
 }

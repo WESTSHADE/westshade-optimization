@@ -75,233 +75,229 @@ function Umbrella({router, size}) {
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA RANGES</Block>
-                <Block marginBottom={["40px", "80px", "120px"]}>
-                    <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="images/umbrella/series-marco.jpg" alt="series marco"
-                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
-                                   renderButton={
-                                       <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{borderColor: "white"}}
-                                                    onClick={() => router.push("/products/market-umbrellas/marco-umbrella")} text={"Buy"}
-                                           />
-                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                               <Link color="inherit" href="marco">LEARN MORE</Link>
-                                           </Block>
-                                       </Block>
-                                   }
-                    />
-                    <BannerDisplay title="SANTORINI" subtitle="Pulley umbrellas; Two frames options" url="images/umbrella/series-santorini.png" alt="series santorini"
-                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
-                                   textColor="MinXPrimaryText"
-                                   renderButton={
-                                       <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
-                                                    font="MinXLabel20" color="MinXPrimaryText"
-                                                    buttonStyle={{borderColor: "#262626"}}
-                                                    onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")} text={"Buy"}
-                                           />
-                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
-                                               <Link color="inherit" href="santorini">LEARN MORE</Link>
-                                           </Block>
-                                       </Block>
-                                   }
-                    />
-                    <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-bali.jpg" alt="series bali"
-                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
-                                   renderButton={
-                                       <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
-                                                    font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{borderColor: "white"}}
-                                                    onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")} text={"Buy"}
-                                           />
-                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                               <Link color="inherit" href="bali">LEARN MORE</Link>
-                                           </Block>
-                                       </Block>
-                                   }
-                    />
-                    <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="images/umbrella/series-kapri.png" alt="series kapri"
-                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
-                                   renderButton={
-                                       <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
-                                                    font="MinXLabel20" color="MinXPrimaryTextAlt"
-                                                    buttonStyle={{borderColor: "white"}}
-                                                    onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")} text={"Buy"}
-                                           />
-                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                               <Link color="inherit" href="kapri">LEARN MORE</Link>
-                                           </Block>
-                                       </Block>
-                                   }
-                    />
-                    <BannerDisplay title="CATALINA" subtitle="Oversized umbrellas" url="images/umbrella/series-catalina.jpg" alt="series catalina"
-                                   containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
-                                   textColor="MinXPrimaryText"
-                                   renderButton={
-                                       <Block display="flex" flexDirection="row" alignItems="center">
-                                           <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
-                                                    font="MinXLabel20" color="MinXPrimaryText"
-                                                    buttonStyle={{borderColor: "#262626"}}
-                                                    onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")} text={"Buy"}
-                                           />
-                                           <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
-                                               <Link color="inherit" href="catalina">LEARN MORE</Link>
-                                           </Block>
-                                       </Block>
-                                   }
-                    />
-                </Block>
-                <BannerDisplay title="CUSTOM PRINTING" subtitle="Make your umbrellas special for your activity." url="images/umbrella/custom-printing.png" alt="custom printing"
-                               containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent" containerBackgroundPosition="bottom"
-                               textColor={"#262626"} subTextColor={"#8C8C8C"}
-                               renderButton={
-                                   <MButton type="solid" height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
-                                            endEnhancer={() => <ChevronRight size={24}/>}
-                                            onClick={() => router.push("/custom-printing/umbrella")}
-                                   />
-                               }
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
+                <Section upperContainerProps={{hidden: true}}
+                         content={
+                             <>
+                                 <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA RANGES</Block>
+                                 <Block marginBottom={["40px", "80px", "120px"]}>
+                                     <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="images/umbrella/series-marco.jpg" alt="series marco"
+                                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                                    renderButton={
+                                                        <Block display="flex" flexDirection="row" alignItems="center">
+                                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font="MinXLabel20" color="MinXPrimaryTextAlt"
+                                                                     buttonStyle={{borderColor: "white"}}
+                                                                     onClick={() => router.push("/products/market-umbrellas/marco-umbrella")} text={"Buy"}
+                                                            />
+                                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
+                                                                <Link color="inherit" href="marco">LEARN MORE</Link>
+                                                            </Block>
+                                                        </Block>
+                                                    }
+                                     />
+                                     <BannerDisplay title="SANTORINI" subtitle="Pulley umbrellas; Two frames options" url="images/umbrella/series-santorini.png" alt="series santorini"
+                                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                                    textColor="MinXPrimaryText"
+                                                    renderButton={
+                                                        <Block display="flex" flexDirection="row" alignItems="center">
+                                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
+                                                                     font="MinXLabel20" color="MinXPrimaryText"
+                                                                     buttonStyle={{borderColor: "#262626"}}
+                                                                     onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")} text={"Buy"}
+                                                            />
+                                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
+                                                                <Link color="inherit" href="santorini">LEARN MORE</Link>
+                                                            </Block>
+                                                        </Block>
+                                                    }
+                                     />
+                                     <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-bali.jpg" alt="series bali"
+                                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                                    renderButton={
+                                                        <Block display="flex" flexDirection="row" alignItems="center">
+                                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
+                                                                     font="MinXLabel20" color="MinXPrimaryTextAlt"
+                                                                     buttonStyle={{borderColor: "white"}}
+                                                                     onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")} text={"Buy"}
+                                                            />
+                                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
+                                                                <Link color="inherit" href="bali">LEARN MORE</Link>
+                                                            </Block>
+                                                        </Block>
+                                                    }
+                                     />
+                                     <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="images/umbrella/series-kapri.png" alt="series kapri"
+                                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                                    renderButton={
+                                                        <Block display="flex" flexDirection="row" alignItems="center">
+                                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
+                                                                     font="MinXLabel20" color="MinXPrimaryTextAlt"
+                                                                     buttonStyle={{borderColor: "white"}}
+                                                                     onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")} text={"Buy"}
+                                                            />
+                                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
+                                                                <Link color="inherit" href="kapri">LEARN MORE</Link>
+                                                            </Block>
+                                                        </Block>
+                                                    }
+                                     />
+                                     <BannerDisplay title="CATALINA" subtitle="Oversized umbrellas" url="images/umbrella/series-catalina.jpg" alt="series catalina"
+                                                    containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
+                                                    textColor="MinXPrimaryText"
+                                                    renderButton={
+                                                        <Block display="flex" flexDirection="row" alignItems="center">
+                                                            <MButton type="outline" display="block" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]}
+                                                                     font="MinXLabel20" color="MinXPrimaryText"
+                                                                     buttonStyle={{borderColor: "#262626"}}
+                                                                     onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")} text={"Buy"}
+                                                            />
+                                                            <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
+                                                                <Link color="inherit" href="catalina">LEARN MORE</Link>
+                                                            </Block>
+                                                        </Block>
+                                                    }
+                                     />
+                                 </Block>
+                                 <BannerDisplay title="CUSTOM PRINTING" subtitle="Make your umbrellas special for your activity." url="images/umbrella/custom-printing.png" alt="custom printing"
+                                                containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent" containerBackgroundPosition="bottom"
+                                                textColor={"#262626"} subTextColor={"#8C8C8C"}
+                                                renderButton={
+                                                    <MButton type="solid" height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
+                                                             endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/custom-printing/umbrella")}
+                                                    />
+                                                }
+                                 />
+                             </>
+                         }
                 />
-            </Block>
-            <Section upperContainerDirection={"column"}
-                     title={"Compare"}
-                     subtitle={"Have a quick look at all umbrella series."}
-                     subtitleStyles={{maxWidth: "unset !important"}}
-                     subtitleMoreText={"All specs >"}
-                     subtitleMoreDestination={"spec"}
-                     content={
-                         <Block position="relative" display="grid" gridTemplateColumns={["1fr 1fr", "1fr 2fr", "1fr 5fr"]}>
-                             <Block ref={ref} backgroundColor="white" paddingTop="24px">
-                                 <Block maxWidth="110px" minHeight="134px" marginBottom="40px" font="MinXHeading20" color="MinXPrimaryText">UMBRELLA SERIES</Block>
-                                 <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">OPEN SYSTEM</Block>
-                                 <Block minHeight="110px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">SIZE</Block>
-                                 <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FRAME</Block>
-                                 <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FABRIC</Block>
-                                 <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">TILT</Block>
-                             </Block>
-                             <Block display="flex" flexDirection="row" overflow={["scrollX", "scrollX", "hidden"]}
-                                    overrides={{
-                                        Block: {
-                                            style: {
-                                                textAlign: "center",
-                                            },
-                                        },
-                                    }}
-                             >
-                                 {data.display.map((item, index) => {
-                                     return (
-                                         <Block key={index} width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px"
-                                                backgroundColor={index % 2 ? "white" : "MinXBackground"}>
-                                             <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                                 <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
-                                                     <Image src={item.picUrl} alt={item.alt} layout="fill" objectFit="contain" quality={100}/>
-                                                 </Block>
-                                                 <Block>{item.title}</Block>
-                                                 <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
-                                                          buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
-                                                          onClick={() => router.push(item.buyUrl)}
-                                                 />
-                                             </Block>
-                                             <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                 {data.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}
-                                             </Block>
-                                             <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                 {data.size[index].map((s, i) => <Block key={i}>{s}</Block>)}
-                                             </Block>
-                                             <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                 {data.frame[index].map((f, i) => <Block key={i}>{f}</Block>)}
-                                             </Block>
-                                             <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                 {data.fabric[index].map((f, i) => <Block key={i}>{f}</Block>)}
-                                             </Block>
-                                             <Block minHeight="22px" marginBottom="32px">
-                                                 <Block width="22px" height="22px">
-                                                     {data.tilt[index] ? (
-                                                         <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                                     ) : (
-                                                         <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
-                                                     )}
-                                                 </Block>
-                                             </Block>
-                                         </Block>
-                                     )
-                                 })}
-                             </Block>
-                             {signDisplay && size.width < 959 ? (
-                                 <Block position="absolute" width="100%" height="100%" onClick={() => setSignDisplay(false)}>
-                                     <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
-                                            marginTop="auto" marginRight="auto" marginBottom="auto" marginLeft="auto"
-                                            overrides={{
-                                                Block: {
-                                                    style: {
-                                                        borderTopRightRadius: "8px",
-                                                        borderBottomRightRadius: "8px",
-                                                        borderBottomLeftRadius: "8px",
-                                                        borderTopLeftRadius: "8px",
-                                                        ":hover": {cursor: 'pointer'}
-                                                    },
+                <Section upperContainerDirection={"column"}
+                         title={"Compare"}
+                         subtitle={"Have a quick look at all umbrella series."}
+                         subtitleStyles={{maxWidth: "unset !important"}}
+                         subtitleMoreText={"All specs >"}
+                         subtitleMoreDestination={"spec"}
+                         content={
+                             <Block position="relative" display="grid" gridTemplateColumns={["1fr 1fr", "1fr 2fr", "1fr 5fr"]}>
+                                 <Block ref={ref} backgroundColor="white" paddingTop="24px">
+                                     <Block maxWidth="110px" minHeight="134px" marginBottom="40px" font="MinXHeading20" color="MinXPrimaryText">UMBRELLA SERIES</Block>
+                                     <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">OPEN SYSTEM</Block>
+                                     <Block minHeight="110px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">SIZE</Block>
+                                     <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FRAME</Block>
+                                     <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FABRIC</Block>
+                                     <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">TILT</Block>
+                                 </Block>
+                                 <Block display="flex" flexDirection="row" overflow={["scrollX", "scrollX", "hidden"]}
+                                        overrides={{
+                                            Block: {
+                                                style: {
+                                                    textAlign: "center",
                                                 },
-                                            }}
-                                     >
-                                         <Block position="relative" width="50px" height="50px">
-                                             <Image src="images/umbrella/slide.png" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
+                                            },
+                                        }}
+                                 >
+                                     {data.display.map((item, index) => {
+                                         return (
+                                             <Block key={index} width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px"
+                                                    backgroundColor={index % 2 ? "white" : "MinXBackground"}>
+                                                 <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
+                                                     <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
+                                                         <Image src={item.picUrl} alt={item.alt} layout="fill" objectFit="contain" quality={100}/>
+                                                     </Block>
+                                                     <Block>{item.title}</Block>
+                                                     <MButton type="solid" height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text='Buy'
+                                                              buttonStyle={{paddingTop: "0px !important", paddingRight: "20px !important", paddingBottom: "0px !important", paddingLeft: "20px !important"}}
+                                                              onClick={() => router.push(item.buyUrl)}
+                                                     />
+                                                 </Block>
+                                                 <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                                     {data.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}
+                                                 </Block>
+                                                 <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                                     {data.size[index].map((s, i) => <Block key={i}>{s}</Block>)}
+                                                 </Block>
+                                                 <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                                     {data.frame[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                                 </Block>
+                                                 <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
+                                                     {data.fabric[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                                 </Block>
+                                                 <Block minHeight="22px" marginBottom="32px">
+                                                     <Block width="22px" height="22px">
+                                                         {data.tilt[index] ? (
+                                                             <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                         ) : (
+                                                             <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                         )}
+                                                     </Block>
+                                                 </Block>
+                                             </Block>
+                                         )
+                                     })}
+                                 </Block>
+                                 {signDisplay && size.width < 959 ? (
+                                     <Block position="absolute" width="100%" height="100%" onClick={() => setSignDisplay(false)}>
+                                         <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
+                                                marginTop="auto" marginRight="auto" marginBottom="auto" marginLeft="auto"
+                                                overrides={{
+                                                    Block: {
+                                                        style: {
+                                                            borderTopRightRadius: "8px",
+                                                            borderBottomRightRadius: "8px",
+                                                            borderBottomLeftRadius: "8px",
+                                                            borderTopLeftRadius: "8px",
+                                                            ":hover": {cursor: 'pointer'}
+                                                        },
+                                                    },
+                                                }}
+                                         >
+                                             <Block position="relative" width="50px" height="50px">
+                                                 <Image src="images/umbrella/slide.png" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
+                                             </Block>
                                          </Block>
                                      </Block>
-                                 </Block>
-                             ) : null}
-                         </Block>
-                     }
-            />
-            <SectionBlock title="FABRIC" content="We provide fabric from two brands - SDP and AGORA."
-                          displayList={[
-                              {url: "/images/umbrella/fabric-sdp.jpg", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
-                              {url: "/images/umbrella/fabric-agora.jpg", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
-                          ]}
-            />
-            <SectionBlock title="FRAME" content="There are two types of frames you can choose from - fiberglass and aluminum if available."
-                          displayList={[
-                              {
-                                  url: "/images/umbrella/frame-aluminum.jpg",
-                                  alt: "frame aluminum",
-                                  title: "Aluminum",
-                                  content: "The lightweight, durable, corrosion resistance aluminum frame comes with an excellent finish. It is strong and will not break in high winds."
-                              },
-                              {
-                                  url: "/images/umbrella/frame-fiberglass.jpg",
-                                  alt: "frame fiberglass",
-                                  title: "Fiberglass",
-                                  content: "The lightweight, flexible, and strong fiberglass allows the frame to bend without breaking, even in the most severe storms."
-                              }
-                          ]}
-            />
-            <SectionBlock title="OPEN SYSTEM" content="There are two types of open system - push up and pulley lift."
-                          displayList={[
-                              {
-                                  url: "/images/umbrella/open-push-up.jpg",
-                                  alt: "open push up",
-                                  title: "Push up",
-                                  content: "Simply pushing the umbrella upwards and open from the hub. Effortlessly open your umbrella in 15 seconds."
-                              },
-                              {
-                                  url: "/images/umbrella/open-pulley.jpg",
-                                  alt: "open pulley",
-                                  title: "Pulley lift",
-                                  content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."
-                              }
-                          ]}
-            />
-            <div/>
+                                 ) : null}
+                             </Block>
+                         }
+                />
+                <SectionBlock title="FABRIC" content="We provide fabric from two brands - SDP and AGORA."
+                              displayList={[
+                                  {url: "/images/umbrella/fabric-sdp.jpg", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
+                                  {url: "/images/umbrella/fabric-agora.jpg", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
+                              ]}
+                />
+                <SectionBlock title="FRAME" content="There are two types of frames you can choose from - fiberglass and aluminum if available."
+                              displayList={[
+                                  {
+                                      url: "/images/umbrella/frame-aluminum.jpg",
+                                      alt: "frame aluminum",
+                                      title: "Aluminum",
+                                      content: "The lightweight, durable, corrosion resistance aluminum frame comes with an excellent finish. It is strong and will not break in high winds."
+                                  },
+                                  {
+                                      url: "/images/umbrella/frame-fiberglass.jpg",
+                                      alt: "frame fiberglass",
+                                      title: "Fiberglass",
+                                      content: "The lightweight, flexible, and strong fiberglass allows the frame to bend without breaking, even in the most severe storms."
+                                  }
+                              ]}
+                />
+                <SectionBlock title="OPEN SYSTEM" content="There are two types of open system - push up and pulley lift."
+                              displayList={[
+                                  {
+                                      url: "/images/umbrella/open-push-up.jpg",
+                                      alt: "open push up",
+                                      title: "Push up",
+                                      content: "Simply pushing the umbrella upwards and open from the hub. Effortlessly open your umbrella in 15 seconds."
+                                  },
+                                  {
+                                      url: "/images/umbrella/open-pulley.jpg",
+                                      alt: "open pulley",
+                                      title: "Pulley lift",
+                                      content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."
+                                  }
+                              ]}
+                />
+            </Block>
         </React.Fragment>
     )
 }

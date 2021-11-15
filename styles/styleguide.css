@@ -22,20 +22,17 @@
     --vida-loca: #4c9a18;
     --white: #ffffff;
 
-    --font-size-l: 10px;
-    --font-size-m: 9px;
-    --font-size-s: 8px;
-    --font-size-xl: 12px;
-    --font-size-xxl: 20px;
-    --font-size-xxxl: 26px;
-    --font-size-xxxxl: 34px;
-    --font-size-xxxxxl: 46px;
-}
+    --color-white: white;
+    --color-black: black;
+    --color-red: #991F34;
+    --color-yellow: #F4C84E;
+    --color-blue: #1A4A8B;
+    --color-green: #275D3D;
 
-.background-gray {
-    background-color: #edebee;
-}
+    --color-placeholder: #8C8C8C;
 
-.background-light-blue {
-    background-color: #fbfbfd;
+    --primary-background: white;
+    --secondary-background: #F7F7F7;
+
+    --maximum-display-width: 1440px;
 }

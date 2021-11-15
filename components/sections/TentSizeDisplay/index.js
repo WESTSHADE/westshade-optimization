@@ -6,7 +6,7 @@ import Sandwich from "../../sandwich";
 
 const sizes = ["10x10", "10x15", "13x13", "10x20", "16x16", "13x20", "13x26", "20x20"]
 
-const TentSizeDisplay = ({}) => {
+const TentSizeDisplay = () => {
     return (
         <Block width="100%" display="grid" gridTemplateColumns={["repeat(3, 1fr)", "repeat(4, 1fr)", "repeat(4, 1fr)", "repeat(8, 1fr)"]} gridColumnGap="8px" gridRowGap="24px" justifyItems="center">
             {sizes.map((size, index) => {

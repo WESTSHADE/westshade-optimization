@@ -29,7 +29,7 @@ const Menu = ({menuList, learnMoreText = "Learn more >", learnMoreUrl = "/", pic
             {menuList.map((menu, index) => (
                 <div key={index} className={styles["menu-list-container"]}>
                     <StatefulMenu items={menu}
-                                  onItemSelect={(e) => handleGoPage(e.item.href).then(() => onClose())}
+                                  onItemSelect={(e) => handleGoPage(e.item.href)}
                                   overrides={{
                                       List: {
                                           props: {

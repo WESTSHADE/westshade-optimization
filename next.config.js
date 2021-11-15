@@ -49,6 +49,7 @@ const nextConfig = {
         return {
             "/": {page: "/"},
             "/canopy-tent": {page: "/canopy-tent"},
+            "/canopy-tent/spec": {page: "/canopy-tent/spec"},
             "/custom-printing": {page: "/custom-printing"},
             "/custom-printing/canopy-tent": {page: "/custom-printing/canopy-tent"},
             "/custom-printing/umbrella": {page: "/custom-printing/umbrella"},
@@ -90,14 +91,25 @@ const nextConfig = {
             "/cart": {page: "/cart"},
             "/checkout": {page: "/checkout"},
             "/checkout/success": {page: "/checkout/success"},
+            // 被替换页
+            "/y5-economic": {page: "/canopy-tent"},
+            "/y6-commercial": {page: "/canopy-tent"},
+            "/y7-heavy-duty": {page: "/canopy-tent"},
+            "/y5-economic/specs": {page: "/canopy-tent/spec"},
+            "/y6-commercial/specs": {page: "/canopy-tent/spec"},
+            "/y7-heavy-duty/specs": {page: "/canopy-tent/spec"},
+            "/market-umbrellas": {page: "/umbrella/santorini"},
+            "/tilt-umbrellas": {page: "/umbrella/bali"},
+            "/cantilever-umbrellas": {page: "/umbrella/catalina"},
+            "/compare": {page: "/canopy-tent/spec"},
+            "/compare-tilt-umbrella": {page: "/umbrella/spec"},
+            "/compare-market-umbrella": {page: "/umbrella/spec"},
+            "/y5-economic/buy": {page: "/products/canopy-tent", query: {id: "25649"}},
+            "/y6-commercial/buy": {page: "/products/canopy-tent", query: {id: "24229"}},
+            "/y7-heavy-duty/buy": {page: "/products/canopy-tent", query: {id: "25659"}},
             // 将要被删除页面
             "/custom-printing-canopy-tent": {page: "/custom-printing-canopy-tent"},
             "/our-custom-printing-process": {page: "/our-custom-printing-process"},
-            "/market-umbrellas": {page: "/market-umbrellas"},
-            "/tilt-umbrellas": {page: "/tilt-umbrellas"},
-            "/cantilever-umbrellas": {page: "/cantilever-umbrellas"},
-            "/compare-tilt-umbrella": {page: "/compare-tilt-umbrella"},
-            "/compare-market-umbrella": {page: "/compare-market-umbrella"},
             "/10x10-canopy-tent": {page: "/10x10-canopy-tent"},
             "/10x15-canopy-tent": {page: "/10x15-canopy-tent"},
             "/10x20-canopy-tent": {page: "/10x20-canopy-tent"},
@@ -106,34 +118,13 @@ const nextConfig = {
             "/13x26-canopy-tent": {page: "/13x26-canopy-tent"},
             "/16x16-canopy-tent": {page: "/16x16-canopy-tent"},
             "/20x20-canopy-tent": {page: "/20x20-canopy-tent"},
-            "/y5-economic": {page: "/y5-economic"},
-            "/y6-commercial": {page: "/y6-commercial"},
-            "/y7-heavy-duty": {page: "/y7-heavy-duty"},
-            "/y5-economic/specs": {page: "/y5-economic/specs"},
-            "/y6-commercial/specs": {page: "/y6-commercial/specs"},
-            "/y7-heavy-duty/specs": {page: "/y7-heavy-duty/specs"},
-            "/y5-economic/buy": {page: "/products/canopy-tent", query: {id: "25649"}},
-            "/y6-commercial/buy": {page: "/products/canopy-tent", query: {id: "24229"}},
-            "/y7-heavy-duty/buy": {page: "/products/canopy-tent", query: {id: "25659"}},
-            "/compare": {page: "/compare"},
         };
     },
-    redirects: async function redirect() {
-        return [
-            {source: '/y5-economic/', destination: '/canopy-tent', permanent: true,},
-            {source: '/y5-economic/specs/', destination: '/canopy-tent/spec', permanent: true,},
-            {source: '/y6-commercial/', destination: '/canopy-tent', permanent: true,},
-            {source: '/y6-commercial/specs/', destination: '/canopy-tent/spec', permanent: true,},
-            {source: '/y7-heavy-duty/', destination: '/canopy-tent', permanent: true,},
-            {source: '/y7-heavy-duty/specs/', destination: '/canopy-tent/spec', permanent: true,},
-            {source: '/market-umbrellas/', destination: '/umbrella/santorini', permanent: true,},
-            {source: '/tilt-umbrellas/', destination: '/umbrella/bali', permanent: true,},
-            {source: '/cantilever-umbrellas/', destination: '/umbrella/catalina', permanent: true,},
-            {source: '/compare/', destination: '/canopy-tent/spec', permanent: true,},
-            {source: '/compare-tilt-umbrella/', destination: '/umbrella/spec', permanent: true,},
-            {source: '/compare-market-umbrella/', destination: '/umbrella/spec', permanent: true,},
-        ]
-    },
+    // redirects: async function redirect() {
+    //     return [
+    //         {source: '/y5-economic/', destination: '/canopy-tent', permanent: true,},
+    //     ]
+    // },
 };
 
 module.exports = nextConfig;

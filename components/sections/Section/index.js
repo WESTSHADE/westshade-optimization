@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 
 import Link from "next/link";
 
@@ -6,7 +7,6 @@ import {Block} from "baseui/block";
 
 export default function Section(props) {
     const {
-        containerSidePadding = ["16px", "16px", "24px"],
         containerProps,
         containerClassName,
         containerStyles,
@@ -32,15 +32,15 @@ export default function Section(props) {
     } = props;
 
     return (
-        <Block maxWidth="1920px" width="100%" display="flex" flexDirection="column" marginRight="auto" marginBottom={["60px", "80px", "120px"]} marginLeft="auto"
-               paddingRight={containerSidePadding} paddingLeft={containerSidePadding} {...containerProps}
+        <Block width="100%" display="flex" flexDirection="column" {...containerProps}
+            // marginBottom={["60px", "80px", "120px"]}
                overrides={{
                    Block: {
                        props: {
-                           className: containerClassName
+                           className: clsx(["m-body-section-wrap", "m-wrap-side", containerClassName])
                        },
                        style: {
-                           ":last-child": {marginBottom: "0 !important"}, ...containerStyles
+                           ":last-child": {...containerStyles}
                        }
                    },
                }}
@@ -55,18 +55,20 @@ export default function Section(props) {
                        },
                    }}
             >
-                <Block marginBottom="12px" font={titleFont} color="MinXPrimaryText"  {...titleProps}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: titleClassName
+                {title ? (
+                    <Block marginBottom="12px" font={titleFont} color="MinXPrimaryText"  {...titleProps}
+                           overrides={{
+                               Block: {
+                                   props: {
+                                       className: titleClassName
+                                   },
+                                   style: {lineHeight: "0.8 !important", ...titleStyles}
                                },
-                               style: {lineHeight: "0.8 !important", ...titleStyles}
-                           },
-                       }}
-                >
-                    {title}
-                </Block>
+                           }}
+                    >
+                        {title}
+                    </Block>
+                ) : null}
                 <Block maxWidth="320px" font={subtitleFont} color="MinXSecondaryText" {...subtitleProps}
                        overrides={{
                            Block: {

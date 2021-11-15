@@ -154,7 +154,9 @@ const banner = ({
             >
                 <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
             </Block>
-            <Block position="absolute" bottom={["40px", "60px", "70px"]} left={["24px", "40px", "calc((100% + 24px)/12)"]}>
+            <Block position="absolute"
+                // bottom={["40px", "60px", "70px"]}
+                   left={["24px", "40px", "calc((100% + 24px)/12)"]}>
                 <Block maxWidth={["213px", "298px"]} marginBottom={titleMarginBottom}
                        font={titleFont} color={textColor ? textColor : "MinXPrimaryTextAlt"}
                        overrides={{
