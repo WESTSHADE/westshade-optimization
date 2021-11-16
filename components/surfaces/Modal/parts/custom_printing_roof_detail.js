@@ -10,6 +10,10 @@ import {FileUploader} from "baseui/file-uploader";
 import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
+import Utils from "../../../../utils/utils";
+
+const utils = new Utils();
+
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -57,29 +61,36 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
         setSelectedRoofListTemp(temp);
     }
 
-    function uploadOnChange(file, key) {
+    async function uploadOnChange(file, key) {
         let temp = JSON.parse(JSON.stringify(selectedListTemp));
 
         let peak = temp[selectedRoofSlide].peak;
         let valance = temp[selectedRoofSlide].valance;
 
+        let fileName = new Date().toISOString().slice(0, 10) + "-" + file.name;
+
+        let result = await utils.imageUpload(file, fileName);
+        console.log(result);
+
         temp.map((item, index) => {
             if (applyToFullSide[selectedSlidePart]) {
                 if (selectedSlidePart === 0) {
                     item.peak = peak;
-                    item.peak[key] = file;
+                    item.peak[key] = "https://westshade.s3.us-west-2.amazonaws.com/custom-printing-attachments/" + fileName;
                 } else if (selectedSlidePart === 1) {
                     item.peak = valance;
-                    item.valance[key] = file;
+                    item.valance[key] = "https://westshade.s3.us-west-2.amazonaws.com/custom-printing-attachments/" + fileName;
                 }
             } else {
                 if (selectedSlidePart === 0) {
-                    if (index === selectedRoofSlide) item.peak[key] = file;
+                    if (index === selectedRoofSlide) item.peak[key] = "https://westshade.s3.us-west-2.amazonaws.com/custom-printing-attachments/" + fileName;
                 } else if (selectedSlidePart === 1) {
-                    if (index === selectedRoofSlide) item.valance[key] = file;
+                    if (index === selectedRoofSlide) item.valance[key] = "https://westshade.s3.us-west-2.amazonaws.com/custom-printing-attachments/" + fileName;
                 }
             }
         })
+
+        console.log(temp);
         setSelectedRoofListTemp(temp);
     }
 
@@ -201,8 +212,9 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                                     }}
                                     onDropAccepted={async (acceptedOrRejected, event) => {
                                         console.log(acceptedOrRejected);
-                                        let base64 = await toBase64(acceptedOrRejected[0])
-                                        uploadOnChange(base64, "backgroundImage");
+                                        // let base64 = await toBase64(acceptedOrRejected[0])
+                                        // uploadOnChange(base64, "backgroundImage");
+                                        uploadOnChange(acceptedOrRejected[0], "backgroundImage");
                                     }}
                                     onDropRejected={(e) => {
                                         console.log(e)
@@ -239,8 +251,9 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                         <FileUploader
                             onDropAccepted={async (acceptedOrRejected, event) => {
                                 console.log(acceptedOrRejected);
-                                let base64 = await toBase64(acceptedOrRejected[0])
-                                uploadOnChange(base64, "logo");
+                                // let base64 = await toBase64(acceptedOrRejected[0])
+                                // uploadOnChange(base64, "logo");
+                                uploadOnChange(acceptedOrRejected[0], "logo");
                             }}
                             overrides={{
                                 FileDragAndDrop: {

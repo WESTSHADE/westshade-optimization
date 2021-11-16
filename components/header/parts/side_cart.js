@@ -22,9 +22,7 @@ const Cart = ({isOpen, onClose}) => {
     const getSubtotal = () => {
         let price = 0;
         if (cartProduct.length === cart.length) {
-            cartProduct.forEach((p, index) => {
-                price += numberFn.strToFloat(p.price) * cart[index].quantity;
-            });
+            cartProduct.forEach((p, index) => price += numberFn.strToFloat(p.price) * cart[index].quantity);
         }
         return price;
     };

@@ -98,18 +98,3 @@ a:-webkit-any-link {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-
-/* ============================================================ */
-
-.alert-message {
-    z-index: 999;
-    position: fixed;
-    top: 64px;
-}
-
-@media (min-width: 1280px) {
-    .alert-message {
-        top: 122px;
-    }
-}
-

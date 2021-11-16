@@ -1,561 +1,288 @@
-import React, {useEffect, useState} from "react";
-import styled from "styled-components";
+import React, {createRef, useEffect, useState} from "react";
+import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
+import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import {Block} from "baseui/block";
-import {FormControl} from "baseui/form-control";
-import {Input} from "baseui/input";
+import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 
-import {Box, Button, Container, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
-
-import CContainer from "../components/container";
-import CLink from "../components/link";
-import MButton from "../components/button-n";
+import Button from "../components/button-n";
+import CardTabs from "../components/card_tabs";
 import {Modal} from "../components/surfaces";
 
-import Utils from "../utils/utils";
-
-const utils = new Utils();
-
-const MXImageDisplay = styled.img`
-	width: 90%;
-	min-height: 200px;
-	max-height: 400px;
-	object-fit: contain;
-`;
-
-const MXDot = styled(({color, ...other}) => <div style={{backgroundColor: color}} {...other} />)`
-	width: 14px;
-	height: 14px;
-	margin: 4px;
-	border-radius: 50%;
-	border: 1px solid #aaaaaa;
-`;
-
-const MXDotGroup = styled(({...other}) => (
-    <div {...other}>
-        <MXDot color="black"/>
-        <MXDot color="white"/>
-        <MXDot color="#ff0000"/>
-        <MXDot color="#3773b8"/>
-        <MXDot color="#eecb45"/>
-        <MXDot color="#4c9a18"/>
-    </div>
-))`
-	display: inline-flex;
-	margin-bottom: 8px;
-`;
-
-const MXContainerBuy = ({text, buttonText, href, backgroundColor, dot}) => {
+const Tag = ({text}) => {
     return (
-        <div style={{margin: "18px 0 36px 0", display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-            {dot ? <MXDotGroup/> : null}
-            <Typography variant="h6" display="block" color="textSecondary" paragraph={!!text}>
-                <strong>{text}</strong>
-            </Typography>
-            <CLink backgroundColor={backgroundColor} href={href}>
-                {buttonText ? buttonText : "Buy"}
-            </CLink>
-        </div>
-    );
-};
+        <Block height="32px" padding="8px" backgroundColor="#F5FCFC" color="#5FBDBE"
+               overrides={{
+                   Block: {
+                       style: {border: "1px solid #5FBDBE"}
+                   }
+               }}
+        >{text}</Block>
+    )
+}
 
-function Canopy_Tent_Package({router}) {
-    const [display, setDisplay] = useState(false);
+function Canopy_Tent({router}) {
+    const [tabsRefs, setTabsRefs] = useState([]);
+    const [activeTabKey, setActiveTabKey] = useState("0");
+    const [tabLeft, setTabLeft] = useState(0);
 
-    const [showModal, setShowModal] = useState(false);
-    const [showGetQuote, setShowGetQuote] = useState(false);
+    const [displayTabs, setDisplayTabs] = useState(false);
 
-    ////////////////////////////////////////
+    const [frameCompareOpen, setFrameCompareOpen] = useState(false);
+    const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
 
-    const [quoteSubject, setQuoteSubject] = useState("");
-    const [quoteNameLast, setQuoteNameLast] = useState("");
-    const [quoteNameFirst, setQuoteNameFirst] = useState("");
-    const [quoteEmail, setQuoteEmail] = useState("");
-    const [quotePhone, setQuotePhone] = useState("");
-    const [quoteRequest, setQuoteRequest] = useState("");
-    const [quoteError, setQuoteError] = useState(false);
+    const goBuyingPage = (param) => router.push(param);
 
-    ////////////////////////////////////////
+    const frame = [{
+        tabTitle: "Y7",
+        tabContentTitle: "Y7 - Heavy-duty aluminum frame",
+        tabContentContent: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/y7.png",
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y7", size: "20x20"}}),
+        onClickLink: () => setFrameCompareOpen(true)
+    }];
 
-    const handleEnquiry = () => {
-        setShowGetQuote(!showGetQuote);
+    const printing_technology = [{
+        tabTitle: "Dye Sublimation",
+        tabContentTitle: "Dye sublimation printing",
+        tabContentContent: "Full color dye sublimation printing, unlimited colors, scratch-free, fading resistance. It is best choice of brand marketing and activity display.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/uv-printer.png",
+        onClick: () => {
+        },
+        onClickLink: () => setTechnologyCompareOpen(true)
+    }, {
+        tabTitle: "UV Printing",
+        tabContentTitle: "UV Printing",
+        tabContentContent: "Take your branding to the next level with our digital printing process using our high-quality UV ink to take your logo directly onto the canopy fabric. Provides high resolution service that dries and strengthens onto your canopy in an instant.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/dye-sublimation-printer.png",
+        onClick: () => {
+        },
+        onClickLink: () => setTechnologyCompareOpen(true)
+    }];
 
-        if (showGetQuote) {
-            setQuoteError(false);
-            setQuoteNameLast("");
-            setQuoteNameFirst("");
-            setQuoteEmail("");
-            setQuotePhone("");
-            setQuoteRequest("");
-        }
-    }
+    useEffect(() => {
+        setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef()));
+    }, []);
 
-    const handleSendQuote = async () => {
-        if (!quoteSubject || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
-            setQuoteError(true);
-        } else {
-            let result = await utils.contact({
-                form_id: "1",
-                status: "active",
-                3: quoteSubject,
-                1.3: quoteNameFirst,
-                1.6: quoteNameLast,
-                2: quoteEmail,
-                5: quoteRequest,
-                6: quotePhone,
-            });
-            setShowModal(true);
-            router.replace("/20x20-canopy-tent/#sent");
-        }
-    };
+    useEffect(() => {
+        if (tabsRefs.length > 0) setDisplayTabs(true);
+    }, [tabsRefs]);
 
-    useEffect(() => setTimeout(() => setDisplay(true), 250), []);
+    useEffect(() => {
+        if (displayTabs) setTabLeft((tabsRefs[activeTabKey].current.clientWidth - 40) / 2);
+    }, [displayTabs]);
 
     return (
         <React.Fragment>
-            <Box className="page canopy-tent-package" fontSize={14} lineHeight={1.43}>
-                {display ? (
+            <Head>
+                <title>20x20 Canopy Tent | WESTSHADE</title>
+                {/*<meta name="description" content="View frequently asked questions about our shipping and return policies, estimated delivery, damaged items, and refunds."/>*/}
+            </Head>
+            <Block backgroundColor="#F7F7F7" overrides={{Block: {props: {className: "text-center"}}}}>
+                {displayTabs ? (
                     <>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                    20x20 Canopy Tent
-                                </Typography>
-                                <Typography color="textSecondary" paragraph={true}>
-                                    Westshade&#39;s 20x20 instant pop up canopy tent is the largest canopy tent available - the possibilities for utilizing this tent are endless! This canopy tent is a must have for any heavy duty outdoor
-                                    event, and only
-                                    comes in our most durable heavy duty aluminum frame - the Y7 series. With the maximum shade and UV protection available, you won&#39;t regret getting the 20x20 canopy tent for your events!
-                                    <br/>
-                                    <br/>
-                                    Browse our selection of 20x20 canopy tent series available, or customize your canopy tent to make it your own!
-                                </Typography>
-                            </Container>
-                        </CContainer>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Grid container spacing={6}>
-                                    <Grid item xs={12} md={6}>
-                                        <MXImageDisplay src="/images/rectangle-42-3@2x.png" alt="y7-heavy-duty"/>
-                                    </Grid>
-                                    <Grid item xs={12} md={6} container alignItems="center">
-                                        <div className="position-r">
-                                            <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left">
-                                                Y7 Heavy Duty
-                                            </Typography>
-                                            <Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} align="left" paragraph={true}>
-                                                For heavy duty use
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" align="left" paragraph={true}>
-                                                The most heavy duty aluminum frame canopy on the market with unchallenged strength and durability.
-                                            </Typography>
-                                            <MXContainerBuy text={"$2,171.00"} backgroundColor={"#2767c5"} dot href={{pathname: "/y7-heavy-duty/buy"}}/>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
-                        <CContainer>
-                            <Container maxWidth="sm">
-                                <Typography variant="h6" classes={{h6: "information-title"}}>Y7 Heavy Duty</Typography>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <List>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Frame Specifications"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Material"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Shape"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Bracket Connectors"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Height Adjustment"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Nuts and Bolts"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Diameter"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Thickness"}/>
-                                            </ListItem>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Fabric features"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Fabric"}/>
-                                            </ListItem>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Function"}/>
-                                            </ListItem>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Warrenty"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Warranty"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Roof Warranty"}/>
-                                            </ListItem>
-                                        </List>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <List>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"Push button"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"Stainless steel"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"2.25 inches (57mm)"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"0.07 inches (1.8mm)"}/>
-                                            </ListItem>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"320gsm"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"Waterproof"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"UV protection"}/>
-                                            </ListItem>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"10 year"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
-                                            </ListItem>
-                                        </List>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Typography variant="h5"> Custom printing </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} md={6}>
-                                        <MXImageDisplay src="/images/rectangle-48-2@2x.png"/>
-                                    </Grid>
-                                    <Grid item xs={12} md={6} container alignContent="center">
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} align="left">
-                                            Y7 Heavy Duty Custom Print
-                                        </Typography>
-                                        <Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} align="left" paragraph={true}>
-                                            For heavy duty use
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" align="left" paragraph={true}>
-                                            The most heavy duty aluminum frame canopy on the market with unchallenged strength and durability.
-                                        </Typography>
-                                        <Typography variant="h6" display="block" color="textPrimary" paragraph={true}>
-                                            <strong>Starting at $2,921.00</strong>
-                                        </Typography>
-                                        <div style={{display: "flex", justifyContent: "flex-start"}}>
-                                            <Button variant="contained" className="section-grid-button" style={{marginRight: "24px"}} onClick={() => router.push("/custom-printed-package/f2020cpp")} disableElevation>
-                                                Buy
-                                            </Button>
-                                            <Button variant="contained" className="section-grid-button" style={{marginRight: "24px"}}
-                                                    onClick={() => {
-                                                        setQuoteSubject("Y7 Heavy Duty Custom Print 20x20");
-                                                        setShowGetQuote(true)
-                                                    }}
-                                                    disableElevation
-                                            >
-                                                Free quote & mockup
-                                            </Button>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Grid container spacing={2} direction="row" alignItems="center">
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP1.jpg" alt="custom-printing-20x20-package-1"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP2.jpg" alt="custom-printing-20x20-package-2"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP3.jpg" alt="custom-printing-20x20-package-3"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP4.jpg" alt="custom-printing-20x20-package-4"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP5.jpg" alt="custom-printing-20x20-package-5"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP6.jpg" alt="custom-printing-20x20-package-6"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP7.jpg" alt="custom-printing-20x20-package-7"/>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={3}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/20x20/Y7F2020CPP8.jpg" alt="custom-printing-20x20-package-8"/>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
+                        <Block display="flex" flexDirection="column" marginBottom={["32px", "40px", "64px"]} padding={["24px 16px", "32px 16px", "40px 24px"]} backgroundColor="#F5FCFC">
+                            <Block marginBottom={["24px", "24px", "32px"]} font="MinXLabel32">20x20 Canopy Tent</Block>
+                            <Block width="100%" maxWidth="420px" marginRight="auto" marginLeft="auto" font="MinXLabel20">
+                                <Block display="grid" gridTemplateColumns="1fr 1fr" height="90px">
+                                    <Block position="relative" onClick={() => setActiveTabKey("0")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "1" ? "grayscale(1)" : "grayscale(0)"}}}}>
+                                        <Image src="images/canopy-tent/tent/stock-color-tent.png" alt='stock color tent' layout="fill" objectFit="contain" quality={100}/>
+                                    </Block>
+                                    <Block position="relative" onClick={() => setActiveTabKey("1")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "0" ? "grayscale(1)" : "grayscale(0)"}}}}>
+                                        <Image src="images/canopy-tent/tent/custom-printing-tent.png" alt='custom printing tent' layout="fill" objectFit="contain" quality={100}/>
+                                    </Block>
+                                </Block>
+                                <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}
+                                      overrides={{
+                                          TabBorder: {props: {hidden: true}},
+                                          TabHighlight: {
+                                              props: {
+                                                  className: "tab-highlight-horizon long"
+                                              },
+                                              style: {left: tabLeft + "px"}
+                                          },
+                                      }}
+                                >
+                                    <Tab title="Stock Color" tabRef={tabsRefs[0]}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF"}),
+                                             },
+                                             TabPanel: {props: {hidden: true}}
+                                         }}
+                                    />
+                                    <Tab title="Custom Printed" tabRef={tabsRefs[1]}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF",}),
+                                             },
+                                             TabPanel: {props: {hidden: true}}
+                                         }}
+                                    />
+                                </Tabs>
+                            </Block>
+                        </Block>
+                        <>
+                            {activeTabKey === "0" ? (
+                                <>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>STOCK COLORS</Block>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">Pick a color to light up your mood.</Block>
+                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                                onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "20x20"}})}
+                                        />
+                                        <Block position="relative" height={["159px", "260px", "494px"]}>
+                                            <Image src="images/canopy-tent/tent/fabric-stock-color.png" alt="fabric stock color" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                        <Block display="grid" gridTemplateColumns={["1fe", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["auto auto", "auto auto", "auto"]} backgroundColor="white"
+                                               overrides={{Block: {props: {className: "section-round-corner-s"}}}}
+                                        >
+                                            <Block position="relative" width="100%" height={["160px", "216px", "348px"]}>
+                                                <Image src="images/canopy-tent/tent/fabric.jpg" alt="fabric for stock color tent" layout="fill" objectFit="cover"/>
+                                            </Block>
+                                            <Block display="grid" gridRowGap="12px" padding={["16px", "24px", "32px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
+                                                <Block font="MinXParagraph20">Fabric for stock color tent</Block>
+                                                <Block display="flex" flexDirection="row" flexWrap="wrap" overrides={{Block: {style: {gap: "12px"}}}}>
+                                                    <Tag text="Polyester"/><Tag text="500D"/><Tag text="320gsm"/><Tag text="PVC Coated"/>
+                                                </Block>
+                                                <Block font="MinXParagraph16" color="MinXSecondaryText">
+                                                    Your comfort and safety is our first priority. The fabric Westshade uses for plain canopy tent is 500D, 320gsm, PVC coated polyester. It’s water-resistant, fading resistant, fire
+                                                    resistant,
+                                                    and it provides UV protection.
+                                                </Block>
+                                            </Block>
+                                        </Block>
+                                    </Block>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>FRAME</Block>
+                                        <Block marginBottom={["24px", "40px", "64px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                            Westshade provides 1 frame option to meet your unique needs.
+                                        </Block>
+                                        <CardTabs title="" tabList={frame} imageMinHeight={["200px", "310px", "600px"]} objectFit="contain" tabType="button"
+                                            // linkText="-> Compare frames"
+                                                  containerProps={{gridColumnGap: "20px"}}
+                                                  containerStyles={{textAlign: "left"}}
+                                                  containerImageProps={{padding: ["22px 14px", "30px 24px", "40px 32px"], backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-right"}}}}}
+                                                  containerTabsProps={{display: "flex", flexDirection: "column", backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-left"}}}}}
+                                                  carouselProps={{
+                                                      showIndicators: false,
+                                                      renderArrowPrev: () => {
+                                                      },
+                                                      renderArrowNext: () => {
+                                                      }
+                                                  }}
+                                        />
+                                    </Block>
+                                </>
+                            ) : (
+                                <>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>CUSTOM PRINTING</Block>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                            You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
+                                        </Block>
+                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                                onClick={() => {
+                                                }}
+                                        />
+                                        <Block display="grid" gridRowGap="20px" overrides={{Block: {style: {textAlign: "left"}}}}>
+                                            <Block display="grid" gridColumnGap="20px" gridRowGap="20px" gridTemplateAreas={[`"a" "b" "c"`, `"a" "b" "c"`, `"a a" "b c"`]}>
+                                                <Block gridArea="a" position="relative" height={["234px", "234px", "600px"]} overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=ud5m8ET8sE8&ab_channel=Westshade'/>
+                                                </Block>
+                                                <Block gridArea="b" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <Block padding={["24px 16px", "24px", "40px"]}>
+                                                        <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Fabric for custom printed tent</Block>
+                                                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We adopt 600D, 360 gsm, PU coated polyester fabric for custom printed canopy tent. It’s
+                                                            light but strong. </Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                    </Block>
+                                                    <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                                        <Image src="images/canopy-tent/tent/600D-polyester.jpg" alt="600D polyester" layout="fill" objectFit="contain"/>
+                                                    </Block>
+                                                </Block>
+                                                <Block gridArea="c" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <Block padding={["24px 16px", "24px", "40px"]}>
+                                                        <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Ink for printing</Block>
+                                                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We use ink imported from Korea for dye sublimation printing and use ink imported from
+                                                            Japan for UV
+                                                            printing.</Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                    </Block>
+                                                    <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                                        <Image src="images/canopy-tent/tent/imported-from-korea.jpg" alt="imported from korea" layout="fill" objectFit="contain"/>
+                                                    </Block>
+                                                </Block>
+                                            </Block>
+                                            <CardTabs title="Select a printing technology" tabList={printing_technology} imageMinHeight={["200px", "310px", "600px"]} objectFit="contain" tabType="button"
+                                                      linkText="-> Compare printing technology"
+                                                      containerProps={{gridColumnGap: "20px"}}
+                                                      containerImageProps={{padding: ["22px 14px", "30px 24px", "40px 32px"], backgroundColor: "#243233", overrides: {Block: {props: {className: "card-radius-right"}}}}}
+                                                      containerTabsProps={{display: "flex", flexDirection: "column", backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-left"}}}}}
+                                                      carouselProps={{
+                                                          showIndicators: false,
+                                                          renderArrowPrev: () => {
+                                                          },
+                                                          renderArrowNext: () => {
+                                                          }
+                                                      }}
+                                            />
+                                        </Block>
+                                    </Block>
+                                </>
+                            )}
+                        </>
+                        <Block maxWidth="1152px" marginRight="auto" marginLeft="auto" paddingRight="16px" paddingBottom={["40px", "80px", "120px"]} paddingLeft="16px">
+                            <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>MORE VIDEO</Block>
+                            <Block marginBottom={["24px", "40px", "64px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                We want to help you find the right canopy and make your use of the canopy easy.
+                            </Block>
+                            <Block display="grid" gridGap="20px" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} overrides={{Block: {style: {textAlign: "left"}}}}>
+                                <Block padding={["16px", "32px", "40px"]} backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                    <Block position="relative" height={["190px", "307px", "353px"]} marginBottom={["16px", "24px", "32px"]}
+                                           overrides={{Block: {props: {className: "section-round-corner"}}}}>
+                                        <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=YGX1N5997iY&ab_channel=Westshade'/>
+                                    </Block>
+                                    <Block marginBottom="12px" font="MinXParagraph20">Open up the canopy</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">Two people can set up the tent easily by following up this instruction video. No extra tools needed.</Block>
+                                </Block>
+                                <Block padding={["16px", "32px", "40px"]} backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                    <Block position="relative" height={["190px", "307px", "353px"]} marginBottom={["16px", "24px", "32px"]}
+                                           overrides={{Block: {props: {className: "section-round-corner"}}}}>
+                                        <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=hYmRbcDzLRw&ab_channel=Westshade'/>
+                                    </Block>
+                                    <Block marginBottom="12px" font="MinXParagraph20">Tent introduction</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade's canopy tent.</Block>
+                                </Block>
+                            </Block>
+                        </Block>
                     </>
                 ) : null}
-                <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
-                    <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
-                           display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
-                    >
-                        <Block display="flex" flexDirection="column" justifyContent="center" alignItems="center"
-                               overrides={{
-                                   Block: {
-                                       style: {textAlign: "center"}
-                                   }
-                               }}
-                        >
-                            <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
-                            <Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
-                                <Image src={"images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
-                            </Block>
-                            <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                            <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
-                                     buttonStyle={{
-                                         backgroundColor: "rgba(0, 0, 0, 0.87) !important",
-                                         paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                         borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                     }}
-                                     onClick={() => window.open(`tel:877-702-1872`, '_self')}
-                            />
-                        </Block>
-                        <Block>
-                            <FormControl label={() => "Product*"}>
-                                <Input value={quoteSubject} clearOnEscape error={!quoteSubject && quoteError} required
-                                       overrides={{
-                                           Root: {
-                                               props: {
-                                                   className: "container-input-enquiry"
-                                               },
-                                               style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                           },
-                                           InputContainer: {
-                                               props: {
-                                                   className: "container-inner-input-enquiry"
-                                               }
-                                           },
-                                           Input: {
-                                               props: {
-                                                   className: "input-enquiry"
-                                               },
-                                           },
-                                       }}
-                                       onChange={(event) => {
-                                           setQuoteError(false);
-                                           setQuoteSubject(event.target.value);
-                                       }}
-                                />
-                            </FormControl>
-                            <Block display="grid" gridTemplateColumns="1fr 1fr" gridColumnGap="24px">
-                                <Block>
-                                    <FormControl label={() => "Last Name*"}>
-                                        <Input value={quoteNameLast} clearOnEscape error={!quoteNameLast && quoteError} required
-                                               overrides={{
-                                                   Root: {
-                                                       props: {
-                                                           className: "container-input-enquiry"
-                                                       },
-                                                       style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                                   },
-                                                   InputContainer: {
-                                                       props: {
-                                                           className: "container-inner-input-enquiry"
-                                                       }
-                                                   },
-                                                   Input: {
-                                                       props: {
-                                                           className: "input-enquiry"
-                                                       },
-                                                   },
-                                               }}
-                                               onChange={(event) => {
-                                                   setQuoteError(false);
-                                                   setQuoteNameLast(event.target.value);
-                                               }}
-                                        />
-                                    </FormControl>
-                                </Block>
-                                <Block>
-                                    <FormControl label={() => "First Name*"}>
-                                        <Input value={quoteNameFirst} clearOnEscape error={!quoteNameFirst && quoteError} required
-                                               overrides={{
-                                                   Root: {
-                                                       props: {
-                                                           className: "container-input-enquiry"
-                                                       },
-                                                       style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                                   },
-                                                   InputContainer: {
-                                                       props: {
-                                                           className: "container-inner-input-enquiry"
-                                                       }
-                                                   },
-                                                   Input: {
-                                                       props: {
-                                                           className: "input-enquiry"
-                                                       },
-                                                   },
-                                               }}
-                                               onChange={(event) => {
-                                                   setQuoteError(false);
-                                                   setQuoteNameFirst(event.target.value);
-                                               }}
-                                        />
-                                    </FormControl>
-                                </Block>
-                            </Block>
-                            <FormControl label={() => "Email*"}>
-                                <Input value={quoteEmail} clearOnEscape error={!quoteEmail && quoteError} required
-                                       overrides={{
-                                           Root: {
-                                               props: {
-                                                   className: "container-input-enquiry"
-                                               },
-                                               style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                           },
-                                           InputContainer: {
-                                               props: {
-                                                   className: "container-inner-input-enquiry"
-                                               }
-                                           },
-                                           Input: {
-                                               props: {
-                                                   className: "input-enquiry"
-                                               },
-                                           },
-                                       }}
-                                       onChange={(event) => {
-                                           setQuoteError(false);
-                                           setQuoteEmail(event.target.value);
-                                       }}
-                                />
-                            </FormControl>
-                            <FormControl label={() => "Phone*"}>
-                                <Input value={quotePhone} clearOnEscape error={!quotePhone && quoteError} required
-                                       overrides={{
-                                           Root: {
-                                               props: {
-                                                   className: "container-input-enquiry"
-                                               },
-                                               style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                           },
-                                           InputContainer: {
-                                               props: {
-                                                   className: "container-inner-input-enquiry"
-                                               }
-                                           },
-                                           Input: {
-                                               props: {
-                                                   className: "input-enquiry"
-                                               },
-                                           },
-                                       }}
-                                       onChange={(event) => {
-                                           setQuoteError(false);
-                                           setQuotePhone(event.target.value);
-                                       }}
-                                />
-                            </FormControl>
-                            <FormControl label={() => "Describe What You’re Looking For*"}>
-                                <Input value={quoteRequest} clearOnEscape error={!quoteRequest && quoteError} required
-                                       overrides={{
-                                           Root: {
-                                               props: {
-                                                   className: "container-input-enquiry"
-                                               },
-                                               style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                           },
-                                           InputContainer: {
-                                               props: {
-                                                   className: "container-inner-input-enquiry"
-                                               },
-                                           },
-                                           Input: {
-                                               props: {
-                                                   className: "input-enquiry"
-                                               },
-                                           },
-                                       }}
-                                       onChange={(event) => {
-                                           setQuoteError(false);
-                                           setQuoteRequest(event.target.value);
-                                       }}
-                                />
-                            </FormControl>
-                            <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
-                                     buttonStyle={{
-                                         backgroundColor: "#e0e0e0 !important",
-                                         paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                         borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                     }}
-                                     onClick={() => handleSendQuote()}
-                            />
-                        </Block>
-                    </Block>
-                </Modal>
-                <Modal type="alertdialog" isOpen={showModal} onClose={() => setShowModal(false)} backgroundColor="rgb(237, 247, 237)"
-                       dialogStyles={{backgroundColor: "rgb(237, 247, 237)"}}
-                       header={<Block color="rgb(102, 187, 106)">Success</Block>}
-                >
-                    <Block marginTop="32px" marginBottom="32px" color="rgb(102, 187, 106)">Email has been sent successfully.</Block>
-                </Modal>
-            </Box>
+            </Block>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={technologyCompareOpen} onClose={() => setTechnologyCompareOpen(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
         </React.Fragment>
     );
 }
 
-export default withRouter(Canopy_Tent_Package);
+Canopy_Tent.getInitialProps = async () => {
+    return {
+        fullPage: true
+    };
+};
+
+export default withRouter(Canopy_Tent);
+

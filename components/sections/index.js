@@ -8,6 +8,7 @@ import Section from "./Section";
 import SubHeaderBar from "./SubHeaderBar";
 import TentSizeDisplay from "./TentSizeDisplay";
 import OrderProcess from "./OrderProcess";
+import ProductDescription from "./Product_Description";
 
 module.exports = {
     BannerDisplay,
@@ -19,5 +20,6 @@ module.exports = {
     Selection,
     SubHeaderBar,
     OrderProcess,
-    TentSizeDisplay
+    TentSizeDisplay,
+    ProductDescription
 };

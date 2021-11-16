@@ -62,7 +62,7 @@ const BlockVideo = ({src, isSelected, step}) => {
                          config={{
                              file: {
                                  attributes: {
-                                     crossorigin: "anonymous",
+                                     crossOrigin: "anonymous",
                                      controlsList: "nofullscreen",
                                  },
                              },

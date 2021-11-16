@@ -205,15 +205,14 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     const [frameCompareOpen, setFrameCompareOpen] = useState(false);
     const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
 
-    const [showCustomInfoInput, setShowCustomInfoInput] = useState(false);
-
     ////////////////////////////////////////
+
+    const [entryId, setEntryId] = useState(null);
 
     const dispatch = useDispatch();
 
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
-    console.log(user);
 
     function renderCustomImage(props, wallPics = []) {
         return (
@@ -228,27 +227,51 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
     }
 
     const handleSendCustomPrinting = async (request) => {
-        console.log(request);
-
         let result = await utils.contact({
             form_id: "3",
             status: "active",
             1: "Custom Printing canopy tent request",
-            5: "Peak: " + (request[0].peak.backgroundColor || "") + "; " + "Valance: " + (request[0].valance.backgroundColor || "") + "; ",
-            6: "Peak: " + (request[0].peak.content || "") + "; " + "Valance: " + (request[0].valance.content || "") + "; ",
-            7: "Peak: " + (request[0].peak.fontFamily || "") + ", " + (request[0].peak.fontColor || "") + "; " + "Valance: " + (request[0].valance.fontFamily || "") + ", " + (request[0].valance.fontColor || "") + "; ",
-            8: "Peak: " + (request[0].peak.instruction || "") + "; " + "Valance: " + (request[0].valance.instruction || "") + "; ",
-            4: request[0].peak.backgroundImage,
-            28: request[0].peak.backgroundImage,
-            9: request[0].peak.logo,
-            29: request[0].valance.logo,
+            5: (request[2].peak.backgroundColor ? "Peak: " + request[2].peak.backgroundColor + "; " : "") + (request[2].valance.backgroundColor ? "Valance: " + request[2].valance.backgroundColor + ";" : ""),
+            6: (request[2].peak.content ? "Peak: " + request[2].peak.content + "; " : "") + (request[2].valance.content ? "Valance: " + request[2].valance.content + ";" : ""),
+            7: (request[2].peak.fontFamily || request[2].peak.fontColor ? "Peak: " + request[2].peak.fontFamily + " " + request[2].peak.fontColor + "; " : "") + (request[2].valance.fontFamily || request[2].valance.fontColor ? "Valance: " + request[2].valance.fontFamily + " " + request[2].valance.fontColor + "; " : ""),
+            8: (request[2].peak.instruction ? "Peak: " + request[2].peak.instruction + "; " : "") + (request[2].valance.instruction ? "Valance: " + request[2].valance.instruction + "; " : ""),
+            55: request[2].peak.backgroundImage,
+            56: request[2].valance.backgroundImage,
+            57: request[2].peak.logo,
+            58: request[2].valance.logo,
+            10: (request[3].peak.backgroundColor ? "Peak: " + request[3].peak.backgroundColor + "; " : "") + (request[3].valance.backgroundColor ? "Valance: " + request[3].valance.backgroundColor + ";" : ""),
+            13: (request[3].peak.content ? "Peak: " + request[3].peak.content + "; " : "") + (request[3].valance.content ? "Valance: " + request[3].valance.content + ";" : ""),
+            14: (request[3].peak.fontFamily || request[3].peak.fontColor ? "Peak: " + request[3].peak.fontFamily + " " + request[3].peak.fontColor + "; " : "") + (request[3].valance.fontFamily || request[3].valance.fontColor ? "Valance: " + request[3].valance.fontFamily + " " + request[3].valance.fontColor + "; " : ""),
+            15: (request[3].peak.instruction ? "Peak: " + request[3].peak.instruction + "; " : "") + (request[3].valance.instruction ? "Valance: " + request[3].valance.instruction + "; " : ""),
+            59: request[3].peak.backgroundImage,
+            60: request[3].valance.backgroundImage,
+            61: request[3].peak.logo,
+            62: request[3].valance.logo,
+            16: (request[0].peak.backgroundColor ? "Peak: " + request[0].peak.backgroundColor + "; " : "") + (request[0].valance.backgroundColor ? "Valance: " + request[0].valance.backgroundColor + ";" : ""),
+            19: (request[0].peak.content ? "Peak: " + request[0].peak.content + "; " : "") + (request[0].valance.content ? "Valance: " + request[0].valance.content + ";" : ""),
+            20: (request[0].peak.fontFamily || request[0].peak.fontColor ? "Peak: " + request[0].peak.fontFamily + " " + request[0].peak.fontColor + "; " : "") + (request[0].valance.fontFamily || request[0].valance.fontColor ? "Valance: " + request[0].valance.fontFamily + " " + request[0].valance.fontColor + "; " : ""),
+            21: (request[0].peak.instruction ? "Peak: " + request[0].peak.instruction + "; " : "") + (request[0].valance.instruction ? "Valance: " + request[0].valance.instruction + "; " : ""),
+            63: request[0].peak.backgroundImage,
+            64: request[0].valance.backgroundImage,
+            65: request[0].peak.logo,
+            66: request[0].valance.logo,
+            22: (request[1].peak.backgroundColor ? "Peak: " + request[1].peak.backgroundColor + "; " : "") + (request[1].valance.backgroundColor ? "Valance: " + request[1].valance.backgroundColor + ";" : ""),
+            25: (request[1].peak.content ? "Peak: " + request[1].peak.content + "; " : "") + (request[1].valance.content ? "Valance: " + request[1].valance.content + ";" : ""),
+            26: (request[1].peak.fontFamily || request[1].peak.fontColor ? "Peak: " + request[1].peak.fontFamily + " " + request[1].peak.fontColor + "; " : "") + (request[1].valance.fontFamily || request[1].valance.fontColor ? "Valance: " + request[1].valance.fontFamily + " " + request[1].valance.fontColor + "; " : ""),
+            27: (request[1].peak.instruction ? "Peak: " + request[1].peak.instruction + "; " : "") + (request[1].valance.instruction ? "Valance: " + request[1].valance.instruction + "; " : ""),
+            67: request[1].peak.backgroundImage,
+            68: request[1].valance.backgroundImage,
+            69: request[1].peak.logo,
+            70: request[1].valance.logo,
             3.1: applyToFullSide[0] ? "Apply to four sides peak" : "",
             3.2: applyToFullSide[1] ? "Apply to four sides valance" : "",
-            36.1: user.first_name,
-            36.2: user.last_name,
-            37: "8563169367"
+            36.1: "",
+            36.2: "",
+            37: "",
+            71: ""
         });
-        console.log(result);
+
+        return result;
     };
 
     const openWallModal = (index) => {
@@ -286,11 +309,12 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
     const openCustomPrintingModal = () => setPrintIsOpen(true);
 
-    const closeCustomPrintingModal = (save, tempList) => {
+    const closeCustomPrintingModal = async (save, tempList) => {
         if (save) {
             const temp = JSON.parse(JSON.stringify(tempList));
 
-            handleSendCustomPrinting(temp);
+            let result = await handleSendCustomPrinting(temp);
+            setEntryId(result.id);
 
             setRoofColorSelectedList(temp);
 
@@ -337,8 +361,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             selectedVariantList[1] = productVariant[1].filter(({attributes}) => arrayEquals(target, attributes))[0];
             selectionA[1] = target;
 
-            console.log(selectionA);
-            console.log(selectedVariantList);
+            // console.log(selectionA);
+            // console.log(selectedVariantList);
 
             setSelectedAttribute(selectionA);
             setSelectedVariant(selectedVariantList);
@@ -418,7 +442,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 }
 
                 // 挑选出对应 Roof/Wall Variant.
-                console.log(selection);
+                // console.log(selection);
                 selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
             });
         } else if (index === 1 && id === id_attribute_printing_tech) {
@@ -451,7 +475,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 attribute.forEach((attr) => (attr.id === id ? (attr.option = event.target.value) : null));
             }
             selectionA[indexA + 2] = attribute
-            console.log(selectionA);
+            // console.log(selectionA);
             selectedVariantList[indexA + 2] = productVariant[indexA + 2].filter(({attributes}) => arrayEquals(selectionA[indexA + 2], attributes))[0];
         });
 
@@ -538,26 +562,12 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         });
         setAvailableList(available);
 
-
-        console.log(available);
+        // console.log(available);
         setTotalRegularPrice(regularPrice);
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
 
-    const sendRequest = () => {
-        if (loggedIn) {
-            if (user.first_name && user.last_name && user.shipping.phone) {
-
-
-            } else {
-                setShowCustomInfoInput(true);
-            }
-        } else {
-            setShowCustomInfoInput(true);
-        }
-    }
-
-    const updateCart = async () => {
+    const updateCart = () => {
         let cl = JSON.parse(JSON.stringify(cart));
         cl = cl.concat([...checkoutProductList]);
 
@@ -566,7 +576,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 meta_data: [
                     {
                         key: "cart",
-                        value: cl,
+                        value: cl
                     },
                 ],
             };
@@ -576,6 +586,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             dispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
+
+        setEntryId(null)
     };
 
     //////////////////////////////////////
@@ -601,7 +613,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         } else if (productComponent[0].hasOwnProperty("image")) {
             setMainImage([productComponent[0].image]);
         }
-        console.log(productComponent);
+        // console.log(productComponent);
 
         setSelectedAttribute(productComponent.map(({default_attributes}) => default_attributes) || []);
     }, [productComponent]);
@@ -761,11 +773,22 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     value: attr.option,
                 }));
 
-                checkoutProductList.push({
-                    id: item.id,
-                    quantity: item.needed,
-                    variation: variation,
-                });
+                console.log(productComponent[index]);
+                if (productComponent[index].id === id_product_custom_printed_roof) {
+                    checkoutProductList.push({
+                        id: item.id,
+                        quantity: item.needed,
+                        variation: variation,
+                        entryId: entryId
+                    });
+                } else {
+                    checkoutProductList.push({
+                        id: item.id,
+                        quantity: item.needed,
+                        variation: variation,
+                    });
+                }
+
             } else {
                 let needed = checkoutProductList[i].quantity + item.needed;
                 if (needed > item.quantity) {
@@ -1531,39 +1554,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                         </SelectionArea>
                     </Block>
                 </Block>
-            </Modal>
-            <Modal type="alertdialog" isOpen={showCustomInfoInput} onClose={() => setShowCustomInfoInput(false)} header="Please Input your Information"
-                   dialogStyles={{padding: "0px 40px 20px"}}
-                   footer={
-                       <Block display="grid" gridTemplateColumns="repeat(2, 94px)" gridColumnGap="40px" height="40px" justifyContent="center">
-                           <Button kind={KIND.minimal} shape={SHAPE.pill}
-                                   overrides={{
-                                       BaseButton: {
-                                           props: {
-                                               className: clsx([styles["confirm-empty-button"]])
-                                           },
-                                       },
-                                   }}
-                                   onClick={() => handleClearCart()}
-                           >
-                               Empty
-                           </Button>
-                           <Button kind={KIND.minimal} shape={SHAPE.pill}
-                                   overrides={{
-                                       BaseButton: {
-                                           props: {
-                                               className: clsx([styles["cancel-empty-button"]])
-                                           },
-                                       },
-                                   }}
-                                   onClick={() => setShowClear(false)}
-                           >
-                               Cancel
-                           </Button>
-                       </Block>
-                   }
-            >
-                <Block font="MinXParagraph12">After submitting the order, we’ll contact you based on the information you provide us here.</Block>
             </Modal>
             <CustomPrintingRoof isOpen={printIsOpen} onClose={closeCustomPrintingModal} selectedRoofList={roofColorSelectedList} applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}/>
         </React.Fragment>

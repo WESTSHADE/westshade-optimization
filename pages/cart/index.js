@@ -125,7 +125,7 @@ function Cart_Page({router}) {
         //     checkoutData.shipping = {...user.shipping};
         // }
 
-        utils.createOrder(token, checkoutData).then((res) => {
+        utils.createOrder(token, checkoutData).then(async (res) => {
             setShowLoading(false);
             if (res.message) {
                 setShowError(true);
@@ -137,38 +137,40 @@ function Cart_Page({router}) {
             } else {
                 beginCheckout(cartProduct, lineItem);
 
+                let result = await Promise.all(cart.filter(item => item.entryId).map((item) => utils.updateContact({id: item.entryId, 71: res.id})));
+
                 router.push({pathname: "/checkout/", query: {id: res.id}})
             }
         });
     };
 
-    useEffect(() => {
-        if (!user) return;
-        // if (
-        //     !user.billing.first_name ||
-        //     !user.billing.last_name ||
-        //     !user.billing.address_1 ||
-        //     !user.billing.city ||
-        //     !user.billing.state ||
-        //     !user.billing.postcode ||
-        //     !user.billing.country ||
-        //     !user.billing.email ||
-        //     !user.billing.phone
-        //     // !user.shipping.first_name ||
-        //     // !user.shipping.last_name ||
-        //     // !user.shipping.address_1 ||
-        //     // !user.shipping.city ||
-        //     // !user.shipping.state ||
-        //     // !user.shipping.postcode ||
-        //     // !user.shipping.country
-        // ) {
-        //     setAddressesDone(false);
-        // } else {
-        //     setAddressesDone(true);
-        // }
-    }, [user]);
+    // useEffect(() => {
+    //     if (!user) return;
+    //     if (
+    //         !user.billing.first_name ||
+    //         !user.billing.last_name ||
+    //         !user.billing.address_1 ||
+    //         !user.billing.city ||
+    //         !user.billing.state ||
+    //         !user.billing.postcode ||
+    //         !user.billing.country ||
+    //         !user.billing.email ||
+    //         !user.billing.phone
+    //         // !user.shipping.first_name ||
+    //         // !user.shipping.last_name ||
+    //         // !user.shipping.address_1 ||
+    //         // !user.shipping.city ||
+    //         // !user.shipping.state ||
+    //         // !user.shipping.postcode ||
+    //         // !user.shipping.country
+    //     ) {
+    //         setAddressesDone(false);
+    //     } else {
+    //         setAddressesDone(true);
+    //     }
+    // }, [user]);
 
-    useEffect(() => {
+    useEffect(async () => {
         if (cartProduct.length < 1) return;
         let itemList = [];
         cartProduct.forEach(({parent_id, id}, index) => {
@@ -185,6 +187,7 @@ function Cart_Page({router}) {
                 });
             }
         });
+
         setLineItem(itemList);
     }, [cartProduct]);
 

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
-import {Button, SHAPE, KIND} from "baseui/button";
+import {Button, SIZE, SHAPE, KIND} from "baseui/button";
 import {Menu} from 'baseui/icon'
 
 import styles from "./header.module.scss";
@@ -190,7 +190,9 @@ function Header() {
                             {/*</NavigationItem>*/}
                             <NavigationItem>
                                 <Block position="relative" display="flex">
-                                    <Link href="/cart"><Cart className="cursor" color="#323232"/></Link>
+                                    <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>
+                                        <Cart className="cursor" color="#323232"/>
+                                    </Button>
                                     <Block display={badge > 0 ? "flex" : "none"} justifyContent="center" alignItems="center" backgroundColor="#23A4AD"
                                            minWidth="18px" height="18px" font="MinXLabel12" color="MinXPrimaryTextAlt"
                                            overrides={{
@@ -204,7 +206,9 @@ function Header() {
                                 </Block>
                             </NavigationItem>
                             <NavigationItem>
-                                <Link href="/my-account"><Account className="cursor" color="#323232"/></Link>
+                                <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/my-account")}>
+                                    <Account className="cursor" color="#323232"/>
+                                </Button>
                             </NavigationItem>
                         </NavigationList>
                     </HeaderNavigation>

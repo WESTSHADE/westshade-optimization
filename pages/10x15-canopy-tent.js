@@ -1,531 +1,304 @@
-import React, {useEffect, useState} from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import styled from "styled-components";
+import React, {createRef, useEffect, useState} from "react";
+import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 
-import {Box, Button, Container, Divider, Grid, List, ListItem, ListItemText, Typography} from "@material-ui/core";
+import {Block} from "baseui/block";
+import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 
-import CContainer from "../components/container";
-import CLink from "../components/link";
+import Button from "../components/button-n";
+import CardTabs from "../components/card_tabs";
+import {Modal} from "../components/surfaces";
 
-const MXImageDisplay = styled.img`
-	width: 90%;
-	min-height: 200px;
-	max-height: 400px;
-	object-fit: contain;
-`;
-
-const MXDot = styled(({color, ...other}) => <div style={{backgroundColor: color}} {...other} />)`
-	width: 14px;
-	height: 14px;
-	margin: 4px;
-	border-radius: 50%;
-	border: 1px solid #aaaaaa;
-`;
-
-const MXDotGroup = styled(({...other}) => (
-    <div {...other}>
-        <MXDot color="black"/>
-        <MXDot color="white"/>
-        <MXDot color="#ff0000"/>
-        <MXDot color="#3773b8"/>
-        <MXDot color="#eecb45"/>
-        <MXDot color="#4c9a18"/>
-    </div>
-))`
-	display: inline-flex;
-	margin-bottom: 8px;
-`;
-
-const MXContainerBuy = ({text, buttonText, href, backgroundColor}) => {
+const Tag = ({text}) => {
     return (
-        <div style={{margin: "18px 18px 36px 18px", display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <Typography variant="inherit" display="block" color="textSecondary" paragraph={!!text}>
-                {text}
-            </Typography>
-            <CLink backgroundColor={backgroundColor} href={href}>
-                {buttonText ? buttonText : "Buy"}
-            </CLink>
-        </div>
-    );
-};
+        <Block height="32px" padding="8px" backgroundColor="#F5FCFC" color="#5FBDBE"
+               overrides={{
+                   Block: {
+                       style: {border: "1px solid #5FBDBE"}
+                   }
+               }}
+        >{text}</Block>
+    )
+}
 
-function Canopy_Tent_Package({router}) {
-    const settings = {
-        arrows: false,
-        dots: false,
-        infinite: false,
-        autoplay: false,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: 960,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    initialSlide: 1,
-                },
-            },
-        ],
-    };
+function Canopy_Tent({router}) {
+    const [tabsRefs, setTabsRefs] = useState([]);
+    const [activeTabKey, setActiveTabKey] = useState("0");
+    const [tabLeft, setTabLeft] = useState(0);
 
-    const [display, setDisplay] = useState(false);
+    const [displayTabs, setDisplayTabs] = useState(false);
+
+    const [frameCompareOpen, setFrameCompareOpen] = useState(false);
+    const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
+
+    const goBuyingPage = (param) => router.push(param);
+
+    const frame = [{
+        tabTitle: "Y5",
+        tabContentTitle: "Y5 - Economical steel frame",
+        tabContentContent: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is designed for everyday use, performs exceptionally well all year round.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/y5.png",
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x15"}}),
+        onClickLink: () => setFrameCompareOpen(true)
+    }, {
+        tabTitle: "Y6",
+        tabContentTitle: "Y6 - Commercial frame",
+        tabContentContent: "Y6 range is an ideal entry level of aluminum tent. It's lightweight yet remaining the strength of heavy duty steel frame.  It is ideal for the regular professional user.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/y6.png",
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y6", size: "10x15"}}),
+        onClickLink: () => setFrameCompareOpen(true)
+    }, {
+        tabTitle: "Y7",
+        tabContentTitle: "Y7 - Heavy-duty aluminum frame",
+        tabContentContent: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/y7.png",
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y7", size: "10x15"}}),
+        onClickLink: () => setFrameCompareOpen(true)
+    }];
+
+    const printing_technology = [{
+        tabTitle: "Dye Sublimation",
+        tabContentTitle: "Dye sublimation printing",
+        tabContentContent: "Full color dye sublimation printing, unlimited colors, scratch-free, fading resistance. It is best choice of brand marketing and activity display.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/uv-printer.png",
+        onClick: () => {
+        },
+        onClickLink: () => setTechnologyCompareOpen(true)
+    }, {
+        tabTitle: "UV Printing",
+        tabContentTitle: "UV Printing",
+        tabContentContent: "Take your branding to the next level with our digital printing process using our high-quality UV ink to take your logo directly onto the canopy fabric. Provides high resolution service that dries and strengthens onto your canopy in an instant.",
+        tabContentPrice: "",
+        url: "images/canopy-tent/tent/dye-sublimation-printer.png",
+        onClick: () => {
+        },
+        onClickLink: () => setTechnologyCompareOpen(true)
+    }];
 
     useEffect(() => {
-        setTimeout(function () {
-            setDisplay(true);
-        }, 250);
+        setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef()));
     }, []);
+
+    useEffect(() => {
+        if (tabsRefs.length > 0) setDisplayTabs(true);
+    }, [tabsRefs]);
+
+    useEffect(() => {
+        if (displayTabs) setTabLeft((tabsRefs[activeTabKey].current.clientWidth - 40) / 2);
+    }, [displayTabs]);
 
     return (
         <React.Fragment>
-            <Box className="page canopy-tent-package" fontSize={14} lineHeight={1.43}>
-                {display ? (
+            <Head>
+                <title>10x15 Canopy Tent | WESTSHADE</title>
+                {/*<meta name="description" content="View frequently asked questions about our shipping and return policies, estimated delivery, damaged items, and refunds."/>*/}
+            </Head>
+            <Block backgroundColor="#F7F7F7" overrides={{Block: {props: {className: "text-center"}}}}>
+                {displayTabs ? (
                     <>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                    10x15 Canopy Tent
-                                </Typography>
-                                <Typography color="textSecondary" paragraph={true}>
-                                    Add more additional space of shaded protection for your upcoming events and outdoor activities with our 10x15 instant pop-up canopy tent! Perfect for parties, picnics, market trade shows, exhibitions,
-                                    business events, and
-                                    all other outdoor activity! Choose between the Y5, Y6, and the Y7 series available today for the right activity. In addition, we offer customizable custom printing packages to make your marketing and
-                                    original display shine
-                                    in front of your audience!
-                                </Typography>
-                            </Container>
-                        </CContainer>
-                        <CContainer className="extend gray">
-                            <Container maxWidth="md">
-                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                    Which tent is right for you?
-                                </Typography>
-                                <Grid container spacing={6}>
-                                    <Grid item xs={12} md={4}>
-                                        <div className="w-100p">
-                                            <div className="position-r" style={{minHeight: 400}}>
-                                                <MXImageDisplay src="/images/product/y5-economic-canopy-tent/y5-economic.png" alt="y5-economic"/>
-                                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}>
-                                                    {" "}
-                                                    Y5 Economic{" "}
-                                                </Typography>
-                                                <Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} paragraph={true}>
-                                                    {" "}
-                                                    For recreational use{" "}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" paragraph={true}>
-                                                    Our most economical canopy made out of stable powder-coated steel for everyday usage.
-                                                </Typography>
-                                            </div>
-                                            <MXContainerBuy text={"Starting at $245"} backgroundColor={"#2767c5"} dot href={{pathname: "/y5-economic/buy"}}/>
-                                            <Divider/>
-                                            <Grid container spacing={2} style={{margin: "24px auto auto", width: "90%"}}>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/pole@1x.png"/>
-                                                        <p className="section-content">1.75’’ outer leg frame</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/onepress@1x.png"/>
-                                                        <p className="section-content">Push button height ajustor</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/bracket-connector@1x.png"/>
-                                                        <p className="section-content">Truss bars and connectors</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/footpads@1x.png"/>
-                                                        <p className="section-content">Powder coating steel frame</p>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <div className="w-100p">
-                                            <div className="position-r" style={{minHeight: 400}}>
-                                                <MXImageDisplay src="/images/product/y6-commercial-buy/y6-commercial.png" alt="y6-commercial"/>
-                                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}>
-                                                    {" "}
-                                                    Y6 Commercial{" "}
-                                                </Typography>
-                                                <Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} paragraph={true}>
-                                                    {" "}
-                                                    For commercial use{" "}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" paragraph={true}>
-                                                    Stronger and lighter commercial grade aluminum frame canopy tent for various environments.
-                                                </Typography>
-                                            </div>
-                                            <MXContainerBuy text={"Starting at $445"} backgroundColor={"#2767c5"} dot href={{pathname: "/y6-commercial/buy"}}/>
-                                            <Divider/>
-                                            <Grid container spacing={2} style={{margin: "24px auto auto", width: "90%"}}>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/pole-1@1x.png"/>
-                                                        <p className="section-content">1.75’’ Aluminum outer leg</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/image-33@2x.png"/>
-                                                        <p className="section-content">Push button height ajustor</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/image-34@2x.png"/>
-                                                        <p className="section-content">Aluminum connectors</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/footpads-1@1x.png"/>
-                                                        <p className="section-content">Aluminum frame</p>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <div className="w-100p">
-                                            <div className="position-r" style={{minHeight: 400}}>
-                                                <MXImageDisplay src="/images/product/y7-heavy-duty-canopy-tent/y7-heavy-duty.png" alt="y7-heavy-duty"/>
-                                                <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}}>
-                                                    {" "}
-                                                    Y7 Heavy Duty{" "}
-                                                </Typography>
-                                                <Typography variant="subtitle2" color="inherit" style={{color: "#e59010"}} paragraph={true}>
-                                                    {" "}
-                                                    For heavy duty use{" "}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" paragraph={true}>
-                                                    The most heavy duty aluminum frame canopy on the market with unchallenged strength and durability.
-                                                </Typography>
-                                            </div>
-                                            <MXContainerBuy text={"Starting at $619"} backgroundColor={"#2767c5"} dot href={{pathname: "/y7-heavy-duty/buy"}}/>
-                                            <Divider/>
-                                            <Grid container spacing={2} style={{margin: "24px auto auto", width: "90%"}}>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/pole-1@1x.png"/>
-                                                        <p className="section-content">1.75’’ outer leg frame</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/image-33@2x.png"/>
-                                                        <p className="section-content">Push button height ajustor</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/image-34@2x.png"/>
-                                                        <p className="section-content">Truss bars and connectors</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <div className="section-image-package-specs-container">
-                                                        <img className="section-image-package-specs" src="/images/footpads-1@1x.png"/>
-                                                        <p className="section-content">Powder coating steel frame</p>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                                <Grid container>
-                                    <Grid item xs={4}>
-                                        <List>
-                                            <ListItem className="section-image-package-listItem"/>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Frame Specifications"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Material"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Shape"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Bracket Connectors"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Height Adjustment"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Nuts and Bolts"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Diameter"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Outer Leg Thickness"}/>
-                                            </ListItem>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Fabric features"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Fabric"}/>
-                                            </ListItem>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Function"}/>
-                                            </ListItem>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem style={{minHeight: "41px"}}/>
-                                            <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}>
-                                                <ListItemText className="section-image-package-listItem-title" primary={"Warrenty"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Frame Warranty"}/>
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemText className="section-image-package-listItem-subtitle" primary={"Roof Warranty"}/>
-                                            </ListItem>
-                                        </List>
-                                    </Grid>
-                                    <Grid item xs={8}>
-                                        <Slider {...settings}>
-                                            <List>
-                                                <ListItem className="section-image-package-listItem ">
-                                                    <ListItemText className="section-image-package-listItem-title center" primary={"Y5 Economic"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Powder-coated steel"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Nylon"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Push button"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Zinc coated steel"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1.75 inches (45mm)"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"0.05inches (1.2mm)"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"320gsm"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Waterproof"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"UV protection"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem-button">
-                                                    <ListItemText className="section-image-package-listItem-content" style={{width: "100%", marginBottom: 12}} primary={"Starting at $245"}/>
-                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push({pathname: "/y5-economic/buy"})}>
-                                                        Buy
-                                                    </Button>
-                                                </ListItem>
-                                            </List>
-                                            <List>
-                                                <ListItem className="section-image-package-listItem">
-                                                    <ListItemText className="section-image-package-listItem-title center" primary={"Y6 Commercial"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Push button"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Stainless steel"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1.75 inches (45mm)"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"0.06 inches (1.5mm)"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"320gsm"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Waterproof"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"UV protection"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"5 year"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem-button">
-                                                    <ListItemText className="section-image-package-listItem-content" style={{width: "100%", marginBottom: 12}} primary={"Starting at $445"}/>
-                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push("/y6-commercial/buy/")}>
-                                                        Buy
-                                                    </Button>
-                                                </ListItem>
-                                            </List>
-                                            <List>
-                                                <ListItem className="section-image-package-listItem">
-                                                    <ListItemText className="section-image-package-listItem-title center" primary={"Y7 Heavy Duty"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Hexagonal"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"6063-T5 Aluminum"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Push button"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Stainless steel"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"2.25 inches (57mm)"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"0.07 inches (1.8mm)"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"500D Polyester with PVC coating"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"320gsm"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"Waterproof"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"CPAI-84 certified fire retardant"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"UV protection"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem" style={{backgroundColor: "white"}}/>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"10 year"}/>
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemText className="section-image-package-listItem-content" primary={"1 year"}/>
-                                                </ListItem>
-                                                <ListItem className="section-image-package-listItem-button">
-                                                    <ListItemText className="section-image-package-listItem-content" style={{width: "100%", marginBottom: 12}} primary={"Starting at $619"}/>
-                                                    <Button variant="contained" className="section-grid-button" onClick={() => router.push("/y7-heavy-duty/buy/")}>
-                                                        Buy
-                                                    </Button>
-                                                </ListItem>
-                                            </List>
-                                        </Slider>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
-                        <CContainer>
-                            <Container maxWidth="md">
-                                <Typography variant="h5" paragraph={true}>
-                                    {" "}
-                                    Custom printing{" "}
-                                </Typography>
-                                <Grid container spacing={2} direction="row" alignItems="center">
-                                    <Grid item xs={12} sm={4}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/10x15/F1015CPP4.jpg" alt="custom-printing-10x15-y5"/>
-                                        </div>
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                            <strong> Y5 Economic </strong>
-                                        </Typography>
-                                        <Typography variant="subtitle2" color="textSecondary" paragraph={true}>
-                                            {" "}
-                                            Starting at $805{" "}
-                                        </Typography>
-                                        <MXContainerBuy backgroundColor={"#2767c5"} href={{pathname: "/custom-printed-package/f1015cpp", query: {frame: "y5"}}}/>
-                                    </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/10x15/F1015CPP8.jpg" alt="custom-printing-10x15-y6"/>
-                                        </div>
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                            <strong> Y6 Commercial </strong>
-                                        </Typography>
-                                        <Typography variant="subtitle2" color="textSecondary" paragraph={true}>
-                                            {" "}
-                                            Starting at $965{" "}
-                                        </Typography>
-                                        <MXContainerBuy backgroundColor={"#2767c5"} href={{pathname: "/custom-printed-package/f1015cpp", query: {frame: "y6"}}}/>
-                                    </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <div className="position-r">
-                                            <MXImageDisplay src="/images/product/custom-printed-package/10x15/F1015CPP7.jpg" alt="custom-printing-10x15-y7"/>
-                                        </div>
-                                        <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
-                                            <strong> Y7 Heavy Duty </strong>
-                                        </Typography>
-                                        <Typography variant="subtitle2" color="textSecondary" paragraph={true}>
-                                            {" "}
-                                            Starting at $1,365{" "}
-                                        </Typography>
-                                        <MXContainerBuy backgroundColor={"#2767c5"} href={{pathname: "/custom-printed-package/f1015cpp", query: {frame: "y7"}}}/>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </CContainer>
+                        <Block display="flex" flexDirection="column" marginBottom={["32px", "40px", "64px"]} padding={["24px 16px", "32px 16px", "40px 24px"]} backgroundColor="#F5FCFC">
+                            <Block marginBottom={["24px", "24px", "32px"]} font="MinXLabel32">10x15 Canopy Tent</Block>
+                            <Block width="100%" maxWidth="420px" marginRight="auto" marginLeft="auto" font="MinXLabel20">
+                                <Block display="grid" gridTemplateColumns="1fr 1fr" height="90px">
+                                    <Block position="relative" onClick={() => setActiveTabKey("0")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "1" ? "grayscale(1)" : "grayscale(0)"}}}}>
+                                        <Image src="images/canopy-tent/tent/stock-color-tent.png" alt='stock color tent' layout="fill" objectFit="contain" quality={100}/>
+                                    </Block>
+                                    <Block position="relative" onClick={() => setActiveTabKey("1")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "0" ? "grayscale(1)" : "grayscale(0)"}}}}>
+                                        <Image src="images/canopy-tent/tent/custom-printing-tent.png" alt='custom printing tent' layout="fill" objectFit="contain" quality={100}/>
+                                    </Block>
+                                </Block>
+                                <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}
+                                      overrides={{
+                                          TabBorder: {props: {hidden: true}},
+                                          TabHighlight: {
+                                              props: {
+                                                  className: "tab-highlight-horizon long"
+                                              },
+                                              style: {left: tabLeft + "px"}
+                                          },
+                                      }}
+                                >
+                                    <Tab title="Stock Color" tabRef={tabsRefs[0]}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF"}),
+                                             },
+                                             TabPanel: {props: {hidden: true}}
+                                         }}
+                                    />
+                                    <Tab title="Custom Printed" tabRef={tabsRefs[1]}
+                                         overrides={{
+                                             Tab: {
+                                                 props: {
+                                                     className: "canopy-tent-tab"
+                                                 },
+                                                 style: ({$isActive}) => ({color: $isActive ? "#262626" : "#BFBFBF",}),
+                                             },
+                                             TabPanel: {props: {hidden: true}}
+                                         }}
+                                    />
+                                </Tabs>
+                            </Block>
+                        </Block>
+                        <>
+                            {activeTabKey === "0" ? (
+                                <>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>STOCK COLORS</Block>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">Pick a color to light up your mood.</Block>
+                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                                onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x15"}})}
+                                        />
+                                        <Block position="relative" height={["159px", "260px", "494px"]}>
+                                            <Image src="images/canopy-tent/tent/fabric-stock-color.png" alt="fabric stock color" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                        <Block display="grid" gridTemplateColumns={["1fe", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["auto auto", "auto auto", "auto"]} backgroundColor="white"
+                                               overrides={{Block: {props: {className: "section-round-corner-s"}}}}
+                                        >
+                                            <Block position="relative" width="100%" height={["160px", "216px", "348px"]}>
+                                                <Image src="images/canopy-tent/tent/fabric.jpg" alt="fabric for stock color tent" layout="fill" objectFit="cover"/>
+                                            </Block>
+                                            <Block display="grid" gridRowGap="12px" padding={["16px", "24px", "32px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
+                                                <Block font="MinXParagraph20">Fabric for stock color tent</Block>
+                                                <Block display="flex" flexDirection="row" flexWrap="wrap" overrides={{Block: {style: {gap: "12px"}}}}>
+                                                    <Tag text="Polyester"/><Tag text="500D"/><Tag text="320gsm"/><Tag text="PVC Coated"/>
+                                                </Block>
+                                                <Block font="MinXParagraph16" color="MinXSecondaryText">
+                                                    Your comfort and safety is our first priority. The fabric Westshade uses for plain canopy tent is 500D, 320gsm, PVC coated polyester. It’s water-resistant, fading resistant, fire
+                                                    resistant,
+                                                    and it provides UV protection.
+                                                </Block>
+                                            </Block>
+                                        </Block>
+                                    </Block>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>FRAME</Block>
+                                        <Block marginBottom={["24px", "40px", "64px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                            Westshade provides 3 frame options to meet your unique needs.
+                                        </Block>
+                                        <CardTabs title="Select a frame option" tabList={frame} imageMinHeight={["200px", "310px", "600px"]} objectFit="contain" tabType="button"
+                                                  linkText="-> Compare frames"
+                                                  containerProps={{gridColumnGap: "20px"}}
+                                                  containerStyles={{textAlign: "left"}}
+                                                  containerImageProps={{padding: ["22px 14px", "30px 24px", "40px 32px"], backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-right"}}}}}
+                                                  containerTabsProps={{display: "flex", flexDirection: "column", backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-left"}}}}}
+                                                  carouselProps={{
+                                                      showIndicators: false,
+                                                      renderArrowPrev: () => {
+                                                      },
+                                                      renderArrowNext: () => {
+                                                      }
+                                                  }}
+                                        />
+                                    </Block>
+                                </>
+                            ) : (
+                                <>
+                                    <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>CUSTOM PRINTING</Block>
+                                        <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                            You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
+                                        </Block>
+                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                                onClick={() => {
+                                                }}
+                                        />
+                                        <Block display="grid" gridRowGap="20px" overrides={{Block: {style: {textAlign: "left"}}}}>
+                                            <Block display="grid" gridColumnGap="20px" gridRowGap="20px" gridTemplateAreas={[`"a" "b" "c"`, `"a" "b" "c"`, `"a a" "b c"`]}>
+                                                <Block gridArea="a" position="relative" height={["234px", "234px", "600px"]} overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=ud5m8ET8sE8&ab_channel=Westshade'/>
+                                                </Block>
+                                                <Block gridArea="b" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <Block padding={["24px 16px", "24px", "40px"]}>
+                                                        <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Fabric for custom printed tent</Block>
+                                                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We adopt 600D, 360 gsm, PU coated polyester fabric for custom printed canopy tent. It’s
+                                                            light but strong. </Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                    </Block>
+                                                    <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                                        <Image src="images/canopy-tent/tent/600D-polyester.jpg" alt="600D polyester" layout="fill" objectFit="contain"/>
+                                                    </Block>
+                                                </Block>
+                                                <Block gridArea="c" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                                    <Block padding={["24px 16px", "24px", "40px"]}>
+                                                        <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Ink for printing</Block>
+                                                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We use ink imported from Korea for dye sublimation printing and use ink imported from
+                                                            Japan for UV
+                                                            printing.</Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                    </Block>
+                                                    <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
+                                                        <Image src="images/canopy-tent/tent/imported-from-korea.jpg" alt="imported from korea" layout="fill" objectFit="contain"/>
+                                                    </Block>
+                                                </Block>
+                                            </Block>
+                                            <CardTabs title="Select a printing technology" tabList={printing_technology} imageMinHeight={["200px", "310px", "600px"]} objectFit="contain" tabType="button"
+                                                      linkText="-> Compare printing technology"
+                                                      containerProps={{gridColumnGap: "20px"}}
+                                                      containerImageProps={{padding: ["22px 14px", "30px 24px", "40px 32px"], backgroundColor: "#243233", overrides: {Block: {props: {className: "card-radius-right"}}}}}
+                                                      containerTabsProps={{display: "flex", flexDirection: "column", backgroundColor: "white", overrides: {Block: {props: {className: "card-radius-left"}}}}}
+                                                      carouselProps={{
+                                                          showIndicators: false,
+                                                          renderArrowPrev: () => {
+                                                          },
+                                                          renderArrowNext: () => {
+                                                          }
+                                                      }}
+                                            />
+                                        </Block>
+                                    </Block>
+                                </>
+                            )}
+                        </>
+                        <Block maxWidth="1152px" marginRight="auto" marginLeft="auto" paddingRight="16px" paddingBottom={["40px", "80px", "120px"]} paddingLeft="16px">
+                            <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>MORE VIDEO</Block>
+                            <Block marginBottom={["24px", "40px", "64px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
+                                We want to help you find the right canopy and make your use of the canopy easy.
+                            </Block>
+                            <Block display="grid" gridGap="20px" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} overrides={{Block: {style: {textAlign: "left"}}}}>
+                                <Block padding={["16px", "32px", "40px"]} backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                    <Block position="relative" height={["190px", "307px", "353px"]} marginBottom={["16px", "24px", "32px"]}
+                                           overrides={{Block: {props: {className: "section-round-corner"}}}}>
+                                        <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=YGX1N5997iY&ab_channel=Westshade'/>
+                                    </Block>
+                                    <Block marginBottom="12px" font="MinXParagraph20">Open up the canopy</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">Two people can set up the tent easily by following up this instruction video. No extra tools needed.</Block>
+                                </Block>
+                                <Block padding={["16px", "32px", "40px"]} backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
+                                    <Block position="relative" height={["190px", "307px", "353px"]} marginBottom={["16px", "24px", "32px"]}
+                                           overrides={{Block: {props: {className: "section-round-corner"}}}}>
+                                        <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=hYmRbcDzLRw&ab_channel=Westshade'/>
+                                    </Block>
+                                    <Block marginBottom="12px" font="MinXParagraph20">Tent introduction</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade's canopy tent.</Block>
+                                </Block>
+                            </Block>
+                        </Block>
                     </>
                 ) : null}
-            </Box>
+            </Block>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={technologyCompareOpen} onClose={() => setTechnologyCompareOpen(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
         </React.Fragment>
     );
 }
 
-export default withRouter(Canopy_Tent_Package);
+Canopy_Tent.getInitialProps = async () => {
+    return {
+        fullPage: true
+    };
+};
+
+export default withRouter(Canopy_Tent);
+

@@ -4,9 +4,7 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
-import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import clsx from "clsx";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -20,24 +18,18 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
-import {Input} from "baseui/input";
-import {Textarea} from "baseui/textarea";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
-import {StatefulDataTable, BooleanColumn, CategoricalColumn, CustomColumn, NumericalColumn, StringColumn, COLUMNS, NUMERICAL_FORMATS} from "baseui/data-table";
-import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
-import {Accordion, Panel} from "baseui/accordion";
 
 import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
 import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
-import {Checkout_N as Checkout} from "../../components/sections";
+import {Checkout_N as Checkout, ProductDescription} from "../../components/sections";
 import {Modal} from "../../components/surfaces";
 import MButton from "../../components/button-n";
 import SelectionArea from "../../components/selection_area";
 import Selection from "../../components/selection-n";
-import CardTabs from "../../components/card_tabs";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 
@@ -117,42 +109,6 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
 
-const feature_1 = [{
-    tabTitle: "Water Resistant",
-    tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/canopy-tent/feature-fabric.jpg",
-}, {
-    tabTitle: "Fire Retardant",
-    tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84.",
-    url: "images/product/canopy-tent/feature-fire.png",
-}, {
-    tabTitle: "UV Protection",
-    tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days.",
-    url: "images/product/canopy-tent/feature-uv.jpg",
-}]
-
-const feature_2 = [{
-    tabTitle: "Steel",
-    tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck.",
-    url: "images/product/canopy-tent/feature-steel.png",
-}, {
-    tabTitle: "Aluminum",
-    tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions.",
-    url: "images/product/canopy-tent/feature-aluminum.png",
-}]
-
-const anatomyPart = [
-    {url: "/top-corner-connector.png", title: "TOP CORNER CONNECTOR", content: "The top corner connectors help connect together the canopy to provide stability and durability."},
-    {url: "/truss-bar.png", title: "TRUSS BAR", content: "Truss bar is the middle connector between the leg pole and helps stabilize the canopy."},
-    {url: "/leg-height-connector.png", title: "HEIGHT ADJUST CONNECTOR", content: "Adjust the shade as needed throughout the day with leg height adjustments."},
-    {
-        url: "/foot-plate.png",
-        title: "FOOT PLATE",
-        content: "Footplates are heavy weights that rest on the feet of the pop up tent legs to offer additional anchoring in conjunction with staking kits or they can operate alone when stakes are not necessary."
-    },
-    {url: "/leg-pole.png", title: "LEG POLE", content: "Our leg poles are stable and are going to provide the most coverage without taking up too much space."},
-];
-
 function Canopy_Tent({router, products, variants}) {
     const [displayTabs, setDisplayTabs] = useState(false);
     const [tabSelectionActiveKey, setTabSelectionActiveKey] = useState(0);
@@ -192,8 +148,6 @@ function Canopy_Tent({router, products, variants}) {
 
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
-    const [tentSeries, setTentSeries] = useState("");
-
     const [isInStock, setIsInStock] = useState(true);
 
     const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -225,18 +179,12 @@ function Canopy_Tent({router, products, variants}) {
     const [tabsRefs, setTabsRefs] = useState([]);
     const [value3, setValue3] = useState("1");
 
-    const [displayIntro, setDisplayIntro] = useState(false);
-    const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
-    const [frameIntroPosition, setFrameIntroPosition] = useState(0);
-
     ////////////////////////////////////////
 
     const dispatch = useDispatch();
 
     const {loggedIn, token} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
-
-    const goSpecPage = () => router.push({pathname: "/canopy-tent/spec"});
 
     const openWallModal = (index) => {
         setActiveWall(index);
@@ -935,750 +883,508 @@ function Canopy_Tent({router, products, variants}) {
                 <title>Canopy Tent | WESTSHADE</title>
                 <meta name="description" content="Customized your own canopy. Buy it with desired frames, Heavy Duty Aluminum, Commercial Aluminum, Economic Steel and more!"/>
             </Head>
-            <Block height="auto" display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]} marginBottom="40px">
-                <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom="40px">
-                    {/* 图片区域 */}
-                    <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
+            <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
+                {/* 图片区域 */}
+                <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
+                          overrides={{
+                              Root: {
+                                  style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
+                              },
+                              TabList: {
+                                  props: {
+                                      className: "hideScrollBar"
+                                  },
+                                  style: {
+                                      display: "grid",
+                                      gridTemplateColumns: " repeat(3,auto)",
+                                      gridColumnGap: "12px",
+                                      justifyContent: "center",
+                                      overflowX: "scroll",
+                                  },
+                              },
+                              TabBorder: {props: {hidden: true}},
+                              TabHighlight: {props: {hidden: true}},
+                          }}
+                    >
+                        <Tab title="Photo"
+                             overrides={{
+                                 TabPanel: {
+                                     style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                 },
+                                 Tab: {
+                                     style: ({$isActive}) => ({
+                                         background: $isActive ? "black" : "transparent",
+                                         color: $isActive ? "white" : "black",
+                                         paddingTop: "5px",
+                                         paddingBottom: "5px",
+                                         paddingRight: "24px",
+                                         paddingLeft: "24px",
+                                         borderRadius: "24px",
+                                         ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                     }),
+                                 },
+                             }}
+                        >
+                            <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
+                                          renderLeftNav={(onClick, disabled) => (
+                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                      onClick={onClick}
+                                                      overrides={{
+                                                          BaseButton: {
+                                                              props: {
+                                                                  className: "cursor react-image-gallery-arrow left",
+                                                              },
+                                                          },
+                                                      }}
+                                                      disabled={disabled}
+                                              >
+                                                  <ChevronLeft size={28} color={"white"}/>
+                                              </Button>
+                                          )}
+                                          renderRightNav={(onClick, disabled) => (
+                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                      onClick={onClick}
+                                                      overrides={{
+                                                          BaseButton: {
+                                                              props: {
+                                                                  className: "cursor react-image-gallery-arrow right",
+                                                              },
+                                                          },
+                                                      }}
+                                                      disabled={disabled}
+                                              >
+                                                  <ChevronRight size={28} color={"white"}/>
+                                              </Button>
+                                          )}
+                            />
+                        </Tab>
+                        <Tab title="Video" overrides={{
+                            TabPanel: {
+                                style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                            },
+                            Tab: {
+                                style: ({$isActive}) => ({
+                                    background: $isActive ? "black" : "transparent",
+                                    color: $isActive ? "white" : "black",
+                                    paddingTop: "5px",
+                                    paddingBottom: "5px",
+                                    paddingRight: "24px",
+                                    paddingLeft: "24px",
+                                    borderRadius: "24px",
+                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                }),
+                            },
+                        }}/>
+                        <Tab title="3D" overrides={{
+                            TabPanel: {
+                                style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                            },
+                            Tab: {
+                                style: ({$isActive}) => ({
+                                    background: $isActive ? "black" : "transparent",
+                                    color: $isActive ? "white" : "black",
+                                    paddingTop: "5px",
+                                    paddingBottom: "5px",
+                                    paddingRight: "24px",
+                                    paddingLeft: "24px",
+                                    borderRadius: "24px",
+                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                }),
+                            },
+                        }}/>
+                    </Tabs>
+                </Block>
+                {/* 选择区域 */}
+                <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
+                       paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
+                       overrides={{
+                           Block: {
+                               props: {
+                                   className: "hideScrollBar"
+                               },
+                           },
+                       }}
+                >
+                    <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
+                    <Block marginTop="4px" marginBottom="24px" font="MinXLabel14" color="MinXButton">
+                        <Link color="inherit" href={"/canopy-tent/spec"}>Spec</Link>
+                    </Block>
+                    {displayTabs ? (
+                        <Tabs activeKey={tabSelectionActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabSelectionActiveKey(parseInt(activeKey))}
                               overrides={{
                                   Root: {
-                                      style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
+                                      style: ({$theme}) => ({width: "100%"}),
                                   },
                                   TabList: {
                                       props: {
                                           className: "hideScrollBar"
                                       },
                                       style: {
-                                          display: "grid",
-                                          gridTemplateColumns: " repeat(3,auto)",
-                                          gridColumnGap: "12px",
-                                          justifyContent: "center",
                                           overflowX: "scroll",
                                       },
                                   },
                                   TabBorder: {props: {hidden: true}},
-                                  TabHighlight: {props: {hidden: true}},
+                                  TabHighlight: {
+                                      props: {
+                                          className: "tab-highlight-horizon"
+                                      },
+                                      style: {left: tabsRefs[tabSelectionActiveKey].current ? `${(tabsRefs[tabSelectionActiveKey].current.clientWidth - 24) / 2}px` : 0},
+                                  },
                               }}
                         >
-                            <Tab title="Photo"
+                            <Tab title="Basic" tabRef={tabsRefs[0]}
                                  overrides={{
                                      TabPanel: {
                                          style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
                                      },
                                      Tab: {
-                                         style: ({$isActive}) => ({
-                                             background: $isActive ? "black" : "transparent",
-                                             color: $isActive ? "white" : "black",
-                                             paddingTop: "5px",
-                                             paddingBottom: "5px",
-                                             paddingRight: "24px",
-                                             paddingLeft: "24px",
-                                             borderRadius: "24px",
-                                             ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                         }),
+                                         style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
                                      },
                                  }}
                             >
-                                <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
-                                              renderLeftNav={(onClick, disabled) => (
-                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                          onClick={onClick}
-                                                          overrides={{
-                                                              BaseButton: {
-                                                                  props: {
-                                                                      className: "cursor react-image-gallery-arrow left",
-                                                                  },
-                                                              },
-                                                          }}
-                                                          disabled={disabled}
-                                                  >
-                                                      <ChevronLeft size={28} color={"white"}/>
-                                                  </Button>
-                                              )}
-                                              renderRightNav={(onClick, disabled) => (
-                                                  <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                          onClick={onClick}
-                                                          overrides={{
-                                                              BaseButton: {
-                                                                  props: {
-                                                                      className: "cursor react-image-gallery-arrow right",
-                                                                  },
-                                                              },
-                                                          }}
-                                                          disabled={disabled}
-                                                  >
-                                                      <ChevronRight size={28} color={"white"}/>
-                                                  </Button>
-                                              )}
-                                />
+                                <>
+                                    <SelectionArea title="Size">
+                                        <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
+                                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => (
+                                                <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
+                                            ))) : null}
+                                        </Selection>
+                                        <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
+                                                 buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                                 onClick={() => setSizeGuideOpen(true)}
+                                        />
+                                    </SelectionArea>
+                                    <SelectionArea title="Frame">
+                                        <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
+                                                   onChange={(event) => {
+                                                       setSelectedFrame(event.target.value);
+                                                       if (event.target.value === "y5") {
+                                                           setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
+                                                           setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
+                                                       } else if (event.target.value === "y6") {
+                                                           setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
+                                                           setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
+                                                       } else if (event.target.value === "y7") {
+                                                           setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
+                                                           setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
+                                                       }
+                                                   }}
+                                        >
+                                            <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
+                                            <Radio value="y6">Y6 Commercial Aluminum</Radio>
+                                            <Radio value="y5">Y5 Economic Steel</Radio>
+                                        </Selection>
+                                        <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
+                                                 buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
+                                                 onClick={() => setFrameCompareOpen(true)}
+                                        />
+                                    </SelectionArea>
+                                    <SelectionArea title="Color">
+                                        <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}
+                                                   onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopyColor)}
+                                        >
+                                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) => options.map((option, index) => (
+                                                        <Radio key={index} value={option.toLowerCase()}
+                                                               overrides={{
+                                                                   Label: ({$value}) => (
+                                                                       <div className="radio-dot"
+                                                                            style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
+                                                                       />
+                                                                   ),
+                                                               }}
+                                                        />
+                                                    ))
+                                                )
+                                                : null}
+                                        </Selection>
+                                    </SelectionArea>
+                                </>
                             </Tab>
-                            <Tab title="Video" overrides={{
-                                TabPanel: {
-                                    style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                },
-                                Tab: {
-                                    style: ({$isActive}) => ({
-                                        background: $isActive ? "black" : "transparent",
-                                        color: $isActive ? "white" : "black",
-                                        paddingTop: "5px",
-                                        paddingBottom: "5px",
-                                        paddingRight: "24px",
-                                        paddingLeft: "24px",
-                                        borderRadius: "24px",
-                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                    }),
-                                },
-                            }}/>
-                            <Tab title="3D" overrides={{
-                                TabPanel: {
-                                    style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                },
-                                Tab: {
-                                    style: ({$isActive}) => ({
-                                        background: $isActive ? "black" : "transparent",
-                                        color: $isActive ? "white" : "black",
-                                        paddingTop: "5px",
-                                        paddingBottom: "5px",
-                                        paddingRight: "24px",
-                                        paddingLeft: "24px",
-                                        borderRadius: "24px",
-                                        ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                    }),
-                                },
-                            }}/>
-                        </Tabs>
-                    </Block>
-                    {/* 选择区域 */}
-                    <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
-                           paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
-                           overrides={{
-                               Block: {
-                                   props: {
-                                       className: "hideScrollBar"
-                                   },
-                               },
-                           }}
-                    >
-                        <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
-                        <Block marginTop="4px" marginBottom="24px" font="MinXLabel14" color="MinXButton">
-                            <Link color="inherit" href={"/canopy-tent/spec"}>Spec</Link>
-                        </Block>
-                        {displayTabs ? (
-                            <Tabs activeKey={tabSelectionActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabSelectionActiveKey(parseInt(activeKey))}
-                                  overrides={{
-                                      Root: {
-                                          style: ({$theme}) => ({width: "100%"}),
-                                      },
-                                      TabList: {
-                                          props: {
-                                              className: "hideScrollBar"
-                                          },
-                                          style: {
-                                              overflowX: "scroll",
-                                          },
-                                      },
-                                      TabBorder: {props: {hidden: true}},
-                                      TabHighlight: {
-                                          props: {
-                                              className: "tab-highlight-horizon"
-                                          },
-                                          style: {left: tabsRefs[tabSelectionActiveKey].current ? `${(tabsRefs[tabSelectionActiveKey].current.clientWidth - 24) / 2}px` : 0},
-                                      },
-                                  }}
+                            <Tab title="+Wall" tabRef={tabsRefs[1]}
+                                 overrides={{
+                                     TabPanel: {
+                                         style: ({$theme}) => ({paddingRight: 0, paddingLeft: 0}),
+                                     },
+                                     Tab: {
+                                         style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
+                                     },
+                                 }}
                             >
-                                <Tab title="Basic" tabRef={tabsRefs[0]}
-                                     overrides={{
-                                         TabPanel: {
-                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                         },
-                                         Tab: {
-                                             style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                         },
-                                     }}
-                                >
-                                    <>
-                                        <SelectionArea title="Size">
-                                            <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                                                {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => (
-                                                    <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
-                                                ))) : null}
-                                            </Selection>
-                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
-                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => setSizeGuideOpen(true)}
-                                            />
-                                        </SelectionArea>
-                                        <SelectionArea title="Frame">
-                                            <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
-                                                       onChange={(event) => {
-                                                           setSelectedFrame(event.target.value);
-                                                           if (event.target.value === "y5") {
-                                                               setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
-                                                               setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
-                                                           } else if (event.target.value === "y6") {
-                                                               setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
-                                                               setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
-                                                           } else if (event.target.value === "y7") {
-                                                               setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
-                                                               setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
-                                                           }
-                                                       }}
-                                            >
-                                                <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
-                                                <Radio value="y6">Y6 Commercial Aluminum</Radio>
-                                                <Radio value="y5">Y5 Economic Steel</Radio>
-                                            </Selection>
-                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
-                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => setFrameCompareOpen(true)}
-                                            />
-                                        </SelectionArea>
-                                        <SelectionArea title="Color">
-                                            <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}
-                                                       onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopyColor)}
-                                            >
-                                                {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) => options.map((option, index) => (
-                                                            <Radio key={index} value={option.toLowerCase()}
-                                                                   overrides={{
-                                                                       Label: ({$value}) => (
-                                                                           <div className="radio-dot"
-                                                                                style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
-                                                                           />
-                                                                       ),
-                                                                   }}
-                                                            />
-                                                        ))
-                                                    )
-                                                    : null}
-                                            </Selection>
-                                        </SelectionArea>
-                                    </>
-                                </Tab>
-                                <Tab title="+Wall" tabRef={tabsRefs[1]}
-                                     overrides={{
-                                         TabPanel: {
-                                             style: ({$theme}) => ({paddingRight: 0, paddingLeft: 0}),
-                                         },
-                                         Tab: {
-                                             style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                         },
-                                     }}
-                                >
-                                    <ul className={css({paddingLeft: 0, paddingRight: 0,})}>
-                                        {wallPlainAttributeList.map((component, index) => {
-                                            return (
-                                                <ListItem key={index}
-                                                          artwork={(props) => {
-                                                              return component[0].option !== "none" ? (
-                                                                  <>
-                                                                      {index === 0 ? (
-                                                                          <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
-                                                                      ) : index === 1 ? (
-                                                                          <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
-                                                                      ) : index === 2 ? (
-                                                                          <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
-                                                                      ) : index === 3 ? (
-                                                                          <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
-                                                                      ) : null}
-                                                                  </>
-                                                              ) : (
-                                                                  <>
-                                                                      {index === 0 ? (
-                                                                          <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
-                                                                      ) : index === 1 ? (
-                                                                          <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
-                                                                      ) : index === 2 ? (
-                                                                          <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
-                                                                      ) : index === 3 ? (
-                                                                          <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
-                                                                      ) : null}
-                                                                  </>
-                                                              );
-                                                          }}
-                                                          overrides={{
-                                                              Root: {
-                                                                  style: ({$theme}) => ({
-                                                                      height: "68px",
-                                                                      paddingRight: "8px",
-                                                                      paddingLeft: "8px",
-                                                                      backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
-                                                                  }),
-                                                              },
-                                                              Content: {
-                                                                  style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
-                                                              },
-                                                              ArtworkContainer: {
-                                                                  style: {width: "44px", height: "44px"},
-                                                              },
-                                                          }}
-                                                          endEnhancer={() => {
-                                                              return (
-                                                                  <>
-                                                                      {component[0].option !== "none" ? (
-                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                              <Button shape={SHAPE.pill}
-                                                                                      overrides={{
-                                                                                          BaseButton: {props: {className: "button-edit"}},
-                                                                                      }}
-                                                                                      onClick={() => openWallModal(index)}
-                                                                              >
-                                                                                  Edit
-                                                                              </Button>
-                                                                              <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                                      overrides={{
-                                                                                          BaseButton: {
-                                                                                              style: ({$theme}) => ({
-                                                                                                  marginLeft: "17px",
-                                                                                                  width: "20px",
-                                                                                                  height: "20px",
-                                                                                                  backgroundColor: "transparent",
-                                                                                              }),
-                                                                                          },
-                                                                                      }}
-                                                                                      onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
-                                                                              >
-                                                                                  <Delete size={20}/>
-                                                                              </Button>
-                                                                          </div>
-                                                                      ) : (
-                                                                          <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                              <Button
-                                                                                  shape={SHAPE.pill}
+                                <ul className={css({paddingLeft: 0, paddingRight: 0,})}>
+                                    {wallPlainAttributeList.map((component, index) => {
+                                        return (
+                                            <ListItem key={index}
+                                                      artwork={(props) => {
+                                                          return component[0].option !== "none" ? (
+                                                              <>
+                                                                  {index === 0 ? (
+                                                                      <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
+                                                                  ) : index === 1 ? (
+                                                                      <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
+                                                                  ) : index === 2 ? (
+                                                                      <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
+                                                                  ) : index === 3 ? (
+                                                                      <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
+                                                                  ) : null}
+                                                              </>
+                                                          ) : (
+                                                              <>
+                                                                  {index === 0 ? (
+                                                                      <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
+                                                                  ) : index === 1 ? (
+                                                                      <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
+                                                                  ) : index === 2 ? (
+                                                                      <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
+                                                                  ) : index === 3 ? (
+                                                                      <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
+                                                                  ) : null}
+                                                              </>
+                                                          );
+                                                      }}
+                                                      overrides={{
+                                                          Root: {
+                                                              style: ({$theme}) => ({
+                                                                  height: "68px",
+                                                                  paddingRight: "8px",
+                                                                  paddingLeft: "8px",
+                                                                  backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
+                                                              }),
+                                                          },
+                                                          Content: {
+                                                              style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
+                                                          },
+                                                          ArtworkContainer: {
+                                                              style: {width: "44px", height: "44px"},
+                                                          },
+                                                      }}
+                                                      endEnhancer={() => {
+                                                          return (
+                                                              <>
+                                                                  {component[0].option !== "none" ? (
+                                                                      <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                                                          <Button shape={SHAPE.pill}
                                                                                   overrides={{
-                                                                                      BaseButton: {props: {className: "button-add"}},
+                                                                                      BaseButton: {props: {className: "button-edit"}},
                                                                                   }}
                                                                                   onClick={() => openWallModal(index)}
-                                                                              >
-                                                                                  Edit
-                                                                              </Button>
-                                                                          </div>
-                                                                      )}
-                                                                  </>
-                                                              );
-                                                          }}
+                                                                          >
+                                                                              Edit
+                                                                          </Button>
+                                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
+                                                                                  overrides={{
+                                                                                      BaseButton: {
+                                                                                          style: ({$theme}) => ({
+                                                                                              marginLeft: "17px",
+                                                                                              width: "20px",
+                                                                                              height: "20px",
+                                                                                              backgroundColor: "transparent",
+                                                                                          }),
+                                                                                      },
+                                                                                  }}
+                                                                                  onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
+                                                                          >
+                                                                              <Delete size={20}/>
+                                                                          </Button>
+                                                                      </div>
+                                                                  ) : (
+                                                                      <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                                                          <Button
+                                                                              shape={SHAPE.pill}
+                                                                              overrides={{
+                                                                                  BaseButton: {props: {className: "button-add"}},
+                                                                              }}
+                                                                              onClick={() => openWallModal(index)}
+                                                                          >
+                                                                              Edit
+                                                                          </Button>
+                                                                      </div>
+                                                                  )}
+                                                              </>
+                                                          );
+                                                      }}
+                                            >
+                                                <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
+                                                               overrides={{
+                                                                   LabelContent: {
+                                                                       style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
+                                                                   },
+                                                                   LabelDescription: {
+                                                                       style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
+                                                                   },
+                                                               }}
                                                 >
-                                                    <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
-                                                                   overrides={{
-                                                                       LabelContent: {
-                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
-                                                                       },
-                                                                       LabelDescription: {
-                                                                           style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
-                                                                       },
-                                                                   }}
-                                                    >
-                                                        {component[0].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[0].option, 1)}
-                                                    </ListItemLabel>
-                                                </ListItem>
-                                            );
-                                        })}
-                                    </ul>
-                                </Tab>
-                                {/*<Tab title="+Accessory" tabRef={tabsRefs[2]}*/}
-                                {/*    overrides={{*/}
-                                {/*        TabPanel: {*/}
-                                {/*            style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),*/}
-                                {/*        },*/}
-                                {/*        Tab: {*/}
-                                {/*            style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},*/}
-                                {/*        },*/}
-                                {/*    }}*/}
-                                {/*>*/}
-                                {/*    <>*/}
-                                {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
-                                {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For production</div>*/}
-                                {/*            <RadioGroup*/}
-                                {/*                value={value3}*/}
-                                {/*                onChange={(event) => setValue3(event.target.value)}*/}
-                                {/*                name="slide"*/}
-                                {/*                align={ALIGN.horizontal}*/}
-                                {/*                overrides={{*/}
-                                {/*                    RadioGroupRoot: {*/}
-                                {/*                        style: ({$theme}) => ({*/}
-                                {/*                            display: "grid",*/}
-                                {/*                            width: "100%",*/}
-                                {/*                            flexWrap: "wrap",*/}
-                                {/*                            justifyContent: "space-between",*/}
-                                {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
-                                {/*                        }),*/}
-                                {/*                    },*/}
-                                {/*                    Root: {*/}
-                                {/*                        style: ({$checked}) => ({*/}
-                                {/*                            height: "162px",*/}
-                                {/*                            justifyContent: "center",*/}
-                                {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
-                                {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
-                                {/*                            boxSizing: "border-box",*/}
-                                {/*                            borderRadius: "16px",*/}
-                                {/*                            marginTop: 0,*/}
-                                {/*                            marginRight: "12px",*/}
-                                {/*                            marginBottom: "16px",*/}
-                                {/*                            marginLeft: "12px",*/}
-                                {/*                        }),*/}
-                                {/*                    },*/}
-                                {/*                    RadioMarkOuter: {*/}
-                                {/*                        style: () => ({display: "none"}),*/}
-                                {/*                    },*/}
-                                {/*                    RadioMarkInner: {*/}
-                                {/*                        style: () => ({display: "none"}),*/}
-                                {/*                    },*/}
-                                {/*                    Label: {*/}
-                                {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
-                                {/*                    },*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                <Radio*/}
-                                {/*                    value={"1"}*/}
-                                {/*                    overrides={{*/}
-                                {/*                        Label: ({$value}) => (*/}
-                                {/*                            <div style={{position: "relative"}}>*/}
-                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
-                                {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Wheeled cover</div>*/}
-                                {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94</div>*/}
-                                {/*                                <Button*/}
-                                {/*                                    size={SIZE.mini}*/}
-                                {/*                                    kind={KIND.minimal}*/}
-                                {/*                                    overrides={{*/}
-                                {/*                                        BaseButton: {*/}
-                                {/*                                            style: ({$theme}) => ({*/}
-                                {/*                                                height: "20px",*/}
-                                {/*                                                fontSize: "12px",*/}
-                                {/*                                                lineHeight: "20px",*/}
-                                {/*                                                color: "#23A4AD",*/}
-                                {/*                                            }),*/}
-                                {/*                                        },*/}
-                                {/*                                    }}*/}
-                                {/*                                >*/}
-                                {/*                                    Add to cart*/}
-                                {/*                                </Button>*/}
-                                {/*                            </div>*/}
-                                {/*                        ),*/}
-                                {/*                    }}*/}
-                                {/*                />*/}
-                                {/*            </RadioGroup>*/}
-                                {/*            <div style={{marginBottom: 20}}/>*/}
-                                {/*        </div>*/}
-                                {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
-                                {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For stabilization</div>*/}
-                                {/*            <RadioGroup*/}
-                                {/*                value={value3}*/}
-                                {/*                onChange={(event) => setValue3(event.target.value)}*/}
-                                {/*                name="slide"*/}
-                                {/*                align={ALIGN.horizontal}*/}
-                                {/*                overrides={{*/}
-                                {/*                    RadioGroupRoot: {*/}
-                                {/*                        style: ({$theme}) => ({*/}
-                                {/*                            display: "grid",*/}
-                                {/*                            width: "100%",*/}
-                                {/*                            flexWrap: "wrap",*/}
-                                {/*                            justifyContent: "space-between",*/}
-                                {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
-                                {/*                        }),*/}
-                                {/*                    },*/}
-                                {/*                    Root: {*/}
-                                {/*                        style: ({$checked}) => ({*/}
-                                {/*                            height: "162px",*/}
-                                {/*                            justifyContent: "center",*/}
-                                {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
-                                {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
-                                {/*                            boxSizing: "border-box",*/}
-                                {/*                            borderRadius: "16px",*/}
-                                {/*                            marginTop: 0,*/}
-                                {/*                            marginRight: "12px",*/}
-                                {/*                            marginBottom: "16px",*/}
-                                {/*                            marginLeft: "12px",*/}
-                                {/*                        }),*/}
-                                {/*                    },*/}
-                                {/*                    RadioMarkOuter: {*/}
-                                {/*                        style: () => ({display: "none"}),*/}
-                                {/*                    },*/}
-                                {/*                    RadioMarkInner: {*/}
-                                {/*                        style: () => ({display: "none"}),*/}
-                                {/*                    },*/}
-                                {/*                    Label: {*/}
-                                {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
-                                {/*                    },*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                <Radio*/}
-                                {/*                    value={"1"}*/}
-                                {/*                    overrides={{*/}
-                                {/*                        Label: ({$value}) => (*/}
-                                {/*                            <div style={{position: "relative"}}>*/}
-                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
-                                {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Water weight</div>*/}
-                                {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94 each</div>*/}
-                                {/*                                <Button*/}
-                                {/*                                    size={SIZE.mini}*/}
-                                {/*                                    kind={KIND.minimal}*/}
-                                {/*                                    overrides={{*/}
-                                {/*                                        BaseButton: {*/}
-                                {/*                                            style: ({$theme}) => ({*/}
-                                {/*                                                height: "20px",*/}
-                                {/*                                                fontSize: "12px",*/}
-                                {/*                                                lineHeight: "20px",*/}
-                                {/*                                                color: "#23A4AD",*/}
-                                {/*                                            }),*/}
-                                {/*                                        },*/}
-                                {/*                                    }}*/}
-                                {/*                                >*/}
-                                {/*                                    Add to cart*/}
-                                {/*                                </Button>*/}
-                                {/*                            </div>*/}
-                                {/*                        ),*/}
-                                {/*                    }}*/}
-                                {/*                />*/}
-                                {/*            </RadioGroup>*/}
-                                {/*            <div style={{marginBottom: 20}}/>*/}
-                                {/*        </div>*/}
-                                {/*    </>*/}
-                                {/*</Tab>*/}
-                            </Tabs>
-                        ) : null}
-                    </Block>
+                                                    {component[0].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[0].option, 1)}
+                                                </ListItemLabel>
+                                            </ListItem>
+                                        );
+                                    })}
+                                </ul>
+                            </Tab>
+                            {/*<Tab title="+Accessory" tabRef={tabsRefs[2]}*/}
+                            {/*    overrides={{*/}
+                            {/*        TabPanel: {*/}
+                            {/*            style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),*/}
+                            {/*        },*/}
+                            {/*        Tab: {*/}
+                            {/*            style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},*/}
+                            {/*        },*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    <>*/}
+                            {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
+                            {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For production</div>*/}
+                            {/*            <RadioGroup*/}
+                            {/*                value={value3}*/}
+                            {/*                onChange={(event) => setValue3(event.target.value)}*/}
+                            {/*                name="slide"*/}
+                            {/*                align={ALIGN.horizontal}*/}
+                            {/*                overrides={{*/}
+                            {/*                    RadioGroupRoot: {*/}
+                            {/*                        style: ({$theme}) => ({*/}
+                            {/*                            display: "grid",*/}
+                            {/*                            width: "100%",*/}
+                            {/*                            flexWrap: "wrap",*/}
+                            {/*                            justifyContent: "space-between",*/}
+                            {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
+                            {/*                        }),*/}
+                            {/*                    },*/}
+                            {/*                    Root: {*/}
+                            {/*                        style: ({$checked}) => ({*/}
+                            {/*                            height: "162px",*/}
+                            {/*                            justifyContent: "center",*/}
+                            {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
+                            {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
+                            {/*                            boxSizing: "border-box",*/}
+                            {/*                            borderRadius: "16px",*/}
+                            {/*                            marginTop: 0,*/}
+                            {/*                            marginRight: "12px",*/}
+                            {/*                            marginBottom: "16px",*/}
+                            {/*                            marginLeft: "12px",*/}
+                            {/*                        }),*/}
+                            {/*                    },*/}
+                            {/*                    RadioMarkOuter: {*/}
+                            {/*                        style: () => ({display: "none"}),*/}
+                            {/*                    },*/}
+                            {/*                    RadioMarkInner: {*/}
+                            {/*                        style: () => ({display: "none"}),*/}
+                            {/*                    },*/}
+                            {/*                    Label: {*/}
+                            {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
+                            {/*                    },*/}
+                            {/*                }}*/}
+                            {/*            >*/}
+                            {/*                <Radio*/}
+                            {/*                    value={"1"}*/}
+                            {/*                    overrides={{*/}
+                            {/*                        Label: ({$value}) => (*/}
+                            {/*                            <div style={{position: "relative"}}>*/}
+                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
+                            {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Wheeled cover</div>*/}
+                            {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94</div>*/}
+                            {/*                                <Button*/}
+                            {/*                                    size={SIZE.mini}*/}
+                            {/*                                    kind={KIND.minimal}*/}
+                            {/*                                    overrides={{*/}
+                            {/*                                        BaseButton: {*/}
+                            {/*                                            style: ({$theme}) => ({*/}
+                            {/*                                                height: "20px",*/}
+                            {/*                                                fontSize: "12px",*/}
+                            {/*                                                lineHeight: "20px",*/}
+                            {/*                                                color: "#23A4AD",*/}
+                            {/*                                            }),*/}
+                            {/*                                        },*/}
+                            {/*                                    }}*/}
+                            {/*                                >*/}
+                            {/*                                    Add to cart*/}
+                            {/*                                </Button>*/}
+                            {/*                            </div>*/}
+                            {/*                        ),*/}
+                            {/*                    }}*/}
+                            {/*                />*/}
+                            {/*            </RadioGroup>*/}
+                            {/*            <div style={{marginBottom: 20}}/>*/}
+                            {/*        </div>*/}
+                            {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
+                            {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For stabilization</div>*/}
+                            {/*            <RadioGroup*/}
+                            {/*                value={value3}*/}
+                            {/*                onChange={(event) => setValue3(event.target.value)}*/}
+                            {/*                name="slide"*/}
+                            {/*                align={ALIGN.horizontal}*/}
+                            {/*                overrides={{*/}
+                            {/*                    RadioGroupRoot: {*/}
+                            {/*                        style: ({$theme}) => ({*/}
+                            {/*                            display: "grid",*/}
+                            {/*                            width: "100%",*/}
+                            {/*                            flexWrap: "wrap",*/}
+                            {/*                            justifyContent: "space-between",*/}
+                            {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
+                            {/*                        }),*/}
+                            {/*                    },*/}
+                            {/*                    Root: {*/}
+                            {/*                        style: ({$checked}) => ({*/}
+                            {/*                            height: "162px",*/}
+                            {/*                            justifyContent: "center",*/}
+                            {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
+                            {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
+                            {/*                            boxSizing: "border-box",*/}
+                            {/*                            borderRadius: "16px",*/}
+                            {/*                            marginTop: 0,*/}
+                            {/*                            marginRight: "12px",*/}
+                            {/*                            marginBottom: "16px",*/}
+                            {/*                            marginLeft: "12px",*/}
+                            {/*                        }),*/}
+                            {/*                    },*/}
+                            {/*                    RadioMarkOuter: {*/}
+                            {/*                        style: () => ({display: "none"}),*/}
+                            {/*                    },*/}
+                            {/*                    RadioMarkInner: {*/}
+                            {/*                        style: () => ({display: "none"}),*/}
+                            {/*                    },*/}
+                            {/*                    Label: {*/}
+                            {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
+                            {/*                    },*/}
+                            {/*                }}*/}
+                            {/*            >*/}
+                            {/*                <Radio*/}
+                            {/*                    value={"1"}*/}
+                            {/*                    overrides={{*/}
+                            {/*                        Label: ({$value}) => (*/}
+                            {/*                            <div style={{position: "relative"}}>*/}
+                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
+                            {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Water weight</div>*/}
+                            {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94 each</div>*/}
+                            {/*                                <Button*/}
+                            {/*                                    size={SIZE.mini}*/}
+                            {/*                                    kind={KIND.minimal}*/}
+                            {/*                                    overrides={{*/}
+                            {/*                                        BaseButton: {*/}
+                            {/*                                            style: ({$theme}) => ({*/}
+                            {/*                                                height: "20px",*/}
+                            {/*                                                fontSize: "12px",*/}
+                            {/*                                                lineHeight: "20px",*/}
+                            {/*                                                color: "#23A4AD",*/}
+                            {/*                                            }),*/}
+                            {/*                                        },*/}
+                            {/*                                    }}*/}
+                            {/*                                >*/}
+                            {/*                                    Add to cart*/}
+                            {/*                                </Button>*/}
+                            {/*                            </div>*/}
+                            {/*                        ),*/}
+                            {/*                    }}*/}
+                            {/*                />*/}
+                            {/*            </RadioGroup>*/}
+                            {/*            <div style={{marginBottom: 20}}/>*/}
+                            {/*        </div>*/}
+                            {/*    </>*/}
+                            {/*</Tab>*/}
+                        </Tabs>
+                    ) : null}
                 </Block>
             </Block>
-            <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
-                <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
-                {selectedFrame === "y5" ? (
-                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/product/canopy-tent/anatomy-y5.png" alt="anatomy y5 frame" objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["10px", "20px", "22px"]} left={["4px", "9px", "9px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(0);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["56px", "85px", "110px"]} right={["2px", "10px", "8px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(1);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["100px", "165px", "210px"]} left={["4px", "6px", "8px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(2);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["114px", "178px", "220px"]} right={["10px", "12px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(3);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["54px", "90px", "100px"]} right={["62px", "98px", "125px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(4);
-                               }}
-                        />
-                    </Block>
-                ) : (selectedFrame === "y6") ? (
-                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/product/canopy-tent/anatomy-y6.png" alt="anatomy y6 frame" objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["52px", "88px", "108px"]} left={["2px", "2px", "2px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(0);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "140px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(1);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["110px", "165px", "210px"]} left={["14px", "22px", "26px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(2);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["140px", "214px", "272px"]} right={["10px", "18px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(3);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["58px", "100px", "120px"]} right={["108px", "164px", "205px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(4);
-                               }}
-                        />
-                    </Block>
-                ) : (selectedFrame === "y7") ? (
-                    <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                        <Image src={"images/product/canopy-tent/anatomy-" + selectedFrame + ".png"} alt={"anatomy " + selectedFrame + " frame"} objectFit="contain" layout="fill"/>
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(0);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["66px", "110px", "136px"]} right={["4px", "10px", "12px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(1);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["104px", "156px", "190px"]} left={["12px", "20px", "22px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(2);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["130px", "206px", "248px"]} right={["6px", "14px", "18px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(3);
-                               }}
-                        />
-                        <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} bottom={["62px", "88px", "120px"]} right={["86px", "138px", "175px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
-                               onClick={() => {
-                                   setDisplayIntro(true);
-                                   setFrameIntroIsModal(true);
-                                   setFrameIntroPosition(4);
-                               }}
-                        />
-                    </Block>
-                ) : null}
-                <Block position="absolute" top={0} right={0} bottom={0} left={0} alignItems="center" justifyContent="center" flexDirection="column"
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: clsx(displayIntro ? "displayFlex" : "displayNone", frameIntroIsModal ? "frame-intro-background-in" : "frame-intro-background-out")
-                               },
-                               style: {textAlign: "center", transition: "opacity 800ms ease-in-out"}
-                           },
-                       }}
-                >
-                    <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px" justifyItems="center" marginBottom="32px">
-                        <Block position="relative" width={["150px", "200px", "250px"]} height={["150px", "200px", "250px"]}
-                               overrides={{
-                                   Block: {
-                                       props: {
-                                           className: "frame-intro"
-                                       }
-                                   },
-                               }}
-                        >
-                            <Image src={"images/product/canopy-tent/" + selectedFrame + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
-                        </Block>
-                        <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
-                        <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
-                    </Block>
-                    <Button kind={KIND.secondary} shape={SHAPE.circle} onClick={() => {
-                        setFrameIntroIsModal(false);
-                        setTimeout(() => setDisplayIntro(false), 800);
-                    }}
-                            overrides={{
-                                BaseButton: {
-                                    style: {backgroundColor: "rgba(0, 0, 0, 0.3)"}
-                                }
-                            }}
-                    >
-                        <Delete size={24} color={"white"}/>
-                    </Button>
-                </Block>
-            </Block>
-            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
-                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Features</Block>
-                <Block display="grid" gridTemplateColumns="1fr" gridRowGap="24px">
-                    <CardTabs title="Roof Top" tabList={feature_1} containerImageProps={{backgroundColor: "#F5FCFC"}}/>
-                    <CardTabs title="Frame" tabList={feature_2} objectFit="contain" containerImageProps={{backgroundColor: "#F5FCFC"}} reverse/>
-                </Block>
-            </Block>
-            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
-                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Versatile Tent</Block>
-                <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
-                    <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(3, 1fr)"]} gridTemplateRows={["repeat(3, 220px)", "repeat(3, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
-                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_1.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
-                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Shade in the backyard</Block>
-                        </Block>
-                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_2.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
-                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Parking canopy</Block>
-                        </Block>
-                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_3.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
-                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor picnic</Block>
-                        </Block>
-                    </Block>
-                    <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 220px)", "repeat(2, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
-                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_4.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
-                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor dining</Block>
-                        </Block>
-                        <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_5.jpg" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
-                            <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Mobile store</Block>
-                        </Block>
-                    </Block>
-                </Block>
-            </Block>
-            <Block paddingTop={["36px", "42px", "54px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom={["36px", "42px", "54px"]} paddingLeft={["16px", "16px", "24px"]}>
-                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Let’s answer your questions</Block>
-                <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" font="MinXHeading14" color="MinXPrimaryText">
-                    <Accordion overrides={{
-                        Root: {
-                            style: {
-                                borderBottomColor: "#F0F0F0"
-                            }
-                        },
-                        Header: {
-                            props: {
-                                className: "accordion-header"
-                            },
-                            style: {
-                                minHeight: "48px",
-                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit"
-                            }
-                        },
-                        Content: {
-                            style: {
-                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
-                                backgroundColor: "translate"
-                            }
-                        },
-                    }}>
-                        <Panel title="Do your canopies set up in seconds?">
-                            They sure do! Our canopies can be set up in less than 60 seconds with just two people.
-                        </Panel>
-                        <Panel title="Do you have a video showing proper setup and take down?">
-                            Yes! Check out this one minute video <Link href="https://www.youtube.com/watch?v=J9ygFXvOVn4">https://www.youtube.com/watch?v=J9ygFXvOVn4</Link>
-                        </Panel>
-                        <Panel title="Can my canopy withstand wind and at what point are weight bags or steel stakes required?">
-                            We recommend using weight bags or steel stakes in all types of weather environments. White stakes are ideal to keep your canopy secure during all outdoor activities, our professional weight bags hold up to 30lbs
-                            of sand, or anything similar material, and easily attach to your shelter for additional stability.
-                        </Panel>
-                        <Panel title="Can I use my canopy anywhere?">
-                            Yes, our canopies stand securely on grass, dirt, or pavement without ropes and poles. In windy conditions, however, we recommend using our weight bags to anchor and prevent your canopy from tipping over.
-                        </Panel>
-                        <Panel title="I bought a canopy from another company,  will your replacement fit my current frame?">
-                            Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product.
-                        </Panel>
-                    </Accordion>
-                </Block>
-            </Block>
+            <ProductDescription product={selectedFrame}/>
             <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
                       onClick={() => openSummaryModal()}
                       onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}

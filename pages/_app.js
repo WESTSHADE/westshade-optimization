@@ -17,7 +17,6 @@ import Footer from "../components/footer";
 import "../styles/old.css";
 import "../styles/globals.css";
 import "../styles/styleguide.css";
-import "../styles/y5-buy.css";
 import "../styles/baseui.css";
 import "../styles/apple-business.css";
 

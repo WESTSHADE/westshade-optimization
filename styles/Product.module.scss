@@ -136,28 +136,4 @@
       background-color: #7f7f7f;
     }
   }
-
-  .container-description {
-    .section-header {
-    }
-
-    .container-content-ul {
-      text-align: left;
-
-      .section-content {
-        margin-bottom: 24px;
-        line-height: 1.45rem;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-      }
-
-      .section-content ul li::before {
-        content: "\2022";
-        font-weight: bold;
-        display: inline-block;
-        width: 1em;
-      }
-    }
-  }
 }

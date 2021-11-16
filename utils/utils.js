@@ -181,4 +181,48 @@ export default class Utils {
             // Note - error messages will vary depending on browser
         }
     }
+
+    async updateContact(data) {
+        try {
+            const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/contact", {
+                method: "PUT",
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(data),
+            });
+            const json = await res.json();
+            return json;
+        } catch (error) {
+            console.error(error);
+            // expected output: ReferenceError: nonExistentFunction is not defined
+            // Note - error messages will vary depending on browser
+        }
+    }
+
+    async imageUpload(file, name) {
+        try {
+            const {data, status} = await axios({
+                method: "PUT",
+                url: "https://westshade.s3.us-west-2.amazonaws.com/custom-printing-attachments/" + name,
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": file.type,
+                },
+                data: file,
+            });
+
+            if (status !== 200) {
+
+            }
+
+            // return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

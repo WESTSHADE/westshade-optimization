@@ -11,7 +11,7 @@ import Head from "next/head";
 import {Block} from "baseui/block";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import {Checkout, Selection} from "../../components/sections";
+import {Checkout_N as Checkout, Selection, ProductDescription} from "../../components/sections";
 import {Modal} from "../../components/surfaces";
 
 import styles from "./Product.module.scss";
@@ -30,6 +30,13 @@ const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const urlFn = new UrlFn();
 const utils = new Utils();
+
+const id_product_umbrella_marco = "49555";
+const id_product_umbrella_santorini = "47943";
+const id_product_umbrella_bali = "30361";
+const id_product_umbrella_kapri = "59850";
+const id_product_umbrella_catalina = "30441";
+
 
 const id_attribute_color = 2;
 const id_attribute_umbrellaSize = 15;
@@ -519,50 +526,56 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             <Head>
                 <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
             </Head>
-            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
-                <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
-                    {/* 图片区域 */}
-                    <Block position={["", "", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
-                        <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                                  onClick={() => openSummaryModal()}
-                                  onClickMinus={() => setTotalCount(totalCount - 1)}
-                                  onClickPlus={() => setTotalCount(totalCount + 1)}
-                                  onClickAddToBag={() => updateCart()}
-                                  onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
-                        />
-                    </Block>
-                    {/* 选择区域 */}
-                    <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]}
-                           overrides={{
-                               Block: {
-                                   props: {
-                                       className: "hideScrollBar"
-                                   },
+            <Block width={["100%", "480px", "100%"]} display="flex" flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
+                {/* 图片区域 */}
+                <Block position={["", "", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                </Block>
+                {/* 选择区域 */}
+                <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]}
+                       overrides={{
+                           Block: {
+                               props: {
+                                   className: "hideScrollBar"
                                },
-                           }}
-                    >
-                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingBottom="156px" paddingLeft={["16px", "16px", "24px"]}>
-                            <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
-                            {product && product.short_description ? (
-                                <Block font="MinXParagraph14"
-                                       overrides={{
-                                           Block: {
-                                               props: {
-                                                   className: clsx(styles["container-product-section"], styles["align-left"])
-                                               },
+                           },
+                       }}
+                >
+                    <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
+                        {product && product.short_description ? (
+                            <Block font="MinXParagraph14"
+                                   overrides={{
+                                       Block: {
+                                           props: {
+                                               className: clsx(styles["container-product-section"], styles["align-left"])
                                            },
-                                       }}
-                                       dangerouslySetInnerHTML={{
-                                           __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
-                                       }}
-                                />
-                            ) : null}
-                            <SelectionList index={0} data={productComponent[0]}/>
-                        </Block>
+                                       },
+                                   }}
+                                   dangerouslySetInnerHTML={{
+                                       __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
+                                   }}
+                            />
+                        ) : null}
+                        <SelectionList index={0} data={productComponent[0]}/>
                     </Block>
                 </Block>
             </Block>
+            <ProductDescription product={
+                productId === id_product_umbrella_bali ? "bali" :
+                    productId === id_product_umbrella_catalina ? "catalina" :
+                        productId === id_product_umbrella_kapri ? "kapri" :
+                            productId === id_product_umbrella_marco ? "marco" :
+                                productId === id_product_umbrella_santorini ? "santorini" :
+                                    null}
+            />
+            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                      onClick={() => openSummaryModal()}
+                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                      onClickPlus={() => setTotalCount(totalCount + 1)}
+                      onClickAddToBag={() => updateCart()}
+                      onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            />
             <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
         </React.Fragment>
     );
@@ -587,7 +600,6 @@ Umbrella.getInitialProps = async (context) => {
         product: product,
         productComponent: component,
         productVariant: variant,
-        noFooter: true,
     };
 };
 
