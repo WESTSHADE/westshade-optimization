@@ -43,10 +43,6 @@
     margin-bottom: 60px;
 }
 
-.text-center {
-    text-align: center;
-}
-
 .container-display-no-margin-bottom {
     max-width: 1920px;
     display: flex;
@@ -646,6 +642,12 @@ ul.bullet-warranty.sub > li {
     line-height: 22px;
     color: #8c8c8c;
     border: 1px dashed #8c8c8c;
+}
+
+.button-add:hover, .button-add:active {
+    color: black;
+    background-color: transparent;
+    border-color: #23a4ad;
 }
 
 .button-edit {

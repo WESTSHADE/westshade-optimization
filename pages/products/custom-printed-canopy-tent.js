@@ -39,7 +39,7 @@ import CustomPrintingRoof from "../../components/custom_printing_roof";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Accordion, Panel} from "baseui/accordion";
+
 import styles from "../cart/cart.module.scss";
 
 const numberFn = new NumberFn();
@@ -773,7 +773,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                     value: attr.option,
                 }));
 
-                console.log(productComponent[index]);
                 if (productComponent[index].id === id_product_custom_printed_roof) {
                     checkoutProductList.push({
                         id: item.id,

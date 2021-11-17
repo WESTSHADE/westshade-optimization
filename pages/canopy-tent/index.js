@@ -187,7 +187,7 @@ function Canopy_Tent({router}) {
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="20px" gridRowGap={["16px", "16px", "24px"]} justifyItems="center">
                                  <BlockDisplay title="Safe Shade" content="The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade."
                                                src="/images/canopy-tent/tent_fabric.jpg"/>
-                                 <BlockDisplay title="Long-last Fabric" content="The 320 gsm, 500D polyester with PVC coating is durable even with abrasion and distortion."
+                                 <BlockDisplay title="Long-lasting Fabric" content="The 320 gsm, 500D polyester with PVC coating is durable even with abrasion and distortion."
                                                src="/images/canopy-tent/fabric_structure.jpg"/>
                                  <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
                                                src="/images/canopy-tent/fabric_colors.jpg"

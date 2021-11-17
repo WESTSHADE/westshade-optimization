@@ -120,23 +120,23 @@ function Bali({router}) {
                                              <Block maxWidth={["unset", "167px"]} font="MinXParagraph14">The fabric has a waterproof treatment</Block>
                                          </Block>
                                      </Block>
-                                     <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["unset"]} marginLeft="auto">
-                                         <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/bali/icon_wind.png" alt="bali wind" layout="fill" objectFit="contain" quality={100}/>
-                                         </Block>
-                                         <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
-                                                overrides={{
-                                                    Block: {
-                                                        props: {
-                                                            className: styles["text-section-card"]
-                                                        },
-                                                    },
-                                                }}
-                                         >
-                                             <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Wind resistant</Block>
-                                             <Block maxWidth={["unset", "167px"]} font="MinXParagraph14">The fabric stands a 50-70km/h wind</Block>
-                                         </Block>
-                                     </Block>
+                                     {/*<Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["unset"]} marginLeft="auto">*/}
+                                     {/*    <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>*/}
+                                     {/*        <Image src="images/umbrella/bali/icon_wind.png" alt="bali wind" layout="fill" objectFit="contain" quality={100}/>*/}
+                                     {/*    </Block>*/}
+                                     {/*    <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"*/}
+                                     {/*           overrides={{*/}
+                                     {/*               Block: {*/}
+                                     {/*                   props: {*/}
+                                     {/*                       className: styles["text-section-card"]*/}
+                                     {/*                   },*/}
+                                     {/*               },*/}
+                                     {/*           }}*/}
+                                     {/*    >*/}
+                                     {/*        <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Wind resistant</Block>*/}
+                                     {/*        <Block maxWidth={["unset", "167px"]} font="MinXParagraph14">The fabric stands a 50-70km/h wind</Block>*/}
+                                     {/*    </Block>*/}
+                                     {/*</Block>*/}
                                  </Block>
                              </>
                          }

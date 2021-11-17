@@ -30,7 +30,7 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                {...containerProps}
         >
             <Block gridArea="a" {...containerImageProps}>
-                <Carousel selectedItem={tabActiveKey} autoPlay={false} showStatus={false} showThumbs={false} showArrows={false} emulateTouch dynamicHeight infiniteLoop
+                <Carousel selectedItem={tabActiveKey} autoPlay={false} showStatus={false} showThumbs={false} showArrows={false} emulateTouch dynamicHeight infiniteLoop={tabList.length > 1}
                           renderArrowPrev={(onClick, disabled) => (
                               <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClick} disabled={disabled}
                                       overrides={{
@@ -62,7 +62,7 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                 >
                     {tabList.length > 0 && tabList.map((item, index) =>
                         <Block key={index} position="relative" width="100%" height="auto" minHeight={imageMinHeight}>
-                            <Image src={item.url} alt="feature" layout="fill" objectFit={objectFit}/>
+                            <Image src={item.url} alt="feature" layout="fill" objectFit={item.objectFit}/>
                         </Block>
                     )}
                 </Carousel>

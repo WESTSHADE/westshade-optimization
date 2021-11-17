@@ -70,7 +70,6 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
         let fileName = new Date().toISOString().slice(0, 10) + "-" + file.name;
 
         let result = await utils.imageUpload(file, fileName);
-        console.log(result);
 
         temp.map((item, index) => {
             if (applyToFullSide[selectedSlidePart]) {
@@ -90,7 +89,6 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
             }
         })
 
-        console.log(temp);
         setSelectedRoofListTemp(temp);
     }
 
@@ -195,36 +193,11 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                                  }}
                             >
                                 <FileUploader
-                                    onDrop={(e) => {
-                                        console.log(e)
-                                    }}
-                                    onDragEnter={(e) => {
-                                        console.log(e)
-                                    }}
-                                    onDragLeave={(e) => {
-                                        console.log(e)
-                                    }}
-                                    onDragOver={(e) => {
-                                        console.log(e)
-                                    }}
-                                    onDragStart={(e) => {
-                                        console.log(e)
-                                    }}
                                     onDropAccepted={async (acceptedOrRejected, event) => {
-                                        console.log(acceptedOrRejected);
                                         // let base64 = await toBase64(acceptedOrRejected[0])
                                         // uploadOnChange(base64, "backgroundImage");
-                                        uploadOnChange(acceptedOrRejected[0], "backgroundImage");
+                                        await uploadOnChange(acceptedOrRejected[0], "backgroundImage");
                                     }}
-                                    onDropRejected={(e) => {
-                                        console.log(e)
-                                    }}
-                                    onFileDialogCancel={(e) => {
-                                        console.log(e)
-                                    }}
-                                    // progressAmount={(e) => {
-                                    //     console.log(e)
-                                    // }}
                                     overrides={{
                                         FileDragAndDrop: {
                                             style: {
@@ -250,10 +223,9 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                     <Panel title="Logo">
                         <FileUploader
                             onDropAccepted={async (acceptedOrRejected, event) => {
-                                console.log(acceptedOrRejected);
                                 // let base64 = await toBase64(acceptedOrRejected[0])
                                 // uploadOnChange(base64, "logo");
-                                uploadOnChange(acceptedOrRejected[0], "logo");
+                                await uploadOnChange(acceptedOrRejected[0], "logo");
                             }}
                             overrides={{
                                 FileDragAndDrop: {

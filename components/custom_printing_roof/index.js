@@ -36,10 +36,9 @@ export default function custom_printing_roof({isOpen, onClose, selectedRoofList,
     };
 
     const closePrintingDetail = (save, list) => {
-        console.log(tempTempList)
         if (save) {
             const temp = JSON.parse(JSON.stringify(list));
-            console.log(temp);
+
             if (selectedSlidePart === 0) {
                 Object.keys(temp[selectedRoofSlide].peak).forEach(key => temp[selectedRoofSlide].peak[key] === "" ? delete temp[selectedRoofSlide].peak[key] : {});
             } else if (selectedSlidePart === 1) {

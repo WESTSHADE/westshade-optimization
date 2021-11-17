@@ -59,15 +59,15 @@ export default function Selection(props) {
                 {data.options.map((option, i) =>
                     <Radio key={i} value={option.toLowerCase()}
                            overrides={{
-                               Label: ({$value}) => (
-                                   <div className={styles["dot-color"]}
-                                        style={{
-                                            backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value === "blood orange" ? "#BC3823" : $value === "khaki" ? "khaki" : $value === "pacific blue" ? "#1ca9c9" : $value,
-                                        }}
-                                   />
-                               ),
+                               Label: ({$value}) => {
+                                   const color = $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value === "blood orange" ? "#BC3823" : $value === "khaki" ? "khaki" : $value === "pacific blue" ? "#1ca9c9" : $value === "sand" ? "#DDC7A3" : $value === "aqua" ? "#27BAB9" : $value === "gray" ? "#5E5D60" : $value;
+                                   return (
+                                       <div className={styles["dot-color"]} style={{backgroundColor: color, borderColor: $value === "white" ? "#D9D9D9" : "transparent"}}/>
+                                   )
+                               },
                            }}
-                    />)}
+                    />
+                )}
             </RadioGroup>
         )
     }

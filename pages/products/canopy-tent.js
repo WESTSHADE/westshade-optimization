@@ -17,7 +17,7 @@ import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
-import {Search, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
+import {Search, Plus, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
@@ -1193,10 +1193,12 @@ function Canopy_Tent({router, products, variants}) {
                                                                               shape={SHAPE.pill}
                                                                               overrides={{
                                                                                   BaseButton: {props: {className: "button-add"}},
+                                                                                  StartEnhancer: {style: {marginRight: 0}}
                                                                               }}
+                                                                              startEnhancer={() => <Plus/>}
                                                                               onClick={() => openWallModal(index)}
                                                                           >
-                                                                              Edit
+                                                                              Add
                                                                           </Button>
                                                                       </div>
                                                                   )}

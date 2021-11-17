@@ -22,7 +22,7 @@ import Utils from "../../utils/utils";
 import {EventEmitter} from "../../utils/events";
 
 import Banner from "../../components/banner";
-import CustomAccordion from "../../components/accordion";
+import Accordion from "../../components/accordion";
 import CustomButton from "../../components/button";
 import Checkout from "../../components/buttonGroup";
 import Selections from "../../components/selection_group";
@@ -215,8 +215,6 @@ function Custom_printed_Package({router, product, productComponent, productVaria
 
     useEffect(() => {
         setTimeout(() => setDisplay(true), 250);
-
-        console.log(product);
 
         setProductId(product.id.toString());
         setShippedDay(dateFn.getReceivedDay());
@@ -756,27 +754,26 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                 <h3 className="section-title" style={{fontSize: "1.25rem"}}>
                                                     Frequently Asked Questions
                                                 </h3>
-                                                <CustomAccordion
+                                                <Accordion
                                                     list={[
                                                         {
-                                                            summary: "Q: Do you offer design services?",
-                                                            details: "A: Yes, Our talented and attentive art & design team is happy to help you as much or as little as you’d like in the overall design of your project.",
+                                                            title: "Q: Do you offer design services?",
+                                                            content: "A: Yes, Our talented and attentive art & design team is happy to help you as much or as little as you’d like in the overall design of your project.",
                                                         },
                                                         {
-                                                            summary: "Q: Will I receive a proof before print production begins?",
-                                                            details: "A: Yes. You will need to approve a digital proof for all custom-printed products prior to print production.",
+                                                            title: "Q: Will I receive a proof before print production begins?",
+                                                            content: "A: Yes. You will need to approve a digital proof for all custom-printed products prior to print production.",
                                                         },
                                                         {
-                                                            summary: "Q: Can I change my artwork once it has been approved and is in production?",
-                                                            details:
+                                                            title: "Q: Can I change my artwork once it has been approved and is in production?",
+                                                            content:
                                                                 "A: Once your custom-print has begun its production, we will be unable to recall any previously approved designs. We produce the design quickly after approval, so we ask that you finalize with our team prior to your design reaching production.",
                                                         },
                                                         {
-                                                            summary: "Q: Can I cancel my order?",
-                                                            details: "A: No. In order to get products into our client’s hands quickly, we begin production as soon as you give us approval. There are no cancellations or returns on any custom-printed products.",
+                                                            title: "Q: Can I cancel my order?",
+                                                            content: "A: No. In order to get products into our client’s hands quickly, we begin production as soon as you give us approval. There are no cancellations or returns on any custom-printed products.",
                                                         },
                                                     ]}
-                                                    square
                                                 />
                                             </Box>
                                             <Box className="section-container">

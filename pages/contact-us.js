@@ -4,7 +4,23 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Accordion, Panel} from "baseui/accordion";
+
+import Accordion from "../components/accordion";
+
+const QA = [
+    {
+        title: "Where can I use my WestShade pop-up canopy?",
+        content: "Our canopies stand securely on grass, dirt, or pavement without ropes or poles. In windy conditions, However, we recommend using our Weight Bags to anchor and prevent your canopy from tipping over."
+    },
+    {title: "Can I buy a replacement canopy covering?", content: "Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us online."},
+    {title: "Do you have any accessories available?", content: "Yes, our full line of accessories includes sidewalls, half sidewalls, sidewalls with roll up doors, sidewalls with windows and sand bags."},
+    {title: "What fire ratings do your fabric items have?", content: " Our fabric meets CPAI-84, NFPA-71 and the California Administrative Code Title 19 fire resistant requirements."},
+    {
+        title: "What are your shipping costs?",
+        content: <>We provide free shipping and handling costs for any orders over $149 within the U.S., with the exception of AK, HI and PR.<br/><br/>Shipping costs for customers located in those 3 states will be provided after further order
+            estimates.</>
+    },
+];
 
 const SectionBlock = ({url, alt, title, content}) => {
     return (
@@ -50,56 +66,7 @@ function Contact_Us() {
             >
                 <Block width="100%" maxWidth="660px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "60px", "80px"]} marginLeft="auto" paddingTop="80px">
                     <Block marginBottom={["24px", "32px", "40px"]} font="MinXHeading20" color="MinXPrimaryText">FAQs</Block>
-                    <Block width="100%" font="MinXHeading14" color="MinXPrimaryText">
-                        <Accordion overrides={{
-                            Root: {
-                                style: {
-                                    borderBottomColor: "#F0F0F0"
-                                }
-                            },
-                            Header: {
-                                props: {
-                                    className: "accordion-header"
-                                },
-                                style: {
-                                    minHeight: "48px",
-                                    paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                    fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit"
-                                }
-                            },
-                            Content: {
-                                style: {
-                                    paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                    fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
-                                    backgroundColor: "translate"
-                                }
-                            },
-                        }}>
-                            <Panel title="Where can I use my WestShade pop-up canopy?">
-                                Our canopies stand securely on grass, dirt, or pavement without ropes or poles. In windy conditions, However, we
-                                recommend using our Weight Bags to anchor and prevent your canopy from tipping over.
-                            </Panel>
-                            <Panel title="Can I buy a replacement canopy covering?">
-                                Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us
-                                online.
-                            </Panel>
-                            <Panel title="Do you have any accessories available?">
-                                Yes, our full line of accessories includes sidewalls, half sidewalls, sidewalls with roll up doors, sidewalls
-                                with windows and sand bags.
-                            </Panel>
-                            <Panel title="What fire ratings do your fabric items have?">
-                                Our fabric meets CPAI-84, NFPA-71 and the California Administrative Code Title 19 fire resistant
-                                requirements.
-                            </Panel>
-                            <Panel title="What are your shipping costs?">
-                                We provide free shipping and handling costs for any orders over $149 within the U.S., with the exception of AK, HI and
-                                PR.
-                                <br/>
-                                <br/>
-                                Shipping costs for customers located in those 3 states will be provided after further order estimates.
-                            </Panel>
-                        </Accordion>
-                    </Block>
+                    <Accordion list={QA}/>
                 </Block>
                 <Block width="100%" maxWidth="600px" display="flex" flex={1} flexDirection="column" alignItems="center" marginRight="auto" marginBottom={["40px", "06px", "80px"]} marginLeft="auto" paddingTop="80px">
                     <Block marginBottom={["24px", "32px", "40px"]} font="MinXHeading20" color="MinXPrimaryText">Contact us</Block>

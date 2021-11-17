@@ -5,34 +5,39 @@ import Link from "next/link";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Delete} from "baseui/icon";
 import {Button, KIND, SHAPE} from "baseui/button";
-import {Accordion, Panel} from "baseui/accordion";
+import {Delete} from "baseui/icon";
 
+import Accordion from "../../../accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
     tabTitle: "Water Resistant",
     tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
     url: "images/product/canopy-tent/feature-fabric.jpg",
+    objectFit: "cover"
 }, {
     tabTitle: "Fire Retardant",
     tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84.",
     url: "images/product/canopy-tent/feature-fire.png",
+    objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days.",
     url: "images/product/canopy-tent/feature-uv.jpg",
+    objectFit: "cover"
 }]
 
 const feature_2 = [{
     tabTitle: "Steel",
     tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck.",
     url: "images/product/canopy-tent/feature-steel.png",
+    objectFit: "contain"
 }, {
     tabTitle: "Aluminum",
     tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions.",
     url: "images/product/canopy-tent/feature-aluminum.png",
+    objectFit: "contain"
 }]
 
 const anatomyPart = [
@@ -45,6 +50,20 @@ const anatomyPart = [
         content: "Footplates are heavy weights that rest on the feet of the pop up tent legs to offer additional anchoring in conjunction with staking kits or they can operate alone when stakes are not necessary."
     },
     {url: "/leg-pole.png", title: "LEG POLE", content: "Our leg poles are stable and are going to provide the most coverage without taking up too much space."},
+];
+
+const QA = [
+    {title: "Do your canopies set up in seconds?", content: "They sure do! Our canopies can be set up in less than 60 seconds with just two people."},
+    {title: "Do you have a video showing proper setup and take down?", content: <>Yes! Check out this one minute video <Link href="https://www.youtube.com/watch?v=J9ygFXvOVn4">https://www.youtube.com/watch?v=J9ygFXvOVn4</Link></>},
+    {
+        title: "Can my canopy withstand wind and at what point are weight bags or steel stakes required?",
+        content: "We recommend using weight bags or steel stakes in all types of weather environments. White stakes are ideal to keep your canopy secure during all outdoor activities, our professional weight bags hold up to 30lbs of sand, or anything similar material, and easily attach to your shelter for additional stability."
+    },
+    {
+        title: "Can I use my canopy anywhere?",
+        content: "Yes, our canopies stand securely on grass, dirt, or pavement without ropes and poles. In windy conditions, however, we recommend using our weight bags to anchor and prevent your canopy from tipping over."
+    },
+    {title: "I bought a canopy from another company,  will your replacement fit my current frame?", content: "Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product."},
 ];
 
 export default function description() {
@@ -172,49 +191,7 @@ export default function description() {
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                 <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Let’s answer your questions</Block>
-                <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" font="MinXHeading14" color="MinXPrimaryText">
-                    <Accordion overrides={{
-                        Root: {
-                            style: {
-                                borderBottomColor: "#F0F0F0"
-                            }
-                        },
-                        Header: {
-                            props: {
-                                className: "accordion-header"
-                            },
-                            style: {
-                                minHeight: "48px",
-                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit"
-                            }
-                        },
-                        Content: {
-                            style: {
-                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
-                                backgroundColor: "translate"
-                            }
-                        },
-                    }}>
-                        <Panel title="Do your canopies set up in seconds?">
-                            They sure do! Our canopies can be set up in less than 60 seconds with just two people.
-                        </Panel>
-                        <Panel title="Do you have a video showing proper setup and take down?">
-                            Yes! Check out this one minute video <Link href="https://www.youtube.com/watch?v=J9ygFXvOVn4">https://www.youtube.com/watch?v=J9ygFXvOVn4</Link>
-                        </Panel>
-                        <Panel title="Can my canopy withstand wind and at what point are weight bags or steel stakes required?">
-                            We recommend using weight bags or steel stakes in all types of weather environments. White stakes are ideal to keep your canopy secure during all outdoor activities, our professional weight bags hold up to 30lbs
-                            of sand, or anything similar material, and easily attach to your shelter for additional stability.
-                        </Panel>
-                        <Panel title="Can I use my canopy anywhere?">
-                            Yes, our canopies stand securely on grass, dirt, or pavement without ropes and poles. In windy conditions, however, we recommend using our weight bags to anchor and prevent your canopy from tipping over.
-                        </Panel>
-                        <Panel title="I bought a canopy from another company,  will your replacement fit my current frame?">
-                            Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product.
-                        </Panel>
-                    </Accordion>
-                </Block>
+                <Accordion maxWidth="660px" list={QA}/>
             </Block>
         </Block>
     )

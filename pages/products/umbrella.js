@@ -45,6 +45,8 @@ const id_attribute_umbrellaFrame = 48;
 
 let checkoutProductList = [];
 
+let santoriniFrame = "aluminum";
+
 function Umbrella({router, product, productComponent = [], productVariant = []}) {
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
@@ -131,6 +133,11 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         selection[index].forEach((attribute) => {
             if (attribute.id === id) attribute.option = event.target.value;
         });
+
+        if (id === id_attribute_umbrellaFrame) {
+            santoriniFrame = event.target.value;
+        }
+
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
         let selectionVariant = [...selectedVariant];
         let selected = productVariant[index].filter((variant) => {
@@ -283,6 +290,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                         } else if (umbrellaFrame) {
                             attr.option = umbrellaFrame.toLowerCase();
                         }
+                        santoriniFrame = attr.option;
                     } else if (attr.id === id_attribute_color) {
                         attr.option = stringFn.replaceDash(attr.option, 1);
                     }
@@ -326,7 +334,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     useEffect(() => {
         // 已选各产品组成变体
         if (!selectedVariant || selectedVariant.length === 0) return;
-        console.log(selectedVariant)
 
         selectedVariant.forEach((variant, index) => {
             if (!variant || !variant.attributes) return;
@@ -568,6 +575,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                             productId === id_product_umbrella_marco ? "marco" :
                                 productId === id_product_umbrella_santorini ? "santorini" :
                                     null}
+                                santoriniFrame={santoriniFrame}
             />
             <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
                       onClick={() => openSummaryModal()}
