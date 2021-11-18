@@ -64,7 +64,7 @@ const data = {
             {label: "Rib", content: <>8 aluminum ribs<br/>0.78" x 0.45", thickness=0.07"</>},
         ],
         [
-            {label: "Frame Material", content: "Aluminum"},
+            {label: "Frame Material", content: "Aluminum, Fiberglass"},
             {label: "Pole", content: <>d=1.57", thickness=0.1"<br/>d=2", thickness=0.12" (size=10', 11.5')</>},
             {},
             {label: "Rib", content: <>4 aluminum ribs (size=6.5')<br/>8 aluminum ribs<br/>1" x 0.75", thickness=0.05"</>},

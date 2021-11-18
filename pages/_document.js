@@ -46,9 +46,7 @@ class MyDocument extends Document {
                     <link rel="icon" href="/logo.png"/>
                     <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"/>
                     {this.props.stylesheets.map((sheet, i) => (
-                        <style key={i} className="_styletron_hydrate_" dangerouslySetInnerHTML={{__html: sheet.css}} media={sheet.attrs.media}
-                               data-hydrate={sheet.attrs["data-hydrate"]}
-                        />
+                        <style key={i} className="_styletron_hydrate_" dangerouslySetInnerHTML={{__html: sheet.css}} media={sheet.attrs.media} data-hydrate={sheet.attrs["data-hydrate"]}/>
                     ))}
                     <script
                         dangerouslySetInnerHTML={{
@@ -57,8 +55,7 @@ class MyDocument extends Document {
                     />
                 </Head>
                 <body>
-                <noscript
-                    dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}/>
+                <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}/>
                 <Main/>
                 <NextScript/>
                 <script type="text/javascript" src="/static/appleBusinessChat.js"/>

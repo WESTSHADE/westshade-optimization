@@ -419,88 +419,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         setAvailable(available);
     }, [availableList]);
 
-    //////////////////////////////////////
-
-    const DataTable = () => {
-        let rowDate = [];
-
-        selectedVariant.map((variant, index) => {
-            let cell = {
-                name: productComponent[index].name,
-                quantity: 1,
-                regular_price: variant.regular_price,
-                sale_price: variant.sale_price,
-                on_sale: variant.on_sale,
-            };
-            rowDate.push(cell);
-        });
-
-        function NameCell({value}) {
-            return (
-                <Block font="MinXLabel14" overrides={{Block: {style: {fontWeight: "400"}},}}>{value}</Block>
-            );
-        }
-
-        function QuantityCell({value}) {
-            return <Block font="MinXLabel14" overrides={{Block: {style: {textAlign: "center", fontWeight: "400"}},}}>{value * totalCount}</Block>;
-        }
-
-        function PriceCell({priceRegular, priceSale, onSale}) {
-            return (
-                <Block font="MinXLabel14" overrides={{Block: {style: {textAlign: "right", fontWeight: "400"}},}}>
-                    {onSale ? (
-                        <Block display="flex" flexDirection="row" justifyContent="flex-end">
-                            {priceSale == 0 ? <Block marginRight="10px" color="#E4458C">Free</Block> :
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
-                            <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                        </Block>
-                    ) : (
-                        <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"}/>
-                    )}
-                </Block>
-            );
-        }
-
-        return (
-            <Block height="100%">
-                <TableBuilder data={rowDate}
-                              overrides={{
-                                  Root: {
-                                      style: {height: "calc(100% - 44px)"},
-                                  },
-                              }}
-                >
-                    <TableBuilderColumn header="Item">{(row) => <NameCell value={row.name}/>}</TableBuilderColumn>
-                    <TableBuilderColumn header="Quantity" numeric
-                                        overrides={{
-                                            TableHeadCell: {
-                                                style: {textAlign: "center",}
-                                            },
-                                        }}
-                    >
-                        {(row) => <QuantityCell value={row.quantity}/>}
-                    </TableBuilderColumn>
-                    <TableBuilderColumn header="Price"
-                                        overrides={{
-                                            TableHeadCell: {
-                                                style: {textAlign: "right"},
-                                            },
-                                        }}
-                    >
-                        {(row) => <PriceCell priceRegular={row.regular_price} priceSale={row.sale_price} onSale={row.on_sale}/>}
-                    </TableBuilderColumn>
-                </TableBuilder>
-                <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center"
-                       paddingTop="12px" paddingRight="20px" paddingBottom="12px" paddingLeft="20px"
-                       font="MinXLabel14" overrides={{Block: {style: {fontWeight: "400", borderTop: "1px solid #d9d9d9"}},}}
-                >
-                    <div>Total:</div>
-                    <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalePrice ? totalSalePrice : totalRegularPrice} displayType={"text"} style={{fontSize: 16, fontWeight: "bold"}}/>
-                </Block>
-            </Block>
-        );
-    };
-
     const SelectionList = ({index, data = {attributes: []}}) => {
         let sl = data.attributes.filter((attribute) => attribute.variation);
         return (
@@ -539,15 +457,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
                 </Block>
                 {/* 选择区域 */}
-                <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: "hideScrollBar"
-                               },
-                           },
-                       }}
-                >
+                <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
                     <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                         <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                         {product && product.short_description ? (
@@ -584,7 +494,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                       onClickAddToBag={() => updateCart()}
                       onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
         </React.Fragment>
     );
 }

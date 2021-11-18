@@ -49,12 +49,17 @@
       overflow: hidden;
 
       .close {
-        top: 29px;
-        right: 29px;
+        top: 21px;
+        right: 21px;
         border-radius: 50%;
 
         &:active {
           background-color: #f0f0f0;
+        }
+
+        @media screen and (min-width: 480px) {
+          top: 29px;
+          right: 29px;
         }
       }
 
@@ -68,8 +73,10 @@
         flex: 1;
         margin-right: 0;
         margin-left: 0;
-        padding-right: 24px;
-        padding-left: 24px;
+        //padding-right: 24px;
+        padding-right: 16px;
+        //padding-left: 24px;
+        padding-left: 16px;
         overflow-y: scroll;
       }
 

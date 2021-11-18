@@ -37,10 +37,18 @@ body {
     text-align: left;
 }
 
+.text-right {
+    text-align: right;
+}
+
 .text-inherit {
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
+}
+
+.font-400 {
+    font-weight: 400;
 }
 
 .glassmorphism {

@@ -787,96 +787,7 @@ function Canopy_Tent({router, products, variants}) {
         });
         setAvailable(available);
     }, [availableList]);
-
-    const DataTable = () => {
-        let rowDate = [];
-
-        selectedVariant.map((variant, index) => {
-            if (!variant) return;
-
-            let cell = {
-                name: index === 0 ? selectedFrame.toUpperCase() + " Canopy Tent Set" : productComponent[index].id === id_product_wall ? productComponent[index].name + ": " + variant.attributes[0].option : productComponent[index].name,
-                quantity: 1,
-                regular_price: variant.regular_price,
-                sale_price: variant.sale_price,
-                on_sale: variant.on_sale
-            }
-
-            rowDate.push(cell);
-        });
-
-        function NameCell({value}) {
-            return <div style={{fontSize: 14}}>{value}</div>;
-        }
-
-        function QuantityCell({value}) {
-            return <div style={{textAlign: "center", fontSize: 14}}>{value * totalCount}</div>;
-        }
-
-        function PriceCell({priceRegular, priceSale, onSale}) {
-            return (
-                <div style={{textAlign: "right", fontSize: 14}}>
-                    {onSale ? (
-                        <Block display="flex" flexDirection="row" justifyContent="flex-end">
-                            {priceSale === 0 ? <div style={{color: "#E4458C", marginRight: 10}}>Free</div> :
-                                <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"} style={{color: "#E4458C", marginRight: 10}}/>}
-                            <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                        </Block>
-                    ) : (
-                        <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"}/>
-                    )}
-                </div>
-            );
-        }
-
-        return (
-            <div style={{height: "100%"}}>
-                <TableBuilder
-                    data={rowDate}
-                    overrides={{
-                        Root: {
-                            style: {
-                                height: "calc(100% - 44px)",
-                            },
-                        },
-                    }}
-                >
-                    <TableBuilderColumn header="Item">{(row) => <NameCell value={row.name}/>}</TableBuilderColumn>
-                    <TableBuilderColumn header="Quantity" numeric
-                                        overrides={{
-                                            TableHeadCell: {
-                                                style: {textAlign: "center"},
-                                            },
-                                        }}
-                    >
-                        {(row) => <QuantityCell value={row.quantity}/>}
-                    </TableBuilderColumn>
-                    <TableBuilderColumn header="Price"
-                                        overrides={{
-                                            TableHeadCell: {
-                                                style: {textAlign: "right"},
-                                            },
-                                        }}
-                    >
-                        {(row) => <PriceCell priceRegular={row.regular_price} priceSale={row.sale_price} onSale={row.on_sale}/>}
-                    </TableBuilderColumn>
-                </TableBuilder>
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    padding: "12px 20px",
-                    borderTop: "1px solid #D9D9D9",
-                    justifyContent: "space-between",
-                    fontSize: 14,
-                    alignItems: "center"
-                }}>
-                    <div>Total:</div>
-                    <NumberFormat thousandSeparator={true} prefix={"$"} value={totalRegularPrice} displayType={"text"} style={{fontSize: 16, fontWeight: "bold"}}/>
-                </div>
-            </div>
-        );
-    };
-
+    
     return (
         <React.Fragment>
             <Head>
@@ -1551,7 +1462,7 @@ function Canopy_Tent({router, products, variants}) {
                     </Block>
                 </Block>
             </Modal>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={<DataTable/>}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
         </React.Fragment>
     );
 }
