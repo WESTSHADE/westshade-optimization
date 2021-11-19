@@ -7,6 +7,7 @@
   &.attr-color {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, auto);
+    grid-column-gap: 0;
   }
 
   &.attr-material, &.attr-tableCover {
@@ -20,10 +21,15 @@
     box-sizing: border-box;
 
     &.attr-color {
-      width: 52px;
-      height: 52px;
+      grid-column-gap: 0;
+      //width: 52px;
+      //height: 52px;
       margin: 0 auto;
+      padding: 4px;
+      box-sizing: content-box;
       border-radius: 50%;
+      border-width: 3px;
+      border-style: solid;
 
       .dot-color {
         width: 38px;
@@ -57,7 +63,8 @@
     &.attr-color {
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: repeat(1, auto);
-      grid-column-gap: 16px;
+      //grid-column-gap: 16px;
+      grid-column-gap: 0;
     }
   }
 }

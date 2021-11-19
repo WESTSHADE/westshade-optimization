@@ -12,7 +12,7 @@ const shipping_note = (props) => {
     const {direction = "row"} = props;
 
     return (
-        <Block height="auto" display="grid" gridTemplateColumns={direction === "column" ? "1fr" : ["1fr", "1fr", "repeat(2,1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft="auto" marginRight="auto" {...props}>
+        <Block height="auto" display="grid" gridTemplateColumns={direction === "column" ? "1fr" : ["1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft="auto" marginRight="auto" {...props}>
             <Block display="flex" flexDirection="row">
                 <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
                 <Block font="MinXParagraph14">

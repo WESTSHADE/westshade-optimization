@@ -44,15 +44,14 @@ export default function Selection(props) {
                                     className: clsx([styles["container-radio"], styles["attr-color"]])
                                 },
                                 style: ({$checked}) => ({
-                                    padding: $checked ? "4px" : "6px",
-                                    border: $checked ? "3px solid #23A4AD" : "1px solid transparent",
+                                    borderColor: $checked ? "#23A4AD" : "transparent",
                                 }),
                             },
                             RadioMarkOuter: {
-                                style: {display: "none"},
+                                style: {display: "none"}
                             },
                             RadioMarkInner: {
-                                style: {display: "none"},
+                                style: {display: "none"}
                             },
                         }}
             >
@@ -60,10 +59,13 @@ export default function Selection(props) {
                     <Radio key={i} value={option.toLowerCase()}
                            overrides={{
                                Label: ({$value}) => {
-                                   const color = $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value === "blood orange" ? "#BC3823" : $value === "khaki" ? "khaki" : $value === "pacific blue" ? "#1ca9c9" : $value === "sand" ? "#DDC7A3" : $value === "aqua" ? "#27BAB9" : $value === "gray" ? "#5E5D60" : $value;
-                                   return (
-                                       <div className={styles["dot-color"]} style={{backgroundColor: color, borderColor: $value === "white" ? "#D9D9D9" : "transparent"}}/>
-                                   )
+                                   const color = $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" :
+                                       $value === "red" ? "#991F34" : $value === "blood orange" ? "#BC3823" :
+                                           $value === "khaki" ? "#CCBAA2" : $value === "sand" ? "#DDC7A3" :
+                                               $value === "gray" ? "#5E5D60" : $value === "charcoal gray" ? "#5C5C5C" :
+                                                   $value === "blue" ? "#1A4A8B" : $value === "aqua" ? "#27BAB9" : $value === "pacific blue" ? "#1ca9c9" : $value === "turquoise" ? "#66C4E0" : $value;
+
+                                   return <div className={styles["dot-color"]} style={{backgroundColor: color, borderColor: $value === "white" ? "#D9D9D9" : "transparent"}}/>
                                },
                            }}
                     />
@@ -140,7 +142,7 @@ export default function Selection(props) {
                                     className: styles["radio-label"]
                                 },
                                 style: ({$checked}) => ({
-                                    fontWeight: $checked ? "bold" : "400",
+                                    fontWeight: $checked ? "bold" : 400,
                                 }),
                             },
                         }}
