@@ -1,25 +1,10 @@
 {
   "selection": [
-    {
-      "index": 0,
-      "label": "Bali"
-    },
-    {
-      "index": 1,
-      "label": "Kapri"
-    },
-    {
-      "index": 2,
-      "label": "Santorini"
-    },
-    {
-      "index": 3,
-      "label": "Marco"
-    },
-    {
-      "index": 4,
-      "label": "Catalina"
-    }
+    { "index": 0, "label": "Bali" },
+    { "index": 1, "label": "Kapri" },
+    { "index": 2, "label": "Santorini" },
+    { "index": 3, "label": "Marco" },
+    { "index": 4, "label": "Catalina" }
   ],
   "display": [
     {
@@ -50,385 +35,132 @@
   ],
   "shape": [
     [
-      {
-        "content": "Octagon"
-      },
-      {
-        "content": "Octagon"
-      },
-      {
-        "content": [
-          "Square",
-          "Octagon"
-        ]
-      },
-      {
-        "content": "Square"
-      },
-      {
-        "content": "Square"
-      }
+      { "content": [ "Octagon" ] },
+      { "content": [ "Octagon" ] },
+      { "content": [ "Square", "Octagon" ] },
+      { "content": [ "Square" ] },
+      { "content": [ "Square" ] }
     ]
   ],
   "size": [
     [
-      {
-        "content": "9'"
-      },
-      {
-        "content": [
-          "6.5'",
-          "7.5'",
-          "9'",
-          "10'"
-        ]
-      },
-      {
-        "content": [
-          "6.5'",
-          "7.5'",
-          "9'",
-          "10'",
-          "11.5'"
-        ]
-      },
-      {
-        "content": "6.5'"
-      },
-      {
-        "content": [
-          "10'",
-          "11.5'",
-          "13'",
-          "16.4'"
-        ]
-      }
+      { "content": [ "9'" ] },
+      { "content": [ "6.5'", "7.5'", "9'", "10'" ] },
+      { "content": [ "6.5'", "7.5'", "9'", "10'", "11.5'" ] },
+      { "content": [ "6.5'" ] },
+      { "content": [ "10'", "11.5'", "13'", "16.4'" ] }
     ]
   ],
   "color": [
     [
-      {
-        "content": [
-          "#E8634E",
-          "#C83737",
-          "#D6C199",
-          "#4EB3F2"
-        ]
-      },
-      {
-        "content": [
-          "#000000",
-          "#585858",
-          "#D6C199",
-          "#A0353A",
-          "#23A4AD",
-          "#DDB95A"
-        ]
-      },
-      {
-        "content": [
-          "#000000",
-          "#585858",
-          "#D6C199",
-          "#A0353A",
-          "#23A4AD",
-          "#DDB95A"
-        ]
-      },
-      {
-        "content": [
-          "#000000",
-          "#585858",
-          "#D6C199",
-          "#A0353A",
-          "#23A4AD",
-          "#DDB95A"
-        ]
-      },
-      {
-        "content": [
-          "#FFFFFF"
-        ]
-      }
+      { "content": [ "#E8634E", "#C83737", "#D6C199", "#4EB3F2" ] },
+      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
+      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
+      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
+      { "content": [ "#FFFFFF" ] }
     ]
   ],
   "lift_system": [
     [
-      {
-        "content": "Crank"
-      },
-      {
-        "content": "Crank"
-      },
-      {
-        "content": "Pulley"
-      },
-      {
-        "content": "Push up"
-      },
-      {
-        "content": "Crank"
-      }
+      { "content": "Crank" },
+      { "content": "Crank" },
+      { "content": "Pulley" },
+      { "content": "Push up" },
+      { "content": "Crank" }
     ]
   ],
   "tilt": [
     [
-      {
-        "content": "Push button"
-      },
-      {
-        "content": "Crank"
-      },
-      {
-        "content": "Non-tilt"
-      },
-      {
-        "content": "Non-tilt"
-      },
-      {
-        "content": "Non-tilt"
-      }
+      { "content": "Push button" },
+      { "content": "Crank" },
+      { "content": "Non-tilt" },
+      { "content": "Non-tilt" },
+      { "content": "Non-tilt" }
     ]
   ],
   "frame": [
     [
-      {
-        "label": "Frame Material",
-        "content": "Steel in bronze finish"
-      },
-      {
-        "label": "Frame Material",
-        "content": "Aluminum"
-      },
-      {
-        "label": "Frame Material",
-        "content": [
-          "Aluminum",
-          "Fiberglass"
-        ]
-      },
-      {
-        "label": "Frame Material",
-        "content": "Aluminum"
-      },
-      {
-        "label": "Frame Material",
-        "content": "Aluminum"
-      }
+      { "label": "Frame Material", "content": [ "Steel in bronze finish" ] },
+      { "label": "Frame Material", "content": [ "Aluminum" ] },
+      { "label": "Frame Material", "content": [ "Aluminum", "Fiberglass" ] },
+      { "label": "Frame Material", "content": [ "Aluminum" ] },
+      { "label": "Frame Material", "content": [ "Aluminum" ] }
     ],
     [
-      {
-        "label": "Pole",
-        "content": "d=1.5\", thickness=0.03\""
-      },
-      {
-        "label": "Pole - Upper",
-        "content": "d=1.38\", thickness=0.06\""
-      },
-      {
-        "label": "Pole",
-        "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')"
-      },
-      {
-        "label": "Pole",
-        "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')"
-      },
-      {
-        "label": "Pole",
-        "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')"
-      }
+      { "label": "Pole", "content": "d=1.5\", thickness=0.03\"" },
+      { "label": "Pole - Upper", "content": "d=1.38\", thickness=0.06\"" },
+      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" },
+      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" },
+      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" }
     ],
     [
-      {},
-      {
-        "label": "Pole - Lower",
-        "content": "d=1.5\", thickness=0.06\""
-      },
-      {},
-      {},
-      {}
+      { },
+      { "label": "Pole - Lower", "content": "d=1.5\", thickness=0.06\"" },
+      { },
+      { },
+      { }
     ],
     [
-      {
-        "label": "Rib",
-        "content": "8 fiberglass ribs\n0.75\" x 0.5\", thickness=0.03\""
-      },
-      {
-        "label": "Rib",
-        "content": "8 aluminum ribs\n0.78\" x 0.45\", thickness=0.07\""
-      },
-      {
-        "label": "Rib",
-        "content": "4 aluminum ribs(size=6.5')\n8 aluminum ribs\n1\" x 0.75\", thickness=0.05\""
-      },
-      {
-        "label": "Rib",
-        "content": "4 aluminum ribs\nd=0.75\", thickness=0.07\""
-      },
-      {
-        "label": "Rib",
-        "content": "4 aluminum ellipse shape ribs\n2.375\" x 1.375\""
-      }
+      { "label": "Rib", "content": "8 fiberglass ribs\n0.75\" x 0.5\", thickness=0.03\"" },
+      { "label": "Rib", "content": "8 aluminum ribs\n0.78\" x 0.45\", thickness=0.07\"" },
+      { "label": "Rib", "content": "4 aluminum ribs(size=6.5')\n8 aluminum ribs\n1\" x 0.75\", thickness=0.05\"" },
+      { "label": "Rib", "content": "4 aluminum ribs\nd=0.75\", thickness=0.07\"" },
+      { "label": "Rib", "content": "4 aluminum ellipse shape ribs\n2.375\" x 1.375\"" }
     ]
   ],
   "fabric": [
     [
-      {
-        "label": "Fabric Material",
-        "content": "Polyester (SDP)"
-      },
-      {
-        "label": "Fabric Material",
-        "content": "Acrylic (AGORA)"
-      },
-      {
-        "label": "Fabric Material",
-        "content": "Polyester (SDP)\nAcrylic (AGORA)"
-      },
-      {
-        "label": "Fabric Material",
-        "content": "Polyester (SDP)\nAcrylic (AGORA)"
-      },
-      {
-        "label": "Fabric Material",
-        "content": "Heavy duty welded PVC"
-      }
+      { "label": "Fabric Material", "content": "Polyester (SDP)" },
+      { "label": "Fabric Material", "content": "Acrylic (AGORA)" },
+      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (AGORA)" },
+      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (AGORA)" },
+      { "label": "Fabric Material", "content": "Heavy duty welded PVC" }
     ],
     [
-      {
-        "label": "gsm",
-        "content": "-"
-      },
-      {
-        "label": "gsm",
-        "content": "260"
-      },
-      {
-        "label": "gsm",
-        "content": "260"
-      },
-      {
-        "label": "gsm",
-        "content": "260"
-      },
-      {
-        "label": "gsm",
-        "content": "850"
-      }
+      { "label": "gsm", "content": "-" },
+      { "label": "gsm", "content": "260" },
+      { "label": "gsm", "content": "260" },
+      { "label": "gsm", "content": "260" },
+      { "label": "gsm", "content": "850" }
     ],
     [
-      {
-        "label": "UV Resistance",
-        "content": "200 hours"
-      },
-      {
-        "label": "UV Resistance",
-        "content": "UPF 50+\n1500+ hours"
-      },
-      {
-        "label": "UV Resistance",
-        "content": "UPF 50+\n1500+ hours"
-      },
-      {
-        "label": "UV Resistance",
-        "content": "UPF 50+\n1500+ hours"
-      },
-      {
-        "label": "UV Resistance",
-        "content": "UPF 50+\n1500+ hours"
-      }
+      { "label": "UV Resistance", "content": "200 hours" },
+      { "label": "UV Resistance", "content": "UPF 50+\n1500+ hours" },
+      { "label": "UV Resistance", "content": "UPF 50+\n1500+ hours" },
+      { "label": "UV Resistance", "content": "UPF 50+\n1500+ hours" },
+      { "label": "UV Resistance", "content": "UPF 50+\n1500+ hours" }
     ]
   ],
   "height_measurements": [
     [
-      {
-        "label": "Overall height",
-        "content": "8.2'"
-      },
-      {
-        "label": "Overall height",
-        "content": "6.9' - 8.2' (size=6.5', 7.5')\n7.2' - 8.5' (size=9')\n7.2' - 8.9' (size=10')"
-      },
-      {
-        "label": "Overall height",
-        "content": "8.2' (size=7.5')\n8.5' (size=6.5', 9')\n9' (size=11.5')\n10' (size=10')"
-      },
-      {
-        "label": "Overall height",
-        "content": "7.5'"
-      },
-      {
-        "label": "Overall height",
-        "content": "11'\n11.5’ (size=13’)"
-      }
+      { "label": "Overall height", "content": "8.2'" },
+      { "label": "Overall height", "content": "6.9' - 8.2' (size=6.5', 7.5')\n7.2' - 8.5' (size=9')\n7.2' - 8.9' (size=10')" },
+      { "label": "Overall height", "content": "8.2' (size=7.5')\n8.5' (size=6.5', 9')\n9' (size=11.5')\n10' (size=10')" },
+      { "label": "Overall height", "content": "7.5'" },
+      { "label": "Overall height", "content": "11'\n11.5’ (size=13’)" }
     ],
     [
-      {
-        "label": "Clearance height",
-        "content": "7'"
-      },
-      {
-        "label": "Clearance height",
-        "content": "5.9' - 7.2'"
-      },
-      {
-        "label": "Clearance height",
-        "content": "7'"
-      },
-      {
-        "label": "Clearance height",
-        "content": "7.5'"
-      },
-      {
-        "label": "Clearance height",
-        "content": "7.5'\n8.2’ (size=13’)"
-      }
+      { "label": "Clearance height", "content": "7'" },
+      { "label": "Clearance height", "content": "5.9' - 7.2'" },
+      { "label": "Clearance height", "content": "7'" },
+      { "label": "Clearance height", "content": "7.5'" },
+      { "label": "Clearance height", "content": "7.5'\n8.2’ (size=13’)" }
     ]
   ],
   "warranty": [
     [
-      {
-        "label": "Frame",
-        "content": "3 years"
-      },
-      {
-        "label": "Frame",
-        "content": "3 years"
-      },
-      {
-        "label": "Frame",
-        "content": "3 years"
-      },
-      {
-        "label": "Frame",
-        "content": "3 years"
-      },
-      {
-        "label": "Frame",
-        "content": "3 years"
-      }
+      { "label": "Frame", "content": "3 years" },
+      { "label": "Frame", "content": "3 years" },
+      { "label": "Frame", "content": "3 years" },
+      { "label": "Frame", "content": "3 years" },
+      { "label": "Frame", "content": "3 years" }
     ],
     [
-      {
-        "label": "Roof",
-        "content": "2 years"
-      },
-      {
-        "label": "Roof",
-        "content": "5 years"
-      },
-      {
-        "label": "Roof",
-        "content": "2 years (SDP)\n5 years (AGORA)"
-      },
-      {
-        "label": "Roof",
-        "content": "2 years (SDP)\n5 years (AGORA)"
-      },
-      {
-        "label": "Roof",
-        "content": "5 years"
-      }
+      { "label": "Roof", "content": "2 years" },
+      { "label": "Roof", "content": "5 years" },
+      { "label": "Roof", "content": "2 years (SDP)\n5 years (AGORA)" },
+      { "label": "Roof", "content": "2 years (SDP)\n5 years (AGORA)" },
+      { "label": "Roof", "content": "5 years" }
     ]
   ]
 }
