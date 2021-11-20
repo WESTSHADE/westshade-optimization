@@ -47,6 +47,10 @@ body {
     line-height: inherit;
 }
 
+.text-capitalize {
+    text-transform: capitalize
+}
+
 .font-400 {
     font-weight: 400;
 }

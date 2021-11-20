@@ -1,17 +1,8 @@
 {
   "selection": [
-    {
-      "index": 0,
-      "label": "Y5 Economic"
-    },
-    {
-      "index": 1,
-      "label": "Y6 Commercial"
-    },
-    {
-      "index": 2,
-      "label": "Y7 Heavy Duty"
-    }
+    { "index": 0, "label": "Y5 Economic" },
+    { "index": 1, "label": "Y6 Commercial" },
+    { "index": 2, "label": "Y7 Heavy Duty" }
   ],
   "display": [
     {
@@ -53,422 +44,163 @@
   ],
   "size": [
     [
-      "10'x10'",
-      "10'x15'",
-      "10'x20'"
-    ],
-    [
-      "10'x10'",
-      "10'x15'",
-      "10'x20'"
-    ],
-    [
-      "10'x10'",
-      "10'x15'",
-      "10'x20'",
-      "13'x13'",
-      "13'x20'",
-      "13'x26'",
-      "16'x16'",
-      "20'x20'"
+      { "content": [ "10'x10'", "10'x15'", "10'x20'" ] },
+      { "content": [ "10'x10'", "10'x15'", "10'x20'" ] },
+      { "content": [ "10'x10'", "10'x15'", "10'x20'", "13'x13'", "13'x20'", "13'x26'", "16'x16'", "20'x20'" ] }
     ]
   ],
   "color": [
     [
-      "#FFFFFF",
-      "#000000",
-      "#991F34",
-      "#F4C84E",
-      "#275D3D",
-      "#1A4A8B"
-    ],
-    [
-      "#FFFFFF",
-      "#000000",
-      "#991F34",
-      "#F4C84E",
-      "#275D3D",
-      "#1A4A8B"
-    ],
-    [
-      "#FFFFFF",
-      "#000000",
-      "#991F34",
-      "#F4C84E",
-      "#275D3D",
-      "#1A4A8B"
+      { "content": [ "#FFFFFF", "#000000", "#991F34", "#F4C84E", "#275D3D", "#1A4A8B" ] },
+      { "content": [ "#FFFFFF", "#000000", "#991F34", "#F4C84E", "#275D3D", "#1A4A8B" ] },
+      { "content": [ "#FFFFFF", "#000000", "#991F34", "#F4C84E", "#275D3D", "#1A4A8B" ] }
     ]
   ],
   "frame_specifications": [
     [
-      {
-        "label": "Frame Material",
-        "content": "Commercial Grade Heavy Duty Steel"
-      },
-      {
-        "label": "Outer Leg Shape",
-        "content": "Hexagonal"
-      },
-      {
-        "label": "Bracket Connectors",
-        "content": "Nylon"
-      },
-      {
-        "label": "Height Adjustment",
-        "content": "Push Button"
-      },
-      {
-        "label": "Nuts and Bolts",
-        "content": "Stainless Steel"
-      },
-      {
-        "label": "Plastic Parts",
-        "content": "Nylon"
-      },
-      {
-        "label": "Foot Plate",
-        "content": "Zinc Coated Steel"
-      }
+      { "label": "Frame Material", "content": "Commercial Grade Heavy Duty Steel" },
+      { "label": "Frame Material", "content": "6063-T5 High Strength Aluminum" },
+      { "label": "Frame Material", "content": "6063-T5 High Strength Aluminum" }
     ],
     [
-      {
-        "label": "Frame Material",
-        "content": "6063-T5 High Strength Aluminum"
-      },
-      {
-        "label": "Outer Leg Shape",
-        "content": "Hexagonal"
-      },
-      {
-        "label": "Bracket Connectors",
-        "content": "Aluminum"
-      },
-      {
-        "label": "Height Adjustment",
-        "content": "Push Button"
-      },
-      {
-        "label": "Nuts and Bolts",
-        "content": "Stainless Steel"
-      },
-      {
-        "label": "Plastic Parts",
-        "content": "Nylon"
-      },
-      {
-        "label": "Foot Plate",
-        "content": "4\" * 4\" Zinc Coated Steel"
-      }
+      { "label": "Outer Leg Shape", "content": "Hexagonal" },
+      { "label": "Outer Leg Shape", "content": "Hexagonal" },
+      { "label": "Outer Leg Shape", "content": "Hexagonal" }
     ],
     [
-      {
-        "label": "Frame Material",
-        "content": "6063-T5 High Strength Aluminum"
-      },
-      {
-        "label": "Outer Leg Shape",
-        "content": "Hexagonal"
-      },
-      {
-        "label": "Bracket Connectors",
-        "content": "Aluminum"
-      },
-      {
-        "label": "Height Adjustment",
-        "content": "Push Button"
-      },
-      {
-        "label": "Nuts and Bolts",
-        "content": "Stainless Steel"
-      },
-      {
-        "label": "Plastic Parts",
-        "content": "Nylon"
-      },
-      {
-        "label": "Foot Plate",
-        "content": "4\" * 4\" Zinc Coated Steel"
-      }
+      { "label": "Bracket Connectors", "content": "Nylon" },
+      { "label": "Bracket Connectors", "content": "Aluminum" },
+      { "label": "Bracket Connectors", "content": "Aluminum" }
+    ],
+    [
+      { "label": "Height Adjustment", "content": "Push Button" },
+      { "label": "Height Adjustment", "content": "Push Button" },
+      { "label": "Height Adjustment", "content": "Push Button" }
+    ],
+    [
+      { "label": "Nuts and Bolts", "content": "Stainless Steel" },
+      { "label": "Nuts and Bolts", "content": "Stainless Steel" },
+      { "label": "Nuts and Bolts", "content": "Stainless Steel" }
+    ],
+    [
+      { "label": "Plastic Parts", "content": "Nylon" },
+      { "label": "Plastic Parts", "content": "Nylon" },
+      { "label": "Plastic Parts", "content": "Nylon" }
+    ],
+    [
+      { "label": "Foot Plate", "content": "Zinc Coated Steel" },
+      { "label": "Foot Plate", "content": "4\" * 4\" Zinc Coated Steel" },
+      { "label": "Foot Plate", "content": "4\" * 4\" Zinc Coated Steel" }
     ]
   ],
   "frame_measurements": [
     [
-      {
-        "label": "Outer Leg Diameter",
-        "content": "1.75\" (45 mm)"
-      },
-      {
-        "label": "Outer Leg Thickness",
-        "content": "0.05\" (1.2 mm)"
-      },
-      {
-        "label": "Truss Bar Height ",
-        "content": "0.98\" (25 mm)"
-      },
-      {
-        "label": "Truss Bar Width",
-        "content": "0.49\" (12.5 mm)"
-      },
-      {
-        "label": "Truss Bar Depth",
-        "content": "0.047\" (1.2 mm)"
-      },
-      {
-        "label": "Truss Bar Structure",
-        "content": "Rectangle"
-      }
+      { "label": "Outer Leg Diameter", "content": "1.75\" (45 mm)" },
+      { "label": "Outer Leg Diameter", "content": "1.75\" (45 mm)" },
+      { "label": "Outer Leg Diameter", "content": "1.75\" (45 mm)" }
     ],
     [
-      {
-        "label": "Outer Leg Diameter",
-        "content": "1.75\" (45 mm)"
-      },
-      {
-        "label": "Outer Leg Thickness",
-        "content": "0.05\" (1.2 mm)"
-      },
-      {
-        "label": "Truss Bar Height ",
-        "content": "1\" (26 mm)"
-      },
-      {
-        "label": "Truss Bar Width",
-        "content": "0.51\" (13 mm)"
-      },
-      {
-        "label": "Truss Bar Depth",
-        "content": "0.039\" (1 mm)"
-      },
-      {
-        "label": "Truss Bar Structure",
-        "content": "Built-in reinforcing rib"
-      }
+      { "label": "Outer Leg Thickness", "content": "0.05\" (1.2 mm)" },
+      { "label": "Outer Leg Thickness", "content": "0.05\" (1.2 mm)" },
+      { "label": "Outer Leg Thickness", "content": "0.05\" (1.2 mm)" }
     ],
     [
-      {
-        "label": "Outer Leg Diameter",
-        "content": "1.75\" (45 mm)"
-      },
-      {
-        "label": "Outer Leg Thickness",
-        "content": "0.05\" (1.2 mm)"
-      },
-      {
-        "label": "Truss Bar Height ",
-        "content": "1\" (26 mm)"
-      },
-      {
-        "label": "Truss Bar Width",
-        "content": "0.51\" (13 mm)"
-      },
-      {
-        "label": "Truss Bar Depth",
-        "content": "0.071\" (1.8 mm)"
-      },
-      {
-        "label": "Truss Bar Structure",
-        "content": "Built-in reinforcing rib"
-      }
+      { "label": "Truss Bar Height ", "content": "0.98\" (25 mm)" },
+      { "label": "Truss Bar Height ", "content": "1\" (26 mm)" },
+      { "label": "Truss Bar Height ", "content": "1\" (26 mm)" }
+    ],
+    [
+      { "label": "Truss Bar Width", "content": "0.49\" (12.5 mm)" },
+      { "label": "Truss Bar Width", "content": "0.51\" (13 mm)" },
+      { "label": "Truss Bar Width", "content": "0.51\" (13 mm)" }
+    ],
+    [
+      { "label": "Truss Bar Depth", "content": "0.047\" (1.2 mm)" },
+      { "label": "Truss Bar Depth", "content": "0.039\" (1 mm)" },
+      { "label": "Truss Bar Depth", "content": "0.071\" (1.8 mm)" }
+    ],
+    [
+      { "label": "Truss Bar Structure", "content": "Rectangle" },
+      { "label": "Truss Bar Structure", "content": "Built-in reinforcing rib" },
+      { "label": "Truss Bar Structure", "content": "Built-in reinforcing rib" }
     ]
   ],
   "roof_and_sidewalls_specifications": [
     [
-      {
-        "label": "Fabric",
-        "content": "500D Polyester With PVC Coating, 320gsm"
-      },
-      {
-        "label": "Function",
-        "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection"
-      },
-      {
-        "label": "Reinforcement",
-        "content": "All Stress Points"
-      },
-      {
-        "label": "Roof Connected Wall",
-        "content": "2\" (5cm) Velcro"
-      },
-      {
-        "label": "Wall Connector",
-        "content": "#8 Resin Zipper"
-      },
-      {
-        "label": "Roof Tension",
-        "content": "Spring"
-      }
+      { "label": "Fabric", "content": "500D Polyester With PVC Coating, 320gsm" },
+      { "label": "Fabric", "content": "500D Polyester With PVC Coating, 320gsm" },
+      { "label": "Fabric", "content": "500D Polyester With PVC Coating, 320gsm" }
     ],
     [
-      {
-        "label": "Fabric",
-        "content": "500D Polyester With PVC Coating, 320gsm"
-      },
-      {
-        "label": "Function",
-        "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection"
-      },
-      {
-        "label": "Reinforcement",
-        "content": "All Stress Points"
-      },
-      {
-        "label": "Roof Connected Wall",
-        "content": "2\" (5cm) Velcro"
-      },
-      {
-        "label": "Wall Connector",
-        "content": "#8 Resin Zipper"
-      },
-      {
-        "label": "Roof Tension",
-        "content": "Spring"
-      }
+      { "label": "Function", "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection" },
+      { "label": "Function", "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection" },
+      { "label": "Function", "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection" }
     ],
     [
-      {
-        "label": "Fabric",
-        "content": "500D Polyester With PVC Coating, 320gsm"
-      },
-      {
-        "label": "Function",
-        "content": "Waterproof, CPAI-84 Fire Retardant, UV Protection"
-      },
-      {
-        "label": "Reinforcement",
-        "content": "All Stress Points"
-      },
-      {
-        "label": "Roof Connected Wall",
-        "content": "2\" (5cm) Velcro"
-      },
-      {
-        "label": "Wall Connector",
-        "content": "#8 Resin Zipper"
-      },
-      {
-        "label": "Roof Tension",
-        "content": "Spring"
-      }
+      { "label": "Reinforcement", "content": "All Stress Points" },
+      { "label": "Reinforcement", "content": "All Stress Points" },
+      { "label": "Reinforcement", "content": "All Stress Points" }
+    ],
+    [
+      { "label": "Roof Connected Wall", "content": "2\" (5cm) Velcro" },
+      { "label": "Roof Connected Wall", "content": "2\" (5cm) Velcro" },
+      { "label": "Roof Connected Wall", "content": "2\" (5cm) Velcro" }
+    ],
+    [
+      { "label": "Wall Connector", "content": "#8 Resin Zipper" },
+      { "label": "Wall Connector", "content": "#8 Resin Zipper" },
+      { "label": "Wall Connector", "content": "#8 Resin Zipper" }
+    ],
+    [
+      { "label": "Roof Tension", "content": "Spring" },
+      { "label": "Roof Tension", "content": "Spring" },
+      { "label": "Roof Tension", "content": "Spring" }
     ]
   ],
   "height_measurements": [
     [
-      {
-        "label": "Peak Height",
-        "content": "10'15\" (3.43 m)"
-      },
-      {
-        "label": "Height Adjustment",
-        "content": "6'3\" (190 cm)\n6'7\" (200 cm)\n6'10\" (208 cm)"
-      }
+      { "label": "Peak Height", "content": "10'15\" (3.43 m)" },
+      { "label": "Peak Height ", "content": "10'10\" (3.30 m)" },
+      { "label": "Peak Height ", "content": "10'10\" (3.30 m)" }
     ],
     [
-      {
-        "label": "Peak Height ",
-        "content": "10'10\" (3.30 m)"
-      },
-      {
-        "label": "Height Adjustment ",
-        "content": "5'2\" (158 cm)\n6'1\" (187 cm)\n6'8\" (203 cm)"
-      }
-    ],
-    [
-      {
-        "label": "Peak Height ",
-        "content": "10'10\" (3.30 m)"
-      },
-      {
-        "label": "Height Adjustment ",
-        "content": "5'2\" (158 cm)\n6'1\" (187 cm)\n6'8\" (203 cm)"
-      }
+      { "label": "Height Adjustment", "content": "6'3\" (190 cm)\n6'7\" (200 cm)\n6'10\" (208 cm)" },
+      { "label": "Height Adjustment ", "content": "5'2\" (158 cm)\n6'1\" (187 cm)\n6'8\" (203 cm)" },
+      { "label": "Height Adjustment ", "content": "5'2\" (158 cm)\n6'1\" (187 cm)\n6'8\" (203 cm)" }
     ]
   ],
   "package_measurements": [
     [
-      {
-        "label": "Height",
-        "content": "65\" (164 cm)"
-      },
-      {
-        "label": "Width",
-        "content": "11\" (28 cm)"
-      },
-      {
-        "label": "Depth",
-        "content": "11\" (28 cm)"
-      },
-      {
-        "label": "Weight",
-        "content": "78.8 lbs (35.8 kg)"
-      }
+      { "label": "Height", "content": "65\" (164 cm)" },
+      { "label": "Height", "content": "65\" (164 cm)" },
+      { "label": "Height", "content": "65\" (164 cm)" }
     ],
     [
-      {
-        "label": "Height",
-        "content": "65\" (164 cm)"
-      },
-      {
-        "label": "Width",
-        "content": "10\" (27 cm)"
-      },
-      {
-        "label": "Depth",
-        "content": "11\" (28 cm)"
-      },
-      {
-        "label": "Weight",
-        "content": "78.8 lbs (35.8 kg)"
-      }
+      { "label": "Width", "content": "11\" (28 cm)" },
+      { "label": "Width", "content": "10\" (27 cm)" },
+      { "label": "Width", "content": "13\" (34 cm)" }
     ],
     [
-      {
-        "label": "Height",
-        "content": "65\" (164 cm)"
-      },
-      {
-        "label": "Width",
-        "content": "13\" (34 cm)"
-      },
-      {
-        "label": "Depth",
-        "content": "13\" (34 cm)"
-      },
-      {
-        "label": "Weight",
-        "content": "98.9 lbs (44.9 kg)"
-      }
+      { "label": "Depth", "content": "11\" (28 cm)" },
+      { "label": "Depth", "content": "11\" (28 cm)" },
+      { "label": "Depth", "content": "13\" (34 cm)" }
+    ],
+    [
+      { "label": "Weight", "content": "78.8 lbs (35.8 kg)" },
+      { "label": "Weight", "content": "78.8 lbs (35.8 kg)" },
+      { "label": "Weight", "content": "98.9 lbs (44.9 kg)" }
     ]
   ],
   "warranty": [
     [
-      {
-        "label": "Frame",
-        "content": "1 Year"
-      },
-      {
-        "label": "Roof",
-        "content": "1 Year"
-      }
+      { "label": "Frame", "content": "1 Year" },
+      { "label": "Frame", "content": "5 Years" },
+      { "label": "Frame", "content": "10 Years" }
     ],
     [
-      {
-        "label": "Frame",
-        "content": "5 Years"
-      },
-      {
-        "label": "Roof",
-        "content": "1 Year"
-      }
-    ],
-    [
-      {
-        "label": "Frame",
-        "content": "10 Years"
-      },
-      {
-        "label": "Roof",
-        "content": "1 Year"
-      }
+      { "label": "Roof", "content": "1 Year" },
+      { "label": "Roof", "content": "1 Year" },
+      { "label": "Roof", "content": "1 Year" }
     ]
   ]
 }
