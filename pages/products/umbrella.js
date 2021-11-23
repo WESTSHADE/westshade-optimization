@@ -507,9 +507,9 @@ Umbrella.getInitialProps = async (context) => {
         variant = [];
 
     product = await utils.getProductByWooId(id);
-    if (product.type === "simple") {
+    if (product && product.type === "simple") {
         component[0] = {...product};
-    } else if (product.type === "variable") {
+    } else if (product && product.type === "variable") {
         component[0] = {...product};
         variant[0] = await utils.getVariantByWooProductId(id);
     }

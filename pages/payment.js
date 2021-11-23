@@ -37,7 +37,7 @@ function Payment({orderID}) {
 
     const pay = () => {
         utils.checkout({id: id, cc: number, exp: expiration, cvv: code}).then((res) => {
-            console.log(res);
+            // console.log(res);
         });
     };
 

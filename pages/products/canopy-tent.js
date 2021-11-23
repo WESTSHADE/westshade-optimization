@@ -121,6 +121,7 @@ function Canopy_Tent({router, products, variants}) {
 
     const [selectedFrame, setSelectedFrame] = useState("y7");
     const [selectedSize, setSelectedSize] = useState("10x10");
+    const [selectedColor, setSelectedColor] = useState("white");
 
     const [productImageGallery, setProductImageGallery] = useState([]);
     const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
@@ -577,6 +578,11 @@ function Canopy_Tent({router, products, variants}) {
             setSelectedSize(size);
         }
 
+        let color = urlFn.getParam("color");
+        if (color) {
+            setSelectedColor(color);
+        }
+
         viewItem({id: 30477, name: "Canopy Tent", categories: [{name: "Canopy Tents"}]});
     }, []);
 
@@ -605,6 +611,10 @@ function Canopy_Tent({router, products, variants}) {
                     let size = router.query.size || urlFn.getParam("size");
 
                     if (size) attr.option = size;
+                } else if (attr.id === id_attribute_canopyColor) {
+                    let color = urlFn.getParam("color");
+
+                    if (color) attr.option = color;
                 }
             });
             selectedAttrList.push([...defaultAttr]);
@@ -693,7 +703,7 @@ function Canopy_Tent({router, products, variants}) {
             }
 
             let colorResult = variant.attributes.filter((attr) => attr.id === id_attribute_canopyColor);
-            let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
+            let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : selectedColor ? selectedColor : "white";
 
             if (index < 1) {
                 size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
@@ -787,7 +797,7 @@ function Canopy_Tent({router, products, variants}) {
         });
         setAvailable(available);
     }, [availableList]);
-    
+
     return (
         <React.Fragment>
             <Head>

@@ -449,6 +449,10 @@ function Accessories({router, product, productComponent, productVariant}) {
                             >
                                 {attribute.id === id_attribute_canopySize && selectedAttribute.length > 0 ? attribute.options.map((option, index) => {
                                     let selectedFrame = selectedAttribute[0].filter((attribute) => attribute.id === id_attribute_frameSeries);
+
+                                    if (selectedFrame.length === 0)
+                                        return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
+
                                     if ((selectedFrame[0].option === "y5 economic" || selectedFrame[0].option === "y6 commercial") && index > 2) return null;
 
                                     return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
@@ -521,9 +525,9 @@ Accessories.getInitialProps = async (context) => {
         variant = [];
 
     product = await utils.getProductByWooId(id);
-    if (product.type === "simple") {
+    if (product && product.type === "simple") {
         component[0] = {...product};
-    } else if (product.type === "variable") {
+    } else if (product && product.type === "variable") {
         component[0] = {...product};
         variant[0] = await utils.getVariantByWooProductId(id);
     }

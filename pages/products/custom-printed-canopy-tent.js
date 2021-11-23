@@ -361,9 +361,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             selectedVariantList[1] = productVariant[1].filter(({attributes}) => arrayEquals(target, attributes))[0];
             selectionA[1] = target;
 
-            // console.log(selectionA);
-            // console.log(selectedVariantList);
-
             setSelectedAttribute(selectionA);
             setSelectedVariant(selectedVariantList);
         }
@@ -442,7 +439,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 }
 
                 // 挑选出对应 Roof/Wall Variant.
-                // console.log(selection);
                 selectionVariant[indexA] = productVariant[indexA].filter(({attributes}) => arrayEquals(selection[indexA], attributes))[0];
             });
         } else if (index === 1 && id === id_attribute_printing_tech) {
@@ -475,7 +471,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                 attribute.forEach((attr) => (attr.id === id ? (attr.option = event.target.value) : null));
             }
             selectionA[indexA + 2] = attribute
-            // console.log(selectionA);
             selectedVariantList[indexA + 2] = productVariant[indexA + 2].filter(({attributes}) => arrayEquals(selectionA[indexA + 2], attributes))[0];
         });
 
@@ -562,7 +557,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         });
         setAvailableList(available);
 
-        // console.log(available);
         setTotalRegularPrice(regularPrice);
         setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
@@ -613,7 +607,6 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         } else if (productComponent[0].hasOwnProperty("image")) {
             setMainImage([productComponent[0].image]);
         }
-        // console.log(productComponent);
 
         setSelectedAttribute(productComponent.map(({default_attributes}) => default_attributes) || []);
     }, [productComponent]);
@@ -833,7 +826,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         }
         setProductImageGalleryTemp(images);
     }, [wallPicturesTemp]);
-    
+
     return (
         <React.Fragment>
             <Head>
@@ -1474,7 +1467,7 @@ Custom_Printed_Canopy_Tent.getInitialProps = async (context) => {
         variant = [];
 
     product = await utils.getProductByWooId(61289);
-    if (product.type === "composite") {
+    if (product && product.type === "composite") {
         let cc = [product.composite_components[0], product.composite_components[1]];
         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));

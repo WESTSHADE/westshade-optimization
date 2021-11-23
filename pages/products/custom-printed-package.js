@@ -1035,9 +1035,9 @@ Custom_printed_Package.getInitialProps = async (context) => {
     // product = await utils.getProductByWooId(id);
     product = await resP.json();
 
-    if (product.type === "simple") {
+    if (product && product.type === "simple") {
         component[0] = {...product};
-    } else if (product.type === "variable") {
+    } else if (product && product.type === "variable") {
         component[0] = {...product};
         // variant[0] = await utils.getVariantByWooProductId(id);
         const resV = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/variations?productId=" + id, {

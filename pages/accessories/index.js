@@ -85,11 +85,11 @@ const Product = ({name, product, showDesc = true}) => {
                         )}
                     </Block>
                     <Link color="inherit" onClick={(event) => event.preventDefault()}
-                          href={product.id === 26553 ? {pathname: "/products/accessories/", query: {id: "26516", type: "half"}} :
-                              product.id === 26523 ? {pathname: "/products/accessories/", query: {id: "26516", type: "full"}} :
-                                  product.id === 26804 ? {pathname: "/products/accessories/", query: {id: "26516", type: "rollup"}} :
-                                      product.id === 26774 ? {pathname: "/products/accessories/", query: {id: "26516", type: "pvc"}} :
-                                          product.id === 26744 ? {pathname: "/products/accessories/", query: {id: "26516", type: "mesh"}} :
+                          href={product.id === 26553 ? {pathname: "/products/accessories/", query: {id: 26516, type: "half"}} :
+                              product.id === 26523 ? {pathname: "/products/accessories/", query: {id: 26516, type: "full"}} :
+                                  product.id === 26804 ? {pathname: "/products/accessories/", query: {id: 26516, type: "rollup"}} :
+                                      product.id === 26774 ? {pathname: "/products/accessories/", query: {id: 26516, type: "pvc"}} :
+                                          product.id === 26744 ? {pathname: "/products/accessories/", query: {id: 26516, type: "mesh"}} :
                                               "/products/accessories?id=" + product.id}
                     >Buy</Link>
                 </Block>

@@ -58,7 +58,7 @@ class MyDocument extends Document {
                 <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}/>
                 <Main/>
                 <NextScript/>
-                <script type="text/javascript" src="/static/appleBusinessChat.js"/>
+                <script type="text/javascript" src="/staticFiles/appleBusinessChat.js"/>
                 </body>
             </Html>
         );

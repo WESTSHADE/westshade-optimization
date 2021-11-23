@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
@@ -12,6 +13,7 @@ import {Input} from 'baseui/input';
 import {CheckIndeterminate, Plus} from 'baseui/icon'
 
 import Shipping from "../../components/sections/ShippingNote";
+import {Modal} from "../../components/surfaces";
 
 import Utils from "../../utils/utils";
 import {NumberFn} from "../../utils/tools";
@@ -27,7 +29,6 @@ import {modifyCart} from "../../redux/actions/cartActions";
 import {updateUser} from "../../redux/actions/userActions";
 
 import Cart from "./cart.svg";
-import {Modal} from "../../components/surfaces";
 
 function Cart_Page({router}) {
     const [lineItem, setLineItem] = useState([]);
@@ -309,14 +310,14 @@ function Cart_Page({router}) {
                                                             </Button>
                                                         </Block>
                                                     </Block>
-                                                    <Block marginBottom={["", "12px"]} paddingLeft="20px" font="MinXLabel14" color="MinXPrimaryText"
-                                                           overrides={{
-                                                               Block: {
-                                                                   style: {fontWeight: 700,}
-                                                               },
-                                                           }}
-                                                    >
-                                                        {`$` + product.price * cart[index].quantity}
+                                                    <Block display="grid" gridTemplateColumns="1fr" gridRowGap="6px" paddingLeft="20px" font="MinXLabel14" color="MinXPrimaryText" $style={{fontWeight: 700}}>
+                                                        <NumberFormat thousandSeparator={true} prefix={"$"} value={product.regular_price} displayType={"text"} style={product.on_sale ? {textDecoration: "line-through"} : {}}/>
+                                                        {product.on_sale ?
+                                                            <Block color="#F07C7C">
+                                                                {(product.sale_price === "" || product.sale_price === "0" || product.sale_price === 0 || !product.sale_price) ? "Free" :
+                                                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={product.sale_price} displayType={"text"}/>
+                                                                }
+                                                            </Block> : null}
                                                     </Block>
                                                 </Block>
                                             </Block>

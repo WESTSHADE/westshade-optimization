@@ -29,7 +29,7 @@ function Home({router}) {
             <Head>
                 <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>
                 <meta name="description" content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
-                <script id="mcjs" type="text/javascript" src="/static/mailchimpFirstOrder.js"/>
+                <script id="mcjs" type="text/javascript" src="/staticFiles/mailchimpFirstOrder.js"/>
             </Head>
             <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="images/home/custom_printing.jpg"
                            router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home containerMarginBottom={"0px"}/>

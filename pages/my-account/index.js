@@ -88,8 +88,6 @@ function Login() {
             if (!email) setEmailLoginError(true);
             if (!password) setPasswordLoginError(true);
         } else {
-            console.log(email);
-            console.log(password);
             dispatch(logIn({email, password}));
         }
     };
@@ -614,7 +612,6 @@ function Address() {
     const handleSaveAddress = () => {
         let temp = {...shippingDetail};
         // if (temp.phone) temp.phone = temp.phone.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').replace(/^[\s\d]+/, '');
-        // console.log(temp);
         dispatch(updateUser(token, {shipping: {...temp}}))
     };
 
