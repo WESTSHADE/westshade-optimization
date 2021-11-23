@@ -236,16 +236,19 @@ function Kapri({router}) {
                          subtitleMoreText={"Learn more >"}
                          subtitleMoreDestination={"/custom-printing/umbrella"}
                          content={
-                             <Block width="100%" maxWidth="960px" marginRight={["unset", "unset", "auto"]} marginLeft={["unset", "unset", "auto"]}
-                                    display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
-                             >
-                                 <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
-                                     <Image src="images/umbrella/kapri/custom1.jpg" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
-                                 </Block>
-                                 <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
-                                     <Image src="images/umbrella/kapri/custom2.jpg" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
-                                 </Block>
+                             <Block position="relative" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden">
+                                 <Image src="images/umbrella/kapri/custom3.jpg" alt="kapri custom" layout="fill" objectFit="cover" quality={100}/>
                              </Block>
+                             // <Block width="100%" maxWidth="960px" marginRight={["unset", "unset", "auto"]} marginLeft={["unset", "unset", "auto"]}
+                             //        display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
+                             // >
+                             //     <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
+                             //         <Image src="images/umbrella/kapri/custom1.jpg" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                             //     </Block>
+                             //     <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
+                             //         <Image src="images/umbrella/kapri/custom2.jpg" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                             //     </Block>
+                             // </Block>
                          }
                 />
                 {productList.length > 0 ? (
