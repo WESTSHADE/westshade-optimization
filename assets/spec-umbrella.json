@@ -39,24 +39,24 @@
       { "content": [ "Octagon" ] },
       { "content": [ "Square", "Octagon" ] },
       { "content": [ "Square" ] },
-      { "content": [ "Square" ] }
+      { "content": [ "Square", "Hexagon" ] }
     ]
   ],
   "size": [
     [
-      { "content": [ "9'" ] },
-      { "content": [ "6.5'", "7.5'", "9'", "10'" ] },
-      { "content": [ "6.5'", "7.5'", "9'", "10'", "11.5'" ] },
-      { "content": [ "6.5'" ] },
-      { "content": [ "10'", "11.5'", "13'", "16.4'" ] }
+      { "content": [ "9' (2.8 m)" ] },
+      { "content": [ "6.5' (2 m)", "7.5' (2.3 m)", "9' (2.8 m)", "10' (3 m)" ] },
+      { "content": [ "6.5' (2 m)", "7.5' (2.3 m)", "9' (2.8 m)", "10' (3 m)", "11.5' (3.5m)" ] },
+      { "content": [ "6.5' (2 m)" ] },
+      { "content": [ "10' (3 m)", "11.5' (3.5 m)", "13' (4 m)", "16.4' (5 m)" ] }
     ]
   ],
   "color": [
     [
-      { "content": [ "#E8634E", "#C83737", "#D6C199", "#4EB3F2" ] },
-      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
-      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
-      { "content": [ "#000000", "#585858", "#D6C199", "#A0353A", "#23A4AD", "#DDB95A" ] },
+      { "content": [ "#C83737", "#D6C199", "#4EB3F2", "#E8634E" ] },
+      { "content": [ "#A0353A", "#585858", "#DDB95A", "#000000", "#23A4AD", "#D6C199" ] },
+      { "content": [ "#A0353A", "#585858", "#DDB95A", "#000000", "#23A4AD", "#D6C199" ] },
+      { "content": [ "#A0353A", "#585858", "#DDB95A", "#000000", "#23A4AD", "#D6C199" ] },
       { "content": [ "#FFFFFF" ] }
     ]
   ],
@@ -87,34 +87,37 @@
       { "label": "Frame Material", "content": [ "Aluminum" ] }
     ],
     [
-      { "label": "Pole", "content": "d=1.5\", thickness=0.03\"" },
-      { "label": "Pole - Upper", "content": "d=1.38\", thickness=0.06\"" },
-      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" },
-      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" },
-      { "label": "Pole", "content": "d=1.57\", thickness=0.1\"\nd=2\", thickness=0.12\"(size=10', 11.5')" }
+      { "label": "Pole", "content": "D = 1.5\" (38 mm), Thickness = 0.03\" (0.8 mm)" },
+      { "label": "Pole - Upper", "content": "D = 1.38\" (35 mm), Thickness = 0.06\" (1.5 mm)" },
+      { "label": "Pole", "content": "D = 1.57\" (40 mm), Thickness = 0.1\" (2.5 mm) (size =6.5', 7.5', 9')\nD = 2\" (50 mm), Thickness = 0.12\" (3 mm) (size = 10', 11.5')" },
+      { "label": "Pole", "content": "D = 1.5\" (38 mm), Thickness = 0.08\" (2 mm)" },
+      { "label": "Pole", "content": "D = 3.5\" (90 mm), Thickness = 0.4\" (10 mm)" }
     ],
     [
       { },
-      { "label": "Pole - Lower", "content": "d=1.5\", thickness=0.06\"" },
+      { "label": "Pole - Lower", "content": "D = 1.5\" (38.5 mm), Thickness = 0.06\" (1.4 mm)" },
       { },
       { },
       { }
     ],
     [
-      { "label": "Rib", "content": "8 fiberglass ribs\n0.75\" x 0.5\", thickness=0.03\"" },
-      { "label": "Rib", "content": "8 aluminum ribs\n0.78\" x 0.45\", thickness=0.07\"" },
-      { "label": "Rib", "content": "4 aluminum ribs(size=6.5')\n8 aluminum ribs\n1\" x 0.75\", thickness=0.05\"" },
-      { "label": "Rib", "content": "4 aluminum ribs\nd=0.75\", thickness=0.07\"" },
-      { "label": "Rib", "content": "4 aluminum ellipse shape ribs\n2.375\" x 1.375\"" }
+      { "label": "Rib", "content": "8 Steel Pole with Bronze Finish Ribs\n0.75\" * 0.5\" (19.05 mm * 12.7 mm), Thickness = 0.03\" (0.7 mm)" },
+      { "label": "Rib", "content": "8 Aluminum Ribs\n0.78\" * 0.45\" (20 mm * 11.5 mm), Thickness = 0.07\" (1.78 mm)" },
+      {
+        "label": "Rib",
+        "content": "4 Aluminum Ribs, 1\" * 0.75\" (25.4 mm * 19.05 mm), Thickness = 0.05\" (1.27 mm) (size = 6.5', frame material = Aluminum)\n8 Aluminum Ribs, 1\" * 0.75\" (25.4 mm * 19.05 mm), Thickness = 0.05\" (1.27 mm) (size = 7’.5, 9’, 11.5’ frame material = Aluminum)\n8 Aluminum Ribs, 1.25\" * 0.75\" (31.75 mm * 19.05 mm), Thickness = 0.05\" (1.27 mm) (size = 10', frame material = Aluminum)\n4 Aluminum Ribs, D = 0.5\" (13 mm) (size = 6.5', frame material = Fiberglass)\n8 Aluminum Ribs, D = 0.5\" (13 mm) (size = 7’.5, 8.2’, 9’, 11.5’', frame material = Fiberglass)"
+      },
+      { "label": "Rib", "content": "4 Aluminum Ribs\nD = 0.75\" (19.05 mm), Thickness = 0.07\" (1.78 mm)" },
+      { "label": "Rib", "content": "4 Aluminum Ellipse Shape Ribs\n2.375\" * 1.75\" (60 mm * 45 mm)" }
     ]
   ],
   "fabric": [
     [
       { "label": "Fabric Material", "content": "Polyester (SDP)" },
-      { "label": "Fabric Material", "content": "Acrylic (AGORA)" },
-      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (AGORA)" },
-      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (AGORA)" },
-      { "label": "Fabric Material", "content": "Heavy duty welded PVC" }
+      { "label": "Fabric Material", "content": "Acrylic (Agora)" },
+      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (Agora)" },
+      { "label": "Fabric Material", "content": "Polyester (SDP)\nAcrylic (Agora)" },
+      { "label": "Fabric Material", "content": "Heavy Duty Welded PVC" }
     ],
     [
       { "label": "gsm", "content": "-" },
@@ -133,34 +136,34 @@
   ],
   "height_measurements": [
     [
-      { "label": "Overall height", "content": "8.2'" },
-      { "label": "Overall height", "content": "6.9' - 8.2' (size=6.5', 7.5')\n7.2' - 8.5' (size=9')\n7.2' - 8.9' (size=10')" },
-      { "label": "Overall height", "content": "8.2' (size=7.5')\n8.5' (size=6.5', 9')\n9' (size=11.5')\n10' (size=10')" },
-      { "label": "Overall height", "content": "7.5'" },
-      { "label": "Overall height", "content": "11'\n11.5’ (size=13’)" }
+      { "label": "Overall height", "content": "8.2' (2.5 m)" },
+      { "label": "Overall height", "content": "6.9' - 8.2' (2.1 m - 2.5 m) (size = 6.5', 7.5')\n7.2' - 8.5' (2.2 m - 2.6 m) (size = 9')\n7.2' - 8.9' (2.2 m - 2.7 m) (size = 10')" },
+      { "label": "Overall height", "content": "8.2' (2.5 m) (size = 7.5')\n8.53' (2.6 m) (size = 6.5', 9')\n8.86' (2.7 m) (size = 11.5')\n10' (3 m) (size = 10')" },
+      { "label": "Overall height", "content": "7.5' (2.3 m)" },
+      { "label": "Overall height", "content": "11' (3.35 m)" }
     ],
     [
-      { "label": "Clearance height", "content": "7'" },
-      { "label": "Clearance height", "content": "5.9' - 7.2'" },
-      { "label": "Clearance height", "content": "7'" },
-      { "label": "Clearance height", "content": "7.5'" },
-      { "label": "Clearance height", "content": "7.5'\n8.2’ (size=13’)" }
+      { "label": "Clearance height", "content": "6.9' (2.1 m)" },
+      { "label": "Clearance height", "content": "5.9' - 7.2' (1.8 m - 2.2 m)" },
+      { "label": "Clearance height", "content": "6.9' (2.1 m)" },
+      { "label": "Clearance height", "content": "6.5' (1.98 m)" },
+      { "label": "Clearance height", "content": "7.5' (2.3 m)" }
     ]
   ],
   "warranty": [
     [
-      { "label": "Frame", "content": "3 years" },
-      { "label": "Frame", "content": "3 years" },
-      { "label": "Frame", "content": "3 years" },
-      { "label": "Frame", "content": "3 years" },
-      { "label": "Frame", "content": "3 years" }
+      { "label": "Frame", "content": "3 Years" },
+      { "label": "Frame", "content": "3 Years" },
+      { "label": "Frame", "content": "3 Years" },
+      { "label": "Frame", "content": "3 Years" },
+      { "label": "Frame", "content": "5 Years" }
     ],
     [
-      { "label": "Roof", "content": "2 years" },
-      { "label": "Roof", "content": "5 years" },
-      { "label": "Roof", "content": "2 years (SDP)\n5 years (AGORA)" },
-      { "label": "Roof", "content": "2 years (SDP)\n5 years (AGORA)" },
-      { "label": "Roof", "content": "5 years" }
+      { "label": "Roof", "content": "2 Years" },
+      { "label": "Roof", "content": "5 Years" },
+      { "label": "Roof", "content": "2 Years (SDP)\n5 Years (AGORA)" },
+      { "label": "Roof", "content": "2 Years (SDP)\n5 Years (AGORA)" },
+      { "label": "Roof", "content": "5 Years" }
     ]
   ]
 }
