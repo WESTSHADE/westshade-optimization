@@ -3,6 +3,8 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react'
 import {Provider as StyletronProvider} from "styletron-react";
 
+import Document, {Html, Head, Main, NextScript} from "next/document";
+
 import {BaseProvider, LightTheme, createTheme} from "baseui";
 import {Block} from "baseui/block";
 
@@ -171,6 +173,7 @@ function MyApp({Component, pageProps}) {
     }, [isSupported]);
 
     return (
+
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
                 <StyletronProvider value={styletron}>

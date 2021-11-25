@@ -141,34 +141,66 @@ function Marco({router}) {
                              </>
                          }
                 />
-                <Section title={<>DETAILS<br/>WILL BE MISSED</>}
+                {/*<Section title={<>DETAILS<br/>WILL BE MISSED</>}*/}
+                {/*         content={*/}
+                {/*             <Block width="100%" maxWidth="960px" marginRight={["unset", "auto"]} marginLeft={["unset", "auto"]} display="grid"*/}
+                {/*                    gridTemplateAreas={[`"a" "b" "c"`, `"a b" "c b"`, `"a b c"`]} gridColumnGap={["unset", "18px", "64px"]} gridRowGap={["32px", "40px", "0"]}*/}
+                {/*             >*/}
+                {/*                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["start", "center"]} gridArea="a" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>*/}
+                {/*                     <Block position="relative" width={["215px", "215px", "326px"]} height={["138px", "138px", "211px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
+                {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
+                {/*                     >*/}
+                {/*                         <Image src="images/umbrella/marco/detail1.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                     </Block>*/}
+                {/*                     Stainless steel fixings*/}
+                {/*                 </Block>*/}
+                {/*                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["end", "center"]} gridArea="b" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>*/}
+                {/*                     <Block position="relative" width={["204px", "204px", "240px"]} height={["268px", "268px", "316px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
+                {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
+                {/*                     >*/}
+                {/*                         <Image src="images/umbrella/marco/detail2.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                     </Block>*/}
+                {/*                     Stainless steel fixings*/}
+                {/*                 </Block>*/}
+                {/*                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["start", "center"]} gridArea="c" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>*/}
+                {/*                     <Block position="relative" width={["200px", "215px", "200px"]} height={["200px", "215px", "200px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
+                {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
+                {/*                     >*/}
+                {/*                         <Image src="images/umbrella/marco/detail3.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                     </Block>*/}
+                {/*                     Stainless steel fixings*/}
+                {/*                 </Block>*/}
+                {/*             </Block>*/}
+                {/*         }*/}
+                {/*/>*/}
+                <Section title={<>NO DETAILS<br/>WILL BE MISSED</>}
+                         subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}
                          content={
-                             <Block width="100%" maxWidth="960px" marginRight={["unset", "auto"]} marginLeft={["unset", "auto"]} display="grid"
-                                    gridTemplateAreas={[`"a" "b" "c"`, `"a b" "c b"`, `"a b c"`]} gridColumnGap={["unset", "18px", "64px"]} gridRowGap={["32px", "40px", "0"]}
-                             >
-                                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["start", "center"]} gridArea="a" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
-                                     <Block position="relative" width={["215px", "215px", "326px"]} height={["138px", "138px", "211px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
+                             <Block width="100%" maxWidth="960px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "48px", "40px"]}
+                                    gridRowGap={["24px", "40px", "0px"]} justifyItems="center" overrides={{Block: {props: {className: "text-center"}}}}>
+                                 <Block width={["136px", "200px", "220px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
+                                     <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/marco/detail1.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/santorini/detail1-al.jpg" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
-                                     Stainless steel fixings
+                                     Stainless Steel Fixings
                                  </Block>
-                                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["end", "center"]} gridArea="b" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
-                                     <Block position="relative" width={["204px", "204px", "240px"]} height={["268px", "268px", "316px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
+                                 <Block width={["136px", "200px", "220px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
+                                     <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/marco/detail2.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/santorini/detail2-al.jpg" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
-                                     Stainless steel fixings
+                                     Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame
                                  </Block>
-                                 <Block display="flex" flexDirection="column" alignItems="center" justifySelf={["start", "center"]} gridArea="c" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
-                                     <Block position="relative" width={["200px", "215px", "200px"]} height={["200px", "215px", "200px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
+                                 <Block width={["136px", "200px", "220px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}>
+                                     <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/marco/detail3.png" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/santorini/detail3-al.jpg" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
-                                     Stainless steel fixings
+                                     Nylon Arm Joints
                                  </Block>
                              </Block>
                          }
