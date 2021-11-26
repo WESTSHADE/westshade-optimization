@@ -148,8 +148,8 @@ function Header() {
         <React.Fragment>
             <div className={styles["container-nav"]}>
                 <Block position="fixed" top={0} right={0} left={0} display="block" width="100%" backgroundColor="#FBFBFB">
-                    <Block width="100%" backgroundColor="#fbfbfb">
-                        <Block maxWidth="1183px" margin="0 auto" display="flex" flexDirection={["row-reverse", "", "row"]} justifyContent="space-between" alignItems="center" padding="12px 16px">
+                    <Block width="100%" backgroundColor="#fbfbfb" height={["48px", "64px"]}>
+                        <Block maxWidth="1183px" height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", "", "row"]} justifyContent="space-between" alignItems="center" padding="12px 16px">
                             <Block position="relative" display={["none", "", "block"]} height="40px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
                                 <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="fixed" width={175} height={40} objectFit="contain" objectPosition="left" quality={100}/>
                             </Block>
