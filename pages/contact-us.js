@@ -84,8 +84,8 @@ const CustomCheckboxLabel = ({children, active}) => {
             backgroundColor="#ffffff" 
             className={css({ 
                 width: "100%", 
-                paddingTop: "12px", 
-                paddingBottom: "12px", 
+                paddingTop: active ? "11px" : "12px", 
+                paddingBottom: active ? "11px" : "12px", 
                 borderTopLeftRadius: "44px",
                 borderTopRightRadius: "44px",
                 borderBottomLeftRadius: "44px",
@@ -94,7 +94,10 @@ const CustomCheckboxLabel = ({children, active}) => {
                 borderBottomWidth: active ? "2px" : "1px", 
                 borderLeftWidth: active ? "2px" : "1px", 
                 borderRightWidth: active ? "2px" : "1px", 
-                borderStyle: "solid", 
+                borderTopStyle: "solid", 
+                borderLeftStyle: "solid", 
+                borderRightStyle: "solid", 
+                borderBottomStyle: "solid", 
                 borderColor: active ? "#23A4AD": "#b2b2b2", 
                 backgroundColor: "#ffffff", 
                 color: "#2c2c2c", 
@@ -115,6 +118,7 @@ const CustomInput = ({startEnhancer, endEnhancer, type, value, onChange, error, 
     
     return(
         <Input
+            className="form-input"
             placeholder={placeholder}
             type={type} 
             value={value}
@@ -126,7 +130,7 @@ const CustomInput = ({startEnhancer, endEnhancer, type, value, onChange, error, 
             pattern={pattern}
             overrides={{
                 Root: {style: {width: "100%", borderLeftWidth: "0px", borderRightWidth:"0px", borderTopWidth:"0px", borderBottomWidth: "0px", outlineLeftWidth: "0px", outlineRightWidth:"0px", outlineTopWidth:"0px", outlineBottomWidth: "0px", outlineWidth: "0px", backgroundColor: "transparent"}},
-                Input: {style: ($isFocused) => ({backgroundColor: "transparent", borderRadius: "8px", ":focus": {border: "1px solid #23A4AD"}})},
+                Input: {style: ($isFocused) => ({backgroundColor: "transparent", borderRadius: "8px", borderLeftWidth: "1px", borderRightWidth:"1px", borderTopWidth:"1px", borderBottomWidth: "1px", borderTopStyle: "solid", borderBottomStyle: "solid", borderLeftStyle: "solid", borderRightStyle: "solid", borderColor: "transparent", ":focus": {borderColor: "#23A4AD"}})},
                 InputContainer: { style: {backgroundColor: "#ffffff", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius:"8px"}}
             }}
         />
@@ -149,12 +153,12 @@ const Contact_Us = () => {
     const [formLoading, setFormLoading] = useState(false);
 
     const handleInterest = (interest) => {
-        console.log(formState.interests.includes(interest))
         if (!formState.interests.includes(interest)) setFormState({...formState, interests: [...formState.interests, interest]})
         else {
             let idx = formState.interests.indexOf(interest);
             let newInterests = [...formState.interests];
-            setFormState({...formState, interests: newInterests.splice(idx, 1)})
+            newInterests.splice(idx, 1);
+            setFormState({...formState, interests: newInterests})
         }
     }
 
@@ -395,6 +399,7 @@ const Contact_Us = () => {
                             }}
                         >
                             <Textarea
+                                className="form-input"
                                 value={formState.message}
                                 onChange={e => setFormState({...formState, message: e.target.value})}
                                 size={SIZE.large}
