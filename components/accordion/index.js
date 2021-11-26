@@ -9,7 +9,7 @@ export default function Custom_Accordion(props) {
     const {list, ...restProps} = props;
 
     return (
-        <Block width="100%" marginRight="auto" marginLeft="auto" font="MinXHeading14" color="MinXPrimaryText" {...restProps}>
+        <Block width="100%" marginRight="auto" marginLeft="auto" font="MinXHeading16" color="MinXPrimaryText" {...restProps}>
             <Accordion overrides={{
                 Root: {
                     props: {
@@ -28,8 +28,8 @@ export default function Custom_Accordion(props) {
                 }
             }}>
                 {list.map((item, index) =>
-                    <Panel key={index} title={item.title}>{item.content}</Panel>)
-                }
+                    <Panel key={index} title={item.title}>{item.content}</Panel>
+                )}
             </Accordion>
         </Block>
     )

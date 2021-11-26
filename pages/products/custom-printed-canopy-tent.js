@@ -265,8 +265,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             70: request[1].valance.logo,
             3.1: applyToFullSide[0] ? "Apply to four sides peak" : "",
             3.2: applyToFullSide[1] ? "Apply to four sides valance" : "",
-            36.1: "",
-            36.2: "",
+            36.3: "",
+            36.6: "",
             37: "",
             71: ""
         });

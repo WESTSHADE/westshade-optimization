@@ -42,7 +42,7 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>*/}
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
                     <link rel="icon" href="/logo.png"/>
                     <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"/>
                     {this.props.stylesheets.map((sheet, i) => (

@@ -13,11 +13,11 @@ import MButton from "../../components/button-n";
 
 const data = {
     display: [
-        {title: "Bali", picUrl: "images/umbrella/spec/bali.png", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-        {title: "Kapri", picUrl: "images/umbrella/spec/kapri.png", alt: "Kapri Umbrella Spec", buyUrl: '/products/tilt-umbrellas/kapri-umbrella'},
-        {title: "Marco", picUrl: "images/umbrella/spec/marco.png", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
-        {title: "Santorini", picUrl: "images/umbrella/spec/santorini.png", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
-        {title: "Catalina", picUrl: "images/umbrella/spec/catalina.png", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
+        {title: "Bali", picUrl: "images/umbrella/spec/bali.webp", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
+        {title: "Kapri", picUrl: "images/umbrella/spec/kapri.webp", alt: "Kapri Umbrella Spec", buyUrl: '/products/tilt-umbrellas/kapri-umbrella'},
+        {title: "Marco", picUrl: "images/umbrella/spec/marco.webp", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
+        {title: "Santorini", picUrl: "images/umbrella/spec/santorini.webp", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
+        {title: "Catalina", picUrl: "images/umbrella/spec/catalina.webp", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
     ],
     open_system: [["Crank"], ["Crank"], ["Push up"], ["Pulley"], ["Crank"]],
     size: [["9'"], ["6.5'", "7.5'", "9'", "10'"], ["6.5'"], ["6.5'", "7.5'", "9'", "10'", "11.5'"], ["10'", "11.5'", "13'", "16.4'"]],
@@ -81,7 +81,7 @@ function Umbrella({router, size}) {
                              <>
                                  <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA RANGES</Block>
                                  <Block marginBottom={["40px", "80px", "120px"]}>
-                                     <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="images/umbrella/series-marco.jpg" alt="series marco"
+                                     <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="images/umbrella/series-marco.webp" alt="series marco"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
                                                         <Block display="flex" flexDirection="row" alignItems="center">
@@ -95,7 +95,7 @@ function Umbrella({router, size}) {
                                                         </Block>
                                                     }
                                      />
-                                     <BannerDisplay title="SANTORINI" subtitle="Pulley umbrellas; Two frames options" url="images/umbrella/series-santorini.png" alt="series santorini"
+                                     <BannerDisplay title="SANTORINI" subtitle="Pulley umbrellas; Two frames options" url="images/umbrella/series-santorini.webp" alt="series santorini"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     textColor="MinXPrimaryText"
                                                     renderButton={
@@ -111,7 +111,7 @@ function Umbrella({router, size}) {
                                                         </Block>
                                                     }
                                      />
-                                     <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-bali.jpg" alt="series bali"
+                                     <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="images/umbrella/series-bali.webp" alt="series bali"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
                                                         <Block display="flex" flexDirection="row" alignItems="center">
@@ -126,7 +126,7 @@ function Umbrella({router, size}) {
                                                         </Block>
                                                     }
                                      />
-                                     <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="images/umbrella/series-kapri.png" alt="series kapri"
+                                     <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="images/umbrella/series-kapri.webp" alt="series kapri"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
                                                         <Block display="flex" flexDirection="row" alignItems="center">
@@ -141,7 +141,7 @@ function Umbrella({router, size}) {
                                                         </Block>
                                                     }
                                      />
-                                     <BannerDisplay title="CATALINA" subtitle="Oversized umbrellas" url="images/umbrella/series-catalina.jpg" alt="series catalina"
+                                     <BannerDisplay title="CATALINA" subtitle="Oversized umbrellas" url="images/umbrella/series-catalina.webp" alt="series catalina"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     textColor="MinXPrimaryText"
                                                     renderButton={
@@ -158,7 +158,7 @@ function Umbrella({router, size}) {
                                                     }
                                      />
                                  </Block>
-                                 <BannerDisplay title="CUSTOM PRINTING" subtitle="Make your umbrellas special for your activity." url="images/umbrella/custom-printing.png" alt="custom printing"
+                                 <BannerDisplay title="CUSTOM PRINTING" subtitle="Make your umbrellas special for your activity." url="images/umbrella/series-custom-printing.webp" alt="custom printing"
                                                 containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent" containerBackgroundPosition="bottom"
                                                 textColor={"#262626"} subTextColor={"#8C8C8C"}
                                                 renderButton={
@@ -224,9 +224,9 @@ function Umbrella({router, size}) {
                                                  <Block minHeight="22px" marginBottom="32px">
                                                      <Block width="22px" height="22px">
                                                          {data.tilt[index] ? (
-                                                             <Image src="images/umbrella/related.png" alt="related tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                             <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                                                          ) : (
-                                                             <Image src="images/umbrella/unrelated.png" alt="unrelated tilt" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                             <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                                                          )}
                                                      </Block>
                                                  </Block>
@@ -251,7 +251,7 @@ function Umbrella({router, size}) {
                                                 }}
                                          >
                                              <Block position="relative" width="50px" height="50px">
-                                                 <Image src="images/umbrella/slide.png" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
+                                                 <Image src="images/umbrella/slide.webp" alt="Slide Sign" layout="fill" objectFit="contain" quality={100}/>
                                              </Block>
                                          </Block>
                                      </Block>
@@ -261,20 +261,20 @@ function Umbrella({router, size}) {
                 />
                 <SectionBlock title="FABRIC" content="We provide fabric from two brands - SDP and AGORA."
                               displayList={[
-                                  {url: "/images/umbrella/fabric-sdp.jpg", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
-                                  {url: "/images/umbrella/fabric-agora.jpg", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
+                                  {url: "/images/umbrella/fabric-sdp.webp", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
+                                  {url: "/images/umbrella/fabric-agora.webp", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
                               ]}
                 />
                 <SectionBlock title="FRAME" content="There are two types of frames you can choose from - fiberglass and aluminum if available."
                               displayList={[
                                   {
-                                      url: "/images/umbrella/frame-aluminum.jpg",
+                                      url: "/images/umbrella/frame-aluminum.webp",
                                       alt: "frame aluminum",
                                       title: "Aluminum",
                                       content: "The lightweight, durable, corrosion resistance aluminum frame comes with an excellent finish. It is strong and will not break in high winds."
                                   },
                                   {
-                                      url: "/images/umbrella/frame-fiberglass.jpg",
+                                      url: "/images/umbrella/frame-fiberglass.webp",
                                       alt: "frame fiberglass",
                                       title: "Fiberglass",
                                       content: "The lightweight, flexible, and strong fiberglass allows the frame to bend without breaking, even in the most severe storms."
@@ -284,13 +284,13 @@ function Umbrella({router, size}) {
                 <SectionBlock title="OPEN SYSTEM" content="There are two types of open system - push up and pulley lift."
                               displayList={[
                                   {
-                                      url: "/images/umbrella/open-push-up.jpg",
+                                      url: "/images/umbrella/open-push-up.webp",
                                       alt: "open push up",
                                       title: "Push up",
                                       content: "Simply pushing the umbrella upwards and open from the hub. Effortlessly open your umbrella in 15 seconds."
                                   },
                                   {
-                                      url: "/images/umbrella/open-pulley.jpg",
+                                      url: "/images/umbrella/open-pulley.webp",
                                       alt: "open pulley",
                                       title: "Pulley lift",
                                       content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."

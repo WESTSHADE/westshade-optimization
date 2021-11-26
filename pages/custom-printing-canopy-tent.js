@@ -33,7 +33,7 @@ function Custom_Printing_Canopy_Tent() {
             <Box className="page" fontSize={14} lineHeight={1.43}>
                 {display ? (
                     <>
-                        <Banner backgroundImage={"/images/banner/2000-700-1-1-1@1x.png"} title="Canopy Tent Custom Printing Packages"/>
+                        <Banner backgroundImage={"/images/banner/2000-700-1.webp"} title="Canopy Tent Custom Printing Packages"/>
                         <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
@@ -72,7 +72,7 @@ function Custom_Printing_Canopy_Tent() {
                                 </Typography>
                                 <Grid container spacing={2} direction="row" alignItems="center">
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X10.jpg" alt="custom-printing-10X10"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X10.webp" alt="custom-printing-10X10"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             10x10 ft{" "}
@@ -83,7 +83,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X15.jpg" alt="custom-printing-10X15"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X15.webp" alt="custom-printing-10X15"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             10x15 ft{" "}
@@ -94,7 +94,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X20.jpg" alt="custom-printing-10X20"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-10X20.webp" alt="custom-printing-10X20"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             10x20 ft{" "}
@@ -105,7 +105,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X13.jpg" alt="custom-printing-13X13"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X13.webp" alt="custom-printing-13X13"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             13X13 ft{" "}
@@ -116,7 +116,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X20.jpg" alt="custom-printing-13X20"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X20.webp" alt="custom-printing-13X20"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             13X20 ft{" "}
@@ -127,7 +127,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X26.jpg" alt="custom-printing-13X26"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-13X26.webp" alt="custom-printing-13X26"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             13X26 ft{" "}
@@ -138,7 +138,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-16X16.jpg" alt="custom-printing-16X16"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-16X16.webp" alt="custom-printing-16X16"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             16X16 ft{" "}
@@ -149,7 +149,7 @@ function Custom_Printing_Canopy_Tent() {
                                         </CLink>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-20X20.jpg" alt="custom-printing-20X20"/>
+                                        <MXImageDisplay src="/images/custom-printed-package/custom-printing-20X20.webp" alt="custom-printing-20X20"/>
                                         <Typography variant="subtitle1" classes={{subtitle1: "information-subtitle"}} paragraph={true}>
                                             {" "}
                                             20X20 ft{" "}

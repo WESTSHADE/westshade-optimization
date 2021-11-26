@@ -73,9 +73,9 @@ function Contact_Us() {
                     <Block display="grid" justifyContent={["center", "flex-start", "space-around"]}
                            gridTemplateColumns={["repeat(auto-fill, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap="20px"
                     >
-                        <SectionBlock url={"images/contact-us/online-chat.png"} alt="Online Chat" title="ONLINE CHAT" content="Chat now"/>
-                        <SectionBlock url={"images/contact-us/call-us.png"} alt="Call us" title="CALL US" content="877-702-1872"/>
-                        <SectionBlock url={"images/contact-us/email-us.png"} alt="Email us" title="EMAIL US" content="support@westshade.com"/>
+                        <SectionBlock url={"images/contact-us/online-chat.webp"} alt="Online Chat" title="ONLINE CHAT" content="Chat now"/>
+                        <SectionBlock url={"images/contact-us/call-us.webp"} alt="Call us" title="CALL US" content="877-702-1872"/>
+                        <SectionBlock url={"images/contact-us/email-us.webp"} alt="Email us" title="EMAIL US" content="support@westshade.com"/>
                     </Block>
                 </Block>
             </Block>

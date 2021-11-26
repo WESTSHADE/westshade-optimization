@@ -25,7 +25,7 @@ function Custom404({router}) {
                         <Block position="relative" flex={['unset', 'unset', 1]} justifyContent="center"
                                width={["180px", "200px"]} height={["180px", "210px"]} marginBottom={["40px", "70px", "0px"]}
                         >
-                            <Image src="images/404/404.png" alt="404" layout="fill" objectFit="contain" quality={100}/>
+                            <Image src="images/404/404.webp" alt="404" layout="fill" objectFit="contain" quality={100}/>
                         </Block>
                         <Block display="flex" flexDirection="column" alignSelf={["flex-start", "flex-start", "center"]}>
                             <Block marginBottom="24px" font={["MinXHeading24", "MinXHeading36", "MinXHeading48"]} color="MinXPrimaryText">Oops! Page not found</Block>
@@ -50,7 +50,7 @@ function Custom404({router}) {
                                onClick={() => router.push("/custom-printing")}
                         >
                             <Block position="relative" height={["100px", "127px"]}>
-                                <Image src="images/404/custom_printing.png" alt="Custom Printing" layout="fill" objectFit="contain" quality={100}/>
+                                <Image src="images/404/custom_printing.webp" alt="Custom Printing" layout="fill" objectFit="contain" quality={100}/>
                             </Block>
                             <Block font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                                    overrides={{
@@ -73,7 +73,7 @@ function Custom404({router}) {
                                onClick={() => router.push("/canopy-tent")}
                         >
                             <Block position="relative" height={["100px", "127px"]}>
-                                <Image src="images/404/tent.png" alt="Tent" layout="fill" objectFit="contain" quality={100}/>
+                                <Image src="images/404/tent.webp" alt="Tent" layout="fill" objectFit="contain" quality={100}/>
                             </Block>
                             <Block font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                                    overrides={{
@@ -96,7 +96,7 @@ function Custom404({router}) {
                                onClick={() => router.push("/umbrella")}
                         >
                             <Block position="relative" height={["100px", "127px"]}>
-                                <Image src="images/404/umbrella.png" alt="Umbrella" layout="fill" objectFit="contain" quality={100}/>
+                                <Image src="images/404/umbrella.webp" alt="Umbrella" layout="fill" objectFit="contain" quality={100}/>
                             </Block>
                             <Block font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                                    overrides={{

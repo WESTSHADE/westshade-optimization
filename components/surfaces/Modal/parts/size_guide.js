@@ -42,13 +42,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 10'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -59,13 +59,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 15'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -76,13 +76,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 13'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -93,13 +93,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 20'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -110,13 +110,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">16' x 16'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -127,13 +127,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 20'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -144,13 +144,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 26'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
@@ -161,13 +161,13 @@ export default function content() {
                         <Block font="MinXParagraph14" color="MinXSecondaryText">20' x 20'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.png" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.png" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
             </Block>

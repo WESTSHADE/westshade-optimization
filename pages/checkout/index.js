@@ -505,16 +505,16 @@ function Checkout({router, orderID, orderDetail}) {
                                     <Block paddingRight="12px" font="MinXParagraph16">We accept these credit cards</Block>
                                     <Block position="relative" display="grid" gridTemplateColumns="repeat(4, 34px)" gridTemplateRows="24px" gridColumnGap="12px">
                                         <Block position="relative">
-                                            <Image src="images/component/footer/icon_visa.png" layout="fill" objectFit="contain"/>
+                                            <Image src="images/component/footer/icon_visa.webp" layout="fill" objectFit="contain"/>
                                         </Block>
                                         <Block position="relative">
-                                            <Image src="images/component/footer/icon_master.png" layout="fill" objectFit="contain"/>
+                                            <Image src="images/component/footer/icon_master.webp" layout="fill" objectFit="contain"/>
                                         </Block>
                                         <Block position="relative">
-                                            <Image src="images/component/footer/icon_amex.png" layout="fill" objectFit="contain"/>
+                                            <Image src="images/component/footer/icon_amex.webp" layout="fill" objectFit="contain"/>
                                         </Block>
                                         <Block position="relative">
-                                            <Image src="images/component/footer/icon_discover.png" layout="fill" objectFit="contain"/>
+                                            <Image src="images/component/footer/icon_discover.webp" layout="fill" objectFit="contain"/>
                                         </Block>
                                     </Block>
                                 </Block>

@@ -39,7 +39,7 @@ const MENU = [
                 {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
             ],
         }],
-        picture: "/images/component/header/tent.jpg",
+        picture: "/images/component/header/tent.webp",
         content: "Y7 HEAVY DUTY TENT",
         link: "/canopy-tent",
         dropMenu: false
@@ -60,7 +60,7 @@ const MENU = [
                 {id: 'Catalina', href: '/umbrella/catalina'},
             ]
         }],
-        picture: "/images/component/header/umbrella.jpg",
+        picture: "/images/component/header/umbrella.webp",
         content: "SANTORINI FIBERGLASS",
         link: "/umbrella",
         dropMenu: true
@@ -73,7 +73,7 @@ const MENU = [
                 {id: 'Table Cover', href: '/custom-printing/table-cover'},
             ]
         }],
-        picture: "/images/component/header/custom_printing.jpg",
+        picture: "/images/component/header/custom_printing.webp",
         content: "CUSTOM PRINTING TENT",
         link: "/custom-printing",
         dropMenu: true
@@ -92,7 +92,7 @@ const MENU = [
 
             ],
         }],
-        picture: "/images/component/header/accs.jpg",
+        picture: "/images/component/header/accs.webp",
         content: "PROTECTIVE COVER",
         link: "/accessories",
         linkText: "View all >",
