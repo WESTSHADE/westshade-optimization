@@ -128,6 +128,12 @@ const Menu = ({isOpen, onClose}) => {
                            handleGoPage("/accessories").then(() => onClose());
                        }}
                 />
+                <Panel title="CONTACT US"
+                       onClick={(e) => {
+                           e.preventDefault();
+                           handleGoPage("/contact-us").then(() => onClose());
+                       }}
+                />
                 {/*<Panel title="ACCESSORIES"*/}
                 {/*       overrides={{*/}
                 {/*           PanelContainer: {*/}
