@@ -13,39 +13,39 @@ import CardTabs from "../../../card_tabs";
 const feature_1 = [{
     tabTitle: "Waterproof",
     tabContent: "All of our umbrellas are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/umbrella/santorini/feature-water.jpg",
+    url: "images/product/umbrella/santorini/feature-water.webp",
     objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "Available in two fabrics - SDP (Solution Dyed Polyester) and AGORA (Solution Dyed Acrylic). Both fabrics block 98% harmful UV rays.",
-    url: "images/product/umbrella/santorini/feature-uv.jpg",
+    url: "images/product/umbrella/santorini/feature-uv.webp",
     objectFit: "cover"
 }]
 
 const feature_2 = [{
     tabTitle: "Aluminum",
     tabContent: "Our aluminum umbrellas are extremely strong and durable. They are rust resistant and sturdy.",
-    url: "images/product/umbrella/santorini/feature-aluminum.jpg",
+    url: "images/product/umbrella/santorini/feature-aluminum.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Fiberglass",
     tabContent: "Our fiberglass ribs can bend and flex making the umbrellas super durable and able to withstand wind and rough weather conditions.",
-    url: "images/product/umbrella/santorini/feature-fiberglass.jpg",
+    url: "images/product/umbrella/santorini/feature-fiberglass.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Pulley System",
     tabContent: "The santorini umbrella is a pulley umbrella. The pulley method uses a rope to assist in raising the umbrella hub with a system of integrated cords that work to expand and open the umbrella canopy.",
-    url: "images/product/umbrella/santorini/feature-pulley-system.jpg",
+    url: "images/product/umbrella/santorini/feature-pulley-system.webp",
     objectFit: "cover"
 }]
 
 const anatomyPart = [
-    {url: "/part-aluminum-fixings.png", title: "FIXINGS", content: "Stainless steel fittings to ensure the umbrella stays stable."},
-    {url: "/part-aluminum-hub.jpg", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
-    {url: "/part-aluminum-joint.jpg", title: "JOINT", content: "High strength and high quality moulded nylon arm joints."},
-    {url: "/part-fiberglass-fixings.png", title: "FIXINGS", content: "Stainless steel fittings to ensure the umbrella stays stable."},
-    {url: "/part-fiberglass-hub.png", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
-    {url: "/part-fiberglass-joint.png", title: "JOINT", content: "High strength and high quality moulded nylon arm joints."},
+    {url: "/part-aluminum-fixings.webp", title: "FIXINGS", content: "Stainless steel fittings to ensure the umbrella stays stable."},
+    {url: "/part-aluminum-hub.webp", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
+    {url: "/part-aluminum-joint.webp", title: "JOINT", content: "High strength and high quality moulded nylon arm joints."},
+    {url: "/part-fiberglass-fixings.webp", title: "FIXINGS", content: "Stainless steel fittings to ensure the umbrella stays stable."},
+    {url: "/part-fiberglass-hub.webp", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
+    {url: "/part-fiberglass-joint.webp", title: "JOINT", content: "High strength and high quality moulded nylon arm joints."},
 ];
 
 const QA = [
@@ -73,7 +73,7 @@ export default function description({frame = "aluminum"}) {
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 {frame === "aluminum" ? (
                     <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/product/umbrella/anatomy-santorini-aluminum.png" alt="anatomy santorini frame" objectFit="contain" layout="fill"/>
+                        <Image src="images/product/umbrella/anatomy-santorini-aluminum.webp" alt="anatomy santorini frame" objectFit="contain" layout="fill"/>
                         <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["50px", "72px", "90px"]} right={["8px", "5px", "0px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
@@ -98,7 +98,7 @@ export default function description({frame = "aluminum"}) {
                     </Block>
                 ) : frame === "fiberglass" ? (
                     <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                        <Image src="images/product/umbrella/anatomy-santorini-fiberglass.png" alt="anatomy santorini frame" objectFit="contain" layout="fill"/>
+                        <Image src="images/product/umbrella/anatomy-santorini-fiberglass.webp" alt="anatomy santorini frame" objectFit="contain" layout="fill"/>
                         <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["60px", "92px", "120px"]} right={["10px", "12px", "15px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                                onClick={() => {
                                    setDisplayIntro(true);
@@ -174,21 +174,21 @@ export default function description({frame = "aluminum"}) {
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(3, 1fr)"]} gridTemplateRows={["repeat(3, 220px)", "repeat(3, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-1.jpg" alt="Versatile Umbrella Santorini" layout="fill" objectFit="cover" objectPosition="right"/>
+                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-1.webp" alt="Versatile Umbrella Santorini" layout="fill" objectFit="cover" objectPosition="right"/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-2.jpeg" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
+                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-2.webp" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-3.jpg" alt="Versatile Umbrella Santorini" layout="fill" objectFit="cover" objectPosition="left"/>
+                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-3.webp" alt="Versatile Umbrella Santorini" layout="fill" objectFit="cover" objectPosition="left"/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 220px)", "repeat(2, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-4.jpeg" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
+                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-4.webp" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-5.jpg" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
+                            <Image src="images/product/umbrella/santorini/versatile/umbrella-santorini-5.webp" alt="Versatile Umbrella Santorini" layout="fill" objectFit={"cover"}/>
                         </Block>
                     </Block>
                 </Block>

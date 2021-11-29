@@ -44,12 +44,12 @@ const id_attribute_packageNo = 35;
 const id_attribute_printingTechnique = 44;
 
 const imageGallery = [
-    {img: "/images/rectangle-79-2@2x.png", title: ""},
-    {img: "/images/rectangle-80-7@2x.png", title: ""},
-    {img: "/images/rectangle-77-7@2x.png", title: ""},
-    {img: "/images/rectangle-77-8@2x.png", title: ""},
-    {img: "/images/rectangle-78-3@2x.png", title: ""},
-    {img: "/images/rectangle-78-4@2x.png", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-79-2_2x.webp", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-80-7_2x.webp", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-77-7_2x.webp", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-77-8_2x.webp", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-78-3_2x.webp", title: ""},
+    {img: "/images/product/custom-printed-package/versatile/rectangle-78-4_2x.webp", title: ""},
 ];
 
 let checkoutProductList = [];
@@ -565,7 +565,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                         <>
                                             {productId === "40149" || productId === "40193" || productId === "40275" ? (
                                                 <>
-                                                    <Banner backgroundImage={"../images/image-44@1x.png"} containerStyle={{width: "100%", minHeight: 320, maxHeight: 320, left: 0}}>
+                                                    <Banner backgroundImage={"../images/product/custom-printed-package/image-44@1x.webp"} containerStyle={{width: "100%", minHeight: 320, maxHeight: 320, left: 0}}>
                                                         <div className="section-grid-item-inner">
                                                             <h3 className="banner-title">UNLIMITED COLORS, UNLIMITED CREATIVITY</h3>
                                                         </div>
@@ -604,7 +604,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                             </p>
                                                         ) : null}
                                                     </Box>
-                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/comparison-y5y6y7.jpg"/>
+                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/comparison-y5y6y7.webp"/>
                                                 </>
                                             ) : null}
                                             <Box className="section-container">
@@ -670,7 +670,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                     </Grid>
                                                     <Grid item xs={12} md={6}>
                                                         <img
-                                                            src="/images/valance-and-peak.png"
+                                                            src="/images/product/custom-printed-package/valance-and-peak.webp"
                                                             style={{
                                                                 objectFit: "contain",
                                                                 width: "100%",
@@ -702,7 +702,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                             <li style={{marginBottom: 8}}>Professional Cover Top blocking 99% UV Rays</li>
                                                         </ul>
                                                     </Box>
-                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/frame-y7.jpg"/>
+                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/frame-y7.webp"/>
                                                     <Box className="section-container" style={{paddingLeft: 0, paddingRight: 0}}>
                                                         <List>
                                                             <ListItem className="background-light-blue">
@@ -750,7 +750,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                 </>
                                             ) : null}
                                             <Box className="section-container">
-                                                <img style={{objectFit: "contain", width: "100%"}} src="/images/intro@1x.png"/>
+                                                <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/intro@1x.webp"/>
                                                 <h3 className="section-title" style={{fontSize: "1.25rem"}}>
                                                     Frequently Asked Questions
                                                 </h3>

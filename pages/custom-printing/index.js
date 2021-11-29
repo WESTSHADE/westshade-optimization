@@ -41,7 +41,7 @@ function Custom_Printing({router}) {
                                },
                                style: {
                                    background: "transparent !important",
-                                   ":after": {background: "url('/images/custom-printing/custom-printing-display.jpg')"},
+                                   ":after": {background: "url('/images/custom-printing/custom-printing-display.webp')"},
                                }
                            }
                        }}
@@ -94,9 +94,9 @@ function Custom_Printing({router}) {
                                                        );
                                                    }}
                                          >
-                                             <ImageSlide key={0} url="/images/custom-printing/live-example-01.jpg"/>
-                                             <ImageSlide key={1} url="/images/custom-printing/live-example-02.jpg"/>
-                                             <ImageSlide key={2} url="/images/custom-printing/live-example-03.jpg"/>
+                                             <ImageSlide key={0} url="/images/custom-printing/live-example-01.webp"/>
+                                             <ImageSlide key={1} url="/images/custom-printing/live-example-02.webp"/>
+                                             <ImageSlide key={2} url="/images/custom-printing/live-example-03.webp"/>
                                          </Carousel>
                                      </Block>
                                  </Block>
@@ -145,9 +145,9 @@ function Custom_Printing({router}) {
                                                    );
                                                }}
                                      >
-                                         <ImageSlide key={0} url="/images/custom-printing/live-example-01.jpg"/>
-                                         <ImageSlide key={1} url="/images/custom-printing/live-example-02.jpg"/>
-                                         <ImageSlide key={2} url="/images/custom-printing/live-example-03.jpg"/>
+                                         <ImageSlide key={0} url="/images/custom-printing/live-example-01.webp"/>
+                                         <ImageSlide key={1} url="/images/custom-printing/live-example-02.webp"/>
+                                         <ImageSlide key={2} url="/images/custom-printing/live-example-03.webp"/>
                                      </Carousel>
                                  </Block>
                              </>}
@@ -180,7 +180,7 @@ function Custom_Printing({router}) {
                                         }}
                                  >
                                      <Block position="relative" height={["320px", "446px"]}>
-                                         <Image src="images/custom-printing/dye-sublimation-printing.jpg" alt="Dye Sublimation Printing" layout="fill" objectFit="cover"/>
+                                         <Image src="images/custom-printing/dye-sublimation-printing.webp" alt="Dye Sublimation Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">THERMAL</Block>
@@ -205,7 +205,7 @@ function Custom_Printing({router}) {
                                         }}
                                  >
                                      <Block position="relative" height={["320px", "446px"]}>
-                                         <Image src="images/custom-printing/uv-printing-n.jpg" alt="UV Printing" layout="fill" objectFit="cover"/>
+                                         <Image src="images/custom-printing/uv-printing.webp" alt="UV Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">DIGITAL</Block>

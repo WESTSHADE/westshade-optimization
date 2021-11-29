@@ -26,7 +26,7 @@ function Catalina({router}) {
     // }, []);
 
     const ProductItem = ({detail}) => {
-        let imageSrc = '/images/default-product.jpg';
+        let imageSrc = '/images/product/default-product.webp';
         let link = 'https://www.westshade.com/products/accessories/?id=' + detail.id;
 
         const setMainImage = (images) => {
@@ -73,7 +73,7 @@ function Catalina({router}) {
             </Head>
             <SubHeaderBar title={"Umbrella Catalina"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="images/umbrella/catalina/catalina_display.jpg" alt="catalina display"
+                <BannerDisplay title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="images/umbrella/catalina/catalina_display.webp" alt="catalina display"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
                                containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]}
                                containerBackground="rgba(0,0,0,0.2)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
@@ -84,7 +84,7 @@ function Catalina({router}) {
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" height={["312px", "400px", "450px"]} display="flex" flexDirection="column" alignItems="center"
                                         marginRight="auto" marginBottom={["24px", "24px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                                        backgroundImage={"url(\"/images/umbrella/catalina/fabric.png\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
+                                        backgroundImage={"url(\"/images/umbrella/catalina/fabric.webp\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
                                  >
                                      <Block marginBottom={["4px", "4px", "12px"]} font={["MinXHeading20", "MinXHeading24"]} color="MinXPrimaryText"
                                             overrides={{
@@ -117,12 +117,12 @@ function Catalina({router}) {
                                      >Self-cleaning finishing</Block>
                                  </Block>
                                  <Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                                     <Image src="images/umbrella/catalina/roof.png" alt="catalina roof" layout="responsive" width={912} height={324} quality={100}/>
+                                     <Image src="images/umbrella/catalina/roof.webp" alt="catalina roof" layout="responsive" width={912} height={324} quality={100}/>
                                  </Block>
                                  <Block display="flex" flexDirection={["column", "row"]} justifyContent="space-around" width="100%" maxWidth="662px" marginRight="auto" marginLeft="auto">
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/catalina/icon_upf.png" alt="santorini udf" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="images/umbrella/catalina/icon_upf.webp" alt="santorini udf" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -139,7 +139,7 @@ function Catalina({router}) {
                                      </Block>
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/catalina/icon_water.png" alt="santorini water" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="images/umbrella/catalina/icon_water.webp" alt="santorini water" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -156,7 +156,7 @@ function Catalina({router}) {
                                      </Block>
                                      {/*<Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["unset"]} marginLeft="auto">*/}
                                      {/*    <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>*/}
-                                     {/*        <Image src="images/umbrella/catalina/icon_wind.png" alt="santorini wind" layout="fill" objectFit="contain" quality={100}/>*/}
+                                     {/*        <Image src="images/umbrella/catalina/icon_wind.webp" alt="santorini wind" layout="fill" objectFit="contain" quality={100}/>*/}
                                      {/*    </Block>*/}
                                      {/*    <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"*/}
                                      {/*           overrides={{*/}
@@ -185,7 +185,7 @@ function Catalina({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/catalina/detail1.jpg" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/catalina/detail1.webp" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Stainless Steel Fixings
                                  </Block>
@@ -193,7 +193,7 @@ function Catalina({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden" backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/catalina/detail2.jpeg" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/catalina/detail2.webp" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      <span style={{color: "#23A4AD"}}>Aluminum</span> Hub & Frame
                                  </Block>
@@ -201,7 +201,7 @@ function Catalina({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden" backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/catalina/detail3.jpeg" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/catalina/detail3.webp" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Crank Lift
                                  </Block>
@@ -209,7 +209,7 @@ function Catalina({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden" backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/catalina/detail4.jpg" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/catalina/detail4.webp" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Internal With Reinforced Channel
                                  </Block>
@@ -217,7 +217,7 @@ function Catalina({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden" backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/catalina/detail5.jpg" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="images/umbrella/catalina/detail5.webp" alt="catalina detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Cast Alloy Base-Plate
                                  </Block>
@@ -229,7 +229,7 @@ function Catalina({router}) {
                              <Block maxWidth="960px" width="100%" display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "32px", "64px"]} marginRight="auto" marginLeft="auto">
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/catalina/size1.png" alt="catalina size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="images/umbrella/catalina/size1.webp" alt="catalina size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">10’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -237,7 +237,7 @@ function Catalina({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/catalina/size2.png" alt="catalina size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="images/umbrella/catalina/size2.webp" alt="catalina size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">11.5’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -245,7 +245,7 @@ function Catalina({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/catalina/size3.png" alt="santorini size 13'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="images/umbrella/catalina/size3.webp" alt="santorini size 13'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">13’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -253,7 +253,7 @@ function Catalina({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/catalina/size4.png" alt="santorini size 16.4'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="images/umbrella/catalina/size4.webp" alt="santorini size 16.4'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">16.4’ Hexagon</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -269,7 +269,7 @@ function Catalina({router}) {
                          content={
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginLeft="auto">
-                                     <Image src="images/umbrella/catalina/custom.png" alt="catalina custom" layout="responsive" width={912} height={374} quality={100}/>
+                                     <Image src="images/umbrella/catalina/custom.webp" alt="catalina custom" layout="responsive" width={912} height={374} quality={100}/>
                                  </Block>
                              </>
                          }

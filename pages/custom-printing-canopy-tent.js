@@ -77,7 +77,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             10x10 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1010cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -88,7 +88,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             10x15 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1015cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -99,7 +99,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             10x20 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1020cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -110,7 +110,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             13X13 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1313cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -121,7 +121,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             13X20 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1320cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -132,7 +132,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             13X26 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1326cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -143,7 +143,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             16X16 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f1616cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
@@ -154,7 +154,7 @@ function Custom_Printing_Canopy_Tent() {
                                             {" "}
                                             20X20 ft{" "}
                                         </Typography>
-                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.jpeg" alt="custom-printing-function"/>
+                                        <MXImageDisplay src="/images/custom-printing/custom-printing-function.webp" alt="custom-printing-function"/>
                                         <CLink backgroundColor={"#5cb85c"} href={{pathname: "/custom-printed-package/f2020cpp"}} style={{margin: "24px auto", width: "80%"}}>
                                             View Print Packages
                                         </CLink>
