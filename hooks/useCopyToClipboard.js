@@ -23,13 +23,15 @@ const useCopyToClipboard = text => {
     };
   
     const [copied, setCopied] = useState(false);
+
+    const reset = () => setCopied(false)
   
     const copy = useCallback(() => {
       if (!copied) setCopied(copyToClipboard(text));
     }, [text]);
     useEffect(() => () => setCopied(false), [text]);
   
-    return [copied, copy];
+    return [copied, copy, reset];
   };
   
   export default useCopyToClipboard;

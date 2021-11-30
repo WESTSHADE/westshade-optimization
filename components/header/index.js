@@ -100,8 +100,8 @@ const MENU = [
         dropMenu: false
     },
     {
-        title: "Contact Us",
-        content: "Contact Us",
+        title: "CONTACT US",
+        content: "CONTACT US",
         link: "/contact-us",
         linkText: "View all >",
         dropMenu: false
