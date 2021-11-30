@@ -9,7 +9,7 @@ import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
 import {ArrowDown} from 'baseui/icon'
 
-import {Benefit, FormSections, Section} from "../../../components/sections"
+import {Benefit, FreeMockupForm, Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 import {Modal} from "../../../components/surfaces";
 
@@ -224,7 +224,7 @@ function Custom_Printing_Umbrella({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FormSections/>}
+                         content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                          subtitleStyles={{maxWidth: "unset !important"}}

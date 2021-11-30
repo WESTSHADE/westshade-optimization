@@ -10,7 +10,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
-import {Section, Benefit, FormSections} from "../../../components/sections"
+import {Section, Benefit, FreeMockupForm} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 
 const ImageSlide = ({url, alt}) => {
@@ -202,7 +202,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FormSections/>}
+                         content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                          subtitleStyles={{maxWidth: "unset !important"}}

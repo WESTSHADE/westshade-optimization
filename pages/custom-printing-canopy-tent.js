@@ -4,17 +4,17 @@ import clsx from "clsx";
 
 import Head from "next/head";
 
+import {useStyletron} from "baseui";
+import {Button, SHAPE} from "baseui/button";
+import {Block} from "baseui/block";
+import {ChevronDown} from "baseui/icon";
+
 import {Box, Container, Grid, Typography} from "@material-ui/core";
 
 import Banner from "../components/banner";
 import CContainer from "../components/container";
 import CLink from "../components/link";
-import {Button, SHAPE} from "baseui/button";
-import {Block} from "baseui/block";
-import {ChevronDown} from "baseui/icon";
-import Index from "../components/sections/FormSections"
-import {useStyletron} from "baseui";
-import {Visibility} from "@material-ui/icons";
+import {FreeMockupForm} from "../components/sections"
 
 const MXImageDisplay = styled.img`
 	width: 90%;
@@ -138,7 +138,7 @@ function Custom_Printing_Canopy_Tent() {
                                         transition: "all .5s ease-in-out"
                                     })}
                                 >
-                                    <Index/>
+                                    <FreeMockupForm/>
                                 </Block>
                             </Block>
                         </Block>

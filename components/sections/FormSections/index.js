@@ -1,19 +1,15 @@
+import {useEffect, useState} from "react";
+
+import Image from "next/image";
+
 import {Block} from "baseui/block";
 import {Button, SHAPE} from "baseui/button";
 import {FormControl} from "baseui/form-control";
 import {Notification} from "baseui/notification";
-import Image from "next/image";
-import {useEffect, useState} from "react";
+
+import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea, CustomFileUploadInput} from "../../forms/parts";
+
 import Utils from "../../../utils/utils";
-import {
-    CustomCheckbox,
-    CustomCheckboxLabel,
-    CustomInput,
-    CustomLabel,
-    CustomSubmitButton,
-    CustomTextarea,
-    CustomFileUploadInput
-} from "../../forms/parts";
 
 const utils = new Utils()
 
@@ -28,8 +24,7 @@ const initialState = {
     logo: {},
 }
 
-
-const FormSections = () => {
+const FreeMockupForm = () => {
     const [formState, setFormState] = useState(initialState);
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -93,9 +88,9 @@ const FormSections = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(formState.logo.url)
-    }, [formState.logo])
+    // useEffect(() => {
+    //     console.log(formState.logo.url)
+    // }, [formState.logo])
 
     return (
         <>
@@ -107,7 +102,7 @@ const FormSections = () => {
                                 <Image src="/images/custom-printing/umbrella-free-mockup.webp" alt="umbrella" width={534} height={345} layout="responsive" objectFit="contain" quality={30}/>
                             </Block>
                             <Block display={["none", "block", "block"]} width="100%" marginTop="35px">
-                                <CustomLabel> Contact infomation </CustomLabel>
+                                <CustomLabel> Contact information </CustomLabel>
                                 <Block width="100%" display="flex" justifyContent="space-between" flexWrap="wrap">
                                     <Block marginBottom="16px" width={["48%", "100%", "48%", "48%"]}>
                                         <CustomInput
@@ -235,7 +230,7 @@ const FormSections = () => {
                                 />
                             </FormControl>
                             <Block display={["block", "none", "none"]} width="100%" marginTop="35px">
-                                <CustomLabel> Contact infomation </CustomLabel>
+                                <CustomLabel> Contact information </CustomLabel>
                                 <Block width="100%" display="flex" justifyContent="space-between" flexWrap="wrap">
                                     <Block marginBottom="16px" width={["48%", "100%", "48%", "48%"]}>
                                         <CustomInput
@@ -358,4 +353,4 @@ const FormSections = () => {
     )
 }
 
-export default FormSections;
+export default FreeMockupForm;
