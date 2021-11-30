@@ -14,7 +14,6 @@ import { Block } from "baseui/block";
 import { ChevronDown } from "baseui/icon";
 import FreeMockupForm from "../components/sections/FormSections/FreeMockupForm"
 import { useStyletron } from "baseui";
-import { Visibility } from "@material-ui/icons";
 
 const MXImageDisplay = styled.img`
 	width: 90%;
