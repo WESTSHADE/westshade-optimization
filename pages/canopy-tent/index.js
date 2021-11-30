@@ -186,9 +186,9 @@ function Canopy_Tent({router}) {
                                  <BlockDisplay title="Safe Shade" content="The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade."
                                                src="/images/canopy-tent/tent_fabric.webp"/>
                                  <BlockDisplay title="Long-lasting Fabric" content="The 320 gsm, 500D polyester with PVC coating is durable even with abrasion and distortion."
-                                               src="images/canopy-tent/fabric_structure.webp"/>
+                                               src="/images/canopy-tent/fabric_structure.webp"/>
                                  <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
-                                               src="images/canopy-tent/fabric_colors.webp"
+                                               src="/images/canopy-tent/fabric_colors.webp"
                                                button={() => (
                                                    <MButton height="48px" font="MinXLabel16" text="Customize My Tent" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                                                )}
@@ -223,13 +223,13 @@ function Canopy_Tent({router}) {
                                          The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
                                      </Block>
                                      <Block position="relative" display="flex" width="100%" height={["259px", "307px", "307px", "331px"]} marginBottom="auto" padding="0 4px">
-                                         <Image src="images/canopy-tent/built-in/connecting-poles.webp" alt="Connecting Poles" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/connecting-poles.webp" alt="Connecting Poles" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      <Block position="relative" display="inline-flex" width="100%" justifyContent="space-between" $style={{gap: "8px"}}>
-                                         <Image src="images/canopy-tent/built-in/footpads.webp" alt="Footpads" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
-                                         <Image src="images/canopy-tent/built-in/nuts-and-bolts.webp" alt="Nuts and Bolts" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
-                                         <Image src="images/canopy-tent/built-in/bracket-connectors.webp" alt="Bracket Connectors" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
-                                         <Image src="images/canopy-tent/built-in/pole-dimensions.webp" alt="Pole Dimensions" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/footpads.webp" alt="Footpads" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/nuts-and-bolts.webp" alt="Nuts and Bolts" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/bracket-connectors.webp" alt="Bracket Connectors" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/pole-dimensions.webp" alt="Pole Dimensions" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
                                      </Block>
                                  </Block>
                                  <Block position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]} padding={["40px 18px 24px", "", "40px 18px 0px"]} backgroundColor="MinXBackground"
@@ -246,7 +246,7 @@ function Canopy_Tent({router}) {
                                          The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
                                      </Block>
                                      <Block width={["100%", "100%", "110%", "100%"]} height={["331px", "395px", "446px", "429px"]}>
-                                         <BlockVideo src="images/canopy-tent/strong_support.mp4" type="video/mp4" isSelected={true}/>
+                                         <BlockVideo src="/images/canopy-tent/strong_support.mp4" type="video/mp4" isSelected={true}/>
                                      </Block>
                                  </Block>
                              </Block>
@@ -301,14 +301,14 @@ function Canopy_Tent({router}) {
                                                        );
                                                    }}
                                          >
-                                             <VideoSlide key={0} url="images/canopy-tent/set-up-tent/step_1.mp4" step={1}/>
-                                             <VideoSlide key={1} url="images/canopy-tent/set-up-tent/step_2.mp4" step={2}/>
-                                             <VideoSlide key={2} url="images/canopy-tent/set-up-tent/step_3.mp4" step={3}/>
-                                             <VideoSlide key={3} url="images/canopy-tent/set-up-tent/step_4.mp4" step={4}/>
-                                             <VideoSlide key={4} url="images/canopy-tent/set-up-tent/step_5.mp4" step={5}/>
-                                             <VideoSlide key={5} url="images/canopy-tent/set-up-tent/step_6.mp4" step={6}/>
-                                             <VideoSlide key={6} url="images/canopy-tent/set-up-tent/step_7.mp4" step={7}/>
-                                             <VideoSlide key={7} url="images/canopy-tent/set-up-tent/step_8.mp4" step={8}/>
+                                             <VideoSlide key={0} url="/images/canopy-tent/set-up-tent/step_1.mp4" step={1}/>
+                                             <VideoSlide key={1} url="/images/canopy-tent/set-up-tent/step_2.mp4" step={2}/>
+                                             <VideoSlide key={2} url="/images/canopy-tent/set-up-tent/step_3.mp4" step={3}/>
+                                             <VideoSlide key={3} url="/images/canopy-tent/set-up-tent/step_4.mp4" step={4}/>
+                                             <VideoSlide key={4} url="/images/canopy-tent/set-up-tent/step_5.mp4" step={5}/>
+                                             <VideoSlide key={5} url="/images/canopy-tent/set-up-tent/step_6.mp4" step={6}/>
+                                             <VideoSlide key={6} url="/images/canopy-tent/set-up-tent/step_7.mp4" step={7}/>
+                                             <VideoSlide key={7} url="/images/canopy-tent/set-up-tent/step_8.mp4" step={8}/>
                                          </Carousel>
                                      </Block>
                                  </Block>
@@ -373,14 +373,14 @@ function Canopy_Tent({router}) {
                                                    );
                                                }}
                                      >
-                                         <VideoSlide key={0} url="images/canopy-tent/set-up-tent/step_1.mp4" step={9}/>
-                                         <VideoSlide key={1} url="images/canopy-tent/set-up-tent/step_2.mp4" step={10}/>
-                                         <VideoSlide key={2} url="images/canopy-tent/set-up-tent/step_3.mp4" step={11}/>
-                                         <VideoSlide key={3} url="images/canopy-tent/set-up-tent/step_4.mp4" step={12}/>
-                                         <VideoSlide key={4} url="images/canopy-tent/set-up-tent/step_5.mp4" step={13}/>
-                                         <VideoSlide key={5} url="images/canopy-tent/set-up-tent/step_6.mp4" step={14}/>
-                                         <VideoSlide key={6} url="images/canopy-tent/set-up-tent/step_7.mp4" step={15}/>
-                                         <VideoSlide key={7} url="images/canopy-tent/set-up-tent/step_8.mp4" step={16}/>
+                                         <VideoSlide key={0} url="/images/canopy-tent/set-up-tent/step_1.mp4" step={9}/>
+                                         <VideoSlide key={1} url="/images/canopy-tent/set-up-tent/step_2.mp4" step={10}/>
+                                         <VideoSlide key={2} url="/images/canopy-tent/set-up-tent/step_3.mp4" step={11}/>
+                                         <VideoSlide key={3} url="/images/canopy-tent/set-up-tent/step_4.mp4" step={12}/>
+                                         <VideoSlide key={4} url="/images/canopy-tent/set-up-tent/step_5.mp4" step={13}/>
+                                         <VideoSlide key={5} url="/images/canopy-tent/set-up-tent/step_6.mp4" step={14}/>
+                                         <VideoSlide key={6} url="/images/canopy-tent/set-up-tent/step_7.mp4" step={15}/>
+                                         <VideoSlide key={7} url="/images/canopy-tent/set-up-tent/step_8.mp4" step={16}/>
                                      </Carousel>
                                  </Block>
                              </>

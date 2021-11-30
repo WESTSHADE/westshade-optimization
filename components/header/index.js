@@ -38,7 +38,7 @@ const MENU = [
                 {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
             ],
         }],
-        picture: "images/component/header/tent.webp",
+        picture: "/images/component/header/tent.webp",
         content: "Y7 HEAVY DUTY TENT",
         link: "/canopy-tent",
         dropMenu: false
@@ -59,7 +59,7 @@ const MENU = [
                 {id: 'Catalina', href: '/umbrella/catalina'},
             ]
         }],
-        picture: "images/component/header/umbrella.webp",
+        picture: "/images/component/header/umbrella.webp",
         content: "SANTORINI FIBERGLASS",
         link: "/umbrella",
         dropMenu: true
@@ -72,7 +72,7 @@ const MENU = [
                 {id: 'Table Cover', href: '/custom-printing/table-cover'},
             ]
         }],
-        picture: "images/component/header/custom_printing.webp",
+        picture: "/images/component/header/custom_printing.webp",
         content: "CUSTOM PRINTING TENT",
         link: "/custom-printing",
         dropMenu: true
@@ -91,7 +91,7 @@ const MENU = [
 
             ],
         }],
-        picture: "images/component/header/accs.webp",
+        picture: "/images/component/header/accs.webp",
         content: "PROTECTIVE COVER",
         link: "/accessories",
         linkText: "View all >",
@@ -148,7 +148,7 @@ function Header() {
                     <Block width="100%" backgroundColor="#fbfbfb" height={["48px", "64px"]}>
                         <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", "", "row"]} justifyContent="space-between" alignItems="center" padding="12px 16px">
                             <Block position="relative" display={["none", "", "block"]} height="40px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                <Image src={"images/icon/logo-site.png"} alt="Site Logo" layout="fixed" width={175} height={40} objectFit="contain" objectPosition="left" quality={100}/>
+                                <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="fixed" width={175} height={40} objectFit="contain" objectPosition="left" quality={100}/>
                             </Block>
                             <Block>
                                 <Button
@@ -235,14 +235,14 @@ function Header() {
                                     </Button>
                                 </Block>
                                 {/* <Block position="relative" display={["none", "", "block"]} width="206px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
                                 </Block> */}
                             </NavigationItem>
                         </NavigationList>
                         <NavigationList $align={ALIGN.center} className="nav-center loge">
                             <NavigationItem>
                                 <Block position="relative" width="110px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
                                 </Block>
                             </NavigationItem>
                         </NavigationList>
@@ -252,7 +252,7 @@ function Header() {
                         <NavigationList $align={ALIGN.right} className="nav-right">
                             {/*<NavigationItem>*/}
                             {/*    <a href="/" onClick={(e) => handleClick(e, "/")}>*/}
-                            {/*        <Image src={"images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/>*/}
+                            {/*        <Image src={"/images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/>*/}
                             {/*    </a>*/}
                             {/*</NavigationItem>*/}
                             <NavigationItem>

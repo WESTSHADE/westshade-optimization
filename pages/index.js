@@ -39,13 +39,13 @@ function Home({router}) {
                 <meta name="description" content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
                 <script id="mcjs" type="text/javascript" src="/staticFiles/mailchimpFirstOrder.js"/>
             </Head>
-            <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="images/home/custom_printing.webp"
+            <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="/images/home/custom_printing.webp"
                            router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home containerMarginBottom={"0px"}/>
-            <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability." url="images/home/tent.webp" containerBackgroundPosition="bottom"
+            <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability." url="/images/home/tent.webp" containerBackgroundPosition="bottom"
                            router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home containerMarginBottom={"0px"}/>
-            <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="images/home/umbrella.webp" containerBackgroundPosition="bottom"
+            <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella.webp" containerBackgroundPosition="bottom"
                            router={router} destination="/umbrella" home containerMarginBottom={"0px"}/>
-            {/*<BannerDisplay refD={ref3} title="UMBRELLA" subtitle="KAPRI" url="images/home/umbrella.webp" subtitleFont={["MinXSubtitle46", "MinXSubtitle46", 'MinXSubtitle46']}*/}
+            {/*<BannerDisplay refD={ref3} title="UMBRELLA" subtitle="KAPRI" url="/images/home/umbrella.webp" subtitleFont={["MinXSubtitle46", "MinXSubtitle46", 'MinXSubtitle46']}*/}
             {/*               router={router} destination="/umbrella" home containerMarginBottom={"0px"}*/}
             {/*               content="Easy to adjust any desired angle for shade coverage with a simple push button."*/}
             {/*               newPart*/}

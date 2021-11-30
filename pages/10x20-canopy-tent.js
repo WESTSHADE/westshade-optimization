@@ -224,10 +224,10 @@ function Canopy_Tent({router}) {
                                                         <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Fabric for custom printed tent</Block>
                                                         <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We adopt 600D, 360 gsm, PU coated polyester fabric for custom printed canopy tent. It’s
                                                             light but strong. </Block>
-                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing &gt;</Link></Block>
                                                     </Block>
                                                     <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
-                                                        <Image src="images/canopy-tent/tent/600D-polyester.webp" alt="600D polyester" layout="fill" objectFit="contain"/>
+                                                        <Image src="/images/canopy-tent/tent/600D-polyester.webp" alt="600D polyester" layout="fill" objectFit="contain"/>
                                                     </Block>
                                                 </Block>
                                                 <Block gridArea="c" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
@@ -236,10 +236,10 @@ function Canopy_Tent({router}) {
                                                         <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We use ink imported from Korea for dye sublimation printing and use ink imported from
                                                             Japan for UV
                                                             printing.</Block>
-                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing &gt;</Link></Block>
                                                     </Block>
                                                     <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
-                                                        <Image src="images/canopy-tent/tent/imported-from-korea.webp" alt="imported from korea" layout="fill" objectFit="contain"/>
+                                                        <Image src="/images/canopy-tent/tent/imported-from-korea.webp" alt="imported from korea" layout="fill" objectFit="contain"/>
                                                     </Block>
                                                 </Block>
                                             </Block>
@@ -281,7 +281,7 @@ function Canopy_Tent({router}) {
                                         <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=hYmRbcDzLRw&ab_channel=Westshade'/>
                                     </Block>
                                     <Block marginBottom="12px" font="MinXParagraph20">Tent introduction</Block>
-                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade's canopy tent.</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade&apos;s canopy tent.</Block>
                                 </Block>
                             </Block>
                         </Block>

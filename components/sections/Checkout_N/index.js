@@ -78,7 +78,7 @@ const checkout = (props) => {
                 <Block width={["100%", "448px", "100%"]} height={["54px", "100%"]} display={"flex"} flexDirection={"row"} justifyContent={["center", "center", "space-between"]} alignItems={"center"} margin={"auto"}>
                     <Block display={["none", "none", "flex"]} alignItems="column" justifyContent="center">
                         <Block display="flex" flexDirection="row">
-                            <img src={"images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
                             <Block font="MinXParagraph14">Order today, shipped by {shippedDay}.</Block>
                         </Block>
                     </Block>

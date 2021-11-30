@@ -13,23 +13,23 @@ import CardTabs from "../../../card_tabs";
 const feature_1 = [{
     tabTitle: "Waterproof",
     tabContent: "All of our umbrellas are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/umbrella/catalina/feature-fabric.webp",
+    url: "/images/product/umbrella/catalina/feature-fabric.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Fire Retardant",
     tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84.",
-    url: "images/product/umbrella/catalina/feature-fire.webp",
+    url: "/images/product/umbrella/catalina/feature-fire.webp",
     objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "The fabric blocks 98% harmful UV rays.",
-    url: "images/product/umbrella/catalina/feature-uv.webp",
+    url: "/images/product/umbrella/catalina/feature-uv.webp",
     objectFit: "cover"
 }
 // , {
 //     tabTitle: "Fabric",
 //     tabContent: "Heavy duty welded PVC fabric that is super strong and has ¼ inches thickness, 850 gsm also fully waterproof and gives excellent protection against UV rays.",
-//     url:"images/product/umbrella/catalina/feature-fabric.webp",
+//     url:"/images/product/umbrella/catalina/feature-fabric.webp",
 // }
 ]
 
@@ -37,12 +37,12 @@ const feature_2 = [
 //     {
 //     tabTitle: "Crank System",
 //     tabContent: "The Catalina umbrella is a crank umbrella. A crank is a handle usually placed at the center of the pole and that works by turning the crank until the umbrella is fully opened.",
-//     url:"images/product/umbrella/marco/feature-pushup.webp",
+//     url:"/images/product/umbrella/marco/feature-pushup.webp",
 // },
     {
         tabTitle: "Aluminum",
         tabContent: "Our aluminum umbrellas are extremely strong and durable. They are rust resistant and sturdy.",
-        url: "images/product/umbrella/catalina/feature-aluminum.webp",
+        url: "/images/product/umbrella/catalina/feature-aluminum.webp",
         objectFit: "cover"
     }]
 
@@ -78,7 +78,7 @@ export default function description() {
             <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                    <Image src="images/product/umbrella/anatomy-catalina.webp" alt="anatomy catalina frame" objectFit="contain" layout="fill"/>
+                    <Image src="/images/product/umbrella/anatomy-catalina.webp" alt="anatomy catalina frame" objectFit="contain" layout="fill"/>
                     <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["105px", "160px", "210px"]} right={["5px", "10px", "5px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                            onClick={() => {
                                setDisplayIntro(true);
@@ -135,7 +135,7 @@ export default function description() {
                                    },
                                }}
                         >
-                            <Image src={"images/product/umbrella/catalina" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
+                            <Image src={"/images/product/umbrella/catalina" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
                         </Block>
                         <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
                         <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
@@ -167,15 +167,15 @@ export default function description() {
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="286px" gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/catalina/versatile/umbrella-catalina-1.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/catalina/versatile/umbrella-catalina-1.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 220px)", "repeat(2, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/catalina/versatile/umbrella-catalina-2.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/catalina/versatile/umbrella-catalina-2.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/catalina/versatile/umbrella-catalina-3.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/catalina/versatile/umbrella-catalina-3.webp" alt="Versatile Umbrella Catalina" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                 </Block>

@@ -1091,7 +1091,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                 {/*                          artwork={(props) => {*/}
                                 {/*                              let side = index === 0 ? "left" : index === 1 ? "right" : index === 2 ? "front" : index === 3 ? "back" : "";*/}
                                 {/*                              let added = component[1].option !== "none" ? "-added" : "";*/}
-                                {/*                              return <img src={"images/icon/icon-wall-" + side + added + ".png"} alt={"icon-wall-" + side}/>;*/}
+                                {/*                              return <img src={"/images/icon/icon-wall-" + side + added + ".png"} alt={"icon-wall-" + side}/>;*/}
                                 {/*                          }}*/}
                                 {/*                          overrides={{*/}
                                 {/*                              Root: {*/}
@@ -1229,7 +1229,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                 {/*                    overrides={{*/}
                                 {/*                        Label: ({$value}) => (*/}
                                 {/*                            <div style={{position: "relative"}}>*/}
-                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="images/icon/wall-pvc.png"/>*/}
+                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
                                 {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Wheeled cover</div>*/}
                                 {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94</div>*/}
                                 {/*                                <Button*/}
@@ -1302,7 +1302,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                 {/*                    overrides={{*/}
                                 {/*                        Label: ({$value}) => (*/}
                                 {/*                            <div style={{position: "relative"}}>*/}
-                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="images/icon/wall-pvc.png"/>*/}
+                                {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
                                 {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Water weight</div>*/}
                                 {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94 each</div>*/}
                                 {/*                                <Button*/}
@@ -1437,7 +1437,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                                            {/*    ?*/}
                                                            {/*</Button>*/}
                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                               <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
                                                            </Block>
                                                            <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
                                                        </Block>

@@ -44,7 +44,7 @@ const Product = ({name, product, showDesc = true}) => {
                 {url ? (
                     <img src={url} alt={product.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                 ) : (
-                    <Image src="images/product/default-product.webp" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                    <Image src="/images/product/default-product.webp" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                 )}
             </Block>
             <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
@@ -103,7 +103,7 @@ function Accessories({router, products}) {
         <React.Fragment>
             <Head>
                 <title>Accessories - WESTSHADE</title>
-                <meta name="description" content="Westshade's selection of versatile accessories are perfect with Westshade's canopy and umbrella."/>
+                <meta name="description" content="Westshade&apos;s selection of versatile accessories are perfect with Westshade&apos;s canopy and umbrella."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <Block position="relative" width="100%" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center"
@@ -127,7 +127,7 @@ function Accessories({router, products}) {
                         <Block marginBottom="12px" font="MinXSubtitle14" color="MinXSecondaryText">CANOPY TENT</Block>
                         <Block marginBottom="24px" font={["MinXTitle44", "MinXTitle44"]} color="MinXPrimaryText">ACCESSORY & REPLACEMENT</Block>
                         <Block font="MinXSubtitle20" color="MinXSecondaryText" maxWidth={["280px", "400px", "420px", "615px"]}>
-                            Westshade's selection of versatile accessories allows you to customize and combine individual elements depending on your personal or business needs.
+                            Westshade&apos;s selection of versatile accessories allows you to customize and combine individual elements depending on your personal or business needs.
                         </Block>
                     </Block>
                 </Block>
@@ -158,7 +158,7 @@ function Accessories({router, products}) {
                              <>
                                  <Block backgroundColor="#F2F2F2" marginBottom="32px" padding="45px 16px">
                                      <Block position="relative" width="100%" maxWidth="800px" marginRight="auto" marginLeft="auto">
-                                         <Image src="images/accessory/replacement-part.webp" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
+                                         <Image src="/images/accessory/replacement-part.webp" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
                                      </Block>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]}>

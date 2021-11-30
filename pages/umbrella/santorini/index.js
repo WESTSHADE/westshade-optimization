@@ -73,7 +73,7 @@ function Santorini({router}) {
             </Head>
             <SubHeaderBar title={"Umbrella Santorini"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="SANTORINI" subtitle="Pully outdoor umbrella" url="images/umbrella/santorini/santorini_display.webp" alt="santorini display"
+                <BannerDisplay title="SANTORINI" subtitle="Pully outdoor umbrella" url="/images/umbrella/santorini/santorini_display.webp" alt="santorini display"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
                                containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]}
                                containerBackground="rgba(0,0,0,0.5)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
@@ -83,12 +83,12 @@ function Santorini({router}) {
                          content={
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                                     <Image src="images/umbrella/santorini/roof.webp" alt="santorini roof" layout="responsive" width={912} height={324} quality={100}/>
+                                     <Image src="/images/umbrella/santorini/roof.webp" alt="santorini roof" layout="responsive" width={912} height={324} quality={100}/>
                                  </Block>
                                  <Block display="flex" flexDirection={["column", "row"]} justifyContent="space-around" width="100%" maxWidth="662px" marginRight="auto" marginLeft="auto">
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/santorini/icon_upf.webp" alt="santorini udf" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/icon_upf.webp" alt="santorini udf" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -105,7 +105,7 @@ function Santorini({router}) {
                                      </Block>
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/santorini/icon_water.webp" alt="santorini water" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/icon_water.webp" alt="santorini water" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -122,7 +122,7 @@ function Santorini({router}) {
                                      </Block>
                                      {/*<Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["unset"]} marginLeft="auto">*/}
                                      {/*    <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>*/}
-                                     {/*        <Image src="images/umbrella/santorini/icon_wind.webp" alt="santorini wind" layout="fill" objectFit="contain" quality={100}/>*/}
+                                     {/*        <Image src="/images/umbrella/santorini/icon_wind.webp" alt="santorini wind" layout="fill" objectFit="contain" quality={100}/>*/}
                                      {/*    </Block>*/}
                                      {/*    <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"*/}
                                      {/*           overrides={{*/}
@@ -152,7 +152,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail1-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail1-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Stainless Steel Fixings
                                      </Block>
@@ -160,7 +160,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail2-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail2-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame
                                      </Block>
@@ -168,7 +168,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail3-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail3-al.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Nylon Arm Joints
                                      </Block>
@@ -178,7 +178,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail1-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail1-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Stainless Steel Fixings
                                      </Block>
@@ -186,7 +186,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail2-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail2-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Nylon Hub & <span style={{color: "#23A4AD"}}>Fiberglass</span> Frame
                                      </Block>
@@ -194,7 +194,7 @@ function Santorini({router}) {
                                          <Block position="relative" width="100%" height={["136px", "200px", "220px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"
                                                 overrides={{Block: {props: {className: "section-round-corner"}}}}
                                          >
-                                             <Image src="images/umbrella/santorini/detail3-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/santorini/detail3-fb.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          Nylon Arm Joints
                                      </Block>
@@ -210,7 +210,7 @@ function Santorini({router}) {
                              <Block position="relative" maxWidth="960px" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden"
                                     overrides={{Block: {props: {className: "section-round-corner"}}}}
                              >
-                                 <Image src="images/umbrella/santorini/colors.webp" alt="santorini color" layout="fill" objectFit="cover" quality={100}/>
+                                 <Image src="/images/umbrella/santorini/colors.webp" alt="santorini color" layout="fill" objectFit="cover" quality={100}/>
                              </Block>
                          }
                 />
@@ -219,7 +219,7 @@ function Santorini({router}) {
                              <Block maxWidth="960px" width="100%" display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "32px", "64px"]} marginRight="auto" marginLeft="auto">
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/santorini/size1.webp" alt="santorini size 6.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="/images/umbrella/santorini/size1.webp" alt="santorini size 6.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">6.5’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -227,7 +227,7 @@ function Santorini({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/santorini/size2.webp" alt="santorini size 7.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="/images/umbrella/santorini/size2.webp" alt="santorini size 7.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">7.5’ Octagon</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -235,7 +235,7 @@ function Santorini({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/santorini/size3.webp" alt="santorini size 9'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="/images/umbrella/santorini/size3.webp" alt="santorini size 9'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">9’ Octagon</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -243,7 +243,7 @@ function Santorini({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/santorini/size4.webp" alt="santorini size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="/images/umbrella/santorini/size4.webp" alt="santorini size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">10’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -251,7 +251,7 @@ function Santorini({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/santorini/size5.webp" alt="santorini size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                         <Image src="/images/umbrella/santorini/size5.webp" alt="santorini size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">11.5’ Octagon</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -269,10 +269,10 @@ function Santorini({router}) {
                                     display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
                              >
                                  <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
-                                     <Image src="images/umbrella/santorini/custom1.webp" alt="santorini custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/santorini/custom1.webp" alt="santorini custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
                                  </Block>
                                  <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
-                                     <Image src="images/umbrella/santorini/custom2.webp" alt="santorini custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/santorini/custom2.webp" alt="santorini custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
                                  </Block>
                              </Block>
                          }

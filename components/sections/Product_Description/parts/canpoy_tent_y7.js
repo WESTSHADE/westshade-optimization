@@ -14,29 +14,29 @@ import CardTabs from "../../../card_tabs";
 const feature_1 = [{
     tabTitle: "Water Resistant",
     tabContent: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/canopy-tent/feature-fabric.webp",
+    url: "/images/product/canopy-tent/feature-fabric.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Fire Retardant",
     tabContent: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84.",
-    url: "images/product/canopy-tent/feature-fire.webp",
+    url: "/images/product/canopy-tent/feature-fire.webp",
     objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "Westshade canopies provide up to 98% UV block,  the optimal UV protection for people and pets. Our unique polyester fabric allows warm air to escape, keeping you cool on hot and sunny days.",
-    url: "images/product/canopy-tent/feature-uv.webp",
+    url: "/images/product/canopy-tent/feature-uv.webp",
     objectFit: "cover"
 }]
 
 const feature_2 = [{
     tabTitle: "Steel",
     tabContent: "We carry steel frames for our Y5 canopies. Steel framed canopies are heavier and typically used for patio, garden, or the deck.",
-    url: "images/product/canopy-tent/feature-steel.webp",
+    url: "/images/product/canopy-tent/feature-steel.webp",
     objectFit: "contain"
 }, {
     tabTitle: "Aluminum",
     tabContent: "Our Aluminum frames (Y6, Y7) are lightweight and are used for a variety of occasions such as business events, job fairs, and exhibitions.",
-    url: "images/product/canopy-tent/feature-aluminum.webp",
+    url: "/images/product/canopy-tent/feature-aluminum.webp",
     objectFit: "contain"
 }]
 
@@ -76,7 +76,7 @@ export default function description() {
             <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                    <Image src="images/product/canopy-tent/anatomy-y7.webp" alt="anatomy y7 frame" objectFit="contain" layout="fill"/>
+                    <Image src="/images/product/canopy-tent/anatomy-y7.webp" alt="anatomy y7 frame" objectFit="contain" layout="fill"/>
                     <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                            onClick={() => {
                                setDisplayIntro(true);
@@ -133,7 +133,7 @@ export default function description() {
                                    },
                                }}
                         >
-                            <Image src={"images/product/canopy-tent/y7" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
+                            <Image src={"/images/product/canopy-tent/y7" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
                         </Block>
                         <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
                         <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
@@ -165,25 +165,25 @@ export default function description() {
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(3, 1fr)"]} gridTemplateRows={["repeat(3, 220px)", "repeat(3, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_1.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Image src="/images/product/canopy-tent/Versatile_tent_1.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
                             <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Shade in the backyard</Block>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_2.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Image src="/images/product/canopy-tent/Versatile_tent_2.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
                             <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Parking canopy</Block>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_3.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Image src="/images/product/canopy-tent/Versatile_tent_3.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
                             <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor picnic</Block>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 220px)", "repeat(2, 286px)", "286px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_4.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Image src="/images/product/canopy-tent/Versatile_tent_4.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
                             <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Outdoor dining</Block>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" overrides={{Block: {style: {borderRadius: "8px"}}}}>
-                            <Image src="images/product/canopy-tent/Versatile_tent_5.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
+                            <Image src="/images/product/canopy-tent/Versatile_tent_5.webp" alt="Versatile tent" layout="fill" objectFit={"cover"}/>
                             <Block position="absolute" bottom={"24px"} left={["24px", "24px", "32px"]} font="MinXLabel16" color="white">Mobile store</Block>
                         </Block>
                     </Block>

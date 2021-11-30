@@ -33,7 +33,7 @@ function Shipping_Return() {
         <React.Fragment>
             <Head>
                 <title>Shipping and Return Policy - FAQs | WESTSHADE</title>
-                <meta name="description" content="Shipping and return policy about Westshade's canopy, umbrella and accessories."/>
+                <meta name="description" content="Shipping and return policy about Westshade&apos;s canopy, umbrella and accessories."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["32px", "32px", "40px"]}>
                 <Section upperContainerProps={{hidden: true}}

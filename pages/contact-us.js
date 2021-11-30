@@ -228,7 +228,7 @@ const Contact_Us = () => {
         <>
             <Head>
                 <title>Contact Us - WESTSHADE</title>
-                <meta name="description" content="Frequently asked question about Westshade's canopy, umbrella and accessories."/>
+                <meta name="description" content="Frequently asked question about Westshade&apos;s canopy, umbrella and accessories."/>
             </Head>
             <Block width="100%" display="grid" placeItems="center" backgroundColor="#DFF2EF">
                 <Block maxWidth="1183px" padding={["40px 16px", "100px 16px", "100px 32px"]}>
@@ -238,7 +238,7 @@ const Contact_Us = () => {
                     </Block>
                     <Block display="flex" justifyContent="center" gap="30px" flexWrap={["wrap", "nowrap", "nowrap", "nowrap"]} marginTop={["24px", "64px"]} className={css({gap: "31px"})}>
                         <CustomCard>
-                            <Image src="images/contact-us/call-us.webp" alt="call us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
+                            <Image src="/images/contact-us/call-us.webp" alt="call us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
                             <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Call us</Block>
                             <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">877-702-1872</Block>
                             <Button
@@ -271,7 +271,7 @@ const Contact_Us = () => {
                             </Button>
                         </CustomCard>
                         <CustomCard>
-                            <Image src="images/contact-us/email-us.webp" alt="email us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
+                            <Image src="/images/contact-us/email-us.webp" alt="email us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
                             <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Email us</Block>
                             <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">support@westshade.com</Block>
                             <Button
@@ -319,7 +319,7 @@ const Contact_Us = () => {
                             }
                         </CustomCard>
                         <CustomCard>
-                            <Image src="images/contact-us/online-chat.webp" alt="chat with us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
+                            <Image src="/images/contact-us/online-chat.webp" alt="chat with us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
                             <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Online chat</Block>
                             <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">Talk to a shade specalist</Block>
                             <Button

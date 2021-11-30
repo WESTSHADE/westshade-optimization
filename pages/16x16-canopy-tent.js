@@ -42,7 +42,7 @@ function Canopy_Tent({router}) {
         tabContentTitle: "Y7 - Heavy-duty aluminum frame",
         tabContentContent: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
         tabContentPrice: "",
-        url: "images/canopy-tent/tent/y7.webp",
+        url: "/images/canopy-tent/tent/y7.webp",
         onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y7", size: "16x16"}}),
         onClickLink: () => setFrameCompareOpen(true)
     }];
@@ -52,7 +52,7 @@ function Canopy_Tent({router}) {
         tabContentTitle: "Dye sublimation printing",
         tabContentContent: "Full color dye sublimation printing, unlimited colors, scratch-free, fading resistance. It is best choice of brand marketing and activity display.",
         tabContentPrice: "",
-        url: "images/canopy-tent/tent/uv-printer.webp",
+        url: "/images/canopy-tent/tent/uv-printer.webp",
         onClick: () => {
         },
         onClickLink: () => setTechnologyCompareOpen(true)
@@ -61,7 +61,7 @@ function Canopy_Tent({router}) {
         tabContentTitle: "UV Printing",
         tabContentContent: "Take your branding to the next level with our digital printing process using our high-quality UV ink to take your logo directly onto the canopy fabric. Provides high resolution service that dries and strengthens onto your canopy in an instant.",
         tabContentPrice: "",
-        url: "images/canopy-tent/tent/dye-sublimation-printer.webp",
+        url: "/images/canopy-tent/tent/dye-sublimation-printer.webp",
         onClick: () => {
         },
         onClickLink: () => setTechnologyCompareOpen(true)
@@ -93,10 +93,10 @@ function Canopy_Tent({router}) {
                             <Block width="100%" maxWidth="420px" marginRight="auto" marginLeft="auto" font="MinXLabel20">
                                 <Block display="grid" gridTemplateColumns="1fr 1fr" height="90px">
                                     <Block position="relative" onClick={() => setActiveTabKey("0")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "1" ? "grayscale(1)" : "grayscale(0)"}}}}>
-                                        <Image src="images/canopy-tent/tent/stock-color-tent.webp" alt='stock color tent' layout="fill" objectFit="contain" quality={100}/>
+                                        <Image src="/images/canopy-tent/tent/stock-color-tent.webp" alt='stock color tent' layout="fill" objectFit="contain" quality={100}/>
                                     </Block>
                                     <Block position="relative" onClick={() => setActiveTabKey("1")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "0" ? "grayscale(1)" : "grayscale(0)"}}}}>
-                                        <Image src="images/canopy-tent/tent/custom-printing-tent.webp" alt='custom printing tent' layout="fill" objectFit="contain" quality={100}/>
+                                        <Image src="/images/canopy-tent/tent/custom-printing-tent.webp" alt='custom printing tent' layout="fill" objectFit="contain" quality={100}/>
                                     </Block>
                                 </Block>
                                 <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}
@@ -145,13 +145,13 @@ function Canopy_Tent({router}) {
                                                 onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "16x16"}})}
                                         />
                                         <Block position="relative" height={["159px", "260px", "494px"]}>
-                                            <Image src="images/canopy-tent/tent/fabric-stock-color.webp" alt="fabric stock color" layout="fill" objectFit="contain"/>
+                                            <Image src="/images/canopy-tent/tent/fabric-stock-color.webp" alt="fabric stock color" layout="fill" objectFit="contain"/>
                                         </Block>
                                         <Block display="grid" gridTemplateColumns={["1fe", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["auto auto", "auto auto", "auto"]} backgroundColor="white"
                                                overrides={{Block: {props: {className: "section-round-corner-s"}}}}
                                         >
                                             <Block position="relative" width="100%" height={["160px", "216px", "348px"]}>
-                                                <Image src="images/canopy-tent/tent/fabric.webp" alt="fabric for stock color tent" layout="fill" objectFit="cover"/>
+                                                <Image src="/images/canopy-tent/tent/fabric.webp" alt="fabric for stock color tent" layout="fill" objectFit="cover"/>
                                             </Block>
                                             <Block display="grid" gridRowGap="12px" padding={["16px", "24px", "32px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
                                                 <Block font="MinXParagraph20">Fabric for stock color tent</Block>
@@ -208,10 +208,10 @@ function Canopy_Tent({router}) {
                                                         <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">Fabric for custom printed tent</Block>
                                                         <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We adopt 600D, 360 gsm, PU coated polyester fabric for custom printed canopy tent. It’s
                                                             light but strong. </Block>
-                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing &gt;</Link></Block>
                                                     </Block>
                                                     <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
-                                                        <Image src="images/canopy-tent/tent/600D-polyester.webp" alt="600D polyester" layout="fill" objectFit="contain"/>
+                                                        <Image src="/images/canopy-tent/tent/600D-polyester.webp" alt="600D polyester" layout="fill" objectFit="contain"/>
                                                     </Block>
                                                 </Block>
                                                 <Block gridArea="c" backgroundColor="white" overrides={{Block: {props: {className: "section-round-corner-s"}}}}>
@@ -220,10 +220,10 @@ function Canopy_Tent({router}) {
                                                         <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">We use ink imported from Korea for dye sublimation printing and use ink imported from
                                                             Japan for UV
                                                             printing.</Block>
-                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing ></Link></Block>
+                                                        <Block font="MinXParagraph14" color="#23A4AD"><Link href="/custom-printing">Learn more about custom printing &gt;</Link></Block>
                                                     </Block>
                                                     <Block position="relative" height={["270px", "300px", "380px"]} backgroundColor="#E5E7E9">
-                                                        <Image src="images/canopy-tent/tent/imported-from-korea.webp" alt="imported from korea" layout="fill" objectFit="contain"/>
+                                                        <Image src="/images/canopy-tent/tent/imported-from-korea.webp" alt="imported from korea" layout="fill" objectFit="contain"/>
                                                     </Block>
                                                 </Block>
                                             </Block>
@@ -265,7 +265,7 @@ function Canopy_Tent({router}) {
                                         <ReactPlayer width="100%" height="100%" url='https://www.youtube.com/watch?v=hYmRbcDzLRw&ab_channel=Westshade'/>
                                     </Block>
                                     <Block marginBottom="12px" font="MinXParagraph20">Tent introduction</Block>
-                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade's canopy tent.</Block>
+                                    <Block font="MinXParagraph16" color="MinXSecondaryText">In this video, we introduce you to the process of making each part of Westshade&apos;s canopy tent.</Block>
                                 </Block>
                             </Block>
                         </Block>

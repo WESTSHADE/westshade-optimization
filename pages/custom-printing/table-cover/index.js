@@ -86,7 +86,7 @@ function Custom_Printing_Table_Cover({router, size}) {
                             buttonStyle={{borderColor: "#262626"}} $style={{zIndex: 1}} onClick={() => goBuyingPage()}
                     />
                     <Block position="relative" width="100%" height={["125px", "173px", "180px"]} $style={{zIndex: 1}}>
-                        <Image src="images/custom-printing/table-cover/stretch-table-cover.webp" alt="stretch table cover" layout="fill" objectFit="contain" quality={100} priority={true}/>
+                        <Image src="/images/custom-printing/table-cover/stretch-table-cover.webp" alt="stretch table cover" layout="fill" objectFit="contain" quality={100} priority={true}/>
                     </Block>
                     <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#97F02B", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                     <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#2275F2", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
@@ -95,7 +95,7 @@ function Custom_Printing_Table_Cover({router, size}) {
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the product you want."
                          content={
                              <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
-                                 <Image src="images/custom-printing/table-cover/table-covers.webp" alt="custom printing table covers" layout="responsive" width={1440} height={400} quality={100} priority={true}/>
+                                 <Image src="/images/custom-printing/table-cover/table-covers.webp" alt="custom printing table covers" layout="responsive" width={1440} height={400} quality={100} priority={true}/>
                              </Block>
                          }
                 />
@@ -104,11 +104,11 @@ function Custom_Printing_Table_Cover({router, size}) {
                          content={
                              <>
                                  <SectionCard router={router} title={"Fitted Table Cover"} content={"The fitted table cover is made of the same fabric as canopy tent and features two zips at the back."}
-                                              src={"images/custom-printing/table-cover/back-zip.webp"} alt={"back zip table cover"}
+                                              src={"/images/custom-printing/table-cover/back-zip.webp"} alt={"back zip table cover"}
                                               destination={{pathname: "/custom-print/table-cover/buy", query: {type: "fitted"}, as: "/custom-print/table-cover/buy"}}
                                  />
                                  <SectionCard router={router} title={"Stretch Table Cover"} content={"The stretch table cover is made of a lightweight stretch fabric. It secures itself with pocket at the bottom."}
-                                              src={"images/custom-printing/table-cover/self-secure.webp"} alt={"self secure table cover"}
+                                              src={"/images/custom-printing/table-cover/self-secure.webp"} alt={"self secure table cover"}
                                               destination={{pathname: "/custom-print/table-cover/buy", query: {type: "stretch"}, as: "/custom-print/table-cover/buy"}}
                                  />
                              </>
@@ -131,14 +131,14 @@ function Custom_Printing_Table_Cover({router, size}) {
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
-                                     <img width="100%" height="100%" src="images/custom-printing/table-cover/fabric.webp" alt="fabric" style={{objectFit: "cover"}}/>
+                                     <img width="100%" height="100%" src="/images/custom-printing/table-cover/fabric.webp" alt="fabric" style={{objectFit: "cover"}}/>
                                  </Block>
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
                                      229 gsm stretch fabric
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">
-                                     <img width="100%" height="100%" src="images/custom-printing/table-cover/stretch.gif" alt="fabric" style={{objectFit: "cover"}}/>
+                                     <img width="100%" height="100%" src="/images/custom-printing/table-cover/stretch.gif" alt="fabric" style={{objectFit: "cover"}}/>
                                  </Block>
                              </Block>
                          }
@@ -157,21 +157,21 @@ function Custom_Printing_Table_Cover({router, size}) {
                              >
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="images/custom-printing/table-cover/size-small.webp" alt="size small table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-small.webp" alt="size small table cover" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Small</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=4’, W=2’, H=2’4’’</Block>
                                  </Block>
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="images/custom-printing/table-cover/size-medium.webp" alt="size medium table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-medium.webp" alt="size medium table cover" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Medium</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=6’1’’, W=2’6’’, H=2’4’’</Block>
                                  </Block>
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="images/custom-printing/table-cover/size-large.webp" alt="size large table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-large.webp" alt="size large table cover" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Large</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=8’, W=2’6’’, H=2’4’’</Block>

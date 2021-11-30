@@ -189,7 +189,7 @@ function Kapri({router}) {
                              <Block position="relative" maxWidth="960px" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden"
                                     overrides={{Block: {props: {className: "section-round-corner"}}}}
                              >
-                                 <Image src="images/umbrella/kapri/colors.webp" alt="kapri color" layout="fill" objectFit="cover" quality={100}/>
+                                 <Image src="/images/umbrella/kapri/colors.webp" alt="kapri color" layout="fill" objectFit="cover" quality={100}/>
                              </Block>
                          }
                 />
@@ -198,7 +198,7 @@ function Kapri({router}) {
                              <Block maxWidth="960px" width="100%" display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "32px", "64px"]} marginRight="auto" marginLeft="auto">
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/kapri/size1.webp" alt="kapri size 6.5'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
+                                         <Image src="/images/umbrella/kapri/size1.webp" alt="kapri size 6.5'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">6.5’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -206,7 +206,7 @@ function Kapri({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/kapri/size2.webp" alt="kapri size 7.5'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
+                                         <Image src="/images/umbrella/kapri/size2.webp" alt="kapri size 7.5'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">7.5’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -214,7 +214,7 @@ function Kapri({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/kapri/size3.webp" alt="kapri size 9'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
+                                         <Image src="/images/umbrella/kapri/size3.webp" alt="kapri size 9'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">9’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -222,7 +222,7 @@ function Kapri({router}) {
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
-                                         <Image src="images/umbrella/kapri/size4.webp" alt="kapri size 10'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
+                                         <Image src="/images/umbrella/kapri/size4.webp" alt="kapri size 10'ft" layout="responsive" objectFit="contain" width={992} height={624} quality={100}/>
                                      </Block>
                                      <Block font="MinXLabel16" color="MinXPrimaryText">10’ Square</Block>
                                      <MButton type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
@@ -237,16 +237,16 @@ function Kapri({router}) {
                          subtitleMoreDestination={"/custom-printing/umbrella"}
                          content={
                              <Block position="relative" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden">
-                                 <Image src="images/umbrella/kapri/custom3.webp" alt="kapri custom" layout="fill" objectFit="cover" quality={100}/>
+                                 <Image src="/images/umbrella/kapri/custom3.webp" alt="kapri custom" layout="fill" objectFit="cover" quality={100}/>
                              </Block>
                              // <Block width="100%" maxWidth="960px" marginRight={["unset", "unset", "auto"]} marginLeft={["unset", "unset", "auto"]}
                              //        display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
                              // >
                              //     <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
-                             //         <Image src="images/umbrella/kapri/custom1.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                             //         <Image src="/images/umbrella/kapri/custom1.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
                              //     </Block>
                              //     <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
-                             //         <Image src="images/umbrella/kapri/custom2.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                             //         <Image src="/images/umbrella/kapri/custom2.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
                              //     </Block>
                              // </Block>
                          }
