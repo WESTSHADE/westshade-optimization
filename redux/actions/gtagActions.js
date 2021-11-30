@@ -4,7 +4,6 @@ const utils = new Utils();
 
 const fetchProduct = async (id) => {
     if (!id) return;
-    console.log("gtag");
     return await utils.getProductByWooId(id);
 };
 

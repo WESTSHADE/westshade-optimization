@@ -67,7 +67,7 @@ const Cart = ({isOpen, onClose}) => {
                                             <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%"
                                                  style={{objectFit: "contain"}}/>
                                         ) : (
-                                            <Image src={"images/default-product.jpg"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                            <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                                         )}
                                     </Block>
                                     <Block position="relative" display="flex" flexDirection="column" flex={1} paddingRight="12px">

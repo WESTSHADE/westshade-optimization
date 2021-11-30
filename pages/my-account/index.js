@@ -425,7 +425,7 @@ function Orders({size}) {
                                                     <img src={item.image.src} alt={item.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                                                     // <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 ) : (
-                                                    <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                    <Image src="images/product/default-product.webp" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 )}
                                             </Block>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>

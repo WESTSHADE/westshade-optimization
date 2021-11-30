@@ -460,7 +460,7 @@ function Canopy_Tent({router, products, variants}) {
             const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
             const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
             const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            wallPicturesList[index] = "images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
         });
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
@@ -710,7 +710,7 @@ function Canopy_Tent({router, products, variants}) {
                 const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                 setMainImage([
                     {
-                        src: "/images/product/" + product_name + "/frame/" + series + "-" + size + "-" + colorUrl + ".png",
+                        src: "images/product/" + product_name + "/frame/" + series + "-" + size + "-" + colorUrl + ".png",
                     },
                 ]);
             } else {
@@ -721,7 +721,7 @@ function Canopy_Tent({router, products, variants}) {
                     const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
                     const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                     const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
-                    wallPicturesList[index - 1] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    wallPicturesList[index - 1] = "images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
                 } else {
                     wallPicturesList[index - 1] = "";
                 }
@@ -1040,25 +1040,25 @@ function Canopy_Tent({router, products, variants}) {
                                                           return component[0].option !== "none" ? (
                                                               <>
                                                                   {index === 0 ? (
-                                                                      <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
+                                                                      <img src="images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
                                                                   ) : index === 1 ? (
-                                                                      <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
+                                                                      <img src="images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
                                                                   ) : index === 2 ? (
-                                                                      <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
+                                                                      <img src="images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
                                                                   ) : index === 3 ? (
-                                                                      <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
+                                                                      <img src="images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
                                                                   ) : null}
                                                               </>
                                                           ) : (
                                                               <>
                                                                   {index === 0 ? (
-                                                                      <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
+                                                                      <img src="images/icon/icon-wall-left.png" alt="icon-wall-left"/>
                                                                   ) : index === 1 ? (
-                                                                      <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
+                                                                      <img src="images/icon/icon-wall-right.png" alt="icon-wall-right"/>
                                                                   ) : index === 2 ? (
-                                                                      <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
+                                                                      <img src="images/icon/icon-wall-front.png" alt="icon-wall-front"/>
                                                                   ) : index === 3 ? (
-                                                                      <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
+                                                                      <img src="images/icon/icon-wall-back.png" alt="icon-wall-back"/>
                                                                   ) : null}
                                                               </>
                                                           );
@@ -1202,7 +1202,7 @@ function Canopy_Tent({router, products, variants}) {
                             {/*                    overrides={{*/}
                             {/*                        Label: ({$value}) => (*/}
                             {/*                            <div style={{position: "relative"}}>*/}
-                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
+                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="images/icon/wall-pvc.png"/>*/}
                             {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Wheeled cover</div>*/}
                             {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94</div>*/}
                             {/*                                <Button*/}
@@ -1275,7 +1275,7 @@ function Canopy_Tent({router, products, variants}) {
                             {/*                    overrides={{*/}
                             {/*                        Label: ({$value}) => (*/}
                             {/*                            <div style={{position: "relative"}}>*/}
-                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
+                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="images/icon/wall-pvc.png"/>*/}
                             {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Water weight</div>*/}
                             {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94 each</div>*/}
                             {/*                                <Button*/}

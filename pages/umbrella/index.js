@@ -261,20 +261,20 @@ function Umbrella({router, size}) {
                 />
                 <SectionBlock title="FABRIC" content="We provide fabric from two brands - SDP and AGORA."
                               displayList={[
-                                  {url: "/images/umbrella/fabric-sdp.webp", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
-                                  {url: "/images/umbrella/fabric-agora.webp", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
+                                  {url: "images/umbrella/fabric-sdp.webp", alt: "fabric sdp", title: "SDP", content: "The SDP fabric is made of solution dyed polyester with a UPF 50+ protection. It is water repellent, stain resistant."},
+                                  {url: "images/umbrella/fabric-agora.webp", alt: "fabric agora", title: "AGORA", content: "The AGORA fabric is made of solution dyed acrylic with a UPF 50+ protection. AGORA has a longer lifespan than SDP."}
                               ]}
                 />
                 <SectionBlock title="FRAME" content="There are two types of frames you can choose from - fiberglass and aluminum if available."
                               displayList={[
                                   {
-                                      url: "/images/umbrella/frame-aluminum.webp",
+                                      url: "images/umbrella/frame-aluminum.webp",
                                       alt: "frame aluminum",
                                       title: "Aluminum",
                                       content: "The lightweight, durable, corrosion resistance aluminum frame comes with an excellent finish. It is strong and will not break in high winds."
                                   },
                                   {
-                                      url: "/images/umbrella/frame-fiberglass.webp",
+                                      url: "images/umbrella/frame-fiberglass.webp",
                                       alt: "frame fiberglass",
                                       title: "Fiberglass",
                                       content: "The lightweight, flexible, and strong fiberglass allows the frame to bend without breaking, even in the most severe storms."
@@ -284,13 +284,13 @@ function Umbrella({router, size}) {
                 <SectionBlock title="OPEN SYSTEM" content="There are two types of open system - push up and pulley lift."
                               displayList={[
                                   {
-                                      url: "/images/umbrella/open-push-up.webp",
+                                      url: "images/umbrella/open-push-up.webp",
                                       alt: "open push up",
                                       title: "Push up",
                                       content: "Simply pushing the umbrella upwards and open from the hub. Effortlessly open your umbrella in 15 seconds."
                                   },
                                   {
-                                      url: "/images/umbrella/open-pulley.webp",
+                                      url: "images/umbrella/open-pulley.webp",
                                       alt: "open pulley",
                                       title: "Pulley lift",
                                       content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."

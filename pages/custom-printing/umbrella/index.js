@@ -140,7 +140,7 @@ function Custom_Printing_Umbrella({router, size}) {
                     >
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["a", "a", "unset"]}>
                             <Block position="relative" width="100%" height={["81px", "142px", "166px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Kapri</Block>
                         </Block>
@@ -158,13 +158,13 @@ function Custom_Printing_Umbrella({router, size}) {
                         {/*</Block>*/}
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["c", "c", "unset"]}>
                             <Block position="relative" width="100%" height={["91px", "148px", "175px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-santorini.webp" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="images/custom-printing/umbrella/icon-santorini.webp" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Santorini</Block>
                         </Block>
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["d", "d", "unset"]}>
                             <Block position="relative" width="100%" height={["109px", "180px", "212px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-catalina.webp" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="images/custom-printing/umbrella/icon-catalina.webp" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Catalina</Block>
                         </Block>
@@ -176,7 +176,7 @@ function Custom_Printing_Umbrella({router, size}) {
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={
                              <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
-                                 <Image src="images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100}/>
+                                 <Image src="images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100} priority={true}/>
                              </Block>
                          }
                 />

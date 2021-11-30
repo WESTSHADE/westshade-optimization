@@ -93,7 +93,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                         <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#EF5DA8", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
                     </Block>
                     <Block position="absolute" width={["240px", "320px", "420px"]} height={["240px", "320px", "420px"]} marginRight="auto" marginLeft="auto" right={0} bottom={0} left={0}>
-                        <Image src="images/custom-printing/canopy-tent/canopy-tent.webp" alt="canopy tent" layout="fill" objectFit="contain" quality={100}/>
+                        <Image src="images/custom-printing/canopy-tent/canopy-tent.webp" alt="canopy tent" layout="fill" objectFit="contain" quality={100} priority={true}/>
                     </Block>
                 </Block>
                 <Section title="ANY STYLE MULTIPLE SIZE"
@@ -157,12 +157,12 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                                );
                                            }}
                                  >
-                                     <ImageSlide key={0} url="/images/custom-printing/canopy-tent/any_style1.webp" alt="canopy tent"/>
-                                     <ImageSlide key={1} url="/images/custom-printing/canopy-tent/any_style2.webp" alt="canopy tent"/>
-                                     <ImageSlide key={2} url="/images/custom-printing/canopy-tent/any_style3.webp" alt="canopy tent"/>
-                                     <ImageSlide key={3} url="/images/custom-printing/canopy-tent/any_style4.webp" alt="canopy tent"/>
-                                     <ImageSlide key={4} url="/images/custom-printing/canopy-tent/any_style5.webp" alt="canopy tent"/>
-                                     <ImageSlide key={5} url="/images/custom-printing/canopy-tent/any_style6.webp" alt="canopy tent"/>
+                                     <ImageSlide key={0} url="images/custom-printing/canopy-tent/any_style1.webp" alt="canopy tent"/>
+                                     <ImageSlide key={1} url="images/custom-printing/canopy-tent/any_style2.webp" alt="canopy tent"/>
+                                     <ImageSlide key={2} url="images/custom-printing/canopy-tent/any_style3.webp" alt="canopy tent"/>
+                                     <ImageSlide key={3} url="images/custom-printing/canopy-tent/any_style4.webp" alt="canopy tent"/>
+                                     <ImageSlide key={4} url="images/custom-printing/canopy-tent/any_style5.webp" alt="canopy tent"/>
+                                     <ImageSlide key={5} url="images/custom-printing/canopy-tent/any_style6.webp" alt="canopy tent"/>
                                  </Carousel>
                              </Block>
                          }

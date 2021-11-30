@@ -76,16 +76,16 @@ function Payment({orderID}) {
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>We accept these credit cards</div>
                         <div style={{display: "flex", flexDirection: "row", marginBottom: 24}}>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_visa.webp" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="images/component/footer/icon_visa.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_master.webp" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="images/component/footer/icon_master.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_amex.webp" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="images/component/footer/icon_amex.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_discover.webp" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="images/component/footer/icon_discover.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                         </div>
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>Card information</div>
@@ -201,7 +201,7 @@ function Payment({orderID}) {
                                     autoFocus
                                     content={() => (
                                         <div style={{zIndex: 999}}>
-                                            <img src="/images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
+                                            <img src="images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
                                         </div>
                                     )}
                                     overrides={{
@@ -317,7 +317,7 @@ function Payment({orderID}) {
                             PAY NOW
                         </Button>
                         <div style={{display: "flex", flexDirection: "row"}}>
-                            <img src="/images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                            <img src="images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
                             <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You can shop at
                                 Westshade with confidence. We have partnered with Authorize.Net.
                             </div>

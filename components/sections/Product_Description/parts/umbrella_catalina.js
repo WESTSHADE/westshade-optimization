@@ -29,7 +29,7 @@ const feature_1 = [{
 // , {
 //     tabTitle: "Fabric",
 //     tabContent: "Heavy duty welded PVC fabric that is super strong and has ¼ inches thickness, 850 gsm also fully waterproof and gives excellent protection against UV rays.",
-//     url: "images/product/umbrella/catalina/feature-fabric.webp",
+//     url:"images/product/umbrella/catalina/feature-fabric.webp",
 // }
 ]
 
@@ -37,7 +37,7 @@ const feature_2 = [
 //     {
 //     tabTitle: "Crank System",
 //     tabContent: "The Catalina umbrella is a crank umbrella. A crank is a handle usually placed at the center of the pole and that works by turning the crank until the umbrella is fully opened.",
-//     url: "images/product/umbrella/marco/feature-pushup.webp",
+//     url:"images/product/umbrella/marco/feature-pushup.webp",
 // },
     {
         tabTitle: "Aluminum",

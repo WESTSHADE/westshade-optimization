@@ -40,6 +40,7 @@ const banner = ({
                     renderButton,
                     newPart
                 }) => {
+
     if (newPart) {
         return (
             <Block ref={refD} position="relative" width="100%" height={containerHeight}
@@ -65,7 +66,7 @@ const banner = ({
                            },
                        }}
                 >
-                    <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
+                    <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100} priority={true}/>
                 </Block>
                 <Block position="absolute" top={"42%"} width="100%" maxWidth="1152px" display="flex" flexDirection={["column", "column", "row"]} justifyContent={["", "", "space-between"]} paddingLeft={["16px"]} paddingRight={["16px"]}>
                     <Block marginBottom={"24px"}>
@@ -152,7 +153,7 @@ const banner = ({
                        },
                    }}
             >
-                <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100}/>
+                <Image src={url} alt={alt} layout="fill" objectFit={imageObjectFit} objectPosition={containerBackgroundPosition} quality={100} priority={true}/>
             </Block>
             <Block position="absolute"
                 // bottom={["40px", "60px", "70px"]}

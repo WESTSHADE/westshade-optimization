@@ -76,7 +76,7 @@ export default function description() {
             <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                    <Image src={"images/product/canopy-tent/anatomy-y7.webp"} alt={"anatomy y7 frame"} objectFit="contain" layout="fill"/>
+                    <Image src="images/product/canopy-tent/anatomy-y7.webp" alt="anatomy y7 frame" objectFit="contain" layout="fill"/>
                     <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["36px", "60px", "76px"]} left={["4px", "4px", "6px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                            onClick={() => {
                                setDisplayIntro(true);

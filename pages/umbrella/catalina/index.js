@@ -84,7 +84,7 @@ function Catalina({router}) {
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" height={["312px", "400px", "450px"]} display="flex" flexDirection="column" alignItems="center"
                                         marginRight="auto" marginBottom={["24px", "24px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                                        backgroundImage={"url(\"/images/umbrella/catalina/fabric.webp\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
+                                        backgroundImage={"url(\"images/umbrella/catalina/fabric.webp\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
                                  >
                                      <Block marginBottom={["4px", "4px", "12px"]} font={["MinXHeading20", "MinXHeading24"]} color="MinXPrimaryText"
                                             overrides={{

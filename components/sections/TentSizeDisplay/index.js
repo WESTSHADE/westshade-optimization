@@ -12,7 +12,7 @@ const TentSizeDisplay = () => {
             {sizes.map((size, index) => {
                 let number = size.split("x");
                 return (
-                    <Sandwich key={index} src={"/images/icon/icon-" + size + ".png"} alt={`Tent Size ${size}`} title={`${number[0]}’ x ${number[1]}’`} containerImageProps={{minWidth: "60px", width: "76%"}}
+                    <Sandwich key={index} src={"images/icon/icon-" + size + ".png"} alt={`Tent Size ${size}`} title={`${number[0]}’ x ${number[1]}’`} containerImageProps={{minWidth: "60px", width: "76%"}}
                               titleProps={{font: "MinXLabel14"}} titleColor="MinXSecondaryText"
                     />
                 )

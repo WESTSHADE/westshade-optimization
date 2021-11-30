@@ -44,12 +44,12 @@ const id_attribute_packageNo = 35;
 const id_attribute_printingTechnique = 44;
 
 const imageGallery = [
-    {img: "/images/product/custom-printed-package/versatile/rectangle-79-2_2x.webp", title: ""},
-    {img: "/images/product/custom-printed-package/versatile/rectangle-80-7_2x.webp", title: ""},
-    {img: "/images/product/custom-printed-package/versatile/rectangle-77-7_2x.webp", title: ""},
-    {img: "/images/product/custom-printed-package/versatile/rectangle-77-8_2x.webp", title: ""},
-    {img: "/images/product/custom-printed-package/versatile/rectangle-78-3_2x.webp", title: ""},
-    {img: "/images/product/custom-printed-package/versatile/rectangle-78-4_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-79-2_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-80-7_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-77-7_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-77-8_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-78-3_2x.webp", title: ""},
+    {img: "images/product/custom-printed-package/versatile/rectangle-78-4_2x.webp", title: ""},
 ];
 
 let checkoutProductList = [];
@@ -604,7 +604,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                             </p>
                                                         ) : null}
                                                     </Box>
-                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/comparison-y5y6y7.webp"/>
+                                                    <img style={{objectFit: "contain", width: "100%"}} src="images/product/custom-printed-package/comparison-y5y6y7.webp"/>
                                                 </>
                                             ) : null}
                                             <Box className="section-container">
@@ -670,7 +670,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                     </Grid>
                                                     <Grid item xs={12} md={6}>
                                                         <img
-                                                            src="/images/product/custom-printed-package/valance-and-peak.webp"
+                                                            src="images/product/custom-printed-package/valance-and-peak.webp"
                                                             style={{
                                                                 objectFit: "contain",
                                                                 width: "100%",
@@ -702,7 +702,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                             <li style={{marginBottom: 8}}>Professional Cover Top blocking 99% UV Rays</li>
                                                         </ul>
                                                     </Box>
-                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/frame-y7.webp"/>
+                                                    <img style={{objectFit: "contain", width: "100%"}} src="images/product/custom-printed-package/frame-y7.webp"/>
                                                     <Box className="section-container" style={{paddingLeft: 0, paddingRight: 0}}>
                                                         <List>
                                                             <ListItem className="background-light-blue">
@@ -750,7 +750,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                 </>
                                             ) : null}
                                             <Box className="section-container">
-                                                <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/intro@1x.webp"/>
+                                                <img style={{objectFit: "contain", width: "100%"}} src="images/product/custom-printed-package/intro@1x.webp"/>
                                                 <h3 className="section-title" style={{fontSize: "1.25rem"}}>
                                                     Frequently Asked Questions
                                                 </h3>
@@ -806,7 +806,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                 ) : null}
                 <Modal type="alertdialog" isOpen={showPrintServiceModal} onClose={() => setShowPrintServiceModal(false)} content="technique"/>
                 <Modal type="alertdialog" isOpen={showSizeModal} onClose={() => setShowSizeModal(false)}>
-                    <img className="popup-image" src="/images/tent-spec/choose-size.jpg"/>
+                    <img className="popup-image" src="images/tent-spec/choose-size.jpg"/>
                 </Modal>
                 <Modal type="alertdialog" isOpen={showModal} onClose={() => setShowModal(false)} dialogStyles={{background: "rgb(237, 247, 237)", paddingTop: '24px'}}>
                     <Alert severity="success">

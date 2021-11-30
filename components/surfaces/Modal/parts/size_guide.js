@@ -37,46 +37,46 @@ export default function content() {
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
                     <Block display="flex" flexDirection="column" alignItems="center">
                         <Block width="50px" height="50px">
-                            <Image src="images/icon/icon-10x10.png" alt="canopy tent 10x10" layout="responsive" objectFit="contain" width={156} height={140} quality={100}/>
+                            <Image src="/images/icon/icon-10x10.png" alt="canopy tent 10x10" layout="responsive" objectFit="contain" width={156} height={140} quality={100}/>
                         </Block>
                         <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 10'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
                     <Block display="flex" flexDirection="column" alignItems="center">
                         <Block width="50px" height="50px">
-                            <Image src="images/icon/icon-10x15.png" alt="canopy tent 10x15" layout="responsive" objectFit="contain" width={175} height={144} quality={100}/>
+                            <Image src="/images/icon/icon-10x15.png" alt="canopy tent 10x15" layout="responsive" objectFit="contain" width={175} height={144} quality={100}/>
                         </Block>
                         <Block font="MinXParagraph14" color="MinXSecondaryText">10' x 15'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                 </Block>
                 <Block display="grid" gridTemplateRows="78px repeat(3, 60px)" gridRowGap="24px" alignItems="center" justifyItems="center">
                     <Block display="flex" flexDirection="column" alignItems="center">
                         <Block width="50px" height="50px">
-                            <Image src="images/icon/icon-13x13.png" alt="canopy tent 13x13" layout="responsive" objectFit="contain" width={160} height={140} quality={100}/>
+                            <Image src="/images/icon/icon-13x13.png" alt="canopy tent 13x13" layout="responsive" objectFit="contain" width={160} height={140} quality={100}/>
                         </Block>
                         <Block font="MinXParagraph14" color="MinXSecondaryText">13' x 13'</Block>
                     </Block>
                     <Block width="22px" height="22px">
-                        <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                        <Image src="/images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
                     </Block>
                     <Block width="22px" height="22px">
                         <Image src="images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>

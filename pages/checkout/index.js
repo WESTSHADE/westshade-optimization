@@ -605,7 +605,7 @@ function Checkout({router, orderID, orderDetail}) {
                                         <StatefulTooltip placement={PLACEMENT.topRight} triggerType={TRIGGER_TYPE.click} autoFocus
                                                          content={() => (
                                                              <div style={{zIndex: 999}}>
-                                                                 <img src="/images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
+                                                                 <img src="images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
                                                              </div>
                                                          )}
                                                          overrides={{
@@ -663,7 +663,7 @@ function Checkout({router, orderID, orderDetail}) {
                                          disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
                                 />
                                 <Block display="flex" flexDirection="row" alignItems="center">
-                                    <img src="/images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                                    <img src="images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
                                     <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You
                                         can shop at Westshade with confidence. We have partnered with Authorize.Net.
                                     </div>

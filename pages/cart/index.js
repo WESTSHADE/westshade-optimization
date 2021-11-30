@@ -243,7 +243,7 @@ function Cart_Page({router}) {
                                                         {product.images.length > 0 ? (
                                                             <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%" style={{objectFit: "contain"}}/>
                                                         ) : (
-                                                            <Image src={"/images/default-product.jpg"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                                            <Image src={"images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                                                         )}
                                                     </Block>
                                                     <Block>

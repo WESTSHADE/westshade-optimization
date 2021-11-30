@@ -237,7 +237,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-front.png" alt="valance-front"/>}
+                            <ListItem artwork={() => <img src="images/icon/icon-valance-front.png" alt="valance-front"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -272,7 +272,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                         </Block>
                     ) : selectedRoofSlide === 3 ? (
                         <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
-                            <ListItem artwork={() => <img src="/images/icon/icon-peak-back.png" alt="peak-back"/>}
+                            <ListItem artwork={() => <img src="images/icon/icon-peak-back.png" alt="peak-back"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -304,7 +304,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-back.png" alt="valance-back"/>}
+                            <ListItem artwork={() => <img src="images/icon/icon-valance-back.png" alt="valance-back"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},

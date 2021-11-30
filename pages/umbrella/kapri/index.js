@@ -73,7 +73,7 @@ function Kapri({router}) {
             </Head>
             <SubHeaderBar title={"Umbrella Kapri"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="images/umbrella/kapri/kapri_display.webp" alt="kapri display" imageObjectFit="contain"
+                <BannerDisplay title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="/images/umbrella/kapri/kapri_display.webp" alt="kapri display" imageObjectFit="contain"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
                                containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]}
                                containerBackground="transparent" backgroundColor="#EEF3FA" textColor="MinXPrimaryText" renderButton={<></>}
@@ -83,12 +83,12 @@ function Kapri({router}) {
                          content={
                              <>
                                  {/*<Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">*/}
-                                 {/*    <Image src="images/umbrella/kapri/roof.webp" alt="kapri roof" layout="responsive" width={912} height={324} quality={100}/>*/}
+                                 {/*    <Image src="/images/umbrella/kapri/roof.webp" alt="kapri roof" layout="responsive" width={912} height={324} quality={100}/>*/}
                                  {/*</Block>*/}
                                  <Block display="flex" flexDirection={["column", "row"]} justifyContent="space-around" width="100%" maxWidth="662px" marginRight="auto" marginLeft="auto">
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/kapri/icon_upf.webp" alt="kapri udf" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/kapri/icon_upf.webp" alt="kapri udf" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -105,7 +105,7 @@ function Kapri({router}) {
                                      </Block>
                                      <Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["32px", "unset"]} marginLeft="auto">
                                          <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>
-                                             <Image src="images/umbrella/kapri/icon_water.webp" alt="kapri water" layout="fill" objectFit="contain" quality={100}/>
+                                             <Image src="/images/umbrella/kapri/icon_water.webp" alt="kapri water" layout="fill" objectFit="contain" quality={100}/>
                                          </Block>
                                          <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"
                                                 overrides={{
@@ -122,7 +122,7 @@ function Kapri({router}) {
                                      </Block>
                                      {/*<Block display="flex" flexDirection={["row", "column"]} alignItems="center" marginRight="auto" marginBottom={["unset"]} marginLeft="auto">*/}
                                      {/*    <Block position="relative" width={["60px", "80px"]} height={["60px", "80px"]} marginRight={["22px", "0"]} marginBottom={["0", "24px", "32px"]}>*/}
-                                     {/*        <Image src="images/umbrella/kapri/icon_wind.webp" alt="kapri wind" layout="fill" objectFit="contain" quality={100}/>*/}
+                                     {/*        <Image src="/images/umbrella/kapri/icon_wind.webp" alt="kapri wind" layout="fill" objectFit="contain" quality={100}/>*/}
                                      {/*    </Block>*/}
                                      {/*    <Block width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText"*/}
                                      {/*           overrides={{*/}
@@ -150,7 +150,7 @@ function Kapri({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/kapri/detail1.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/kapri/detail1.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Self-Tensioning Tips
                                  </Block>
@@ -158,7 +158,7 @@ function Kapri({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/kapri/detail2.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/kapri/detail2.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Nylon Hub
                                  </Block>
@@ -166,7 +166,7 @@ function Kapri({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/kapri/detail3.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/kapri/detail3.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Crank Lift & Tilt
                                  </Block>
@@ -174,7 +174,7 @@ function Kapri({router}) {
                                      <Block position="relative" width="100%" height={["136px", "200px", "212px"]} marginBottom={["12px", "16px", "24px"]} backgroundColor="white"
                                             overrides={{Block: {props: {className: "section-round-corner"}}}}
                                      >
-                                         <Image src="images/umbrella/kapri/detail4.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/kapri/detail4.webp" alt="kapri detail" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
                                      Height Adjustment
                                  </Block>

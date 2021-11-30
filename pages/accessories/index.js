@@ -44,7 +44,7 @@ const Product = ({name, product, showDesc = true}) => {
                 {url ? (
                     <img src={url} alt={product.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                 ) : (
-                    <Image src="images/default-product.jpg" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                    <Image src="images/product/default-product.webp" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                 )}
             </Block>
             <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
@@ -158,7 +158,7 @@ function Accessories({router, products}) {
                              <>
                                  <Block backgroundColor="#F2F2F2" marginBottom="32px" padding="45px 16px">
                                      <Block position="relative" width="100%" maxWidth="800px" marginRight="auto" marginLeft="auto">
-                                         <Image src="/images/accessory/replacement-part.webp" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
+                                         <Image src="images/accessory/replacement-part.webp" alt="replacement part" layout="responsive" objectFit="contain" width={767} height={519} quality={100}/>
                                      </Block>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]}>

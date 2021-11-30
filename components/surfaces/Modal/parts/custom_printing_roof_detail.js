@@ -133,7 +133,7 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                             <Tab title="Color"
                                  artwork={() => (
                                      <Block position="relative" width="20px" height="20px">
-                                         <Image src="images/icon/icon_pantone.png" layout="responsive" width={60} height={60} quality={100}/>
+                                         <Image src="/images/icon/icon_pantone.png" layout="responsive" width={60} height={60} quality={100}/>
                                      </Block>
                                  )}
                                  overrides={{
@@ -179,7 +179,7 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                             <Tab title="Image"
                                  artwork={() => (
                                      <Block position="relative" width="20px" height="20px">
-                                         <Image src="images/icon/icon_picture.png" layout="responsive" width={60} height={60} quality={100}/>
+                                         <Image src="/images/icon/icon_picture.png" layout="responsive" width={60} height={60} quality={100}/>
                                      </Block>
                                  )}
                                  overrides={{

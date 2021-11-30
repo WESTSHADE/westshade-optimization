@@ -38,12 +38,15 @@ const nextConfig = {
     // },
     images: {
         deviceSizes: [600, 960, 1280, 1920],
+        // disableStaticImages: true,
         loader: "imgix",
+        minimumCacheTTL: 60,
         domains: [
             'checkout.westshade.com',
             '54.212.246.17',
         ],
-        path: "/",
+        formats: ['image/webp'],
+        path: isProd ? "https://www.westshade.com" : "http://localhost:3000",
     },
     exportPathMap: async function () {
         return {
