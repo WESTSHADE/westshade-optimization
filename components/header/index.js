@@ -212,10 +212,11 @@ function Header() {
                             Root: {
                                 props: {
                                     className: styles["root-navigation"]
-                                }
+                                },
                             }
                         }}
                     >
+                        
                         <NavigationList $align={ALIGN.left} className="nav-left">
                             <NavigationItem>
                                 <Block position="relative" display={["flex", "", "none"]}>

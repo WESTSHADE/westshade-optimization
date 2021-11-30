@@ -4,10 +4,6 @@ import {withRouter} from "next/router";
 import Head from "next/head";
 
 import BannerDisplay from "../components/sections/BannerDisplay";
-import MButton from "../components/button-n";
-import {ChevronRight} from "baseui/icon";
-
-// const start = Date.now();
 
 function Home({router}) {
     const ref1 = useRef(null);
@@ -25,12 +21,6 @@ function Home({router}) {
         //     }, 500)
         // }
     }
-
-    // console.log("js运行时间：", Date.now() - start)
-    //
-    // setTimeout(() => {
-    //     console.log("总运行时间：", Date.now() - start)
-    // }, 0)
 
     return (
         <React.Fragment>
