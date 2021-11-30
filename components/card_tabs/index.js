@@ -62,7 +62,7 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                 >
                     {tabList.length > 0 && tabList.map((item, index) =>
                         <Block key={index} position="relative" width="100%" height="auto" minHeight={imageMinHeight}>
-                            <Image src={item.url} alt="feature" layout="fill" objectFit={item.objectFit}/>
+                            <Image src={item.url} alt="feature" layout="fill" objectFit={objectFit}/>
                         </Block>
                     )}
                 </Carousel>

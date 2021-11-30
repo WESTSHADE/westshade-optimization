@@ -9,12 +9,9 @@ import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
 import {ArrowDown} from 'baseui/icon'
 
-import {Section} from "../../../components/sections"
+import {Benefit, FreeMockupForm, Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 import {Modal} from "../../../components/surfaces";
-import FreeMockupForm from "../../../components/sections/FormSections/FreeMockupForm"
-import Benefit from "../../../components/sections/Benefit";
-
 
 import Utils from "../../../utils/utils";
 
@@ -143,31 +140,31 @@ function Custom_Printing_Umbrella({router, size}) {
                     >
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["a", "a", "unset"]}>
                             <Block position="relative" width="100%" height={["81px", "142px", "166px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-bali.png" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Kapri</Block>
                         </Block>
                         {/*<Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["a", "a", "unset"]}>*/}
                         {/*    <Block position="relative" width="100%" height={["81px", "142px", "166px"]} marginRight="auto" marginLeft="auto">*/}
-                        {/*        <Image src="images/custom-printing/umbrella/icon-bali.png" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
+                        {/*        <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
                         {/*    </Block>*/}
                         {/*    <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Bali</Block>*/}
                         {/*</Block>*/}
                         {/*<Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["b", "b", "unset"]}>*/}
                         {/*    <Block position="relative" width="100%" height={["86px", "136px", "159px"]} marginRight="auto" marginLeft="auto">*/}
-                        {/*        <Image src="images/custom-printing/umbrella/icon-marco.png" alt="marco" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
+                        {/*        <Image src="/images/custom-printing/umbrella/icon-marco.webp" alt="marco" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
                         {/*    </Block>*/}
                         {/*    <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Marco</Block>*/}
                         {/*</Block>*/}
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["c", "c", "unset"]}>
                             <Block position="relative" width="100%" height={["91px", "148px", "175px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-santorini.png" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="/images/custom-printing/umbrella/icon-santorini.webp" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Santorini</Block>
                         </Block>
                         <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["d", "d", "unset"]}>
                             <Block position="relative" width="100%" height={["109px", "180px", "212px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="images/custom-printing/umbrella/icon-catalina.png" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>
+                                <Image src="/images/custom-printing/umbrella/icon-catalina.webp" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
                             </Block>
                             <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Catalina</Block>
                         </Block>
@@ -179,7 +176,7 @@ function Custom_Printing_Umbrella({router, size}) {
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={
                              <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
-                                 <Image src="images/custom-printing/umbrella/custom-printing-banner.jpg" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100}/>
+                                 <Image src="/images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100} priority={true}/>
                              </Block>
                          }
                 />
@@ -189,15 +186,15 @@ function Custom_Printing_Umbrella({router, size}) {
                              content={
                                  <Block display="grid" gridRowGap={["16px", "16px", "20px"]}>
                                      {/*<SectionCard router={router} title={"Bali Tilt Umbrella"} content={"Bali umbrella is made of steel, and it comes in one size (9’) and six premade colors."}*/}
-                                     {/*             src={"images/custom-printing/umbrella/bali.jpg"} alt={"bali"}*/}
+                                     {/*             src={"/images/custom-printing/umbrella/bali.webp"} alt={"bali"}*/}
                                      {/*             destination={"/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"}*/}
                                      {/*/>*/}
                                      {/*<SectionCard router={router} title={"Marco Push-Up Umbrella"} content={"Marco umbrella is made of aluminum, and it comes in one size (6.5’) and six premade colors."}*/}
-                                     {/*             src={"images/custom-printing/umbrella/marco.jpg"} alt={"marco"}*/}
+                                     {/*             src={"/images/custom-printing/umbrella/marco.webp"} alt={"marco"}*/}
                                      {/*             destination={"/products/market-umbrellas/marco-umbrella"}*/}
                                      {/*/>*/}
                                      <SectionCard router={router} title={"Kapri Tilt Umbrella"} content={"Kapri umbrella is made of aluminum, and it comes in 4 sizes with height adjustment."}
-                                                  src={"images/custom-printing/umbrella/kapri.jpg"} alt={"kapri"}
+                                                  src={"/images/custom-printing/umbrella/kapri.webp"} alt={"kapri"}
                                                   buttonText="Enquiry" destination={"/"}
                                                   onClick={() => {
                                                       setQuoteProduct("Kapri Tilt Umbrella");
@@ -205,7 +202,7 @@ function Custom_Printing_Umbrella({router, size}) {
                                                   }}
                                      />
                                      <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
-                                                  src={"images/custom-printing/umbrella/santorini.jpg"} alt={"santorini"}
+                                                  src={"/images/custom-printing/umbrella/santorini.webp"} alt={"santorini"}
                                                   buttonText="Enquiry" destination={"/products/market-umbrellas/santorini-umbrella"}
                                                   onClick={() => {
                                                       setQuoteProduct("Santorini Pulley Umbrella");
@@ -213,7 +210,7 @@ function Custom_Printing_Umbrella({router, size}) {
                                                   }}
                                      />
                                      <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
-                                                  src={"images/custom-printing/umbrella/catalina.jpg"} alt={"catalina"}
+                                                  src={"/images/custom-printing/umbrella/catalina.webp"} alt={"catalina"}
                                                   buttonText="Enquiry" destination={"/products/cantilever-umbrellas/catalina-umbrella"}
                                                   onClick={() => {
                                                       setQuoteProduct("Catalina Oversized Umbrella");
@@ -227,12 +224,12 @@ function Custom_Printing_Umbrella({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FreeMockupForm />}
+                         content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
-                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
-                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                         upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
+                         subtitleStyles={{maxWidth: "unset !important"}}
                 />
-                <Benefit containerClassName="m-body-section-wrap" />
+                <Benefit containerClassName="m-body-section-wrap"/>
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
                 <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
@@ -247,7 +244,7 @@ function Custom_Printing_Umbrella({router, size}) {
                     >
                         <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
                         <Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
-                            <Image src={"images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
+                            <Image src={"/images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
                         </Block>
                         <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
                         <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(877)702-1872' color="white"

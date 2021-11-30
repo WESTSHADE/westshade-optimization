@@ -14,7 +14,7 @@ function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);
     const [tabLeft, setTabLeft] = useState(0);
     const [displayTabs, setDisplayTabs] = useState(false);
-    
+
     const [activeTabKey, setActiveTabKey] = useState("0");
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,7 @@ function Shipping_Return() {
         <React.Fragment>
             <Head>
                 <title>Shipping and Return Policy - FAQs | WESTSHADE</title>
-                <meta name="description" content="Shipping and return policy about Westshade's canopy, umbrella and accessories."/>
+                <meta name="description" content="Shipping and return policy about Westshade&apos;s canopy, umbrella and accessories."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["32px", "32px", "40px"]}>
                 <Section upperContainerProps={{hidden: true}}
@@ -162,7 +162,7 @@ function Shipping_Return() {
             </Block>
             <Modal type="alertdialog" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <Block position="relative" width="80vw" maxWidth="600px" height="auto">
-                    <Image src="images/fedex-ground-shipment.jpg" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475} quality={100}/>
+                    <Image src="/images/fedex-ground-shipment.webp" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475} quality={100}/>
                 </Block>
             </Modal>
         </React.Fragment>

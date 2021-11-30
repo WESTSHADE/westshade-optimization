@@ -13,31 +13,31 @@ import CardTabs from "../../../card_tabs";
 const feature_1 = [{
     tabTitle: "Waterproof",
     tabContent: "All of our umbrellas are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/umbrella/marco/feature-water.jpg",
+    url: "/images/product/umbrella/marco/feature-water.webp",
     objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "The fabric blocks 98% harmful UV rays.",
-    url: "images/product/umbrella/marco/feature-uv.jpg",
+    url: "/images/product/umbrella/marco/feature-uv.webp",
     objectFit: "cover"
 }]
 
 const feature_2 = [{
     tabTitle: "Push Up System",
     tabContent: "The Marco Umbrella features the Push-Up system, all you need to do is grasp the center hub and push up to spread the umbrella and lock it into position. It’s just that easy to also lower the umbrella down.",
-    url: "images/product/umbrella/marco/feature-pushup.jpg",
+    url: "/images/product/umbrella/marco/feature-pushup.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Aluminum",
     tabContent: "Our aluminum umbrellas are extremely strong and durable. They are rust resistant and very sturdy.",
-    url: "images/product/umbrella/marco/feature-aluminum.jpg",
+    url: "/images/product/umbrella/marco/feature-aluminum.webp",
     objectFit: "cover"
 }]
 
 const anatomyPart = [
-    {url: "/part-fixings.jpg", title: "FIXINGS", content: "Stainless steel fittings to ensure the canopy stays stable."},
-    {url: "/part-hub.jpg", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
-    {url: "/part-joint.jpg", title: "JOINT", content: "Marco umbrella is of high strength and high quality moulded nylon arm joints."},
+    {url: "/part-fixings.webp", title: "FIXINGS", content: "Stainless steel fittings to ensure the canopy stays stable."},
+    {url: "/part-hub.webp", title: "HUB", content: "High quality nylon hub is easy to use just push up lift system."},
+    {url: "/part-joint.webp", title: "JOINT", content: "Marco umbrella is of high strength and high quality moulded nylon arm joints."},
 ];
 
 const QA = [
@@ -54,7 +54,7 @@ const QA = [
     {title: "How should I store my Marco umbrella?", content: "When not using your Marco umbrella, store your umbrella in an enclosed space such as a garage or basement during off-season."},
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);
@@ -64,7 +64,7 @@ export default function description() {
             <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                    <Image src="images/product/umbrella/anatomy-marco.png" alt="anatomy marco frame" objectFit="contain" layout="fill"/>
+                    <Image src="/images/product/umbrella/anatomy-marco.webp" alt="anatomy marco frame" objectFit="contain" layout="fill"/>
                     <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["48px", "70px", "90px"]} right={["8px", "12px", "16px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                            onClick={() => {
                                setDisplayIntro(true);
@@ -107,7 +107,7 @@ export default function description() {
                                    },
                                }}
                         >
-                            <Image src={"images/product/umbrella/marco" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
+                            <Image src={"/images/product/umbrella/marco" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
                         </Block>
                         <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
                         <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
@@ -139,15 +139,15 @@ export default function description() {
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="400px" gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/marco/versatile/umbrella-marco-1.jpg" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/marco/versatile/umbrella-marco-1.webp" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 400px)", "repeat(2, 400px)", "400px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/marco/versatile/umbrella-marco-2.jpg" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/marco/versatile/umbrella-marco-2.webp" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/marco/versatile/umbrella-marco-3.jpg" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/marco/versatile/umbrella-marco-3.webp" alt="Versatile Umbrella Marco" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                 </Block>

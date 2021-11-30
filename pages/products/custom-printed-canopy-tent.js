@@ -6,6 +6,7 @@ import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
+import Script from 'next/script'
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -265,8 +266,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
             70: request[1].valance.logo,
             3.1: applyToFullSide[0] ? "Apply to four sides peak" : "",
             3.2: applyToFullSide[1] ? "Apply to four sides valance" : "",
-            36.1: "",
-            36.2: "",
+            36.3: "",
+            36.6: "",
             37: "",
             71: ""
         });
@@ -831,8 +832,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         <React.Fragment>
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
-                <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             </Head>
+            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}
@@ -1437,7 +1438,7 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                                            {/*    ?*/}
                                                            {/*</Button>*/}
                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                               <Image src={"images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
                                                            </Block>
                                                            <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
                                                        </Block>

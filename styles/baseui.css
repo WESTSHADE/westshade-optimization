@@ -12,6 +12,7 @@
 .nav-left > li:first-child, .nav-center > li:first-child, .nav-right > li:first-child {
     padding-left: 0;
 }
+
 /* ================== contact-form input ================== */
 .form-input input::placeholder, .form-input textarea::placeholder {
     color: #BFBFBF;
@@ -233,7 +234,7 @@
 
 .spec-sticky-bar {
     position: sticky;
-    top: calc(48px - 100px - 20px);
+    top: calc(64px + 56px - 100px - 20px);
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(6px);
 }
@@ -622,7 +623,8 @@ ul.bullet-warranty.sub > li {
     }
 
     .spec-sticky-bar {
-        top: calc(96px - 100px - 20px)
+        /*top: calc(96px - 100px - 20px)*/
+        top: calc(64px + 72px - 100px - 20px)
     }
 
     .card-radius-right {

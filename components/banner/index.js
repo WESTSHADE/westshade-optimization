@@ -12,7 +12,7 @@ class Banner extends React.Component {
 
         return (
             <div className={clsx([styles["container-full-screen"], styles["container-banner"]])} style={{...containerStyle}}>
-                <Image src={backgroundImage} alt="canopy tent banner" layout="fill" objectFit="cover" placeholder="blur"/>
+                <Image src={backgroundImage} alt="canopy tent banner" layout="fill" objectFit="cover"/>
                 <Container maxWidth="md" classes={{root: styles["root-container"]}}>
                     {align === "left" ? (
                         <Grid container direction="column" justifyContent="center" alignItems="flex-start">

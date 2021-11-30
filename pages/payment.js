@@ -76,16 +76,16 @@ function Payment({orderID}) {
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>We accept these credit cards</div>
                         <div style={{display: "flex", flexDirection: "row", marginBottom: 24}}>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_visa.png" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="/images/component/footer/icon_visa.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_master.png" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="/images/component/footer/icon_master.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_amex.png" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="/images/component/footer/icon_amex.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                             <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_discover.png" style={{height: "100%", objectFit: "cover"}}/>
+                                <img src="/images/component/footer/icon_discover.webp" style={{height: "100%", objectFit: "cover"}}/>
                             </div>
                         </div>
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>Card information</div>

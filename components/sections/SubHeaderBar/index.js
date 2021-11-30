@@ -9,7 +9,7 @@ import Button from "../../button-n";
 
 const Bar = ({containerClassName, title, subTitle, subTitleDestination, buttonText, onClick}) => {
     return (
-        <Block position="sticky" top={["48px", "48px", "96px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
+        <Block position="sticky" top={["104px", "120px", "136px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                overrides={{
                    Block: {
                        props: {

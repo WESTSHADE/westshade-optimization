@@ -6,7 +6,7 @@ import {PLACEMENT, StatefulTooltip, TRIGGER_TYPE} from "baseui/tooltip";
 import {Modal} from "../surfaces";
 import MButton from "../button-n";
 
-export default function custom_printing_roof({isOpen, onClose, selectedRoofList, applyToFullSide, setApplyToFullSide}) {
+export default function CustomPrintingRoof({isOpen, onClose, selectedRoofList, applyToFullSide, setApplyToFullSide}) {
     const [printDetailIsOpen, setPrintDetailIsOpen] = useState(false);
 
     const [selectedRoofSlide, setSelectedRoofSlide] = useState(null);

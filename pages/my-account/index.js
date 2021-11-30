@@ -238,8 +238,8 @@ function Signup() {
                     Password must contain at least 1 number and 1 letter; it must be at least 6 characters in length.
                 </Block>
                 <Block font="MinXHeading14">
-                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions"><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
-                    color="inherit" href="/privacy"><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
+                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions" passHref><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
+                    color="inherit" href="/privacy" passHref><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
                 </Block>
                 <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Join Westshade'
                          buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
@@ -393,7 +393,7 @@ function Orders({size}) {
                                 <Block color="MinXSecondaryText">Order: <strong style={{color: "#262626"}}>{o.id}</strong></Block>
                                 <Block color="MinXSecondaryText">Date: <strong style={{color: "#262626"}}>{o.date_created}</strong></Block>
                             </Block>
-                            <Block height="40px" display="flex" alignItems="center" justifyContent="center" font="MinXParagraph14" color="#F07C7C"
+                            <Block height="40px" display="flex" alignItems="center" justifyContent="center" font="MinXParagraph14"
                                    backgroundColor={(o.status === "pending" || o.status === "processing") ? "rgb(244,237,124)" : o.status === "completed" ? "rgb(153,229,178)" : "#FAF0F0"}
                                    color={(o.status === "pending" || o.status === "processing") ? "rgb(198,173,15)" : o.status === "completed" ? "rgb(0,158,73)" : "#F07C7C"}
                                    overrides={{
@@ -425,7 +425,7 @@ function Orders({size}) {
                                                     <img src={item.image.src} alt={item.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                                                     // <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 ) : (
-                                                    <Image src="images/default-product.jpg" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
+                                                    <Image src="/images/product/default-product.webp" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
                                                 )}
                                             </Block>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>

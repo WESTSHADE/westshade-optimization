@@ -11,15 +11,14 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import ArrowLeft from "baseui/icon/arrow-left";
 import ArrowRight from "baseui/icon/arrow-right";
 
-import {Benefit, OrderProcess, Section} from "../../components/sections";
+import {Benefit, OrderProcess, Section, FreeMockupForm} from "../../components/sections";
 import Sandwich from "../../components/sandwich";
-import FreeMockupForm from "../../components/sections/FormSections/FreeMockupForm"
 import MButton from "../../components/button-n";
 
 const ImageSlide = ({url}) => {
     return (
         <div className="react-player">
-            <img src={url} width="100%" height="100%"/>
+            <img src={url} alt="live-example" width="100%" height="100%"/>
         </div>
     );
 };
@@ -41,7 +40,7 @@ function Custom_Printing({router}) {
                                },
                                style: {
                                    background: "transparent !important",
-                                   ":after": {background: "url('/images/custom-printing/custom-printing-display.jpg')"},
+                                   ":after": {background: "url('/images/custom-printing/custom-printing-display.webp')"},
                                }
                            }
                        }}
@@ -94,9 +93,9 @@ function Custom_Printing({router}) {
                                                        );
                                                    }}
                                          >
-                                             <ImageSlide key={0} url="/images/custom-printing/live-example-01.jpg"/>
-                                             <ImageSlide key={1} url="/images/custom-printing/live-example-02.jpg"/>
-                                             <ImageSlide key={2} url="/images/custom-printing/live-example-03.jpg"/>
+                                             <ImageSlide key={0} url="/images/custom-printing/live-example-01.webp"/>
+                                             <ImageSlide key={1} url="/images/custom-printing/live-example-02.webp"/>
+                                             <ImageSlide key={2} url="/images/custom-printing/live-example-03.webp"/>
                                          </Carousel>
                                      </Block>
                                  </Block>
@@ -145,9 +144,9 @@ function Custom_Printing({router}) {
                                                    );
                                                }}
                                      >
-                                         <ImageSlide key={0} url="/images/custom-printing/live-example-01.jpg"/>
-                                         <ImageSlide key={1} url="/images/custom-printing/live-example-02.jpg"/>
-                                         <ImageSlide key={2} url="/images/custom-printing/live-example-03.jpg"/>
+                                         <ImageSlide key={0} url="/images/custom-printing/live-example-01.webp"/>
+                                         <ImageSlide key={1} url="/images/custom-printing/live-example-02.webp"/>
+                                         <ImageSlide key={2} url="/images/custom-printing/live-example-03.webp"/>
                                      </Carousel>
                                  </Block>
                              </>}
@@ -160,10 +159,10 @@ function Custom_Printing({router}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FreeMockupForm />}
+                         content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
-                        //  containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
-                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                         upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
+                         subtitleStyles={{maxWidth: "unset !important"}}
                 />
                 <Section upperContainerDirection="column"
                          title="PRINTING TECH"
@@ -188,7 +187,7 @@ function Custom_Printing({router}) {
                                         }}
                                  >
                                      <Block position="relative" height={["320px", "446px"]}>
-                                         <Image src="images/custom-printing/dye-sublimation-printing.jpg" alt="Dye Sublimation Printing" layout="fill" objectFit="cover"/>
+                                         <Image src="/images/custom-printing/dye-sublimation-printing.webp" alt="Dye Sublimation Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">THERMAL</Block>
@@ -213,7 +212,7 @@ function Custom_Printing({router}) {
                                         }}
                                  >
                                      <Block position="relative" height={["320px", "446px"]}>
-                                         <Image src="images/custom-printing/uv-printing-n.jpg" alt="UV Printing" layout="fill" objectFit="cover"/>
+                                         <Image src="/images/custom-printing/uv-printing.webp" alt="UV Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">DIGITAL</Block>

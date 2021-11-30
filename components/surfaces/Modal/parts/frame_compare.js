@@ -4,7 +4,7 @@ import {useRouter} from 'next/router'
 
 import {Block} from "baseui/block";
 
-export default function content() {
+export default function Content() {
     const router = useRouter();
 
     const goSpecPage = () => router.push({pathname: "/canopy-tent/spec"});
@@ -76,7 +76,7 @@ export default function content() {
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
                     </Block>
                     <Block font="MinXLabel20">
-                        <Block>0.05"</Block>
+                        <Block>0.05&quot;</Block>
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
                     </Block>
                     <Block font="MinXLabel20">
@@ -98,7 +98,7 @@ export default function content() {
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
                     </Block>
                     <Block font="MinXLabel20">
-                        <Block>0.06"</Block>
+                        <Block>0.06&quot;</Block>
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
                     </Block>
                     <Block font="MinXLabel20">
@@ -120,7 +120,7 @@ export default function content() {
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Frame</Block>
                     </Block>
                     <Block font="MinXLabel20">
-                        <Block>0.07"</Block>
+                        <Block>0.07&quot;</Block>
                         <Block marginTop="4px" font="MinXParagraph14" color="MinXSecondaryText">Pole thickness</Block>
                     </Block>
                     <Block font="MinXLabel20">

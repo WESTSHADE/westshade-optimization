@@ -21,10 +21,10 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
-export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, selectedRoofSlide, selectedSlidePart, applyToFullSide, setApplyToFullSide}) {
-    if (!selectedListTemp) return null;
-
+export default function RoofDetail({selectedListTemp, setSelectedRoofListTemp, selectedRoofSlide, selectedSlidePart, applyToFullSide, setApplyToFullSide}) {
     const [activeTabKey, setActiveTabKey] = useState("0");
+
+    if (!selectedListTemp) return null;
 
     function inputValue(key) {
         return selectedRoofSlide !== null ?
@@ -133,7 +133,7 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                             <Tab title="Color"
                                  artwork={() => (
                                      <Block position="relative" width="20px" height="20px">
-                                         <Image src="images/icon/icon_pantone.png" layout="responsive" width={60} height={60} quality={100}/>
+                                         <Image src="/images/icon/icon_pantone.png" layout="responsive" width={60} height={60} quality={100}/>
                                      </Block>
                                  )}
                                  overrides={{
@@ -172,14 +172,14 @@ export default function roof_detail({selectedListTemp, setSelectedRoofListTemp, 
                                 </Block>
                                 <Block font="MinXParagraph12" color="rgba(0,0,0,0.45)" $style={{textAlign: "right", textDecoration: "underline", textTransform: "capitalize"}}>
                                     <a target="_blank" href="https://www.pantone.com/color-finder" rel="noopener noreferrer">
-                                        Go to "Pantone Color Finder"
+                                        Go to &quot;Pantone Color Finder&quot;
                                     </a>
                                 </Block>
                             </Tab>
                             <Tab title="Image"
                                  artwork={() => (
                                      <Block position="relative" width="20px" height="20px">
-                                         <Image src="images/icon/icon_picture.png" layout="responsive" width={60} height={60} quality={100}/>
+                                         <Image src="/images/icon/icon_picture.png" layout="responsive" width={60} height={60} quality={100}/>
                                      </Block>
                                  )}
                                  overrides={{

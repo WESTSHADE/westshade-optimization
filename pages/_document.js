@@ -42,23 +42,17 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                    {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>*/}
                     <link rel="icon" href="/logo.png"/>
-                    <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"/>
+                    {/*<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600,700,800,900&display=swap" rel="stylesheet"/>*/}
                     {this.props.stylesheets.map((sheet, i) => (
                         <style key={i} className="_styletron_hydrate_" dangerouslySetInnerHTML={{__html: sheet.css}} media={sheet.attrs.media} data-hydrate={sheet.attrs["data-hydrate"]}/>
                     ))}
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MCQP54N')`,
-                        }}
-                    />
                 </Head>
                 <body>
-                <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}/>
+                <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style={{display: 'none', visibility: 'hidden'}}/>`}}/>
                 <Main/>
                 <NextScript/>
-                <script type="text/javascript" src="/staticFiles/appleBusinessChat.js"/>
                 </body>
             </Html>
         );

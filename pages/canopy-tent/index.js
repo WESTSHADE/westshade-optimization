@@ -19,9 +19,7 @@ const refs = [];
 const BlockVideo = ({src, isSelected, step}) => {
     const refBlockVideo = useRef(null);
 
-    if (step && step > 0) {
-        refs[step - 1] = refBlockVideo;
-    }
+    if (step && step > 0) refs[step - 1] = refBlockVideo;
 
     const handleScroll = (x) => {
         if (refBlockVideo.current) {
@@ -156,7 +154,7 @@ function Canopy_Tent({router}) {
                 <title>Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Different types of canopy tent to meet your special needs. Safe shade, long-lasting fabric and unlimited color."/>
             </Head>
-            <SubHeaderBar title="Canopy Tent" subTitle="Spec" subTitleDestination="spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
+            <SubHeaderBar title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
                 <Block height={["480px", "660px", "900px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["60px 30px 0", "80px 30px 0", "160px 30px 0"]}
@@ -166,7 +164,7 @@ function Canopy_Tent({router}) {
                                    className: "banner-display text-center"
                                },
                                style: {
-                                   ":after": {background: "url('/images/canopy-tent/canopy-tent.jpg')"},
+                                   ":after": {background: "url('/images/canopy-tent/canopy-tent.webp')"},
                                }
                            }
                        }}
@@ -186,11 +184,11 @@ function Canopy_Tent({router}) {
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="20px" gridRowGap={["16px", "16px", "24px"]} justifyItems="center">
                                  <BlockDisplay title="Safe Shade" content="The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade."
-                                               src="/images/canopy-tent/tent_fabric.jpg"/>
+                                               src="/images/canopy-tent/tent_fabric.webp"/>
                                  <BlockDisplay title="Long-lasting Fabric" content="The 320 gsm, 500D polyester with PVC coating is durable even with abrasion and distortion."
-                                               src="/images/canopy-tent/fabric_structure.jpg"/>
+                                               src="/images/canopy-tent/fabric_structure.webp"/>
                                  <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
-                                               src="/images/canopy-tent/fabric_colors.jpg"
+                                               src="/images/canopy-tent/fabric_colors.webp"
                                                button={() => (
                                                    <MButton height="48px" font="MinXLabel16" text="Customize My Tent" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                                                )}
@@ -210,15 +208,7 @@ function Canopy_Tent({router}) {
                 />
                 <Section title="STRONG STRUCTURE"
                          content={
-                             <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px"
-                                    overrides={{
-                                        Block: {
-                                            props: {
-                                                className: "text-center"
-                                            }
-                                        },
-                                    }}
-                             >
+                             <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px" className="text-center">
                                  <Block position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]} padding={["40px 18px", "40px 18px 12px"]} backgroundColor="MinXBackground"
                                         overrides={{
                                             Block: {
@@ -232,14 +222,14 @@ function Canopy_Tent({router}) {
                                      <Block maxWidth={["250px", "346px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                          The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
                                      </Block>
-                                     <Block position="relative" display="flex" height={["259px", "307px", "307px", "331px"]} marginBottom="auto">
-                                         <img src="/images/canopy-tent/built-in/connecting-poles.png" alt="Connecting Poles" height="100%" style={{objectFit: "contain", padding: "0 4px"}}/>
+                                     <Block position="relative" display="flex" width="100%" height={["259px", "307px", "307px", "331px"]} marginBottom="auto" padding="0 4px">
+                                         <Image src="/images/canopy-tent/built-in/connecting-poles.webp" alt="Connecting Poles" layout="fill" objectFit="contain" quality={100}/>
                                      </Block>
-                                     <Block position="relative" display="flex" flexDirection="row" width="100%" height="74px">
-                                         <img src="/images/canopy-tent/built-in/footpads.png" alt="Footpads" width="25%" style={{objectFit: "contain", padding: "0 4px"}}/>
-                                         <img src="/images/canopy-tent/built-in/nuts-and-bolts.png" alt="Nuts and Bolts" width="25%" style={{objectFit: "contain", padding: "0 4px"}}/>
-                                         <img src="/images/canopy-tent/built-in/bracket-connectors.png" alt="Bracket Connectors" width="25%" style={{objectFit: "contain", padding: "0 4px"}}/>
-                                         <img src="/images/canopy-tent/built-in/pole-dimensions.png" alt="Pole Dimensions" width="25%" style={{objectFit: "contain", padding: "0 4px"}}/>
+                                     <Block position="relative" display="inline-flex" width="100%" justifyContent="space-between" $style={{gap: "8px"}}>
+                                         <Image src="/images/canopy-tent/built-in/footpads.webp" alt="Footpads" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/nuts-and-bolts.webp" alt="Nuts and Bolts" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/bracket-connectors.webp" alt="Bracket Connectors" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
+                                         <Image src="/images/canopy-tent/built-in/pole-dimensions.webp" alt="Pole Dimensions" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
                                      </Block>
                                  </Block>
                                  <Block position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]} padding={["40px 18px 24px", "", "40px 18px 0px"]} backgroundColor="MinXBackground"

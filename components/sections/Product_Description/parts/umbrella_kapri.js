@@ -13,39 +13,39 @@ import CardTabs from "../../../card_tabs";
 const feature_1 = [{
     tabTitle: "Waterproof",
     tabContent: "All of our umbrellas are designed to offer the ideal coverage and protection needed for all your events. It is easy to clean, maintain and is also mold resistant for longer durability, making it ideal for all weather conditions.",
-    url: "images/product/umbrella/kapri/feature-water.jpg",
+    url: "/images/product/umbrella/kapri/feature-water.webp",
     objectFit: "cover"
 }, {
     tabTitle: "UV Protection",
     tabContent: "The fabric blocks 98% harmful UV rays.",
-    url: "images/product/umbrella/kapri/feature-uv.jpg",
+    url: "/images/product/umbrella/kapri/feature-uv.webp",
     objectFit: "cover"
 }]
 
 const feature_2 = [{
     tabTitle: "Aluminum",
     tabContent: "Marine-Grade anodized aluminum material frame.",
-    url: "images/product/umbrella/kapri/feature-aluminum.jpg",
+    url: "/images/product/umbrella/kapri/feature-aluminum.webp",
     objectFit: "cover"
 }, {
     tabTitle: "Crank System",
     tabContent: "The Kapri umbrella is a smooth crank system. The unique crank system can continue to rotate when the umbrella is opened, so that the umbrella can be automatically tilted for individual adjustment according to the position of the sun.",
-    url: "images/product/umbrella/kapri/feature-crank-system.png",
+    url: "/images/product/umbrella/kapri/feature-crank-system.webp",
     objectFit: "contain"
 }, {
     tabTitle: "Height Adjustment",
     tabContent: "Kapri Umbrella height can be adjusted by simply turning the knob.",
-    url: "images/product/umbrella/kapri/feature-height-adjustment.png",
+    url: "/images/product/umbrella/kapri/feature-height-adjustment.webp",
     objectFit: "contain"
 }]
 
 const anatomyPart = [
-    {url: "/part-fixings.jpg", title: "SELF-TENSIONING TIPS", content: "The top of the ribs adopts retractable parts."},
-    {url: "/part-hub.jpg", title: "NYLON HUB & ALUMINUM FRAME", content: "Strong nylon hub that bears strength and resistance."},
-    {url: "/part-joint.jpg", title: "NYLON ARM JOINTS", content: "High strength and high quality moulded nylon arm joints."},
-    {url: "/part-tilt.jpg", title: "TILT", content: "Use the crank to tilt the umbrella when it’s open."},
-    {url: "/part-crank.jpg", title: "CRANK", content: "Simple and easy to use crank lift system."},
-    {url: "/part-knot.jpg", title: "KNOT", content: "Easy to use adjustment knob to adjust the height of the umbrella."},
+    {url: "/part-fixings.webp", title: "SELF-TENSIONING TIPS", content: "The top of the ribs adopts retractable parts."},
+    {url: "/part-hub.webp", title: "NYLON HUB & ALUMINUM FRAME", content: "Strong nylon hub that bears strength and resistance."},
+    {url: "/part-joint.webp", title: "NYLON ARM JOINTS", content: "High strength and high quality moulded nylon arm joints."},
+    {url: "/part-tilt.webp", title: "TILT", content: "Use the crank to tilt the umbrella when it’s open."},
+    {url: "/part-crank.webp", title: "CRANK", content: "Simple and easy to use crank lift system."},
+    {url: "/part-knot.webp", title: "KNOT", content: "Easy to use adjustment knob to adjust the height of the umbrella."},
 ];
 
 const QA = [
@@ -58,7 +58,7 @@ const QA = [
     },
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);
@@ -68,7 +68,7 @@ export default function description() {
             <Block position="relative" backgroundColor="#F7F7F7" paddingTop={["36px", "42px", "54px"]} paddingBottom={["36px", "42px", "54px"]}>
                 <Block marginBottom={["24px", "36px", "38px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>The anatomy of frame</Block>
                 <Block position="relative" width={["282px", "440px", "566px"]} height={["282px", "440px", "566px"]} marginRight="auto" marginLeft="auto">
-                    <Image src="images/product/umbrella/anatomy-kapri.png" alt="anatomy kapri frame" objectFit="contain" layout="fill"/>
+                    <Image src="/images/product/umbrella/anatomy-kapri.webp" alt="anatomy kapri frame" objectFit="contain" layout="fill"/>
                     <Block width={["8px", "12px", "20px"]} height={["8px", "12px", "20px"]} top={["48px", "70px", "90px"]} right={["20px", "25px", "30px"]} overrides={{Block: {props: {className: "cursor feature-frame-dot"}}}}
                            onClick={() => {
                                setDisplayIntro(true);
@@ -132,7 +132,7 @@ export default function description() {
                                    },
                                }}
                         >
-                            <Image src={"images/product/umbrella/kapri" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
+                            <Image src={"/images/product/umbrella/kapri" + anatomyPart[frameIntroPosition].url} alt="anatomy frame part" objectFit="contain" layout="fill"/>
                         </Block>
                         <Block font="MinXParagraph20" color="MinXPrimaryText">{anatomyPart[frameIntroPosition].title}</Block>
                         <Block maxWidth="250px" font="MinXParagraph16" color="MinXSecondaryText">{anatomyPart[frameIntroPosition].content}</Block>
@@ -164,15 +164,15 @@ export default function description() {
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="400px" gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/kapri/versatile/umbrella-kapri-1.jpg" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/kapri/versatile/umbrella-kapri-1.webp" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridTemplateRows={["repeat(2, 400px)", "repeat(2, 400px)", "400px"]} gridRowGap={["16px", "24px", "20px"]} gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/kapri/versatile/umbrella-kapri-2.jpg" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/kapri/versatile/umbrella-kapri-2.webp" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
                         </Block>
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>
-                            <Image src="images/product/umbrella/kapri/versatile/umbrella-kapri-3.jpg" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
+                            <Image src="/images/product/umbrella/kapri/versatile/umbrella-kapri-3.webp" alt="Versatile Umbrella Kapri" layout="fill" objectFit="cover"/>
                         </Block>
                     </Block>
                 </Block>
