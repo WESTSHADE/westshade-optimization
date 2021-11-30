@@ -18,10 +18,16 @@ body {
 .m-wrap-side {
     padding: 0 16px
 }
+.m-wrap-side-full {
+    padding: 0;
+}
 
 @media (min-width: 960px) {
     .m-wrap-side {
         padding: 0 32px
+    }
+    .m-wrap-side-full {
+        padding: 0;
     }
 }
 

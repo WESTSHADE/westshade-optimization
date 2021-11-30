@@ -13,7 +13,7 @@ import ArrowRight from "baseui/icon/arrow-right";
 
 import {Benefit, OrderProcess, Section} from "../../components/sections";
 import Sandwich from "../../components/sandwich";
-
+import FreeMockupForm from "../../components/sections/FormSections/FreeMockupForm"
 import MButton from "../../components/button-n";
 
 const ImageSlide = ({url}) => {
@@ -158,6 +158,14 @@ function Custom_Printing({router}) {
                          content={<OrderProcess/>}
                 />
                 <Section upperContainerDirection="column"
+                         title="Get a free mockup"
+                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         content={<FreeMockupForm />}
+                         containerClassName="m-wrap-side-full"
+                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
+                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                />
+                <Section upperContainerDirection="column"
                          title="PRINTING TECH"
                          subtitle="You can choose between two printing technologies based on your need."
                          content={
@@ -223,7 +231,7 @@ function Custom_Printing({router}) {
                              </Block>
                          }
                 />
-                <Benefit containerClassName="m-body-section-wrap"/>
+                <Benefit containerClassName="m-body-section-wrap" light/>
             </Block>
         </React.Fragment>
     );

@@ -12,6 +12,9 @@ import {ArrowDown} from 'baseui/icon'
 import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
 import {Modal} from "../../../components/surfaces";
+import FreeMockupForm from "../../../components/sections/FormSections/FreeMockupForm"
+import Benefit from "../../../components/sections/Benefit";
+
 
 import Utils from "../../../utils/utils";
 
@@ -113,7 +116,7 @@ function Custom_Printing_Umbrella({router, size}) {
                 <meta name="description"
                       content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
                 <Block ref={refBanner} display="grid" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["32px 30px", "40px 30px", "64px 30px"]}
                        overrides={{
                            Block: {
@@ -221,6 +224,15 @@ function Custom_Printing_Umbrella({router, size}) {
                              }
                     />
                 </Block>
+                <Section upperContainerDirection="column"
+                         title="Get a free mockup"
+                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         content={<FreeMockupForm />}
+                         containerClassName="m-wrap-side-full"
+                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
+                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                />
+                <Benefit containerClassName="m-body-section-wrap" />
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
                 <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}

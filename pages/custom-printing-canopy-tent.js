@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import clsx from "clsx";
 
@@ -9,6 +9,12 @@ import {Box, Container, Grid, Typography} from "@material-ui/core";
 import Banner from "../components/banner";
 import CContainer from "../components/container";
 import CLink from "../components/link";
+import { Button, SHAPE } from "baseui/button";
+import { Block } from "baseui/block";
+import { ChevronDown } from "baseui/icon";
+import FreeMockupForm from "../components/sections/FormSections/FreeMockupForm"
+import { useStyletron } from "baseui";
+import { Visibility } from "@material-ui/icons";
 
 const MXImageDisplay = styled.img`
 	width: 90%;
@@ -16,13 +22,26 @@ const MXImageDisplay = styled.img`
 `;
 
 function Custom_Printing_Canopy_Tent() {
+    const [css] = useStyletron();
     const [display, setDisplay] = useState(false);
+    const [showForm, setShowForm] = useState(false);
+    const formContainerRef = useRef(null)
 
     useEffect(() => {
         setTimeout(function () {
             setDisplay(true);
         }, 250);
     }, []);
+
+    useEffect(() => {
+        if(!showForm){
+            setTimeout(() => {
+                formContainerRef.current.style.height = "0";
+            }, 400);
+        }else {
+            formContainerRef.current.style.height = "auto";
+        }
+    }, [showForm]);
 
     return (
         <React.Fragment>
@@ -46,7 +65,7 @@ function Custom_Printing_Canopy_Tent() {
                                 </Typography>
                             </Container>
                         </CContainer>
-                        <CContainer>
+                        {/* <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: clsx("information-title", "information-subtitle")}} paragraph={true}>
                                     CONTACT US NOW
@@ -64,7 +83,65 @@ function Custom_Printing_Canopy_Tent() {
                                     </Grid>
                                 </Grid>
                             </Container>
-                        </CContainer>
+                        </CContainer> */}
+                        <Block width="100%">
+                            <Block display="grid" placeItems="center" marginTop={["40px", "64px", "90px"]} marginBottom={["24px", "32px", "40px"]}>
+                                <Button
+                                    onClick={() => setShowForm(!showForm)}
+                                    shape={SHAPE.pill}
+                                    endEnhancer={() => <ChevronDown size={20} />}
+                                    overrides={{
+                                        BaseButton: {
+                                            style: {
+                                                padding: "20px 0",
+                                                minWidth: "284px",
+                                                backgroundColor: "#23A4AD",
+                                                color: "#ffffff",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                ":hover": {
+                                                    backgroundColor: "#5FBDBE"
+                                                },
+                                                ":active": {
+                                                    backgroundColor: "#43878C"
+                                                }
+                                            }
+                                        },
+                                        EndEnhancer: {
+                                            style : {
+                                                transform: showForm ? "rotate(-180deg)" : "rotate(0deg)",
+                                                transition: "all .3s ease-in-out"
+                                            }
+                                        }
+                                    }}
+                                >
+                                    Get a free mockup
+                                </Button>
+                            </Block>
+                            <Block 
+                                width="100%" 
+                                placeItems="center"
+                                ref={formContainerRef}
+                                className={css({
+                                    transition: "all .3s ease-in"
+                                })}
+                                >
+                                    <Block
+                                        className={css({
+                                            opacity: showForm ? "1" : "0",
+                                            transform: showForm ? "scaleY(1)" : "scaleY(0)",
+                                            visibility: showForm ? "visible" : "hidden",
+                                            userSelect: showForm ? "auto" : "none",
+                                            transformOrigin: "0 0",
+                                            transformStyle: "flat",
+                                            transition: "all .5s ease-in-out"
+                                        })}
+                                    >
+                                        <FreeMockupForm />
+                                    </Block>
+                            </Block>
+                        </Block>
                         <CContainer>
                             <Container maxWidth="md">
                                 <Typography variant="subtitle1" classes={{subtitle1: clsx("information-title", "information-subtitle")}} paragraph={true}>
