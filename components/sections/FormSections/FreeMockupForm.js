@@ -3,7 +3,7 @@ import { Button, SHAPE } from "baseui/button";
 import { FormControl } from "baseui/form-control";
 import { Notification } from "baseui/notification";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Utils from "../../../utils/utils";
 import { 
     CustomCheckbox, 
@@ -48,11 +48,10 @@ const index = () => {
                 2: companyName,
                 3: phone,
                 4: email,
-                6: interests.join(),
+                6: interests.join(", "),
                 7: logo.url,
                 8: printInstruction
             })
-            console.log({res});
             setFormLoading(false);
             setFormState(initialState);
             setFormSubmitted(true);
@@ -93,10 +92,6 @@ const index = () => {
             setFormState({...formState, phone: cleanVal})
         }
     }
-
-    useEffect(() => {
-        console.log(formState.logo.url)
-    }, [formState.logo])
 
     return (
         <>
@@ -217,7 +212,7 @@ const index = () => {
                             <CustomLabel>Logo</CustomLabel>
                             <Block margin="0 auto"  maxWidth={["295px","100%","295px","295px"]} width="100%">
                                 <Block width="100%" display="grid" placeItems="center">
-                                    <CustomFileUploadInput id="form-file-upload" onChange={handleFile}/>
+                                    <CustomFileUploadInput attachedFile={!!formState.logo.file} id="form-file-upload" onChange={handleFile}/>
                                 </Block>
                             </Block>
                         </Block>
@@ -278,7 +273,7 @@ const index = () => {
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     backgroundColor="#ededed"
                                     value={formState.phone}
-                                    onChange={(e) => setFormState({...formState, phone: e.target.value})}
+                                    onChange={handlePhone}
                                 />
                             </Block>
                             <Block marginBottom="16px" width="100%">
