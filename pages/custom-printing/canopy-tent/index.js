@@ -168,14 +168,14 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                          }
                 />
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIAL<br/>EVENTS</>}
-                         subtitle="Westshade provides free mockup service and we’ll help you to make you special and stand out in important events."
+                         subtitle={<>Westshade provides free mockup service and we&apos;ll help you to make you special and stand out in important events.</>}
                          content={
                              <Block position="relative" width="100%" height={["187px", "268px", "538px"]}>
                                  <Image src="/images/custom-printing/canopy-tent/event.webp" alt="custom printing event" layout="fill" objectFit="cover" objectPosition="bottom" quality={100}/>
                              </Block>
                          }
                 />
-                <Section title={<>CUSTOMERS'<br/>SHOW</>}
+                <Section title={<>CUSTOMERS&apos;<br/>SHOW</>}
                          subtitle="Our customers love the tents they created with us. Check them out!"
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["16px", "16px", "20px"]} justifyItems="center">

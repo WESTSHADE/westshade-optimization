@@ -66,7 +66,7 @@ const QA = [
     {title: "I bought a canopy from another company,  will your replacement fit my current frame?", content: "Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product."},
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);

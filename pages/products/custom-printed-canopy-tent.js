@@ -6,6 +6,7 @@ import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
+import Script from 'next/script'
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -831,8 +832,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
         <React.Fragment>
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
-                <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             </Head>
+            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display={"flex"} justifyContent={"center"} overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} paddingBottom={["116px", "116px", "0px"]}>
                     {/* 图片区域 */}

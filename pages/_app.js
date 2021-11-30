@@ -135,8 +135,6 @@ function useWindowSize() {
 }
 
 function MyApp({Component, pageProps}) {
-    const [isSupported, setIsSupported] = useState(false);
-
     const size = useWindowSize();
 
     useEffect(() => {
@@ -154,34 +152,29 @@ function MyApp({Component, pageProps}) {
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
-
-        setIsSupported(window.appleBusinessChat.isSupported());
     }, []);
-
-    useEffect(() => {
-        if (isSupported) {
-            let elem = document.getElementById("chat-widget-container");
-            if (elem) elem.remove();
-
-            if (!pageProps.noFooter) {
-                setTimeout(function () {
-                    createABannerPlaceholder();
-                    window.appleBusinessChat.refresh();
-                }, 1000);
-            }
-        }
-    }, [isSupported]);
 
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
                 <StyletronProvider value={styletron}>
                     <BaseProvider theme={CustomTheme}>
-                        <Script id="GTM" strategy="afterInteractive"
+                        <Script id="gmt"
                                 dangerouslySetInnerHTML={{
                                     __html: `  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', 'GTM-MCQP54N');`,
                                 }}
+                                strategy="afterInteractive"
                         />
+                        <Script id="apple-business-chat" src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js" strategy="afterInteractive"/>
+                        <Script id="apple-business-chat-js" src="/staticFiles/appleBusinessChat.js" strategy="afterInteractive"
+                                onLoad={() => {
+                                    if (window.appleBusinessChat.isSupported()) {
+                                        createABannerPlaceholder();
+                                        window.appleBusinessChat.refresh();
+                                    }
+                                }}
+                        />
+                        <Script id="mcjs" type="text/javascript" src="/staticFiles/mailchimpFirstOrder.js" strategy="afterInteractive"/>
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
                             <Header/>
                             <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={["104px", "120px", "136px"]} marginRight="auto"

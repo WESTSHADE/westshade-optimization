@@ -52,7 +52,7 @@ const QA = [
     {title: "Should I use an umbrella cover?", content: "You can use an umbrella cover if need be to prevent debris and moisture from reaching your umbrella."},
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);

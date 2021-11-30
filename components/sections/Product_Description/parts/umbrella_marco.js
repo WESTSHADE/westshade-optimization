@@ -54,7 +54,7 @@ const QA = [
     {title: "How should I store my Marco umbrella?", content: "When not using your Marco umbrella, store your umbrella in an enclosed space such as a garage or basement during off-season."},
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);

@@ -1,4 +1,5 @@
 import {useState} from "react";
+import clsx from "clsx";
 
 import Head from "next/head"
 import Image from "next/image";
@@ -442,13 +443,12 @@ const Contact_Us = () => {
                                 }}
                             >
                                 <Textarea
-                                    className="form-input"
                                     value={formState.message}
                                     onChange={e => setFormState({...formState, message: e.target.value})}
                                     size={SIZE.large}
                                     clearOnEscape
                                     required
-                                    className={css({borderTopColor: "transparent", borderBottomColor: "transparent", borderRightColor: "transparent", borderLeftColor: "transparent"})}
+                                    className={clsx(["form-input", css({borderTopColor: "transparent", borderBottomColor: "transparent", borderRightColor: "transparent", borderLeftColor: "transparent"})])}
                                     overrides={{
                                         Root: {style: {borderTopWidth: "0px", borderLeftWidth: "0px", borderBottomWidth: "0px", borderRightWidth: "0px"}},
                                         Input: {style: ($isFocused) => ({height: "180px", backgroundColor: "#ffffff", outline: "none", borderRadius: "4px", resize: "both", ":focus": {border: "1px solid #23A4AD"}})},

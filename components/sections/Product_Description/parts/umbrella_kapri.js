@@ -58,7 +58,7 @@ const QA = [
     },
 ];
 
-export default function description() {
+export default function Description() {
     const [displayIntro, setDisplayIntro] = useState(false);
     const [frameIntroIsModal, setFrameIntroIsModal] = useState(false);
     const [frameIntroPosition, setFrameIntroPosition] = useState(0);

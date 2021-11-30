@@ -46,7 +46,7 @@ const nextConfig = {
             '54.212.246.17',
         ],
         formats: ['image/webp'],
-        path: isProd ? "https://www.westshade.com" : "http://localhost:3000",
+        path: isProd ? "https://westshade.s3.us-west-2.amazonaws.com" : "http://localhost:3000",
     },
     exportPathMap: async function () {
         return {

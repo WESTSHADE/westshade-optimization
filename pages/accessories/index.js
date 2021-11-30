@@ -103,7 +103,7 @@ function Accessories({router, products}) {
         <React.Fragment>
             <Head>
                 <title>Accessories - WESTSHADE</title>
-                <meta name="description" content="Westshade&apos;s selection of versatile accessories are perfect with Westshade&apos;s canopy and umbrella."/>
+                <meta name="description" content={`Westshade&apos;s selection of versatile accessories are perfect with Westshade&apos;s canopy and umbrella.`}/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <Block position="relative" width="100%" height={["318px", "320px", "352px"]} backgroundColor="#F5FCFC" overflow="hidden" display="flex" alignItems="center" justifyContent="center"

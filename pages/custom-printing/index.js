@@ -19,7 +19,7 @@ import MButton from "../../components/button-n";
 const ImageSlide = ({url}) => {
     return (
         <div className="react-player">
-            <img src={url} width="100%" height="100%"/>
+            <img src={url} alt="live-example" width="100%" height="100%"/>
         </div>
     );
 };

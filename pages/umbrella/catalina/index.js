@@ -100,7 +100,7 @@ function Catalina({router}) {
                                                     style: {fontWeight: "900 !important"},
                                                 },
                                             }}
-                                     >1/4'' thickness</Block>
+                                     >1/4" thickness</Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel28", "MinXLabel32"]} color="MinXPrimaryText"
                                             overrides={{
                                                 Block: {
