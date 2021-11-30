@@ -9,12 +9,12 @@ import {Box, Container, Grid, Typography} from "@material-ui/core";
 import Banner from "../components/banner";
 import CContainer from "../components/container";
 import CLink from "../components/link";
-import { Button, SHAPE } from "baseui/button";
-import { Block } from "baseui/block";
-import { ChevronDown } from "baseui/icon";
-import FreeMockupForm from "../components/sections/FormSections/FreeMockupForm"
-import { useStyletron } from "baseui";
-import { Visibility } from "@material-ui/icons";
+import {Button, SHAPE} from "baseui/button";
+import {Block} from "baseui/block";
+import {ChevronDown} from "baseui/icon";
+import Index from "../components/sections/FormSections"
+import {useStyletron} from "baseui";
+import {Visibility} from "@material-ui/icons";
 
 const MXImageDisplay = styled.img`
 	width: 90%;
@@ -34,11 +34,11 @@ function Custom_Printing_Canopy_Tent() {
     }, []);
 
     useEffect(() => {
-        if(!showForm){
+        if (!showForm) {
             setTimeout(() => {
                 formContainerRef.current.style.height = "0";
             }, 400);
-        }else {
+        } else {
             formContainerRef.current.style.height = "auto";
         }
     }, [showForm]);
@@ -89,7 +89,7 @@ function Custom_Printing_Canopy_Tent() {
                                 <Button
                                     onClick={() => setShowForm(!showForm)}
                                     shape={SHAPE.pill}
-                                    endEnhancer={() => <ChevronDown size={20} />}
+                                    endEnhancer={() => <ChevronDown size={20}/>}
                                     overrides={{
                                         BaseButton: {
                                             style: {
@@ -109,7 +109,7 @@ function Custom_Printing_Canopy_Tent() {
                                             }
                                         },
                                         EndEnhancer: {
-                                            style : {
+                                            style: {
                                                 transform: showForm ? "rotate(-180deg)" : "rotate(0deg)",
                                                 transition: "all .3s ease-in-out"
                                             }
@@ -119,27 +119,27 @@ function Custom_Printing_Canopy_Tent() {
                                     Get a free mockup
                                 </Button>
                             </Block>
-                            <Block 
-                                width="100%" 
+                            <Block
+                                width="100%"
                                 placeItems="center"
                                 ref={formContainerRef}
                                 className={css({
                                     transition: "all .3s ease-in"
                                 })}
+                            >
+                                <Block
+                                    className={css({
+                                        opacity: showForm ? "1" : "0",
+                                        transform: showForm ? "scaleY(1)" : "scaleY(0)",
+                                        visibility: showForm ? "visible" : "hidden",
+                                        userSelect: showForm ? "auto" : "none",
+                                        transformOrigin: "0 0",
+                                        transformStyle: "flat",
+                                        transition: "all .5s ease-in-out"
+                                    })}
                                 >
-                                    <Block
-                                        className={css({
-                                            opacity: showForm ? "1" : "0",
-                                            transform: showForm ? "scaleY(1)" : "scaleY(0)",
-                                            visibility: showForm ? "visible" : "hidden",
-                                            userSelect: showForm ? "auto" : "none",
-                                            transformOrigin: "0 0",
-                                            transformStyle: "flat",
-                                            transition: "all .5s ease-in-out"
-                                        })}
-                                    >
-                                        <FreeMockupForm />
-                                    </Block>
+                                    <Index/>
+                                </Block>
                             </Block>
                         </Block>
                         <CContainer>

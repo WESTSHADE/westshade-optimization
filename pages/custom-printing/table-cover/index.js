@@ -6,11 +6,8 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import {Section} from "../../../components/sections"
+import {Benefit, FormSections, Section} from "../../../components/sections"
 import Button from "../../../components/button-n";
-import Benefit from "../../../components/sections/Benefit";
-import FreeMockupForm from "../../../components/sections/FormSections/FreeMockupForm"
-
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (
@@ -185,9 +182,8 @@ function Custom_Printing_Table_Cover({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FreeMockupForm/>}
+                         content={<FormSections/>}
                          containerClassName="m-wrap-side-full"
-                    // containerProps={{marginBottom: ["-60px", "-80px", "-120px"]}}
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                          subtitleStyles={{maxWidth: "unset !important"}}
                 />

@@ -29,7 +29,7 @@ const initialState = {
 }
 
 
-const index = () => {
+const FormSections = () => {
     const [formState, setFormState] = useState(initialState);
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -142,9 +142,8 @@ const index = () => {
                                 <Block marginBottom="16px" width="100%">
                                     <CustomInput
                                         type="tel"
-                                        placeholder="Phone"
                                         required
-                                        placeholder="Phone  (000-000-0000)"
+                                        placeholder="Phone (000-000-0000)"
                                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                         backgroundColor="#ededed"
                                         value={formState.phone}
@@ -271,9 +270,8 @@ const index = () => {
                                 <Block marginBottom="16px" width="100%">
                                     <CustomInput
                                         type="tel"
-                                        placeholder="Phone"
                                         required
-                                        placeholder="Phone  (000-000-0000)"
+                                        placeholder="Phone (000-000-0000)"
                                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                         backgroundColor="#ededed"
                                         value={formState.phone}
@@ -360,4 +358,4 @@ const index = () => {
     )
 }
 
-export default index;
+export default FormSections;
