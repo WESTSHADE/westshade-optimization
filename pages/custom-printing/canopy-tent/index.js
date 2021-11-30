@@ -13,6 +13,9 @@ import ArrowRight from "baseui/icon/arrow-right";
 
 import {Section} from "../../../components/sections"
 import MButton from "../../../components/button-n";
+import Benefit from "../../../components/sections/Benefit";
+import FreeMockupForm from "../../../components/sections/FormSections/FreeMockupForm"
+
 
 const ImageSlide = ({url, alt}) => {
     return (
@@ -70,7 +73,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                 <title>Custom Printing Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
             </Head>
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
                 <Block position="relative">
                     <Block ref={refBanner} height={["368px", "437px", "582px"]} display="grid" gridTemplateRows="repeat(2, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center"
                            marginBottom="100px" padding={["32px 30px", "40px 30px", "64px 30px"]}
@@ -200,6 +203,15 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                              </Block>
                          }
                 />
+                <Section upperContainerDirection="column"
+                         title="Get a free mockup"
+                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         content={<FreeMockupForm />}
+                         containerClassName="m-wrap-side-full"
+                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
+                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                />
+                <Benefit containerClassName="m-body-section-wrap" />
             </Block>
         </React.Fragment>
     )
