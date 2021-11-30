@@ -44,7 +44,7 @@ const Product = ({name, product, showDesc = true}) => {
                 {url ? (
                     <img src={url} alt={product.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
                 ) : (
-                    <Image src="/images/product/default-product.webp" alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                    <Image src="/images/product/default-product.webp" alt={product.name} layout="fill" objectFit="contain" quality={100} priority={true}/>
                 )}
             </Block>
             <Block display="grid" gridTemplateRows="1fr auto" gridRowGap={["12px", "16px"]} overrides={{Block: {style: {textAlign: "left"}}}}>
@@ -149,7 +149,7 @@ function Accessories({router, products}) {
                 <Section title={<Block><Block marginBottom="10px" font="MinXParagraph14" color="MinXSecondaryText">CANOPY TENT</Block>ACCESSORY</Block>}
                          content={
                              <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["32px", "40px", "62px"]}>
-                                 {products[1].map((product, index) => <Product key={index} product={product}/>)}
+                                 {products[1].map(product => <Product key={product.id} product={product}/>)}
                              </Block>
                          }
                 />
@@ -162,7 +162,7 @@ function Accessories({router, products}) {
                                      </Block>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", "24px", "48px"]} gridRowGap={["24px", "32px", "40px"]}>
-                                     {products[2].map((product, index) => <Product key={index} product={product} showDesc={false}/>)}
+                                     {products[2].map(product => product.id !== 31855 && product.id !== 58944 ? <Product key={product.id} product={product} showDesc={false}/> : null)}
                                  </Block>
                              </>
                          }

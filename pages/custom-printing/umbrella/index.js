@@ -227,12 +227,13 @@ function Custom_Printing_Umbrella({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
-                         content={<FreeMockupForm />}
+                         content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
-                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
-                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                         containerProps={{marginBottom: ["-60px", "-80px", "-120px"]}}
+                         upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
+                         subtitleStyles={{maxWidth: "unset !important"}}
                 />
-                <Benefit containerClassName="m-body-section-wrap" />
+                <Benefit containerClassName="m-body-section-wrap"/>
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
                 <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
