@@ -227,4 +227,30 @@ export default class Utils {
             console.error(error);
         }
     }
+
+    async imageUploadV2(file, link, name) {
+        try {
+            const {data, status} = await axios({
+                method: "PUT",
+                url: "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + name,
+                headers: {
+                    "Access-Control-Allow-Headers": "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": file.type,
+                },
+                data: file,
+            });
+            console.log({data, status})
+
+            if (status !== 200) {
+                return false;
+            }
+            else {
+                return true
+            }
+            // return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

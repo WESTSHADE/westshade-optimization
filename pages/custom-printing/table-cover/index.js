@@ -8,6 +8,9 @@ import {Block} from "baseui/block";
 
 import {Section} from "../../../components/sections"
 import Button from "../../../components/button-n";
+import Benefit from "../../../components/sections/Benefit";
+import FreeMockupForm from "../../../components/sections/FormSections/FreeMockupForm"
+
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (
@@ -68,7 +71,7 @@ function Custom_Printing_Table_Cover({router, size}) {
                 <title>Custom Printing Table Cover - WESTSHADE</title>
                 <meta name="description" content="Customize your table covers for any occasions. Print your logo, icon and choose any color! Choose fabric from fitted and stretched table covers!"/>
             </Head>
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
                 <Block ref={refBanner} display="grid" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["32px 30px", "40px 30px", "64px 30px"]}
                        overrides={{
                            Block: {
@@ -179,6 +182,15 @@ function Custom_Printing_Table_Cover({router, size}) {
                              </Block>
                          }
                 />
+                <Section upperContainerDirection="column"
+                         title="Get a free mockup"
+                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         content={<FreeMockupForm />}
+                         containerClassName="m-wrap-side-full"
+                         containerProps={{marginBottom:["-60px","-80px", "-120px"]}}
+                         upperContainerProps = {{marginBottom: ["32px", "32px", "40px"],padding: ["0 16px", "0 32px", ]}}
+                />
+                <Benefit containerClassName="m-body-section-wrap" />
             </Block>
         </React.Fragment>
     )

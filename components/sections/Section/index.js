@@ -69,7 +69,7 @@ export default function Section(props) {
                         {title}
                     </Block>
                 ) : null}
-                <Block maxWidth="320px" font={subtitleFont} color="MinXSecondaryText" {...subtitleProps}
+                <Block font={subtitleFont} color="MinXSecondaryText" {...subtitleProps}
                        overrides={{
                            Block: {
                                props: {
