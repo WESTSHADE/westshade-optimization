@@ -39,29 +39,11 @@ function Home({router}) {
                 <meta name="description" content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
             </Head>
             <BannerDisplay refD={ref1} title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="/images/home/custom_printing.webp"
-                           router={router} destination="/custom-printing" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref2)} home containerMarginBottom={"0px"}/>
+                           router={router} destination="/custom-printing" onClickScrollDown={() => scrollDownToNextSection(ref2)} home/>
             <BannerDisplay refD={ref2} title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability." url="/images/home/tent.webp" containerBackgroundPosition="bottom"
-                           router={router} destination="/canopy-tent" showScrollDown onClickScrollDown={() => scrollDownToNextSection(ref3)} home containerMarginBottom={"0px"}/>
+                           router={router} destination="/canopy-tent" onClickScrollDown={() => scrollDownToNextSection(ref3)} home/>
             <BannerDisplay refD={ref3} title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella.webp" containerBackgroundPosition="bottom"
-                           router={router} destination="/umbrella" home containerMarginBottom={"0px"}/>
-            {/*<BannerDisplay refD={ref3} title="UMBRELLA" subtitle="KAPRI" url="/images/home/umbrella.webp" subtitleFont={["MinXSubtitle46", "MinXSubtitle46", 'MinXSubtitle46']}*/}
-            {/*               router={router} destination="/umbrella" home containerMarginBottom={"0px"}*/}
-            {/*               content="Easy to adjust any desired angle for shade coverage with a simple push button."*/}
-            {/*               newPart*/}
-            {/*               renderButton={*/}
-            {/*                   <MButton type="solid" width={["240px"]} height={["56px"]}*/}
-            {/*                            font="MinXLabel20" color={"MinXPrimaryTextAlt"}*/}
-            {/*                            buttonStyle={{*/}
-            {/*                                borderColor: 'rgba(255,255,255,0.2) !important',*/}
-            {/*                                backgroundColor: `rgba(255,255,255,0.2) !important`,*/}
-            {/*                                ":hover": {backgroundColor: 'rgba(255,255,255,0.5) !important'},*/}
-            {/*                                ":active": {backgroundColor: "rgba(255,255,255,0.8) !important"}*/}
-            {/*                            }}*/}
-            {/*                            endEnhancer={() => <ChevronRight size={24} color={"white"}/>}*/}
-            {/*                            onClick={() => router.push("/umbrella")} text={"Learn More"}*/}
-            {/*                   />*/}
-            {/*               }*/}
-            {/*/>*/}
+                           router={router} destination="/umbrella" home/>
         </React.Fragment>
     )
 }
