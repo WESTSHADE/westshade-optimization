@@ -44,7 +44,7 @@ function Footer({isHomePage}) {
                                }}
                                onClick={() => document.location.href = "/"}
                         >
-                            <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                            <Image src={"/images/icon/logo-site-w-text.webp"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "1fr auto"]} gridRowGap={["32px", "32px", "40px"]} width="100%" paddingLeft={["0px", "0px", "calc((100% + 24px)/12)"]}>

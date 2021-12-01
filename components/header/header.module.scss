@@ -10,10 +10,41 @@
     border-bottom: none;
     background-color: #F2F2F2;
 
+    .nav-left {
+      @media screen and (min-width: 960px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .nav-center {
+      &.menu {
+        display: none;
+        letter-spacing: 0.1em
+      }
+    }
+
+    .nav-left, .nav-center, .nav-right {
+      & > li {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      & > li:first-child {
+        padding-left: 0;
+      }
+    }
+
     .badge {
       position: absolute;
       top: 0;
       right: 0;
+      justify-content: center;
+      align-items: center;
+      min-width: 18px;
+      height: 18px;
+      background-color: #23A4Ad;
       border-radius: 50%;
       transform: translate(50%, -50%);
       overflow: hidden;
@@ -31,3 +62,5 @@
     }
   }
 }
+
+
