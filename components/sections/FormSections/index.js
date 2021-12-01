@@ -24,33 +24,43 @@ const initialState = {
     logo: {},
 }
 
+
 const FreeMockupForm = () => {
     const [formState, setFormState] = useState(initialState);
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [fileError, setFileError] = useState({status:false, message: ""});
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormLoading(true);
-        const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction} = formState
-        const successImageUpload = utils.imageUploadV2(logo.file, logo.url, logo.filename);
-        if (successImageUpload) {
-            const res = utils.contact({
-                form_id: "5",
-                status: "active",
-                1.3: firstname,
-                1.6: lastname,
-                2: companyName,
-                3: phone,
-                4: email,
-                6: interests.join(),
-                7: logo.url,
-                8: printInstruction
-            })
-            console.log({res});
+        const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction} = formState;
+        if(!Object.entries(logo).length === 0 && !logo.constructor === Object) {
+            const uploadImage = await utils.imageUploadV2(logo.file, logo.url, logo.filename);
+            if (uploadImage.status === 200) {
+                const res = utils.contact({
+                    form_id: "5",
+                    status: "active",
+                    1.3: firstname,
+                    1.6: lastname,
+                    2: companyName,
+                    3: phone,
+                    4: email,
+                    6: interests.join(),
+                    7: logo.url,
+                    8: printInstruction
+                })
+                setFormLoading(false);
+                setFormState(initialState);
+                setFormSubmitted(true);
+            }else {
+                setFileError({status: true, message: "please try attaching the file again"});
+                setFormLoading(false);
+            }
+        }
+        else {
+            setFileError({status: true, message: "please attach a file"});
             setFormLoading(false);
-            setFormState(initialState);
-            setFormSubmitted(true);
         }
     }
 
@@ -67,10 +77,16 @@ const FreeMockupForm = () => {
     const handleFile = (e) => {
         let file = e.target.files[0];
         const url = "https://westshade.s3.us-west-2.amazonaws.com/contacts/"
-        let fileName = new Date().toISOString().slice(0, 10) + "-" + file.name;
+        let fileName = new Date().toISOString().slice(0, 10) + "-" + file.name.split(' ').join('-');
         let fileExt = file.name.substring(file.name.lastIndexOf('.') + 1, file.name.length) || file.name;
         if (["ai", "psd", "jpg", "png", "jpeg"].includes(fileExt.toLowerCase())) {
             setFormState({...formState, logo: {url: url + fileName, file: file, filename: fileName}});
+            setFileError(false);
+            console.log(fileName)
+        }
+        else {
+            setFormState({...formState, logo: {}});
+            setFileError({status: true, message: "please attach a valid file"});
         }
     }
 
@@ -210,7 +226,7 @@ const FreeMockupForm = () => {
                                 <CustomLabel>Logo</CustomLabel>
                                 <Block margin="0 auto" maxWidth={["295px", "100%", "295px", "295px"]} width="100%">
                                     <Block width="100%" display="grid" placeItems="center">
-                                        <CustomFileUploadInput id="form-file-upload" onChange={handleFile}/>
+                                        <CustomFileUploadInput error={fileError} attachedFile={!!formState.logo.file && !fileError} id="form-file-upload" onChange={handleFile}/>
                                     </Block>
                                 </Block>
                             </Block>
@@ -227,6 +243,7 @@ const FreeMockupForm = () => {
                                     backgroundColor="#ededed"
                                     value={formState.printInstruction}
                                     onChange={(e) => setFormState({...formState, printInstruction: e.target.value})}
+                                    required
                                 />
                             </FormControl>
                             <Block display={["block", "none", "none"]} width="100%" marginTop="35px">
