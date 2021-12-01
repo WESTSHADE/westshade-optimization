@@ -243,14 +243,18 @@ export default class Utils {
             console.log({data, status})
 
             if (status !== 200) {
-                return false;
+                return {status};
             }
             else {
-                return true
+                return {
+                    status,
+                    url: "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + name
+                }
             }
             // return data;
         } catch (error) {
             console.error(error);
+            return {status: 400}
         }
     }
 }

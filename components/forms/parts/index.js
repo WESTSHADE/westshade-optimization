@@ -126,7 +126,6 @@ const CustomTextarea = ({customClassname, message, onChange, id, placeholder, re
             value={message}
             onChange={onChange}
             size={SIZE.large}
-            clearOnEscape
             required={required}
             id={id}
             placeholder={placeholder}
@@ -140,7 +139,7 @@ const CustomTextarea = ({customClassname, message, onChange, id, placeholder, re
     )
 }
 
-const CustomFileUploadInput = ({onChange, id, attachedFile}) => {
+const CustomFileUploadInput = ({onChange, id, attachedFile, error}) => {
     const [css] = useStyletron();
 
     return (
@@ -169,8 +168,14 @@ const CustomFileUploadInput = ({onChange, id, attachedFile}) => {
                 </Block>
             </Block>
             <Block as="small" marginTop="8px" textAlign="center" font="MinXParagraph14" color="MinXPrimaryText">
-                File format: .ai, .psd, png, jpg
+                File format: .ai, .psd, .png, .jpg
             </Block>
+            {
+                error.status &&
+                <Block as="small" marginTop="4px" textAlign="center" font="MinXParagraph14" color="#F07C7C">
+                    {error.message || "We only accept image with .ai, .psd, .png and .jpg type"}
+                </Block>
+            }
             <input hidden id={id} type="file" onChange={onChange}/>
         </>
     )
