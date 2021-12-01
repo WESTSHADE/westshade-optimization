@@ -39,10 +39,11 @@ const Banner = ({
                     buttonHoverColor,
                     buttonActiveColor,
                     renderButton,
+                    containerTextPosition = "absolute"
                 }) => {
 
     return (
-        <Block ref={refD} position="relative" width="100%" height={containerHeight} marginTop={home ? ["-104px", "-120px", "-136px"] : null} marginBottom={containerMarginBottom} display="flex" justifyContent="flex-end" alignItems="flex-start"
+        <Block ref={refD} position="relative" width="100%" height={containerHeight} marginTop={home ? ["-104px", "-120px", "-136px"] : null} marginBottom={containerMarginBottom}
                backgroundColor={containerBackground}
                overrides={{
                    Block: {
@@ -52,13 +53,13 @@ const Banner = ({
                        style: {
                            ...containerStyle,
                            ":after": {
-                               background: `url('${url}') ${containerBackgroundPosition}/${imageObjectFit}`,
+                               background: `url('${url}') ${backgroundColor} ${containerBackgroundPosition}/${imageObjectFit}`,
                            }
                        }
                    },
                }}
         >
-            <Block position="absolute" bottom={["40px", "60px", "70px"]} left={["24px", "40px", "calc((100% + 24px)/12)"]}>
+            <Block position="absolute" bottom={containerTextPosition === "center" ? "unset" : ["40px", "60px", "70px"]} left={["24px", "40px", "calc((100% + 24px)/12)"]}>
                 <Block maxWidth={["213px", "298px"]} marginBottom={titleMarginBottom} font={titleFont} color={textColor ? textColor : "MinXPrimaryTextAlt"} $style={{lineHeight: "0.85em !important"}}>
                     {title}
                 </Block>

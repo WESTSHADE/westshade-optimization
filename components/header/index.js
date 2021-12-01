@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import clsx from "clsx";
 
 import {useRouter} from "next/router";
 import Link from "next/link";
@@ -145,15 +146,14 @@ function Header() {
         <React.Fragment>
             <div className={styles["container-nav"]}>
                 <Block position="fixed" top={0} right={0} left={0} display="block" width="100%" backgroundColor="#FBFBFB">
-                    <Block width="100%" backgroundColor="#fbfbfb" height={["48px", "64px"]}>
-                        <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", "", "row"]} justifyContent="space-between" alignItems="center" padding="12px 16px">
-                            <Block position="relative" display={["none", "", "block"]} height="40px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="fixed" width={175} height={40} objectFit="contain" objectPosition="left" quality={100}/>
+                    <Block width="100%" backgroundColor="#FBFBFB" height={["48px", "64px"]}>
+                        <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", null, "row"]} justifyContent="space-between" alignItems="center" paddingRight="16px" paddingLeft="16px"
+                               $style={{gap: "24px", whiteSpace: "nowrap"}}
+                        >
+                            <Block className="site-logo cursor" position="relative" display={["none", null, "block"]} height="40px" onClick={() => router.push("/")}>
+                                <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" quality={100} priority={true}/>
                             </Block>
-                            <Block>
-                                <Button
-                                    onClick={() => {
-                                    }}
+                            <Button shape={SHAPE.pill}
                                     startEnhancer={() =>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                             <path
@@ -161,116 +161,83 @@ function Header() {
                                                 fill="#FAFAFA"/>
                                         </svg>
                                     }
-                                    shape={SHAPE.pill}
-                                    $as="a"
-                                    href="tel:877-702-1872"
+                                    $as="a" href="tel:877-702-1872"
                                     overrides={{
                                         BaseButton: {
-                                            style: ($theme) => ({
-                                                paddingTop: "4.5px",
-                                                paddingBottom: "4.5px",
+                                            style: {
+                                                height: "24px",
                                                 paddingLeft: " 24px",
                                                 paddingRight: " 24px",
-                                                color: "#ffffff !important",
+                                                color: "#FFF !important",
                                                 backgroundColor: "#23A4AD",
                                                 ":hover": {backgroundColor: "#5FBDBE"}
-                                            })
+                                            }
                                         },
                                     }}
-                                >
-                                    Call us <Block font="MinXParagraph14" display={["none", "", "inline-block"]}> &nbsp; 877-702-1872</Block>
-                                </Button>
-                            </Block>
-                            <Block display="flex">
-                                <Button
-                                    $as="a"
-                                    href="mailto: support@westshade.com"
-                                    kind={KIND.minimal}
-                                    startEnhancer={() =>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#999999" viewBox="0 0 24 24">
-                                            <path
-                                                d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
-                                        </svg>
-                                    }
-                                    overrides={{
-                                        BaseButton: {style: {textDecoration: "underline", color: "#262626", fontSize: "14px", fontWeight: "400", paddingLeft: "0px", paddingRight: "0px", ":hover": {backgroundColor: "transparent"}}},
-                                        StartEnhancer: {style: {display: "grid", placeItems: "center", marginRight: "8px"}}
-                                    }}
+                            >
+                                Call us <Block font="MinXParagraph14" display={["none", null, "inline-block"]}>&nbsp;&nbsp;877-702-1872</Block>
+                            </Button>
+                            <Block display="grid" gridTemplateColumns="auto auto" gridColumnGap={["24px", "40px"]} font="MinXParagraph14" alignItems="inherit">
+                                <Button kind={KIND.minimal}
+                                        startEnhancer={() =>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#999999" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
+                                            </svg>
+                                        }
+                                        $as="a" href="mailto: support@westshade.com"
+                                        overrides={{
+                                            BaseButton: {style: {textDecoration: "underline", color: "#262626", fontSize: "inherit", fontWeight: "inherit", paddingLeft: "0px", paddingRight: "0px", ":hover": {backgroundColor: "transparent"}}},
+                                            StartEnhancer: {style: {marginRight: "8px"}}
+                                        }}
                                 >
                                     Email Us
                                 </Button>
-                                <Block marginLeft={["24px", "40px"]} display="grid" placeItems="center" font="MinXParagraph14">
-                                    <Link href="/my-account">
-                                        Log in
-                                    </Link>
-                                </Block>
+                                <Link href="/my-account">
+                                    Log in
+                                </Link>
                             </Block>
                         </Block>
                     </Block>
-                    <HeaderNavigation
-                        overrides={{
-                            Root: {
-                                props: {
-                                    className: styles["root-navigation"]
-                                },
-                            }
-                        }}
-                    >
-                        
-                        <NavigationList $align={ALIGN.left} className="nav-left">
+                    <HeaderNavigation className={styles["root-navigation"]}>
+                        <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
                             <NavigationItem>
-                                <Block position="relative" display={["flex", "", "none"]}>
-                                    <Button shape={SHAPE.circle} kind={KIND.minimal}
-                                            overrides={{
-                                                BaseButton: {
-                                                    style: {
-                                                        width: "24px", height: "24px",
-                                                        ":hover": {backgroundColor: "transparent"},
-                                                        ":active": {backgroundColor: "transparent"},
-                                                    },
+                                <Button shape={SHAPE.circle} kind={KIND.minimal}
+                                        overrides={{
+                                            BaseButton: {
+                                                style: {
+                                                    width: "24px", height: "24px",
+                                                    ":hover": {backgroundColor: "transparent"},
+                                                    ":active": {backgroundColor: "transparent"},
                                                 },
-                                            }}
-                                            onClick={() => setMenuDrawerOpen(true)}
-                                    >
-                                        <Menu size={24} color="#323232"/>
-                                    </Button>
-                                </Block>
+                                            },
+                                        }}
+                                        onClick={() => setMenuDrawerOpen(true)}
+                                >
+                                    <Menu size={24} color="#323232"/>
+                                </Button>
                                 {/* <Block position="relative" display={["none", "", "block"]} width="206px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} quality={100} priority={true}/>
                                 </Block> */}
                             </NavigationItem>
                         </NavigationList>
                         <NavigationList $align={ALIGN.center} className="nav-center loge">
                             <NavigationItem>
-                                <Block position="relative" width="110px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site.png"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                                <Block className="site-logo cursor" position="relative" height="40px" onClick={() => router.push("/")}>
+                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} quality={100} priority={true}/>
                                 </Block>
                             </NavigationItem>
                         </NavigationList>
                         <NavigationList $align={ALIGN.center} className="nav-center menu">
                             {MENU.map((item, index) => <NavItem key={index} detail={item}/>)}
                         </NavigationList>
-                        <NavigationList $align={ALIGN.right} className="nav-right">
-                            {/*<NavigationItem>*/}
-                            {/*    <a href="/" onClick={(e) => handleClick(e, "/")}>*/}
-                            {/*        <Image src={"/images/icon/icon-search.png"} alt="Search" layout="fixed" width={20} height={20} quality={100}/>*/}
-                            {/*    </a>*/}
-                            {/*</NavigationItem>*/}
+                        <NavigationList $align={ALIGN.right} className={styles["nav-right"]}>
                             <NavigationItem>
                                 <Block position="relative" display="flex">
                                     <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>
                                         <Cart className="cursor" color="#323232"/>
                                     </Button>
-                                    <Block display={badge > 0 ? "flex" : "none"} justifyContent="center" alignItems="center" backgroundColor="#23A4AD"
-                                           minWidth="18px" height="18px" font="MinXLabel12" color="MinXPrimaryTextAlt"
-                                           overrides={{
-                                               Block: {
-                                                   props: {
-                                                       className: styles["badge"]
-                                                   }
-                                               },
-                                           }}
-                                    >{badge}</Block>
+                                    <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>
                                 </Block>
                             </NavigationItem>
                             {/* <NavigationItem>

@@ -90,7 +90,7 @@ function Umbrella({router, size}) {
                                                                      onClick={() => router.push("/products/market-umbrellas/marco-umbrella")} text={"Buy"}
                                                             />
                                                             <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                                                <Link color="inherit" href="marco">LEARN MORE</Link>
+                                                                <Link color="inherit" href="/umbrella/marco">LEARN MORE</Link>
                                                             </Block>
                                                         </Block>
                                                     }
@@ -106,7 +106,7 @@ function Umbrella({router, size}) {
                                                                      onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")} text={"Buy"}
                                                             />
                                                             <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
-                                                                <Link color="inherit" href="santorini">LEARN MORE</Link>
+                                                                <Link color="inherit" href="/umbrella/santorini">LEARN MORE</Link>
                                                             </Block>
                                                         </Block>
                                                     }
@@ -121,7 +121,7 @@ function Umbrella({router, size}) {
                                                                      onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")} text={"Buy"}
                                                             />
                                                             <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                                                <Link color="inherit" href="bali">LEARN MORE</Link>
+                                                                <Link color="inherit" href="/umbrella/bali">LEARN MORE</Link>
                                                             </Block>
                                                         </Block>
                                                     }
@@ -136,7 +136,7 @@ function Umbrella({router, size}) {
                                                                      onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")} text={"Buy"}
                                                             />
                                                             <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryTextAlt">
-                                                                <Link color="inherit" href="kapri">LEARN MORE</Link>
+                                                                <Link color="inherit" href="/umbrella/kapri">LEARN MORE</Link>
                                                             </Block>
                                                         </Block>
                                                     }
@@ -152,7 +152,7 @@ function Umbrella({router, size}) {
                                                                      onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")} text={"Buy"}
                                                             />
                                                             <Block marginLeft="24px" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText">
-                                                                <Link color="inherit" href="catalina">LEARN MORE</Link>
+                                                                <Link color="inherit" href="/umbrella/catalina">LEARN MORE</Link>
                                                             </Block>
                                                         </Block>
                                                     }
