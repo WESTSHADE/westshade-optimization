@@ -177,7 +177,7 @@ function MyApp({Component, pageProps}) {
                         <Script id="mcjs" type="text/javascript" src="/staticFiles/mailchimpFirstOrder.js" strategy="afterInteractive"/>
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
                             <Header/>
-                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={["104px", "120px", "136px"]} marginRight="auto"
+                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={["118px", "134px", "150px"]} marginRight="auto"
                                    marginLeft="auto">
                                 <Component size={size} {...pageProps} />
                             </Block>
