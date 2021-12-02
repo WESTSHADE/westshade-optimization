@@ -7,5 +7,5 @@ module.exports = {
     Cart,
     DropMenu,
     MobileMenu,
-    NavItem
+    NavItem,
 };
