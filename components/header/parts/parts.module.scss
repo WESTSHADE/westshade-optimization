@@ -56,14 +56,36 @@
       }
 
       .menu-content {
+        display: grid;
+        grid-row-gap: 12px;
         padding: 0;
 
         ul {
           padding: 0 0 0 45px;
           box-shadow: none;
 
-          .submenu-title {
-            margin-top: 14px;
+          &:first-child {
+            margin-top: 12px;
+          }
+
+          li {
+            padding: 6px 8px;
+          }
+        }
+
+        .button-more {
+          padding: 0;
+          color: #262626;
+          font-size: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+
+          &:hover {
+            background-color: transparent
+          }
+
+          &:active {
+            background-color: transparent
           }
         }
       }

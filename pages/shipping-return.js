@@ -22,12 +22,14 @@ function Shipping_Return() {
     useEffect(() => setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef())), []);
 
     useEffect(() => {
-        if (tabsRefs.length > 0) setDisplayTabs(true);
-    }, [tabsRefs]);
-
-    useEffect(() => {
-        if (displayTabs) setTabLeft((tabsRefs[activeTabKey].current.clientWidth - 24) / 2);
-    }, [displayTabs]);
+        if (tabsRefs.length > 0) {
+            if (!displayTabs) {
+                setDisplayTabs(true);
+            } else {
+                setTabLeft((tabsRefs[activeTabKey].current.clientWidth - 24) / 2);
+            }
+        }
+    }, [tabsRefs, displayTabs, activeTabKey]);
 
     return (
         <React.Fragment>
@@ -38,9 +40,7 @@ function Shipping_Return() {
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["32px", "32px", "40px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
-                             <Block height={["184px", "200px", "216px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap="12px" justifyItems="center" alignContent="center"
-                                    backgroundColor="#F7F7F7" overrides={{Block: {props: {className: "text-center"}}}}
-                             >
+                             <Block className="text-center" height={["184px", "200px", "216px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap="12px" alignContent="center" backgroundColor="#F7F7F7">
                                  <Block font="MinXSubtitle14" color="MinXPrimaryText">CUSTOMER SERVICE</Block>
                                  <Block marginBottom={["8px", "8px", "16px"]} font={["MinXTitle24", "MinXTitle32"]} color="MinXPrimaryText">DELIVERY & RETURN</Block>
                                  {displayTabs ? (
@@ -162,7 +162,7 @@ function Shipping_Return() {
             </Block>
             <Modal type="alertdialog" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <Block position="relative" width="80vw" maxWidth="600px" height="auto">
-                    <Image src="/images/fedex-ground-shipment.webp" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475} quality={100}/>
+                    <Image src="/images/fedex-ground-shipment.webp" alt="fedex ground shipment" layout="responsive" objectFit="contain" width={1273} height={1475}/>
                 </Block>
             </Modal>
         </React.Fragment>

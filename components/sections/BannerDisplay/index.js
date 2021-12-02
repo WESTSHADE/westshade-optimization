@@ -25,11 +25,8 @@ const Banner = ({
                     backgroundColor = "transparent",
                     imageObjectFit = "cover",
                     url,
-                    alt = "",
                     router,
                     destination,
-                    showScrollDown,
-                    onClickScrollDown,
                     home,
                     arrowButton,
                     textButton,
@@ -95,44 +92,6 @@ const Banner = ({
                     </>
                 )}
             </Block>
-            {/*TODO: 滚轮下滑和button点击下滑不兼容, 未找到解决办法*/}
-            {/*<Block display={["none", "none", "none", showScrollDown ? "block" : "none"]} position="absolute" right="0px" bottom="70px" left="0px" width="48px" height="56px"*/}
-            {/*       margin="auto" font="MinXLabel20"*/}
-            {/*>*/}
-            {/*    <Button shape={SHAPE.pill}*/}
-            {/*            overrides={{*/}
-            {/*                BaseButton: {*/}
-            {/*                    style: {*/}
-            {/*                        width: "100%",*/}
-            {/*                        height: "100%",*/}
-            {/*                        fontSize: "inherit",*/}
-            {/*                        fontWeight: "inherit",*/}
-            {/*                        lineHeight: "inherit",*/}
-            {/*                        borderTopWidth: "1px",*/}
-            {/*                        borderRightWidth: "1px",*/}
-            {/*                        borderBottomWidth: "1px",*/}
-            {/*                        borderLeftWidth: "1px",*/}
-            {/*                        borderTopStyle: "solid",*/}
-            {/*                        borderRightStyle: "solid",*/}
-            {/*                        borderBottomStyle: "solid",*/}
-            {/*                        borderLeftStyle: "solid",*/}
-            {/*                        borderTopColor: "white",*/}
-            {/*                        borderRightColor: "white",*/}
-            {/*                        borderBottomColor: "white",*/}
-            {/*                        borderLeftColor: "white",*/}
-            {/*                        backgroundColor: "transparent",*/}
-            {/*                        ":hover": {backgroundColor: 'rgba(255,255,255,0.5)'},*/}
-            {/*                        ":active": {backgroundColor: 'rgba(255,255,255,0.8)'},*/}
-            {/*                    },*/}
-            {/*                },*/}
-            {/*                EndEnhancer: {*/}
-            {/*                    style: {marginLeft: "0px"}*/}
-            {/*                }*/}
-            {/*            }}*/}
-            {/*            endEnhancer={() => <ArrowDown size={36}/>}*/}
-            {/*            onClick={() => onClickScrollDown()}*/}
-            {/*    />*/}
-            {/*</Block>*/}
         </Block>
     )
 }

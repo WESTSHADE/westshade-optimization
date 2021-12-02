@@ -15,7 +15,7 @@ const nextConfig = {
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
         maxWidth: 1440,
-        version: "2.0.18"
+        version: "2.0.19"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -39,13 +39,14 @@ const nextConfig = {
     images: {
         deviceSizes: [600, 960, 1280, 1920],
         // disableStaticImages: true,
-        loader: "imgix",
         minimumCacheTTL: 60,
         domains: [
-            'checkout.westshade.com',
-            '54.212.246.17',
+            "checkout.westshade.com/wp-content/uploads",
+            "54.212.246.17/wp-content/uploads",
+            "static.westshade.com"
         ],
         formats: ['image/webp'],
+        loader: "imgix",
         path: isProd ? "https://static.westshade.com" : "http://localhost:3000",
     },
     exportPathMap: async function () {

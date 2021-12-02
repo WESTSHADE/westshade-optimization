@@ -69,10 +69,6 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.site-logo {
-    aspect-ratio: 5;
-}
-
 .banner-display {
     position: relative;
     background: rgba(0, 0, 0, 0.2);

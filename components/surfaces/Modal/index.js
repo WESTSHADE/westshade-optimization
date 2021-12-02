@@ -38,7 +38,7 @@ const modal = (props) => {
     } = props;
 
     return (
-        <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog}
+        <Modal onClose={onClose} isOpen={isOpen} animate autoFocus size={size} role={type === "alertdialog" ? ROLE.alertdialog : ROLE.dialog} unstable_ModalBackdropScroll={true}
                overrides={{
                    Root: {
                        props: {

@@ -159,12 +159,15 @@ function MyApp({Component, pageProps}) {
             <PersistGate persistor={persistor} loading={null}>
                 <StyletronProvider value={styletron}>
                     <BaseProvider theme={CustomTheme}>
+                        <Script id="create-dataLayer">{`window.dataLayer = window.dataLayer || [];`}</Script>
+                        {/* Google Tag Manager GTM-MCQP54N */}
                         <Script id="gmt"
                                 dangerouslySetInnerHTML={{
                                     __html: `  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', 'GTM-MCQP54N');`,
                                 }}
                                 strategy="afterInteractive"
                         />
+                        {/* End Google Tag Manager */}
                         <Script id="apple-business-chat" src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js" strategy="afterInteractive"/>
                         <Script id="apple-business-chat-js" src="/staticFiles/appleBusinessChat.js" strategy="afterInteractive"
                                 onLoad={() => {

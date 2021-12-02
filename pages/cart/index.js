@@ -212,7 +212,8 @@ function Cart_Page({router}) {
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top={["48px", "48px", "96px"]} display="flex" alignItems="center" justifyContent="space-between" height="72px" backgroundColor="white" font="MinXHeading20" color="MinXPrimaryText"
+                            <Block position="sticky" top={["104px", "120px", "136px"]} display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
+                                   color="MinXPrimaryText"
                                    $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
                                 <Button shape={SHAPE.square} kind={KIND.minimal}
@@ -257,9 +258,8 @@ function Cart_Page({router}) {
                                                         ) : null}
                                                     </Block>
                                                 </Block>
-                                                <Block display="flex" flexDirection={["row", "column"]} alignItems={["center", "flex-end"]}
-                                                       marginBottom="16px">
-                                                    <Block display="flex" flexDirection={["row", "column"]} flex={[1, 0]} justifyContent={["flex-start", ""]}
+                                                <Block display="flex" flexDirection={["row", "column"]} alignItems={["center", "flex-end"]} marginBottom="16px">
+                                                    <Block display="flex" flexDirection={["row", "column"]} flex={[1, 0]} justifyContent="flex-start"
                                                            alignItems={["center", "flex-end"]} marginBottom={["", "12px"]}>
                                                         <Block width={["60px", "auto"]} marginRight={["15px", "0px"]} marginBottom={["", "12px"]} font="MinXLabel12"
                                                                color="MinXPrimaryText"
@@ -325,7 +325,7 @@ function Cart_Page({router}) {
                                     }) : null}
                             </Block>
                         </Block>
-                        <Block marginBottom="24px">
+                        <Block marginTop="24px" marginBottom="24px">
                             <Block position={["relative", "relative", "sticky"]} top={["", "", "120px"]}>
                                 <Block marginBottom={["16px", "16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Order summary</Block>
                                 <Block marginBottom={["16px", "16px", "24px"]}

@@ -18,9 +18,22 @@
     }
 
     .nav-center {
+      &.logo {
+        @media screen and (min-width: 960px) {
+          display: none;
+          visibility: hidden;
+        }
+      }
+
       &.menu {
         display: none;
-        letter-spacing: 0.1em
+        visibility: hidden;
+
+        @media screen and (min-width: 960px) {
+          display: flex;
+          visibility: visible;
+          letter-spacing: 0.1em;
+        }
       }
     }
 
@@ -60,6 +73,12 @@
       padding-right: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
       padding-left: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
     }
+  }
+
+  .site-logo {
+    position: relative;
+    height: 40px;
+    aspect-ratio: 5;
   }
 }
 

@@ -1,5 +1,6 @@
 function createABannerPlaceholder() {
     let refreshPlaceholder = document.getElementById("refreshPlaceholder");
+    if (!refreshPlaceholder) return;
     refreshPlaceholder.classList.add("apple-business-chat-banner-container");
     refreshPlaceholder.setAttribute("data-apple-business-id", "5c460d0d-a6a4-4460-a9db-8267edd70c7b");
     refreshPlaceholder.setAttribute("data-apple-banner-background-color", "rgb(247, 247, 247)");
