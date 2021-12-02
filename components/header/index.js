@@ -9,120 +9,19 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
 import {Button, SIZE, SHAPE, KIND} from "baseui/button";
-import {Menu, ChevronDown} from 'baseui/icon'
+import {Menu} from 'baseui/icon'
 
-import {Cart as SideCart, DropMenu, MobileMenu} from "./parts";
+import {Cart as SideCart, MobileMenu, NavItem} from "./parts";
 
 import {EventEmitter} from "../../utils/events";
 import {getUser} from "../../redux/actions/userActions";
+
+import MENU from "../../assets/menu.json";
 
 import styles from "./header.module.scss";
 
 import Account from "./account.svg";
 import Cart from "./cart.svg";
-
-const MENU = [
-    {
-        title: "CANOPY TENT",
-        list: [{
-            SQUARE: [
-                {id: '10’ x 10’', href: '/custom-printed-package/f1010cpp'},
-                {id: '13’ x 13’', href: '/custom-printed-package/f1313cpp'},
-                {id: '16’ x 16’', href: '/custom-printed-package/f1616cpp'},
-                {id: '20’ x 20’', href: '/custom-printed-package/f2020cpp'},
-            ]
-        }, {
-            RECTANGULAR: [
-                {id: '10’ x 15’', href: '/custom-printed-package/f1015cpp'},
-                {id: '10’ x 20’', href: '/custom-printed-package/f1020cpp'},
-                {id: '13’ x 20’', href: '/custom-printed-package/f1320cpp'},
-                {id: '13’ x 26’', href: '/custom-printed-package/f1326cpp'},
-            ],
-        }],
-        picture: "/images/component/header/tent.webp",
-        content: "Y7 HEAVY DUTY TENT",
-        link: "/canopy-tent",
-        dropMenu: false
-    }, {
-        title: "UMBRELLA",
-        list: [{
-            MARKET: [
-                {id: 'Marco', href: '/umbrella/marco'},
-                {id: 'Santorini', href: '/umbrella/santorini'},
-            ],
-        }, {
-            TILT: [
-                {id: 'Bali', href: '/umbrella/bali'},
-                {id: 'Kapri', href: '/umbrella/kapri'},
-            ]
-        }, {
-            OVERSIZE: [
-                {id: 'Catalina', href: '/umbrella/catalina'},
-            ]
-        }],
-        picture: "/images/component/header/umbrella.webp",
-        content: "SANTORINI FIBERGLASS",
-        link: "/umbrella",
-        dropMenu: true
-    }, {
-        title: "CUSTOM PRINTING",
-        list: [{
-            "": [
-                {id: 'Canopy Tent', href: '/custom-printing/canopy-tent'},
-                {id: 'Umbrella', href: '/custom-printing/umbrella'},
-                {id: 'Table Cover', href: '/custom-printing/table-cover'},
-            ]
-        }],
-        picture: "/images/component/header/custom_printing.webp",
-        content: "CUSTOM PRINTING TENT",
-        link: "/custom-printing",
-        dropMenu: true
-    }, {
-        title: "ACCESSORIES",
-        list: [{
-            ACCESSORIES: [
-                {id: 'Tent Accessories', href: '/'},
-                {id: 'Umbrella Accessories', href: '/'},
-            ]
-        }, {
-            OTHER: [
-                {id: 'Heater', href: '/products/accessories/?id=20491'},
-                {id: 'Led Light', href: '/products/accessories/?id=20510'},
-                {id: 'Table cover', href: '/custom-print/table-cover/buy'},
-
-            ],
-        }],
-        picture: "/images/component/header/accs.webp",
-        content: "PROTECTIVE COVER",
-        link: "/accessories",
-        linkText: "View all >",
-        dropMenu: false
-    }, {
-        title: "CONTACT US",
-        link: "/contact-us",
-        dropMenu: false
-    }
-];
-
-const NavItem = ({detail = {}}) => {
-    const {title = "", list = [], picture, content = "", link = "/", linkText, dropMenu = false} = detail;
-
-    const [style, setStyle] = useState({visibility: "hidden", opacity: 0, height: 0});
-
-    return (
-        <NavigationItem
-            onMouseEnter={() => setStyle({visibility: "visible", opacity: 1, height: "auto"})}
-            onMouseLeave={() => setStyle({visibility: "hidden", opacity: 0, height: 0})}
-        >
-            <Block paddingLeft="20px" display="flex" alignItems="center" font="MinXParagraph14" className="cursor">
-                <Link href={link}>{title}</Link>{dropMenu && <ChevronDown/>}
-            </Block>
-            {dropMenu ? (
-                <DropMenu containerStyle={style} menuList={list} picUrl={picture} content={content} learnMoreUrl={link} learnMoreText={linkText}/>
-            ) : null}
-        </NavigationItem>
-    )
-}
 
 function Header() {
     const router = useRouter();
@@ -137,9 +36,7 @@ function Header() {
     useEffect(() => {
         EventEmitter.subscribe("handleCart", (event) => setCartDrawerOpen(event));
 
-        if (loggedIn) {
-            dispatch(getUser(token));
-        }
+        if (loggedIn) dispatch(getUser(token));
     }, []);
 
     return (
@@ -150,8 +47,8 @@ function Header() {
                         <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", null, "row"]} justifyContent="space-between" alignItems="center" paddingRight="16px" paddingLeft="16px"
                                $style={{gap: "24px", whiteSpace: "nowrap"}}
                         >
-                            <Block className="site-logo cursor" position="relative" display={["none", null, "block"]} height="40px" onClick={() => router.push("/")}>
-                                <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" quality={100} priority={true}/>
+                            <Block className={clsx([styles["site-logo"], "cursor"])} display={["none", null, "block"]} onClick={() => router.push("/")}>
+                                <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
                             </Block>
                             <Button shape={SHAPE.pill}
                                     startEnhancer={() =>
@@ -193,9 +90,7 @@ function Header() {
                                 >
                                     Email Us
                                 </Button>
-                                <Link href="/my-account">
-                                    Log in
-                                </Link>
+                                <Link href="/my-account">Log in</Link>
                             </Block>
                         </Block>
                     </Block>
@@ -216,22 +111,19 @@ function Header() {
                                 >
                                     <Menu size={24} color="#323232"/>
                                 </Button>
-                                {/* <Block position="relative" display={["none", "", "block"]} width="206px" overrides={{Block: {props: {className: "cursor"}}}} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} quality={100} priority={true}/>
-                                </Block> */}
                             </NavigationItem>
                         </NavigationList>
-                        <NavigationList $align={ALIGN.center} className="nav-center loge">
+                        <NavigationList className={clsx([styles["nav-center"], styles["logo"]])} $align={ALIGN.center}>
                             <NavigationItem>
-                                <Block className="site-logo cursor" position="relative" height="40px" onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} quality={100} priority={true}/>
+                                <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
+                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
                                 </Block>
                             </NavigationItem>
                         </NavigationList>
-                        <NavigationList $align={ALIGN.center} className="nav-center menu">
+                        <NavigationList className={clsx([styles["nav-center"], styles["menu"]])} $align={ALIGN.center}>
                             {MENU.map((item, index) => <NavItem key={index} detail={item}/>)}
                         </NavigationList>
-                        <NavigationList $align={ALIGN.right} className={styles["nav-right"]}>
+                        <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
                             <NavigationItem>
                                 <Block position="relative" display="flex">
                                     <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>

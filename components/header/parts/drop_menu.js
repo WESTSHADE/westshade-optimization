@@ -44,7 +44,6 @@ const Menu = ({menuList, learnMoreText = "Learn more >", learnMoreUrl = "/", pic
                                       Option: {
                                           props: {
                                               className: styles["list-item"],
-                                              getItemLabel: item => item.id,
                                           },
                                       },
                                   }}
