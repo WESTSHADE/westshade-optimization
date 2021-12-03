@@ -228,7 +228,7 @@ export default class Utils {
         }
     }
 
-    async imageUploadV2(file, link, name) {
+    async imageUploadV2(file, name) {
         try {
             const {data, status} = await axios({
                 method: "PUT",
