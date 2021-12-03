@@ -93,7 +93,6 @@ const Contact_Us = () => {
                 7: companyName,
                 8: phone,
                 9: email,
-                11: "https://westshade.s3.us-west-2.amazonaws.com/contacts/test.jpg"
             });
             setFormLoading(false);
             setFormState({
@@ -132,13 +131,13 @@ const Contact_Us = () => {
                 <title>Contact Us - WESTSHADE</title>
                 <meta name="description" content="Frequently asked question about Westshade&apos;s canopy, umbrella and accessories."/>
             </Head>
-            <Block width="100%" display="grid" placeItems="center" backgroundColor="#DFF2EF">
+            <Block className="text-center" width="100%" display="grid" placeItems="center" backgroundColor="#DFF2EF">
                 <Block maxWidth="1183px" padding={["40px 16px", "100px 16px", "100px 32px"]}>
-                    <Block marginBottom={["16px", "24px", "24px"]} font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText"><h1 className={css({textAlign: "center", fontWeight: 500})}>Contact us</h1></Block>
+                    <Block as="h1" marginBottom={["16px", "24px", "24px"]} font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText" $style={{fontWeight: "500 !important"}}>Contact us</Block>
                     <Block maxWidth="535px" margin="0 auto" className={css({textAlign: "center"})} color="MinXPrimaryText" font={["MinXParagraph16", "MinXParagraph20"]}>
                         We are here to help you from 8:30 AM - 5:30 PM PST, Monday to Friday (except holidays and weekends).
                     </Block>
-                    <Block display="flex" justifyContent="center" gap="30px" flexWrap={["wrap", "nowrap", "nowrap", "nowrap"]} marginTop={["24px", "64px"]} className={css({gap: "31px"})}>
+                    <Block display="flex" justifyContent="center" flexWrap={[true, false]} marginTop={["24px", "64px"]} className={css({gap: "30px"})}>
                         <CustomCard>
                             <Image src="/images/contact-us/call-us.webp" alt="call us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
                             <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Call us</Block>
@@ -252,159 +251,107 @@ const Contact_Us = () => {
                     </Block>
                 </Block>
             </Block>
-
             {/* Contact Form Section */}
             <Block width="100%" backgroundColor="#f7f7f7">
                 <Block width="100%" maxWidth="600px" display="flex" flex={1} flexDirection="column" alignItems="center" margin="0 auto" padding={["40px 16px", "100px 16px"]}>
                     <Block marginBottom={["16px", "24px", "24px"]} font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText"><h2 className={css({textAlign: "center", fontWeight: 500})}>Have us contact you</h2></Block>
-                    <Block as="form" marginTop={["32px", "40px"]} className={css({width: "100%"})} onSubmit={handleContactForm}>
-                        <>
-                            <FormControl
-                                label={() => <CustomLabel> {"Interested in"} </CustomLabel>}
-                                overrides={{
-                                    ControlContainer: {style: {display: "flex", flexWrap: "wrap", marginBottom: "24px"}}
-                                }}
-                            >
-                                <>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("custom-print-tent")}
-                                            onChange={() => handleInterest("custom-print-tent")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("custom-print-tent")}>
-                                                Custom printed tent
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("canopy-tent")}
-                                            onChange={() => handleInterest("canopy-tent")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("canopy-tent")}>
-                                                Canopy tent
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("custom-printed-umbrella")}
-                                            onChange={() => handleInterest("custom-printed-umbrella")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("custom-printed-umbrella")}>
-                                                Custom printed umbrella
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("umbrella")}
-                                            onChange={() => handleInterest("umbrella")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("umbrella")}>
-                                                Umbrella
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("custom-printed-table-cover")}
-                                            onChange={() => handleInterest("custom-printed-table-cover")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("custom-printed-table-cover")}>
-                                                Custom printed table cover
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                    <Block width={["100%", "48%"]} marginBottom="16px">
-                                        <CustomCheckbox
-                                            checked={formState.interests.includes("other")}
-                                            onChange={() => handleInterest("other")}
-                                        >
-                                            <CustomCheckboxLabel active={formState.interests.includes("other")}>
-                                                Other
-                                            </CustomCheckboxLabel>
-                                        </CustomCheckbox>
-                                    </Block>
-                                </>
-                            </FormControl>
-                            <FormControl
-                                label={() => <CustomLabel> {"How can we help?"} </CustomLabel>}
-                            >
-                                <CustomTextarea
-                                    customClassname="form-input"
-                                    required
-                                    id="form-message"
-                                />
-                            </FormControl>
-                            <FormControl
-                                label={() => <CustomLabel> {"Contact infomation"} </CustomLabel>}
-                                overrides={{
-                                    ControlContainer: {style: {marginTop: "40px"}}
-                                }}
-                                className={css({marginTop: "40px"})}
-                            >
-                                <>
-                                    <Block display="flex" flexWrap="wrap" justifyContent="space-between">
-                                        <Block width={["100%", "48%"]} marginBottom="16px">
-                                            <CustomInput
-                                                type="text"
-                                                value={formState.firstname}
-                                                onChange={(e) => setFormState({...formState, firstname: e.target.value})}
-                                                error={formError && !!formState.firstname}
-                                                required
-                                                placeholder="First name"
-                                            />
-                                        </Block>
-                                        <Block width={["100%", "48%"]} marginBottom="16px">
-                                            <CustomInput
-                                                type="text"
-                                                value={formState.lastname}
-                                                onChange={(e) => setFormState({...formState, lastname: e.target.value})}
-                                                error={formError && !!formState.lastname}
-                                                required
-                                                placeholder="Last name"
-                                            />
-                                        </Block>
-                                    </Block>
-                                    <Block width="100%" marginBottom="16px">
-                                        <CustomInput
-                                            type="text"
-                                            value={formState.companyName}
-                                            onChange={(e) => setFormState({...formState, companyName: e.target.value})}
-                                            error={formError && !!formState.companyName}
-                                            placeholder="Company name (optional)"
-                                        />
-                                    </Block>
-                                    <Block width="100%" marginBottom="16px">
-                                        <CustomInput
-                                            type="tel"
-                                            value={formState.phone}
-                                            onChange={handlePhone}
-                                            error={formError && !!formState.phone}
-                                            required
-                                            placeholder="Phone  (000-000-0000)"
-                                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                        />
-                                    </Block>
-                                    <Block width="100%" marginBottom="16px">
-                                        <CustomInput
-                                            type="email"
-                                            value={formState.email}
-                                            onChange={(e) => setFormState({...formState, email: e.target.value})}
-                                            error={formError && !!formState.email}
-                                            required
-                                            placeholder="Email"
-                                        />
-                                    </Block>
-                                </>
-                            </FormControl>
-                            <Block width="100%" marginTop="40px">
-                                <CustomSubmitButton isLoading={formLoading}>
-                                    Submit
-                                </CustomSubmitButton>
+                    <Block as="form" width="100%" marginTop={["32px", "40px"]} onSubmit={handleContactForm}>
+                        <FormControl label={() => <CustomLabel>Interested in</CustomLabel>}
+                                     overrides={{
+                                         ControlContainer: {style: {marginBottom: "40px"}}
+                                     }}
+                        >
+                            <Block display="grid" gridColumnGap="16px" gridRowGap="16px" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}>
+                                <CustomCheckbox checked={formState.interests.includes("custom-print-tent")}
+                                                onChange={() => handleInterest("custom-print-tent")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("custom-print-tent")}>Custom printed tent</CustomCheckboxLabel>
+                                </CustomCheckbox>
+                                <CustomCheckbox checked={formState.interests.includes("canopy-tent")}
+                                                onChange={() => handleInterest("canopy-tent")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("canopy-tent")}>Canopy tent</CustomCheckboxLabel>
+                                </CustomCheckbox>
+                                <CustomCheckbox checked={formState.interests.includes("custom-printed-umbrella")}
+                                                onChange={() => handleInterest("custom-printed-umbrella")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("custom-printed-umbrella")}>Custom printed umbrella</CustomCheckboxLabel>
+                                </CustomCheckbox>
+                                <CustomCheckbox checked={formState.interests.includes("umbrella")}
+                                                onChange={() => handleInterest("umbrella")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("umbrella")}>Umbrella</CustomCheckboxLabel>
+                                </CustomCheckbox>
+                                <CustomCheckbox checked={formState.interests.includes("custom-printed-table-cover")}
+                                                onChange={() => handleInterest("custom-printed-table-cover")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("custom-printed-table-cover")}>Custom printed table cover</CustomCheckboxLabel>
+                                </CustomCheckbox>
+                                <CustomCheckbox checked={formState.interests.includes("other")}
+                                                onChange={() => handleInterest("other")}
+                                >
+                                    <CustomCheckboxLabel active={formState.interests.includes("other")}>Other</CustomCheckboxLabel>
+                                </CustomCheckbox>
                             </Block>
-                        </>
+                        </FormControl>
+                        <FormControl label={() => <CustomLabel>How can we help?</CustomLabel>}
+                                     overrides={{
+                                         ControlContainer: {style: {marginBottom: "40px"}}
+                                     }}
+                        >
+                            <CustomTextarea id="form-message" customClassname="form-input" required/>
+                        </FormControl>
+                        <FormControl label={() => <CustomLabel>Contact information</CustomLabel>}
+                                     overrides={{
+                                         ControlContainer: {style: {marginBottom: "40px"}}
+                                     }}
+                        >
+                            <Block display="grid" gridRowGap="16px" gridTemplateColumns="1fr">
+                                <Block display="grid" gridColumnGap="16px" gridRowGap="16px" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]}>
+                                    <CustomInput
+                                        type="text"
+                                        value={formState.firstname}
+                                        onChange={(e) => setFormState({...formState, firstname: e.target.value})}
+                                        error={formError && !!formState.firstname}
+                                        required
+                                        placeholder="First name"
+                                    />
+                                    <CustomInput
+                                        type="text"
+                                        value={formState.lastname}
+                                        onChange={(e) => setFormState({...formState, lastname: e.target.value})}
+                                        error={formError && !!formState.lastname}
+                                        required
+                                        placeholder="Last name"
+                                    />
+                                </Block>
+                                <CustomInput
+                                    type="text"
+                                    value={formState.companyName}
+                                    onChange={(e) => setFormState({...formState, companyName: e.target.value})}
+                                    error={formError && !!formState.companyName}
+                                    placeholder="Company name (optional)"
+                                />
+                                <CustomInput
+                                    type="tel"
+                                    value={formState.phone}
+                                    onChange={handlePhone}
+                                    error={formError && !!formState.phone}
+                                    required
+                                    placeholder="Phone  (000-000-0000)"
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                />
+                                <CustomInput
+                                    type="email"
+                                    value={formState.email}
+                                    onChange={(e) => setFormState({...formState, email: e.target.value})}
+                                    error={formError && !!formState.email}
+                                    required
+                                    placeholder="Email"
+                                />
+                            </Block>
+                        </FormControl>
+                        <CustomSubmitButton isLoading={formLoading}>Submit</CustomSubmitButton>
                     </Block>
                 </Block>
 
@@ -433,7 +380,7 @@ const Contact_Us = () => {
                     >
                         <Block width={["288px", "288px", "580px"]} backgroundColor="#ffffff" display="flex" flexDirection="column" alignItems="center">
                             <Block width="80px">
-                                <Image src="/images/icon/yes.webp" width={80} height={80} layout="responsive" quality={10} alt="success" objectFit="contain"/>
+                                <Image src="/images/icon/yes.webp" alt="success" layout="responsive" width={80} height={80} objectFit="contain"/>
                             </Block>
                             <Block as="h6" font="MinXHeading24" color="MinXPrimaryText" marginTop="24px">
                                 Submitted
@@ -467,8 +414,8 @@ const Contact_Us = () => {
             </Block>
             {/* End of Contact Form Section */}
             {/* FAQs Section */}
-            <Block width="100%" maxWidth="660px" display="flex" flex={1} flexDirection="column" alignItems="center" margin="0 auto" padding={["40px 16px", "100px 16px"]}>
-                <Block marginBottom={["16px", "24px", "24px"]} font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText"><h2 className={css({textAlign: "center", fontWeight: 500})}>FAQs</h2></Block>
+            <Block width="100%" maxWidth="660px" display="grid" gridRowGap={["16px", "24px"]} justifyItems="center" margin="auto" padding={["40px 16px", "100px 16px"]}>
+                <Block as="h2" font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText">FAQs</Block>
                 <Accordion list={QA}/>
             </Block>
             {/* End of FAQs Section */}

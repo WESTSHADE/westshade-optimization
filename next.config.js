@@ -38,7 +38,6 @@ const nextConfig = {
     // },
     images: {
         deviceSizes: [600, 960, 1280, 1920],
-        // disableStaticImages: true,
         minimumCacheTTL: 60,
         domains: [
             "checkout.westshade.com/wp-content/uploads",

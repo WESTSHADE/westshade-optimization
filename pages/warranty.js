@@ -41,22 +41,8 @@ function Warranty() {
                 <title>Warranty - WESTSHADE</title>
                 <meta name="description" content="Warranty information, Warranty Timeline Coverage and Liability Notice of Westshade."/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
+            <Block className="container-display" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block className="text-center" width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}>
                     <Block marginBottom={["12px", "16px"]} font={["MinXSubtitle10", "MinXSubtitle14"]} color="MinXPrimaryText">CUSTOMER SERVICE</Block>
                     <Block font={["MinXTitle20", "MinXTitle32", "MinXTitle44"]} color="MinXPrimaryText">WARRANTY</Block>
                 </Block>
