@@ -22,12 +22,13 @@ const mButton = ({
                      endEnhancer,
                      onClick,
                      text,
+                     shape = "pill",
                      disabled,
                      ...props
                  }) => {
     return (
         <Block display={display} width={width} height={height} font={font} color={color} {...props}>
-            <Button shape={SHAPE.pill}
+            <Button shape={shape === "pill" ? SHAPE.pill : shape === "square" ? SHAPE.square : SHAPE.pill}
                     overrides={{
                         BaseButton: {
                             props: {

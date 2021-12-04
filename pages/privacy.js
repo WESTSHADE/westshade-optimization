@@ -4,32 +4,18 @@ import Head from "next/head";
 
 import {Block} from "baseui/block";
 
-function Privacy() {
+export default function Privacy() {
     return (
         <React.Fragment>
             <Head>
                 <title>Privacy Policy - WESTSHADE</title>
                 <meta name="description" content="Privacy Policy Protecting your private information is our priority. This statement of Privacy applies to westshade.com and WestShade and governs data."/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
+            <Block display="grid" gridRowGap={["32px", "40px"]} maxWidth="600px" margin={['auto auto 32px', 'auto auto 40px']} padding={["32px 16px 0", "40px 16px 0", "40px 24px 0"]}>
+                <Block className="text-center">
                     <Block font={["MinXTitle20", "MinXTitle32", "MinXTitle44"]} color="MinXPrimaryText">Privacy Policy</Block>
                 </Block>
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block>
                     <Block marginBottom={["20px", "28px"]} font="MinXParagraph16" color="MinXSecondaryText">
                         Protecting your private information is our priority. This statement of Privacy applies to westshade.com and WestShade and governs data collection and usage. For the purpose of this privacy policy, unless
                         otherwise noted, all references to WestShade include westshade.com and Yimu International, Inc. The WestShade website is a online retail site. By using the WestShade website, you consent to the data practices
@@ -174,6 +160,4 @@ function Privacy() {
             </Block>
         </React.Fragment>
     );
-}
-
-export default Privacy;
+};

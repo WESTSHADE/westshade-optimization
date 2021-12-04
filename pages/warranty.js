@@ -5,48 +5,21 @@ import Head from "next/head";
 import {Block} from "baseui/block";
 import {ListItem, ListItemLabel} from "baseui/list";
 
-const CoverageItem = ({title, content, textColor}) => {
-    return (
-        <ListItem endEnhancer={content ? () => (
-            <ListItemLabel overrides={{
-                LabelContent: {
-                    style: {fontSize: "inherit", fontWeight: "inherit", color: textColor ? textColor : "inherit"}
-                }
-            }}
-            >
-                {content}
-            </ListItemLabel>
-        ) : null}
-                  overrides={{
-                      Content: {
-                          style: {minHeight: "48px", marginLeft: 0, paddingRight: 0,},
-                      },
-                  }}
-        >
-            <ListItemLabel overrides={{
-                LabelContent: {
-                    style: {fontSize: "inherit", fontWeight: "inherit", color: textColor ? textColor : "inherit"}
-                }
-            }}>
-                {title}
-            </ListItemLabel>
-        </ListItem>
-    )
-}
+import WARRANTY from "Assets/warranty.json";
 
-function Warranty() {
+export default function Warranty() {
     return (
         <React.Fragment>
             <Head>
                 <title>Warranty - WESTSHADE</title>
                 <meta name="description" content="Warranty information, Warranty Timeline Coverage and Liability Notice of Westshade."/>
             </Head>
-            <Block className="container-display" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
-                <Block className="text-center" width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}>
+            <Block display="grid" gridRowGap={["32px", "40px"]} maxWidth="600px" margin={['auto auto 32px', 'auto auto 40px']} padding={["32px 16px 0", "40px 16px 0", "40px 24px 0"]}>
+                <Block className="text-center">
                     <Block marginBottom={["12px", "16px"]} font={["MinXSubtitle10", "MinXSubtitle14"]} color="MinXPrimaryText">CUSTOMER SERVICE</Block>
                     <Block font={["MinXTitle20", "MinXTitle32", "MinXTitle44"]} color="MinXPrimaryText">WARRANTY</Block>
                 </Block>
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block>
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Warranty Information</Block>
                     <Block font="MinXParagraph14" color="MinXPrimaryText">
                         <ul className="bullet-warranty">
@@ -66,26 +39,21 @@ function Warranty() {
                         </ul>
                     </Block>
                 </Block>
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block>
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Warranty Timeline Coverage</Block>
                     <Block width="100%" maxWidth="320px" font="MinXLabel14" color="MinXPrimaryText">
-                        <CoverageItem title="Canopy Tent"/>
-                        <CoverageItem title="Frame - Y5 Economic Steel" content="1 Year" textColor="#8C8C8C"/>
-                        <CoverageItem title="Frame - Y6 Commercial Aluminum" content="5 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Frame - Y7 Heavy duty aluminum" content="10 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Roof" content="1 Year" textColor="#8C8C8C"/>
-                        <CoverageItem title="Umbrella"/>
-                        <CoverageItem title="Frame - Aluminum/Fiberglass" content="3 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Roof - SDP Fabric" content="2 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Roof - AGORA Fabric" content="5 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Catalina"/>
-                        <CoverageItem title="Frame" content="3 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Roof" content="5 Years" textColor="#8C8C8C"/>
-                        <CoverageItem title="Accessories"/>
-                        <CoverageItem title="Accessories" content="3 Months" textColor="#8C8C8C"/>
+                        {WARRANTY.coverage.map(({title, content}, index) => (
+                            <ListItem key={index} endEnhancer={content ? () => <ListItemLabel overrides={{LabelContent: {style: {fontSize: "inherit", fontWeight: "inherit", color: "#8C8C8C"}}}}>{content}</ListItemLabel> : null}
+                                      overrides={{Content: {style: {minHeight: "48px", marginLeft: 0, paddingRight: 0}}}}
+                            >
+                                <ListItemLabel overrides={{LabelContent: {style: {fontSize: "inherit", fontWeight: "inherit", color: content ? "#8C8C8C" : "inherit"}}}}>
+                                    {title}
+                                </ListItemLabel>
+                            </ListItem>
+                        ))}
                     </Block>
                 </Block>
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block>
                     <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Liability Notice</Block>
                     <Block font="MinXParagraph14" color="MinXPrimaryText">
                         Under no circumstances should a damaged product be used. Damaged products should be immediately packed up and removed. In purchasing any product from
@@ -98,6 +66,4 @@ function Warranty() {
             </Block>
         </React.Fragment>
     );
-}
-
-export default Warranty;
+};

@@ -19,8 +19,17 @@ const nextConfig = {
     },
     trailingSlash: true,
     webpack: function (config) {
+        const path = require('path');
+
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            Assets: path.resolve(__dirname, 'assets/'),
+            Components: path.resolve(__dirname, 'components/')
+        };
+
         config.externals = config.externals || {};
         config.externals["styletron-server"] = "styletron-server";
+
         return config;
     },
     // webpack: (config, {isServer}) => {

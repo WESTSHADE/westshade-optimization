@@ -11,25 +11,11 @@ function Terms_and_Conditions() {
                 <title>Terms and Conditions - Disclaimers | WESTSHADE</title>
                 <meta name="description" content="View WestShade's terms and conditions about agreement, privacy, communications, account, cancellation and refund policy, and disclaimers."/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           }
-                       },
-                   }}
-            >
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                       overrides={{
-                           Block: {
-                               style: {textAlign: "center"}
-                           },
-                       }}
-                >
+            <Block display="grid" gridRowGap={["32px", "40px"]} maxWidth="600px" margin={['auto auto 32px', 'auto auto 40px']} padding={["32px 16px 0", "40px 16px 0", "40px 24px 0"]}>
+                <Block className="text-center">
                     <Block font={["MinXTitle20", "MinXTitle32", "MinXTitle44"]} color="MinXPrimaryText">Terms and conditions</Block>
                 </Block>
-                <Block width="100%" maxWidth="600px" marginRight="auto" marginBottom={["32px", "40px"]} marginLeft="auto">
+                <Block>
                     <Block marginBottom={["16px", "24px"]} font="MinXParagraph16" color="MinXPrimaryText">Agreement between User and westshade.com</Block>
                     <Block marginBottom={["20px", "28px"]} font="MinXParagraph16" color="MinXSecondaryText">
                         Welcome to westshade.com. The westshade.com website (the “Site”) is comprised of various web pages operated by WestShade.

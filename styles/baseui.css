@@ -1019,3 +1019,27 @@ ul.bullet-warranty.sub > li {
     font-family: Roboto, serif;
     line-height: 26px;
 }
+
+.banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.banner:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    margin: 0;
+    overflow: hidden;
+}
