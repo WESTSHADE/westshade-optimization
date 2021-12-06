@@ -7,61 +7,42 @@ import { Notification } from "baseui/notification";
 import {SIZE, Textarea} from "baseui/textarea";
 import Image from "next/image";
 
-const CustomLabel = ({children}) => {
-    return (
-        <Block marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>
-            {children}
-        </Block>
-    )
-}
+const CustomLabel = ({children}) => <Block marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
 
-const CustomCheckbox = ({children, checked, onChange}) => {
-    const [css] = useStyletron();
-
-    return (
-        <Checkbox
-            checked={checked}
-            onChange={onChange}
-            className={css({width: "100%"})}
-            overrides={{
-                root: {style: {width: "100%"}},
-                Checkmark: {style: {display: "none"}},
-                Label: {style: {width: "100%"}}
-            }}
-        >
-            {children}
-        </Checkbox>
-    )
-}
+const CustomCheckbox = ({children, checked, onChange}) => (
+    <Checkbox checked={checked} onChange={onChange}
+              overrides={{
+                  Checkmark: {style: {display: "none"}},
+                  Label: {style: {width: "100%", paddingLeft: 0}}
+              }}
+    >
+        {children}
+    </Checkbox>
+);
 
 const CustomCheckboxLabel = ({children, active, backgroundColor}) => {
-    const [css] = useStyletron();
     return (
-        <Block
-            className={css({
-                width: "100%",
-                paddingTop: active ? "11px" : "12px",
-                paddingBottom: active ? "11px" : "12px",
-                borderTopLeftRadius: "44px",
-                borderTopRightRadius: "44px",
-                borderBottomLeftRadius: "44px",
-                borderBottomRightRadius: "44px",
-                borderTopWidth: active ? "2px" : "1px",
-                borderBottomWidth: active ? "2px" : "1px",
-                borderLeftWidth: active ? "2px" : "1px",
-                borderRightWidth: active ? "2px" : "1px",
-                borderTopStyle: "solid",
-                borderLeftStyle: "solid",
-                borderRightStyle: "solid",
-                borderBottomStyle: "solid",
-                borderColor: active ? "#23A4AD" : "#b2b2b2",
-                backgroundColor: backgroundColor ? backgroundColor : "#ffffff",
-                color: "#2c2c2c",
-                fontSize: "16px",
-                fontWeight: active ? "500" : "400",
-                textAlign: "center"
-            })
-            }
+        <Block className="text-center" font="MinXLabel16" color="MinXPrimaryText"
+               $style={{
+                   width: "100%",
+                   paddingTop: active ? "11px" : "12px",
+                   paddingBottom: active ? "11px" : "12px",
+                   borderTopLeftRadius: "44px",
+                   borderTopRightRadius: "44px",
+                   borderBottomLeftRadius: "44px",
+                   borderBottomRightRadius: "44px",
+                   borderTopWidth: active ? "2px" : "1px",
+                   borderBottomWidth: active ? "2px" : "1px",
+                   borderLeftWidth: active ? "2px" : "1px",
+                   borderRightWidth: active ? "2px" : "1px",
+                   borderTopStyle: "solid",
+                   borderLeftStyle: "solid",
+                   borderRightStyle: "solid",
+                   borderBottomStyle: "solid",
+                   borderColor: active ? "#23A4AD" : "#b2b2b2",
+                   backgroundColor: backgroundColor ? backgroundColor : "#ffffff",
+                   fontWeight: active ? "500" : "400",
+               }}
         >
             {children}
         </Block>

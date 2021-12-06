@@ -1,0 +1,18 @@
+{
+  "coverage": [
+    { "title": "Canopy Tent" },
+    { "title": "Frame - Y5 Economic Steel", "content": "1 Year" },
+    { "title": "Frame - Y6 Commercial Aluminum", "content": "5 Years" },
+    { "title": "Frame - Y7 Heavy duty aluminum", "content": "10 Year" },
+    { "title": "Roof", "content": "1 Year" },
+    { "title": "Umbrella" },
+    { "title": "Frame - Aluminum/Fiberglass", "content": "3 Years" },
+    { "title": "Roof - SDP Fabric", "content": "2 Years" },
+    { "title": "Roof - AGORA Fabric", "content": "5 Years" },
+    { "title": "Catalina" },
+    { "title": "Frame", "content": "3 Years" },
+    { "title": "Roof", "content": "5 Years" },
+    { "title": "Accessories" },
+    { "title": "Accessories", "content": "3 Months" }
+  ]
+}

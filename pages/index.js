@@ -1,4 +1,5 @@
 import React from "react";
+// import loadable from '@loadable/component'
 
 import {withRouter} from "next/router";
 import Head from "next/head";
