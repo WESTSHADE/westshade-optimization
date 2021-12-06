@@ -93,6 +93,7 @@ const Contact_Us = () => {
                 7: companyName,
                 8: phone,
                 9: email,
+                11: "https://westshade.s3.us-west-2.amazonaws.com/contacts/test.jpg"
             });
             setFormLoading(false);
             setFormState({
@@ -299,7 +300,10 @@ const Contact_Us = () => {
                                          ControlContainer: {style: {marginBottom: "40px"}}
                                      }}
                         >
-                            <CustomTextarea id="form-message" customClassname="form-input" required/>
+                            <CustomTextarea id="form-message" customClassname="form-input" required
+                                            value={formState.message}
+                                            onChange={(e)=> setFormState({...formState, message: e.target.value})}
+                            />
                         </FormControl>
                         <FormControl label={() => <CustomLabel>Contact information</CustomLabel>}
                                      overrides={{

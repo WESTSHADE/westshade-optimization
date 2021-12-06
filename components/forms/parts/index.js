@@ -1,9 +1,11 @@
 import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
-import {Button, SHAPE} from "baseui/button";
+import {Button, KIND, SHAPE} from "baseui/button";
 import {Checkbox} from "baseui/checkbox";
 import {Input} from "baseui/input";
+import { Notification } from "baseui/notification";
 import {SIZE, Textarea} from "baseui/textarea";
+import Image from "next/image";
 
 const CustomLabel = ({children}) => <Block marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
 
@@ -120,7 +122,7 @@ const CustomTextarea = ({customClassname, message, onChange, id, placeholder, re
     )
 }
 
-const CustomFileUploadInput = ({onChange, id, attachedFile, error}) => {
+const CustomFileUploadInput = ({onChange, id, attachedFile, error, removeAttachedFile, multiple}) => {
     const [css] = useStyletron();
 
     return (
@@ -153,13 +155,76 @@ const CustomFileUploadInput = ({onChange, id, attachedFile, error}) => {
             </Block>
             {
                 error.status &&
-                <Block as="small" marginTop="4px" textAlign="center" font="MinXParagraph14" color="#F07C7C">
-                    {error.message || "We only accept image with .ai, .psd, .png and .jpg type"}
+                
+                <Notification autoHideDuration={5000}
+                    overrides={{
+                        Body: {
+                            style: {
+                                backgroundColor: "transparent"
+                            }
+                        },
+                        InnerContainer: {
+                            style: {
+                                textAlign: "center",
+                                width: "100%"
+                            }
+                        }
+                    }}
+                >
+                    {() => <Block width="100%" as="small" marginTop="4px" textAlign="center" font="MinXParagraph14" color="#F07C7C">
+                        {error.message || "We only accept image with .ai, .psd, .png and .jpg type"}
+                    </Block>}
+                </Notification>
+            }
+            {
+                attachedFile && 
+                <Block marginTop="44px" display="grid" placeItems="center">
+                    <Block
+                        onClick={removeAttachedFile}
+                        className={css({padding: "5px 55px", borderRadius:"44px", cursor:"pointer"})}
+                        backgroundColor="MinXDividers"
+                        font="MinXParagraph14"
+                    >
+                        Cancel
+                    </Block>
                 </Block>
             }
-            <input hidden id={id} type="file" onChange={onChange}/>
+            <input hidden id={id} type="file" onChange={onChange} multiple={multiple}/>
         </>
     )
+}
+
+const CustomFilePreview = ({type, file, removeHandler}) => {
+    const [css] = useStyletron();
+    let previewImage = null;
+    switch (type) {
+        case "ai":
+            previewImage = "/images/icon/icon-ai.png"
+            break;
+        case "psd":
+            previewImage = "/images/icon/icon-psd.png"
+            break;
+        default:
+            previewImage = URL.createObjectURL(file);
+    }
+
+    return(
+        <Block width="100%" maxHeight="44px" marginBottom="24px" padding="1 0" display="flex" justifyContent="space-between" alignItems="center">
+            <Block display="flex">
+                <Block className={css({borderRadius: "4px"})} overflow="hidden">
+                    <Image src={ previewImage || "/images/icon-preview.png" } alt="logo" layout="fixed" width={46.5} height={44} objectFit="cover"/>
+                </Block>
+                <Block marginLeft="15px" display="flex" flexDirection="column" justifyContent="space-between">
+                    <Block font="MinXParagraph14" color="#000000">{file.name}</Block>
+                    <Block font="MinXParagraph12" color="rgba(0, 0, 0, 0.45)">{ Math.round((file.size / 1000000) * Math.pow(10, 2 || 0)) / (Math.pow(10, 2 || 0)) } MB</Block>
+                </Block>
+            </Block>
+            <Block width="20px" height="22px">
+                <i onClick={removeHandler}><Block as="img" className={css({width: "100%", objectFit: "contain", cursor: "pointer"})} src="/images/icon/icon-delete-black.png" alt="trash"/></i>
+            </Block>
+        </Block>
+    )
+
 }
 
 const CustomSubmitButton = ({children, isLoading}) => {
@@ -180,4 +245,4 @@ const CustomSubmitButton = ({children, isLoading}) => {
     </Button>
 }
 
-export {CustomLabel, CustomInput, CustomCheckbox, CustomCheckboxLabel, CustomSubmitButton, CustomTextarea, CustomFileUploadInput}
+export {CustomLabel, CustomInput, CustomCheckbox, CustomCheckboxLabel, CustomSubmitButton, CustomTextarea, CustomFileUploadInput, CustomFilePreview}
