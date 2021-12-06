@@ -335,6 +335,8 @@ const Contact_Us = () => {
                                     customClassname="form-input"
                                     required
                                     id="form-message"
+                                    value={formState.message}
+                                    onChange={(e)=> setFormState({...formState, message: e.target.value})}
                                 />
                             </FormControl>
                             <FormControl
