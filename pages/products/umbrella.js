@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
+import Script from "next/script";
 
 import {Block} from "baseui/block";
-import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import {Checkout_N as Checkout, Selection, ProductDescription} from "../../components/sections";
-import {Modal} from "../../components/surfaces";
+import {Checkout_N as Checkout, Selection, ProductImages, ProductDescription} from "Components/sections";
+import {Modal} from "Components/surfaces";
 
 import styles from "./Product.module.scss";
 
@@ -24,6 +21,7 @@ import {EventEmitter} from "../../utils/events";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -78,6 +76,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
     ////////////////////////////////////////
+
+    const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
@@ -451,13 +451,14 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             <Head>
                 <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
             </Head>
+            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             <Block width={["100%", "480px", "100%"]} display="flex" flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
                 {/* 图片区域 */}
-                <Block position={["", "", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                    <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                <Block position={[null, null, "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <ProductImages gallery={productImageGallery}/>
                 </Block>
                 {/* 选择区域 */}
-                <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
+                <Block width={["auto", "auto", "440px"]} overflow={[null, null, "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
                     <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                         <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                         {product && product.short_description ? (

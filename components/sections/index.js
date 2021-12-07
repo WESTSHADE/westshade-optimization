@@ -9,6 +9,7 @@ import SubHeaderBar from "./SubHeaderBar";
 import TentSizeDisplay from "./TentSizeDisplay";
 import OrderProcess from "./OrderProcess";
 import ProductDescription from "./Product_Description";
+import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 
 module.exports = {
@@ -23,5 +24,6 @@ module.exports = {
     OrderProcess,
     TentSizeDisplay,
     ProductDescription,
-    FreeMockupForm
+    FreeMockupForm,
+    ProductImages
 };

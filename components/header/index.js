@@ -43,7 +43,7 @@ function Header() {
         <React.Fragment>
             <div className={styles["container-nav"]}>
                 <Block position="fixed" top={0} right={0} left={0} display="block" width="100%" backgroundColor="#FBFBFB">
-                    <Block width="100%" backgroundColor="#FBFBFB" height={["48px", "64px"]}>
+                    <Block width="100%" backgroundColor="#FBFBFB" height="40px">
                         <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", null, "row"]} justifyContent="space-between" alignItems="center" paddingRight="16px" paddingLeft="16px"
                                $style={{gap: "24px", whiteSpace: "nowrap"}}
                         >
