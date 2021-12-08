@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 
+import {ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
 import {Button, SIZE, SHAPE, KIND} from "baseui/button";
@@ -13,17 +14,21 @@ import {Menu} from 'baseui/icon'
 
 import {Cart as SideCart, MobileMenu, NavItem} from "./parts";
 
-import {EventEmitter} from "../../utils/events";
-import {getUser} from "../../redux/actions/userActions";
+import MENU from "Assets/menu.json";
+import {EventEmitter} from "Utils/events";
+import {responsiveTheme, themedUseStyletron} from "Utils/theme";
 
-import MENU from "../../assets/menu.json";
+import {getUser} from "../../redux/actions/userActions";
 
 import styles from "./header.module.scss";
 
-import Account from "./account.svg";
+// import Account from "./account.svg";
 import Cart from "./cart.svg";
 
 function Header() {
+    const [css, theme] = themedUseStyletron();
+    const customTheme = {...theme, ...responsiveTheme};
+
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -40,14 +45,12 @@ function Header() {
     }, []);
 
     return (
-        <React.Fragment>
-            <div className={styles["container-nav"]}>
-                <Block position="fixed" top={0} right={0} left={0} display="block" width="100%" backgroundColor="#FBFBFB">
-                    <Block width="100%" backgroundColor="#FBFBFB" height="40px">
-                        <Block maxWidth={process.env.maxWidth + "px"} height="100%" margin="0 auto" display="flex" flexDirection={["row-reverse", null, "row"]} justifyContent="space-between" alignItems="center" paddingRight="16px" paddingLeft="16px"
-                               $style={{gap: "24px", whiteSpace: "nowrap"}}
-                        >
-                            <Block className={clsx([styles["site-logo"], "cursor"])} display={["none", null, "block"]} onClick={() => router.push("/")}>
+        <ThemeProvider theme={customTheme}>
+            <React.Fragment>
+                <div className={styles["container-nav"]}>
+                    <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
+                        <Block className={styles["root-navigation-top"]}>
+                            <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
                                 <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
                             </Block>
                             <Button shape={SHAPE.pill}
@@ -61,20 +64,13 @@ function Header() {
                                     $as="a" href="tel:877-702-1872"
                                     overrides={{
                                         BaseButton: {
-                                            style: {
-                                                height: "24px",
-                                                paddingLeft: " 24px",
-                                                paddingRight: " 24px",
-                                                color: "#FFF !important",
-                                                backgroundColor: "#23A4AD",
-                                                ":hover": {backgroundColor: "#5FBDBE"}
-                                            }
+                                            style: {height: "24px", paddingLeft: " 24px", paddingRight: " 24px", color: "#FFF !important", backgroundColor: "#23A4AD", ":hover": {backgroundColor: "#5FBDBE"}}
                                         },
                                     }}
                             >
                                 Call us <Block font="MinXParagraph14" display={["none", null, "inline-block"]}>&nbsp;&nbsp;877-702-1872</Block>
                             </Button>
-                            <Block display="grid" gridTemplateColumns="auto auto" gridColumnGap={["24px", "40px"]} font="MinXParagraph14" alignItems="inherit">
+                            <Block display="grid" gridTemplateColumns="auto auto" gridColumnGap={["24px", null, "40px"]} font="MinXParagraph14" alignItems="inherit">
                                 <Button kind={KIND.minimal}
                                         startEnhancer={() =>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#999999" viewBox="0 0 24 24">
@@ -93,58 +89,58 @@ function Header() {
                                 <Link href="/my-account">Log in</Link>
                             </Block>
                         </Block>
-                    </Block>
-                    <HeaderNavigation className={styles["root-navigation"]}>
-                        <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
-                            <NavigationItem>
-                                <Button shape={SHAPE.circle} kind={KIND.minimal}
-                                        overrides={{
-                                            BaseButton: {
-                                                style: {
-                                                    width: "24px", height: "24px",
-                                                    ":hover": {backgroundColor: "transparent"},
-                                                    ":active": {backgroundColor: "transparent"},
+                        <HeaderNavigation className={styles["root-navigation"]}>
+                            <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
+                                <NavigationItem>
+                                    <Button shape={SHAPE.circle} kind={KIND.minimal}
+                                            overrides={{
+                                                BaseButton: {
+                                                    style: {
+                                                        width: "24px", height: "24px",
+                                                        ":hover": {backgroundColor: "transparent"},
+                                                        ":active": {backgroundColor: "transparent"},
+                                                    },
                                                 },
-                                            },
-                                        }}
-                                        onClick={() => setMenuDrawerOpen(true)}
-                                >
-                                    <Menu size={24} color="#323232"/>
-                                </Button>
-                            </NavigationItem>
-                        </NavigationList>
-                        <NavigationList className={clsx([styles["nav-center"], styles["logo"]])} $align={ALIGN.center}>
-                            <NavigationItem>
-                                <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
-                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
-                                </Block>
-                            </NavigationItem>
-                        </NavigationList>
-                        <NavigationList className={clsx([styles["nav-center"], styles["menu"]])} $align={ALIGN.center}>
-                            {MENU.map((item, index) => <NavItem key={index} detail={item}/>)}
-                        </NavigationList>
-                        <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
-                            <NavigationItem>
-                                <Block position="relative" display="flex">
-                                    <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>
-                                        <Cart className="cursor" color="#323232"/>
+                                            }}
+                                            onClick={() => setMenuDrawerOpen(true)}
+                                    >
+                                        <Menu size={24} color="#323232"/>
                                     </Button>
-                                    <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>
-                                </Block>
-                            </NavigationItem>
-                            {/* <NavigationItem>
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList className={clsx([styles["nav-center"], styles["logo"]])} $align={ALIGN.center}>
+                                <NavigationItem>
+                                    <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
+                                        <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
+                                    </Block>
+                                </NavigationItem>
+                            </NavigationList>
+                            <NavigationList className={clsx([styles["nav-center"], styles["menu"]])} $align={ALIGN.center}>
+                                {MENU.map((item, index) => <NavItem key={index} detail={item}/>)}
+                            </NavigationList>
+                            <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
+                                <NavigationItem>
+                                    <Block position="relative" display="flex">
+                                        <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>
+                                            <Cart className="cursor" color="#323232"/>
+                                        </Button>
+                                        <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>
+                                    </Block>
+                                </NavigationItem>
+                                {/* <NavigationItem>
                                 <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/my-account")}>
                                     <Account className="cursor" color="#323232"/>
                                 </Button>
                             </NavigationItem> */}
-                        </NavigationList>
-                    </HeaderNavigation>
-                </Block>
-                {/*侧边栏*/}
-                <MobileMenu isOpen={isMenuDrawerOpen} onClose={() => setMenuDrawerOpen(false)}/>
-                <SideCart isOpen={isCartDrawerOpen} onClose={() => setCartDrawerOpen(false)}/>
-            </div>
-        </React.Fragment>
+                            </NavigationList>
+                        </HeaderNavigation>
+                    </Block>
+                    {/*侧边栏*/}
+                    <MobileMenu isOpen={isMenuDrawerOpen} onClose={() => setMenuDrawerOpen(false)}/>
+                    <SideCart isOpen={isCartDrawerOpen} onClose={() => setCartDrawerOpen(false)}/>
+                </div>
+            </React.Fragment>
+        </ThemeProvider>
     );
 }
 

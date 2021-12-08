@@ -1,3 +1,4 @@
+const path = require("path");
 /**
  * @type {import('next').NextConfig}
  */
@@ -24,7 +25,8 @@ const nextConfig = {
         config.resolve.alias = {
             ...config.resolve.alias,
             Assets: path.resolve(__dirname, 'assets/'),
-            Components: path.resolve(__dirname, 'components/')
+            Components: path.resolve(__dirname, 'components/'),
+            Utils: path.resolve(__dirname, 'utils/')
         };
 
         config.externals = config.externals || {};

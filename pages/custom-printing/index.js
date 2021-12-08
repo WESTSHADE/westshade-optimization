@@ -8,18 +8,16 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
-import ArrowLeft from "baseui/icon/arrow-left";
-import ArrowRight from "baseui/icon/arrow-right";
+import {ArrowRight, ArrowLeft} from "baseui/icon";
 
-import {Benefit, OrderProcess, Section, FreeMockupForm} from "../../components/sections";
-import Sandwich from "../../components/sandwich";
-import MButton from "../../components/button-n";
+import {Benefit, OrderProcess, Section, FreeMockupForm} from "Components/sections";
+import MButton from "Components/button-n";
 
 const ImageSlide = ({url}) => {
     return (
-        <div className="react-player">
-            <img src={url} alt="live-example" width="100%" height="100%"/>
-        </div>
+        <Block className="react-player" width="100vw !important">
+            <Image src={url} alt="live-example" layout="fill" objectFit="cover"/>
+        </Block>
     );
 };
 
@@ -33,13 +31,13 @@ function Custom_Printing({router}) {
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
                 <Block height={["480px", "660px", "900px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["60px 30px 0", "80px 30px 0", "160px 30px 0"]}
+                       backgroundColor="transparent !important"
                        overrides={{
                            Block: {
                                props: {
                                    className: "banner-display text-center"
                                },
                                style: {
-                                   background: "transparent !important",
                                    ":after": {background: "url('/images/custom-printing/custom-printing-display.webp')"},
                                }
                            }
@@ -168,63 +166,39 @@ function Custom_Printing({router}) {
                          title="PRINTING TECH"
                          subtitle="You can choose between two printing technologies based on your need."
                          content={
-                             <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["16px", "20px"]} gridColumnGap="20px"
-                                    overrides={{
-                                        Block: {
-                                            props: {
-                                                className: "text-center"
-                                            }
-                                        }
-                                    }}
-                             >
-                                 <Block backgroundColor="MinXBackground"
-                                        overrides={{
-                                            Block: {
-                                                props: {
-                                                    className: "section-round-corner"
-                                                }
-                                            }
-                                        }}
-                                 >
+                             <Block className="text-center" display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["16px", "20px"]} gridColumnGap="20px">
+                                 <Block className="section-round-corner" backgroundColor="MinXBackground">
                                      <Block position="relative" height={["320px", "446px"]}>
                                          <Image src="/images/custom-printing/dye-sublimation-printing.webp" alt="Dye Sublimation Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">THERMAL</Block>
                                          <Block marginBottom="32px" font="MinXParagraph20" color="MinXPrimaryText" $style={{fontWeight: 700}}>Dye Sublimation</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>USAGE</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>Good for logo printing</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>METHOD</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>Transfer color from a printed paper to the fabric</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>FEATURE</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>No peeling, fading, or extra fabric build-up</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>FABRIC</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>600D fabric, 288 gsm</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">USAGE</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">Good for logo printing</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">METHOD</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">Transfer color from a printed paper to the fabric</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">FEATURE</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">No peeling, fading, or extra fabric build-up</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">FABRIC</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">600D fabric, 288 gsm</Block>
                                      </Block>
                                  </Block>
-                                 <Block backgroundColor="MinXBackground"
-                                        overrides={{
-                                            Block: {
-                                                props: {
-                                                    className: "section-round-corner"
-                                                }
-                                            }
-                                        }}
-                                 >
+                                 <Block className="section-round-corner" backgroundColor="MinXBackground">
                                      <Block position="relative" height={["320px", "446px"]}>
                                          <Image src="/images/custom-printing/uv-printing.webp" alt="UV Printing" layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block padding="32px 16px">
                                          <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">DIGITAL</Block>
                                          <Block marginBottom="32px" font="MinXParagraph20" color="MinXPrimaryText" $style={{fontWeight: 700}}>UV Printing</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>USAGE</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>Good for whole tent printing</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>METHOD</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>Directly print CMYK ink onto the fabric</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>FEATURE</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>2-3 times lifespan of dye sublimation</Block>
-                                         <Block marginBottom="8px" font="MinXHeading14" color={"MinXSecondaryText"}>FABRIC</Block>
-                                         <Block marginBottom="16px" font="MinXParagraph14" color={"MinXPrimaryText"}>900D fabric, 360 gsm</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">USAGE</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">Good for whole tent printing</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">METHOD</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">Directly print CMYK ink onto the fabric</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">FEATURE</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">2-3 times lifespan of dye sublimation</Block>
+                                         <Block marginBottom="8px" font="MinXHeading14" color="MinXSecondaryText">FABRIC</Block>
+                                         <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText">900D fabric, 360 gsm</Block>
                                      </Block>
                                  </Block>
                              </Block>

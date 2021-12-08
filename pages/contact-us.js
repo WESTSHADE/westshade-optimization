@@ -10,27 +10,15 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import {Notification} from "baseui/notification";
 import {FormControl} from "baseui/form-control";
 
-import Accordion from "../components/accordion";
-import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea} from "../components/forms/parts";
+import QA from "Assets/q&a.json";
+
+import Accordion from "Components/accordion";
+import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea} from "Components/forms/parts";
+
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import Utils from "../utils/utils";
 
 const utils = new Utils();
-
-const QA = [
-    {
-        title: "Where can I use my WestShade pop-up canopy?",
-        content: "Our canopies stand securely on grass, dirt, or pavement without ropes or poles. In windy conditions, However, we recommend using our Weight Bags to anchor and prevent your canopy from tipping over."
-    },
-    {title: "Can I buy a replacement canopy covering?", content: "Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us online."},
-    {title: "Do you have any accessories available?", content: "Yes, our full line of accessories includes sidewalls, half sidewalls, sidewalls with roll up doors, sidewalls with windows and sand bags."},
-    {title: "What fire ratings do your fabric items have?", content: " Our fabric meets CPAI-84, NFPA-71 and the California Administrative Code Title 19 fire resistant requirements."},
-    {
-        title: "What are your shipping costs?",
-        content: <>We provide free shipping and handling costs for any orders over $149 within the U.S., with the exception of AK, HI and PR.<br/><br/>Shipping costs for customers located in those 3 states will be provided after further order
-            estimates.</>
-    },
-];
 
 const CustomCard = ({children}) => {
     const [css] = useStyletron();
@@ -127,7 +115,7 @@ const Contact_Us = () => {
     }
 
     return (
-        <>
+        <React.Fragment>
             <Head>
                 <title>Contact Us - WESTSHADE</title>
                 <meta name="description" content="Frequently asked question about Westshade&apos;s canopy, umbrella and accessories."/>
@@ -302,7 +290,7 @@ const Contact_Us = () => {
                         >
                             <CustomTextarea id="form-message" customClassname="form-input" required
                                             value={formState.message}
-                                            onChange={(e)=> setFormState({...formState, message: e.target.value})}
+                                            onChange={(e) => setFormState({...formState, message: e.target.value})}
                             />
                         </FormControl>
                         <FormControl label={() => <CustomLabel>Contact information</CustomLabel>}
@@ -420,10 +408,10 @@ const Contact_Us = () => {
             {/* FAQs Section */}
             <Block width="100%" maxWidth="660px" display="grid" gridRowGap={["16px", "24px"]} justifyItems="center" margin="auto" padding={["40px 16px", "100px 16px"]}>
                 <Block as="h2" font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText">FAQs</Block>
-                <Accordion list={QA}/>
+                <Accordion list={QA.contact_us}/>
             </Block>
             {/* End of FAQs Section */}
-        </>
+        </React.Fragment>
     )
 }
 

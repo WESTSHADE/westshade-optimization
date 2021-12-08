@@ -11,6 +11,7 @@ import OrderProcess from "./OrderProcess";
 import ProductDescription from "./Product_Description";
 import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
+import CanopyTentHero from "./CanopyTentHero";
 
 module.exports = {
     BannerDisplay,
@@ -25,5 +26,6 @@ module.exports = {
     TentSizeDisplay,
     ProductDescription,
     FreeMockupForm,
-    ProductImages
+    ProductImages,
+    CanopyTentHero
 };

@@ -77,8 +77,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
     ////////////////////////////////////////
 
-    const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
-
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
 
     const [umbrellaSize, setUmbrellaSize] = useState("");

@@ -1,15 +1,16 @@
 import React from "react";
 
 import Head from "next/head";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Section} from "../components/sections";
+import {Section} from "Components/sections";
 
 const BlockGridIcon = ({src, alt, title}) => {
     return (
-        <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", "24px", "32px"]} justifyItems="center">
-            <Block width="106px" height="106px">
-                <img src={src} alt={alt} width="100%" height="100%" style={{border: "1px solid #D9D9D9", borderRadius: "50%"}}/>
+        <Block>
+            <Block position="relative" width="106px" height="106px" marginBottom={["8px", "24px", "32px"]} overflow="hidden" $style={{border: "1px solid #D9D9D9", borderRadius: "50%"}}>
+                <Image src={src} alt={alt} layout="fill" objectFit="contain"/>
             </Block>
             <Block font="MinXLabel14" color="MinXPrimaryText">{title}</Block>
         </Block>
@@ -40,15 +41,14 @@ function About_Us() {
                 <meta name="description"
                       content="Our goal is to bring comfort, quality, and convenience in enhancing our customers outdoor and indoor experience. In addition to our recreational and optimal business solution shelters, we also provide full custom-printing services in creating the ideal advertising method for your next product & service promotion!"/>
             </Head>
-            <Block display="flex" flexDirection="column" position="relative" alignItems="flex-start" justifyContent={"flex-end"} width="960px" height={["181px", "272px", "517px"]}
-                   marginRight="auto" marginBottom={["32px", "32px", "40px"]} marginLeft="auto" paddingRight={"30px"} paddingBottom={["38px", "30px", "140px"]} paddingLeft={"30px"}
-                   backgroundImage={"url(\"/images/about-us/about-us-display.webp\")"} backgroundSize="cover" backgroundPosition="center" backgroundRepeat="no-repeat"
+            <Block display="flex" flexDirection="column" position="relative" alignItems="flex-start" justifyContent="center" width="960px" height={["181px", "272px", "517px"]} margin={["auto auto 32px", null, "auto auto 40px"]} padding="0 30px"
+                   backgroundImage={"url('/images/about-us/about-us-display.webp')"} backgroundSize="cover" backgroundPosition="center" backgroundRepeat="no-repeat"
             >
                 <div>
                     <Block marginBottom="8px" font={["MinXSubtitle10", "MinXSubtitle14"]} color="MinXPrimaryText">
                         EITHER IT’S YOUR BUSINESS OR FAMILY ACTIVITIES
                     </Block>
-                    <Block maxWidth={["272px", "433px", "476px"]} marginBottom="20px" font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">
+                    <Block maxWidth={["272px", "433px", "476px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">
                         WE’VE GOT YOU COVERED
                     </Block>
                 </div>
@@ -62,19 +62,17 @@ function About_Us() {
                                      Westshade puts quality designing, engineering, and reliability in every canopy and umbrella that is perfect suited for all of our customers.
                                  </Block>
                                  <Block alignSelf={["flex-start", "flex-end"]} width={["100%", "390px", "587px"]} font="MinXParagraph14" color="MinXPrimaryText">
-                                     Our goal is to bring <span style={{color: "#23A4AD"}}>comfort, quality, and convenience</span> in enhancing our customers outdoor and indoor
-                                     experience. In addition to our recreational and optimal business solution shelters, we also provide <span
-                                     style={{color: "#23A4AD"}}>full custom-printing</span> services in creating the ideal advertising method for your next product & service
-                                     promotion!
+                                     Our goal is to bring <Block color="#23A4AD" as="span">comfort, quality, and convenience</Block> in enhancing our customers outdoor and indoor experience. In addition to our recreational and optimal business
+                                     solution shelters, we also provide <Block color="#23A4AD" as="span">full custom-printing</Block> services in creating the ideal advertising method for your next product & service promotion!
                                  </Block>
                              </Block>
                          }
                 />
                 <Section upperContainerProps={{hidden: true}}
                          content={
-                             <Block overrides={{Block: {props: {className: "text-center"}}}}>
+                             <Block className="text-center">
                                  <Block marginBottom={["12px", "24px", "40px"]} font={["MinXHeading20", "MinXHeading32", "MinXHeading44"]} color="MinXPrimaryText">WHAT WE PROVIDE</Block>
-                                 <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]} gridRowGap={["18px", "26px"]} gridColumnGap={["28px", "38px"]} justifyItems="center">
+                                 <Block display="grid" gridTemplateColumns={["repeat(2, 1fr)", null, "repeat(4, 1fr)"]} gridRowGap={["18px", "26px"]} gridColumnGap={["28px", "38px"]} justifyItems="center">
                                      <BlockGridIcon src={"/images/about-us/icon_tent.webp"} title={"Canopy tent"} alt={"Canopy Tent"}/>
                                      <BlockGridIcon src={"/images/about-us/icon_table_cover.webp"} title={"Table cover"} alt={"Table cover"}/>
                                      <BlockGridIcon src={"/images/about-us/icon_umb.webp"} title={"Umbrella"} alt={"Umbrella"}/>
