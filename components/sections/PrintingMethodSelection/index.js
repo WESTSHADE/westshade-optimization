@@ -95,7 +95,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
     )
 }
 
-const index = ({printingMethodValue, setMethod}) => {
+const PrintingMethodSelection = ({printingMethodValue, setMethod}) => {
     const [showPrintingTechnology,setShowPrintingTechnology] = useState(false);
 
     return (
@@ -125,4 +125,4 @@ const index = ({printingMethodValue, setMethod}) => {
     )
 }
 
-export default index
+export default PrintingMethodSelection

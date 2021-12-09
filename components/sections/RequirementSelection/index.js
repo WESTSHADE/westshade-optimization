@@ -4,9 +4,10 @@ import { useState } from "react"
 import { useStyletron } from "styletron-react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
+import Index from "../TentSizeSelection"
 import RoofDetail from "./InputDetails"
 
-const index = ({activeSide = "FRONT", activeTentImage, setSide, requirement, setRequirement}) => {
+const RequirementSelection = ({activeSide = "FRONT", activeTentImage, setSide, requirement, setRequirement}) => {
     const [peakDetailIsOpen, setPeakDetailsIsOpen] = useState(false);
     const [valanceDetailIsOpen, setValanceDetailsIsOpen] = useState(false);
     const [css] = useStyletron();
@@ -196,4 +197,4 @@ const index = ({activeSide = "FRONT", activeTentImage, setSide, requirement, set
     )
 }
 
-export default index
+export default RequirementSelection;

@@ -70,7 +70,7 @@ const TentSizeCard = ({image, label,value,active, onClick}) => {
 }
 
 
-const index = ({ frame, sizeValue, setSize, error}) => {
+const TentSizeSelection = ({ frame, sizeValue, setSize, error}) => {
     const [css] = useStyletron();
     const [showSizeGuide, setShowSizeGuide] = useState(false);
 
@@ -117,6 +117,7 @@ const index = ({ frame, sizeValue, setSize, error}) => {
                     {
                         tentSizes[frame].map((size) => (
                             <Radio
+                                key={size.size}
                                 value={size.size}
                                 image={size.image}
                                 label={size.label}
@@ -144,4 +145,4 @@ const index = ({ frame, sizeValue, setSize, error}) => {
     )
 }
 
-export default index
+export default TentSizeSelection;

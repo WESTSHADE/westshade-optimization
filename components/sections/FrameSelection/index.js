@@ -2,7 +2,6 @@ import { useStyletron } from "baseui"
 import { Block } from "baseui/block"
 import Image from "next/image"
 import { useState } from "react"
-import { css } from "styled-components"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
@@ -99,7 +98,7 @@ const FrameTypeCard = ({frame, active,onClick}) => {
     )
 }
 
-const index = ({frameValue, setFrame}) => {
+const FrameSelection = ({frameValue, setFrame}) => {
     const [showFrameCompare,setShowFrameCompare] = useState(false);
     const [css] = useStyletron();
     return (
@@ -129,4 +128,4 @@ const index = ({frameValue, setFrame}) => {
     )
 }
 
-export default index
+export default FrameSelection
