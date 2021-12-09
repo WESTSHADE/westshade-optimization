@@ -171,7 +171,7 @@ function MyApp({Component, pageProps}) {
                         <Script id="apple-business-chat" src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js" strategy="afterInteractive"/>
                         <Script id="apple-business-chat-js" src="/staticFiles/appleBusinessChat.js" strategy="afterInteractive"
                                 onLoad={() => {
-                                    if (window.appleBusinessChat.isSupported()) {
+                                    if (window.appleBusinessChat?.isSupported()) {
                                         createABannerPlaceholder();
                                         window.appleBusinessChat.refresh();
                                     }
