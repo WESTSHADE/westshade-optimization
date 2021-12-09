@@ -16,7 +16,7 @@ import Accordion from "Components/accordion";
 import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea} from "Components/forms/parts";
 
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
-import Utils from "../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 

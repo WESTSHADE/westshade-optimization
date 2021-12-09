@@ -15,16 +15,17 @@ import {FormControl} from "baseui/form-control";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Delete from 'baseui/icon/delete'
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import {viewPromotion} from "../../redux/actions/gtagActions";
 
-import Utils from "../../utils/utils";
-import {NumberFn, UrlFn} from "../../utils/tools";
+import Utils from "Utils/utils";
+import {NumberFn, UrlFn} from "Utils/tools";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Modal} from "../../components/surfaces";
-import MButton from "../../components/button-n";
+import {Modal} from "Components/surfaces";
+import MButton from "Components/button-n";
 
 const utils = new Utils();
 const numberFn = new NumberFn();
@@ -604,9 +605,9 @@ function Checkout({router, orderID, orderDetail}) {
                                         </FormControl>
                                         <StatefulTooltip placement={PLACEMENT.topRight} triggerType={TRIGGER_TYPE.click} autoFocus
                                                          content={() => (
-                                                             <div style={{zIndex: 999}}>
-                                                                 <img src="/images/icon/icon-cvc.png" alt="cvc" style={{height: "60px", objectFit: "contain"}}/>
-                                                             </div>
+                                                             <AspectRatioBox aspectRatio={5 / 3} width="100px" style={{zIndex: 999}}>
+                                                                 <Image src="/images/icon/icon-cvc.png" alt="authorize" layout="fill" objectFit="contain"/>
+                                                             </AspectRatioBox>
                                                          )}
                                                          overrides={{
                                                              Body: {style: ({$theme}) => ({boxShadow: "none", backgroundColor: "transparent",})},
@@ -663,7 +664,9 @@ function Checkout({router, orderID, orderDetail}) {
                                          disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
                                 />
                                 <Block display="flex" flexDirection="row" alignItems="center">
-                                    <img src="/images/icon/icon-authorize.png" alt="authorize" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                                    <AspectRatioBox aspectRatio={1} width="35px">
+                                        <Image src="/images/icon/icon-authorize.png" alt="authorize" layout="fill" objectFit="contain"/>
+                                    </AspectRatioBox>
                                     <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You
                                         can shop at Westshade with confidence. We have partnered with Authorize.Net.
                                     </div>

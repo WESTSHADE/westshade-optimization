@@ -8,8 +8,8 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import ChevronRight from "baseui/icon/chevron-right";
 
-import {BannerDisplay, Section} from "../../components/sections";
-import MButton from "../../components/button-n";
+import {BannerDisplay, Section} from "Components/sections";
+import MButton from "Components/button-n";
 
 const data = {
     display: [

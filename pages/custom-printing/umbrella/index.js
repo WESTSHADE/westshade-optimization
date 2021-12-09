@@ -7,41 +7,31 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
+import {AspectRatioBox} from 'baseui/aspect-ratio-box';
 import {ArrowDown} from 'baseui/icon'
 
-import {Benefit, FreeMockupForm, Section} from "../../../components/sections"
-import MButton from "../../../components/button-n";
-import {Modal} from "../../../components/surfaces";
+import {Benefit, FreeMockupForm, Section} from "Components/sections"
+import Button from "Components/button-n";
+import {Modal} from "Components/surfaces";
 
-import Utils from "../../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 
 const SectionCard = ({router, src, alt, title, content, destination, onClick, buttonText = "Buy"}) => {
     return (
-        <Block display={["grid", "grid", "flex"]} flexDirection={["column", "column", "row-reverse"]} alignItems={["", "", "center"]} justifyContent={["", "", "space-between"]}
-               gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "unset"]} gridRowGap={["20px", "24px", "unset"]} padding={["32px 16px", "48px 24px", "20px 0px 0px 40px"]}
-               overrides={{
-                   Block: {
-                       style: {
-                           boxShadow: "0px 16px 40px rgba(0, 0, 0, 0.05)",
-                       },
-                   },
-               }}
+        <Block display={["grid", null, "flex"]} flexDirection={["column", null, "row-reverse"]} alignItems={[null, null, "center"]} justifyContent={[null, null, "space-between"]} gridTemplateColumns={["1fr", null, "unset"]}
+               gridRowGap={["20px", "24px", "unset"]} padding={["32px 16px", "48px 64px", "20px 0 0"]} $style={{boxShadow: "0px 16px 40px rgba(0, 0, 0, 0.05)"}}
         >
-            <Block position="relative" width="100%" maxWidth={["256px", "320px", "380px"]} marginRight={["auto", "auto", "0px"]} marginBottom={["12px", "24px", "0px"]} marginLeft="auto">
-                <Image src={src} alt={alt} layout="responsive" width={640} height={640} quality={100}/>
-            </Block>
-            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", "12px", "16px"]}>
+            <AspectRatioBox position="relative" width={["256px", "320px", "380px"]} margin="auto"><Image src={src} alt={alt} layout="fill" priority/></AspectRatioBox>
+            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", null, "16px"]} flex={1} paddingLeft={[null, null, "40px"]}>
                 <Block font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
                 <Block maxWidth="400px" font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
-                <MButton type="outline" width="72px" height="32px" font="MinXLabel14" color="MinXPrimaryText" text={buttonText}
-                         onClick={onClick ? onClick : () => router.push(destination)}
-                />
+                <Button type="outline" width={["72px", null, "121px"]} height={["32px", null, "48px"]} font="MinXLabel14" color="MinXPrimaryText" text={buttonText} onClick={onClick ? onClick : () => router.push(destination)}/>
             </Block>
         </Block>
     )
-}
+};
 
 function Custom_Printing_Umbrella({router, size}) {
     const ref = useRef(null);
@@ -52,17 +42,19 @@ function Custom_Printing_Umbrella({router, size}) {
 
     const [showGetQuote, setShowGetQuote] = useState(false);
 
-    const [quoteProduct, setQuoteProduct] = useState("");
-    const [quoteQuantity, setQuoteQuantity] = useState(1);
-    const [quoteNameLast, setQuoteNameLast] = useState("");
-    const [quoteNameFirst, setQuoteNameFirst] = useState("");
-    const [quoteEmail, setQuoteEmail] = useState("");
-    const [quotePhone, setQuotePhone] = useState("");
-    const [quoteRequest, setQuoteRequest] = useState("");
     const [quoteError, setQuoteError] = useState(false);
+    const [quote, setQuote] = useState({
+        product: "",
+        quantity: 1,
+        nameLast: "",
+        nameFirst: "",
+        email: "",
+        phone: "",
+        request: ""
+    });
 
     const goBuyingSection = () => {
-        if (window) window.scrollTo({top: size.width > 959 ? ref.current.offsetTop - 120 : ref.current.offsetTop - 72, behavior: 'smooth'});
+        if (window) window.scrollTo({top: ref.current.offsetTop - 60, behavior: 'smooth'});
     };
 
     const handleEnquiry = () => {
@@ -70,32 +62,39 @@ function Custom_Printing_Umbrella({router, size}) {
 
         if (showGetQuote) {
             setQuoteError(false);
-            setQuoteNameLast("");
-            setQuoteNameFirst("");
-            setQuoteEmail("");
-            setQuotePhone("");
-            setQuoteRequest("");
+            setQuote({
+                product: "",
+                quantity: 1,
+                nameLast: "",
+                nameFirst: "",
+                email: "",
+                phone: "",
+                request: ""
+            });
         }
     }
 
+    const handleEnquiryDetail = (key, value) => {
+        setQuoteError(false);
+        setQuote({...quote, [key]: value});
+    };
 
-    const handleSendQuote = async () => {
-        if (!quoteProduct || !quoteNameLast || !quoteNameFirst || !quoteEmail || !quotePhone || !quoteRequest) {
+    const handleSendQuote = () => {
+        if (!quote.nameFirst || !quote.nameLast || !quote.email || !quote.phone || !quote.request) {
             setQuoteError(true);
         } else {
-            let result = await utils.contact({
+            utils.contact({
                 form_id: "2",
                 status: "active",
-                1: "New Entry: " + quoteProduct + " Enquiry",
+                1: "New Entry: " + quote.product + " Enquiry",
                 2: "",
-                3: quoteQuantity,
-                4.3: quoteNameFirst,
-                4.6: quoteNameLast,
-                5: quoteEmail,
-                6: quotePhone,
-                8: quoteRequest,
-            });
-            handleEnquiry();
+                3: quote.quantity,
+                4.3: quote.nameFirst,
+                4.6: quote.nameLast,
+                5: quote.email,
+                6: quote.phone,
+                8: quote.request,
+            }).then(() => handleEnquiry());
         }
     };
 
@@ -114,12 +113,9 @@ function Custom_Printing_Umbrella({router, size}) {
                       content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
-                <Block ref={refBanner} display="grid" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["32px 30px", "40px 30px", "64px 30px"]}
+                <Block ref={refBanner} className="banner-display text-center" display="grid" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["32px 30px", "40px 30px", "64px 30px"]}
                        overrides={{
                            Block: {
-                               props: {
-                                   className: "banner-display text-center"
-                               },
                                style: {
                                    ":after": {background: "linear-gradient(95.25deg, rgba(120, 121, 241, 0.85) 0%, rgba(211, 212, 255, 0) 52.6%, rgba(120, 121, 241, 0.85) 100%), #BFC0FF;"}
                                }
@@ -130,43 +126,42 @@ function Custom_Printing_Umbrella({router, size}) {
                     <Block maxWidth={["260px", "420px", "580px", "640px"]} font={["MinXSubtitle16", "MinXSubtitle24", 'MinXSubtitle28']} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>
                         You can print your own artwork on any umbrellas
                     </Block>
-                    <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["8px", "12px", "20px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below"
-                             buttonStyle={{borderColor: "white"}} $style={{zIndex: 1}}
-                             startEnhancer={() => <ArrowDown size={36}/>} onClick={() => goBuyingSection()}
+                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["8px", "12px", "20px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below"
+                            buttonStyle={{borderColor: "white"}} $style={{zIndex: 1}}
+                            startEnhancer={() => <ArrowDown size={36}/>} onClick={() => goBuyingSection()}
                     />
-                    <Block width="100%" display="grid" justifyContent={["", "", "space-around"]}
-                           gridTemplateAreas={[`"a c" "d d"`, `"a c" "d d"`, "unset"]} gridTemplateColumns={["", "", "152px 171px 338px"]} gridColumnGap="20px" gridRowGap={["40px", "40px", "unset"]}
-                           $style={{zIndex: 1}}
+                    <Block width="100%" display="grid" justifyContent={[null, null, "space-around"]} gridTemplateAreas={[`"a c" "d d"`, null, "unset"]} gridTemplateColumns={[null, null, "152px 171px 338px"]} gridColumnGap="20px"
+                           gridRowGap={["40px", null, "unset"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}
                     >
-                        <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["a", "a", "unset"]}>
-                            <Block position="relative" width="100%" height={["81px", "142px", "166px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
+                        <Block display="grid" gridTemplateColumns="auto" gridRowGap="12px" alignSelf="end" gridArea={["a", null, "unset"]}>
+                            <Block position="relative" width="100%" height={["81px", "142px", "166px"]}>
+                                <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" priority={true}/>
                             </Block>
-                            <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Kapri</Block>
+                            Kapri
                         </Block>
-                        {/*<Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["a", "a", "unset"]}>*/}
-                        {/*    <Block position="relative" width="100%" height={["81px", "142px", "166px"]} marginRight="auto" marginLeft="auto">*/}
-                        {/*        <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
+                        {/*<Block display="grid" gridTemplateColumns="auto" gridRowGap="12px" alignSelf="end" gridArea={["a", "a", "unset"]}>*/}
+                        {/*    <Block position="relative" width="100%" height={["81px", "142px", "166px"]}>*/}
+                        {/*        <Image src="/images/custom-printing/umbrella/icon-bali.webp" alt="bali" layout="fill" objectFit="contain" objectPosition="bottom"/>*/}
                         {/*    </Block>*/}
-                        {/*    <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Bali</Block>*/}
+                        {/*    Bali*/}
                         {/*</Block>*/}
-                        {/*<Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["b", "b", "unset"]}>*/}
-                        {/*    <Block position="relative" width="100%" height={["86px", "136px", "159px"]} marginRight="auto" marginLeft="auto">*/}
-                        {/*        <Image src="/images/custom-printing/umbrella/icon-marco.webp" alt="marco" layout="fill" objectFit="contain" objectPosition="bottom" quality={100}/>*/}
+                        {/*<Block display="grid" gridTemplateColumns="auto" gridRowGap="12px" alignSelf="end" gridArea={["b", "b", "unset"]}>*/}
+                        {/*    <Block position="relative" width="100%" height={["86px", "136px", "159px"]}>*/}
+                        {/*        <Image src="/images/custom-printing/umbrella/icon-marco.webp" alt="marco" layout="fill" objectFit="contain" objectPosition="bottom"/>*/}
                         {/*    </Block>*/}
-                        {/*    <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Marco</Block>*/}
+                        {/*    Marco*/}
                         {/*</Block>*/}
-                        <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["c", "c", "unset"]}>
-                            <Block position="relative" width="100%" height={["91px", "148px", "175px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="/images/custom-printing/umbrella/icon-santorini.webp" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
+                        <Block display="grid" gridTemplateColumns="auto" gridRowGap="12px" alignSelf="end" gridArea={["c", null, "unset"]}>
+                            <Block position="relative" width="100%" height={["91px", "148px", "175px"]}>
+                                <Image src="/images/custom-printing/umbrella/icon-santorini.webp" alt="santorini" layout="fill" objectFit="contain" objectPosition="bottom" priority={true}/>
                             </Block>
-                            <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Santorini</Block>
+                            Santorini
                         </Block>
-                        <Block display="grid" gridTemplateColumns="repeat(1, auto)" gridRowGap="12px" alignSelf={"end"} gridArea={["d", "d", "unset"]}>
-                            <Block position="relative" width="100%" height={["109px", "180px", "212px"]} marginRight="auto" marginLeft="auto">
-                                <Image src="/images/custom-printing/umbrella/icon-catalina.webp" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" quality={100} priority={true}/>
+                        <Block display="grid" gridTemplateColumns="auto" gridRowGap="12px" alignSelf="end" gridArea={["d", null, "unset"]}>
+                            <Block position="relative" width="100%" height={["109px", "180px", "212px"]}>
+                                <Image src="/images/custom-printing/umbrella/icon-catalina.webp" alt="catalina" layout="fill" objectFit="contain" objectPosition="bottom" priority={true}/>
                             </Block>
-                            <Block marginRight="auto" marginLeft="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryTextAlt">Catalina</Block>
+                            Catalina
                         </Block>
                     </Block>
                     <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#F02B9B", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
@@ -175,9 +170,7 @@ function Custom_Printing_Umbrella({router, size}) {
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={
-                             <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
-                                 <Image src="/images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} quality={100} priority={true}/>
-                             </Block>
+                             <Image src="/images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} priority={true}/>
                          }
                 />
                 <Block ref={ref}>
@@ -197,24 +190,24 @@ function Custom_Printing_Umbrella({router, size}) {
                                                   src={"/images/custom-printing/umbrella/kapri.webp"} alt={"kapri"}
                                                   buttonText="Enquiry" destination={"/"}
                                                   onClick={() => {
-                                                      setQuoteProduct("Kapri Tilt Umbrella");
-                                                      handleEnquiry()
+                                                      handleEnquiryDetail("product", "Kapri Tilt Umbrella");
+                                                      handleEnquiry();
                                                   }}
                                      />
                                      <SectionCard router={router} title={"Santorini Pulley Umbrella"} content={"Santorini umbrella is made of aluminum or fiberglass, and it comes in five sizes and six premade colors."}
                                                   src={"/images/custom-printing/umbrella/santorini.webp"} alt={"santorini"}
                                                   buttonText="Enquiry" destination={"/products/market-umbrellas/santorini-umbrella"}
                                                   onClick={() => {
-                                                      setQuoteProduct("Santorini Pulley Umbrella");
-                                                      handleEnquiry()
+                                                      handleEnquiryDetail("product", "Santorini Pulley Umbrella");
+                                                      handleEnquiry();
                                                   }}
                                      />
                                      <SectionCard router={router} title={"Catalina Oversized Umbrella"} content={"Catalina umbrella is made of aluminum, and it comes in four sizes and white color."}
                                                   src={"/images/custom-printing/umbrella/catalina.webp"} alt={"catalina"}
                                                   buttonText="Enquiry" destination={"/products/cantilever-umbrellas/catalina-umbrella"}
                                                   onClick={() => {
-                                                      setQuoteProduct("Catalina Oversized Umbrella");
-                                                      handleEnquiry()
+                                                      handleEnquiryDetail("product", "Catalina Oversized Umbrella");
+                                                      handleEnquiry();
                                                   }}
                                      />
                                  </Block>
@@ -224,208 +217,116 @@ function Custom_Printing_Umbrella({router, size}) {
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
                          subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         subtitleStyles={{maxWidth: "unset !important"}}
                          content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
-                         subtitleStyles={{maxWidth: "unset !important"}}
                 />
                 <Benefit containerClassName="m-body-section-wrap"/>
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
-                <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
-                       display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
-                >
-                    <Block display="flex" flexDirection="column" justifyContent="center" alignItems="center"
-                           overrides={{
-                               Block: {
-                                   style: {textAlign: "center"}
-                               }
-                           }}
-                    >
-                        <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
-                        <Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
-                            <Image src={"/images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
+                <Block display="grid" gridTemplateRows="auto" gridTemplateColumns={["1fr", null, "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="32px" margin={["32px auto", null, "30px 32px"]}>
+                    <Block className="text-center" display="flex" justifyContent="center" alignItems="center">
+                        <Block maxWidth="320px" display="grid" gridRowGap="24px" justifyItems="center">
+                            <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
+                            <Image src={"/images/tent-spec/customer-service.svg"} alt="customer service" layout="fixed" width={120} height={120}/>
+                            <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
+                            <Button type="solid" height="36px" margin="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
+                                    buttonStyle={{
+                                        backgroundColor: "rgba(0, 0, 0, 0.87) !important",
+                                        borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+                                    }}
+                                    onClick={() => window.open(`tel:877-702-1872`, '_self')}
+                            />
                         </Block>
-                        <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
-                                 buttonStyle={{
-                                     backgroundColor: "rgba(0, 0, 0, 0.87) !important",
-                                     paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                     borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                 }}
-                                 onClick={() => window.open(`tel:877-702-1872`, '_self')}
-                        />
                     </Block>
                     <Block>
                         <FormControl label={() => "Product*"}>
-                            <Input value={quoteProduct} clearOnEscape error={!quoteProduct && quoteError} required
+                            <Input value={quote["product"]} clearOnEscape required
                                    overrides={{
-                                       Root: {
-                                           props: {
-                                               className: "container-input-enquiry"
-                                           },
-                                           style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
-                                       },
-                                       InputContainer: {
-                                           props: {
-                                               className: "container-inner-input-enquiry"
-                                           }
-                                       },
-                                       Input: {
-                                           props: {
-                                               className: "input-enquiry"
-                                           },
-                                       },
-                                   }}
-                                   onChange={(event) => {
-                                       setQuoteError(false);
-                                       setQuoteProduct(event.target.value);
+                                       Root: {props: {className: "container-input-enquiry"}},
+                                       InputContainer: {props: {className: "container-inner-input-enquiry"}},
+                                       Input: {props: {className: "input-enquiry"}}
                                    }}
                             />
                         </FormControl>
                         <Block display="grid" gridTemplateColumns="1fr 1fr" gridColumnGap="24px">
                             <Block>
                                 <FormControl label={() => "Last Name*"}>
-                                    <Input value={quoteNameLast} clearOnEscape error={!quoteNameLast && quoteError} required
+                                    <Input value={quote["nameLast"]} clearOnEscape error={!quote["nameLast"] && quoteError} required
                                            overrides={{
                                                Root: {
-                                                   props: {
-                                                       className: "container-input-enquiry"
-                                                   },
+                                                   props: {className: "container-input-enquiry"},
                                                    style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
                                                },
-                                               InputContainer: {
-                                                   props: {
-                                                       className: "container-inner-input-enquiry"
-                                                   }
-                                               },
-                                               Input: {
-                                                   props: {
-                                                       className: "input-enquiry"
-                                                   },
-                                               },
+                                               InputContainer: {props: {className: "container-inner-input-enquiry"}},
+                                               Input: {props: {className: "input-enquiry"}}
                                            }}
-                                           onChange={(event) => {
-                                               setQuoteError(false);
-                                               setQuoteNameLast(event.target.value);
-                                           }}
+                                           onChange={(event) => handleEnquiryDetail("nameLast", event.target.value)}
                                     />
                                 </FormControl>
                             </Block>
                             <Block>
                                 <FormControl label={() => "First Name*"}>
-                                    <Input value={quoteNameFirst} clearOnEscape error={!quoteNameFirst && quoteError} required
+                                    <Input value={quote["nameFirst"]} clearOnEscape error={!quote["nameFirst"] && quoteError} required
                                            overrides={{
                                                Root: {
-                                                   props: {
-                                                       className: "container-input-enquiry"
-                                                   },
+                                                   props: {className: "container-input-enquiry"},
                                                    style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
                                                },
-                                               InputContainer: {
-                                                   props: {
-                                                       className: "container-inner-input-enquiry"
-                                                   }
-                                               },
-                                               Input: {
-                                                   props: {
-                                                       className: "input-enquiry"
-                                                   },
-                                               },
+                                               InputContainer: {props: {className: "container-inner-input-enquiry"}},
+                                               Input: {props: {className: "input-enquiry"}}
                                            }}
-                                           onChange={(event) => {
-                                               setQuoteError(false);
-                                               setQuoteNameFirst(event.target.value);
-                                           }}
+                                           onChange={(event) => handleEnquiryDetail("nameFirst", event.target.value)}
                                     />
                                 </FormControl>
                             </Block>
                         </Block>
                         <FormControl label={() => "Email*"}>
-                            <Input value={quoteEmail} clearOnEscape error={!quoteEmail && quoteError} required
+                            <Input value={quote["email"]} clearOnEscape error={!quote["email"] && quoteError} required
                                    overrides={{
                                        Root: {
-                                           props: {
-                                               className: "container-input-enquiry"
-                                           },
+                                           props: {className: "container-input-enquiry"},
                                            style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
                                        },
-                                       InputContainer: {
-                                           props: {
-                                               className: "container-inner-input-enquiry"
-                                           }
-                                       },
-                                       Input: {
-                                           props: {
-                                               className: "input-enquiry"
-                                           },
-                                       },
+                                       InputContainer: {props: {className: "container-inner-input-enquiry"}},
+                                       Input: {props: {className: "input-enquiry"}}
                                    }}
-                                   onChange={(event) => {
-                                       setQuoteError(false);
-                                       setQuoteEmail(event.target.value);
-                                   }}
+                                   onChange={(event) => handleEnquiryDetail("email", event.target.value)}
                             />
                         </FormControl>
                         <FormControl label={() => "Phone*"}>
-                            <Input value={quotePhone} clearOnEscape error={!quotePhone && quoteError} required
+                            <Input value={quote["phone"]} clearOnEscape error={!quote["phone"] && quoteError} required
                                    overrides={{
                                        Root: {
-                                           props: {
-                                               className: "container-input-enquiry"
-                                           },
+                                           props: {className: "container-input-enquiry"},
                                            style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
                                        },
-                                       InputContainer: {
-                                           props: {
-                                               className: "container-inner-input-enquiry"
-                                           }
-                                       },
-                                       Input: {
-                                           props: {
-                                               className: "input-enquiry"
-                                           },
-                                       },
+                                       InputContainer: {props: {className: "container-inner-input-enquiry"}},
+                                       Input: {props: {className: "input-enquiry"}}
                                    }}
-                                   onChange={(event) => {
-                                       setQuoteError(false);
-                                       setQuotePhone(event.target.value);
-                                   }}
+                                   onChange={(event) => handleEnquiryDetail("phone", event.target.value)}
                             />
                         </FormControl>
                         <FormControl label={() => "Describe What You’re Looking For*"}>
-                            <Input value={quoteRequest} clearOnEscape error={!quoteRequest && quoteError} required
+                            <Input value={quote["request"]} clearOnEscape error={!quote["request"] && quoteError} required
                                    overrides={{
                                        Root: {
-                                           props: {
-                                               className: "container-input-enquiry"
-                                           },
+                                           props: {className: "container-input-enquiry"},
                                            style: ({$error}) => $error ? {borderBottomColor: "rgb(241, 153, 142) !important"} : null
                                        },
-                                       InputContainer: {
-                                           props: {
-                                               className: "container-inner-input-enquiry"
-                                           },
-                                       },
-                                       Input: {
-                                           props: {
-                                               className: "input-enquiry"
-                                           },
-                                       },
+                                       InputContainer: {props: {className: "container-inner-input-enquiry"},},
+                                       Input: {props: {className: "input-enquiry"}}
                                    }}
-                                   onChange={(event) => {
-                                       setQuoteError(false);
-                                       setQuoteRequest(event.target.value);
-                                   }}
+                                   onChange={(event) => handleEnquiryDetail("request", event.target.value)}
                             />
                         </FormControl>
-                        <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
-                                 buttonStyle={{
-                                     backgroundColor: "#e0e0e0 !important",
-                                     paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                     borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                 }}
-                                 onClick={() => handleSendQuote()}
+                        <Button type="solid" height="auto" marginTop="24px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
+                                buttonStyle={{
+                                    backgroundColor: "#e0e0e0 !important",
+                                    borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
+                                }}
+                                onClick={() => handleSendQuote()}
                         />
                     </Block>
                 </Block>

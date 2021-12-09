@@ -8,17 +8,17 @@ import {FormControl} from "baseui/form-control";
 import {Notification} from "baseui/notification";
 
 import {
-        CustomCheckbox, 
-        CustomCheckboxLabel, 
-        CustomInput, 
-        CustomLabel, 
-        CustomSubmitButton, 
-        CustomTextarea, 
-        CustomFileUploadInput,
-        CustomFilePreview
-    } from "../../forms/parts";
+    CustomCheckbox,
+    CustomCheckboxLabel,
+    CustomInput,
+    CustomLabel,
+    CustomSubmitButton,
+    CustomTextarea,
+    CustomFileUploadInput,
+    CustomFilePreview
+} from "../../forms/parts";
 
-import Utils from "../../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils()
 
@@ -38,45 +38,44 @@ const FreeMockupForm = () => {
     const [formState, setFormState] = useState(initialState);
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [fileError, setFileError] = useState({status:false, message: ""});
+    const [fileError, setFileError] = useState({status: false, message: ""});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormLoading(true);
         const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction} = formState;
-        if(logo.length > 0) {
+        if (logo.length > 0) {
             handleUpload()
-            .then( async (result) => {
-                console.log("upload success", result)
-                const resultToObj = result.reduce((acc, cur, i) => {
-                    acc[12 + i] = cur.url;
-                    return acc;
-                  }, {});
-                let res = await utils.contact({
-                    form_id: "5",
-                    status: "active",
-                    1.3: firstname,
-                    1.6: lastname,
-                    2: companyName,
-                    3: phone,
-                    4: email,
-                    6: interests.join(", "),
-                    8: printInstruction,
-                    ...resultToObj
-                });
-                console.log(res)
-                setFormLoading(false);
-                setFormState(initialState);
-                setFormSubmitted(true);
-            })
-            .catch( error => {
-                console.log(error)
-                console.log("upload failed", uploadResponse)
-                setFileError({status: true, message: "please try attaching the file again"});
-                setFormLoading(false);
-            })
-        }
-        else {
+                .then(async (result) => {
+                    console.log("upload success", result)
+                    const resultToObj = result.reduce((acc, cur, i) => {
+                        acc[12 + i] = cur.url;
+                        return acc;
+                    }, {});
+                    let res = await utils.contact({
+                        form_id: "5",
+                        status: "active",
+                        1.3: firstname,
+                        1.6: lastname,
+                        2: companyName,
+                        3: phone,
+                        4: email,
+                        6: interests.join(", "),
+                        8: printInstruction,
+                        ...resultToObj
+                    });
+                    console.log(res)
+                    setFormLoading(false);
+                    setFormState(initialState);
+                    setFormSubmitted(true);
+                })
+                .catch(error => {
+                    console.log(error)
+                    console.log("upload failed", uploadResponse)
+                    setFileError({status: true, message: "please try attaching the file again"});
+                    setFormLoading(false);
+                })
+        } else {
             setFileError({status: true, message: "please attach a file"});
             setFormLoading(false);
         }
@@ -93,10 +92,10 @@ const FreeMockupForm = () => {
     }
 
     const handleUpload = async () => {
-        let upload_res = formState.logo.map(async (_, idx) =>  {
+        let upload_res = formState.logo.map(async (_, idx) => {
             try {
                 const {file, filename} = formState.logo[idx];
-                const res = await utils.imageUploadV2(file,filename);
+                const res = await utils.imageUploadV2(file, filename);
                 return {status: res.status, url: res.url}
             } catch (error) {
                 console.log(error);
@@ -111,32 +110,30 @@ const FreeMockupForm = () => {
         let files = e.target.files;
         let filesState = [];
 
-        if(formState.logo.length >= 10 || (formState.logo.length + files.length) > 10){
+        if (formState.logo.length >= 10 || (formState.logo.length + files.length) > 10) {
             setFileError({status: true, message: "Maximum reached (10). Please contact us."})
             return
         }
         for (let i = 0; i < files.length; i++) {
             let fileExt = files[i].name.substring(files[i].name.lastIndexOf('.') + 1, files[i].name.length) || files[i].name;
-            let fileName =  i + "-" + new Date().valueOf() + "-" + files[i].name.split(' ').join('-');
-            
+            let fileName = i + "-" + new Date().valueOf() + "-" + files[i].name.split(' ').join('-');
+
             if (["ai", "psd", "jpg", "png", "jpeg"].includes(fileExt.toLowerCase())) {
 
-                if(files[0].size > 209715200){
+                if (files[0].size > 209715200) {
                     setFileError({status: true, message: "Maximum file size is 200 MB"});
                     return;
-                }
-                else {
+                } else {
                     console.log(fileName)
-                    filesState.push({file: files[i], filename: fileName, fileExt, id:fileName})
+                    filesState.push({file: files[i], filename: fileName, fileExt, id: fileName})
                 }
-            }
-            else {
+            } else {
                 setFormState({...formState, logo: [...formState.logo]});
                 setFileError({status: true, message: "please attach a valid file"});
                 return;
             }
         }
-        setFormState({...formState, logo: [...formState.logo,...filesState]});
+        setFormState({...formState, logo: [...formState.logo, ...filesState]});
         setFileError(false);
     }
 
@@ -284,10 +281,10 @@ const FreeMockupForm = () => {
                                 <Block width="100%">
                                     {
                                         formState.logo.map((logo) => (
-                                            <CustomFilePreview 
-                                                key={logo.id} 
-                                                type={logo.fileExt} 
-                                                file={logo.file} 
+                                            <CustomFilePreview
+                                                key={logo.id}
+                                                type={logo.fileExt}
+                                                file={logo.file}
                                                 removeHandler={() => removeFile(logo.id)}
                                             />
                                         ))
@@ -295,10 +292,10 @@ const FreeMockupForm = () => {
                                 </Block>
                                 <Block margin="0 auto" maxWidth={["295px", "100%", "295px", "295px"]} width="100%">
                                     <Block width="100%" display="grid" placeItems="center">
-                                        <CustomFileUploadInput 
-                                            error={fileError} 
-                                            removeAttachedFile={() => setFormState({...formState, logo: []})} 
-                                            id="form-file-upload" 
+                                        <CustomFileUploadInput
+                                            error={fileError}
+                                            removeAttachedFile={() => setFormState({...formState, logo: []})}
+                                            id="form-file-upload"
                                             onChange={handleFile} multiple
                                         />
                                     </Block>

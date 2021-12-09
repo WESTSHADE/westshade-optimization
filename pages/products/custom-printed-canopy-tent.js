@@ -26,17 +26,18 @@ import {Table} from "baseui/table-semantic";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 import {FileUploader} from "baseui/file-uploader";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
+import {NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
 
-import {Checkout_N as Checkout} from "../../components/sections";
-import {Modal} from "../../components/surfaces";
-import MButton from "../../components/button-n";
-import SelectionArea from "../../components/selection_area";
-import Selection from "../../components/selection-n";
-import CustomPrintingRoof from "../../components/custom_printing_roof";
+import {Checkout_N as Checkout} from "Components/sections";
+import {Modal} from "Components/surfaces";
+import MButton from "Components/button-n";
+import SelectionArea from "Components/selection_area";
+import Selection from "Components/selection-n";
+import CustomPrintingRoof from "Components/custom_printing_roof";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
@@ -217,13 +218,13 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
 
     function renderCustomImage(props, wallPics = []) {
         return (
-            <>
-                <img className="image-gallery-image" src={props.original} alt={props.originalAlt}/>
+            <AspectRatioBox aspectRatio={1} minHeight="230px">
+                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPics.map((pic, index) => {
                     if (!pic) return;
                     return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
                 })}
-            </>
+            </AspectRatioBox>
         );
     }
 

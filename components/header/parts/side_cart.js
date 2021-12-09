@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {ANCHOR, Drawer} from "baseui/drawer";
 
 import Button from "../../button-n";
-import {NumberFn} from "../../../utils/tools";
+import {NumberFn} from "Utils/tools";
 
 import styles from "./parts.module.scss";
 

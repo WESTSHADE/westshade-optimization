@@ -3,25 +3,24 @@ import {useDispatch, useSelector} from "react-redux";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
-import Head from "next/head";
 import Script from "next/script";
+import Head from "next/head";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import {Checkout_N as Checkout, Selection, ProductImages, ProductDescription} from "Components/sections";
 import {Modal} from "Components/surfaces";
-
-import styles from "./Product.module.scss";
+import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-
-import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
-
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 
+import styles from "./Product.module.scss";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -102,7 +101,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
         function renderCustomImage(props) {
             return (
-                <img className="image-gallery-image" src={props.original}/>
+                <AspectRatioBox aspectRatio={16 / 9} minHeight="230px">
+                    <Image src={props.original} alt="product image" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                </AspectRatioBox>
             );
         }
 

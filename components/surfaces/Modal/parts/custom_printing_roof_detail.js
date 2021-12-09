@@ -10,7 +10,7 @@ import {FileUploader} from "baseui/file-uploader";
 import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
-import Utils from "../../../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 

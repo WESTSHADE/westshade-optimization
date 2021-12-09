@@ -8,8 +8,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 
 import {Section} from "Components/sections";
-
-import Utils from "../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 

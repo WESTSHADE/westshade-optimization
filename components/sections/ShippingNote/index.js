@@ -1,8 +1,11 @@
 import React from "react";
 
-import {Block} from "baseui/block";
+import Image from "next/image";
 
-import {DateFn} from "../../../utils/tools";
+import {Block} from "baseui/block";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
+
+import {DateFn} from "Utils/tools";
 
 const dateFn = new DateFn();
 
@@ -14,7 +17,9 @@ const shipping_note = (props) => {
     return (
         <Block height="auto" display="grid" gridTemplateColumns={direction === "column" ? "1fr" : ["1fr", "repeat(2, 1fr)"]} gridColumnGap="16px" gridRowGap="16px" marginLeft="auto" marginRight="auto" {...props}>
             <Block display="flex" flexDirection="row">
-                <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                <AspectRatioBox aspectRatio={1} width="20px" height="20px" marginRight="12px">
+                    <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
+                </AspectRatioBox>
                 <Block font="MinXParagraph14">
                     <Block>Free shipping on orders over $149</Block>
                     <Block>Order today, shipped by {shippedDay}.</Block>
@@ -22,7 +27,9 @@ const shipping_note = (props) => {
                 </Block>
             </Block>
             <Block display="flex" flexDirection="row">
-                <img src={"/images/icon/pickup.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"pick up"}/>
+                <AspectRatioBox aspectRatio={1} width="20px" height="20px" marginRight="12px">
+                    <Image src="/images/icon/pickup.png" alt="pick up" layout="fill" objectFit="contain"/>
+                </AspectRatioBox>
                 <Block font="MinXParagraph14">
                     Pick up in <span style={{color: "rgb(35, 164, 173)"}}>warehouse</span>
                 </Block>

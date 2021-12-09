@@ -1,6 +1,8 @@
 import {Radio} from "@material-ui/core";
 
-import {StringFn} from "../../utils/tools";
+import Image from "next/image";
+
+import {StringFn} from "Utils/tools";
 
 const stringFn = new StringFn();
 

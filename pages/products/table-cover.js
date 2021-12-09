@@ -6,22 +6,21 @@ import clsx from "clsx";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
-import Link from "next/link";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Checkout_L as Checkout, Selection} from "../../components/sections";
-
-import styles from "./Product.module.scss";
+import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
+import {Checkout_L as Checkout, Selection} from "Components/sections";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-
-import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
-
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+
+import styles from "./Product.module.scss";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -93,7 +92,9 @@ function Table_Cover({router, product, productComponent, productVariant}) {
 
         function renderCustomImage(props) {
             return (
-                <img className="image-gallery-image" src={props.original}/>
+                <AspectRatioBox aspectRatio={16 / 9} minHeight="230px">
+                    <Image src={props.original} alt="product image" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                </AspectRatioBox>
             );
         }
 

@@ -12,11 +12,11 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import {Input} from 'baseui/input';
 import {CheckIndeterminate, Plus} from 'baseui/icon'
 
-import Shipping from "../../components/sections/ShippingNote";
-import {Modal} from "../../components/surfaces";
+import Shipping from "Components/sections/ShippingNote";
+import {Modal} from "Components/surfaces";
 
-import Utils from "../../utils/utils";
-import {NumberFn} from "../../utils/tools";
+import Utils from "Utils/utils";
+import {NumberFn} from "Utils/tools";
 
 const numberFn = new NumberFn();
 const utils = new Utils();
@@ -242,7 +242,7 @@ function Cart_Page({router}) {
                                                 <Block display="flex" flexDirection="row" marginBottom="16px">
                                                     <Block position="relative" width={["60px", "120px"]} height={["60px", "120px"]} marginRight={["15px", "24px"]}>
                                                         {product.images.length > 0 ? (
-                                                            <img src={product.images[0].src} alt={product.images[0].alt} width="100%" height="100%" style={{objectFit: "contain"}}/>
+                                                            <Image src={product.images[0].src} alt={product.images[0].alt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                                                         ) : (
                                                             <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
                                                         )}

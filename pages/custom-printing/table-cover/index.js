@@ -6,8 +6,8 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import {Benefit, FreeMockupForm, Section} from "../../../components/sections"
-import Button from "../../../components/button-n";
+import {Benefit, FreeMockupForm, Section} from "Components/sections"
+import Button from "Components/button-n";
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (
@@ -131,14 +131,14 @@ function Custom_Printing_Table_Cover({router, size}) {
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
-                                     <img width="100%" height="100%" src="/images/custom-printing/table-cover/fabric.webp" alt="fabric" style={{objectFit: "cover"}}/>
+                                     <Image src="/images/custom-printing/table-cover/fabric.webp" alt="fabric" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
                                      229 gsm stretch fabric
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">
-                                     <img width="100%" height="100%" src="/images/custom-printing/table-cover/stretch.gif" alt="fabric" style={{objectFit: "cover"}}/>
+                                     <Image src="/images/custom-printing/table-cover/stretch.gif" alt="fabric" layout="fill" objectFit="cover"/>
                                  </Block>
                              </Block>
                          }

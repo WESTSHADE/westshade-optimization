@@ -12,6 +12,7 @@ import ProductDescription from "./Product_Description";
 import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 import CanopyTentHero from "./CanopyTentHero";
+import UmbrellaProductItem from "./Umbrella_Product_Item";
 
 module.exports = {
     BannerDisplay,
@@ -27,5 +28,6 @@ module.exports = {
     ProductDescription,
     FreeMockupForm,
     ProductImages,
-    CanopyTentHero
+    CanopyTentHero,
+    UmbrellaProductItem
 };

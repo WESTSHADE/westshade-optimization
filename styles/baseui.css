@@ -428,6 +428,7 @@ ul.bullet-warranty.sub > li {
 
 .input-enquiry {
     padding-right: 0;
+    padding-bottom: 0;
     padding-left: 0;
     background-color: transparent
 }
@@ -925,6 +926,7 @@ ul.bullet-warranty.sub > li {
 }
 
 .cs-listItem-artwork {
+    position: relative;
     width: 44px;
     height: 44px;
 }

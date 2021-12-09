@@ -1,15 +1,17 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+
+import Image from "next/image";
+
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {ChevronUp, CheckIndeterminate, Plus} from "baseui/icon";
 
-import ChevronUp from "baseui/icon/chevron-up";
-import CheckIndeterminate from "baseui/icon/check-indeterminate";
-import Plus from "baseui/icon/plus";
+import {DateFn} from "Utils/tools";
 
 import styles from "./checkout.module.scss";
 
-import {DateFn} from "../../../utils/tools";
 import MButton from "../../button-n";
 
 const dateFn = new DateFn();
@@ -78,7 +80,9 @@ const checkout = (props) => {
                 <Block width={["100%", "448px", "100%"]} height={["54px", "100%"]} display={"flex"} flexDirection={"row"} justifyContent={["center", "center", "space-between"]} alignItems={"center"} margin={"auto"}>
                     <Block display={["none", "none", "flex"]} alignItems="column" justifyContent="center">
                         <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                            <AspectRatioBox aspectRatio={1} width="20px" height="20px" marginRight="12px">
+                                <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
+                            </AspectRatioBox>
                             <Block font="MinXParagraph14">Order today, shipped by {shippedDay}.</Block>
                         </Block>
                     </Block>

@@ -1,7 +1,5 @@
 import React from "react";
 
-import Link from "next/link";
-
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 import {Block} from "baseui/block";
 

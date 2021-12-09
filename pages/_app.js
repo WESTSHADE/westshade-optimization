@@ -13,8 +13,8 @@ import "@fontsource/roboto";
 import {store, persistor} from "../redux/store";
 import {styletron} from "../styletron";
 
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "Components/header";
+import Footer from "Components/footer";
 
 import "../styles/old.css";
 import "../styles/globals.css";

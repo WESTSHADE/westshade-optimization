@@ -11,22 +11,23 @@ import {Box, Container, Divider, Grid, ImageList, ImageListItem, List, ListItem,
 import {Alert, AlertTitle} from "@material-ui/lab";
 
 import {Block} from "baseui/block";
-import MButton from "../../components/button-n";
 import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
+import {AspectRatioBox,} from 'baseui/aspect-ratio-box';
 
 import styles from "../../styles/Product.module.scss";
 
-import {DateFn, NumberFn, StringFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
+import {DateFn, NumberFn, StringFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
 
-import Banner from "../../components/banner";
-import Accordion from "../../components/accordion";
-import CustomButton from "../../components/button";
-import Checkout from "../../components/buttonGroup";
-import Selections from "../../components/selection_group";
-import {Modal} from "../../components/surfaces";
+import MButton from "Components/button-n";
+import Banner from "Components/banner";
+import Accordion from "Components/accordion";
+import CustomButton from "Components/button";
+import Checkout from "Components/buttonGroup";
+import Selections from "Components/selection_group";
+import {Modal} from "Components/surfaces";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 
@@ -440,7 +441,9 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                         <div className={styles["container-product-image"]}>
                                             <Carousel showIndicators={false}>
                                                 {productImage.map((item, index) => (
-                                                    <img key={index} src={item.src}/>
+                                                    <AspectRatioBox key={index} width="inherit">
+                                                        <Image src={item.src} alt="product" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                                                    </AspectRatioBox>
                                                 ))}
                                             </Carousel>
                                         </div>
@@ -570,7 +573,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                             <h3 className="banner-title">UNLIMITED COLORS, UNLIMITED CREATIVITY</h3>
                                                         </div>
                                                     </Banner>
-                                                    <Box className="section-container">
+                                                    <Block className="section-container">
                                                         {productId === "40149" ? (
                                                             // 10x10
                                                             <p className="section-desc-container-content">
@@ -603,13 +606,15 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                                 and more!
                                                             </p>
                                                         ) : null}
-                                                    </Box>
-                                                    <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/comparison-y5y6y7.webp"/>
+                                                    </Block>
+                                                    <Block position="relative" width="100%">
+                                                        <Image src="/images/product/custom-printed-package/comparison-y5y6y7.webp" alt="comparison-y5y6y7" layout="responsive" width={2481} height={1848} objectFit="contain"/>
+                                                    </Block>
                                                 </>
                                             ) : null}
-                                            <Box className="section-container">
-                                                <Grid container spacing={6}>
-                                                    <Grid item xs={12} md={6} className="section-custom-printed-package-container">
+                                            <Block className="section-container">
+                                                <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridColumnGap="12px" gridRowGap="12px">
+                                                    <Block className="section-custom-printed-package-container">
                                                         <div className="section-desc-container-title">Valance and Peek Display Packages</div>
                                                         {productId === "40149" ? (
                                                             <p className="section-desc-container-content">
@@ -667,19 +672,14 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                                 combinations to help make your design stand out in front of your audiences! Have your images shown in the front, the back, both ways, the options are endless!
                                                             </p>
                                                         ) : null}
-                                                    </Grid>
-                                                    <Grid item xs={12} md={6}>
-                                                        <img
-                                                            src="/images/product/custom-printed-package/valance-and-peak.webp"
-                                                            style={{
-                                                                objectFit: "contain",
-                                                                width: "100%",
-                                                                maxHeight: 400,
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                            </Box>
+                                                    </Block>
+                                                    <Block display="flex">
+                                                        <AspectRatioBox aspectRatio={1} width="100%" maxHeight="400px" margin="auto">
+                                                            <Image src="/images/product/custom-printed-package/valance-and-peak.webp" alt="valance-and-peak" layout="fill" objectFit="contain"/>
+                                                        </AspectRatioBox>
+                                                    </Block>
+                                                </Block>
+                                            </Block>
                                             {productId === "40328" || productId === "40304" || productId === "40315" || productId === "40326" || productId === "40339" ? (
                                                 <>
                                                     <Box className="section-container">
@@ -749,11 +749,11 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                     </Box>
                                                 </>
                                             ) : null}
-                                            <Box className="section-container">
-                                                <img style={{objectFit: "contain", width: "100%"}} src="/images/product/custom-printed-package/intro@1x.webp"/>
-                                                <h3 className="section-title" style={{fontSize: "1.25rem"}}>
-                                                    Frequently Asked Questions
-                                                </h3>
+                                            <Block className="section-container">
+                                                <Block position="relative" width="100%">
+                                                    <Image src="/images/product/custom-printed-package/intro@1x.webp" alt="intro" layout="responsive" width={905} height={529} objectFit="contain"/>
+                                                </Block>
+                                                <h3 className="section-title" style={{fontSize: "1.25rem"}}>Frequently Asked Questions</h3>
                                                 <Accordion
                                                     list={[
                                                         {
@@ -775,28 +775,17 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                         },
                                                     ]}
                                                 />
-                                            </Box>
-                                            <Box className="section-container">
-                                                <h3 className="section-title" style={{fontSize: "1.25rem"}}>
-                                                    Your Design in Action
-                                                </h3>
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        flexWrap: "wrap",
-                                                        justifyContent: "space-around",
-                                                        overflow: "scroll",
-                                                    }}
-                                                >
-                                                    <ImageList style={{flexWrap: "nowrap"}} rowHeight={280} cols={2.5}>
-                                                        {imageGallery.map((item, index) => (
-                                                            <ImageListItem key={index}>
-                                                                <img src={item.img} alt={item.title}/>
-                                                            </ImageListItem>
-                                                        ))}
-                                                    </ImageList>
-                                                </div>
-                                            </Box>
+                                            </Block>
+                                            <Block className="section-container">
+                                                <h3 className="section-title" style={{fontSize: "1.25rem"}}>Your Design in Action</h3>
+                                                <ImageList style={{flexWrap: "nowrap"}} rowHeight={280} cols={2.5}>
+                                                    {imageGallery.map((item, index) => (
+                                                        <ImageListItem key={index}>
+                                                            <img src={item.img} alt={item.title}/>
+                                                        </ImageListItem>
+                                                    ))}
+                                                </ImageList>
+                                            </Block>
                                         </>
                                     ) : null}
                                 </div>

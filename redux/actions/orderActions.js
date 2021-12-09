@@ -2,7 +2,7 @@ import axios from "axios";
 
 import {GET_ORDER_SUCCESS, GET_ORDER_FAIL, CLEAR_ERRORS} from "../constants/orderConstants";
 
-import Utils from "../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 

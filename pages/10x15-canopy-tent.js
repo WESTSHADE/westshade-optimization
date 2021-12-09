@@ -9,9 +9,9 @@ import Link from "next/link";
 import {Block} from "baseui/block";
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 
-import Button from "../components/button-n";
-import CardTabs from "../components/card_tabs";
-import {Modal} from "../components/surfaces";
+import Button from "Components/button-n";
+import CardTabs from "Components/card_tabs";
+import {Modal} from "Components/surfaces";
 
 const Tag = ({text}) => {
     return (

@@ -6,10 +6,10 @@ import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
+import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import {withRouter} from "next/router";
 
 import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
@@ -20,19 +20,19 @@ import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Plus, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
+import {NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
 
-import {Checkout_N as Checkout, ProductDescription} from "../../components/sections";
-import {Modal} from "../../components/surfaces";
-import MButton from "../../components/button-n";
-import SelectionArea from "../../components/selection_area";
-import Selection from "../../components/selection-n";
+import {Checkout_N as Checkout, ProductDescription} from "Components/sections";
+import {Modal} from "Components/surfaces";
+import MButton from "Components/button-n";
+import SelectionArea from "Components/selection_area";
+import Selection from "Components/selection-n";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 
@@ -251,25 +251,25 @@ function Canopy_Tent({router, products, variants}) {
 
     function renderCustomImage(props) {
         return (
-            <>
-                <img className="image-gallery-image" src={props.original}/>
+            <AspectRatioBox aspectRatio={1} minHeight="230px">
+                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPictures.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
                 })}
-            </>
+            </AspectRatioBox>
         );
     }
 
     function renderCustomImageTemp(props) {
         return (
-            <>
-                <img className="image-gallery-image" src={props.original}/>
+            <AspectRatioBox aspectRatio={1} minHeight="230px">
+                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPicturesTemp.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} style={{position: "absolute", left: 0, right: 0, height: "100%", width: "100%", objectFit: "contain"}} src={pic}/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
                 })}
-            </>
+            </AspectRatioBox>
         );
     }
 
@@ -825,7 +825,7 @@ function Canopy_Tent({router, products, variants}) {
                                   },
                               },
                               TabBorder: {props: {hidden: true}},
-                              TabHighlight: {props: {hidden: true}},
+                              TabHighlight: {props: {hidden: true}, style: {display: "none"}},
                           }}
                     >
                         <Tab title="Photo"
@@ -1040,25 +1040,25 @@ function Canopy_Tent({router, products, variants}) {
                                                           return component[0].option !== "none" ? (
                                                               <>
                                                                   {index === 0 ? (
-                                                                      <img src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left"/>
+                                                                      <Image src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left" layout="fill" objectFit="contain"/>
                                                                   ) : index === 1 ? (
-                                                                      <img src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right"/>
+                                                                      <Image src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right" layout="fill" objectFit="contain"/>
                                                                   ) : index === 2 ? (
-                                                                      <img src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front"/>
+                                                                      <Image src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front" layout="fill" objectFit="contain"/>
                                                                   ) : index === 3 ? (
-                                                                      <img src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back"/>
+                                                                      <Image src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back" layout="fill" objectFit="contain"/>
                                                                   ) : null}
                                                               </>
                                                           ) : (
                                                               <>
                                                                   {index === 0 ? (
-                                                                      <img src="/images/icon/icon-wall-left.png" alt="icon-wall-left"/>
+                                                                      <Image src="/images/icon/icon-wall-left.png" alt="icon-wall-left" layout="fill" objectFit="contain"/>
                                                                   ) : index === 1 ? (
-                                                                      <img src="/images/icon/icon-wall-right.png" alt="icon-wall-right"/>
+                                                                      <Image src="/images/icon/icon-wall-right.png" alt="icon-wall-right" layout="fill" objectFit="contain"/>
                                                                   ) : index === 2 ? (
-                                                                      <img src="/images/icon/icon-wall-front.png" alt="icon-wall-front"/>
+                                                                      <Image src="/images/icon/icon-wall-front.png" alt="icon-wall-front" layout="fill" objectFit="contain"/>
                                                                   ) : index === 3 ? (
-                                                                      <img src="/images/icon/icon-wall-back.png" alt="icon-wall-back"/>
+                                                                      <Image src="/images/icon/icon-wall-back.png" alt="icon-wall-back" layout="fill" objectFit="contain"/>
                                                                   ) : null}
                                                               </>
                                                           );
@@ -1076,7 +1076,7 @@ function Canopy_Tent({router, products, variants}) {
                                                               style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
                                                           },
                                                           ArtworkContainer: {
-                                                              style: {width: "44px", height: "44px"},
+                                                              style: {position: "relative", width: "44px", height: "44px"},
                                                           },
                                                       }}
                                                       endEnhancer={() => {

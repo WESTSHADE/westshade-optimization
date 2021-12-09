@@ -5,19 +5,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
-import {Section, Benefit, FreeMockupForm} from "../../../components/sections"
-import MButton from "../../../components/button-n";
+import {Section, Benefit, FreeMockupForm} from "Components/sections"
+import MButton from "Components/button-n";
 
 const ImageSlide = ({url, alt}) => {
     return (
-        <div className="react-player">
-            <img src={url} alt={alt} width="100%" height="100%" style={{objectFit: "contain"}}/>
-        </div>
+        <AspectRatioBox width="inherit">
+            <Image src={url} alt={alt} layout="fill" objectFit="contain"/>
+        </AspectRatioBox>
     );
 };
 

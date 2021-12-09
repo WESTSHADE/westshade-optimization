@@ -112,7 +112,7 @@ const Gallery = ({gallery = []}) => {
                          },
                      }}
                 >
-                    <Block width="100%" height="100%" maxHeight="566px" margin="auto" $style={{aspectRatio: 1}}>
+                    <Block width="100%" height="100%" maxHeight="566px" margin="auto" $style={{aspectRatio: 16 / 9}}>
                         <model-viewer camera-orbit="120deg 75deg 100%" alt="3D model" minimumRenderScale={1} shadow-intensity="1" camera-controls
                                       style={{width: "inherit", height: "inherit", margin: "auto"}}
                                       src="/images/3D/umbrella.glb"

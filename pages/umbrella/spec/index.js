@@ -6,9 +6,9 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Select} from "baseui/select";
 
-import Button from "../../../components/button-n";
-import Compare from "../../../components/compare";
-import {Section} from "../../../components/sections";
+import Button from "Components/button-n";
+import Compare from "Components/compare";
+import {Section} from "Components/sections";
 
 import DataSpec from "../../../assets/spec-umbrella.json";
 

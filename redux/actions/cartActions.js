@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import {MODIFY_CART} from "../constants/cartConstants"
-import Utils from "../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 
