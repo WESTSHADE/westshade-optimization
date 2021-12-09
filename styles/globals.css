@@ -118,3 +118,6 @@ a:-webkit-any-link {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+.highlighted {
+    color: #23A4AD;
+}
