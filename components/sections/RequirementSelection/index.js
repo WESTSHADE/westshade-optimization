@@ -30,7 +30,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, setSide, r
                             <Block marginTop="4px" display="grid" placeItems="center" width="100%">
                                 <MButton 
                                     text="Change angle"
-                                    startEnhancer={() => <i><Image src="/images/icon/icon-3d.png" width={16} height={16} alt="icon" /></i>}
+                                    startEnhancer={() => <i><Image src="/images/icon/icon-3d.png" width={16} height={16} alt="icon" layout="fixed" /></i>}
                                     color="#808080"
                                     buttonStyle={{ 
                                         borderRadius: "8px !important", 
@@ -159,7 +159,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, setSide, r
                     <Block maxWidth="664px" margin="42px auto 0" display="flex" flexWrap="wrap" justifyContent="space-between">
                         <Block width={["100%","45%","45%"]} marginBottom="16px" display="flex" justifyContent="space-between" alignItems="center">
                             <Block display="flex" alignItems="center">
-                                <Image src={`/images/icon/icon-peak-${activeSide.toLocaleUpperCase() || "front"}.png`} width={60} height={60} layout="fixed" objectFit="contain" />
+                                <Image src={`/images/icon/icon-peak-${activeSide.toLowerCase() || "front"}.png`} width={60} height={60} layout="fixed" objectFit="contain" />
                                 <Block display="flex" flexDirection="column" marginLeft="8px">
                                     <Block font="MinXParagraph14" color="#000000">Peak</Block>
                                     <Block marginTop="8px" font="MinXParagraph12" color="#808080">{activeSide || "Front"}</Block>
@@ -202,7 +202,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, setSide, r
                         </Block>
                         <Block width={["100%","45%","45%"]} marginBottom="16px" display="flex" justifyContent="space-between" alignItems="center">
                             <Block display="flex" alignItems="center">
-                                <Image src={`/images/icon/icon-valance-${activeSide.toLocaleUpperCase() || "front"}.png`} width={60} height={60} layout="fixed" objectFit="contain" />
+                                <Image src={`/images/icon/icon-valance-${activeSide.toLowerCase() || "front"}.png`} width={60} height={60} layout="fixed" objectFit="contain" />
                                 <Block display="flex" flexDirection="column" marginLeft="8px">
                                     <Block font="MinXParagraph14" color="#000000">Peak</Block>
                                     <Block marginTop="8px" font="MinXParagraph12" color="#808080">{activeSide || "Front"}</Block>
