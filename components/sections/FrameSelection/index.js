@@ -103,9 +103,14 @@ const FrameSelection = ({frameValue, setFrame}) => {
     const [css] = useStyletron();
     return (
         <>
-            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                <Block font="MinXSubtitle20" color="MinXTitle">
-                    Please select the frame of the tent.
+            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]} >
+                <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column">
+                    <Block font="MinXSubtitle20" color="MinXTitle">
+                        Please select the frame of the tent.
+                    </Block>
+                    <Block color="#808080" font="MinXParagraph16">
+                        {frameTypes.length} frames available
+                    </Block>
                 </Block>
                 <MButton onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily:"Roboto !important", fontSize: "14px"}} text="Compare frames"/>
             </Block>
@@ -113,7 +118,7 @@ const FrameSelection = ({frameValue, setFrame}) => {
                 {
                     frameTypes.map((frame) => (
                         
-                        <Block  key={frame.value} margin={["0 16px 24px","0 16px 24px","0 20px","0 40px"]} maxWidth={["100%","320px","260px", "300px"]} width={["100%","40%","30%","26%"]}>
+                        <Block  key={frame.value} margin={["0 16px 24px","0 10px 24px","0 20px","0 32px"]} maxWidth={["100%","260px", "260px", "300 px"]} width={["100%","27%","30%"]}>
                             <FrameTypeCard 
                                 frame={frame}
                                 onClick={() => setFrame({frame:frame.value})}

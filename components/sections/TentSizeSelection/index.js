@@ -77,8 +77,8 @@ const TentSizeSelection = ({ frame, sizeValue, setSize, error}) => {
     return (
         <>
         <Block width="100%">
-            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                <Block display="flex" flexDirection="column" justifyContent="center">
+            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+                <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]}  display="flex" flexDirection="column" justifyContent="center">
                     <Block font="MinXSubtitle20" color="MinXTitle">
                         Please select the size of the tent.
                     </Block>
@@ -88,7 +88,7 @@ const TentSizeSelection = ({ frame, sizeValue, setSize, error}) => {
                 </Block>
                 <MButton onClick={() => setShowSizeGuide(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily:"Roboto !important"}} text=" size guide"/>
             </Block>
-            <Block width="100%" marginTop="38px" padding={["0 16px","0 16px","0 32px","0 54px"]}>
+            <Block width="100%" marginTop="38px">
                 <RadioGroup
                     value={sizeValue}
                     onChange={e => setSize(e.currentTarget.value)}
@@ -98,8 +98,8 @@ const TentSizeSelection = ({ frame, sizeValue, setSize, error}) => {
                         RadioGroupRoot: {
                             style: {
                                 display: "flex",
-                                justifyContent: "space-between",
-                                flexWrap: "wrap"
+                                justifyContent: "space-around",
+                                flexWrap: "wrap",
                             }
                         },
                         RadioMarkInner: {
@@ -123,20 +123,72 @@ const TentSizeSelection = ({ frame, sizeValue, setSize, error}) => {
                                 label={size.label}
                                 overrides={{
                                     Root: {
-                                        style: {width: "24%", display: "grid", placeItems: "center"}
-                                    }
+                                        style: {display: "block"}
+                                    },
                                 }}
+                                className={css({
+                                    border: "1px solid coral",
+                                    "@media screen and (min-width: 768px)": {
+                                        opacity: 0
+                                    }
+                                })}
                             >
-                                <TentSizeCard 
-                                    value={size.size}
-                                    image={size.image}
-                                    label={size.label}
-                                    active={size.size == sizeValue}
-                                    onClick={() => setSize({size: size.size})}
-                                />
+                                <Block width={["136px", "163px", "226px"]} minWidth="120px">
+                                    <TentSizeCard 
+                                        value={size.size}
+                                        image={size.image}
+                                        label={size.label}
+                                        active={size.size == sizeValue}
+                                        onClick={() => setSize({size: size.size})}
+                                    />
+                                </Block>
                             </Radio>
                         ))
                     }
+                    <Block
+                    aria-hidden="true" 
+                        width={["136px", "163px", "226px"]} 
+                        minWidth="120px"
+                        className={css({
+                            userSelect: "none",
+                            opacity: 0,
+                            visibility: "hidden"
+                        })}
+                        >
+                    </Block>
+                    <Block
+                        aria-hidden="true" 
+                        width={["136px", "163px", "226px"]} 
+                        minWidth="120px"
+                        className={css({
+                            userSelect: "none",
+                            opacity: 0,
+                            visibility: "hidden"
+                        })}
+                        >
+                    </Block>
+                    <Block
+                        aria-hidden="true" 
+                        width={["136px", "163px", "226px"]} 
+                        minWidth="120px"
+                        className={css({
+                            userSelect: "none",
+                            opacity: 0,
+                            visibility: "hidden"
+                        })}
+                        >
+                    </Block>
+                    <Block
+                        aria-hidden="true" 
+                        width={["136px", "163px", "226px"]} 
+                        minWidth="120px"
+                        className={css({
+                            userSelect: "none",
+                            opacity: 0,
+                            visibility: "hidden"
+                        })}
+                        >
+                    </Block>
                 </RadioGroup>
             </Block>
         </Block>
