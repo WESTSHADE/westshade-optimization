@@ -21,7 +21,7 @@ import {DateFn, NumberFn, StringFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import MButton from "Components/button-n";
+import Button from "Components/button-n";
 import Banner from "Components/banner";
 import Accordion from "Components/accordion";
 import CustomButton from "Components/button";
@@ -807,26 +807,13 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
                            display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
                     >
-                        <Block display="flex" flexDirection="column" justifyContent="center" alignItems="center"
-                               overrides={{
-                                   Block: {
-                                       style: {textAlign: "center"}
-                                   }
-                               }}
-                        >
-                            <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
-                            <Block position="relative" width="120px" height="120px" marginTop="24px" marginBottom="24px">
-                                <Image src={"/images/tent-spec/customer-service.svg"} layout="fill" objectFit="contain" quality={100}/>
+                        <Block className="text-center" display="flex" justifyContent="center" alignItems="center">
+                            <Block maxWidth="320px" display="grid" gridRowGap="24px" justifyItems="center">
+                                <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
+                                <Image src={"/images/tent-spec/customer-service.svg"} alt="customer service" layout="fixed" width={120} height={120}/>
+                                <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
+                                <Button shape="square" height="36px" font="MinXParagraph16" text={process.env.businessPhone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + process.env.businessPhone, '_self')}/>
                             </Block>
-                            <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                            <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
-                                     buttonStyle={{
-                                         backgroundColor: "rgba(0, 0, 0, 0.87) !important",
-                                         paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                         borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                     }}
-                                     onClick={() => window.open(`tel:877-702-1872`, '_self')}
-                            />
                         </Block>
                         <Block>
                             <FormControl label={() => "Subject"}>
@@ -991,14 +978,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                        }}
                                 />
                             </FormControl>
-                            <MButton type="solid" height="auto" marginTop="24px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
-                                     buttonStyle={{
-                                         backgroundColor: "#e0e0e0 !important",
-                                         paddingTop: "6px !important", paddingRight: "24px !important", paddingBottom: "6px !important", paddingLeft: "24px !important",
-                                         borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                     }}
-                                     onClick={() => handleSendQuote()}
-                            />
+                            <Button shape="square" height="32px" font="MinXParagraph16" text='Submit' color="white" bundle="gray" onClick={() => handleSendQuote()}/>
                         </Block>
                     </Block>
                 </Modal>

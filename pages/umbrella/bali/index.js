@@ -113,12 +113,12 @@ function Bali({router}) {
                 />
                 <Section title={"SIZE AND SHAPES"}
                          content={
-                             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
+                             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center" font="MinXLabel16">
                                  <Block position="relative" width="100%" maxWidth="475px" overflow="hidden">
                                      <Image src="/images/umbrella/bali/size.webp" alt="bali size 6.5'" layout="responsive" objectFit="contain" width={2050} height={665} quality={100}/>
                                  </Block>
-                                 <Block font="MinXLabel16" color="MinXPrimaryText">6.5’ Square</Block>
-                                 <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")}/>
+                                 <Block color="MinXPrimaryText">6.5’ Square</Block>
+                                 <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")}/>
                              </Block>
                          }
                 />

@@ -10,8 +10,8 @@ import {Input} from "baseui/input";
 import {AspectRatioBox} from 'baseui/aspect-ratio-box';
 import {ArrowDown} from 'baseui/icon'
 
-import {Benefit, FreeMockupForm, Section} from "Components/sections"
 import Button from "Components/button-n";
+import {Benefit, FreeMockupForm, Section} from "Components/sections"
 import {Modal} from "Components/surfaces";
 
 import Utils from "Utils/utils";
@@ -27,7 +27,7 @@ const SectionCard = ({router, src, alt, title, content, destination, onClick, bu
             <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", null, "16px"]} flex={1} paddingLeft={[null, null, "40px"]}>
                 <Block font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
                 <Block maxWidth="400px" font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
-                <Button type="outline" width={["72px", null, "121px"]} height={["32px", null, "48px"]} font="MinXLabel14" color="MinXPrimaryText" text={buttonText} onClick={onClick ? onClick : () => router.push(destination)}/>
+                <Button type="outline" width={["72px", null, "121px"]} height={["32px", null, "48px"]} font="MinXLabel14" text={buttonText} bundle="primary" onClick={onClick ? onClick : () => router.push(destination)}/>
             </Block>
         </Block>
     )
@@ -126,8 +126,7 @@ function Custom_Printing_Umbrella({router, size}) {
                     <Block maxWidth={["260px", "420px", "580px", "640px"]} font={["MinXSubtitle16", "MinXSubtitle24", 'MinXSubtitle28']} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>
                         You can print your own artwork on any umbrellas
                     </Block>
-                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["8px", "12px", "20px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below"
-                            buttonStyle={{borderColor: "white"}} $style={{zIndex: 1}}
+                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["8px", "12px", "20px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below" bundle="white" $style={{zIndex: 1}}
                             startEnhancer={() => <ArrowDown size={36}/>} onClick={() => goBuyingSection()}
                     />
                     <Block width="100%" display="grid" justifyContent={[null, null, "space-around"]} gridTemplateAreas={[`"a c" "d d"`, null, "unset"]} gridTemplateColumns={[null, null, "152px 171px 338px"]} gridColumnGap="20px"
@@ -231,13 +230,7 @@ function Custom_Printing_Umbrella({router, size}) {
                             <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
                             <Image src={"/images/tent-spec/customer-service.svg"} alt="customer service" layout="fixed" width={120} height={120}/>
                             <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                            <Button type="solid" height="36px" margin="auto" font="MinXParagraph16" text='(877)702-1872' color="white"
-                                    buttonStyle={{
-                                        backgroundColor: "rgba(0, 0, 0, 0.87) !important",
-                                        borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                    }}
-                                    onClick={() => window.open(`tel:877-702-1872`, '_self')}
-                            />
+                            <Button shape="square" height="36px" font="MinXParagraph16" text={process.env.businessPhone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + process.env.businessPhone, '_self')}/>
                         </Block>
                     </Block>
                     <Block>
@@ -321,13 +314,7 @@ function Custom_Printing_Umbrella({router, size}) {
                                    onChange={(event) => handleEnquiryDetail("request", event.target.value)}
                             />
                         </FormControl>
-                        <Button type="solid" height="auto" marginTop="24px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Submit' color="MinXPrimaryText"
-                                buttonStyle={{
-                                    backgroundColor: "#e0e0e0 !important",
-                                    borderTopRightRadius: "4px !important", borderBottomRightRadius: "4px !important", borderBottomLeftRadius: "4px !important", borderTopLeftRadius: "4px !important",
-                                }}
-                                onClick={() => handleSendQuote()}
-                        />
+                        <Button shape="square" height="32px" font="MinXParagraph16" text='Submit' color="white" bundle="gray" onClick={() => handleSendQuote()}/>
                     </Block>
                 </Block>
             </Modal>

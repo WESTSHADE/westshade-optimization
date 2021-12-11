@@ -10,7 +10,7 @@ import Button from "Components/button-n";
 import Compare from "Components/compare";
 import {Section} from "Components/sections";
 
-import DataSpec from "../../../assets/spec-canopy-tent.json";
+import DataSpec from "Assets/spec-canopy-tent.json";
 
 function Canopy_Tent_Spec({router, size}) {
     const [columnValue, setColumnValue] = React.useState([DataSpec.selection[0], DataSpec.selection[1], DataSpec.selection[2]]);
@@ -70,9 +70,7 @@ function Canopy_Tent_Spec({router, size}) {
                                             }}
                                     />
                                 </Block>
-                                <Block width="max-content" height="24px" font="MinXLabel14" marginRight="auto" marginLeft="auto">
-                                    <Button type="solid" height="100%" text="Buy" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
-                                </Block>
+                                <Button height="24px" font="MinXLabel14" text="Buy" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
                             </Block>
                         )
                     }

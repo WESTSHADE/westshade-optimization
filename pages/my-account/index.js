@@ -528,13 +528,7 @@ function Profile() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
-                         buttonStyle={{
-                             paddingTop: "20px !important", paddingBottom: "20px !important",
-                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
-                         }}
-                         onClick={handleSaveProfile} disabled={!userDiff}
-                />
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" onClick={handleSaveProfile} disabled={!userDiff}/>
             </Block>
         </>
     )
@@ -782,13 +776,7 @@ function Address() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
-                         buttonStyle={{
-                             paddingTop: "20px !important", paddingBottom: "20px !important",
-                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
-                         }}
-                         onClick={handleSaveAddress} disabled={!shippingDiff}
-                />
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" onClick={handleSaveAddress} disabled={!shippingDiff}/>
             </Block>
         </>
     )
@@ -1063,15 +1051,8 @@ function Account({size}) {
             ) : (
                 <>
                     {displayTabs ? (
-                        <Block display="flex" flexDirection="column" width={["100%", "480px"]} position="relative" alignItems="center"
+                        <Block className="container-display" display="flex" flexDirection="column" width={["100%", "480px"]} position="relative" alignItems="center"
                                paddingTop="24px" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                               overrides={{
-                                   Block: {
-                                       props: {
-                                           className: "container-display"
-                                       }
-                                   },
-                               }}
                         >
                             <Block width="100%" font="MinXLabel20">
                                 <Tabs activeKey={loginActiveTabKey} fill={FILL.fixed} onChange={({activeKey}) => setLoginActiveTabKey(activeKey)}

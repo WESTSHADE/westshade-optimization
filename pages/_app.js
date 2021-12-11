@@ -8,7 +8,7 @@ import Script from 'next/script'
 import {BaseProvider, LightTheme, createTheme} from "baseui";
 import {Block} from "baseui/block";
 
-import "@fontsource/roboto";
+// import "@fontsource/roboto";
 
 import {store, persistor} from "../redux/store";
 import {styletron} from "../styletron";

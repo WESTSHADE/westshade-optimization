@@ -140,12 +140,12 @@ function Marco({router}) {
                 />
                 <Section title={"SIZE AND SHAPES"}
                          content={
-                             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
+                             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center" font="MinXLabel16">
                                  <Block position="relative" width="100%" maxWidth="366px" overflow="hidden">
                                      <Image src="/images/umbrella/marco/size.webp" alt="marco size 6.5'" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                  </Block>
-                                 <Block font="MinXLabel16" color="MinXPrimaryText">6.5’ Square</Block>
-                                 <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}/>
+                                 <Block color="MinXPrimaryText">6.5’ Square</Block>
+                                 <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}/>
                              </Block>
                          }
                 />

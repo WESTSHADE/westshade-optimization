@@ -6,12 +6,12 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import {Benefit, FreeMockupForm, Section} from "Components/sections"
 import Button from "Components/button-n";
+import {Benefit, FreeMockupForm, Section} from "Components/sections"
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (
-        <Block minHeight={"280px"} display={["grid", "grid", "flex"]} flexDirection={["column", "column", "row-reverse"]} alignItems={["", "", "center"]} justifyContent={["", "", "space-between"]}
+        <Block minHeight={"280px"} display={["grid", null, "flex"]} flexDirection={["column", null, "row-reverse"]} alignItems={[null, null, "center"]} justifyContent={[null, null, "space-between"]}
                gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "unset"]} gridRowGap={["20px", "24px", "unset"]} marginBottom={["16px", "16px", "20px"]} paddingTop={["32px", "48px", "20px"]} paddingRight={["16px", "24px", "0px"]}
                paddingBottom={["32px", "48px", "0px"]}
                paddingLeft={["16px", "24px", "40px"]}
@@ -30,18 +30,7 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
             <Block>
                 <Block marginBottom={["12px", "12px", "16px"]} font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
                 <Block maxWidth="400px" marginBottom={["12px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
-                <Button type="outline" display="block" width="72px" height="32px" font="MinXLabel14" color="MinXPrimaryText"
-                        buttonStyle={{
-                            paddingTop: "0px !important",
-                            paddingRight: "0px !important",
-                            paddingBottom: "0px !important",
-                            paddingLeft: "0px !important",
-                            borderColor: `#262626`,
-                            ":hover": {backgroundColor: `rgba(0, 0, 0, 0.05) !important`},
-                            ":active": {backgroundColor: `rgba(0, 0, 0, 0.1) !important`}
-                        }}
-                        onClick={() => router.push(destination)} text={"Buy"}
-                />
+                <Button type="outline" width="72px" height="32px" font="MinXLabel14" color="MinXPrimaryText" text="Buy" bundle="black" onClick={() => router.push(destination)}/>
             </Block>
         </Block>
     )
@@ -82,8 +71,8 @@ function Custom_Printing_Table_Cover({router, size}) {
                        }}
                 >
                     <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create My Table Cover"
-                            buttonStyle={{borderColor: "#262626"}} $style={{zIndex: 1}} onClick={() => goBuyingPage()}
+                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Table Cover" bundle="black" $style={{zIndex: 1}}
+                            onClick={() => goBuyingPage()}
                     />
                     <Block position="relative" width="100%" height={["125px", "173px", "180px"]} $style={{zIndex: 1}}>
                         <Image src="/images/custom-printing/table-cover/stretch-table-cover.webp" alt="stretch table cover" layout="fill" objectFit="contain" quality={100} priority={true}/>

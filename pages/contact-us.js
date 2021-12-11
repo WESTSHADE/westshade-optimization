@@ -130,7 +130,7 @@ const Contact_Us = () => {
                         <CustomCard>
                             <Image src="/images/contact-us/call-us.webp" alt="call us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
                             <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Call us</Block>
-                            <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">877-702-1872</Block>
+                            <Block className="text-center" marginBottom="5px" color="MinXPrimaryText" as="p" font="MinXHeading14">{process.env.businessPhone}</Block>
                             <Button
                                 onClick={() => {
                                 }}
@@ -141,7 +141,7 @@ const Contact_Us = () => {
                                 }
                                 shape={SHAPE.pill}
                                 $as="a"
-                                href="tel:877-702-1872"
+                                href={"tel:+1-" + process.env.businessPhone}
                                 overrides={{
                                     BaseButton: {
                                         style: ($theme) => ({

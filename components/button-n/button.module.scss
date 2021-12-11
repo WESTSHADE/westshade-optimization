@@ -1,53 +1,65 @@
 .button-base {
-  //width: 100%;
   width: inherit;
-  height: 100%;
-  padding: 4px 32px;
-  //padding: 14px 40px;
+  height: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
   font-size: inherit;
   font-weight: inherit;
   font-family: inherit;
   line-height: inherit;
   white-space: nowrap;
-  color: inherit;
-  border-radius: 38px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 30px;
 
-  &.solid {
-    background-color: #23A4AD;
+  &:disabled {
+    filter: contrast(0.7)
+  }
+
+  //&.solid {
+  //  background-color: #23A4AD;
+  //
+  //  &:hover {
+  //    background-color: #5FBDBE;
+  //  }
+  //
+  //  &:active {
+  //    background-color: #43878C;
+  //  }
+  //
+  //  &:disabled {
+  //    color: white;
+  //    border: 1px solid #B8DBDB;
+  //    background-color: #B8DBDB;
+  //  }
+  //}
+
+  &.outline {
+    background-color: transparent;
 
     &:hover {
-      background-color: #5FBDBE;
+      background-color: transparent;
     }
 
     &:active {
-      background-color: #43878C;
+      background-color: transparent;
+    }
+
+    &:focus {
+      background-color: transparent;
     }
 
     &:disabled {
-      color: white;
-      border: 1px solid #B8DBDB;
-      background-color: #B8DBDB;
+      background-color: transparent;
     }
   }
 
-  &.outline {
-    border-width: 2px;
-    border-style: solid;
+  &.text {
+    width: initial;
+    height: 100%;
+    padding: 0;
     background-color: transparent;
-    //background-color: rgba(255, 255, 255, 0.2);
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    &:active {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    &:disabled {
-      border: 2px solid #B8DBDB;
-      background-color: transparent;
-    }
+    border: none;
   }
 
   &.dashed {
@@ -59,6 +71,7 @@
   &.rainbow {
     padding: 3px;
     background: linear-gradient(to left, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%) border-box;
+    border: none;
 
     .button-inner {
       display: flex;
@@ -73,6 +86,14 @@
       line-height: inherit;
       border-radius: 38px;
     }
+  }
+
+  &.square {
+    border-radius: 4px;
+  }
+
+  &.circle {
+    border-radius: 50%;
   }
 }
 

@@ -26,7 +26,7 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                                }}
                         >{linkText}</Block>
                     </Block>
-                    <Button type="solid" width="100%" height="56px" font="MinXParagraph16" text='Buy now' onClick={tabList[0].onClick}/>
+                    <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' onClick={tabList[0].onClick}/>
                 </Block>
             ) : tabList.length > 1 ? (
                 <Tabs activeKey={activeKey} fill={FILL.fixed} activateOnFocus onChange={onChange}
@@ -85,7 +85,7 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                                        }}
                                 >{linkText}</Block>
                             </Block>
-                            <Button type="solid" width="100%" height="56px" font="MinXParagraph16" text='Buy now' position="fixed" bottom={0}
+                            <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' position="fixed" bottom={0}
                                     onClick={item.onClick}
                             />
                         </Tab>

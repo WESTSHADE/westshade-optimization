@@ -61,14 +61,14 @@ function Header() {
                                                 fill="#FAFAFA"/>
                                         </svg>
                                     }
-                                    $as="a" href="tel:877-702-1872"
+                                    $as="a" href={"tel:+1-" + process.env.businessPhone}
                                     overrides={{
                                         BaseButton: {
                                             style: {height: "24px", paddingLeft: " 24px", paddingRight: " 24px", color: "#FFF !important", backgroundColor: "#23A4AD", ":hover": {backgroundColor: "#5FBDBE"}}
                                         },
                                     }}
                             >
-                                Call us <Block font="MinXParagraph14" display={["none", null, "inline-block"]}>&nbsp;&nbsp;877-702-1872</Block>
+                                Call us <Block font="MinXParagraph14" display={["none", null, "inline-block"]}>&nbsp;&nbsp;{process.env.businessPhone}</Block>
                             </Button>
                             <Block display="grid" gridTemplateColumns="auto auto" gridColumnGap={["24px", null, "40px"]} font="MinXParagraph14" alignItems="inherit">
                                 <Button kind={KIND.minimal}
@@ -116,7 +116,7 @@ function Header() {
                                 </NavigationItem>
                             </NavigationList>
                             <NavigationList className={clsx([styles["nav-center"], styles["menu"]])} $align={ALIGN.center}>
-                                {MENU.map((item, index) => <NavItem key={index} detail={item}/>)}
+                                {MENU.map((item, index) => <NavItem key={index} detail={item} router={router}/>)}
                             </NavigationList>
                             <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
                                 <NavigationItem>

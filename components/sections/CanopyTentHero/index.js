@@ -20,7 +20,7 @@ const SpecSection = ({
                          contentColor
                      }) => {
     return (
-        <Block display="grid" gridAutoRows="max-content" gridRowGap="16px" justifyItems="center" maxWidth="132px" padding="0 16px">
+        <Block display="grid" gridAutoRows="max-content" gridRowGap="16px" justifyItems="center" maxWidth="160px" padding="0 16px">
             <Block font={titleSize} color={titleColor} $style={{fontWeight: "400 !important", lineHeight: "100% !important"}}>{title}</Block>
             <Block>
                 <Block font={contentSize} color={contentColor} $style={{fontWeight: "300 !important", lineHeight: "100% !important"}}>{content}</Block>
@@ -56,9 +56,12 @@ const Hero = () => {
                 >
                     <Block font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle18"]} color="#AFFA64" $style={{fontWeight: "300 !important"}}>WESTSHADE</Block>
                     <Block marginBottom="8px" font={["MinXTitle42", "MinXTitle42", "MinXTitle74"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "300 !important"}}>Canopy Tent</Block>
-                    <Block marginBottom="8px" font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle20"]} color="MinXPrimaryTextAlt" $style={{fontStyle: "italic", letterSpacing: "0.04em"}}>Protect you and your family with our best.</Block>
+                    <Block marginBottom="8px" font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle20"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "400 !important", fontStyle: "italic", letterSpacing: "0.04em"}}>Protect you and your family
+                        with our best.</Block>
                     <Button width={["194px", "194px", "202px"]} height={["48px", "48px", "52px"]} font="MinXLabel20" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                 </Block>
+
+
                 <Block className="text-center" position="relative" width="100%" display={["grid", null, "flex"]} flexDirection={[null, null, "column"]} gridRowGap="12px" gridTemplateColumns="1fr" justifyContent="space-between"
                        padding={["0 16px", null, "0 20px"]}
                 >
@@ -72,14 +75,14 @@ const Hero = () => {
                     <Block className="container-canopy-tent-spec canopy-tent-spec-display-outer" width="100%" maxWidth="1015px" display="grid" gridTemplateRows={["repeat(2, auto)", "repeat(2, auto)", "1fr"]}
                            gridTemplateColumns={["1fr", "1fr", "3fr 2fr "]} gridRowGap="12px" margin="auto"
                     >
-                        <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", "136px", "158px"]} display="flex" alignItems="center">
+                        <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", null, "158px"]} display="flex" alignItems="center">
                             <Block width="inherit" display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-around">
                                 <SpecSection title="Set up in" content="3" unit="min." titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
                                 <SpecSection title="Pole diameter*" content="2 ¼" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
                                 <SpecSection title="Pole thickness*" content="0.07" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
                             </Block>
                         </Block>
-                        <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", "136px", "158px"]} display="flex" alignItems="center">
+                        <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", null, "158px"]} display="flex" alignItems="center">
                             <Block width="inherit" display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-around">
                                 <SpecSection title="Roof top*" content="600D" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
                                 <SpecSection title="Warranty*" content="10" unit="years" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>

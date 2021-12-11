@@ -5,14 +5,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SHAPE} from "baseui/button";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
+import Button from "Components/button-n";
 import {Section, Benefit, FreeMockupForm} from "Components/sections"
-import MButton from "Components/button-n";
 
 const ImageSlide = ({url, alt}) => {
     return (
@@ -86,8 +85,8 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                            }}
                     >
                         <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                        <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
-                                 buttonStyle={{borderColor: "white"}} $style={{zIndex: 1}} onClick={() => goBuyingPage()}
+                        <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
+                                bundle="white" $style={{zIndex: 1}} onClick={() => goBuyingPage()}
                         />
                         <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#5D5FEF", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                         <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#EF5DA8", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
@@ -104,15 +103,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                            renderArrowPrev={(onClickHandler, hasPrev, label) =>
                                                hasPrev && (
                                                    <Block position="absolute" width={"17.5%"} height={"100%"} top={0} left={0}>
-                                                       <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                               overrides={{
-                                                                   BaseButton: {
-                                                                       props: {
-                                                                           className: "cursor react-carousel-arrow dark left",
-                                                                       }
-                                                                   },
-                                                               }}
-                                                       >
+                                                       <Button shape="circle" buttonClassName="cursor react-carousel-arrow dark left" bundle="gray" onClick={onClickHandler}>
                                                            <ArrowLeft size={28} color={"white"}/>
                                                        </Button>
                                                    </Block>
@@ -121,15 +112,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                            renderArrowNext={(onClickHandler, hasNext, label) =>
                                                hasNext && (
                                                    <Block position="absolute" width={"17.5%"} height={"100%"} top={0} right={0}>
-                                                       <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                               overrides={{
-                                                                   BaseButton: {
-                                                                       props: {
-                                                                           className: "cursor react-carousel-arrow dark right",
-                                                                       }
-                                                                   },
-                                                               }}
-                                                       >
+                                                       <Button shape="circle" buttonClassName={"cursor react-carousel-arrow dark right"} bundle="gray" onClick={onClickHandler}>
                                                            <ArrowRight size={28} color={"white"}/>
                                                        </Button>
                                                    </Block>
@@ -142,17 +125,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                                               style={props.isSelected ? {transition: "0.5s ease-in-out", transform: "scale(1.2)"} : {transition: "0.5s ease-in-out", transform: "scale(0.8)"}}>
                                                            <item.type {...item.props} {...props} />
                                                        </Block>
-                                                       {props.isSelected ? (
-                                                           <Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText"
-                                                                  overrides={{
-                                                                      Block: {
-                                                                          style: {
-                                                                              zIndex: 1,
-                                                                          }
-                                                                      },
-                                                                  }}
-                                                           >{getSizeDesc(item.key)}</Block>
-                                                       ) : <Block height="40px"/>}
+                                                       {props.isSelected ? (<Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText" $style={{zIndex: 1}}>{getSizeDesc(item.key)}</Block>) : <Block height="40px"/>}
                                                    </Block>
                                                );
                                            }}

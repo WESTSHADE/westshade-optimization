@@ -971,10 +971,7 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                             ))) : null}
                                         </Selection>
-                                        <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
-                                                 buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                 onClick={() => setSizeGuideOpen(true)}
-                                        />
+                                        <MButton height="32px" font="MinXParagraph16" text='Size Guide' color="MinXSecondaryText" bundle="gray" onClick={() => setSizeGuideOpen(true)}/>
                                     </SelectionArea>
                                     <SelectionArea title="Frame">
                                         <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
@@ -996,10 +993,7 @@ function Canopy_Tent({router, products, variants}) {
                                             <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                             <Radio value="y5">Y5 Economic Steel</Radio>
                                         </Selection>
-                                        <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
-                                                 buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                 onClick={() => setFrameCompareOpen(true)}
-                                        />
+                                        <MButton height="32px" font="MinXParagraph16" color="MinXSecondaryText" text='Compare Frames' bundle="gray" onClick={() => setFrameCompareOpen(true)}/>
                                     </SelectionArea>
                                     <SelectionArea title="Color">
                                         <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}

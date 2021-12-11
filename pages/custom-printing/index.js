@@ -7,11 +7,10 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SHAPE} from "baseui/button";
 import {ArrowRight, ArrowLeft} from "baseui/icon";
 
+import Button from "Components/button-n";
 import {Benefit, OrderProcess, Section, FreeMockupForm} from "Components/sections";
-import MButton from "Components/button-n";
 
 const ImageSlide = ({url}) => {
     return (
@@ -30,13 +29,11 @@ function Custom_Printing({router}) {
             </Head>
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Block height={["480px", "660px", "900px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["60px 30px 0", "80px 30px 0", "160px 30px 0"]}
+                <Block className="banner-display text-center" height={["480px", "660px", "900px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center"
+                       padding={["60px 30px 0", "80px 30px 0", "160px 30px 0"]}
                        backgroundColor="transparent !important"
                        overrides={{
                            Block: {
-                               props: {
-                                   className: "banner-display text-center"
-                               },
                                style: {
                                    ":after": {background: "url('/images/custom-printing/custom-printing-display.webp')"},
                                }
@@ -45,8 +42,8 @@ function Custom_Printing({router}) {
                 >
                     <Block font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
                     <Block maxWidth={["262px", "450px", "659px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">Customize it your way</Block>
-                    <MButton type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create Your Style" buttonBackgroundColor="#FAFBFF"
-                             onClick={() => router.push("/custom-printing-canopy-tent")}
+                    <Button type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create Your Style" buttonBackgroundColor="#FAFBFF"
+                            onClick={() => router.push("/custom-printing-canopy-tent")}
                     />
                 </Block>
                 <Section upperContainerDirection="column"
@@ -55,13 +52,7 @@ function Custom_Printing({router}) {
                          content={
                              <>
                                  <Block display={["block", "block", "none"]}>
-                                     <Block display="flex" flexDirection="column" alignItems="center" paddingBottom={["6px", "20px"]} overflow="hidden"
-                                            overrides={{
-                                                Block: {
-                                                    props: {className: "react-image-carousel-small"},
-                                                },
-                                            }}
-                                     >
+                                     <Block className="react-image-carousel-small" display="flex" flexDirection="column" alignItems="center" paddingBottom={["6px", "20px"]} overflow="hidden">
                                          <Carousel showStatus={false} showThumbs={false} showArrows={false} showIndicators={true} swipeable={true} emulateTouch={true}
                                                    renderItem={(item, props) => {
                                                        return (
@@ -102,15 +93,7 @@ function Custom_Printing({router}) {
                                                renderArrowPrev={(onClickHandler, hasPrev, label) =>
                                                    hasPrev && (
                                                        <Block position="absolute" width={"17.5%"} height={["320px", "509px"]} top={0} left={0}>
-                                                           <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                                   overrides={{
-                                                                       BaseButton: {
-                                                                           props: {
-                                                                               className: "cursor react-carousel-arrow left",
-                                                                           }
-                                                                       },
-                                                                   }}
-                                                           >
+                                                           <Button shape="circle" buttonClassName={"cursor react-carousel-arrow left"} bundle="gray" onClick={onClickHandler}>
                                                                <ArrowLeft size={28} color={"white"}/>
                                                            </Button>
                                                        </Block>
@@ -119,15 +102,7 @@ function Custom_Printing({router}) {
                                                renderArrowNext={(onClickHandler, hasNext, label) =>
                                                    hasNext && (
                                                        <Block position="absolute" width={"17.5%"} height={["320px", "509px"]} top={0} right={0}>
-                                                           <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                                   overrides={{
-                                                                       BaseButton: {
-                                                                           props: {
-                                                                               className: "cursor react-carousel-arrow right",
-                                                                           }
-                                                                       },
-                                                                   }}
-                                                           >
+                                                           <Button shape="circle" buttonClassName={"cursor react-carousel-arrow right"} bundle="gray" onClick={onClickHandler}>
                                                                <ArrowRight size={28} color={"white"}/>
                                                            </Button>
                                                        </Block>

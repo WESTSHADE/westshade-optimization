@@ -31,7 +31,7 @@ const ProductItem = ({detail}) => {
                 <AspectRatioBoxBody as="img" src={imageSrc} alt="umbrella accessories"/>
             </AspectRatioBox>
             <Block className="text-center" font="MinXLabel14" color="MinXPrimaryText">{detail.name}</Block>
-            <Button type="solid" height="28px" font="MinXLabel12" text='Learn More' buttonStyle={{paddingRight: "20px !important", paddingLeft: "20px !important"}}
+            <Button height="28px" font="MinXLabel12" text='Learn More' buttonStyle={{paddingRight: "20px !important", paddingLeft: "20px !important"}}
                     onClick={() => router.push(link)}
             />
         </Block>

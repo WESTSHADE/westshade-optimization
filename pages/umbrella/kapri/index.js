@@ -113,38 +113,34 @@ function Kapri({router}) {
                 />
                 <Section title={"SIZE AND SHAPES"}
                          content={
-                             <Block maxWidth="960px" width="100%" display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "32px", "64px"]} marginRight="auto" marginLeft="auto">
+                             <Block maxWidth="960px" width="100%" display="grid" gridTemplateColumns={["1fr", null, "repeat(2, 1fr)"]} gridRowGap={["32px", null, "64px"]} margin="auto" font="MinXLabel16">
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size1.webp" alt="kapri size 6.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
-                                     <Block font="MinXLabel16" color="MinXPrimaryText">6.5’ Octagon</Block>
-                                     <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
-                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
+                                     <Block color="MinXPrimaryText">6.5’ Octagon</Block>
+                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size2.webp" alt="kapri size 7.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
-                                     <Block font="MinXLabel16" color="MinXPrimaryText">7.5’ Octagon</Block>
-                                     <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
-                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
+                                     <Block color="MinXPrimaryText">7.5’ Octagon</Block>
+                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size3.webp" alt="kapri size 9'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
-                                     <Block font="MinXLabel16" color="MinXPrimaryText">9’ Octagon</Block>
-                                     <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
-                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "9ft"}})}/>
+                                     <Block color="MinXPrimaryText">9’ Octagon</Block>
+                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "9ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size4.webp" alt="kapri size 10'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
-                                     <Block font="MinXLabel16" color="MinXPrimaryText">10’ Octagon</Block>
-                                     <Button type="solid" height="40px" font="MinXLabel16" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
-                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "10ft"}})}/>
+                                     <Block color="MinXPrimaryText">10’ Octagon</Block>
+                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "10ft"}})}/>
                                  </Block>
                              </Block>
                          }

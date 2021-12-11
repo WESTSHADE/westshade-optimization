@@ -8,11 +8,10 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SHAPE} from "baseui/button";
 import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
+import Button from "Components/button-n";
 import {Benefit, TentSizeDisplay, Section, SubHeaderBar, CanopyTentHero} from "Components/sections";
-import MButton from "Components/button-n";
 
 const refs = [];
 
@@ -168,7 +167,7 @@ function Canopy_Tent({router}) {
                                  <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
                                                src="/images/canopy-tent/fabric_colors.webp"
                                                button={() => (
-                                                   <MButton height="48px" font="MinXLabel16" text="Customize My Tent" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
+                                                   <Button height="48px" font="MinXLabel16" text="Customize My Tent" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                                                )}
                                  />
                              </Block>
@@ -178,7 +177,7 @@ function Canopy_Tent({router}) {
                          title="MANY SIZE OPTIONS"
                          subtitle="There are 8 size options for you to meet your needs in any occasions."
                          subtitleButton={
-                             <MButton marginTop="12px" height="48px" font="MinXLabel16" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
+                             <Button marginTop="12px" height="48px" font="MinXLabel16" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                          }
                          content={
                              <TentSizeDisplay/>
@@ -296,16 +295,7 @@ function Canopy_Tent({router}) {
                                                renderArrowPrev={(onClickHandler, hasPrev, label) =>
                                                    hasPrev && (
                                                        <Block position="absolute" width="17.5%" height={["320px", "509px"]} top={0} left={0}>
-                                                           <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                                   onClick={onClickHandler}
-                                                                   overrides={{
-                                                                       BaseButton: {
-                                                                           props: {
-                                                                               className: "cursor react-carousel-arrow left",
-                                                                           }
-                                                                       },
-                                                                   }}
-                                                           >
+                                                           <Button shape="circle" buttonClassName="cursor react-carousel-arrow left" bundle="gray" onClick={onClickHandler}>
                                                                <ArrowLeft size={28} color={"white"}/>
                                                            </Button>
                                                        </Block>
@@ -314,16 +304,7 @@ function Canopy_Tent({router}) {
                                                renderArrowNext={(onClickHandler, hasNext, label) =>
                                                    hasNext && (
                                                        <Block position="absolute" width="17.5%" height={["320px", "509px"]} top={0} right={0}>
-                                                           <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                                   onClick={onClickHandler}
-                                                                   overrides={{
-                                                                       BaseButton: {
-                                                                           props: {
-                                                                               className: "cursor react-carousel-arrow right",
-                                                                           }
-                                                                       },
-                                                                   }}
-                                                           >
+                                                           <Button shape="circle" buttonClassName="cursor react-carousel-arrow right" bundle="gray" onClick={onClickHandler}>
                                                                <ArrowRight size={28} color={"white"}/>
                                                            </Button>
                                                        </Block>
