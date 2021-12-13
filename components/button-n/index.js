@@ -65,7 +65,7 @@ const options = {
     },
 }
 
-const mButton = ({
+const MButton = ({
                      type = "solid", bundle, shape, disabled, onClick, text, as, display = "block", width, height, font, color,
                      buttonClassName, buttonStyle, buttonHoverStyle, buttonActiveStyle, buttonFocusStyle, buttonDisabledStyle,
                      buttonBackgroundColor, buttonHoverBackgroundColor, buttonActiveBackgroundColor, buttonFocusBackgroundColor, buttonDisabledBackgroundColor,
@@ -212,4 +212,4 @@ const mButton = ({
     )
 }
 
-export default mButton;
+export default MButton;
