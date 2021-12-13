@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react'
+import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 import {Provider as StyletronProvider} from "styletron-react";
 
 import Script from 'next/script'
@@ -10,7 +10,7 @@ import {Block} from "baseui/block";
 
 // import "@fontsource/roboto";
 
-import {store, persistor} from "../redux/store";
+import {store} from "../redux/store";
 import {styletron} from "../styletron";
 
 import Header from "Components/header";
@@ -115,6 +115,10 @@ const overrides = {
 const theme = createTheme(primitives, overrides);
 const CustomTheme = {...LightTheme, ...theme, ...ResponsiveTheme};
 
+const npConfig = {
+    method: 'localStorage'
+};
+
 function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
     const [windowSize, setWindowSize] = useState({
@@ -156,6 +160,7 @@ function MyApp({Component, pageProps}) {
     });
 
     useEffect(() => {
+        console.log(pageProps);
         const jssStyles = document.querySelector("#jss-server-side");
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
@@ -164,7 +169,7 @@ function MyApp({Component, pageProps}) {
 
     return (
         <Provider store={store}>
-            <PersistGate persistor={persistor} loading={null}>
+            <PersistWrapper wrapperConfig={npConfig}>
                 <StyletronProvider value={styletron}>
                     <BaseProvider theme={CustomTheme}>
                         {/* Google Tag Manager */}
@@ -185,7 +190,7 @@ function MyApp({Component, pageProps}) {
                         </div>
                     </BaseProvider>
                 </StyletronProvider>
-            </PersistGate>
+            </PersistWrapper>
         </Provider>
     );
 }
