@@ -51,16 +51,16 @@ const options = {
     },
     "gray": {
         style: {
-            color: "#F2F2F2"
+            color: "rgba(255, 255, 255, 0.2)"
         },
         hover: {
-            color: "#F2F2F2"
+            color: "rgba(255, 255, 255, 0.3)"
         },
         active: {
-            color: "#F2F2F2"
+            color: "rgba(255, 255, 255, 0.2)"
         },
         focus: {
-            color: "#F2F2F2"
+            color: "rgba(255, 255, 255, 0.2)"
         },
     },
 }
@@ -74,25 +74,25 @@ const MButton = ({
 
     const [defaultStyle, setDefaultStyle] = useState({
         style: {
-            color: "white",
-            backgroundColor: "#23A4AD",
-            borderColor: "#23A4AD"
+            color: "inherit",
+            // backgroundColor: "#23A4AD",
+            // borderColor: "#23A4AD"
         },
         hover: {
-            backgroundColor: "#43878C",
-            borderColor: "#43878C"
+            // backgroundColor: "#43878C",
+            // borderColor: "#43878C"
         },
         active: {
-            backgroundColor: "#23A4AD",
-            borderColor: "#23A4AD"
+            // backgroundColor: "#23A4AD",
+            // borderColor: "#23A4AD"
         },
         focus: {
-            backgroundColor: "#23A4AD",
-            borderColor: "#23A4AD"
+            // backgroundColor: "#23A4AD",
+            // borderColor: "#23A4AD"
         },
         disabled: {
-            backgroundColor: "#23A4AD",
-            borderColor: "#23A4AD",
+            // backgroundColor: "#23A4AD",
+            // borderColor: "#23A4AD",
         },
     });
 
@@ -105,32 +105,65 @@ const MButton = ({
 
         ss = Object.assign({}, defaultStyle);
 
-        if (colorSet) {
-            ss.style = {
-                color: colorSet.style.color,
-                backgroundColor: colorSet.style.color,
-                borderColor: colorSet.style.color
-            };
-            ss.hover = {
-                color: colorSet.hover.color,
-                backgroundColor: colorSet.hover.color,
-                borderColor: colorSet.hover.color
-            };
-            ss.active = {
-                color: colorSet.active.color,
-                backgroundColor: colorSet.active.color,
-                borderColor: colorSet.active.color
-            };
-            ss.focus = {
-                color: colorSet.focus.color,
-                backgroundColor: colorSet.focus.color,
-                borderColor: colorSet.focus.color
-            };
-            ss.disabled = {
-                color: colorSet.style.color,
-                backgroundColor: colorSet.style.color,
-                borderColor: colorSet.style.color,
-            };
+        if (type === "solid") {
+            if (colorSet) {
+                ss.style = {
+                    backgroundColor: colorSet.style.color,
+                };
+                ss.hover = {
+                    backgroundColor: colorSet.hover.color,
+                };
+                ss.active = {
+                    backgroundColor: colorSet.active.color,
+                };
+                ss.focus = {
+                    backgroundColor: colorSet.focus.color,
+                };
+                ss.disabled = {
+                    backgroundColor: colorSet.style.color,
+                };
+            }
+        } else if (type === "outline") {
+            if (colorSet) {
+                ss.style = {
+                    color: colorSet.style.color,
+                    borderColor: colorSet.style.color,
+                };
+                ss.hover = {
+                    color: colorSet.hover.color,
+                    borderColor: colorSet.hover.color,
+                };
+                ss.active = {
+                    color: colorSet.active.color,
+                    borderColor: colorSet.active.color,
+                };
+                ss.focus = {
+                    color: colorSet.focus.color,
+                    borderColor: colorSet.focus.color,
+                };
+                ss.disabled = {
+                    color: colorSet.style.color,
+                    borderColor: colorSet.style.color,
+                };
+            }
+        } else if (type === "text") {
+            if (colorSet) {
+                ss.style = {
+                    color: colorSet.style.color,
+                };
+                ss.hover = {
+                    color: colorSet.hover.color,
+                };
+                ss.active = {
+                    color: colorSet.active.color,
+                };
+                ss.focus = {
+                    color: colorSet.focus.color,
+                };
+                ss.disabled = {
+                    color: colorSet.style.color,
+                };
+            }
         }
 
         if (color) {
@@ -138,37 +171,14 @@ const MButton = ({
             ss.hover.color = "inherit";
             ss.active.color = "inherit";
             ss.focus.color = "inherit";
-            ss.disabled.color = "inherit";
+            ss.style.color = "inherit";
         }
 
-        if (type === "solid") {
-            if (buttonBackgroundColor) {
-                ss.style.backgroundColor = buttonBackgroundColor;
-                ss.style.borderColor = buttonBackgroundColor;
-            }
-            if (buttonHoverBackgroundColor) {
-                ss.hover.backgroundColor = buttonHoverBackgroundColor;
-                ss.hover.borderColor = buttonHoverBackgroundColor;
-            }
-            if (buttonActiveBackgroundColor) {
-                ss.active.backgroundColor = buttonActiveBackgroundColor;
-                ss.active.borderColor = buttonActiveBackgroundColor;
-            }
-            if (buttonFocusBackgroundColor) {
-                ss.focus.backgroundColor = buttonFocusBackgroundColor;
-                ss.focus.borderColor = buttonFocusBackgroundColor;
-            }
-            if (buttonDisabledBackgroundColor) {
-                ss.disabled.backgroundColor = buttonDisabledBackgroundColor;
-                ss.disabled.borderColor = buttonDisabledBackgroundColor;
-            }
-        } else if (type === "outline") {
-            if (buttonBackgroundColor) ss.style.borderColor = buttonBackgroundColor;
-            if (buttonHoverBackgroundColor) ss.hover.borderColor = buttonHoverBackgroundColor;
-            if (buttonActiveBackgroundColor) ss.active.borderColor = buttonActiveBackgroundColor;
-            if (buttonFocusBackgroundColor) ss.focus.borderColor = buttonFocusBackgroundColor;
-            if (buttonDisabledBackgroundColor) ss.disabled.borderColor = buttonDisabledBackgroundColor;
-        }
+        if (buttonBackgroundColor) ss.style.backgroundColor = buttonBackgroundColor;
+        if (buttonHoverBackgroundColor) ss.hover.backgroundColor = buttonHoverBackgroundColor;
+        if (buttonActiveBackgroundColor) ss.active.backgroundColor = buttonActiveBackgroundColor;
+        if (buttonFocusBackgroundColor) ss.focus.backgroundColor = buttonFocusBackgroundColor;
+        if (buttonDisabledBackgroundColor) ss.disabled.backgroundColor = buttonDisabledBackgroundColor;
 
         setDefaultStyle({...defaultStyle, ...ss});
     }, []);

@@ -35,7 +35,7 @@ const Bar = ({containerClassName, title, subTitle, subTitleDestination, buttonTe
                     <Block font="MinXLabel14" color="MinXPrimaryText">
                         <Link href={subTitleDestination}>{subTitle}</Link>
                     </Block>
-                    <Button width="105px" height="28px" font="MinXLabel14" text={buttonText} onClick={onClick}/>
+                    <Button width="105px" height="28px" font="MinXLabel14" bundle="primary" text={buttonText} onClick={onClick}/>
                 </Block>
             </Block>
         </Block>

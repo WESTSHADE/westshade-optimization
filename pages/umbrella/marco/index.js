@@ -145,7 +145,7 @@ function Marco({router}) {
                                      <Image src="/images/umbrella/marco/size.webp" alt="marco size 6.5'" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                  </Block>
                                  <Block color="MinXPrimaryText">6.5’ Square</Block>
-                                 <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}/>
+                                 <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}/>
                              </Block>
                          }
                 />

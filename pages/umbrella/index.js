@@ -87,7 +87,7 @@ function Umbrella({router, size}) {
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} text="LEARN MORE" onClick={() => router.push("/umbrella/marco")}/>
+                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/marco")}/>
                                                         </Block>
                                                     }
                                      />
@@ -110,7 +110,7 @@ function Umbrella({router, size}) {
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} text="LEARN MORE" onClick={() => router.push("/umbrella/bali")}/>
+                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/bali")}/>
                                                         </Block>
                                                     }
                                      />
@@ -121,7 +121,7 @@ function Umbrella({router, size}) {
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} text="LEARN MORE" onClick={() => router.push("/umbrella/kapri")}/>
+                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/kapri")}/>
                                                         </Block>
                                                     }
                                      />
@@ -142,7 +142,7 @@ function Umbrella({router, size}) {
                                                 containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent" containerBackgroundPosition="bottom"
                                                 textColor={"#262626"} subTextColor={"#8C8C8C"}
                                                 renderButton={
-                                                    <Button height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More'
+                                                    <Button height={["24px", "32px", "40px"]} font={["MinXLabel14", "MinXLabel16"]} text='Learn More' bundle="primary"
                                                             endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/custom-printing/umbrella")}
                                                     />
                                                 }
@@ -155,7 +155,7 @@ function Umbrella({router, size}) {
                          subtitle={"Have a quick look at all umbrella series."}
                          subtitleStyles={{maxWidth: "unset !important"}}
                          subtitleMoreText={"All specs >"}
-                         subtitleMoreDestination={"spec"}
+                         subtitleMoreDestination={"umbrella/spec"}
                          content={
                              <Block position="relative" display="grid" gridTemplateColumns={["1fr 1fr", "1fr 2fr", "1fr 5fr"]}>
                                  <Block ref={ref} backgroundColor="white" paddingTop="24px">
@@ -176,7 +176,7 @@ function Umbrella({router, size}) {
                                                          <Image src={item.picUrl} alt={item.alt} layout="fill" objectFit="contain"/>
                                                      </Block>
                                                      <Block>{item.title}</Block>
-                                                     <Button height="24px" font="MinXLabel14" text='Buy' buttonStyle={{paddingRight: "20px", paddingLeft: "20px"}} onClick={() => router.push(item.buyUrl)}/>
+                                                     <Button height="24px" font="MinXLabel14" text='Buy' bundle="primary" buttonStyle={{paddingRight: "20px", paddingLeft: "20px"}} onClick={() => router.push(item.buyUrl)}/>
                                                  </Block>
                                                  <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
                                                      {data.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}

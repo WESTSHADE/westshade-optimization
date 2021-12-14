@@ -58,10 +58,8 @@ const Hero = () => {
                     <Block marginBottom="8px" font={["MinXTitle42", "MinXTitle42", "MinXTitle74"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "300 !important"}}>Canopy Tent</Block>
                     <Block marginBottom="8px" font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle20"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "400 !important", fontStyle: "italic", letterSpacing: "0.04em"}}>Protect you and your family
                         with our best.</Block>
-                    <Button width={["194px", "194px", "202px"]} height={["48px", "48px", "52px"]} font="MinXLabel20" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
+                    <Button width={["194px", "194px", "202px"]} height={["48px", "48px", "52px"]} font="MinXLabel20" text="Buy Now" bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                 </Block>
-
-
                 <Block className="text-center" position="relative" width="100%" display={["grid", null, "flex"]} flexDirection={[null, null, "column"]} gridRowGap="12px" gridTemplateColumns="1fr" justifyContent="space-between"
                        padding={["0 16px", null, "0 20px"]}
                 >

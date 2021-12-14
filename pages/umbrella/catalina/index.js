@@ -150,7 +150,7 @@ function Catalina({router}) {
                                          <Image src="/images/umbrella/catalina/size1.webp" alt="catalina size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">10’ Square</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
                                              onClick={() => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella", query: {size: "10ft"}})}
                                      />
                                  </Block>
@@ -159,7 +159,7 @@ function Catalina({router}) {
                                          <Image src="/images/umbrella/catalina/size2.webp" alt="catalina size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">11.5’ Square</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
                                              onClick={() => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella", query: {size: "11.5ft"}})}
                                      />
                                  </Block>
@@ -168,7 +168,7 @@ function Catalina({router}) {
                                          <Image src="/images/umbrella/catalina/size3.webp" alt="santorini size 13'ft" layout="responsive" objectFit="contain" width={1193} height={643}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">13’ Square</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
                                              onClick={() => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella", query: {size: "13ft"}})}
                                      />
                                  </Block>
@@ -177,7 +177,7 @@ function Catalina({router}) {
                                          <Image src="/images/umbrella/catalina/size4.webp" alt="santorini size 16.4'ft" layout="responsive" objectFit="contain" width={1193} height={643}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">16.4’ Hexagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>}
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
                                              onClick={() => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella", query: {size: "16.4ft"}})}
                                      />
                                  </Block>

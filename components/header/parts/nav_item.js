@@ -25,7 +25,7 @@ const NavItem = ({detail = {}, router}) => {
             }}
         >
             <Block className="cursor" display="flex" alignItems="center" paddingLeft="20px" font="MinXParagraph14">
-                <Button type="text" color="MinXPrimaryText" onClick={() => router.push({pathname: link})}>{title}</Button>{dropMenu && <ChevronDown/>}
+                <Button type="text" bundle="black" onClick={() => router.push({pathname: link})}>{title}</Button>{dropMenu && <ChevronDown/>}
             </Block>
             {display && dropMenu ? <DropMenu containerStyle={style} menuList={list} picUrl={picture} content={content} learnMoreUrl={link} learnMoreText={linkText}/> : null}
         </NavigationItem>

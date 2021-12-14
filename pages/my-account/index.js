@@ -93,10 +93,7 @@ function Login() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Log in'
-                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
-                         onClick={handleLogIn}
-                />
+                <MButton type="solid" width="100%" height="56px" marginBottom="24px" font="MinXLabel16" text='Log in' bundle="primary" onClick={handleLogIn}/>
             </Block>
         </>
     )
@@ -189,10 +186,7 @@ function Signup() {
                     By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions" passHref><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
                     color="inherit" href="/privacy" passHref><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Join Westshade'
-                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
-                         onClick={handleSignUp}
-                />
+                <MButton type="solid" width="100%" height="56px" marginBottom="24px" font="MinXLabel16" text='Join Westshade' bundle="primary" onClick={handleSignUp}/>
             </Block>
         </>
     )
@@ -528,7 +522,7 @@ function Profile() {
                         />
                     </Block>
                 </Block>
-                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" onClick={handleSaveProfile} disabled={!userDiff}/>
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" bundle="primary" onClick={handleSaveProfile} disabled={!userDiff}/>
             </Block>
         </>
     )
@@ -776,7 +770,7 @@ function Address() {
                         />
                     </Block>
                 </Block>
-                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" onClick={handleSaveAddress} disabled={!shippingDiff}/>
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" bundle="primary" onClick={handleSaveAddress} disabled={!shippingDiff}/>
             </Block>
         </>
     )

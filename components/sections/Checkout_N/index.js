@@ -125,7 +125,7 @@ const checkout = (props) => {
                         {/*    {buttonText}*/}
                         {/*</Button>*/}
                         {/*</Block>*/}
-                        <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" disabled={!isAvailable}
+                        <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" bundle="primary" disabled={!isAvailable}
                                  onClick={props.onClickAddToBag}
                         />
                     </Block>

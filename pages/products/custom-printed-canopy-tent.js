@@ -1012,9 +1012,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                                     })
                                                 ) : null}
                                             </Selection>
-                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
-                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => setSizeGuideOpen(true)}
+                                            <MButton type="solid" height="32px" font="MinXParagraph16" text='Size Guide' color="MinXPrimaryText"
+                                                     buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setSizeGuideOpen(true)}
                                             />
                                         </SelectionArea>
                                         <SelectionArea title="Frame">
@@ -1025,9 +1024,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                                        }}
                                                        id={id_attribute_frameSeries} attributes={productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_frameSeries) : []}
                                             />
-                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
-                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => setFrameCompareOpen(true)}
+                                            <MButton type="solid" height="32px" font="MinXParagraph16" text='Compare Frames' color="MinXPrimaryText"
+                                                     buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setFrameCompareOpen(true)}
                                             />
                                         </SelectionArea>
                                         <SelectionArea title="Color">
@@ -1069,9 +1067,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                                        onChange={(event) => handleChangeRadio(event, 1, id_attribute_printing_tech)}
                                                        id={id_attribute_printing_tech} attributes={productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_printing_tech) : []}
                                             />
-                                            <MButton type="solid" height="auto" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Technology' color="MinXPrimaryText"
-                                                     buttonStyle={{backgroundColor: "#F2F2F2 !important", paddingTop: "4px !important", paddingRight: "24px !important", paddingBottom: "4px !important", paddingLeft: "24px !important"}}
-                                                     onClick={() => setTechnologyCompareOpen(true)}
+                                            <MButton type="solid" height="32px" marginRight="auto" marginLeft="auto" font="MinXParagraph16" text='Compare Technology' color="MinXPrimaryText"
+                                                     buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setTechnologyCompareOpen(true)}
                                             />
                                         </SelectionArea>
                                     </>
@@ -1364,14 +1361,8 @@ function Custom_Printed_Canopy_Tent({router, product, productComponent = [], pro
                                </Block>
                            </Block>
                            <Block display="grid" gridTemplateColumns="repeat(2, minmax(85px, auto))" gridColumnGap="24px">
-                               <MButton type="outline" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Cancel' color="MinXButton"
-                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important", borderColor: "#23A4AD"}}
-                                        onClick={() => closeWallModal()}
-                               />
-                               <MButton type="solid" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Save' color="white"
-                                        buttonStyle={{paddingRight: "24px !important", paddingLeft: "24px !important"}}
-                                        onClick={() => closeWallModal(true)}
-                               />
+                               <MButton type="outline" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Cancel' color="MinXButton" onClick={() => closeWallModal()}/>
+                               <MButton type="solid" width="100%" height="40px" minWidth="85px" font="MinXParagraph16" text='Save' color="white" onClick={() => closeWallModal(true)}/>
                            </Block>
                        </Block>
                    }

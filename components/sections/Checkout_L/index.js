@@ -107,7 +107,7 @@ const checkout = (props) => {
                     <Block display="flex" flexDirection="row" marginBottom="20px" font="MinXParagraph14">{`Qty: ${quantity}`}</Block>
                 </Block>
                 <Shipping direction="column" marginBottom="20px"/>
-                <MButton width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text={buttonText} onClick={addToBag} disabled={!isAvailable}/>
+                <MButton width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text={buttonText} bundle="primary" onClick={addToBag} disabled={!isAvailable}/>
             </Block>
         </>
     );

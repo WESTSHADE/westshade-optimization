@@ -314,7 +314,8 @@ function Custom_Printing_Umbrella({router, size}) {
                                    onChange={(event) => handleEnquiryDetail("request", event.target.value)}
                             />
                         </FormControl>
-                        <Button shape="square" height="32px" font="MinXParagraph16" text='Submit' color="white" bundle="gray" onClick={() => handleSendQuote()}/>
+                        <Button shape="square" height="32px" font="MinXParagraph16" text='Submit' color="MinXPrimaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                onClick={() => handleSendQuote()}/>
                     </Block>
                 </Block>
             </Modal>

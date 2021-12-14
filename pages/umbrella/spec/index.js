@@ -81,7 +81,7 @@ function Umbrella_Spec({router, size}) {
                                             },
                                         }}
                                 />
-                                <Button height="24px" marginRight="auto" marginLeft="auto" font="MinXLabel14" text="Buy" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
+                                <Button height="24px" font="MinXLabel14" text="Buy" bundle="primary" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
                             </Block>
                         )
                     }

@@ -971,7 +971,9 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                             ))) : null}
                                         </Selection>
-                                        <MButton height="32px" font="MinXParagraph16" text='Size Guide' color="MinXSecondaryText" bundle="gray" onClick={() => setSizeGuideOpen(true)}/>
+                                        <MButton type="solid" height="32px" font="MinXParagraph16" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                                 onClick={() => setSizeGuideOpen(true)}
+                                        />
                                     </SelectionArea>
                                     <SelectionArea title="Frame">
                                         <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
@@ -993,7 +995,9 @@ function Canopy_Tent({router, products, variants}) {
                                             <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                             <Radio value="y5">Y5 Economic Steel</Radio>
                                         </Selection>
-                                        <MButton height="32px" font="MinXParagraph16" color="MinXSecondaryText" text='Compare Frames' bundle="gray" onClick={() => setFrameCompareOpen(true)}/>
+                                        <MButton type="solid" height="32px" font="MinXParagraph16" color="MinXSecondaryText" text='Compare Frames' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                                 onClick={() => setFrameCompareOpen(true)}
+                                        />
                                     </SelectionArea>
                                     <SelectionArea title="Color">
                                         <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}

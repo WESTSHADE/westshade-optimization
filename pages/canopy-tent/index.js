@@ -167,7 +167,7 @@ function Canopy_Tent({router}) {
                                  <BlockDisplay title="Unlimited Colors" content="There are 6 preset color to choose from and you can also custom any color you like."
                                                src="/images/canopy-tent/fabric_colors.webp"
                                                button={() => (
-                                                   <Button height="48px" font="MinXLabel16" text="Customize My Tent" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
+                                                   <Button height="48px" font="MinXLabel16" text="Customize My Tent" bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                                                )}
                                  />
                              </Block>
@@ -177,7 +177,7 @@ function Canopy_Tent({router}) {
                          title="MANY SIZE OPTIONS"
                          subtitle="There are 8 size options for you to meet your needs in any occasions."
                          subtitleButton={
-                             <Button marginTop="12px" height="48px" font="MinXLabel16" text="Buy Now" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
+                             <Button marginTop="12px" height="48px" font="MinXLabel16" text="Buy Now" bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                          }
                          content={
                              <TentSizeDisplay/>
@@ -209,15 +209,8 @@ function Canopy_Tent({router}) {
                                          <Image src="/images/canopy-tent/built-in/pole-dimensions.webp" alt="Pole Dimensions" layout="fixed" width="100%" height="74px" objectFit="contain" quality={100}/>
                                      </Block>
                                  </Block>
-                                 <Block position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]} padding={["40px 18px 24px", "", "40px 18px 0px"]} backgroundColor="MinXBackground"
-                                        overrides={{
-                                            Block: {
-                                                props: {
-                                                    className: "section-round-corner"
-                                                }
-                                            },
-                                        }}
-                                 >
+                                 <Block className="section-round-corner" position="relative" display="flex" flexDirection="column" alignItems="center" height={["510px", "571px"]} padding={["40px 18px 24px", "", "40px 18px 0px"]}
+                                        backgroundColor="MinXBackground">
                                      <Block marginBottom="16px" font={["MinXHeading28", "MinXHeading36"]} color="MinXPrimaryText">Strong Support</Block>
                                      <Block maxWidth={["250px", "346px"]} marginBottom={["20px", "24px", "14px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                          The CPAI-84 certified material is resistant of UV, water, fire, and wind, providing a safe shade.
@@ -313,15 +306,7 @@ function Canopy_Tent({router}) {
                                                renderItem={(item, props) => {
                                                    return (
                                                        <div>
-                                                           <Block position="relative" height={["320px", "509px"]} marginRight="10px" marginBottom="32px" marginLeft="10px" overflow="hidden"
-                                                                  overrides={{
-                                                                      Block: {
-                                                                          props: {
-                                                                              className: "react-carousel"
-                                                                          },
-                                                                      },
-                                                                  }}
-                                                           >
+                                                           <Block className="react-carousel" position="relative" height={["320px", "509px"]} marginRight="10px" marginBottom="32px" marginLeft="10px" overflow="hidden">
                                                                {props.isSelected ? null : <div className="react-carousel-dusk round"/>}
                                                                <item.type {...item.props} {...props} />
                                                            </Block>

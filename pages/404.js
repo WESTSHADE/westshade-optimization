@@ -29,7 +29,7 @@ function Custom404({router}) {
                         </Block>
                         <Block display="flex" flexDirection="column" alignSelf={["flex-start", null, "center"]}>
                             <Block marginBottom="24px" font={["MinXHeading24", "MinXHeading36", "MinXHeading48"]} color="MinXPrimaryText">Oops! Page not found</Block>
-                            <Button height="48px" font={["MinXLabel14", "MinXLabel16"]} text="Back to Homepage" startEnhancer={() => <ChevronLeft size={24}/>} onClick={() => router.push("/")}/>
+                            <Button height="48px" font={["MinXLabel14", "MinXLabel16"]} text="Back to Homepage" bundle="primary" startEnhancer={() => <ChevronLeft size={24}/>} onClick={() => router.push("/")}/>
                         </Block>
                     </Block>
                 </Block>

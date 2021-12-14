@@ -119,28 +119,28 @@ function Kapri({router}) {
                                          <Image src="/images/umbrella/kapri/size1.webp" alt="kapri size 6.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">6.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size2.webp" alt="kapri size 7.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">7.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size3.webp" alt="kapri size 9'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">9’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "9ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "9ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size4.webp" alt="kapri size 10'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">10’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "10ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "10ft"}})}/>
                                  </Block>
                              </Block>
                          }

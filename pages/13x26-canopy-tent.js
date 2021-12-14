@@ -131,7 +131,7 @@ function Canopy_Tent({router}) {
                                     <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>STOCK COLORS</Block>
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">Pick a color to light up your mood.</Block>
-                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
                                                 onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "13x26"}})}
                                         />
                                         <Block position="relative" height={["159px", "260px", "494px"]}>
@@ -184,7 +184,7 @@ function Canopy_Tent({router}) {
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
                                             You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
                                         </Block>
-                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
                                                 onClick={() => {
                                                 }}
                                         />

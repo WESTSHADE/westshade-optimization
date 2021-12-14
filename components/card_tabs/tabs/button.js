@@ -26,7 +26,7 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                                }}
                         >{linkText}</Block>
                     </Block>
-                    <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' onClick={tabList[0].onClick}/>
+                    <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' bundle="primary" onClick={tabList[0].onClick}/>
                 </Block>
             ) : tabList.length > 1 ? (
                 <Tabs activeKey={activeKey} fill={FILL.fixed} activateOnFocus onChange={onChange}
@@ -75,19 +75,9 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                                 <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">{item.tabContentTitle}</Block>
                                 <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">{item.tabContentContent}</Block>
                                 <Block marginBottom={["10px", "10px", "16px"]} font="MinXParagraph20">{item.tabContentPrice}</Block>
-                                <Block font="MinXParagraph14" color="#23A4AD" onClick={item.onClickLink}
-                                       overrides={{
-                                           Block: {
-                                               props: {
-                                                   className: styles["link-button"]
-                                               }
-                                           }
-                                       }}
-                                >{linkText}</Block>
+                                <Block className={styles["link-button"]} font="MinXParagraph14" color="#23A4AD" onClick={item.onClickLink}>{linkText}</Block>
                             </Block>
-                            <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' position="fixed" bottom={0}
-                                    onClick={item.onClick}
-                            />
+                            <Button width="100%" height="56px" font="MinXParagraph16" text='Buy now' bundle="primary" position="fixed" bottom={0} onClick={item.onClick}/>
                         </Tab>
                     )}
                 </Tabs>

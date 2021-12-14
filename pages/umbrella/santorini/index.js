@@ -132,35 +132,35 @@ function Santorini({router}) {
                                          <Image src="/images/umbrella/santorini/size1.webp" alt="santorini size 6.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">6.5’ Square</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "6.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "6.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/santorini/size2.webp" alt="santorini size 7.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">7.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "7.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "7.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/santorini/size3.webp" alt="santorini size 9'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">9’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "9ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "9ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/santorini/size4.webp" alt="santorini size 10'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">10’ Square</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "10ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "10ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/santorini/size5.webp" alt="santorini size 11.5'ft" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">11.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "11.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/market-umbrellas/santorini-umbrella", query: {size: "11.5ft"}})}/>
                                  </Block>
                              </Block>
                          }

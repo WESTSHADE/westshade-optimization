@@ -70,7 +70,7 @@ function Canopy_Tent_Spec({router, size}) {
                                             }}
                                     />
                                 </Block>
-                                <Button height="24px" font="MinXLabel14" text="Buy" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
+                                <Button height="24px" font="MinXLabel14" text="Buy" bundle="primary" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
                             </Block>
                         )
                     }
