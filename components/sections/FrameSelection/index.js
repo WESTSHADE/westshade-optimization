@@ -5,38 +5,13 @@ import { useState } from "react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
-const frameTypes = [
-    {
-        image: "/images/canopy-tent/tent/y5.webp",
-        value: "Y5",
-        label: "Y5 - Economical steel",
-        description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is desgined for everyday use, performs exceptionally well all year round.",
-        price: "0"
-    },
-    {
-
-        image: "/images/canopy-tent/tent/y6.webp",
-        value: "Y6",
-        label: "Y6 - Commercial aluminum",
-        description: "Y6 range is an ideal entry level of aluminum tent. It's lightweight yet remaining the strength of heavy duty steel frame. It is ideal for the regular professional user.",
-        price: "0"
-    },
-    {
-
-        image: "/images/canopy-tent/tent/y7.webp",
-        value: "Y7",
-        label: "Y7 - Heavy-duty aluminum frame",
-        description: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
-        price: "0"
-    },
-]
 
 const FrameTypeCard = ({frame, active,onClick}) => {
-    const [css] = useStyletron();
 
     return(
         <>
-            <Block 
+            <Block
+                onClick={onClick}
                 width="100%"
                 height="100%" 
                 padding="20px" 
@@ -44,7 +19,8 @@ const FrameTypeCard = ({frame, active,onClick}) => {
                 display="flex"
                 flexDirection="column"
                 justifyContent="space-between"
-                className={css({
+                $style={{
+                    cursor: "pointer",
                     backgroundColor: "#FAFAFA",
                     borderTopLeftRadius: "16px",
                     borderTopRightRadius: "16px",
@@ -60,7 +36,7 @@ const FrameTypeCard = ({frame, active,onClick}) => {
                     borderRightWidth: "3px",
                     borderColor: active ? "#23A4AD" : "transparent",
                     transition: "all .3s ease-in-out"
-                })}
+                }}
              >
                 <Block width="100%">
                     <Image src={frame.image} width={210} height={210} alt={frame.label} layout="responsive" objectFit="contain"/>
@@ -87,8 +63,17 @@ const FrameTypeCard = ({frame, active,onClick}) => {
                             fontSize: "14px !important",
                             fontWeight: "500 !important",
                             width: "100% !important",
-                            border: "2px solid #bfbfbf",
-                            padding: "16px 0 !important"
+                            borderTopWidth: "2px",
+                            borderBottomWidth: "2px",
+                            borderLeftWidth: "2px",
+                            borderRightWidth: "2px",
+                            borderTopStyle: "solid",
+                            borderBottomStyle: "solid",
+                            borderRightStyle: "solid",
+                            borderLeftStyle: "solid",
+                            borderColor: "#bfbfbf",
+                            paddingTop: "16px !important",
+                            paddingBottom: "16px !important",
                         }}
                         text={`Select ${frame.value}`}
                     />
@@ -98,7 +83,7 @@ const FrameTypeCard = ({frame, active,onClick}) => {
     )
 }
 
-const FrameSelection = ({frameValue, setFrame}) => {
+const FrameSelection = ({frameTypes, frameValue, setFrame}) => {
     const [showFrameCompare,setShowFrameCompare] = useState(false);
     const [css] = useStyletron();
     return (
@@ -114,11 +99,11 @@ const FrameSelection = ({frameValue, setFrame}) => {
                 </Block>
                 <MButton onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily:"Roboto !important", fontSize: "14px"}} text="Compare frames"/>
             </Block>
-            <Block width="100%" display="flex" flexWrap={"wrap"} justifyContent="center" alignItems="stretch" marginTop="38px">
+            <Block width="100%" display="flex" flexWrap={"wrap"} justifyContent="space-between" alignItems="stretch" marginTop="38px">
                 {
                     frameTypes.map((frame) => (
                         
-                        <Block  key={frame.value} margin={["0 16px 24px","0 10px 24px","0 20px","0 32px"]} maxWidth={["100%","260px", "260px", "300 px"]} width={["100%","27%","30%"]}>
+                        <Block  key={frame.value} margin={["0 16px 24px","0 5px 24px","0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%","30%","30%"]}>
                             <FrameTypeCard 
                                 frame={frame}
                                 onClick={() => setFrame({frame:frame.value})}

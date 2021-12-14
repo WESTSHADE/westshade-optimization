@@ -20,7 +20,7 @@ const ProgressSteps = ({steps, currentStep}) => {
                             key={step.code}
                             width="12px"
                             height="12px"
-                            backgroundColor={step.status.done ? "#23A4AD" : "#D9D9D9"}
+                            backgroundColor={step.status.done ? "#23A4AD" : step.status.onGoing ? "#ffffff" : "#D9D9D9"}
                             className={css({
                                 borderRadius: "50%",
                                 border: step.status.onGoing || step.status.done ? "3px solid #23A4AD" : "3px solid #D9D9D9",
@@ -67,55 +67,6 @@ const ProgressSteps = ({steps, currentStep}) => {
                 {data[currentStep].label}
         </Block>
         </>
-        // <Block width="100%" position="relative" height="4px">
-        //     <Block 
-        //         width="100%" 
-        //         height="1px" 
-        //         position="absolute" 
-        //         top="0%" 
-        //         left="0%" 
-        //         display="flex" 
-        //         alignItems="center" 
-        //         justifyContent="space-between"
-        //         backgroundColor="#D9D9D9"
-        //     >
-        //         {
-        //             steps.map((step, idx) => (
-        //                 <Block 
-        //                     position="relative" 
-        //                     width="12px" 
-        //                     height="12px" 
-        //                     backgroundColor={reachedSteps >= idx + 1 ? "MinXButton" : "#D9D9D9"}
-        //                     className={css({
-        //                         borderRadius: "50%",
-        //                         border: reachedSteps >= idx + 1 ? "3px solid #23A4AD" : "3px solid #D9D9D9",
-        //                         zIndex: "10"
-        //                     })}
-        //                 >
-        //                     <Block 
-        //                         position="absolute" 
-        //                         left="50%" 
-        //                         bottom="-32px"
-        //                         className={css({
-        //                             transform: "translateX(-50%)"
-        //                         })}
-                                
-        //                     >
-        //                         {step}
-        //                     </Block>
-        //                 </Block>
-        //             ))
-        //         }
-        //     </Block>
-        //     <Block 
-        //         width={((100 / (steps.length - 1)) * reachedSteps)}
-        //         height="1px"
-        //         backgroundColor="#23A4AD"
-        //         position="relative"
-        //     >
-
-        //     </Block>
-        // </Block>
     )
 }
 

@@ -997,8 +997,8 @@ ul.bullet-warranty.sub > li {
 
     .triangle-curved2 {
         border-top-width: 24px;
-        border-right: 24px solid transparent;
-        border-left: 24px solid transparent;
+        border-right: 25px solid transparent;
+        border-left: 25px solid transparent;
     }
     
     .triangle-curved2.bottom {

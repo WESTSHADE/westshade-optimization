@@ -5,28 +5,10 @@ import { useState } from "react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
-const printingMethods = [
-    {
-        color: " <span class='highlighted'> More vivid; great contrast </span>",
-        fabric: " <span class='highlighted'> 900D, 360 gsm </span> polyester <br/> with PU coating",
-        image: "/images/custom-printed-canopy-tent/pmt-uv-printing.png",
-        value: "UV PRINTING",
-        label: "UV Printing",
-        years: "4-5",
-        note:""
-    },
-    {
-        color: "Vivid color; good contrast",
-        fabric: "<span class='highlighted'> 600D, 288 gsm </span> polyester <br/> with PU coating",
-        image: "/images/custom-printed-canopy-tent/pmt-dye-sublimation.png",
-        value: "DYE SUBLIMATION",
-        label: "Dye Sublimation",
-        years: "2-3",
-        note:"*Color fastness depends on usage and weather condition."
-    }
-]
+
 const PrintingMethodCard = ({method, active, onClick}) => {
     const [css] = useStyletron();
+    const [hovered, setHovered] = useState(false)
 
     const createCopy = (copy) => {
         return {__html: copy}
@@ -57,8 +39,34 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                     transition: "all .15s ease-in-out"
                 })}
                 >
-                <Block width="100%">
-                    <Image src={method.image} width={370} height={250} alt={method.label} layout="responsive" objectFit="contain"/>
+                <Block width="100%" position="relative">
+                    <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" top="12px" right="12px" $style={{zIndex: "5"}}>
+                        <MButton 
+                            buttonClassName={css({
+                                background: "rgba(255, 255, 255, 0.7) !important",
+                                backdropFilter: "blur(6px) !important",
+                                transition: "all .3s ease-in",
+                                ':hover': {background: "rgba(255, 255, 255, 0.85) !important"}
+                            })}
+                            width="100%"
+                            color="MinXTitle"
+                            font="MinXParagraph14"
+                            text={hovered ? "original image" : "See original image"}
+                        />
+                    </Block>
+                    <Block width="100%" $style={{borderRadius:"16px", overflow: "hidden",}}>
+                        <Image src={method.image} width={370} height={250} alt={method.label} layout="responsive" objectFit="contain"/>
+                    </Block>
+                    <Block 
+                        position="absolute" 
+                        top="0" 
+                        left="0" 
+                        width="100%" 
+                        height="100%" 
+                        $style={{zIndex: "4",borderRadius:"16px", overflow: "hidden",opacity: hovered ? "1" : "0", transition: "all .3s ease-in-out"}}
+                    >
+                        <Image src={method.originalImage} width={370} height={250} alt="original image" layout="responsive" objectFit="contain"/>
+                    </Block>
                 </Block>
                 <Block marginTop="24px">
                     <Block display="flex" flexDirection="column" alignItems="center">
@@ -84,8 +92,17 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                                 fontSize: "14px !important",
                                 fontWeight: "400 !important",
                                 width: "100% !important",
-                                border: "2px solid #bfbfbf",
-                                padding: "16px 0 !important"
+                                borderTopWidth: "2px",
+                                borderBottomWidth: "2px",
+                                borderLeftWidth: "2px",
+                                borderRightWidth: "2px",
+                                borderTopStyle: "solid",
+                                borderBottomStyle: "solid",
+                                borderRightStyle: "solid",
+                                borderLeftStyle: "solid",
+                                borderColor: "#bfbfbf",
+                                paddingTop: "16px !important",
+                                paddingBottom: "16px !important",
                             }}
                             text={`Select ${method.label}`}
                         />
@@ -113,7 +130,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
     )
 }
 
-const PrintingMethodSelection = ({printingMethodValue, setMethod}) => {
+const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMethod}) => {
     const [showPrintingTechnology,setShowPrintingTechnology] = useState(false);
 
     return (

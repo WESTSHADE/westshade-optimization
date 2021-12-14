@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import Image from "next/image";
 
@@ -103,6 +103,13 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
         return Promise.all(promises)
     }
 
+
+    useEffect(() => {
+        const thirdPartyButton = document.querySelector("#mobile-chat-container");
+        thirdPartyButton.style.transform = "translateY(-80px)"
+        return () => thirdPartyButton.style.transform = "translateY(0px)"
+    }, [])
+
     return (
         <>
         <Block width="100%"  maxWidth="448px"  display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" paddingTop={["32px", "40px"]}>
@@ -183,7 +190,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                     />
                                 </Block>
                                 <Block font="MinXParagraph12" color="rgba(0,0,0,0.45)" $style={{textAlign: "right", textDecoration: "underline", textTransform: "capitalize"}}>
-                                    <a target="_blank" href="https://www.pantone.com/color-finder" rel="noopener noreferrer">
+                                    <a target="_blank" href="https://www.pantone-colours.com/" rel="noopener noreferrer">
                                         Go to &quot;Pantone Color Finder&quot;
                                     </a>
                                 </Block>
@@ -368,7 +375,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
             </Checkbox>
         </Block>
         <Block position="absolute" bottom="0" left="0" width="100%" display="flex" alignItems="center" justifyContent="space-between" backgroundColor="#ffffff" padding="22px 16px">
-            <Block font="MinXParagraph14" color="MinXPrimaryText">
+            <Block font={["MinXParagraph12","MinXParagraph14","MinXParagraph14"]} color="MinXPrimaryText">
             After submitting the order, we’ll email you a free mockup based on your request.
             </Block>
             <Block display="flex" alignItems="center">

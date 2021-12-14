@@ -17,18 +17,13 @@ import { updateUser } from "../../redux/actions/userActions"
 import { modifyCart } from "../../redux/actions/cartActions"
 import { Modal } from "@material-ui/core"
 import { productReducer, reducer, stepReducer,initialState, initialProduct, initialSteps } from "../../assets/states/custom-printed-canopy-tent"
+import MButton from "../../components/button-n"
+import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/custom-printend-canopy-tent"
 
 const utils = new Utils();
 
-//----- initial State for variant details ------//
-
-
-//----- initial State for selected variant and bag/cart ------//
-
-
-
-
-const Index = ({productVariant, productComponent, pageState}) => {
+const Index = ({productVariant, productComponent, pageState, setHideCategories, printingMethods, frameTypes, tentSizes}) => {
+    console.log(productVariant[1])
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();
     const {cart} = useSelector(({cart}) => cart);
@@ -40,7 +35,6 @@ const Index = ({productVariant, productComponent, pageState}) => {
     let myData = Object.keys(steps.allSteps).map(key => {
         return steps.allSteps[key];
     })
-
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
@@ -83,6 +77,18 @@ const Index = ({productVariant, productComponent, pageState}) => {
                 dispatch({type:"SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
             }
         }
+        else {
+            if(steps.currentKey === "requirement" && determineSides().length === 0){
+                stepDispatch({type: "SET_ERROR"})
+            }
+            else if(steps.currentStep !== 3){
+                stepDispatch({type: "SET_DEFAULT_AND_NEXT", payload: {steps: {...steps.allSteps, [steps.currentKey]: {...steps.allSteps[steps.currentKey],status: {...steps.allSteps[steps.currentKey].status, done:true}}}, key: myData[steps.currentStep + 1].code}})
+            }
+            else {
+                stepDispatch({type: "SET_DONE"})
+                dispatch({type:"SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
+            }
+        }
     }
     const prevStep = () => {
         if(steps.currentStep === 0){
@@ -97,8 +103,7 @@ const Index = ({productVariant, productComponent, pageState}) => {
     const clearCustomization = () => {
         dispatch({type: "RESET", payload: initialState})
         stepDispatch({type: "RESET", payload: initialSteps})
-        productDispatch({type: "SET_ENTRY_ID", payload: {entryId:null}})
-
+        productDispatch({type: "RESET", payload: {initialState: {...initialProduct, entryId: null} }})
     }
 
     const determineSides = () => {
@@ -115,11 +120,12 @@ const Index = ({productVariant, productComponent, pageState}) => {
                 printedSides.push(key.charAt(0).toUpperCase() + key.slice(1))
             }
         })
+        console.log(printedSides)
         return printedSides.join(", ")
     }
 
 
-    const getVariant = () => {
+    const getFrameVariant = () => {
         const variant = productVariant[0].filter((item,idx) =>{
             if(item.attributes[0].option === state.size && item.attributes[1].option.includes(state.frame)){
                 return item;
@@ -127,16 +133,55 @@ const Index = ({productVariant, productComponent, pageState}) => {
         })
         return variant[0]
     }
+    const getRoofVariant = () => {
+        let roofVariant = {}
+        console.log(state.size)
+        let sideSizes = state.size.split("x");
+        let printedSides = determineSides().split(", ")
+        roofVariant.roofSize = sideSizes[0]
+        roofVariant.roofSizeII = sideSizes[1]
+        roofVariant.numbers = {number: 0, number1: 0}
+        printedSides.forEach(item => {
+            if(item === "FRONT" || item === "BACK"){
+                roofVariant.numbers.number1++
+            }
+            else {
+                roofVariant.numbers.number++
+            }
+        })
+        let variant = productVariant[1].filter((item) => {
+            if  (item.attributes[0].option == (roofVariant.roofSize + "ft") && 
+                item.attributes[1].option == (roofVariant.roofSizeII + "ft") && 
+                parseInt(item.attributes[2].option) == roofVariant.numbers.number &&
+                parseInt(item.attributes[3].option) == roofVariant.numbers.number1 &&
+                item.attributes[4].option.toUpperCase() == state.printingMethod)
+                {
+                    return item;
+                }
+        })
+        return variant[0]
+    }
+
     const getProductList = () => {
         let productList = []
-        const variation = productState.variant.attributes.map((attr) => ({
+        const roofVariation = productState.roofVariant.attributes.map((attr) => ({
+            attribute: attr.name,
+            value:attr.option
+        }))
+        const frameVariation = productState.frameVariant.attributes.map((attr) => ({
             attribute: attr.name,
             value:attr.option
         }))
         productList.push({
-            id: productState.variant.id,
+            id: productState.roofVariant.id,
             quantity: productState.bag.totalCount,
-            variation: variation,
+            variation: roofVariation,
+            entryId: productState.entryId
+        },
+        {
+            id: productState.frameVariant.id,
+            quantity: productState.bag.totalCount,
+            variation: frameVariation,
             entryId: productState.entryId
         })
         return productList;
@@ -208,7 +253,9 @@ const Index = ({productVariant, productComponent, pageState}) => {
             37: "",
             71: ""
         })
-        productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
+        if(res.id) {
+            productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
+        }
         console.log({
             form_id: "6",
             status: "active",
@@ -254,18 +301,57 @@ const Index = ({productVariant, productComponent, pageState}) => {
         })
     }
 
-    useEffect(() => {
-        productDispatch({type: "SET_VARIANT", payload: {variant: productVariant[0]}})
-    },[productVariant])
+    // useEffect(() => {
+    //     productDispatch({type: "SET_FRAME_VARIANT", payload: {productVariant:productVariant[0][0]}})
+    //     productDispatch({type: "SET_ROOF_VARIANT", payload: {roofVariant:productVariant[1][0]}})
+    // },[productVariant])
 
     useEffect(() => {
-        const variant = getVariant();
-        productDispatch({type: "SET_VARIANT", payload: {variant}})
+        const frameVariant = getFrameVariant();
+        productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
     },[state.size, state.frame])
 
     useEffect(() => {
-        if(steps.done) handleSendDetails();
+        if(determineSides().length !== 0){
+            const roofVariant = getRoofVariant();
+            productDispatch({type: "SET_ROOF_VARIANT", payload: {roofVariant}})
+        }
+    },[state.printReq, state.printingMethod])
+
+    useEffect(() => {
+        if(productState.roofVariant && productState.frameVariant) {
+            const totalPrice = productState.frameVariant.price + productState.roofVariant.price;
+            productDispatch({type: "SET_TOTAL_PRICE", payload : {totalPrice: totalPrice * productState.bag.totalCount}})
+        }
+
+    },[productState.frameVariant, productState.roofVariant])
+
+    //useEffect for submitting printing requirement to wordpress forms and adding all selected variants to an array
+    useEffect(() => {
+        if(steps.done){
+            handleSendDetails();
+            let variants = [];
+            variants.push(productState.frameVariant);
+            variants.push(productState.roofVariant);
+            productDispatch({type: "SET_VARIANTS", payload: {variants}})
+        }
     },[steps.done])
+
+    //useEffect for hiding the talk-to-us section when customizion is ongoing
+    useEffect(() => {
+        const thirPartySection = document.querySelectorAll("#refreshPlaceholder");
+        if(state.activeCustomizer) {
+            setHideCategories(true);
+            thirPartySection?.forEach(item => (
+                item.style.display = "none"
+            ))
+        }
+        else{
+            setHideCategories(false);
+            thirPartySection?.forEach(item => (item.style.display = "flex"))
+        }
+        return () => thirPartySection?.forEach(item => (item.style.display = "flex"))
+    }, [state.activeCustomizer])
 
     return (
         <Block width="100%" position="relative">
@@ -283,18 +369,18 @@ const Index = ({productVariant, productComponent, pageState}) => {
                                         boxShadow: "0px 6.17173px 24.6869px rgba(0, 0, 0, 0.1)" 
                                     })}
                                 >
-                                    <Image src={state.finalImage} alt="product image" width={712} height={520} layout="responsive" />
+                                    <Image src={state.finalImage} alt="product image" width={586} height={556} layout="responsive" />
                                 </Block>
                             </Block>
-                            <Block $style={{textAlign: "center"}} marginTop={["32px","32px","0px"]} maxWidth={["100%","100%","371px"]}>
+                            <Block $style={{textAlign: "center"}} marginTop={["32px","32px","0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%","100%","371px"]}>
                                 <Block as="h1" font="MinXParagraph20">
                                     Custom Printed Canopy Tent
                                 </Block>
                                 <Block as="p" $style={{textAlign: "center"}} marginTop="40px" color="MinXPrimaryText" className="price" font="MinXHeading16">
                                     {/* $986.00 <Block color="MinXSecondaryText" marginLeft="8px" font="MinXHeading14" as="span" className={css({textDecoration: "line-through"})}>$1300.00</Block> */}
                                     {
-                                        productState.variant.price &&
-                                        `From $${productState.variant?.price * productState.bag?.totalCount}`
+                                        productState.bag.totalPrice &&
+                                        `From $${parseInt(productState.bag.totalPrice )}`
                                     }
                                 </Block>
                                 {/* <Block font="MinXHeading14" color="#FF7847">
@@ -310,20 +396,20 @@ const Index = ({productVariant, productComponent, pageState}) => {
                                         </Block>
                                         {
                                             steps.done &&
-                                            <Block 
-                                                as="button" 
-                                                className={css({
-                                                    backgroundColor: "transparent",
+                                            <MButton
+                                                color= "#8c8c8c"
+                                                font="MinXParagraph14"
+                                                buttonStyle={{
+                                                    backgroundColor: "#ffffff !important",
                                                     border: "none",
-                                                    color: "#8c8c8c",
-                                                    fontSize: "14px",
                                                     cursor: "pointer"
-                                                })}
+                                                }}
                                                 disabled={!steps.done}
                                                 onClick={clearCustomization}
+                                                text="Clear"
                                             >
                                                 Clear
-                                            </Block>
+                                            </MButton>
                                         }
                                     </Block>
                                     <Block width="100%" marginTop="12px">
@@ -380,17 +466,20 @@ const Index = ({productVariant, productComponent, pageState}) => {
                                         </>
                                         }
                                     </Block>
-                                    <Block font="MinXParagraph14" color="MinXTitle" marginTop="12px">
+                                    <Block $style={{textAlign: "left"}} font="MinXParagraph14" color="MinXTitle" marginTop="12px">
                                         All custom printing orders will get a mockup before production. You can also <Block display="inline" color="MinXButton" className={css({textDecoration: "underline"})}><Link href="//custom-printing">get a free mockup </Link></Block> without ordering.
                                     </Block>
                                     <Block marginTop="40px">
                                             <Block
                                                 display="flex" 
-                                                padding="11px 42.5px"
+                                                minWidth="317px"
+                                                maxWidth="371px"
+                                                padding={["11px 16px","11px 42.5px"]}
                                                 justifyContent="space-between"
                                                 className={css({
                                                     borderRadius: "40px",
-                                                    border: "1px solid #D9D9D9"
+                                                    border: "1px solid #D9D9D9",
+                                                    backgroundColor:"#ffffff"
                                                 })}
                                             >
                                                 <Link href="/products/custom-printed-package">
@@ -412,8 +501,33 @@ const Index = ({productVariant, productComponent, pageState}) => {
                     <Block width="100%" backgroundColor="MinXBackground">
                         <Block padding="20px 0 45px" margin="0 auto" maxWidth="1152px" width="100%">
                             <Block width="100%" display="flex" justifyContent="space-between" padding="0 16px">
-                                <ButtonM onClick={() => prevStep()} disabled={steps.currentStep === 0} buttonStyle={{backgroundColor: "transparent !important", color:steps.currentStep === 0 ?  "#bfbfbf !important": "#23A4AD !important", border: "2px solid #BFBFBF !important"}} text="Previous" width="138px" font={["MinXLabel14", "MinXLabel16"]} backgroundColor="transparent" />
-                                <ButtonM onClick={() => nextStep()} text={steps.currentStep === 3 ? "Done" : "Next"} width="138px" font={["MinXLabel14", "MinXLabel16"]} />
+                                <ButtonM 
+                                    onClick={() => prevStep()} 
+                                    disabled={steps.currentStep === 0} 
+                                    buttonStyle={{ 
+                                        backgroundColor: "transparent !important", 
+                                        color:steps.currentStep === 0 ?  "#bfbfbf !important": "#23A4AD !important", 
+                                        borderTopWidth:"2px !important",
+                                        borderBottomWidth:"2px !important",
+                                        borderLeftWidth:"2px !important",
+                                        borderRightWidth:"2px !important",
+                                        borderTopStyle:"solid !important",
+                                        borderBottomStyle:"solid !important",
+                                        borderLeftStyle:"solid !important",
+                                        borderRightStyle:"solid !important",
+                                        borderColor: "#BFBFBF !important"
+                                    }} 
+                                    text="Previous" 
+                                    width="138px" 
+                                    font={["MinXLabel14", "MinXLabel16"]} 
+                                    backgroundColor="transparent" 
+                                    />
+                                <ButtonM 
+                                    onClick={() => nextStep()} 
+                                    text={steps.currentStep === 3 ? "Done" : "Next"} 
+                                    width="138px" 
+                                    font={["MinXLabel14", "MinXLabel16"]} 
+                                />
                             </Block>
                             <Block marginTop="22px" padding={["0 16px", "0 75px"]}>
                                 <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep} />
@@ -422,16 +536,16 @@ const Index = ({productVariant, productComponent, pageState}) => {
                     </Block>
                     <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
                         {
-                            steps.currentStep === 0 && <FrameSelection frameValue={state.frame} setFrame={selectFrame} />
+                            steps.currentStep === 0 && <FrameSelection frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame} />
                         }
                         {
-                            steps.currentStep === 1 &&  <TentSizeSelection sizeValue={state.size} setSize={selectSize} frame={state.frame}/>
+                            steps.currentStep === 1 &&  <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>
                         }
                         {
-                            steps.currentStep === 2 && <RequirementSelection requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement} />
+                            steps.currentStep === 2 && <RequirementSelection error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement} />
                         }
                         {
-                            steps.currentStep === 3 && <PrintingMethodSelection printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod} />
+                            steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod} />
                         }
                     </Block>
                 </>
@@ -439,18 +553,18 @@ const Index = ({productVariant, productComponent, pageState}) => {
             }
             <Checkout 
                 quantity={productState.bag.totalCount} 
-                isInStock={productState.variant.stock_status === "instock"} 
-                buttonText={steps.done ? productState.variant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"} 
-                isAvailable={productState.variant.purchasable}
+                isInStock={productState.bag.stock_status === "instock"} 
+                buttonText={steps.done ? productState.roofVariant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"} 
+                isAvailable={productState.tentVariant?.purchasable}
                 onClickMinus={() => productState.bag.totalCount !== 1 && productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount - 1}})}
                 onClickPlus={() => productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount + 1}})}
                 onClickAddToBag={() => addToCart()}
                 onClick={addToCart}
-                onSale={productState.variant.on_sale} 
-                totalPrice={productState.variant.price * productState.bag.totalCount} 
-                totalSalesPrice={productState.variant.sale_price}
+                onSale={productState.tentVariant?.on_sale} 
+                totalPrice={productState.bag.totalPrice} 
+                totalSalesPrice={productState.tentVariant?.sale_price}
             />
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => summaryIsOpen(false)} content="summary" dataTable={{productComponent, selectedVariant:productState.variant, totalSalePrice:productState.variant.sale_price, totalRegularPrice:productState.variant.regular_price, totalCount:productState.bag.totalCount}}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary" dataTable={{productComponent, selectedVariant:productState.variants, totalSalePrice:productState.bag.totalSalePrice, totalRegularPrice:productState.bag.totalRegularPrice, totalCount:productState.bag.totalCount}}/>
         </Block>
     )
 }
@@ -470,14 +584,21 @@ Index.getInitialProps = async (context) => {
     }
 
     return {
-        product: product,
         productComponent: [component[0], component[1]],
         productVariant: [variant[0], variant[1]],
         noFooter: false,
         pageState: {
             initialState,
             initialSteps,
-            initialProduct
-        }
+            initialProduct:{
+                ...initialProduct,
+                roofVariant:variant[1][0],
+                frameVariant:variant[0][0]
+            }
+        },
+        printingMethods,
+        frameTypes,
+        tentSizes,
+        fullPage: true
     };
 }
