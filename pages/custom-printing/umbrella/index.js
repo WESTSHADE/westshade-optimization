@@ -33,9 +33,11 @@ const SectionCard = ({router, src, alt, title, content, destination, onClick, bu
     )
 };
 
-function Custom_Printing_Umbrella({router, size}) {
+function Custom_Printing_Umbrella({router, size, phone}) {
     const ref = useRef(null);
     const refBanner = useRef(null);
+
+    console.log(phone)
 
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
@@ -230,7 +232,7 @@ function Custom_Printing_Umbrella({router, size}) {
                             <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
                             <Image src={"/images/tent-spec/customer-service.svg"} alt="customer service" layout="fixed" width={120} height={120}/>
                             <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                            <Button shape="square" height="36px" font="MinXParagraph16" text={process.env.businessPhone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + process.env.businessPhone, '_self')}/>
+                            <Button shape="square" height="36px" font="MinXParagraph16" text={phone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + phone, '_self')}/>
                         </Block>
                     </Block>
                     <Block>

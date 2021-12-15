@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 
+import Link from "next/link";
+
 import {Block} from "baseui/block";
 import {StyledNavigationItem as NavigationItem} from "baseui/header-navigation";
 import {ChevronDown} from "baseui/icon";
@@ -25,7 +27,8 @@ const NavItem = ({detail = {}, router}) => {
             }}
         >
             <Block className="cursor" display="flex" alignItems="center" paddingLeft="20px" font="MinXParagraph14">
-                <Button type="text" bundle="black" onClick={() => router.push({pathname: link})}>{title}</Button>{dropMenu && <ChevronDown/>}
+                <Link href={link}>{title}</Link>{dropMenu && <ChevronDown/>}
+                {/*<Button type="text" bundle="black" onClick={() => router.push({pathname: link})}>{title}</Button>{dropMenu && <ChevronDown/>}*/}
             </Block>
             {display && dropMenu ? <DropMenu containerStyle={style} menuList={list} picUrl={picture} content={content} learnMoreUrl={link} learnMoreText={linkText}/> : null}
         </NavigationItem>

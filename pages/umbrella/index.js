@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
@@ -57,15 +58,11 @@ function Umbrella({router, size}) {
     const [signDisplay, setSignDisplay] = useState(true);
 
     useEffect(() => {
-        if (ref && ref.current) {
-            setCompareColumnWidth(ref.current.clientWidth);
-        }
+        if (ref && ref.current) setCompareColumnWidth(ref.current.clientWidth);
     }, [ref]);
 
     useEffect(() => {
-        if (size.width && ref && ref.current) {
-            setCompareColumnWidth(ref.current.clientWidth);
-        }
+        if (size.width && ref && ref.current) setCompareColumnWidth(ref.current.clientWidth);
     }, [size]);
 
     return (
@@ -83,11 +80,11 @@ function Umbrella({router, size}) {
                                      <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="/images/umbrella/series-marco.webp" alt="series marco"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
-                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px">
+                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px" alignItems="center" color="white">
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/marco")}/>
+                                                            <Link href="/umbrella/marco" passHref><Block as="a" className="cursor" font={["MinXLabel14", "MinXLabel16"]}>LEARN MORE</Block></Link>
                                                         </Block>
                                                     }
                                      />
@@ -95,33 +92,33 @@ function Umbrella({router, size}) {
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     textColor="MinXPrimaryText"
                                                     renderButton={
-                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px">
+                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px" alignItems="center" color="MinXPrimaryText">
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="black"
                                                                     onClick={() => router.push("/products/market-umbrellas/santorini-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="LEARN MORE" onClick={() => router.push("/umbrella/santorini")}/>
+                                                            <Link href="/umbrella/santorini" passHref><Block as="a" className="cursor" font={["MinXLabel14", "MinXLabel16"]}>LEARN MORE</Block></Link>
                                                         </Block>
                                                     }
                                      />
                                      <BannerDisplay title="BALI" subtitle="Tilt umbrellas with steel frame" url="/images/umbrella/series-bali.webp" alt="series bali"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
-                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px">
+                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px" alignItems="center" color="white">
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/bali")}/>
+                                                            <Link href="/umbrella/bali" passHref><Block as="a" className="cursor" font={["MinXLabel14", "MinXLabel16"]}>LEARN MORE</Block></Link>
                                                         </Block>
                                                     }
                                      />
                                      <BannerDisplay title="Kapri" subtitle="Tilt umbrellas with aluminum frame" url="/images/umbrella/series-kapri.webp" alt="series kapri"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={
-                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px">
+                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px" alignItems="center" color="white">
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="white"
                                                                     onClick={() => router.push("/products/tilt-umbrellas/kapri-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="white" text="LEARN MORE" onClick={() => router.push("/umbrella/kapri")}/>
+                                                            <Link href="/umbrella/kapri" passHref><Block as="a" className="cursor" font={["MinXLabel14", "MinXLabel16"]}>LEARN MORE</Block></Link>
                                                         </Block>
                                                     }
                                      />
@@ -129,11 +126,11 @@ function Umbrella({router, size}) {
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     textColor="MinXPrimaryText"
                                                     renderButton={
-                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px">
+                                                        <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="24px" alignItems="center" color="MinXPrimaryText">
                                                             <Button type="outline" width={["90px", "100px", "120px"]} height={["24px", "32px", "40px"]} font={["MinXLabel16", "MinXLabel20"]} text="Buy" bundle="black"
                                                                     onClick={() => router.push("/products/cantilever-umbrellas/catalina-umbrella")}
                                                             />
-                                                            <Button type="text" font={["MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="LEARN MORE" onClick={() => router.push("/umbrella/catalina")}/>
+                                                            <Link href="/umbrella/catalina" passHref><Block as="a" className="cursor" font={["MinXLabel14", "MinXLabel16"]}>LEARN MORE</Block></Link>
                                                         </Block>
                                                     }
                                      />
@@ -155,16 +152,16 @@ function Umbrella({router, size}) {
                          subtitle={"Have a quick look at all umbrella series."}
                          subtitleStyles={{maxWidth: "unset !important"}}
                          subtitleMoreText={"All specs >"}
-                         subtitleMoreDestination={"umbrella/spec"}
+                         subtitleMoreDestination={"/umbrella/spec"}
                          content={
                              <Block position="relative" display="grid" gridTemplateColumns={["1fr 1fr", "1fr 2fr", "1fr 5fr"]}>
-                                 <Block ref={ref} backgroundColor="white" paddingTop="24px">
+                                 <Block ref={ref} backgroundColor="white" paddingTop="24px" font="MinXParagraph14" color="MinXSecondaryText">
                                      <Block maxWidth="110px" minHeight="134px" marginBottom="40px" font="MinXHeading20" color="MinXPrimaryText">UMBRELLA SERIES</Block>
-                                     <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">OPEN SYSTEM</Block>
-                                     <Block minHeight="110px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">SIZE</Block>
-                                     <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FRAME</Block>
-                                     <Block minHeight="44px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">FABRIC</Block>
-                                     <Block minHeight="22px" marginBottom="32px" font="MinXParagraph14" color="MinXSecondaryText">TILT</Block>
+                                     <Block minHeight="22px" marginBottom="32px">OPEN SYSTEM</Block>
+                                     <Block minHeight="110px" marginBottom="32px">SIZE</Block>
+                                     <Block minHeight="44px" marginBottom="32px">FRAME</Block>
+                                     <Block minHeight="44px" marginBottom="32px">FABRIC</Block>
+                                     <Block minHeight="22px" marginBottom="32px">TILT</Block>
                                  </Block>
                                  <Block className="text-center" display="flex" flexDirection="row" overflow={["scrollX", "scrollX", "hidden"]}>
                                      {data.display.map((item, index) => {

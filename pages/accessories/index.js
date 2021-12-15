@@ -22,10 +22,10 @@ const Product = ({name, product, showDesc = true, onClick}) => {
 
     useEffect(() => {
         let urlPic;
-        if (product.hasOwnProperty("images")) {
-            urlPic = setImage(product.images) || "";
+        if (product.hasOwnProperty("images") && product.images.length > 0) {
+            urlPic = product.images[0].src || "";
         } else if (product.hasOwnProperty("image")) {
-            urlPic = setImage([product.image]) || "";
+            urlPic = product.image.src || "";
         }
         setUrl(urlPic);
     }, []);

@@ -63,7 +63,7 @@ function getVariants(components) {
     return Promise.all(components.map(({id}) => utils.getVariantByWooProductId(id)));
 }
 
-function Custom_printed_Package({router, product, productComponent, productVariant}) {
+function Custom_printed_Package({router, product, productComponent, productVariant, phone}) {
     const [display, setDisplay] = useState(false);
 
     const [productId, setProductId] = useState("");
@@ -812,7 +812,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                 <Block font="MinXLabel20" color="MinXPrimaryText">At Westshade, We Offer Limitless Design Solution.</Block>
                                 <Image src={"/images/tent-spec/customer-service.svg"} alt="customer service" layout="fixed" width={120} height={120}/>
                                 <Block font="MinXParagraph16" color="MinXPrimaryText">Call us for custom print consultation</Block>
-                                <Button shape="square" height="36px" font="MinXParagraph16" text={process.env.businessPhone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + process.env.businessPhone, '_self')}/>
+                                <Button shape="square" height="36px" font="MinXParagraph16" text={phone} color="white" bundle="black" onClick={() => window.open(`tel:+1-` + phone, '_self')}/>
                             </Block>
                         </Block>
                         <Block>

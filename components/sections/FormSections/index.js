@@ -124,7 +124,6 @@ const FreeMockupForm = () => {
                     setFileError({status: true, message: "Maximum file size is 200 MB"});
                     return;
                 } else {
-                    console.log(fileName)
                     filesState.push({file: files[i], filename: fileName, fileExt, id: fileName})
                 }
             } else {

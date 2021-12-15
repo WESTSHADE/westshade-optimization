@@ -21,6 +21,7 @@ import "../styles/globals.css";
 import "../styles/styleguide.css";
 import "../styles/baseui.css";
 import "../styles/apple-business.css";
+import {getLocalStore} from "next-persist";
 
 const breakpoints = {
     small: 480,
@@ -146,8 +147,12 @@ function useWindowSize() {
     return windowSize;
 }
 
+let phone;
+
 function MyApp({Component, pageProps}) {
     const size = useWindowSize();
+
+    const [businessPhone, setBusinessPhone] = useState(process.env.businessPhone);
 
     useEffect(() => {
         if (pageProps.noFooter && document) {
@@ -157,10 +162,14 @@ function MyApp({Component, pageProps}) {
             document.body.style.height = "unset";
             document.body.style.overflow = "unset";
         }
+
+        if (document && document.getElementById('businessPhone')) {
+            phone = document.getElementById('businessPhone').innerText;
+            setBusinessPhone(phone);
+        }
     });
 
     useEffect(() => {
-        console.log(pageProps);
         const jssStyles = document.querySelector("#jss-server-side");
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
@@ -183,7 +192,7 @@ function MyApp({Component, pageProps}) {
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
                             <Header/>
                             <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
-                                <Component size={size} {...pageProps} />
+                                <Component size={size} phone={businessPhone} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
                             {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}

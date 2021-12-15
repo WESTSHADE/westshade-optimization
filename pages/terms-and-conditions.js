@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import {Block} from "baseui/block";
 
-function Terms_and_Conditions() {
+function Terms_and_Conditions({phone}) {
     return (
         <React.Fragment>
             <Head>
@@ -117,7 +117,7 @@ function Terms_and_Conditions() {
                         Email Address: support@westshade.com
                         <br/>
                         <br/>
-                        Telephone number: {process.env.businessPhone}
+                        Telephone number: {phone}
                         <br/>
                         <br/>
                         Effective as of October 05, 2020

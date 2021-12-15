@@ -52,9 +52,8 @@ const nextConfig = {
         deviceSizes: [600, 960, 1280, 1920],
         minimumCacheTTL: 60,
         domains: [
-            "checkout.westshade.com/wp-content/uploads",
-            "54.212.246.17/wp-content/uploads",
-            "static.westshade.com"
+            "static.westshade.com",
+            "static-woo.westshade.com",
         ],
         formats: ['image/webp'],
         loader: "imgix",

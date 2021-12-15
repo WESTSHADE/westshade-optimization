@@ -9,12 +9,13 @@ import Image from "next/image";
 import {ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
-import {Button, SIZE, SHAPE, KIND} from "baseui/button";
+import {Button, SHAPE, KIND} from "baseui/button";
 import {Menu} from 'baseui/icon'
 
 import {Cart as SideCart, MobileMenu, NavItem} from "./parts";
 
 import MENU from "Assets/menu.json";
+
 import {EventEmitter} from "Utils/events";
 import {responsiveTheme, themedUseStyletron} from "Utils/theme";
 
@@ -50,9 +51,11 @@ function Header() {
                 <div className={styles["container-nav"]}>
                     <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
                         <Block className={styles["root-navigation-top"]}>
-                            <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
-                                <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
-                            </Block>
+                            <Link href="/">
+                                <Block className={clsx([styles["site-logo"], "cursor"])}>
+                                    <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
+                                </Block>
+                            </Link>
                             <Button shape={SHAPE.pill}
                                     startEnhancer={() =>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -68,7 +71,7 @@ function Header() {
                                         },
                                     }}
                             >
-                                Call us <Block font="MinXParagraph14" display={["none", null, "inline-block"]}>&nbsp;&nbsp;{process.env.businessPhone}</Block>
+                                Call us&nbsp;&nbsp;<Block id='businessPhone' font="MinXParagraph14" display={["none", null, "inline-block"]}>{process.env.businessPhone}</Block>
                             </Button>
                             <Block display="grid" gridTemplateColumns="auto auto" gridColumnGap={["24px", null, "40px"]} font="MinXParagraph14" alignItems="inherit">
                                 <Button kind={KIND.minimal}
@@ -110,9 +113,11 @@ function Header() {
                             </NavigationList>
                             <NavigationList className={clsx([styles["nav-center"], styles["logo"]])} $align={ALIGN.center}>
                                 <NavigationItem>
-                                    <Block className={clsx([styles["site-logo"], "cursor"])} onClick={() => router.push("/")}>
-                                        <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
-                                    </Block>
+                                    <Link href="/">
+                                        <Block className={clsx([styles["site-logo"], "cursor"])}>
+                                            <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
+                                        </Block>
+                                    </Link>
                                 </NavigationItem>
                             </NavigationList>
                             <NavigationList className={clsx([styles["nav-center"], styles["menu"]])} $align={ALIGN.center}>
@@ -120,18 +125,20 @@ function Header() {
                             </NavigationList>
                             <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
                                 <NavigationItem>
-                                    <Block position="relative" display="flex">
-                                        <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/cart")}>
-                                            <Cart className="cursor" color="#323232"/>
-                                        </Button>
-                                        <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>
-                                    </Block>
+                                    <Link href="/cart">
+                                        <Block className="cursor" position="relative" display="flex">
+                                            <Cart color="#323232"/>
+                                            <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>
+                                        </Block>
+                                    </Link>
                                 </NavigationItem>
-                                {/* <NavigationItem>
-                                <Button kind={KIND.minimal} size={SIZE.mini} shape={SHAPE.circle} onClick={() => router.push("/my-account")}>
-                                    <Account className="cursor" color="#323232"/>
-                                </Button>
-                            </NavigationItem> */}
+                                {/*<NavigationItem>*/}
+                                {/*    <Link href="/my-account">*/}
+                                {/*        <Block className="cursor" position="relative" display="flex">*/}
+                                {/*            <Account className="cursor" color="#323232"/>*/}
+                                {/*        </Block>*/}
+                                {/*    </Link>*/}
+                                {/*</NavigationItem>*/}
                             </NavigationList>
                         </HeaderNavigation>
                     </Block>

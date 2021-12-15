@@ -1,6 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 
+import Link from "next/link";
+
 import {Block} from "baseui/block";
 import {ChevronRight, ArrowRight} from 'baseui/icon'
 
