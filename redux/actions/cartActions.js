@@ -7,7 +7,6 @@ const utils = new Utils();
 
 const fetchProduct = async (id) => {
     if (!id) return;
-    console.log("car action");
     return await utils.getProductByWooId(id);
 };
 

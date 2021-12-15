@@ -37,8 +37,6 @@ function Custom_Printing_Umbrella({router, size, phone}) {
     const ref = useRef(null);
     const refBanner = useRef(null);
 
-    console.log(phone)
-
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 

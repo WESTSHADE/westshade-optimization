@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Provider} from 'react-redux';
 import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 import {Provider as StyletronProvider} from "styletron-react";
@@ -147,8 +147,6 @@ function useWindowSize() {
     return windowSize;
 }
 
-let phone;
-
 function MyApp({Component, pageProps}) {
     const size = useWindowSize();
 
@@ -162,17 +160,43 @@ function MyApp({Component, pageProps}) {
             document.body.style.height = "unset";
             document.body.style.overflow = "unset";
         }
-
-        if (document && document.getElementById('businessPhone')) {
-            phone = document.getElementById('businessPhone').innerText;
-            setBusinessPhone(phone);
-        }
     });
+
+    // useLayoutEffect(() => {
+    //     setTimeout(() => {
+    //         if (document.getElementById('businessPhone')) {
+    //             phone = document.getElementById('businessPhone').innerText;
+    //             setBusinessPhone(phone);
+    //         }
+    //     }, 250)
+    // })
 
     useEffect(() => {
         const jssStyles = document.querySelector("#jss-server-side");
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
+        }
+
+        // Select the node that will be observed for mutations
+        const targetNode = document.getElementById('businessPhone');
+
+        // Options for the observer (which mutations to observe)
+        const config = {attributes: true, childList: true, subtree: true, characterData: true};
+
+        // Callback function to execute when mutations are observed
+        const callback = function (mutationsList, observer) {
+            setBusinessPhone(mutationsList[0].target.textContent);
+        };
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+
+        return () => {
+            // stop tracking changes
+            observer.disconnect();
         }
     }, []);
 

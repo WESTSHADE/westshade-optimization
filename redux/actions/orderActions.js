@@ -30,7 +30,6 @@ export const getOrder = (token) => async (dispatch) => {
 
                 await Promise.all(orders.map(async order => {
                     await Promise.all(order.line_items.map(async (item, index) => {
-                        console.log("order action");
                         let detail = await utils.getProductByWooId(item.product_id);
                         if (detail.hasOwnProperty("image")) {
                             item.image = detail.image;
