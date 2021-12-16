@@ -93,7 +93,8 @@ const reducer = (state, {type, payload}) => {
         case "SET_PRINTING_REQUIREMENTS":
             return {...state, printReq: payload}
         case "RESET":
-            return payload
+            console.log({...state, ...payload})
+            return {...state, ...payload}
         default:
             return {...state}
     }

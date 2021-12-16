@@ -1,6 +1,5 @@
 import { useStyletron } from "baseui";
 import { Block } from "baseui/block";
-import { useEffect } from "react";
 
 const ProgressSteps = ({steps, currentStep}) => {
     const data = Object.keys(steps).map(key => (steps[key]))

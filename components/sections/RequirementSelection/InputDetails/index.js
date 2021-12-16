@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-
 import Image from "next/image";
-
 import {Block} from "baseui/block";
 import {Accordion, Panel} from "baseui/accordion";
 import {FILL, Tab, Tabs} from "baseui/tabs-motion";
@@ -13,6 +11,7 @@ import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Utils from "../../../../utils/utils";
 import MButton from "../../../button-n";
 import { useStyletron } from "styletron-react";
+import {Modal} from "../../../surfaces";
 
 const utils = new Utils();
 
@@ -379,7 +378,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
             After submitting the order, we’ll email you a free mockup based on your request.
             </Block>
             <Block display="flex" alignItems="center">
-                <Block margin="0 8px">
+                <Block margin={["0 4px","0 8px"]}>
                     <MButton
                         height="auto"
                         width="85px"
@@ -400,7 +399,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                         text="Cancel"
                     />
                 </Block>
-                <Block margin="0 8px">
+                <Block margin={["0 4px","0 8px"]}>
                     <MButton
                         height="auto"
                         width="85px"
@@ -420,6 +419,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                 </Block>
             </Block>
         </Block>
+        <Modal type="alertdialog" isOpen={isSaving} onClose={() => {}} content="loading" description="I'm saving the printing details"/>
         </>
     )
 }

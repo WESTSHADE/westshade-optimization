@@ -19,18 +19,22 @@ import { Modal } from "@material-ui/core"
 import { productReducer, reducer, stepReducer,initialState, initialProduct, initialSteps } from "../../assets/states/custom-printed-canopy-tent"
 import MButton from "../../components/button-n"
 import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/custom-printend-canopy-tent"
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel"
+
 
 const utils = new Utils();
 
 const Index = ({productVariant, productComponent, pageState, setHideCategories, printingMethods, frameTypes, tentSizes}) => {
-    console.log(productVariant[1])
+    console.log(pageState.initialProduct)
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();
     const {cart} = useSelector(({cart}) => cart);
     const [state, dispatch] = useReducer(reducer, pageState.initialState);
     const [steps, stepDispatch] = useReducer(stepReducer, pageState.initialSteps);
     const [productState, productDispatch] = useReducer(productReducer, pageState.initialProduct);
-    const [summaryIsOpen, setSummaryIsOpen] = useState(true)
+    const [images, setImages] = useState([]);
+    const [summaryIsOpen, setSummaryIsOpen] = useState(false)
     const [css] = useStyletron();
     let myData = Object.keys(steps.allSteps).map(key => {
         return steps.allSteps[key];
@@ -101,9 +105,9 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
     //---- end of actions for navigating the custom printing flow ----//
 
     const clearCustomization = () => {
-        dispatch({type: "RESET", payload: initialState})
-        stepDispatch({type: "RESET", payload: initialSteps})
-        productDispatch({type: "RESET", payload: {initialState: {...initialProduct, entryId: null} }})
+        dispatch({type: "RESET", payload: pageState.initialState})
+        stepDispatch({type: "RESET", payload: pageState.initialSteps})
+        productDispatch({type: "RESET", payload: {initialState: pageState.initialProduct }})
     }
 
     const determineSides = () => {
@@ -209,53 +213,89 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
         }
     }
 
+    const generateImages = () => {
+        const basePath = "/images/custom-printed-canopy-tent/tents"
+        return [
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp`,
+                width: 586,
+                height: 556
+            },
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BU.webp`,
+                width: 586,
+                height: 556
+            },
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-GN.webp`,
+                width: 586,
+                height: 556
+            },
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-RD.webp`,
+                width: 586,
+                height: 556
+            },
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-WH.webp`,
+                width: 586,
+                height: 556
+            },
+            {
+                path: `${basePath}/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-YE.webp`,
+                width: 586,
+                height: 556
+            },
+        ]
+    }
+
     const handleSendDetails = async () => {
-        const res = await utils.contact({
-            form_id: "6",
-            status: "active",
-            1: "Custom Printing tent",
-            5: (state.printReq.peak.FRONT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.FRONT.background?.value + "; " : "") + (state.printReq.valance.FRONT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.FRONT.background?.value + ";" : ""),
-            6: (state.printReq.peak.FRONT.text?.content ? "Peak: " + state.printReq.peak.FRONT.text?.content + "; " : "") + (state.printReq.valance.FRONT.text?.content ? "Valance: " + state.printReq.peak.FRONT.text?.content + ";" : ""),
-            7: (state.printReq.peak.FRONT.text?.font || state.printReq.peak.FRONT.text?.color ? "Peak: " + state.printReq.peak.FRONT.text?.font + " " + state.printReq.peak.FRONT.text?.color + "; " : "") + (state.printReq.valance.FRONT.text?.font || state.printReq.valance.FRONT.text?.color ? "Valance: " + state.printReq.valance.FRONT.text?.font + " " + state.printReq.valance.FRONT.text?.color + "; " : ""),
-            8: (state.printReq.peak.FRONT.printInstruction ? "Peak: " + state.printReq.peak.FRONT.printInstruction + "; " : "") + (state.printReq.valance.FRONT.printInstruction ? "Valance: " + state.printReq.valance.FRONT.printInstruction + "; " : ""),
-            55: state.printReq.peak.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
-            56: state.printReq.valance.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
-            57: state.printReq.peak.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.logo?.filename : "",
-            58: state.printReq.valance.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.FRONT.logo?.filename : "",
-            10: (state.printReq.peak.BACK.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.BACK.background?.value + "; " : "") + (state.printReq.valance.BACK.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.BACK.background?.value + ";" : ""),
-            13: (state.printReq.peak.BACK.text?.content ? "Peak: " + state.printReq.peak.BACK.text?.content + "; " : "") + (state.printReq.valance.BACK.text?.content ? "Valance: " + state.printReq.peak.BACK.text?.content + ";" : ""),
-            14: (state.printReq.peak.BACK.text?.font || state.printReq.peak.BACK.text?.color ? "Peak: " + state.printReq.peak.BACK.text?.font + " " + state.printReq.peak.BACK.text?.color + "; " : "") + (state.printReq.valance.BACK.text?.font || state.printReq.valance.BACK.text?.color ? "Valance: " + state.printReq.valance.BACK.text?.font + " " + state.printReq.valance.BACK.text?.color + "; " : ""),
-            15: (state.printReq.peak.BACK.printInstruction ? "Peak: " + state.printReq.peak.BACK.printInstruction + "; " : "") + (state.printReq.valance.BACK.printInstruction ? "Valance: " + state.printReq.valance.BACK.printInstruction + "; " : ""),
-            59: state.printReq.peak.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.background?.value.filename : "",
-            60: state.printReq.valance.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.background?.value.filename : "",
-            61: state.printReq.peak.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.logo?.filename : "",
-            62: state.printReq.valance.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.logo?.filename : "",
-            16: (state.printReq.peak.LEFT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.LEFT.background?.value + "; " : "") + (state.printReq.valance.LEFT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.LEFT.background?.value + ";" : ""),
-            19: (state.printReq.peak.LEFT.text?.content ? "Peak: " + state.printReq.peak.LEFT.text?.content + "; " : "") + (state.printReq.valance.LEFT.text?.content ? "Valance: " + state.printReq.peak.LEFT.text?.content + ";" : ""),
-            20: (state.printReq.peak.LEFT.text?.font || state.printReq.peak.LEFT.text?.color ? "Peak: " + state.printReq.peak.LEFT.text?.font + " " + state.printReq.peak.LEFT.text?.color + "; " : "") + (state.printReq.valance.LEFT.text?.font || state.printReq.valance.LEFT.text?.color ? "Valance: " + state.printReq.valance.LEFT.text?.font + " " + state.printReq.valance.LEFT.text?.color + "; " : ""),
-            21: (state.printReq.peak.LEFT.printInstruction ? "Peak: " + state.printReq.peak.LEFT.printInstruction + "; " : "") + (state.printReq.valance.LEFT.printInstruction ? "Valance: " + state.printReq.valance.LEFT.printInstruction + "; " : ""),
-            63: state.printReq.peak.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.background?.value.filename : "",
-            64: state.printReq.valance.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.LEFT.background?.value.filename : "",
-            65: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
-            66: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
-            22: (state.printReq.peak.RIGHT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.RIGHT.background?.value + "; " : "") + (state.printReq.valance.RIGHT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.RIGHT.background?.value + ";" : ""),
-            25: (state.printReq.peak.RIGHT.text?.content ? "Peak: " + state.printReq.peak.RIGHT.text?.content + "; " : "") + (state.printReq.valance.RIGHT.text?.content ? "Valance: " + state.printReq.valance.RIGHT.text?.content + ";" : ""),
-            26: (state.printReq.peak.RIGHT.text?.font || state.printReq.peak.RIGHT.text?.color ? "Peak: " + state.printReq.peak.RIGHT.text?.font + " " + state.printReq.peak.RIGHT.text?.color + "; " : "") + (state.printReq.valance.RIGHT.text?.font || state.printReq.valance.RIGHT.text?.color ? "Valance: " + state.printReq.valance.RIGHT.text?.font + " " + state.printReq.valance.RIGHT.text?.color + "; " : ""),
-            27: (state.printReq.peak.RIGHT.printInstruction ? "Peak: " + state.printReq.peak.RIGHT.printInstruction + "; " : "") + (state.printReq.valance.RIGHT.printInstruction ? "Valance: " + state.printReq.valance.RIGHT.printInstruction + "; " : ""),
-            67: state.printReq.peak.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.background?.value.filename : "",
-            68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
-            69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-            70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
-            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
-            36.3: "",
-            36.6: "",
-            37: "",
-            71: ""
-        })
-        if(res.id) {
-            productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
-        }
+        // const res = await utils.contact({
+        //     form_id: "6",
+        //     status: "active",
+        //     1: "Custom Printing tent",
+        //     5: (state.printReq.peak.FRONT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.FRONT.background?.value + "; " : "") + (state.printReq.valance.FRONT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.FRONT.background?.value + ";" : ""),
+        //     6: (state.printReq.peak.FRONT.text?.content ? "Peak: " + state.printReq.peak.FRONT.text?.content + "; " : "") + (state.printReq.valance.FRONT.text?.content ? "Valance: " + state.printReq.peak.FRONT.text?.content + ";" : ""),
+        //     7: (state.printReq.peak.FRONT.text?.font || state.printReq.peak.FRONT.text?.color ? "Peak: " + state.printReq.peak.FRONT.text?.font + " " + state.printReq.peak.FRONT.text?.color + "; " : "") + (state.printReq.valance.FRONT.text?.font || state.printReq.valance.FRONT.text?.color ? "Valance: " + state.printReq.valance.FRONT.text?.font + " " + state.printReq.valance.FRONT.text?.color + "; " : ""),
+        //     8: (state.printReq.peak.FRONT.printInstruction ? "Peak: " + state.printReq.peak.FRONT.printInstruction + "; " : "") + (state.printReq.valance.FRONT.printInstruction ? "Valance: " + state.printReq.valance.FRONT.printInstruction + "; " : ""),
+        //     55: state.printReq.peak.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+        //     56: state.printReq.valance.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+        //     57: state.printReq.peak.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.logo?.filename : "",
+        //     58: state.printReq.valance.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.FRONT.logo?.filename : "",
+        //     10: (state.printReq.peak.BACK.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.BACK.background?.value + "; " : "") + (state.printReq.valance.BACK.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.BACK.background?.value + ";" : ""),
+        //     13: (state.printReq.peak.BACK.text?.content ? "Peak: " + state.printReq.peak.BACK.text?.content + "; " : "") + (state.printReq.valance.BACK.text?.content ? "Valance: " + state.printReq.peak.BACK.text?.content + ";" : ""),
+        //     14: (state.printReq.peak.BACK.text?.font || state.printReq.peak.BACK.text?.color ? "Peak: " + state.printReq.peak.BACK.text?.font + " " + state.printReq.peak.BACK.text?.color + "; " : "") + (state.printReq.valance.BACK.text?.font || state.printReq.valance.BACK.text?.color ? "Valance: " + state.printReq.valance.BACK.text?.font + " " + state.printReq.valance.BACK.text?.color + "; " : ""),
+        //     15: (state.printReq.peak.BACK.printInstruction ? "Peak: " + state.printReq.peak.BACK.printInstruction + "; " : "") + (state.printReq.valance.BACK.printInstruction ? "Valance: " + state.printReq.valance.BACK.printInstruction + "; " : ""),
+        //     59: state.printReq.peak.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.background?.value.filename : "",
+        //     60: state.printReq.valance.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.background?.value.filename : "",
+        //     61: state.printReq.peak.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.logo?.filename : "",
+        //     62: state.printReq.valance.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.logo?.filename : "",
+        //     16: (state.printReq.peak.LEFT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.LEFT.background?.value + "; " : "") + (state.printReq.valance.LEFT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.LEFT.background?.value + ";" : ""),
+        //     19: (state.printReq.peak.LEFT.text?.content ? "Peak: " + state.printReq.peak.LEFT.text?.content + "; " : "") + (state.printReq.valance.LEFT.text?.content ? "Valance: " + state.printReq.peak.LEFT.text?.content + ";" : ""),
+        //     20: (state.printReq.peak.LEFT.text?.font || state.printReq.peak.LEFT.text?.color ? "Peak: " + state.printReq.peak.LEFT.text?.font + " " + state.printReq.peak.LEFT.text?.color + "; " : "") + (state.printReq.valance.LEFT.text?.font || state.printReq.valance.LEFT.text?.color ? "Valance: " + state.printReq.valance.LEFT.text?.font + " " + state.printReq.valance.LEFT.text?.color + "; " : ""),
+        //     21: (state.printReq.peak.LEFT.printInstruction ? "Peak: " + state.printReq.peak.LEFT.printInstruction + "; " : "") + (state.printReq.valance.LEFT.printInstruction ? "Valance: " + state.printReq.valance.LEFT.printInstruction + "; " : ""),
+        //     63: state.printReq.peak.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.background?.value.filename : "",
+        //     64: state.printReq.valance.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.LEFT.background?.value.filename : "",
+        //     65: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+        //     66: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+        //     22: (state.printReq.peak.RIGHT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.RIGHT.background?.value + "; " : "") + (state.printReq.valance.RIGHT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.RIGHT.background?.value + ";" : ""),
+        //     25: (state.printReq.peak.RIGHT.text?.content ? "Peak: " + state.printReq.peak.RIGHT.text?.content + "; " : "") + (state.printReq.valance.RIGHT.text?.content ? "Valance: " + state.printReq.valance.RIGHT.text?.content + ";" : ""),
+        //     26: (state.printReq.peak.RIGHT.text?.font || state.printReq.peak.RIGHT.text?.color ? "Peak: " + state.printReq.peak.RIGHT.text?.font + " " + state.printReq.peak.RIGHT.text?.color + "; " : "") + (state.printReq.valance.RIGHT.text?.font || state.printReq.valance.RIGHT.text?.color ? "Valance: " + state.printReq.valance.RIGHT.text?.font + " " + state.printReq.valance.RIGHT.text?.color + "; " : ""),
+        //     27: (state.printReq.peak.RIGHT.printInstruction ? "Peak: " + state.printReq.peak.RIGHT.printInstruction + "; " : "") + (state.printReq.valance.RIGHT.printInstruction ? "Valance: " + state.printReq.valance.RIGHT.printInstruction + "; " : ""),
+        //     67: state.printReq.peak.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.background?.value.filename : "",
+        //     68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
+        //     69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+        //     70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+        //     3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
+        //     3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
+        //     36.3: "",
+        //     36.6: "",
+        //     37: "",
+        //     71: ""
+        // })
+        // if(res.id) {
+        //     productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
+        // }
         console.log({
             form_id: "6",
             status: "active",
@@ -307,8 +347,19 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
     // },[productVariant])
 
     useEffect(() => {
-        const frameVariant = getFrameVariant();
-        productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
+        if(state.size && state.frame) {
+            setImages(generateImages())
+        }
+    }, [state.size, state.frame])
+
+    useEffect(() => {
+        if(state.size && state.frame){
+
+            const frameVariant = getFrameVariant();
+            console.log("new frame", frameVariant)
+
+            productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
+        }
     },[state.size, state.frame])
 
     useEffect(() => {
@@ -319,11 +370,10 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
     },[state.printReq, state.printingMethod])
 
     useEffect(() => {
-        if(productState.roofVariant && productState.frameVariant) {
-            const totalPrice = productState.frameVariant.price + productState.roofVariant.price;
+        if(Object.keys(productState.frameVariant).length !== 0 && productState.roofVariant) {
+            const totalPrice = (parseInt(productState.frameVariant.price ) || 0) + (parseInt(productState.roofVariant.price) || 0);
             productDispatch({type: "SET_TOTAL_PRICE", payload : {totalPrice: totalPrice * productState.bag.totalCount}})
         }
-
     },[productState.frameVariant, productState.roofVariant])
 
     //useEffect for submitting printing requirement to wordpress forms and adding all selected variants to an array
@@ -363,13 +413,21 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
                                 <Block 
                                     width="100%" 
                                     backgroundColor="#ffffff"
-                                    padding="25px"
+                                    padding="25px 25px 0 25px"
+                                    height="auto"
                                     className={css({
                                         borderRadius: "6px",
                                         boxShadow: "0px 6.17173px 24.6869px rgba(0, 0, 0, 0.1)" 
                                     })}
+                                    overflow="hidden"
                                 >
-                                    <Image src={state.finalImage} alt="product image" width={586} height={556} layout="responsive" />
+                                    <Carousel showArrows={false} showStatus={false}>
+                                        {
+                                            images.map((image, idx) => (
+                                                <Image key={idx} src={image.path} alt="product image" width={image.width} height={image.height} objectFit="contain" layout="responsive" />
+                                            ))
+                                        }
+                                    </Carousel>
                                 </Block>
                             </Block>
                             <Block $style={{textAlign: "center"}} marginTop={["32px","32px","0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%","100%","371px"]}>
@@ -379,8 +437,7 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
                                 <Block as="p" $style={{textAlign: "center"}} marginTop="40px" color="MinXPrimaryText" className="price" font="MinXHeading16">
                                     {/* $986.00 <Block color="MinXSecondaryText" marginLeft="8px" font="MinXHeading14" as="span" className={css({textDecoration: "line-through"})}>$1300.00</Block> */}
                                     {
-                                        productState.bag.totalPrice &&
-                                        `From $${parseInt(productState.bag.totalPrice )}`
+                                        steps.done ? `$${parseInt(productState.bag.totalPrice )}` : "From $378.00"
                                     }
                                 </Block>
                                 {/* <Block font="MinXHeading14" color="#FF7847">
@@ -518,14 +575,14 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
                                         borderColor: "#BFBFBF !important"
                                     }} 
                                     text="Previous" 
-                                    width="138px" 
+                                    width={["108px","138px"]} 
                                     font={["MinXLabel14", "MinXLabel16"]} 
                                     backgroundColor="transparent" 
                                     />
                                 <ButtonM 
-                                    onClick={() => nextStep()} 
+                                    onClick={() => nextStep()}
                                     text={steps.currentStep === 3 ? "Done" : "Next"} 
-                                    width="138px" 
+                                    width={["108px","138px"]}
                                     font={["MinXLabel14", "MinXLabel16"]} 
                                 />
                             </Block>
@@ -542,7 +599,7 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
                             steps.currentStep === 1 &&  <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>
                         }
                         {
-                            steps.currentStep === 2 && <RequirementSelection error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement} />
+                            steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame} tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement} />
                         }
                         {
                             steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod} />
@@ -553,18 +610,18 @@ const Index = ({productVariant, productComponent, pageState, setHideCategories, 
             }
             <Checkout 
                 quantity={productState.bag.totalCount} 
-                isInStock={productState.bag.stock_status === "instock"} 
+                isInStock={productState.roofVariant?.stock_status === "instock"} 
                 buttonText={steps.done ? productState.roofVariant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"} 
                 isAvailable={productState.tentVariant?.purchasable}
-                onClickMinus={() => productState.bag.totalCount !== 1 && productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount - 1}})}
+                onClickMinus={() => productState.bag?.totalCount !== 1 && productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount - 1}})}
                 onClickPlus={() => productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount + 1}})}
                 onClickAddToBag={() => addToCart()}
-                onClick={addToCart}
+                onClick={() => setSummaryIsOpen(true)}
                 onSale={productState.tentVariant?.on_sale} 
-                totalPrice={productState.bag.totalPrice} 
+                totalPrice={productState.bag?.totalPrice} 
                 totalSalesPrice={productState.tentVariant?.sale_price}
             />
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary" dataTable={{productComponent, selectedVariant:productState.variants, totalSalePrice:productState.bag.totalSalePrice, totalRegularPrice:productState.bag.totalRegularPrice, totalCount:productState.bag.totalCount}}/>
+            <Modal type="dialog" isOpen={true} onClose={() => setSummaryIsOpen(false)} content="summary" dataTable={{productComponent, selectedVariant:productState.variants, totalSalePrice:productState.bag.totalSalePrice, totalRegularPrice:productState.bag.totalRegularPrice, totalCount:productState.bag.totalCount}}/>
         </Block>
     )
 }
@@ -592,8 +649,7 @@ Index.getInitialProps = async (context) => {
             initialSteps,
             initialProduct:{
                 ...initialProduct,
-                roofVariant:variant[1][0],
-                frameVariant:variant[0][0]
+                roofVariant: variant[1][0]
             }
         },
         printingMethods,
