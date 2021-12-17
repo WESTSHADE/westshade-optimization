@@ -105,7 +105,8 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
 
     useEffect(() => {
         const thirdPartyButton = document.querySelector("#mobile-chat-container");
-        thirdPartyButton.style.transform = "translateY(-80px)"
+        if(thirdPartyButton) thirdPartyButton.style.transform = "translateY(-80px)";
+        
         return () => thirdPartyButton.style.transform = "translateY(0px)"
     }, [])
 
@@ -215,7 +216,16 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                     overrides={{
                                         FileDragAndDrop: {
                                             style: {
-                                                flexDirection: "column-reverse"
+                                                flexDirection: "column-reverse",
+                                                borderTopStyle: inputState.background.value.length != 0 ?  "solid" : "dashed",
+                                                borderBottomStyle: inputState.background.value.length != 0 ?  "solid" : "dashed",
+                                                borderLeftStyle: inputState.background.value.length != 0 ?  "solid" : "dashed",
+                                                borderRightStyle: inputState.background.value.length != 0 ?  "solid" : "dashed",
+                                                borderTopColor: inputState.background.value.length != 0 ?  "#23A4AD" : "dashed",
+                                                borderBottomColor: inputState.background.value.length != 0 ?  "#23A4AD" : "dashed",
+                                                borderLeftColor: inputState.background.value.length != 0 ?  "#23A4AD" : "dashed",
+                                                borderRightColor: inputState.background.value.length != 0 ?  "#23A4AD" : "dashed",
+                                                boxShadow: inputState.background.value.length != 0 ? "0px 0px 4px 2px #5FBDBE;": "none"
                                             }
                                         },
                                         ButtonComponent: {
@@ -240,7 +250,16 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                             overrides={{
                                 FileDragAndDrop: {
                                     style: {
-                                        flexDirection: "column-reverse"
+                                        flexDirection: "column-reverse",
+                                        borderTopStyle: inputState.logo.file.length != 0 ?  "solid" : "dashed",
+                                        borderBottomStyle: inputState.logo.file.length != 0 ?  "solid" : "dashed",
+                                        borderLeftStyle: inputState.logo.file.length != 0 ?  "solid" : "dashed",
+                                        borderRightStyle: inputState.logo.file.length != 0 ?  "solid" : "dashed",
+                                        borderTopColor: inputState.logo.file.length != 0 ?  "#23A4AD" : "dashed",
+                                        borderBottomColor: inputState.logo.file.length != 0 ?  "#23A4AD" : "dashed",
+                                        borderLeftColor: inputState.logo.file.length != 0 ?  "#23A4AD" : "dashed",
+                                        borderRightColor: inputState.logo.file.length != 0 ?  "#23A4AD" : "dashed",
+                                        boxShadow: inputState.logo.file.length != 0 ? "0px 0px 4px 2px #5FBDBE;": "none"
                                     }
                                 },
                                 ButtonComponent: {
@@ -373,49 +392,51 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                 Apply it to all four sides
             </Checkbox>
         </Block>
-        <Block position="absolute" bottom="0" left="0" width="100%" display="flex" alignItems="center" justifyContent="space-between" backgroundColor="#ffffff" padding="22px 16px">
-            <Block font={["MinXParagraph12","MinXParagraph14","MinXParagraph14"]} color="MinXPrimaryText">
-            After submitting the order, we’ll email you a free mockup based on your request.
-            </Block>
-            <Block display="flex" alignItems="center">
-                <Block margin={["0 4px","0 8px"]}>
-                    <MButton
-                        height="auto"
-                        width="85px"
-                        onClick={cancelAction}
-                        disabled={isSaving}
-                        buttonStyle={{ 
-                            backgroundColor: "transparent !important", 
-                            color: "#23A4AD !important", 
-                            fontFamily:"Roboto !important",
-                            fontSize: "14px !important",
-                            fontWeight: "500 !important",
-                            width: "100% !important",
-                            border:"2px solid #BFBFBF !important",
-                            padding: "12px 0 !important",
-                            margin: "0 8px",
-                            transition: "all .15s ease-in-out",
-                        }}
-                        text="Cancel"
-                    />
+        <Block  position="absolute" bottom="0" left="0" width="100%" display="grid" placeItems="center" backgroundColor="#ffffff" padding="22px 16px">
+            <Block maxWidth="1272px" width="100%" display="flex" alignItems="center" justifyContent="space-between">
+                <Block font={["MinXParagraph12","MinXParagraph14","MinXParagraph14"]} color="MinXPrimaryText">
+                After submitting the order, we’ll email a mockup.
                 </Block>
-                <Block margin={["0 4px","0 8px"]}>
-                    <MButton
-                        height="auto"
-                        width="85px"
-                        onClick={saveEntries}
-                        isLoading={isSaving}
-                        buttonStyle={{ 
-                            fontFamily:"Roboto !important",
-                            fontSize: "14px !important",
-                            fontWeight: "500 !important",
-                            width: "100% !important",
-                            padding: "12px 0 !important",
-                            margin: "0 8px",
-                            transition: "all .15s ease-in-out",
-                        }}
-                        text="Save"
-                    />
+                <Block display="flex" alignItems="center">
+                    <Block margin={["0 4px","0 8px"]}>
+                        <MButton
+                            height="auto"
+                            width="85px"
+                            onClick={cancelAction}
+                            disabled={isSaving}
+                            buttonStyle={{ 
+                                backgroundColor: "transparent !important", 
+                                color: "#23A4AD !important", 
+                                fontFamily:"Roboto !important",
+                                fontSize: "14px !important",
+                                fontWeight: "500 !important",
+                                width: "100% !important",
+                                border:"2px solid #BFBFBF !important",
+                                padding: "12px 0 !important",
+                                margin: "0 8px",
+                                transition: "all .15s ease-in-out",
+                            }}
+                            text="Cancel"
+                        />
+                    </Block>
+                    <Block margin={["0 4px","0 8px"]}>
+                        <MButton
+                            height="auto"
+                            width="85px"
+                            onClick={saveEntries}
+                            isLoading={isSaving}
+                            buttonStyle={{ 
+                                fontFamily:"Roboto !important",
+                                fontSize: "14px !important",
+                                fontWeight: "500 !important",
+                                width: "100% !important",
+                                padding: "12px 0 !important",
+                                margin: "0 8px",
+                                transition: "all .15s ease-in-out",
+                            }}
+                            text="Save"
+                        />
+                    </Block>
                 </Block>
             </Block>
         </Block>

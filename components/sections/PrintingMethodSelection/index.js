@@ -16,7 +16,8 @@ const PrintingMethodCard = ({method, active, onClick}) => {
 
     return(
         <>
-            <Block 
+            <Block
+                onClick={onClick} 
                 width="100%" 
                 padding="24px" 
                 backgroundColor="MinXTableHeader"
@@ -51,7 +52,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                             width="100%"
                             color="MinXTitle"
                             font="MinXParagraph14"
-                            text={hovered ? "original image" : "See original image"}
+                            text="See original image"
                         />
                     </Block>
                     <Block width="100%" $style={{borderRadius:"16px", overflow: "hidden",}}>

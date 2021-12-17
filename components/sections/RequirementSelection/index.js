@@ -26,6 +26,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
         if(tentSize && tentFrame){
             let basePath = "/images/custom-printed-canopy-tent/tents"
             let imagePath = `/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-${tentSize.toLowerCase()}${frontAngle ? "" : "-FLIPPED"}.webp`
+            console.log(`${basePath}/${imagePath}`)
             setMainImage(`${basePath}/${imagePath}`)
         }
     }, [frontAngle])
@@ -62,32 +63,77 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                         <Block position="absolute" right={["-5px","-74px","-154px"]} top={["-32px","-20px","0"]}>
                             <Block position="relative" width={["95px", "120px", "160px"]} height={["95px", "120px", "160px"]} marginBottom={["16px", "24px", "48px"]}>
                                 <Block position="absolute" bottom={["0px","0"]} right={0} left={0} width={["40px", "50px", "70px"]} marginRight="auto" marginLeft="auto">
-                                    <div className="triangle-curved2 bottom" style={{borderBottomColor: Object.keys(requirement.peak.FRONT).length !== 0 ? "#23A4AD" : activeSide === "FRONT" ? "#CDECEC" : "#F0F0F0"}}/>
+                                    <div className="triangle-curved2 bottom" style={{borderBottomColor: Object.keys(requirement.peak.FRONT).length !== 0 ? "#23A4AD" : activeSide === "FRONT" ? "#CDECEC" : "#F0F0F0"}}> 
+                                        <Block 
+                                        position="absolute" 
+                                        top="10%" 
+                                        left="50%" 
+                                        $style={{transform: "translate(-50%, -10%)", "@media screen and (min-width: 480px)": {transform: "translate(-50%, 0%)"}}} 
+                                        font="MinXParagraph14" 
+                                        color="MinXLabel14"
+                                        >
+                                        D
+                                        </Block>
+                                    </div>
                                     <Block width={["40px", "50px", "70px"]} height={["5px", "6px", "9px"]} marginTop={["2.5px","4.5px"]}marginBottom={["2.5px","4.5px"]}
                                         backgroundColor={Object.keys(requirement.valance.FRONT).length !== 0 ? "#23A4AD" : activeSide === "FRONT" ? "#CDECEC" : "#F0F0F0"}
                                     />
-                                    <Block font="MinXParagraph14" color="MinXLabel14">D</Block>
+                                    <Block $style={{visibility: "hidden"}} font="MinXParagraph14" color="MinXLabel14">D</Block>
+                                    
                                 </Block>
                                 <Block position="absolute" top={["-5px","0"]} right={0} left={0} width={["40px", "50px", "70px"]} marginRight="auto" marginLeft="auto">
-                                    <Block font="MinXParagraph14" color="MinXLabel14">B</Block>
+                                    <Block $style={{visibility: "hidden"}} font="MinXParagraph14" color="MinXLabel14">B</Block>
                                     <Block width={["40px", "50px", "70px"]} height={["5px", "6px", "9px"]} marginTop={["2.5px","4.5px"]} marginBottom={["2.5px","4.5px"]}
                                         backgroundColor={Object.keys(requirement.valance.BACK).length !== 0 ? "#23A4AD" : activeSide === "BACK" ? "#CDECEC" : "#F0F0F0"}
                                     />
-                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.BACK).length !== 0 ? "#23A4AD" : activeSide === "BACK" ? "#CDECEC" : "#F0F0F0"}}/>
+                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.BACK).length !== 0 ? "#23A4AD" : activeSide === "BACK" ? "#CDECEC" : "#F0F0F0"}}>
+                                        <Block 
+                                            position="absolute" 
+                                            top="50%" 
+                                            left="50%" 
+                                            $style={{transform: "translate(-50%, 0%)", "@media screen and (min-width: 480px)": {transform: "translate(-50%, 50%)"}}} 
+                                            font="MinXParagraph14" 
+                                            color="MinXLabel14"
+                                            >
+                                            B
+                                            </Block>
+                                    </div>
                                 </Block>
                                 <Block position="absolute" top={["42.5%","46%","47.5%"]} left={0} width={["40px", "50px", "70px"]} $style={{transform: "rotate(-90deg) translateX(50%)"}}>
-                                    <Block font="MinXParagraph14" color="MinXLabel14">A</Block>
+                                    <Block $style={{visibility: "hidden"}} font="MinXParagraph14" color="MinXLabel14">A</Block>
                                     <Block width={["40px", "50px", "70px"]} height={["5px", "6px", "9px"]} marginTop={["2.5px","4.5px"]} marginBottom={["2.5px","4.5px"]}
                                         backgroundColor={Object.keys(requirement.valance.LEFT).length !== 0 ? "#23A4AD" : activeSide === "LEFT" ? "#CDECEC" : "#F0F0F0"}
                                     />
-                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.LEFT).length !== 0 ? "#23A4AD" : activeSide === "LEFT" ? "#CDECEC" : "#F0F0F0"}}/>
+                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.LEFT).length !== 0 ? "#23A4AD" : activeSide === "LEFT" ? "#CDECEC" : "#F0F0F0"}}> 
+                                        <Block 
+                                            position="absolute" 
+                                            top="50%" 
+                                            left="50%" 
+                                            $style={{transform: "translate(-50%, 10%) rotate(90deg)",  "@media screen and (min-width: 480px)": {transform: "translate(-50%, 50%) rotate(90deg)"}}} 
+                                            font="MinXParagraph14" 
+                                            color="MinXLabel14"
+                                        >
+                                            A
+                                        </Block>
+                                    </div>
                                 </Block>
                                 <Block position="absolute" top={["42.5%","46%","47.5%"]} right={0} width={["40px", "50px", "70px"]} $style={{transform: "rotate(90deg) translateX(-50%)"}}>
-                                    <Block font="MinXParagraph14" color="MinXLabel14">C</Block>
+                                    <Block $style={{visibility: "hidden"}} font="MinXParagraph14" color="MinXLabel14">C</Block>
                                     <Block width={["40px", "50px", "70px"]} height={["5px", "6px", "9px"]} marginTop={["2.5px","4.5px"]} marginBottom={["2.5px","4.5px"]}
                                         backgroundColor={Object.keys(requirement.valance.RIGHT).length !== 0 ? "#23A4AD" : activeSide === "RIGHT" ? "#CDECEC" : "#F0F0F0"}
                                     />
-                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.RIGHT).length !== 0 ? "#23A4AD" : activeSide === "RIGHT" ? "#CDECEC" : "#F0F0F0"}}/>
+                                    <div className="triangle-curved2" style={{borderTopColor: Object.keys(requirement.peak.RIGHT).length !== 0 ? "#23A4AD" : activeSide === "RIGHT" ? "#CDECEC" : "#F0F0F0"}}> 
+                                        <Block 
+                                            position="absolute" 
+                                            top="50%" 
+                                            left="50%" 
+                                            $style={{transform: "translate(-50%, 10%) rotate(-90deg)",  "@media screen and (min-width: 480px)": {transform: "translate(-50%, 50%) rotate(-90deg)"}}}
+                                            font="MinXParagraph14" 
+                                            color="MinXLabel14"
+                                        >
+                                            C
+                                        </Block>
+                                    </div>
                                 </Block>
                             </Block>
                         </Block>
@@ -119,7 +165,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                             <Block width={["44%","45%","141px","141px"]} margin={["0 0px 16px","0 0px 16px"]}>
                                 <MButton
                                     height="auto"
-                                    onClick={() => setSide({activeSide:"FRONT"})}
+                                    onClick={() => setSide({activeSide:"LEFT"})}
                                     buttonStyle={{ 
                                         backgroundColor: "transparent !important", 
                                         color: "#262626 !important", 
@@ -127,12 +173,13 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                                         fontSize: "14px !important",
                                         fontWeight: "400 !important",
                                         width: "100% !important",
-                                        border: activeSide === "FRONT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                        border: activeSide === "LEFT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
                                         padding: "17px 0 !important",
-                                        boxShadow: activeSide === "FRONT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                        boxShadow: activeSide === "LEFT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
                                         transition: "all .15s ease-in-out"
+                                    
                                     }}
-                                    text="Side D"
+                                    text="Side A"
                                 />
                             </Block>
                             <Block width={["44%","45%","141px","141px"]} margin={["0 0px 16px","0 0px 16px"]}>
@@ -157,26 +204,6 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                             <Block width={["44%","45%","141px","141px"]} margin={["0 0px 16px","0 0px 16px"]}>
                                 <MButton
                                     height="auto"
-                                    onClick={() => setSide({activeSide:"LEFT"})}
-                                    buttonStyle={{ 
-                                        backgroundColor: "transparent !important", 
-                                        color: "#262626 !important", 
-                                        fontFamily:"Roboto !important",
-                                        fontSize: "14px !important",
-                                        fontWeight: "400 !important",
-                                        width: "100% !important",
-                                        border: activeSide === "LEFT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
-                                        padding: "17px 0 !important",
-                                        boxShadow: activeSide === "LEFT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
-                                        transition: "all .15s ease-in-out"
-                                    
-                                    }}
-                                    text="Side A"
-                                />
-                            </Block>
-                            <Block width={["44%","45%","141px","141px"]} margin={["0 0px 16px","0 0px 16px"]}>
-                                <MButton
-                                    height="auto"
                                     onClick={() => setSide({activeSide:"RIGHT"})}
                                     buttonStyle={{ 
                                         backgroundColor: "transparent !important", 
@@ -191,6 +218,25 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                                         transition: "all .15s ease-in-out"
                                     }}
                                     text="Side C"
+                                />
+                            </Block>
+                            <Block width={["44%","45%","141px","141px"]} margin={["0 0px 16px","0 0px 16px"]}>
+                                <MButton
+                                    height="auto"
+                                    onClick={() => setSide({activeSide:"FRONT"})}
+                                    buttonStyle={{ 
+                                        backgroundColor: "transparent !important", 
+                                        color: "#262626 !important", 
+                                        fontFamily:"Roboto !important",
+                                        fontSize: "14px !important",
+                                        fontWeight: "400 !important",
+                                        width: "100% !important",
+                                        border: activeSide === "FRONT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                        padding: "17px 0 !important",
+                                        boxShadow: activeSide === "FRONT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                        transition: "all .15s ease-in-out"
+                                    }}
+                                    text="Side D"
                                 />
                             </Block>
                         </Block>
@@ -209,7 +255,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                                         type={Object.keys(requirement.peak[activeSide]).length > 0 ? "solid" : "dashed"}
                                         width="100%" 
                                         height="32px" 
-                                        font={Object.keys(requirement.peak[activeSide]).length > 0 ? "MinXParagraph14" : "MinXLabel14"}
+                                        font="MinXParagraph14"
                                         text={Object.keys(requirement.peak[activeSide]).length > 0 ? "Edit" : "+Print"}  
                                         buttonStyle={{backgroundColor:Object.keys(requirement.peak[activeSide]).length > 0 ? "#8C8C8C !important" : "transparent !important"}}
                                         color={Object.keys(requirement.peak[activeSide]).length > 0 ? "#fafafa" : "#8c8c8c"}
@@ -242,7 +288,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                                 <Block display="flex" alignItems="center">
                                     <Image src={`/images/icon/icon-valance-${activeSide.toLowerCase() || "front"}.png`} width={60} height={60} layout="fixed" objectFit="contain" />
                                     <Block display="flex" flexDirection="column" marginLeft="8px">
-                                        <Block font="MinXParagraph14" color="#000000">Peak</Block>
+                                        <Block font="MinXParagraph14" color="#000000">Valance</Block>
                                         <Block marginTop="8px" $style={{textTransform: "capitalize"}} font="MinXParagraph12" color="#808080">{label[activeSide] || "A"}</Block>
                                     </Block>
                                 </Block>
@@ -252,7 +298,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
                                         type="dashed" 
                                         width="100%"
                                         height="32px" 
-                                        font="MinXLabel14" 
+                                        font="MinXParagraph14" 
                                         text={Object.keys(requirement.valance[activeSide]).length > 0 ? "Edit" : "+Print"} 
                                         buttonStyle={{backgroundColor:Object.keys(requirement.valance[activeSide]).length > 0 ? "#8C8C8C !important" : "transparent !important"}}
                                         color={Object.keys(requirement.valance[activeSide]).length > 0 ? "#fafafa" : "#8c8c8c"}
