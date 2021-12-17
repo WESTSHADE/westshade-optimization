@@ -23,7 +23,7 @@ import styles from "./header.module.scss";
 import Account from "./account.svg";
 import Cart from "./cart.svg";
 
-function Header() {
+function Header({hideCategories}) {
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ function Header() {
                             </Block>
                         </Block>
                     </Block>
-                    <HeaderNavigation className={styles["root-navigation"]}>
+                    <HeaderNavigation  className={clsx(styles["root-navigation"],hideCategories ? styles["hidden"] : "sadas")}>
                         <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
                             <NavigationItem>
                                 <Button shape={SHAPE.circle} kind={KIND.minimal}

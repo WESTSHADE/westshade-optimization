@@ -24,6 +24,7 @@ const mButton = ({
                      text,
                      shape = "pill",
                      disabled,
+                     isLoading,
                      ...props
                  }) => {
     return (
@@ -47,6 +48,7 @@ const mButton = ({
                     endEnhancer={endEnhancer}
                     onClick={onClick}
                     disabled={disabled}
+                    isLoading={isLoading}
             >
                 {type === "rainbow" ? (
                     <div className={styles["button-inner"]} style={{backgroundColor: buttonBackgroundColor}}>{text}</div>

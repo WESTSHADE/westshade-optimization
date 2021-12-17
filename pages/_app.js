@@ -139,7 +139,10 @@ function useWindowSize() {
 
 function MyApp({Component, pageProps}) {
     const size = useWindowSize();
-
+    const [hideCategories, setHideCategories] = useState(false);
+    const handleHideCategories = (value) => {
+        setHideCategories(value)
+    }
     useEffect(() => {
         if (pageProps.noFooter && document) {
             document.body.style.height = "100vh";
@@ -171,10 +174,10 @@ function MyApp({Component, pageProps}) {
                         />
                         {/* End Google Tag Manager*/}
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
-                            <Header/>
-                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={["104px", "120px", "136px"]} marginRight="auto"
+                            <Header hideCategories={hideCategories}/>
+                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={hideCategories ? ["48px", "64px", "64px"] : ["104px", "120px", "136px"]} marginRight="auto"
                                    marginLeft="auto">
-                                <Component size={size} {...pageProps} />
+                                <Component size={size} setHideCategories={handleHideCategories} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
                             {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}

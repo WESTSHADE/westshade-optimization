@@ -240,8 +240,6 @@ export default class Utils {
                 },
                 data: file,
             });
-            console.log({data, status})
-
             if (status !== 200) {
                 return {status};
             }
