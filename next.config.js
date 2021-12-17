@@ -47,7 +47,7 @@ const nextConfig = {
         ],
         formats: ['image/webp'],
         loader: "imgix",
-        path: isProd ? "https://dev-dalbong.d39hc8wiroedli.amplifyapp.com" : "http://localhost:3000",
+        path: isProd ? "https://static.westshade.com" : "http://localhost:3000",
     },
     exportPathMap: async function () {
         return {
