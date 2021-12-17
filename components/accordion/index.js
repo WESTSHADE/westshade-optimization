@@ -5,7 +5,7 @@ import {Accordion, Panel} from "baseui/accordion";
 
 import styles from "./accordion.module.scss";
 
-export default function Custom_Accordion(props) {
+const Custom_Accordion = (props) => {
     const {list, ...restProps} = props;
 
     return (
@@ -27,10 +27,10 @@ export default function Custom_Accordion(props) {
                     },
                 }
             }}>
-                {list.map((item, index) =>
-                    <Panel key={index} title={item.title}>{item.content}</Panel>
-                )}
+                {list.map((item, index) => <Panel key={index} title={item.title}>{item.content}</Panel>)}
             </Accordion>
         </Block>
     )
 }
+
+export default Custom_Accordion;

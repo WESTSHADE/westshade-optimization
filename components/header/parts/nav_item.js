@@ -26,7 +26,7 @@ const NavItem = ({detail = {}}) => {
             }}
         >
             <Block className="cursor" display="flex" alignItems="center" paddingLeft="20px" font="MinXParagraph14">
-                <Link href={link}>{title}</Link>{dropMenu && <ChevronDown/>}
+                <Link href={link} passHref>{title}</Link>{dropMenu && <ChevronDown/>}
             </Block>
             {display && dropMenu ? <DropMenu containerStyle={style} menuList={list} picUrl={picture} content={content} learnMoreUrl={link} learnMoreText={linkText}/> : null}
         </NavigationItem>

@@ -80,7 +80,7 @@ function Umbrella({router, size}) {
                          content={
                              <>
                                  <Block marginBottom="24px" paddingTop={["24px", "40px"]} font={["MinXHeading32", "MinXHeading44", "MinXHeading64"]} color="MinXPrimaryText">UMBRELLA RANGES</Block>
-                                 <Block marginBottom={["40px", "80px", "120px"]}>
+                                 <Block width="100%" marginBottom={["40px", "80px", "120px"]}>
                                      <BannerDisplay title="MARCO" subtitle="Push up umbrellas" url="/images/umbrella/series-marco.webp" alt="series marco"
                                                     containerHeight={["250px", "360px", "500px"]} containerMarginBottom={["12px", "20px"]} containerBackground="transparent"
                                                     renderButton={

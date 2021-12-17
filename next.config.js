@@ -15,12 +15,21 @@ const nextConfig = {
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
         maxWidth: 1440,
-        version: "2.0.19"
+        version: "2.0.20"
     },
     trailingSlash: true,
     webpack: function (config) {
+        const path = require('path');
+
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            Assets: path.resolve(__dirname, 'assets/'),
+            Components: path.resolve(__dirname, 'components/')
+        };
+
         config.externals = config.externals || {};
         config.externals["styletron-server"] = "styletron-server";
+
         return config;
     },
     // webpack: (config, {isServer}) => {
@@ -38,7 +47,6 @@ const nextConfig = {
     // },
     images: {
         deviceSizes: [600, 960, 1280, 1920],
-        // disableStaticImages: true,
         minimumCacheTTL: 60,
         domains: [
             "checkout.westshade.com/wp-content/uploads",
