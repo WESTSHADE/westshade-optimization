@@ -157,10 +157,6 @@ function MyApp({Component, pageProps}) {
         }
     }, []);
 
-    useEffect(() => {
-        console.log({hideCategories})
-    }, [hideCategories])
-
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>

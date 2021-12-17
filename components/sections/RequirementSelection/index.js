@@ -25,8 +25,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage,tentFrame, 
     useEffect(() => {
         if(tentSize && tentFrame){
             let basePath = "/images/custom-printed-canopy-tent/tents"
-            let imagePath = `/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-${tentSize.toLowerCase()}${frontAngle ? "" : "-FLIPPED"}.webp`
-            console.log(`${basePath}/${imagePath}`)
+            let imagePath = `${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-${tentSize.toLowerCase()}${frontAngle ? "" : "-FLIPPED"}.webp`
             setMainImage(`${basePath}/${imagePath}`)
         }
     }, [frontAngle])

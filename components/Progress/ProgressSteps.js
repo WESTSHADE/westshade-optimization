@@ -4,7 +4,6 @@ import { Block } from "baseui/block";
 const ProgressSteps = ({steps, currentStep}) => {
     const data = Object.keys(steps).map(key => (steps[key]))
     const [css] = useStyletron();
-    console.log(currentStep - 1 * 33.33)
 
     return (
         <>

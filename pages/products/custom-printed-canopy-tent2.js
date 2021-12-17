@@ -43,7 +43,6 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
-        console.log(payload)
         dispatch({type:"SET_SIZE", payload});
         stepDispatch({type: "SET_OPTION_IS_DONE"})
     }
@@ -134,7 +133,6 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                 printedSides.push(key.charAt(0).toUpperCase() + key.slice(1))
             }
         })
-        console.log(printedSides)
         return printedSides.join(", ")
     }
 
@@ -149,7 +147,6 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
     }
     const getRoofVariant = () => {
         let roofVariant = {}
-        console.log(state.size)
         let sideSizes = state.size.split("x");
         let printedSides = determineSides().split(", ")
         roofVariant.roofSize = sideSizes[0]
@@ -205,7 +202,6 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         if(!steps.done && !productState.entryId) return;
         let cl = JSON.parse(JSON.stringify(cart));
         cl = cl.concat([...getProductList()]);
-        console.log({cl})
         if (loggedIn) {
             let userData = {
                 meta_data: [
@@ -351,13 +347,8 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         })
     }
 
-    // useEffect(() => {
-    //     productDispatch({type: "SET_FRAME_VARIANT", payload: {productVariant:productVariant[0][0]}})
-    //     productDispatch({type: "SET_ROOF_VARIANT", payload: {roofVariant:productVariant[1][0]}})
-    // },[productVariant])
 
     useEffect(() => {
-        console.log(product)
         if(product.hasOwnProperty("image") && Object.keys(product.image).length !== 0){
             setImages(() => [product.image])
         }
@@ -366,6 +357,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         }
     }, [product])
 
+    //useEffect for setting frame variant
     useEffect(() => {
         if(state.size && state.frame && (steps.allSteps.frame.status.done, steps.allSteps.size.status.done)){
             const frameVariant = getFrameVariant();
@@ -373,6 +365,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         }
     },[state.size, state.frame, steps.allSteps.frame, steps.allSteps.size])
 
+    //useEffect for setting roof variant
     useEffect(() => {
         if(determineSides().length !== 0){
             const roofVariant = getRoofVariant();
@@ -380,10 +373,9 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         }
     },[state.printReq, state.printingMethod])
 
+    //useEffect for setting total price whenever a new product variant is selected
     useEffect(() => {
         if(Object.keys(productState.frameVariant).length !== 0 || Object.keys(productState.roofVariant).length !== 0) {
-            console.log("-----new frame detected and passed------")
-            console.log(productState)
             const totalPrice = (parseInt(productState.frameVariant.price ) || 0) + (parseInt(productState.roofVariant.price) || 0);
             productDispatch({type: "SET_TOTAL_PRICE", payload : {totalPrice: totalPrice * productState.bag.totalCount}})
         }
@@ -472,8 +464,10 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                                                 buttonStyle={{
                                                     backgroundColor: "#ffffff !important",
                                                     border: "none",
-                                                    cursor: "pointer"
+                                                    cursor: "pointer",
+                                                    padding: "0 !important"
                                                 }}
+                                                padding="0"
                                                 disabled={!steps.done}
                                                 onClick={clearCustomization}
                                                 text="Clear"
