@@ -12,15 +12,20 @@ import styles from "./parts.module.scss";
 
 export default function content({dataTable}) {
     const {productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount} = dataTable;
-    
+    console.log(dataTable);
+
     let rowDate = [];
 
     selectedVariant.map((variant, index) => {
+        console.log(variant);
+        if (!variant) return
+        
         let cell = {
             name: productComponent[index].name,
             quantity: 1,
             regular_price: variant.regular_price,
             sale_price: variant.sale_price,
+            price: variant.price,
             on_sale: variant.on_sale,
         };
         rowDate.push(cell);
@@ -46,7 +51,10 @@ export default function content({dataTable}) {
                     <TableBuilderColumn header="Item">{(row) => <NameCell value={row.name}/>}</TableBuilderColumn>
                     <TableBuilderColumn header="Quantity" numeric overrides={{TableHeadCell: {props: {className: "text-center"}}}}>{(row) => <QuantityCell value={row.quantity}/>}</TableBuilderColumn>
                     <TableBuilderColumn header="Price" overrides={{TableHeadCell: {props: {className: "text-right"}}}}>
-                        {(row) => <PriceCell priceRegular={row.on_sale ? row.regular_price : row.price} priceSale={row.sale_price} onSale={row.on_sale}/>}
+                        {(row) => {
+                            console.log(row);
+                            return <PriceCell priceRegular={row.on_sale ? row.regular_price : row.price} priceSale={row.sale_price} onSale={row.on_sale}/>
+                        }}
                     </TableBuilderColumn>
                 </TableBuilder>
                 <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" padding="12px 20px" font="MinXLabel14" className={styles["cell"]} $style={{borderTop: "1px solid #d9d9d9"}}>

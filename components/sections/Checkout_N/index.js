@@ -129,7 +129,6 @@ const checkout = (props) => {
                                  onClick={props.onClickAddToBag}
                         />
                     </Block>
-
                 </Block>
             </Block>
         </Block>

@@ -181,7 +181,7 @@ function MyApp({Component, pageProps}) {
         const targetNode = document.getElementById('businessPhone');
 
         // Options for the observer (which mutations to observe)
-        const config = {attributes: true, childList: true, subtree: true, characterData: true};
+        const config = {childList: true, subtree: true, characterData: true};
 
         // Callback function to execute when mutations are observed
         const callback = function (mutationsList, observer) {

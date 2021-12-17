@@ -279,7 +279,8 @@ function Canopy_Tent({router, products, variants}) {
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            // url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            url = "https://static.westshade.com" + url
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -460,7 +461,7 @@ function Canopy_Tent({router, products, variants}) {
             const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
             const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
             const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            wallPicturesList[index] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
         });
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
@@ -526,7 +527,8 @@ function Canopy_Tent({router, products, variants}) {
         setAvailableList(available);
 
         setTotalRegularPrice(regularPrice);
-        setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+        // setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+        setTotalSalePrice(salePrice);
     };
 
     const updateCart = async () => {
@@ -721,7 +723,7 @@ function Canopy_Tent({router, products, variants}) {
                     const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
                     const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                     const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
-                    wallPicturesList[index - 1] = "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    wallPicturesList[index - 1] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
                 } else {
                     wallPicturesList[index - 1] = "";
                 }
@@ -1311,7 +1313,7 @@ function Canopy_Tent({router, products, variants}) {
                       onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
                       onClickPlus={() => setTotalCount(totalCount + 1)}
                       onClickAddToBag={() => updateCart()}
-                      onSale={totalRegularPrice !== totalRegularPrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+                      onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>

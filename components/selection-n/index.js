@@ -24,16 +24,16 @@ function Selection({id, name, value, onChange, attributes = [], children}) {
                     overrides={{
                         RadioGroupRoot: {
                             props: {
-                                className: clsx(styles["container-radio-group"], (id === id_attribute_frameSeries || id === id_attribute_wallPrintedType || id === id_attribute_printing_tech) ? styles["attr-frame"] : id === id_attribute_canopyColor ? styles["attr-color"] : null)
+                                className: clsx(styles["container-radio-group"], (id === id_attribute_frameSeries || id === id_attribute_wallPrintedType || id === id_attribute_printing_tech) ? styles["attr-frame"] : (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? styles["attr-color"] : null)
                             },
                         },
                         Root: {
                             props: {
-                                className: clsx(styles["container-radio"], id === id_attribute_canopyColor ? styles["attr-color"] : id === id_attribute_wallType ? styles["attr-wall-type"] : null)
+                                className: clsx(styles["container-radio"], (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? styles["attr-color"] : id === id_attribute_wallType ? styles["attr-wall-type"] : null)
                             },
                             style: ({$checked}) => ({
-                                padding: id === id_attribute_canopyColor ? $checked ? "4px" : "6px" : $checked ? "14px 0" : "16px 0",
-                                border: id === id_attribute_canopyColor ? $checked ? "3px solid #23A4AD" : "1px solid transparent" : $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                padding: (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? $checked ? "4px" : "6px" : $checked ? "14px 0" : "16px 0",
+                                border: (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? $checked ? "3px solid #23A4AD" : "1px solid transparent" : $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
                             }),
                         },
                         RadioMarkOuter: {
@@ -55,7 +55,7 @@ function Selection({id, name, value, onChange, attributes = [], children}) {
                 return optionList.map((option, index) => (
                     <Radio key={index} value={option.toLowerCase()}
                            overrides={{
-                               Label: id === id_attribute_canopyColor ? ({$value}) => {
+                               Label: (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? ({$value}) => {
                                    let color = $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value;
                                    return (<div className={styles["radio-dot"]} style={{backgroundColor: color}}/>)
                                } : {

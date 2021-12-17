@@ -29,6 +29,7 @@ const urlFn = new UrlFn();
 const utils = new Utils();
 
 const id_attribute_tableCoverType = 47;
+const id_attribute_tableCoverSize = 49;
 
 let checkoutProductList = [];
 
@@ -118,9 +119,14 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     };
 
     const handleChangeRadio = (event, index, id) => {
+        console.log(event);
+        console.log(index);
+        console.log(id);
+
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
         selection[index].forEach((attribute) => {
+            console.log(attribute);
             if (attribute.id === id) attribute.option = event.target.value;
         });
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存

@@ -82,7 +82,6 @@ export default class Utils {
             if (status !== 200) {
                 console.log(pid);
             }
-
             return data;
         } catch (error) {
             console.error(error);
