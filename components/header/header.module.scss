@@ -105,6 +105,9 @@
       padding-left: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
     }
   }
+  .hidden {
+    display: none;
+  }
 
   .site-logo {
     position: relative;

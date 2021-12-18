@@ -981,6 +981,34 @@ ul.bullet-warranty.sub > li {
     border-bottom-width: 68px;
     border-bottom-style: solid;
 }
+.triangle-curved2 {
+    width: 0;
+    height: 0;
+    border-top-width: 20px;
+    border-top-style: solid;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    transition: all .15s ease-in-out;
+}
+
+.triangle-curved2.bottom {
+    border-top: none;
+    border-bottom-width: 20px;
+    border-bottom-style: solid;
+}
+@media screen and (min-width: 480px) {
+
+    .triangle-curved2 {
+        border-top-width: 24px;
+        border-right: 25px solid transparent;
+        border-left: 25px solid transparent;
+    }
+    
+    .triangle-curved2.bottom {
+        border-top: none;
+        border-bottom-width: 24px;
+    }
+}
 
 @media screen and (min-width: 960px) {
     .triangle-curved {
@@ -991,6 +1019,15 @@ ul.bullet-warranty.sub > li {
 
     .triangle-curved.bottom {
         border-bottom-width: 80px;
+    }
+    .triangle-curved2 {
+        border-top-width: 40px;
+        border-right:35px solid transparent;
+        border-left:35px solid transparent;
+    }
+
+    .triangle-curved2.bottom {
+        border-bottom-width: 40px;
     }
 }
 

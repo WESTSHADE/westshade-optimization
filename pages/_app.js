@@ -21,7 +21,6 @@ import "../styles/globals.css";
 import "../styles/styleguide.css";
 import "../styles/baseui.css";
 import "../styles/apple-business.css";
-import {getLocalStore} from "next-persist";
 
 const breakpoints = {
     small: 480,
@@ -151,6 +150,9 @@ function MyApp({Component, pageProps}) {
     const size = useWindowSize();
 
     const [businessPhone, setBusinessPhone] = useState(process.env.businessPhone);
+    const [hideCategories, setHideCategories] = useState(false);
+
+    const handleHideCategories = (value) => setHideCategories(value)
 
     useEffect(() => {
         if (pageProps.noFooter && document) {
@@ -161,15 +163,6 @@ function MyApp({Component, pageProps}) {
             document.body.style.overflow = "unset";
         }
     });
-
-    // useLayoutEffect(() => {
-    //     setTimeout(() => {
-    //         if (document.getElementById('businessPhone')) {
-    //             phone = document.getElementById('businessPhone').innerText;
-    //             setBusinessPhone(phone);
-    //         }
-    //     }, 250)
-    // })
 
     useEffect(() => {
         const jssStyles = document.querySelector("#jss-server-side");
@@ -215,8 +208,8 @@ function MyApp({Component, pageProps}) {
                         {/* End Google Tag Manager*/}
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
                             <Header/>
-                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
-                                <Component size={size} phone={businessPhone} {...pageProps} />
+                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={hideCategories ? ["48px", "64px", "64px"] : null}  marginRight="auto" marginLeft="auto">
+                                <Component size={size} phone={businessPhone} setHideCategories={handleHideCategories} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
                             {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}

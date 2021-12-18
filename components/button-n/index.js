@@ -66,7 +66,7 @@ const options = {
 }
 
 const MButton = ({
-                     type = "solid", bundle, shape, disabled, onClick, text, as, display = "block", width, height, font, color,
+                     type = "solid", bundle, shape, disabled, isLoading, onClick, text, as, display = "block", width, height, font, color,
                      buttonClassName, buttonStyle, buttonHoverStyle, buttonActiveStyle, buttonFocusStyle, buttonDisabledStyle,
                      buttonBackgroundColor, buttonHoverBackgroundColor, buttonActiveBackgroundColor, buttonFocusBackgroundColor, buttonDisabledBackgroundColor,
                      iconStyle, startEnhancer, endEnhancer, ...props
@@ -214,6 +214,7 @@ const MButton = ({
                     endEnhancer={endEnhancer}
                     onClick={onClick}
                     disabled={disabled}
+                    isLoading={isLoading}
             >
                 {type === "rainbow" ? <div className={styles["button-inner"]} style={{backgroundColor: buttonBackgroundColor}}>{text}</div> : text}
                 {props.children}

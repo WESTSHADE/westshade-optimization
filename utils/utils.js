@@ -69,7 +69,7 @@ export default class Utils {
     async getProductByWooId(pid) {
         try {
             if (!pid) return null;
-
+            
             const {data, status} = await axios({
                 method: "GET",
                 url: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/product?productId=" + pid,
@@ -82,6 +82,7 @@ export default class Utils {
             if (status !== 200) {
                 console.log(pid);
             }
+
             return data;
         } catch (error) {
             console.error(error);

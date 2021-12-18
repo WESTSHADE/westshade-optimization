@@ -26,7 +26,7 @@ import styles from "./header.module.scss";
 // import Account from "./account.svg";
 import Cart from "./cart.svg";
 
-function Header() {
+function Header({hideCategories}) {
     const [css, theme] = themedUseStyletron();
     const customTheme = {...theme, ...responsiveTheme};
 
@@ -92,7 +92,7 @@ function Header() {
                                 <Link href="/my-account">Log in</Link>
                             </Block>
                         </Block>
-                        <HeaderNavigation className={styles["root-navigation"]}>
+                        <HeaderNavigation className={styles["root-navigation"],hideCategories ? styles["hidden"] : "sadas")}>
                             <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
                                 <NavigationItem>
                                     <Button shape={SHAPE.circle} kind={KIND.minimal}
