@@ -43,7 +43,7 @@ function Custom_Printing({router}) {
                     <Block font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
                     <Block maxWidth={["262px", "450px", "659px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">Customize it your way</Block>
                     <Button type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create Your Style" buttonBackgroundColor="#FAFBFF"
-                            onClick={() => router.push("/custom-printing-canopy-tent")}
+                            onClick={() => router.push("/products/custom-printed-canopy-tent/buy")}
                     />
                 </Block>
                 <Section upperContainerDirection="column"

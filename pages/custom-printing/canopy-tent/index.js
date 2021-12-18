@@ -27,7 +27,8 @@ function Custom_Printing_Canopy_Tent({router, size}) {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const goBuyingPage = () => router.push({pathname: "/custom-printing-canopy-tent"});
+    const goCustomPage = () => router.push({pathname: "/products/custom-printed-canopy-tent/buy"});
+    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
 
     const getSizeDesc = (value) => {
         let elm = null;
@@ -85,9 +86,14 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                            }}
                     >
                         <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                        <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
-                                bundle="white" $style={{zIndex: 1}} onClick={() => goBuyingPage()}
-                        />
+                        <Block display="flex" flexDirection={["column", "row"]} marginTop={["16px", 0]} marginBottom={["32px", "48px", "60px"]} $style={{gap: "24px"}}>
+                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Custom online"
+                                    bundle="white" $style={{zIndex: 1}} onClick={() => goCustomPage()}
+                            />
+                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick a package"
+                                    bundle="white" $style={{zIndex: 1}} onClick={() => goPackagePage()}
+                            />
+                        </Block>
                         <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#5D5FEF", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                         <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#EF5DA8", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
                     </Block>

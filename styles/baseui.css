@@ -844,6 +844,7 @@ ul.bullet-warranty.sub > li {
 }
 
 .frame-intro {
+    background-color: white;
     border: 1px solid #D9D9D9;
     box-sizing: border-box;
     border-radius: 16px;
@@ -859,8 +860,8 @@ ul.bullet-warranty.sub > li {
 }
 
 .frame-intro-background-in {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     animation: fadeIn 800ms;
 }
@@ -981,6 +982,7 @@ ul.bullet-warranty.sub > li {
     border-bottom-width: 68px;
     border-bottom-style: solid;
 }
+
 .triangle-curved2 {
     width: 0;
     height: 0;
@@ -996,6 +998,7 @@ ul.bullet-warranty.sub > li {
     border-bottom-width: 20px;
     border-bottom-style: solid;
 }
+
 @media screen and (min-width: 480px) {
 
     .triangle-curved2 {
@@ -1003,7 +1006,7 @@ ul.bullet-warranty.sub > li {
         border-right: 25px solid transparent;
         border-left: 25px solid transparent;
     }
-    
+
     .triangle-curved2.bottom {
         border-top: none;
         border-bottom-width: 24px;
@@ -1020,10 +1023,11 @@ ul.bullet-warranty.sub > li {
     .triangle-curved.bottom {
         border-bottom-width: 80px;
     }
+
     .triangle-curved2 {
         border-top-width: 40px;
-        border-right:35px solid transparent;
-        border-left:35px solid transparent;
+        border-right: 35px solid transparent;
+        border-left: 35px solid transparent;
     }
 
     .triangle-curved2.bottom {

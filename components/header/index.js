@@ -92,7 +92,7 @@ function Header({hideCategories}) {
                                 <Link href="/my-account">Log in</Link>
                             </Block>
                         </Block>
-                        <HeaderNavigation className={styles["root-navigation"],hideCategories ? styles["hidden"] : "sadas")}>
+                        <HeaderNavigation className={clsx(styles["root-navigation"], hideCategories ? styles["hidden"] : "sadas")}>
                             <NavigationList $align={ALIGN.left} className={styles["nav-left"]}>
                                 <NavigationItem>
                                     <Button shape={SHAPE.circle} kind={KIND.minimal}
