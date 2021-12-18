@@ -17,7 +17,7 @@ const nextConfig = {
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
         maxWidth: 1440,
         businessPhone: "877-702-1872",
-        version: "2.0.20"
+        version: "2.0.21"
     },
     trailingSlash: true,
     webpack: function (config) {
