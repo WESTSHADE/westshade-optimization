@@ -1,15 +1,17 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+
+import Image from "next/image";
+
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {ChevronUp, CheckIndeterminate, Plus} from "baseui/icon";
 
-import ChevronUp from "baseui/icon/chevron-up";
-import CheckIndeterminate from "baseui/icon/check-indeterminate";
-import Plus from "baseui/icon/plus";
+import {DateFn} from "Utils/tools";
 
 import styles from "./checkout.module.scss";
 
-import {DateFn} from "../../../utils/tools";
 import MButton from "../../button-n";
 
 const dateFn = new DateFn();
@@ -64,21 +66,23 @@ const checkout = (props) => {
     const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag"} = props;
 
     return (
-        <Block className={styles["container-checkout"]} position="fixed" width="100vw" height={["auto","auto", "68px"]}  paddingTop={["34px", "10px", "10px"]} paddingBottom={["34px", "10px", "10px"]} paddingRight={["24px", "16px", "32px"]} paddingLeft={["24px", "16px", "32px"]}>
+        <Block className={styles["container-checkout"]} position="fixed" width="100vw" height={["94px", "68px"]} paddingRight={["24px", "16px", "32px"]} paddingLeft={["24px", "16px", "32px"]}>
             <Block maxWidth="1440px" height="100%" marginRight="auto" marginLeft="auto">
                 {/* 屏宽 小于 480 */}
-                {/* <Block position={"relative"} display={["block", "none"]} height={"40px"}>
+                <Block position={"relative"} display={["block", "none"]} height={"40px"}>
                     <div className={styles["section-top"]}>
                         <div className={styles["text-quantity"]}>Quantity:</div>
                     </div>
                     <Block position={"absolute"} left={0} right={0} top={0} bottom={0} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                     </Block>
-                </Block> */}
-                {/* <Block width={["100%", "448px", "100%"]} height={["54px", "100%"]} display={"flex"} flexDirection={"row"} justifyContent={["center", "center", "space-between"]} alignItems={"center"} margin={"auto"}>
+                </Block>
+                <Block width={["100%", "448px", "100%"]} height={["54px", "100%"]} display={"flex"} flexDirection={"row"} justifyContent={["center", "center", "space-between"]} alignItems={"center"} margin={"auto"}>
                     <Block display={["none", "none", "flex"]} alignItems="column" justifyContent="center">
                         <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
+                            <AspectRatioBox aspectRatio={1} width="20px" height="20px" marginRight="12px">
+                                <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
+                            </AspectRatioBox>
                             <Block font="MinXParagraph14">Order today, shipped by {shippedDay}.</Block>
                         </Block>
                     </Block>
@@ -108,71 +112,22 @@ const checkout = (props) => {
                         <Block display={["none", "block"]}>
                             <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                         </Block>
-                        <Block width={["116px", "148px", "160px"]}>
-                        <Button shape={SHAPE.pill}
-                               overrides={{
-                                   BaseButton: {
-                                       style: () => ({width: "100%", height: "40px", fontSize: "16px", backgroundColor: "#23A4AD"}),
-                                   },
-                               }}
-                               onClick={props.onClickAddToBag}
-                               disabled={!isAvailable}
-                        >
-                           {buttonText}
-                        </Button>
-                        </Block>
-                        <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" disabled={!isAvailable}
+                        {/*<Block width={["116px", "148px", "160px"]}>*/}
+                        {/*<Button shape={SHAPE.pill}*/}
+                        {/*        overrides={{*/}
+                        {/*            BaseButton: {*/}
+                        {/*                style: () => ({width: "100%", height: "40px", fontSize: "16px", backgroundColor: "#23A4AD"}),*/}
+                        {/*            },*/}
+                        {/*        }}*/}
+                        {/*        onClick={props.onClickAddToBag}*/}
+                        {/*        disabled={!isAvailable}*/}
+                        {/*>*/}
+                        {/*    {buttonText}*/}
+                        {/*</Button>*/}
+                        {/*</Block>*/}
+                        <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" bundle="primary" disabled={!isAvailable}
                                  onClick={props.onClickAddToBag}
                         />
-                    </Block>
-                    <MButton type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" disabled={!isAvailable}
-                                 onClick={props.onClickAddToBag}
-                        />
-
-                </Block> */}
-                <Block width="100%" display="flex" flexWrap={["wrap", "nowrap"]} justifyContent="space-between" alignItems="center">
-                    <Block display={["none","flex"]} marginBottom="4px" alignItems="column" justifyContent="center">
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                            <Block font="MinXParagraph14">Order today, shipped by {shippedDay}.</Block>
-                        </Block>
-                    </Block>
-                    <Block display="flex" alignItems="center" flexDirection={["column", "row"]} width={["100%","auto"]}>
-                        <Block position={"relative"} display={["flex","none"]} height={"40px"} alignItems="center">
-                            <div className={styles["section-top"]}>
-                                <div className={styles["text-quantity"]}>Quantity:</div>
-                            </div>
-                            <Block display={["block", "none"]}>
-                                <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
-                            </Block>
-                        </Block>
-                        <Block display={["none", "block"]}>
-                            <div style={{color: "#262626", fontSize: 16, fontWeight: "700"}}>
-                                {onSale ? (
-                                    <Block display="flex" flexDirection="row" justifyContent="flex-end" font="MinXHeading20">
-                                        {totalSalesPrice == 0 ? <Block marginRight="10px" font="MinXHeading20" color="#F07C7C">Free</Block> :
-                                            <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalesPrice} displayType={"text"} style={{color: "#F07C7C", fontWeight:"700", fontSize:"20px", marginRight: 10}}/>}
-                                        <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                                    </Block>
-                                ) : (
-                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"}/>
-                                )}
-                            </div>
-                        </Block>
-                        <Block display={["none", "block"]} width={["100%", "auto"]} marginRight={["4px","4px","16px"]} marginLeft={["4px","4px","16px"]}>
-                            <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
-                        </Block>
-                        <Block width={["100%","auto"]} margin={["20px 0 16px", "0"]}>
-                            <MButton width="100%" type="solid" minWidth={["116px", "148px", "160px"]} height="40px" font="MinXParagraph16" text={buttonText} color="white" disabled={!isAvailable}
-                                    onClick={props.onClickAddToBag}
-                            />
-                        </Block>
-                    </Block>
-                    <Block display={["flex", "none"]} width="100%" alignItems="column" justifyContent="center">
-                        <Block display="flex" flexDirection="row">
-                            <img src={"/images/icon/delivery.png"} style={{width: 20, height: 20, marginRight: 12}} alt={"free shipping"}/>
-                            <Block font="MinXParagraph14">Order today, shipped by {shippedDay}.</Block>
-                        </Block>
                     </Block>
                 </Block>
             </Block>

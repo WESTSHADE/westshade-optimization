@@ -1,4 +1,22 @@
 {
+  "contact_us": [
+    {
+      "title": "Where can I use my WestShade pop-up canopy?",
+      "content": "Our canopies stand securely on grass, dirt, or pavement without ropes or poles. In windy conditions, However, we recommend using our Weight Bags to anchor and prevent your canopy from tipping over."
+    }, {
+      "title": "Can I buy a replacement canopy covering?",
+      "content": "Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us online."
+    }, {
+      "title": "Do you have any accessories available?",
+      "content": "Yes, our full line of accessories includes sidewalls, half sidewalls, sidewalls with roll up doors, sidewalls with windows and sand bags."
+    }, {
+      "title": "What fire ratings do your fabric items have?",
+      "content": " Our fabric meets CPAI-84, NFPA-71 and the California Administrative Code Title 19 fire resistant requirements."
+    }, {
+      "title": "What are your shipping costs?",
+      "content": "We provide free shipping and handling costs for any orders over $149 within the U.S., with the exception of AK, HI and PR. \n\nShipping costs for customers located in those 3 states will be provided after further order estimates."
+    }
+  ],
   "custom_printing_process": [
     {
       "title": "Start the conversation with a quote request.",

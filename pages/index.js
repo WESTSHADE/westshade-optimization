@@ -4,7 +4,7 @@ import React from "react";
 import {withRouter} from "next/router";
 import Head from "next/head";
 
-import BannerDisplay from "../components/sections/BannerDisplay";
+import BannerDisplay from "Components/sections/BannerDisplay";
 
 function Home({router}) {
     return (

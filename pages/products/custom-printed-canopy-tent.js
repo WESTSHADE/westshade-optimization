@@ -1,9 +1,9 @@
-import { useStyletron } from "baseui"
-import { Block } from "baseui/block"
+import {useStyletron} from "baseui"
+import {Block} from "baseui/block"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useReducer, useState } from "react"
-import ButtonM from  "../../components/button-n"
+import {useEffect, useReducer, useState} from "react"
+import ButtonM from "../../components/button-n"
 import ProgressSteps from "../../components/Progress/ProgressSteps"
 import TentSizeSelection from "../../components/sections/TentSizeSelection"
 import FrameSelection from "../../components/sections/FrameSelection"
@@ -12,20 +12,20 @@ import RequirementSelection from "../../components/sections/RequirementSelection
 import {EventEmitter} from "../../utils/events";
 import Utils from "../../utils/utils";
 import {Checkout_N as Checkout} from "../../components/sections"
-import { useDispatch, useSelector } from "react-redux"
-import { updateUser } from "../../redux/actions/userActions"
-import { modifyCart } from "../../redux/actions/cartActions"
-import { Modal } from "@material-ui/core"
-import { productReducer, reducer, stepReducer,initialState, initialProduct, initialSteps } from "../../assets/states/custom-printed-canopy-tent"
+import {useDispatch, useSelector} from "react-redux"
+import {updateUser} from "../../redux/actions/userActions"
+import {modifyCart} from "../../redux/actions/cartActions"
+import {Modal} from "@material-ui/core"
+import {productReducer, reducer, stepReducer, initialState, initialProduct, initialSteps} from "../../assets/states/custom-printed-canopy-tent"
 import MButton from "../../components/button-n"
 import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/custom-printend-canopy-tent"
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel"
+import {Carousel} from "react-responsive-carousel"
 
 
 const utils = new Utils();
 
-const Index = ({product, productVariant, productComponent, pageState, setHideCategories, printingMethods, frameTypes, tentSizes}) => {
+const Index = ({product, productVariant, productComponent, pageState, printingMethods, frameTypes, tentSizes}) => {
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();
     const {cart} = useSelector(({cart}) => cart);
@@ -33,7 +33,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
     const [steps, stepDispatch] = useReducer(stepReducer, pageState.initialSteps);
     const [productState, productDispatch] = useReducer(productReducer, pageState.initialProduct);
     const [images, setImages] = useState([
-        {src:"/images/custom-printed-canopy-tent/tents/Y7-10x10/0-default-with-logo/Y7-10X10-WH.webp"}
+        {src: "/images/custom-printed-canopy-tent/tents/Y7-10x10/0-default-with-logo/Y7-10X10-WH.webp"}
     ]);
     const [summaryIsOpen, setSummaryIsOpen] = useState(false)
     const [css] = useStyletron();
@@ -43,37 +43,35 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
-        dispatch({type:"SET_SIZE", payload});
+        dispatch({type: "SET_SIZE", payload});
         stepDispatch({type: "SET_OPTION_IS_DONE"})
     }
     const selectFrame = (payload) => {
-        if(payload.frame === 'Y7') {
-            dispatch({type:"SET_FRAME", payload});
+        if (payload.frame === 'Y7') {
+            dispatch({type: "SET_FRAME", payload});
+            stepDispatch({type: "SET_OPTION_IS_DONE"});
+        } else {
+            dispatch({type: "SET_FRAME", payload});
+            dispatch({type: "SET_SIZE", payload: {size: "10x10"}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         }
-        else {
-            dispatch({type:"SET_FRAME", payload});
-            dispatch({type:"SET_SIZE", payload : {size: "10x10"}});
-            stepDispatch({type: "SET_OPTION_IS_DONE"});
-        }
-        
+
     }
     const selectPrintingMethod = (payload) => {
-        dispatch({type:"SET_PRINTING_METHOD", payload});
+        dispatch({type: "SET_PRINTING_METHOD", payload});
         stepDispatch({type: "SET_OPTION_IS_DONE"});
     }
-    const selectPrintingRequirement = (key,side,payload,allSides) => {
-        if(!allSides) {
-            dispatch({type:"SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]:{...state.printReq[key], [side]:payload}}});
+    const selectPrintingRequirement = (key, side, payload, allSides) => {
+        if (!allSides) {
+            dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], [side]: payload}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
-        }
-        else {
-            dispatch({type:"SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]:{...state.printReq[key], LEFT:payload, RIGHT:payload, FRONT:payload, BACK:payload}}});
+        } else {
+            dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], LEFT: payload, RIGHT: payload, FRONT: payload, BACK: payload}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         }
     }
     const selectSide = (payload) => {
-        dispatch({type:"SET_ACTIVE_SIDE", payload});
+        dispatch({type: "SET_ACTIVE_SIDE", payload});
     }
 
     //---- end of actions for printing details ----//
@@ -81,33 +79,31 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
 
     //---- actions for navigating the custom printing flow ----//
     const nextStep = () => {
-        if(steps.allSteps[steps.currentKey].status.done) {
-            if(steps.currentStep !== 3){
+        if (steps.allSteps[steps.currentKey].status.done) {
+            if (steps.currentStep !== 3) {
                 stepDispatch({type: "SET_NEXT_STEP", payload: {key: myData[steps.currentStep + 1].code}})
-            }
-            else {
+            } else {
                 stepDispatch({type: "SET_DONE"})
-                dispatch({type:"SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
+                dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
             }
-        }
-        else {
-            if(steps.currentKey === "requirement" && determineSides().length === 0){
+        } else {
+            if (steps.currentKey === "requirement" && determineSides().length === 0) {
                 stepDispatch({type: "SET_ERROR"})
-            }
-            else if(steps.currentStep !== 3){
-                stepDispatch({type: "SET_DEFAULT_AND_NEXT", payload: {steps: {...steps.allSteps, [steps.currentKey]: {...steps.allSteps[steps.currentKey],status: {...steps.allSteps[steps.currentKey].status, done:true}}}, key: myData[steps.currentStep + 1].code}})
-            }
-            else {
+            } else if (steps.currentStep !== 3) {
+                stepDispatch({
+                    type: "SET_DEFAULT_AND_NEXT",
+                    payload: {steps: {...steps.allSteps, [steps.currentKey]: {...steps.allSteps[steps.currentKey], status: {...steps.allSteps[steps.currentKey].status, done: true}}}, key: myData[steps.currentStep + 1].code}
+                })
+            } else {
                 stepDispatch({type: "SET_DONE"})
-                dispatch({type:"SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
+                dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: false}});
             }
         }
     }
     const prevStep = () => {
-        if(steps.currentStep === 0){
-            return
-        }
-        else {
+        if (steps.currentStep === 0) {
+
+        } else {
             stepDispatch({type: "SET_PREV_STEP", payload: {key: myData[steps.currentStep - 1].code}})
         }
     }
@@ -116,7 +112,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
     const clearCustomization = () => {
         dispatch({type: "RESET", payload: pageState.initialState})
         stepDispatch({type: "RESET", payload: pageState.initialSteps})
-        productDispatch({type: "RESET", payload: {initialState: pageState.initialProduct }})
+        productDispatch({type: "RESET", payload: {initialState: pageState.initialProduct}})
     }
 
     const determineSides = () => {
@@ -124,22 +120,21 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         const peakKeys = Object.keys(state.printReq.peak)
         const valanceKeys = Object.keys(state.printReq.valance)
         peakKeys.map((key) => {
-            if(Object.keys(state.printReq.peak[key]).length !== 0 && !printedSides.includes(key)){
+            if (Object.keys(state.printReq.peak[key]).length !== 0 && !printedSides.includes(key)) {
                 printedSides.push(key.charAt(0).toUpperCase() + key.slice(1))
             }
         })
         valanceKeys.map((key) => {
-            if(Object.keys(state.printReq.valance[key]).length !== 0 && !printedSides.includes(key)){
+            if (Object.keys(state.printReq.valance[key]).length !== 0 && !printedSides.includes(key)) {
                 printedSides.push(key.charAt(0).toUpperCase() + key.slice(1))
             }
         })
         return printedSides.join(", ")
     }
 
-
     const getFrameVariant = () => {
-        const variant = productVariant[0].filter((item,idx) =>{
-            if(item.attributes[0].option === state.size && item.attributes[1].option.includes(state.frame)){
+        const variant = productVariant[0].filter((item, idx) => {
+            if (item.attributes[0].option === state.size && item.attributes[1].option.includes(state.frame)) {
                 return item;
             }
         })
@@ -153,22 +148,20 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         roofVariant.roofSizeII = sideSizes[1]
         roofVariant.numbers = {number: 0, number1: 0}
         printedSides.forEach(item => {
-            if(item === "FRONT" || item === "BACK"){
+            if (item === "FRONT" || item === "BACK") {
                 roofVariant.numbers.number1++
-            }
-            else {
+            } else {
                 roofVariant.numbers.number++
             }
         })
         let variant = productVariant[1].filter((item) => {
-            if  (item.attributes[0].option == (roofVariant.roofSize + "ft") && 
-                item.attributes[1].option == (roofVariant.roofSizeII + "ft") && 
+            if (item.attributes[0].option == (roofVariant.roofSize + "ft") &&
+                item.attributes[1].option == (roofVariant.roofSizeII + "ft") &&
                 parseInt(item.attributes[2].option) == roofVariant.numbers.number &&
                 parseInt(item.attributes[3].option) == roofVariant.numbers.number1 &&
-                item.attributes[4].option.toUpperCase() == state.printingMethod)
-                {
-                    return item;
-                }
+                item.attributes[4].option.toUpperCase() == state.printingMethod) {
+                return item;
+            }
         })
         return variant[0]
     }
@@ -182,7 +175,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                 value: state.size
             },
             {
-                attribute:"Printed Sides",
+                attribute: "Printed Sides",
                 value: determineSides().split(", ").length
             },
             {
@@ -192,25 +185,25 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         ]
         const frameVariation = productState.frameVariant.attributes.map((attr) => ({
             attribute: attr.name,
-            value:attr.option
+            value: attr.option
         }))
         productList.push({
-            id: productState.roofVariant.id,
-            quantity: productState.bag.totalCount,
-            variation: roofVariation,
-            entryId: productState.entryId
-        },
-        {
-            id: productState.frameVariant.id,
-            quantity: productState.bag.totalCount,
-            variation: frameVariation,
-            entryId: productState.entryId
-        })
+                id: productState.roofVariant.id,
+                quantity: productState.bag.totalCount,
+                variation: roofVariation,
+                entryId: productState.entryId
+            },
+            {
+                id: productState.frameVariant.id,
+                quantity: productState.bag.totalCount,
+                variation: frameVariation,
+                entryId: productState.entryId
+            })
         return productList;
     }
-    
+
     const addToCart = () => {
-        if(!steps.done && !productState.entryId) return;
+        if (!steps.done && !productState.entryId) return;
         let cl = JSON.parse(JSON.stringify(cart));
         cl = cl.concat([...getProductList()]);
         if (loggedIn) {
@@ -228,7 +221,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
             reduxDispatch(modifyCart({cart: cl}))
             EventEmitter.dispatch("handleCart", true);
         }
-    }  
+    }
 
     const handleSendDetails = async () => {
         const res = await utils.contact({
@@ -267,14 +260,14 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
             68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
             69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
             70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
-            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
+            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide ? "Apply to four sides peak" : "",
+            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide ? "Apply to four sides valance" : "",
             36.3: "",
             36.6: "",
             37: "",
             71: ""
         })
-        if(res.id) {
+        if (res.id) {
             productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
         }
         // console.log({
@@ -322,62 +315,57 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
         // })
     }
 
-
     useEffect(() => {
-        if(product.hasOwnProperty("image") && Object.keys(product.image).length !== 0){
+        if (product.hasOwnProperty("image") && Object.keys(product.image).length !== 0) {
             setImages(() => [product.image])
-        }
-        else if (product.hasOwnProperty("images") && product.images.length !== 0) {
+        } else if (product.hasOwnProperty("images") && product.images.length !== 0) {
             setImages(() => [...product.images])
         }
     }, [product])
 
     //useEffect for setting frame variant
     useEffect(() => {
-        if(state.size && state.frame && (steps.allSteps.frame.status.done, steps.allSteps.size.status.done)){
+        if (state.size && state.frame && (steps.allSteps.frame.status.done, steps.allSteps.size.status.done)) {
             const frameVariant = getFrameVariant();
             productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
         }
-    },[state.size, state.frame, steps.allSteps.frame, steps.allSteps.size])
+    }, [state.size, state.frame, steps.allSteps.frame, steps.allSteps.size])
 
     //useEffect for setting roof variant
     useEffect(() => {
-        if(determineSides().length !== 0){
+        if (determineSides().length !== 0) {
             const roofVariant = getRoofVariant();
             productDispatch({type: "SET_ROOF_VARIANT", payload: {roofVariant}})
         }
-    },[state.printReq, state.printingMethod])
+    }, [state.printReq, state.printingMethod])
 
     //useEffect for setting total price whenever a new product variant is selected
     useEffect(() => {
-        if(Object.keys(productState.frameVariant).length !== 0 || Object.keys(productState.roofVariant).length !== 0) {
-            const totalPrice = (parseInt(productState.frameVariant.price ) || 0) + (parseInt(productState.roofVariant.price) || 0);
-            productDispatch({type: "SET_TOTAL_PRICE", payload : {totalPrice: totalPrice * productState.bag.totalCount}})
+        if (Object.keys(productState.frameVariant).length !== 0 || Object.keys(productState.roofVariant).length !== 0) {
+            const totalPrice = (parseInt(productState.frameVariant.price) || 0) + (parseInt(productState.roofVariant.price) || 0);
+            productDispatch({type: "SET_TOTAL_PRICE", payload: {totalPrice: totalPrice * productState.bag.totalCount}})
         }
-    },[productState.frameVariant, productState.bag.totalCount,productState.roofVariant,steps.allSteps.frame, steps.allSteps.size])
+    }, [productState.frameVariant, productState.bag.totalCount, productState.roofVariant, steps.allSteps.frame, steps.allSteps.size])
 
     //useEffect for submitting printing requirement to wordpress forms and adding all selected variants to an array
     useEffect(() => {
-        if(steps.done){
+        if (steps.done) {
             handleSendDetails();
             let variants = [];
             variants.push(productState.frameVariant);
             variants.push(productState.roofVariant);
             productDispatch({type: "SET_VARIANTS", payload: {variants}})
         }
-    },[steps.done])
+    }, [steps.done])
 
     //useEffect for hiding the talk-to-us section when customizion is ongoing
     useEffect(() => {
         const thirPartySection = document.querySelectorAll("#refreshPlaceholder");
-        if(state.activeCustomizer) {
-            setHideCategories(true);
+        if (state.activeCustomizer) {
             thirPartySection?.forEach(item => (
                 item.style.display = "none"
             ))
-        }
-        else{
-            setHideCategories(false);
+        } else {
             thirPartySection?.forEach(item => (item.style.display = "flex"))
         }
         return () => thirPartySection?.forEach(item => (item.style.display = "flex"))
@@ -389,36 +377,31 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                 !state.activeCustomizer ?
                     <Block maxWidth="1152px" margin="0 auto">
                         <Block width="100%" padding={["40px 20px"]} display="flex" justifyContent="space-between" alignItems="flex-start" flexWrap={["wrap", "nowrap", "nowrap"]}>
-                            <Block flex="1" marginRight={["0","0","70px"]} minWidth="300px" backgroundColor="#F2F2F2">
-                                <Block 
-                                    width="100%" 
+                            <Block flex="1" marginRight={["0", "0", "70px"]} minWidth="300px" backgroundColor="#F2F2F2">
+                                <Block
+                                    width="100%"
                                     backgroundColor="#ffffff"
                                     padding="25px 25px 0 25px"
                                     height="auto"
                                     className={css({
                                         borderRadius: "6px",
-                                        boxShadow: "0px 6.17173px 24.6869px rgba(0, 0, 0, 0.1)" 
+                                        boxShadow: "0px 6.17173px 24.6869px rgba(0, 0, 0, 0.1)"
                                     })}
                                     overflow="hidden"
                                 >
                                     <Carousel emulateTouch showStatus={false} showIndicators={false}>
-                                        {
-                                            images.map((image, idx) => (
-                                                <Image key={idx} src={image.src} alt="product image" width={568} height={524} objectFit="contain" layout="responsive" />
-                                            ))
-                                        }
+                                        {images.map((image, idx) =>
+                                            <Image key={idx} src={image.src} alt="product image" width={568} height={524} objectFit="contain" layout="responsive"/>
+                                        )}
                                     </Carousel>
                                 </Block>
                             </Block>
-                            <Block $style={{textAlign: "center"}} marginTop={["32px","32px","0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%","100%","371px"]}>
+                            <Block $style={{textAlign: "center"}} marginTop={["32px", "32px", "0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%", "100%", "371px"]}>
                                 <Block as="h1" font="MinXParagraph20">
                                     Custom Printed Canopy Tent
                                 </Block>
                                 <Block as="p" $style={{textAlign: "center"}} marginTop="40px" color="MinXPrimaryText" className="price" font="MinXHeading16">
-                                    {/* $986.00 <Block color="MinXSecondaryText" marginLeft="8px" font="MinXHeading14" as="span" className={css({textDecoration: "line-through"})}>$1300.00</Block> */}
-                                    {
-                                        steps.done ? `$${parseInt(productState.bag.totalPrice )}` : "From $391.00"
-                                    }
+                                    {steps.done ? `$${parseInt(productState.bag.totalPrice)}` : "From $391.00"}
                                 </Block>
                                 {/* <Block font="MinXHeading14" color="#FF7847">
                                     17% OFF
@@ -434,7 +417,7 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                                         {
                                             steps.done &&
                                             <MButton
-                                                color= "#8c8c8c"
+                                                color="#8c8c8c"
                                                 font="MinXParagraph14"
                                                 buttonStyle={{
                                                     backgroundColor: "#ffffff !important",
@@ -454,156 +437,155 @@ const Index = ({product, productVariant, productComponent, pageState, setHideCat
                                     <Block width="100%" marginTop="12px">
                                         {
                                             !steps.done ?
-                                            <ButtonM width="100%" type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FAFBFF"
-                                                onClick={() => (dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: { activeCustomizer: true}}))}
-                                            />
-                                        :
-                                        <>
-                                            <Block 
-                                                padding="16px 24px" 
-                                                width="100%"
-                                                className={css({
-                                                    border: "3px solid #23A4AD",
-                                                    borderRadius: "8px"
-                                                })}
-                                            >
-                                                <Block display="flex" justifyContent="space-between" alignItems="center">
-                                                    <Block font="MinXLabel14" color="MinXTitle">
-                                                        Summary
-                                                    </Block>
-                                                    <Block width="18px" height="18px">
-                                                        <Image src="/images/icon/icon-pencil.png" alt="edit" width={20} height={20} layout="fixed" objectFit="contain" />
-                                                    </Block>
-                                                </Block>
-                                                <Block marginTop="9px">
-                                                        <Block display="flex">
-                                                            <Block font="MinXLabel14" color="MinXSecondaryText">
-                                                                Size:
+                                                <ButtonM width="100%" type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FAFBFF"
+                                                         onClick={() => (dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: true}}))}
+                                                />
+                                                :
+                                                <>
+                                                    <Block
+                                                        padding="16px 24px"
+                                                        width="100%"
+                                                        className={css({
+                                                            border: "3px solid #23A4AD",
+                                                            borderRadius: "8px"
+                                                        })}
+                                                    >
+                                                        <Block display="flex" justifyContent="space-between" alignItems="center">
+                                                            <Block font="MinXLabel14" color="MinXTitle">
+                                                                Summary
                                                             </Block>
-                                                            <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
-                                                                {state.size}
+                                                            <Block width="18px" height="18px">
+                                                                <Image src="/images/icon/icon-pencil.png" alt="edit" width={20} height={20} layout="fixed" objectFit="contain"/>
                                                             </Block>
                                                         </Block>
-                                                        <Block display="flex">
-                                                            <Block font="MinXLabel14" color="MinXSecondaryText">
-                                                                Sides to print:
+                                                        <Block marginTop="9px">
+                                                            <Block display="flex">
+                                                                <Block font="MinXLabel14" color="MinXSecondaryText">
+                                                                    Size:
+                                                                </Block>
+                                                                <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
+                                                                    {state.size}
+                                                                </Block>
                                                             </Block>
-                                                            <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
-                                                                {determineSides()}
+                                                            <Block display="flex">
+                                                                <Block font="MinXLabel14" color="MinXSecondaryText">
+                                                                    Sides to print:
+                                                                </Block>
+                                                                <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
+                                                                    {determineSides()}
+                                                                </Block>
                                                             </Block>
-                                                        </Block>
-                                                        <Block display="flex">
-                                                            <Block font="MinXLabel14" color="MinXSecondaryText">
-                                                                Printing method:
-                                                            </Block>
-                                                            <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
-                                                                {state.printingMethod}
+                                                            <Block display="flex">
+                                                                <Block font="MinXLabel14" color="MinXSecondaryText">
+                                                                    Printing method:
+                                                                </Block>
+                                                                <Block font="MinXParagraph14" color="MinXTitle" marginLeft="4px">
+                                                                    {state.printingMethod}
+                                                                </Block>
                                                             </Block>
                                                         </Block>
                                                     </Block>
-                                            </Block>
-                                        </>
+                                                </>
                                         }
                                     </Block>
                                     <Block $style={{textAlign: "left"}} font="MinXParagraph14" color="MinXTitle" marginTop="12px">
-                                        All custom printing orders will get a mockup before production. You can also <Block display="inline" color="MinXButton" className={css({textDecoration: "underline"})}><Link href="//custom-printing">get a free mockup </Link></Block> without ordering.
+                                        All custom printing orders will get a mockup before production. You can also <Block display="inline" color="MinXButton" className={css({textDecoration: "underline"})}><Link href="//custom-printing">get a free
+                                        mockup </Link></Block> without ordering.
                                     </Block>
                                     <Block marginTop="40px">
-                                            <Block
-                                                display="flex" 
-                                                minWidth="317px"
-                                                maxWidth="371px"
-                                                padding={["11px 16px","11px 42.5px"]}
-                                                justifyContent="space-between"
-                                                className={css({
-                                                    borderRadius: "40px",
-                                                    border: "1px solid #D9D9D9",
-                                                    backgroundColor:"#ffffff"
-                                                })}
-                                            >
-                                                <Link href="/products/custom-printed-package">
-                                                    <a>
+                                        <Block
+                                            display="flex"
+                                            minWidth="317px"
+                                            padding={["11px 16px", "11px 42.5px"]}
+                                            justifyContent="space-between"
+                                            className={css({
+                                                borderRadius: "40px",
+                                                border: "1px solid #D9D9D9",
+                                                backgroundColor: "#ffffff"
+                                            })}
+                                        >
+                                            <Link href="/custom-printing-canopy-tent">
+                                                <a>
                                                     <Block font="MinXLabel14" color="MinXPrimaryText">Artwork not ready?</Block>
                                                     <Block font="MinXParagraph14" color="MinXPrimaryText">
                                                         Buy now and upload later
                                                     </Block>
-                                                    </a>
-                                                </Link>
-                                            </Block>
+                                                </a>
+                                            </Link>
+                                        </Block>
                                     </Block>
                                 </Block>
                             </Block>
                         </Block>
                     </Block>
-                :
-                <>
-                    <Block width="100%" backgroundColor="MinXBackground">
-                        <Block padding="20px 0 45px" margin="0 auto" maxWidth="1152px" width="100%">
-                            <Block width="100%" display="flex" justifyContent="space-between" padding="0 16px">
-                                <ButtonM 
-                                    onClick={() => prevStep()} 
-                                    disabled={steps.currentStep === 0} 
-                                    buttonStyle={{ 
-                                        backgroundColor: "transparent !important", 
-                                        color:steps.currentStep === 0 ?  "#bfbfbf !important": "#23A4AD !important", 
-                                        borderTopWidth:"2px !important",
-                                        borderBottomWidth:"2px !important",
-                                        borderLeftWidth:"2px !important",
-                                        borderRightWidth:"2px !important",
-                                        borderTopStyle:"solid !important",
-                                        borderBottomStyle:"solid !important",
-                                        borderLeftStyle:"solid !important",
-                                        borderRightStyle:"solid !important",
-                                        borderColor: "#BFBFBF !important"
-                                    }} 
-                                    text="Previous" 
-                                    width={["108px","138px"]} 
-                                    font={["MinXLabel14", "MinXLabel16"]} 
-                                    backgroundColor="transparent" 
+                    :
+                    <>
+                        <Block width="100%" backgroundColor="MinXBackground">
+                            <Block padding="20px 0 45px" margin="0 auto" maxWidth="1152px" width="100%">
+                                <Block width="100%" display="flex" justifyContent="space-between" padding="0 16px">
+                                    <ButtonM
+                                        height="32px"
+                                        bundle="primary"
+                                        onClick={() => prevStep()}
+                                        disabled={steps.currentStep === 0}
+                                        buttonStyle={{
+                                            backgroundColor: "transparent !important",
+                                            color: steps.currentStep === 0 ? "#bfbfbf !important" : "#23A4AD !important",
+                                            borderTopWidth: "2px !important",
+                                            borderBottomWidth: "2px !important",
+                                            borderLeftWidth: "2px !important",
+                                            borderRightWidth: "2px !important",
+                                            borderTopStyle: "solid !important",
+                                            borderBottomStyle: "solid !important",
+                                            borderLeftStyle: "solid !important",
+                                            borderRightStyle: "solid !important",
+                                            borderColor: "#BFBFBF !important"
+                                        }}
+                                        text="Previous"
+                                        width={["108px", "138px"]}
+                                        font={["MinXLabel14", "MinXLabel16"]}
+                                        backgroundColor="transparent"
                                     />
-                                <ButtonM 
-                                    onClick={() => nextStep()}
-                                    text={steps.currentStep === 3 ? "Done" : "Next"} 
-                                    width={["108px","138px"]}
-                                    font={["MinXLabel14", "MinXLabel16"]} 
-                                />
-                            </Block>
-                            <Block marginTop="22px" padding={["0 16px", "0 75px"]}>
-                                <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep} />
+                                    <ButtonM
+                                        height="32px"
+                                        onClick={() => nextStep()}
+                                        text={steps.currentStep === 3 ? "Done" : "Next"}
+                                        width={["108px", "138px"]}
+                                        font={["MinXLabel14", "MinXLabel16"]}
+                                        bundle="primary"
+                                    />
+                                </Block>
+                                <Block marginTop="22px" padding={["0 16px", "0 75px"]}>
+                                    <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep}/>
+                                </Block>
                             </Block>
                         </Block>
-                    </Block>
-                    <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
-                        {
-                            steps.currentStep === 0 && <FrameSelection frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame} />
-                        }
-                        {
-                            steps.currentStep === 1 &&  <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>
-                        }
-                        {
-                            steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame} tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement} />
-                        }
-                        {
-                            steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod} />
-                        }
-                    </Block>
-                </>
-
+                        <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
+                            {steps.currentStep === 0 && <FrameSelection frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
+                            {steps.currentStep === 1 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
+                            {steps.currentStep === 2 &&
+                                <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
+                                                      tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>
+                            }
+                            {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
+                        </Block>
+                    </>
             }
-            <Checkout 
-                quantity={productState.bag.totalCount} 
-                isInStock={((productState.roofVariant?.stock_status === "instock") && (productState.roofVariant?.stock_status === "instock"))} 
-                buttonText={steps.done ? productState.roofVariant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"} 
+            <Checkout
+                quantity={productState.bag.totalCount}
+                isInStock={((productState.roofVariant?.stock_status === "instock") && (productState.roofVariant?.stock_status === "instock"))}
+                buttonText={steps.done ? productState.roofVariant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"}
                 isAvailable={productState.tentVariant?.purchasable}
                 onClickMinus={() => productState.bag?.totalCount !== 1 && productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount - 1}})}
                 onClickPlus={() => productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount + 1}})}
                 onClickAddToBag={() => addToCart()}
                 onClick={() => setSummaryIsOpen(true)}
-                onSale={productState.tentVariant?.on_sale || productState.frameVariant?.on_sale} 
-                totalPrice={productState.bag?.totalPrice} 
+                onSale={productState.tentVariant?.on_sale || productState.frameVariant?.on_sale}
+                totalPrice={productState.bag?.totalPrice}
                 totalSalesPrice={productState.bag?.sale_price}
             />
-            <Modal type="dialog" isOpen={true} onClose={() => setSummaryIsOpen(false)} content="summary" dataTable={{productComponent, selectedVariant:productState.variants, totalSalePrice:productState.bag.totalSalePrice, totalRegularPrice:productState.bag.totalRegularPrice, totalCount:productState.bag.totalCount}}/>
+            <Modal type="dialog" isOpen={true} onClose={() => setSummaryIsOpen(false)} content="summary"
+                   dataTable={{productComponent, selectedVariant: productState.variants, totalSalePrice: productState.bag.totalSalePrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/>
         </Block>
     )
 }

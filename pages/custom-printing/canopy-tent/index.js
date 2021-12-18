@@ -7,17 +7,17 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SHAPE} from "baseui/button";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
-import {Section, Benefit, FreeMockupForm} from "../../../components/sections"
-import MButton from "../../../components/button-n";
+import Button from "Components/button-n";
+import {Section, Benefit, FreeMockupForm} from "Components/sections"
 
 const ImageSlide = ({url, alt}) => {
     return (
-        <div className="react-player">
-            <img src={url} alt={alt} width="100%" height="100%" style={{objectFit: "contain"}}/>
-        </div>
+        <AspectRatioBox width="inherit">
+            <Image src={url} alt={alt} layout="fill" objectFit="contain"/>
+        </AspectRatioBox>
     );
 };
 
@@ -27,7 +27,8 @@ function Custom_Printing_Canopy_Tent({router, size}) {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const goBuyingPage = () => router.push({pathname: "/custom-printing-canopy-tent"});
+    const goCustomPage = () => router.push({pathname: "/products/custom-printed-canopy-tent/buy"});
+    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
 
     const getSizeDesc = (value) => {
         let elm = null;
@@ -85,9 +86,14 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                            }}
                     >
                         <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                        <MButton type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Tent"
-                                 buttonStyle={{borderColor: "white"}} $style={{zIndex: 1}} onClick={() => goBuyingPage()}
-                        />
+                        <Block display="flex" flexDirection={["column", "row"]} marginTop={["16px", 0]} marginBottom={["32px", "48px", "60px"]} $style={{gap: "24px"}}>
+                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Custom online"
+                                    bundle="white" $style={{zIndex: 1}} onClick={() => goCustomPage()}
+                            />
+                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick a package"
+                                    bundle="white" $style={{zIndex: 1}} onClick={() => goPackagePage()}
+                            />
+                        </Block>
                         <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#5D5FEF", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
                         <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#EF5DA8", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
                     </Block>
@@ -103,15 +109,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                            renderArrowPrev={(onClickHandler, hasPrev, label) =>
                                                hasPrev && (
                                                    <Block position="absolute" width={"17.5%"} height={"100%"} top={0} left={0}>
-                                                       <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                               overrides={{
-                                                                   BaseButton: {
-                                                                       props: {
-                                                                           className: "cursor react-carousel-arrow dark left",
-                                                                       }
-                                                                   },
-                                                               }}
-                                                       >
+                                                       <Button shape="circle" buttonClassName="cursor react-carousel-arrow dark left" bundle="gray" onClick={onClickHandler}>
                                                            <ArrowLeft size={28} color={"white"}/>
                                                        </Button>
                                                    </Block>
@@ -120,15 +118,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                            renderArrowNext={(onClickHandler, hasNext, label) =>
                                                hasNext && (
                                                    <Block position="absolute" width={"17.5%"} height={"100%"} top={0} right={0}>
-                                                       <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickHandler}
-                                                               overrides={{
-                                                                   BaseButton: {
-                                                                       props: {
-                                                                           className: "cursor react-carousel-arrow dark right",
-                                                                       }
-                                                                   },
-                                                               }}
-                                                       >
+                                                       <Button shape="circle" buttonClassName={"cursor react-carousel-arrow dark right"} bundle="gray" onClick={onClickHandler}>
                                                            <ArrowRight size={28} color={"white"}/>
                                                        </Button>
                                                    </Block>
@@ -141,17 +131,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                                                               style={props.isSelected ? {transition: "0.5s ease-in-out", transform: "scale(1.2)"} : {transition: "0.5s ease-in-out", transform: "scale(0.8)"}}>
                                                            <item.type {...item.props} {...props} />
                                                        </Block>
-                                                       {props.isSelected ? (
-                                                           <Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText"
-                                                                  overrides={{
-                                                                      Block: {
-                                                                          style: {
-                                                                              zIndex: 1,
-                                                                          }
-                                                                      },
-                                                                  }}
-                                                           >{getSizeDesc(item.key)}</Block>
-                                                       ) : <Block height="40px"/>}
+                                                       {props.isSelected ? (<Block font={["MinXParagraph12", "MinXParagraph14"]} color="MinXSecondaryText" $style={{zIndex: 1}}>{getSizeDesc(item.key)}</Block>) : <Block height="40px"/>}
                                                    </Block>
                                                );
                                            }}

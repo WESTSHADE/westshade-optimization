@@ -1,7 +1,9 @@
 import React from "react";
 
-import {Block} from "baseui/block";
 import Image from "next/image";
+
+import {Block} from "baseui/block";
+import {AspectRatioBox} from 'baseui/aspect-ratio-box';
 
 const Sandwich = ({
                       containerProps,
@@ -20,43 +22,15 @@ const Sandwich = ({
                   }) => {
 
     return (
-        <Block display="grid" gridTemplateColumns="1fr" gridRowGap="8px" width="100%" height="fit-content" {...containerProps}
-               overrides={{
-                   Block: {
-                       style: {
-                           textAlign: "center"
-                       },
-                   },
-               }}
-        >
+        <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap="8px" width="100%" height="fit-content" {...containerProps}>
             {src ? (
-                <Block position="relative" width="100%" marginRight="auto" marginLeft="auto" {...containerImageProps}
-                       overrides={{
-                           Block: {
-                               style: {
-                                   aspectRatio: 1
-                               }
-                           }
-                       }}
-                >
+                <AspectRatioBox aspectRatio={1} width="100%" marginRight="auto" marginLeft="auto" {...containerImageProps}>
                     <Image src={src} alt={alt} layout="fill" objectFit={objectFit} quality={100} {...imageProps} />
-                < /Block>
+                < /AspectRatioBox>
             ) : null}
             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="8px" justifyContent="center" marginRight="auto" marginLeft="auto" {...containerTextProps}>
-                {title ? (
-                    <Block font={["MinXLabel16", "MinXLabel24"]} color={titleColor} {...titleProps}
-                           overrides={{
-                               Block: {
-                                   style: {
-                                       whiteSpace: "nowrap"
-                                   }
-                               }
-                           }}
-                    >{title}</Block>
-                ) : null}
-                {content ? (
-                    <Block font="MinXParagraph14" color={contentColor} {...contentProps}>{content}</Block>
-                ) : null}
+                {title ? <Block font={["MinXLabel16", "MinXLabel24"]} color={titleColor} $style={{whiteSpace: "nowrap"}} {...titleProps}>{title}</Block> : null}
+                {content ? <Block font="MinXParagraph14" color={contentColor} {...contentProps}>{content}</Block> : null}
             </Block>
         </Block>
     )

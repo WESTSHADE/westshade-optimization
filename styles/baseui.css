@@ -129,6 +129,7 @@
 }
 
 .react-player {
+    width: 100%;
     height: 100%;
 }
 
@@ -142,6 +143,7 @@
 }
 
 .react-carousel-dusk {
+    z-index: 9;
     position: absolute;
     top: 0;
     right: 0;
@@ -154,13 +156,16 @@
     border-radius: 32px;
 }
 
-
 .react-carousel-small .carousel.carousel-slider {
     overflow: visible;
 }
 
 .react-carousel-small .carousel .control-dots {
     bottom: -36px;
+}
+
+.react-image-carousel-small .carousel-root {
+    width: 100%;
 }
 
 .react-image-carousel-small .carousel.carousel-slider {
@@ -200,6 +205,7 @@
     font-weight: inherit;
     line-height: inherit;
     background-color: rgba(255, 255, 255, 0.5);
+    border: none;
     z-index: 2;
 }
 
@@ -219,7 +225,7 @@
 
 .spec-sticky-bar {
     position: sticky;
-    top: calc(64px + 56px - 100px - 20px);
+    top: calc(92px - 100px - 20px);
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(6px);
 }
@@ -423,6 +429,7 @@ ul.bullet-warranty.sub > li {
 
 .input-enquiry {
     padding-right: 0;
+    padding-bottom: 0;
     padding-left: 0;
     background-color: transparent
 }
@@ -597,11 +604,6 @@ ul.bullet-warranty.sub > li {
     .text-title-display {
         font-size: 44px;
         line-height: 44px;
-    }
-
-    .spec-sticky-bar {
-        /*top: calc(96px - 100px - 20px)*/
-        top: calc(64px + 72px - 100px - 20px)
     }
 
     .card-radius-right {
@@ -842,6 +844,7 @@ ul.bullet-warranty.sub > li {
 }
 
 .frame-intro {
+    background-color: white;
     border: 1px solid #D9D9D9;
     box-sizing: border-box;
     border-radius: 16px;
@@ -857,8 +860,8 @@ ul.bullet-warranty.sub > li {
 }
 
 .frame-intro-background-in {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     animation: fadeIn 800ms;
 }
@@ -925,6 +928,7 @@ ul.bullet-warranty.sub > li {
 }
 
 .cs-listItem-artwork {
+    position: relative;
     width: 44px;
     height: 44px;
 }
@@ -978,6 +982,7 @@ ul.bullet-warranty.sub > li {
     border-bottom-width: 68px;
     border-bottom-style: solid;
 }
+
 .triangle-curved2 {
     width: 0;
     height: 0;
@@ -993,6 +998,7 @@ ul.bullet-warranty.sub > li {
     border-bottom-width: 20px;
     border-bottom-style: solid;
 }
+
 @media screen and (min-width: 480px) {
 
     .triangle-curved2 {
@@ -1000,7 +1006,7 @@ ul.bullet-warranty.sub > li {
         border-right: 25px solid transparent;
         border-left: 25px solid transparent;
     }
-    
+
     .triangle-curved2.bottom {
         border-top: none;
         border-bottom-width: 24px;
@@ -1017,10 +1023,11 @@ ul.bullet-warranty.sub > li {
     .triangle-curved.bottom {
         border-bottom-width: 80px;
     }
+
     .triangle-curved2 {
         border-top-width: 40px;
-        border-right:35px solid transparent;
-        border-left:35px solid transparent;
+        border-right: 35px solid transparent;
+        border-left: 35px solid transparent;
     }
 
     .triangle-curved2.bottom {
@@ -1079,4 +1086,40 @@ ul.bullet-warranty.sub > li {
     background-repeat: no-repeat;
     margin: 0;
     overflow: hidden;
+}
+
+.container-canopy-tent-spec {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-style: solid;
+    border-color: #D9D9D9;
+    border-radius: 8px;
+}
+
+.canopy-tent-spec-display-outer {
+    border-width: 0;
+}
+
+.canopy-tent-spec-display-inner {
+    border-width: 1px;
+    background: rgba(255, 255, 255, .8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+@media screen and (min-width: 672px) {
+    .canopy-tent-spec-display-outer {
+        border-width: 1px;
+        background: rgba(255, 255, 255, .8);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+
+    .canopy-tent-spec-display-inner {
+        border-width: 0;
+        background: transparent;
+        -webkit-backdrop-filter: unset;
+        backdrop-filter: unset;
+    }
 }

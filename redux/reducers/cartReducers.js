@@ -1,3 +1,5 @@
+import {getLocalStore} from 'next-persist';
+
 import {MODIFY_CART, CLEAR_CART} from "../constants/cartConstants";
 
 let defaultCart = {
@@ -6,7 +8,9 @@ let defaultCart = {
     cartProduct: []
 };
 
-export const cartReducer = (state = {...defaultCart}, action) => {
+const persistedState = getLocalStore('reducerCar', defaultCart);
+
+export const cartReducer = (state = persistedState, action) => {
     switch (action.type) {
         case MODIFY_CART:
             // 计算badge

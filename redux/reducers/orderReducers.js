@@ -1,6 +1,10 @@
+import {getLocalStore} from 'next-persist';
+
 import {GET_ORDER_SUCCESS, GET_ORDER_FAIL, CLEAR_ERRORS} from "../constants/orderConstants";
 
-export const orderReducer = (state = {orders: []}, action) => {
+const persistedState = getLocalStore('reducerOrder', []);
+
+export const orderReducer = (state = persistedState, action) => {
     switch (action.type) {
         case GET_ORDER_SUCCESS:
             return {

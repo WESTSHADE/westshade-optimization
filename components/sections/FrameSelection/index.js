@@ -1,20 +1,20 @@
-import { useStyletron } from "baseui"
-import { Block } from "baseui/block"
+import {useStyletron} from "baseui"
+import {Block} from "baseui/block"
 import Image from "next/image"
-import { useState } from "react"
+import {useState} from "react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
 
-const FrameTypeCard = ({frame, active,onClick}) => {
+const FrameTypeCard = ({frame, active, onClick}) => {
 
-    return(
+    return (
         <>
             <Block
                 onClick={onClick}
                 width="100%"
-                height="100%" 
-                padding="20px" 
+                height="100%"
+                padding="20px"
                 backgroundColor="MinXTableHeader"
                 display="flex"
                 flexDirection="column"
@@ -37,7 +37,7 @@ const FrameTypeCard = ({frame, active,onClick}) => {
                     borderColor: active ? "#23A4AD" : "transparent",
                     transition: "all .3s ease-in-out"
                 }}
-             >
+            >
                 <Block width="100%">
                     <Image src={frame.image} width={210} height={210} alt={frame.label} layout="responsive" objectFit="contain"/>
                 </Block>
@@ -56,10 +56,10 @@ const FrameTypeCard = ({frame, active,onClick}) => {
                     <MButton
                         height="auto"
                         onClick={onClick}
-                        buttonStyle={{ 
-                            backgroundColor: "transparent !important", 
-                            color: "#262626 !important", 
-                            fontFamily:"Roboto !important",
+                        buttonStyle={{
+                            backgroundColor: "transparent !important",
+                            color: "#262626 !important",
+                            fontFamily: "Roboto !important",
                             fontSize: "14px !important",
                             fontWeight: "500 !important",
                             width: "100% !important",
@@ -84,11 +84,11 @@ const FrameTypeCard = ({frame, active,onClick}) => {
 }
 
 const FrameSelection = ({frameTypes, frameValue, setFrame}) => {
-    const [showFrameCompare,setShowFrameCompare] = useState(false);
+    const [showFrameCompare, setShowFrameCompare] = useState(false);
     const [css] = useStyletron();
     return (
         <>
-            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]} >
+            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]}>
                 <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column">
                     <Block font="MinXSubtitle20" color="MinXTitle">
                         Please select the frame of the tent.
@@ -97,16 +97,16 @@ const FrameSelection = ({frameTypes, frameValue, setFrame}) => {
                         {frameTypes.length} frames available
                     </Block>
                 </Block>
-                <MButton onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily:"Roboto !important", fontSize: "14px"}} text="Compare frames"/>
+                <MButton height="32px" onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}} text="Compare frames"/>
             </Block>
             <Block width="100%" display="flex" flexWrap={"wrap"} justifyContent="space-between" alignItems="stretch" marginTop="38px">
                 {
                     frameTypes.map((frame) => (
-                        
-                        <Block  key={frame.value} margin={["0 16px 24px","0 5px 24px","0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%","30%","30%"]}>
-                            <FrameTypeCard 
+
+                        <Block key={frame.value} margin={["0 16px 24px", "0 5px 24px", "0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%", "30%", "30%"]}>
+                            <FrameTypeCard
                                 frame={frame}
-                                onClick={() => setFrame({frame:frame.value})}
+                                onClick={() => setFrame({frame: frame.value})}
                                 active={frameValue === frame.value}
                             />
                         </Block>

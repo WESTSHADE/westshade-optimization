@@ -1,3 +1,4 @@
+const path = require("path");
 /**
  * @type {import('next').NextConfig}
  */
@@ -15,7 +16,8 @@ const nextConfig = {
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
         maxWidth: 1440,
-        version: "2.0.20"
+        businessPhone: "877-702-1872",
+        version: "2.0.21"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -24,7 +26,8 @@ const nextConfig = {
         config.resolve.alias = {
             ...config.resolve.alias,
             Assets: path.resolve(__dirname, 'assets/'),
-            Components: path.resolve(__dirname, 'components/')
+            Components: path.resolve(__dirname, 'components/'),
+            Utils: path.resolve(__dirname, 'utils/')
         };
 
         config.externals = config.externals || {};
@@ -49,9 +52,8 @@ const nextConfig = {
         deviceSizes: [600, 960, 1280, 1920],
         minimumCacheTTL: 60,
         domains: [
-            "checkout.westshade.com/wp-content/uploads",
-            "54.212.246.17/wp-content/uploads",
-            "static.westshade.com"
+            "static.westshade.com",
+            "static-woo.westshade.com",
         ],
         formats: ['image/webp'],
         loader: "imgix",

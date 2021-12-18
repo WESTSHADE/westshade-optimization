@@ -9,21 +9,11 @@ import Link from "next/link";
 import {Block} from "baseui/block";
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 
-import Button from "../components/button-n";
-import CardTabs from "../components/card_tabs";
-import {Modal} from "../components/surfaces";
+import Button from "Components/button-n";
+import CardTabs from "Components/card_tabs";
+import {Modal} from "Components/surfaces";
 
-const Tag = ({text}) => {
-    return (
-        <Block height="32px" padding="8px" backgroundColor="#F5FCFC" color="#5FBDBE"
-               overrides={{
-                   Block: {
-                       style: {border: "1px solid #5FBDBE"}
-                   }
-               }}
-        >{text}</Block>
-    )
-}
+const Tag = ({text}) => <Block height="32px" padding="8px" backgroundColor="#F5FCFC" color="#5FBDBE" $style={{border: "1px solid #5FBDBE"}}>{text}</Block>
 
 function Canopy_Tent({router}) {
     const [tabsRefs, setTabsRefs] = useState([]);
@@ -157,7 +147,7 @@ function Canopy_Tent({router}) {
                                     <Block maxWidth="1152px" margin="auto" padding={["0 16px 40px 16px", "0 16px 80px 16px", "0 16px 120px 16px"]}>
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>STOCK COLORS</Block>
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">Pick a color to light up your mood.</Block>
-                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
                                                 onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x10"}})}
                                         />
                                         <Block position="relative" height={["159px", "260px", "494px"]}>
@@ -210,7 +200,7 @@ function Canopy_Tent({router}) {
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">
                                             You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
                                         </Block>
-                                        <Button type="solid" width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy'
+                                        <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
                                                 onClick={() => {
                                                 }}
                                         />

@@ -1,5 +1,7 @@
 import React from "react";
 
+import Image from "next/image";
+
 import {Block} from "baseui/block";
 import {ListItem, ListItemLabel} from "baseui/list";
 import {Button, KIND, SHAPE} from "baseui/button";
@@ -71,7 +73,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                 <Block width="100%" maxWidth="724px" margin="auto">
                     {selectedRoofSlide === 0 ? (
                         <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
-                            <ListItem artwork={() => <img src="/images/icon/icon-peak-left.png" alt="peak-left"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-peak-left.png" alt="peak-left" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -103,7 +105,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-left.png" alt="valance-left"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-valance-left.png" alt="valance-left" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -138,7 +140,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                         </Block>
                     ) : selectedRoofSlide === 1 ? (
                         <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
-                            <ListItem artwork={() => <img src="/images/icon/icon-peak-right.png" alt="peak-right"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-peak-right.png" alt="peak-right" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -170,7 +172,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-right.png" alt="valance-right"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-valance-right.png" alt="valance-right" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -205,7 +207,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                         </Block>
                     ) : selectedRoofSlide === 2 ? (
                         <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
-                            <ListItem artwork={() => <img src="/images/icon/icon-peak-front.png" alt="peak-front"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-peak-front.png" alt="peak-front" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -237,7 +239,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-front.png" alt="valance-front"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-valance-front.png" alt="valance-front" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -272,7 +274,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                         </Block>
                     ) : selectedRoofSlide === 3 ? (
                         <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap={["16px", "20px"]} gridRowGap={["16px", "20px"]}>
-                            <ListItem artwork={() => <img src="/images/icon/icon-peak-back.png" alt="peak-back"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-peak-back.png" alt="peak-back" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},
@@ -304,7 +306,7 @@ export default function roof({selectedListTemp, openDetailModal, removeDetail, s
                             >
                                 <ListItemLabel description={<CPSubtitle color="" side={selectedRoofSlide}/>} overrides={{LabelContent: {props: {className: "cs-title"}}}}>Peak</ListItemLabel>
                             </ListItem>
-                            <ListItem artwork={() => <img src="/images/icon/icon-valance-back.png" alt="valance-back"/>}
+                            <ListItem artwork={() => <Image src="/images/icon/icon-valance-back.png" alt="valance-back" layout="fill"/>}
                                       overrides={{
                                           Root: {props: {className: "cs-listItem-root"}},
                                           Content: {props: {className: "cs-listItem-content"}},

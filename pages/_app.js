@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react'
+import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 import {Provider as StyletronProvider} from "styletron-react";
 
 import Script from 'next/script'
@@ -8,13 +8,13 @@ import Script from 'next/script'
 import {BaseProvider, LightTheme, createTheme} from "baseui";
 import {Block} from "baseui/block";
 
-import "@fontsource/roboto";
+// import "@fontsource/roboto";
 
-import {store, persistor} from "../redux/store";
+import {store} from "../redux/store";
 import {styletron} from "../styletron";
 
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "Components/header";
+import Footer from "Components/footer";
 
 import "../styles/old.css";
 import "../styles/globals.css";
@@ -47,13 +47,18 @@ const overrides = {
         MinXTitle26: {fontFamily: "Roboto", fontSize: "26px", fontWeight: 900, lineHeight: "34px"},
         MinXTitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 900, lineHeight: "36px"},
         MinXTitle32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 900, lineHeight: "40px"},
+        MinXTitle36: {fontFamily: "Roboto", fontSize: "36px", fontWeight: 900, lineHeight: "42px"},
+        MinXTitle42: {fontFamily: "Roboto", fontSize: "42px", fontWeight: 900, lineHeight: "46px"},
         MinXTitle44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: 900, lineHeight: "52px"},
+        MinXTitle52: {fontFamily: "Roboto", fontSize: "52px", fontWeight: 900, lineHeight: "56px"},
         MinXTitle64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 900, lineHeight: "80px"},
+        MinXTitle74: {fontFamily: "Roboto", fontSize: "74px", fontWeight: 900, lineHeight: "80px"},
         // ========================
         MinXSubtitle10: {fontFamily: "Roboto", fontSize: "10px", fontWeight: 400, lineHeight: "12px"},
         MinXSubtitle12: {fontFamily: "Roboto", fontSize: "12px", fontWeight: 400, lineHeight: "14px"},
         MinXSubtitle14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 400, lineHeight: "16px"},
         MinXSubtitle16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px"},
+        MinXSubtitle18: {fontFamily: "Roboto", fontSize: "18px", fontWeight: 500, lineHeight: "26px"},
         MinXSubtitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 500, lineHeight: "28px"},
         MinXSubtitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 500, lineHeight: "32px"},
         MinXSubtitle28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 500, lineHeight: "36px"},
@@ -110,6 +115,10 @@ const overrides = {
 const theme = createTheme(primitives, overrides);
 const CustomTheme = {...LightTheme, ...theme, ...ResponsiveTheme};
 
+const npConfig = {
+    method: 'localStorage'
+};
+
 function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
     const [windowSize, setWindowSize] = useState({
@@ -139,10 +148,9 @@ function useWindowSize() {
 
 function MyApp({Component, pageProps}) {
     const size = useWindowSize();
-    const [hideCategories, setHideCategories] = useState(false);
-    const handleHideCategories = (value) => {
-        setHideCategories(value)
-    }
+
+    const [businessPhone, setBusinessPhone] = useState(process.env.businessPhone);
+
     useEffect(() => {
         if (pageProps.noFooter && document) {
             document.body.style.height = "100vh";
@@ -158,11 +166,33 @@ function MyApp({Component, pageProps}) {
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
+
+        // Select the node that will be observed for mutations
+        const targetNode = document.getElementById('businessPhone');
+
+        // Options for the observer (which mutations to observe)
+        const config = {childList: true, subtree: true, characterData: true};
+
+        // Callback function to execute when mutations are observed
+        const callback = function (mutationsList, observer) {
+            setBusinessPhone(mutationsList[0].target.textContent);
+        };
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+
+        return () => {
+            // stop tracking changes
+            observer.disconnect();
+        }
     }, []);
 
     return (
         <Provider store={store}>
-            <PersistGate persistor={persistor} loading={null}>
+            <PersistWrapper wrapperConfig={npConfig}>
                 <StyletronProvider value={styletron}>
                     <BaseProvider theme={CustomTheme}>
                         {/* Google Tag Manager */}
@@ -173,18 +203,17 @@ function MyApp({Component, pageProps}) {
                                 }}
                         />
                         {/* End Google Tag Manager*/}
-                        <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
-                            <Header hideCategories={hideCategories}/>
-                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginTop={hideCategories ? ["48px", "64px", "64px"] : ["104px", "120px", "136px"]} marginRight="auto"
-                                   marginLeft="auto">
-                                <Component size={size} setHideCategories={handleHideCategories} {...pageProps} />
+                        <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
+                            <Header/>
+                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
+                                <Component size={size} phone={businessPhone} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
                             {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}
                         </div>
                     </BaseProvider>
                 </StyletronProvider>
-            </PersistGate>
+            </PersistWrapper>
         </Provider>
     );
 }

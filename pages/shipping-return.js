@@ -7,8 +7,8 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 
-import {Modal} from "../components/surfaces";
-import {Section} from "../components/sections";
+import {Modal} from "Components/surfaces";
+import {Section} from "Components/sections";
 
 function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);

@@ -2,7 +2,6 @@ import React, {createRef, useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 
 import {Block} from "baseui/block";
@@ -11,66 +10,15 @@ import {Tabs, Tab, ORIENTATION, FILL} from 'baseui/tabs-motion';
 import {Input, MaskedInput} from "baseui/input";
 import {Select} from 'baseui/select';
 import {Avatar} from 'baseui/avatar';
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ChevronRight, ChevronDown, ChevronUp} from 'baseui/icon';
 
-import MButton from "../../components/button-n";
+import MButton from "Components/button-n";
 
 import {register, logIn, logOut, getUser, updateUser, clearUserErrors} from "../../redux/actions/userActions";
 import {getOrder} from "../../redux/actions/orderActions";
 
-const USState = [
-    {id: "AL", label: "Alabama"},
-    {id: "AK", label: "Alaska"},
-    {id: "AZ", label: "Arizona"},
-    {id: "AR", label: "Arkansas"},
-    {id: "CA", label: "California"},
-    {id: "CO", label: "Colorado"},
-    {id: "CT", label: "Connecticut"},
-    {id: "DE", label: "Delaware"},
-    {id: "DC", label: "District of Columbia"},
-    {id: "FL", label: "Florida"},
-    {id: "GA", label: "Georgia"},
-    {id: "HI", label: "Hawaii"},
-    {id: "ID", label: "Idaho"},
-    {id: "IL", label: "Illinois"},
-    {id: "IN", label: "Indiana"},
-    {id: "IA", label: "Iowa"},
-    {id: "KS", label: "Kansas"},
-    {id: "KY", label: "Kentucky"},
-    {id: "LA", label: "Louisiana"},
-    {id: "ME", label: "Maine"},
-    {id: "MD", label: "Maryland"},
-    {id: "MA", label: "Massachusetts"},
-    {id: "MI", label: "Michigan"},
-    {id: "MN", label: "Minnesota"},
-    {id: "MS", label: "Mississippi"},
-    {id: "MO", label: "Missouri"},
-    {id: "MT", label: "Montana"},
-    {id: "NE", label: "Nebraska"},
-    {id: "NV", label: "Nevada"},
-    {id: "NH", label: "New Hampshire"},
-    {id: "NJ", label: "New Jersey"},
-    {id: "NM", label: "New Mexico"},
-    {id: "NY", label: "New York"},
-    {id: "NC", label: "North Carolina"},
-    {id: "ND", label: "North Dakota"},
-    {id: "OH", label: "Ohio"},
-    {id: "OK", label: "Oklahoma"},
-    {id: "OR", label: "Oregon"},
-    {id: "PA", label: "Pennsylvania"},
-    {id: "RI", label: "Rhode Island"},
-    {id: "SC", label: "South Carolina"},
-    {id: "SD", label: "South Dakota"},
-    {id: "TN", label: "Tennessee"},
-    {id: "TX", label: "Texas"},
-    {id: "UT", label: "Utah"},
-    {id: "VT", label: "Vermont"},
-    {id: "VA", label: "Virginia"},
-    {id: "WA", label: "Washington"},
-    {id: "WV", label: "West Virginia"},
-    {id: "WI", label: "Wisconsin"},
-    {id: "WY", label: "Wyoming"},
-];
+import USState from "Assets/state.json";
 
 function Login() {
     const {message} = useSelector(({user}) => user);
@@ -145,10 +93,7 @@ function Login() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Log in'
-                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
-                         onClick={handleLogIn}
-                />
+                <MButton type="solid" width="100%" height="56px" marginBottom="24px" font="MinXLabel16" text='Log in' bundle="primary" onClick={handleLogIn}/>
             </Block>
         </>
     )
@@ -241,10 +186,7 @@ function Signup() {
                     By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions" passHref><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
                     color="inherit" href="/privacy" passHref><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginBottom="24px" marginLeft="auto" font="MinXLabel16" text='Join Westshade'
-                         buttonStyle={{paddingTop: "20px !important", paddingBottom: "20px !important"}}
-                         onClick={handleSignUp}
-                />
+                <MButton type="solid" width="100%" height="56px" marginBottom="24px" font="MinXLabel16" text='Join Westshade' bundle="primary" onClick={handleSignUp}/>
             </Block>
         </>
     )
@@ -387,9 +329,7 @@ function Orders({size}) {
                 {orders.map((o, index) => {
                     return (
                         <div key={index} style={{background: "#FFFFFF", border: "1px solid #D9D9D9", boxSizing: "border-box", borderRadius: "16px", overflow: "hidden"}}>
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" paddingTop="16px" paddingRight="16px" paddingBottom="16px" paddingLeft="16px"
-                                   backgroundColor="MinXBackground" font="MinXParagraph14"
-                            >
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" padding="16px" backgroundColor="MinXBackground" font="MinXParagraph14">
                                 <Block color="MinXSecondaryText">Order: <strong style={{color: "#262626"}}>{o.id}</strong></Block>
                                 <Block color="MinXSecondaryText">Date: <strong style={{color: "#262626"}}>{o.date_created}</strong></Block>
                             </Block>
@@ -420,14 +360,9 @@ function Orders({size}) {
                                                    },
                                                }}
                                         >
-                                            <Block position="relative" width={["60px", "75px"]} height={["60px", "75px"]}>
-                                                {item.image ? (
-                                                    <img src={item.image.src} alt={item.name} width="100%" height="100%" style={{objectFit: "contain"}}/>
-                                                    // <Image src={item.image.src} alt={item.name} layout="fill" objectFit="contain" quality={100}/>
-                                                ) : (
-                                                    <Image src="/images/product/default-product.webp" alt={item.name} layout="fill" objectFit="contain" quality={100}/>
-                                                )}
-                                            </Block>
+                                            <AspectRatioBox width={["60px", "75px"]}>
+                                                <AspectRatioBoxBody as="img" src={item.image.src ? item.image.src : "/images/product/default-product.webp"} alt={item.name}/>
+                                            </AspectRatioBox>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>
                                                 <Block display="flex" flex={1} flexDirection={["column", "row"]} marginBottom={["12px", "20px"]}>
                                                     <Block display="flex" flex={1} flexDirection="column" marginBottom={["12px", "0px"]}>
@@ -438,7 +373,7 @@ function Orders({size}) {
                                                             )
                                                         })}
                                                     </Block>
-                                                    <Block display="flex" flexDirection={["row", "column"]} justifyContent="space-between" alignItems={["", "flex-end"]}>
+                                                    <Block display="flex" flexDirection={["row", "column"]} justifyContent="space-between" alignItems={[null, "flex-end"]}>
                                                         <Block font="MinXLabel14"
                                                                overrides={{
                                                                    Block: {
@@ -587,13 +522,7 @@ function Profile() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
-                         buttonStyle={{
-                             paddingTop: "20px !important", paddingBottom: "20px !important",
-                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
-                         }}
-                         onClick={handleSaveProfile} disabled={!userDiff}
-                />
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" bundle="primary" onClick={handleSaveProfile} disabled={!userDiff}/>
             </Block>
         </>
     )
@@ -841,13 +770,7 @@ function Address() {
                         />
                     </Block>
                 </Block>
-                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text='Save'
-                         buttonStyle={{
-                             paddingTop: "20px !important", paddingBottom: "20px !important",
-                             ":disabled": {backgroundColor: "#B8DBDB !important", color: "white !important"}
-                         }}
-                         onClick={handleSaveAddress} disabled={!shippingDiff}
-                />
+                <MButton width="100%" height="56px" font="MinXLabel16" text='Save' color="white" bundle="primary" onClick={handleSaveAddress} disabled={!shippingDiff}/>
             </Block>
         </>
     )
@@ -1122,15 +1045,8 @@ function Account({size}) {
             ) : (
                 <>
                     {displayTabs ? (
-                        <Block display="flex" flexDirection="column" width={["100%", "480px"]} position="relative" alignItems="center"
+                        <Block className="container-display" display="flex" flexDirection="column" width={["100%", "480px"]} position="relative" alignItems="center"
                                paddingTop="24px" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}
-                               overrides={{
-                                   Block: {
-                                       props: {
-                                           className: "container-display"
-                                       }
-                                   },
-                               }}
                         >
                             <Block width="100%" font="MinXLabel20">
                                 <Tabs activeKey={loginActiveTabKey} fill={FILL.fixed} onChange={({activeKey}) => setLoginActiveTabKey(activeKey)}

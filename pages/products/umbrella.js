@@ -1,29 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import NumberFormat from "react-number-format";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
+import Script from "next/script";
 import Head from "next/head";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Checkout_N as Checkout, Selection, ProductDescription} from "../../components/sections";
-import {Modal} from "../../components/surfaces";
-
-import styles from "./Product.module.scss";
+import {Checkout_N as Checkout, Selection, ProductImages, ProductDescription} from "Components/sections";
+import {Modal} from "Components/surfaces";
+import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-
-import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
-
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+
+import styles from "./Product.module.scss";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -104,7 +101,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
         function renderCustomImage(props) {
             return (
-                <img className="image-gallery-image" src={props.original}/>
+                <AspectRatioBox aspectRatio={16 / 9} minHeight="230px">
+                    <Image src={props.original} alt="product image" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                </AspectRatioBox>
             );
         }
 
@@ -168,6 +167,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         let available = [...availableList];
 
         selectedVariant.forEach((variant, index) => {
+            console.log(variant);
             if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
                 available[index].status = false;
                 return;
@@ -203,7 +203,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         });
         setAvailableList(available);
         setTotalRegularPrice(regularPrice);
-        setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+        // setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
+        setTotalSalePrice(salePrice);
     };
 
     const updateCart = async () => {
@@ -451,13 +452,14 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             <Head>
                 <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
             </Head>
+            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
             <Block width={["100%", "480px", "100%"]} display="flex" flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
                 {/* 图片区域 */}
-                <Block position={["", "", "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                    <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                <Block position={[null, null, "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <ProductImages gallery={productImageGallery}/>
                 </Block>
                 {/* 选择区域 */}
-                <Block width={["auto", "auto", "440px"]} overflow={["", "", "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
+                <Block width={["auto", "auto", "440px"]} overflow={[null, null, "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
                     <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                         <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                         {product && product.short_description ? (

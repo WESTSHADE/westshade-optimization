@@ -7,8 +7,8 @@ import Check from "baseui/icon/check";
 
 import {purchase} from "../../../redux/actions/gtagActions";
 
-import Utils from "../../../utils/utils";
-import {NumberFn} from "../../../utils/tools";
+import Utils from "Utils/utils";
+import {NumberFn} from "Utils/tools";
 
 const utils = new Utils();
 const numberFn = new NumberFn();

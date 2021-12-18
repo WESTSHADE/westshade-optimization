@@ -1,13 +1,12 @@
 import axios from "axios";
 
 import {MODIFY_CART} from "../constants/cartConstants"
-import Utils from "../../utils/utils";
+import Utils from "Utils/utils";
 
 const utils = new Utils();
 
 const fetchProduct = async (id) => {
     if (!id) return;
-    console.log("car action");
     return await utils.getProductByWooId(id);
 };
 

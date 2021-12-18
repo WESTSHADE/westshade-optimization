@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {withRouter} from "next/router";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
@@ -11,8 +12,9 @@ import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Check from "baseui/icon/check";
 
-import Utils from "../utils/utils";
-import {UrlFn} from "../utils/tools";
+import Utils from "Utils/utils";
+import {UrlFn} from "Utils/tools";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 const utils = new Utils();
 const urlFn = new UrlFn();
@@ -74,20 +76,20 @@ function Payment({orderID}) {
                     <div className="container-selection" style={{alignItems: "flex-start", paddingLeft: 16, paddingRight: 16, paddingBottom: 60}}>
                         <div style={{fontSize: 20, fontWeight: "bold", lineHeight: "28px", marginBottom: 24}}>Pay with credit card</div>
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>We accept these credit cards</div>
-                        <div style={{display: "flex", flexDirection: "row", marginBottom: 24}}>
-                            <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_visa.webp" style={{height: "100%", objectFit: "cover"}}/>
-                            </div>
-                            <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_master.webp" style={{height: "100%", objectFit: "cover"}}/>
-                            </div>
-                            <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_amex.webp" style={{height: "100%", objectFit: "cover"}}/>
-                            </div>
-                            <div style={{width: 34, height: 24, marginRight: 12}}>
-                                <img src="/images/component/footer/icon_discover.webp" style={{height: "100%", objectFit: "cover"}}/>
-                            </div>
-                        </div>
+                        <Block position="relative" display="grid" gridTemplateColumns="repeat(4, 34px)" gridTemplateRows="24px" gridColumnGap="12px" marginBottom="24px">
+                            <Block position="relative">
+                                <Image src="/images/component/footer/icon_visa.webp" alt="visa" layout="fill" objectFit="contain"/>
+                            </Block>
+                            <Block position="relative">
+                                <Image src="/images/component/footer/icon_master.webp" alt="master" layout="fill" objectFit="contain"/>
+                            </Block>
+                            <Block position="relative">
+                                <Image src="/images/component/footer/icon_amex.webp" alt="amex" layout="fill" objectFit="contain"/>
+                            </Block>
+                            <Block position="relative">
+                                <Image src="/images/component/footer/icon_discover.webp" alt="discover" layout="fill" objectFit="contain"/>
+                            </Block>
+                        </Block>
                         <div style={{fontSize: 16, fontWeight: "500", lineHeight: "24px", marginBottom: 16}}>Card information</div>
                         <div style={{width: "100%"}}>
                             <FormControl>
@@ -195,30 +197,28 @@ function Payment({orderID}) {
                                         }}
                                     />
                                 </FormControl>
-                                <StatefulTooltip
-                                    placement={PLACEMENT.topRight}
-                                    triggerType={TRIGGER_TYPE.click}
-                                    autoFocus
-                                    content={() => (
-                                        <div style={{zIndex: 999}}>
-                                            <img src="/images/icon/icon-cvc.png" style={{height: "60px", objectFit: "contain"}}/>
-                                        </div>
-                                    )}
-                                    overrides={{
-                                        Body: {
-                                            style: ({$theme}) => ({
-                                                boxShadow: "none",
-                                                backgroundColor: "transparent",
-                                            }),
-                                        },
-                                        Inner: {
-                                            style: ({$theme}) => ({
-                                                backgroundColor: "transparent",
-                                                paddingRight: 0,
-                                                paddingLeft: 0,
-                                            }),
-                                        },
-                                    }}
+                                <StatefulTooltip placement={PLACEMENT.topRight} triggerType={TRIGGER_TYPE.click}
+                                                 autoFocus
+                                                 content={() => (
+                                                     <AspectRatioBox aspectRatio={5 / 3} width="100px" style={{zIndex: 999}}>
+                                                         <Image src="/images/icon/icon-cvc.png" alt="authorize" layout="fill" objectFit="contain"/>
+                                                     </AspectRatioBox>
+                                                 )}
+                                                 overrides={{
+                                                     Body: {
+                                                         style: ({$theme}) => ({
+                                                             boxShadow: "none",
+                                                             backgroundColor: "transparent",
+                                                         }),
+                                                     },
+                                                     Inner: {
+                                                         style: ({$theme}) => ({
+                                                             backgroundColor: "transparent",
+                                                             paddingRight: 0,
+                                                             paddingLeft: 0,
+                                                         }),
+                                                     },
+                                                 }}
                                 >
                                     <div
                                         style={{
@@ -317,7 +317,9 @@ function Payment({orderID}) {
                             PAY NOW
                         </Button>
                         <div style={{display: "flex", flexDirection: "row"}}>
-                            <img src="/images/icon/icon-authorize.png" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                            <AspectRatioBox aspectRatio={1} width="35px">
+                                <Image src="/images/icon/icon-authorize.png" alt="authorize" layout="fill" objectFit="contain"/>
+                            </AspectRatioBox>
                             <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You can shop at
                                 Westshade with confidence. We have partnered with Authorize.Net.
                             </div>
