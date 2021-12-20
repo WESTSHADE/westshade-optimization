@@ -240,12 +240,10 @@ export default class Utils {
                 },
                 data: file,
             });
-            console.log({data, status})
 
             if (status !== 200) {
                 return {status};
-            }
-            else {
+            } else {
                 return {
                     status,
                     url: "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + name

@@ -19,7 +19,7 @@ function Footer({isHomePage}) {
                 <Block display="flex" flexDirection={["column", "column", "row"]} paddingTop={["16px", "16px", "70px"]} paddingBottom={["32px", "32px", "100px"]}>
                     <Block minWidth={["unset", "unset", "calc((100% + 24px)/3)"]} marginBottom="32px" paddingLeft={["0px", "0px", "calc((100% + 24px)/12)"]}>
                         <Block className="cursor" position="relative" width={["147px", "147px", "184px"]} onClick={() => document.location.href = "/"}>
-                            <Image src={"/images/icon/logo-site-w-text.webp"} alt="Site Logo" layout="responsive" width={1200} height={500} quality={100}/>
+                            <Image src={"/images/icon/logo-site-w-text.webp"} alt="Site Logo" layout="responsive" width={1200} height={500} priority/>
                         </Block>
                     </Block>
                     <Block display="grid" gridTemplateColumns={["1fr", "1fr", "1fr auto"]} gridRowGap={["32px", "32px", "40px"]} width="100%" paddingLeft={["0", "0", "calc((100% + 24px)/12)"]}>

@@ -15,16 +15,17 @@ import {FormControl} from "baseui/form-control";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Delete from 'baseui/icon/delete'
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import {viewPromotion} from "../../redux/actions/gtagActions";
 
-import Utils from "../../utils/utils";
-import {NumberFn, UrlFn} from "../../utils/tools";
+import Utils from "Utils/utils";
+import {NumberFn, UrlFn} from "Utils/tools";
 
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Modal} from "../../components/surfaces";
-import MButton from "../../components/button-n";
+import {Modal} from "Components/surfaces";
+import MButton from "Components/button-n";
 
 const utils = new Utils();
 const numberFn = new NumberFn();
@@ -604,9 +605,9 @@ function Checkout({router, orderID, orderDetail}) {
                                         </FormControl>
                                         <StatefulTooltip placement={PLACEMENT.topRight} triggerType={TRIGGER_TYPE.click} autoFocus
                                                          content={() => (
-                                                             <div style={{zIndex: 999}}>
-                                                                 <img src="/images/icon/icon-cvc.png" alt="cvc" style={{height: "60px", objectFit: "contain"}}/>
-                                                             </div>
+                                                             <AspectRatioBox aspectRatio={5 / 3} width="100px" style={{zIndex: 999}}>
+                                                                 <Image src="/images/icon/icon-cvc.png" alt="authorize" layout="fill" objectFit="contain"/>
+                                                             </AspectRatioBox>
                                                          )}
                                                          overrides={{
                                                              Body: {style: ({$theme}) => ({boxShadow: "none", backgroundColor: "transparent",})},
@@ -657,13 +658,13 @@ function Checkout({router, orderID, orderDetail}) {
                                 >
                                     I have read and agree to the website <strong>terms and conditions</strong> <span style={{color: "red"}}>*</span>
                                 </Checkbox>
-                                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel12" text='PAY NOW'
-                                         buttonStyle={{paddingTop: "8px !important", paddingRight: "20px !important", paddingBottom: "8px !important", paddingLeft: "20px !important"}}
-                                         onClick={() => pay()}
+                                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel12" text='PAY NOW' bundle="primary" onClick={() => pay()}
                                          disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
                                 />
                                 <Block display="flex" flexDirection="row" alignItems="center">
-                                    <img src="/images/icon/icon-authorize.png" alt="authorize" style={{width: "35px", height: "28px", objectFit: "contain"}}/>
+                                    <AspectRatioBox aspectRatio={1} width="35px">
+                                        <Image src="/images/icon/icon-authorize.png" alt="authorize" layout="fill" objectFit="contain"/>
+                                    </AspectRatioBox>
                                     <div style={{padding: "0 8px", textAlign: "left", fontSize: "11px", lineHeight: "14px", color: "#8C8C8C", letterSpacing: "2%"}}>You
                                         can shop at Westshade with confidence. We have partnered with Authorize.Net.
                                     </div>
@@ -729,16 +730,7 @@ function Checkout({router, orderID, orderDetail}) {
                             ) : null}
                             <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="16px">
                                 <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
-                                <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD"
-                                         buttonStyle={{
-                                             borderColor: "#23A4AD",
-                                             backgroundColor: 'transparent !important',
-                                             ":hover": {backgroundColor: `#5FBDBE !important`, color: "white !important"},
-                                             ":active": {backgroundColor: `#43878C !important`, color: "white !important"}
-                                         }}
-                                         overrides={{Block: {style: {zIndex: 1}}}}
-                                         onClick={() => updateCoupon()}
-                                />
+                                <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD" bundle="primary" overrides={{Block: {style: {zIndex: 1}}}} onClick={() => updateCoupon()}/>
                             </Block>
                         </Block>
                     </Block>

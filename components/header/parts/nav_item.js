@@ -6,9 +6,10 @@ import {Block} from "baseui/block";
 import {StyledNavigationItem as NavigationItem} from "baseui/header-navigation";
 import {ChevronDown} from "baseui/icon";
 
+import Button from "../../button-n";
 import DropMenu from "./drop_menu";
 
-const NavItem = ({detail = {}}) => {
+const NavItem = ({detail = {}, router}) => {
     const {title = "", list = [], picture, content = "", link = "/", linkText, dropMenu = false} = detail;
 
     const [display, setDisplay] = useState(false);
@@ -26,7 +27,8 @@ const NavItem = ({detail = {}}) => {
             }}
         >
             <Block className="cursor" display="flex" alignItems="center" paddingLeft="20px" font="MinXParagraph14">
-                <Link href={link} passHref>{title}</Link>{dropMenu && <ChevronDown/>}
+                <Link href={link}>{title}</Link>{dropMenu && <ChevronDown/>}
+                {/*<Button type="text" bundle="black" onClick={() => router.push({pathname: link})}>{title}</Button>{dropMenu && <ChevronDown/>}*/}
             </Block>
             {display && dropMenu ? <DropMenu containerStyle={style} menuList={list} picUrl={picture} content={content} learnMoreUrl={link} learnMoreText={linkText}/> : null}
         </NavigationItem>

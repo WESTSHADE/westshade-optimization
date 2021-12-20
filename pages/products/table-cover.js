@@ -6,22 +6,21 @@ import clsx from "clsx";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
-import Link from "next/link";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
+import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Checkout_L as Checkout, Selection} from "../../components/sections";
-
-import styles from "./Product.module.scss";
+import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Utils from "Utils/utils";
+import {EventEmitter} from "Utils/events";
+import {Checkout_L as Checkout, Selection} from "Components/sections";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-
-import {DateFn, NumberFn, StringFn, UrlFn} from "../../utils/tools";
-import Utils from "../../utils/utils";
-import {EventEmitter} from "../../utils/events";
-
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
+
+import styles from "./Product.module.scss";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -30,6 +29,7 @@ const urlFn = new UrlFn();
 const utils = new Utils();
 
 const id_attribute_tableCoverType = 47;
+const id_attribute_tableCoverSize = 49;
 
 let checkoutProductList = [];
 
@@ -93,7 +93,9 @@ function Table_Cover({router, product, productComponent, productVariant}) {
 
         function renderCustomImage(props) {
             return (
-                <img className="image-gallery-image" src={props.original}/>
+                <AspectRatioBox aspectRatio={16 / 9} minHeight="230px">
+                    <Image src={props.original} alt="product image" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                </AspectRatioBox>
             );
         }
 
@@ -117,9 +119,14 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     };
 
     const handleChangeRadio = (event, index, id) => {
+        console.log(event);
+        console.log(index);
+        console.log(id);
+
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
         selection[index].forEach((attribute) => {
+            console.log(attribute);
             if (attribute.id === id) attribute.option = event.target.value;
         });
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存

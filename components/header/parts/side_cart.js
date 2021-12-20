@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {ANCHOR, Drawer} from "baseui/drawer";
 
 import Button from "../../button-n";
-import {NumberFn} from "../../../utils/tools";
+import {NumberFn} from "Utils/tools";
 
 import styles from "./parts.module.scss";
 
@@ -82,9 +82,7 @@ const Cart = ({isOpen, onClose}) => {
                     </Block>
                     <Block font="MinXParagraph14">Excludes tax and fees</Block>
                 </Block>
-                <Button type="outline" width="100%" height="52px" marginBottom="16px" font="MinXLabel14" color="#23A4AD" buttonStyle={{borderColor: "#D0D9D9"}} text="View cart"
-                        onClick={() => router.push("/cart").then(() => onClose())}
-                />
+                <Button width="100%" height="52px" marginBottom="16px" font="MinXLabel14" text="View cart" bundle="primary" onClick={() => router.push("/cart").then(() => onClose())}/>
             </Block>
         </Drawer>
     )

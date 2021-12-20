@@ -6,11 +6,11 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Select} from "baseui/select";
 
-import Button from "../../../components/button-n";
-import Compare from "../../../components/compare";
-import {Section} from "../../../components/sections";
+import Button from "Components/button-n";
+import Compare from "Components/compare";
+import {Section} from "Components/sections";
 
-import DataSpec from "../../../assets/spec-umbrella.json";
+import DataSpec from "Assets/spec-umbrella.json";
 
 function Umbrella_Spec({router, size}) {
     const {query} = router;
@@ -64,7 +64,7 @@ function Umbrella_Spec({router, size}) {
                     if (value.index === cellIndex) {
                         return (
                             <Block key={indexC} display="grid" gridRowGap="8px" justifyItems="center">
-                                <Image src={DataSpec["display"][value.index].picUrl} alt={DataSpec["display"][value.index].alt} width={100} height={100} layout="fixed" objectFit="contain" quality={100}/>
+                                <Image src={DataSpec["display"][value.index].picUrl} alt={DataSpec["display"][value.index].alt} width={100} height={100} layout="fixed" objectFit="contain"/>
                                 <Select backspaceRemoves={false} clearable={false} options={DataSpec["selection"]} value={[value]} searchable={false}
                                         labelKey="label" valueKey="index"
                                         onChange={params => valueSelect(params, indexC)}
@@ -81,9 +81,7 @@ function Umbrella_Spec({router, size}) {
                                             },
                                         }}
                                 />
-                                <Block width="max-content" height="24px" font="MinXLabel14" marginRight="auto" marginLeft="auto">
-                                    <Button type="solid" height="100%" text="Buy" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
-                                </Block>
+                                <Button height="24px" font="MinXLabel14" text="Buy" bundle="primary" onClick={() => router.push(DataSpec.display[value.index].buyUrl)}/>
                             </Block>
                         )
                     }

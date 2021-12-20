@@ -44,15 +44,15 @@ class MyDocument extends Document {
                 <Head>
                     {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>*/}
                     <link rel="icon" href="/logo.png"/>
-                    {/*<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,600,700,800,900&display=swap" rel="stylesheet"/>*/}
+                    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800,900&display=fallback" rel="stylesheet"/>
                     {this.props.stylesheets.map((sheet, i) => (
                         <style key={i} className="_styletron_hydrate_" dangerouslySetInnerHTML={{__html: sheet.css}} media={sheet.attrs.media} data-hydrate={sheet.attrs["data-hydrate"]}/>
                     ))}
                 </Head>
                 <body>
-                <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style={{display: 'none', visibility: 'hidden'}}/>`}}/>
                 <Main/>
                 <NextScript/>
+                <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCQP54N" height="0" width="0" style={{display: 'none', visibility: 'hidden'}}/>`}}/>
                 </body>
             </Html>
         );

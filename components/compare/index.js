@@ -3,7 +3,7 @@ import React from "react";
 import {Block} from "baseui/block";
 import {StyledBody, StyledCell, StyledRow, StyledTable} from "baseui/table";
 
-import {StringFn} from "../../utils/tools"
+import {StringFn} from "Utils/tools"
 
 import styles from "./compare.module.scss"
 

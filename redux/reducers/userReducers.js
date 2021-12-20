@@ -1,3 +1,5 @@
+import {getLocalStore} from 'next-persist';
+
 import {SIGN_UP_SUCCESS, SIGN_UP_FAIL, LOG_IN_SUCCESS, LOG_IN_FAIL, LOG_OUT, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL, UPDATE_USER_INFO_SUCCESS, UPDATE_USER_INFO_FAIL, CLEAR_ERRORS} from "../constants/userConstants";
 
 let defaultUser = {
@@ -35,7 +37,9 @@ let defaultUser = {
     },
 };
 
-export const userReducer = (state = {...defaultUser}, action) => {
+const persistedState = getLocalStore('reducerUser', defaultUser);
+
+export const userReducer = (state = persistedState, action) => {
     switch (action.type) {
         case SIGN_UP_SUCCESS:
             return {

@@ -13,7 +13,7 @@ import {
     CLEAR_ERRORS,
 } from "../constants/userConstants";
 
-import {modifyCart} from "../../redux/actions/cartActions";
+import {modifyCart} from "./cartActions";
 
 export const register = ({email, password}) => async (dispatch) => {
     try {

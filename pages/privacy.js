@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import {Block} from "baseui/block";
 
-export default function Privacy() {
+export default function Privacy({phone}) {
     return (
         <React.Fragment>
             <Head>
@@ -151,7 +151,7 @@ export default function Privacy() {
                         Email Address: support@westshade.com
                         <br/>
                         <br/>
-                        Telephone number: 877-702-1872
+                        Telephone number: {phone}
                         <br/>
                         <br/>
                         Effective as of October 05, 2020

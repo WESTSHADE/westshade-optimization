@@ -38,4 +38,4 @@ const persistor = persistStore(store);
 // };
 // export const wrapper = createWrapper(initStore);
 
-export {store, persistor}
+export {store}
