@@ -40,19 +40,19 @@ const initialProduct = {
 const initialSteps = {
     totalSteps: 4,
     currentStep: 0,
-    currentKey: "frame",
+    currentKey: "size",
     allSteps: {
-        frame: {
-            label: "Frame",
-            code:"frame",
+        size: {
+            label: "Size",
+            code:"size",
             status: {
                 done: false,
                 onGoing: true
             }
         },
-        size: {
-            label: "Size",
-            code:"size",
+        frame: {
+            label: "Frame",
+            code:"frame",
             status: {
                 done: false,
                 onGoing: false
@@ -93,7 +93,6 @@ const reducer = (state, {type, payload}) => {
         case "SET_PRINTING_REQUIREMENTS":
             return {...state, printReq: payload}
         case "RESET":
-            console.log({...state, ...payload})
             return {...state, ...payload}
         default:
             return {...state}
