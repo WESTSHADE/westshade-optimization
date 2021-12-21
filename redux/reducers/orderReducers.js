@@ -2,7 +2,11 @@ import {getLocalStore} from 'next-persist';
 
 import {GET_ORDER_SUCCESS, GET_ORDER_FAIL, CLEAR_ERRORS} from "../constants/orderConstants";
 
-const persistedState = getLocalStore('reducerOrder', []);
+let defaultOrder = {
+    orders: [],
+};
+
+const persistedState = getLocalStore('reducerOrder', defaultOrder);
 
 export const orderReducer = (state = persistedState, action) => {
     switch (action.type) {

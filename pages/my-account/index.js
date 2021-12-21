@@ -326,7 +326,7 @@ function Orders({size}) {
         <>
             <Block marginBottom={["28px", "40px"]} font="MinXTitle32">My Orders</Block>
             <Block display="grid" gridRowGap={["16px", "16px", "24px"]}>
-                {orders.map((o, index) => {
+                {orders && orders.map((o, index) => {
                     return (
                         <div key={index} style={{background: "#FFFFFF", border: "1px solid #D9D9D9", boxSizing: "border-box", borderRadius: "16px", overflow: "hidden"}}>
                             <Block display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" padding="16px" backgroundColor="MinXBackground" font="MinXParagraph14">
@@ -347,7 +347,7 @@ function Orders({size}) {
                                 {o.status}
                             </Block>
                             <Block paddingRight={["8px", "16px"]} paddingBottom="16px" paddingLeft={["8px", "16px"]}>
-                                {o.line_items.map((item, i) => {
+                                {o.line_items && o.line_items.map((item, i) => {
                                     return (
                                         <Block key={i} display="flex" flexDirection="row" paddingTop={["24px", "20px", "16px"]} paddingBottom="16px"
                                                overrides={{
@@ -450,7 +450,6 @@ function Profile() {
                         <Input value={userDetail.first_name} clearOnEscape
                                onChange={({target}) => {
                                    const {value} = target;
-
                                    let detail = {...userDetail}
                                    detail.first_name = value;
                                    setUserDetail(detail);

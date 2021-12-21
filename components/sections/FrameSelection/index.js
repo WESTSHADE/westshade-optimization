@@ -101,16 +101,19 @@ const FrameSelection = ({frameTypes, frameValue, setFrame}) => {
             </Block>
             <Block width="100%" display="flex" flexWrap={"wrap"} justifyContent="space-between" alignItems="stretch" marginTop="38px">
                 {
-                    frameTypes.map((frame) => (
+                    frameTypes.map((frame) => {
+                        console.log(frame);
+                        return (
 
-                        <Block key={frame.value} margin={["0 16px 24px", "0 5px 24px", "0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%", "30%", "30%"]}>
-                            <FrameTypeCard
-                                frame={frame}
-                                onClick={() => setFrame({frame: frame.value})}
-                                active={frameValue === frame.value}
-                            />
-                        </Block>
-                    ))
+                            <Block key={frame.value} margin={["0 16px 24px", "0 5px 24px", "0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%", "30%", "30%"]}>
+                                <FrameTypeCard
+                                    frame={frame}
+                                    onClick={() => setFrame({frame: frame.value})}
+                                    active={frameValue === frame.value}
+                                />
+                            </Block>
+                        )
+                    })
                 }
             </Block>
             <Modal type="alertdialog" isOpen={showFrameCompare} onClose={() => setShowFrameCompare(false)} content="frame"/>
