@@ -61,7 +61,7 @@ const ProgressSteps = ({steps, currentStep}) => {
 
             </Block>
         </Block>
-        <Block placeItems="center" font="MinXLabel14" color="MinXButton" width="100%" marginTop="22px" display={["grid", "none"]}>
+        <Block placeItems="center" font="MinXLabel14" color="MinXButton" width="100%" marginTop="22px" display={[ "none"]}>
                 {data[currentStep].label}
         </Block>
         </>
