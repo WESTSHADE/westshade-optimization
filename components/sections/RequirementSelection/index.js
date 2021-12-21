@@ -46,7 +46,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                 <MButton
                                     height="32px"
                                     text="Change angle"
-                                    startEnhancer={() => <i><Image src="/images/icon/icon-3d.png" width={16} height={16} alt="icon" layout="fixed"/></i>}
+                                    startEnhancer={() => <i><Image src="/images/icon/icon-angle.png" width={16} height={16} alt="icon" layout="fixed"/></i>}
                                     color="#808080"
                                     buttonStyle={{
                                         borderRadius: "8px !important",
