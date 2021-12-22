@@ -36,25 +36,34 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                     borderLeftWidth: "3px",
                     borderRightWidth: "3px",
                     borderColor: active ? "#23A4AD" : "transparent",
+                    cursor: "pointer",
                     transition: "all .15s ease-in-out"
                 })}
             >
+                    {
+                        method?.fabricPrinted &&
+                        <Block font="MinXParagraph12" color="MinXTitle">
+                            This sample is printed on {method.fabricPrinted} fabric.
+                        </Block>
+                    }
                 <Block width="100%" position="relative">
-                    <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" top="12px" right="12px" $style={{zIndex: "5"}}>
+                    <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" bottom="30px" left="50%" $style={{zIndex: "5", transform: "translateX(-50%)"}}>
                         <MButton
                             buttonClassName={css({
-                                background: "rgba(255, 255, 255, 0.7) !important",
+                                background: "rgba(255, 255, 255, 0.6) !important",
                                 backdropFilter: "blur(6px) !important",
                                 transition: "all .3s ease-in",
+                                padding: "9px 18px !important",
                                 ':hover': {background: "rgba(255, 255, 255, 0.85) !important"}
                             })}
                             width="100%"
                             color="MinXTitle"
                             font="MinXParagraph14"
+                            startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-pointer.png" alt="hover" width={14} height={17} layout="fixed"/></Block>}
                             text="See original image"
                         />
                     </Block>
-                    <Block width="100%" $style={{borderRadius: "16px", overflow: "hidden",}}>
+                    <Block marginTop="16px" width="100%" $style={{borderRadius: "16px", overflow: "hidden",}}>
                         <Image src={method.image} width={370} height={250} alt={method.label} layout="responsive" objectFit="contain"/>
                     </Block>
                     <Block
@@ -71,13 +80,24 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                 <Block marginTop="24px">
                     <Block display="flex" flexDirection="column" alignItems="center">
                         <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            COLOR
+                            Color
                         </Block>
                         <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.color)}/>
                     </Block>
                     <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
                         <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            FABRIC
+                            Fastness
+                        </Block>
+                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex"> 
+                            <Block marginRight="4px" font="MinXHeading16" color="MinXButton">
+                                {method.fastness}
+                            </Block>
+                            years*
+                        </Block>
+                    </Block>
+                    <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
+                        <Block font="MinXParagraph16" color="MinXSecondaryText">
+                            Fabric
                         </Block>
                         <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.fabric)}/>
                     </Block>
@@ -108,24 +128,13 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                         />
                     </Block>
                 </Block>
-                {
+            </Block>
+            {
                     method.note &&
-                    <Block
-                        font="MinXParagraph14"
-                        color="MinXSecondaryText"
-                        position="absolute"
-                        top="calc(100% + 8px)"
-                        left="50%"
-                        width="100%"
-                        className={css({
-                            textAlign: "center",
-                            transform: "translateX(-50%)"
-                        })}
-                    >
+                    <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0" >
                         {method.note}
                     </Block>
                 }
-            </Block>
         </>
     )
 }
@@ -147,18 +156,22 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                 <MButton height="32px" onClick={() => setShowPrintingTechnology(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}}
                          text="Compare printing methods"/>
             </Block>
-            <Block width="100%" display="flex" flexWrap="wrap" justifyContent="center" marginTop="38px">
-                {
-                    printingMethods.map((method) => (
-                        <Block key={method.value} margin={["0 16px 16px ", "0px 16px 16px", "0 24px", "0 50px"]} maxWidth={["100%", "418px", "418px"]} width="100%">
-                            <PrintingMethodCard
-                                method={method}
-                                active={printingMethodValue === method.value}
-                                onClick={() => setMethod({pMethod: method.value})}
-                            />
-                        </Block>
-                    ))
-                }
+            <Block width="100%"  marginTop="38px" overflow="hidden">
+                <Block width="100%" display="grid" placeItems="center" overflow="auto">
+                    <Block width="100%" width={["550px","804px"]} display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
+                        {
+                            printingMethods.map((method) => (
+                                <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["275px", "307px", "376px"]} width="100%">
+                                    <PrintingMethodCard
+                                        method={method}
+                                        active={printingMethodValue === method.value}
+                                        onClick={() => setMethod({pMethod: method.value})}
+                                    />
+                                </Block>
+                            ))
+                        }
+                    </Block>
+                </Block>
             </Block>
             <Modal type="alertdialog" isOpen={showPrintingTechnology} onClose={() => setShowPrintingTechnology(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
         </>

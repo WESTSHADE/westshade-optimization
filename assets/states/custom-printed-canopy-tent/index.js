@@ -137,6 +137,8 @@ const stepReducer = (state, {type, payload}) => {
             return {...state, done: true, error:false}
         case "SET_DEFAULT_AND_NEXT":
             return {...state, error:false, currentStep: state.currentStep + 1, allSteps:{...state.allSteps, ...payload.steps,[payload.key]: {...state.allSteps[payload.key], status: {done: false, onGoing: true}}}, currentKey:payload.key}
+        case "SET_EDIT_DETAILS":
+            return {...state, done: false, error:false, currentKey:"size", currentStep: 0} 
         case "SET_ERROR": 
             return {...state, error:true}
         case "RESET":

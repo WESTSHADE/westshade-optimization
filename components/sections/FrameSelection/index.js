@@ -6,8 +6,7 @@ import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
 
-const FrameTypeCard = ({frame, active, onClick}) => {
-
+const FrameTypeCard = ({frame,framePrice, active, onClick}) => {
     return (
         <>
             <Block
@@ -49,7 +48,7 @@ const FrameTypeCard = ({frame, active, onClick}) => {
                         {frame.description}
                     </Block>
                     <Block font="MinXSubtitle20" marginTop="16px">
-                        + $ {frame.price}
+                        + $ {framePrice.price ||  frame.price}
                     </Block>
                 </Block>
                 <Block marginTop="40px">
@@ -83,38 +82,42 @@ const FrameTypeCard = ({frame, active, onClick}) => {
     )
 }
 
-const FrameSelection = ({frameTypes, frameValue, setFrame}) => {
+const FrameSelection = ({frameTypes, framePrices, frameValue, setFrame}) => {
     const [showFrameCompare, setShowFrameCompare] = useState(false);
     const [css] = useStyletron();
     return (
         <>
-            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]}>
-                <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column">
-                    <Block font="MinXSubtitle20" color="MinXTitle">
-                        Please select the frame of the tent.
+            <Block width="100%">
+                <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]}>
+                    <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column">
+                        <Block font="MinXSubtitle20" color="MinXTitle">
+                            Please select the frame of the tent.
+                        </Block>
+                        <Block color="#808080" font="MinXParagraph16">
+                            {frameTypes.length} frames available
+                        </Block>
                     </Block>
-                    <Block color="#808080" font="MinXParagraph16">
-                        {frameTypes.length} frames available
+                    <MButton height="32px" onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}} text="Compare frames"/>
+                </Block>
+                <Block width="100%" display="grid" placeItems="center" overflow="hidden">
+                <Block width="100%" display="grid" placeItems="center" overflow="scrollX">
+                    <Block width="100%" width="1016px" display="flex" $style={{flexWrap: "nowrap"}} justifyContent={["flex-start","space-between"]} alignItems="stretch" marginTop="38px">
+                        {
+                            frameTypes.map((frame, idx) => (
+
+                                <Block key={frame.value} margin={["0 8.5px 24px", "0 9px 24px", "0 10px"]} maxWidth={["251px", "342px", "410px"]} width={["100%", "100%", "100%"]}>
+                                    <FrameTypeCard
+                                        frame={frame}
+                                        framePrice={framePrices[idx]}
+                                        onClick={() => setFrame({frame: frame.value})}
+                                        active={frameValue === frame.value}
+                                    />
+                                </Block>
+                            ))
+                        }
                     </Block>
                 </Block>
-                <MButton height="32px" onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}} text="Compare frames"/>
-            </Block>
-            <Block width="100%" display="flex" flexWrap={"wrap"} justifyContent="space-between" alignItems="stretch" marginTop="38px">
-                {
-                    frameTypes.map((frame) => {
-                        console.log(frame);
-                        return (
-
-                            <Block key={frame.value} margin={["0 16px 24px", "0 5px 24px", "0 10px"]} maxWidth={["100%", "260px", "300px"]} width={["100%", "30%", "30%"]}>
-                                <FrameTypeCard
-                                    frame={frame}
-                                    onClick={() => setFrame({frame: frame.value})}
-                                    active={frameValue === frame.value}
-                                />
-                            </Block>
-                        )
-                    })
-                }
+                </Block>
             </Block>
             <Modal type="alertdialog" isOpen={showFrameCompare} onClose={() => setShowFrameCompare(false)} content="frame"/>
         </>

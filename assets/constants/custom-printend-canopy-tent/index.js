@@ -2,29 +2,33 @@ const printingMethods = [
     {
         color: " <span class='highlighted'> More vivid; great contrast </span>",
         fabric: " <span class='highlighted'> 900D, 360 gsm </span> polyester <br/> with PU coating",
+        fabricPrinted: "900D",
+        fastness: "4-5",
         image: "/images/custom-printed-canopy-tent/pmt-uv-printing.png",
         originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
         value: "UV PRINTING",
         label: "UV Printing",
         years: "4-5",
-        note:""
+        note: ""
     },
     {
         color: "Vivid color; good contrast",
         fabric: "<span class='highlighted'> 600D, 288 gsm </span> polyester <br/> with PU coating",
+        fabricPrinted: "600D",
+        fastness: "2-3",
         image: "/images/custom-printed-canopy-tent/pmt-dye-sublimation.png",
         originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
         value: "DYE SUBLIMATION PRINTING",
         label: "Dye Sublimation",
         years: "2-3",
-        note:"*Color fastness depends on usage and weather condition."
+        note: "*Color fastness depends on usage and weather condition."
     }
 ]
 const frameTypes = [
     {
         image: "/images/canopy-tent/tent/y5.webp",
         value: "Y5",
-        label: "Y5 - Economical steel",
+        label: "Y5 - Economical steel frame",
         description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is desgined for everyday use, performs exceptionally well all year round.",
         price: "0"
     },
@@ -32,7 +36,7 @@ const frameTypes = [
 
         image: "/images/canopy-tent/tent/y6.webp",
         value: "Y6",
-        label: "Y6 - Commercial aluminum",
+        label: "Y6 - Commercial aluminum frame",
         description: "Y6 range is an ideal entry level of aluminum tent. It's lightweight yet remaining the strength of heavy duty steel frame. It is ideal for the regular professional user.",
         price: "0"
     },
@@ -47,24 +51,24 @@ const frameTypes = [
 ]
 const tentSizes = {
     Y7: [
-        {size: "10x10", label: "10'x10'",image: "/images/icon/icon-10x10.png"},
-        {size: "10x15", label: "10'x15'",image: "/images/icon/icon-10x15.png"},
-        {size: "10x20", label: "10'x20'",image: "/images/icon/icon-10x20.png"},
-        {size: "13x13", label: "13'x13'",image: "/images/icon/icon-13x13.png"},
-        {size: "13x20", label: "13'x20'",image: "/images/icon/icon-13x20.png"},
-        {size: "13x26", label: "13'x26'",image: "/images/icon/icon-13x26.png"},
-        {size: "16x16", label: "16'x16'",image: "/images/icon/icon-16x16.png"},
-        {size: "20x20", label: "20'x20'",image: "/images/icon/icon-20x20.png"},
+        {size: "10x10", label: "10'x10'", image: "/images/icon/icon-10x10.png"},
+        {size: "10x15", label: "10'x15'", image: "/images/icon/icon-10x15.png"},
+        {size: "10x20", label: "10'x20'", image: "/images/icon/icon-10x20.png"},
+        {size: "13x13", label: "13'x13'", image: "/images/icon/icon-13x13.png"},
+        {size: "13x20", label: "13'x20'", image: "/images/icon/icon-13x20.png"},
+        {size: "13x26", label: "13'x26'", image: "/images/icon/icon-13x26.png"},
+        {size: "16x16", label: "16'x16'", image: "/images/icon/icon-16x16.png"},
+        {size: "20x20", label: "20'x20'", image: "/images/icon/icon-20x20.png"},
     ],
     Y6: [
-        {size: "10x10", label: "10'x10'",image: "/images/icon/icon-10x10.png"},
-        {size: "10x15", label: "10'x15'",image: "/images/icon/icon-10x15.png"},
-        {size: "10x20", label: "10'x20'",image: "/images/icon/icon-10x20.png"},
+        {size: "10x10", label: "10'x10'", image: "/images/icon/icon-10x10.png"},
+        {size: "10x15", label: "10'x15'", image: "/images/icon/icon-10x15.png"},
+        {size: "10x20", label: "10'x20'", image: "/images/icon/icon-10x20.png"},
     ],
     Y5: [
-        {size: "10x10", label: "10'x10'",image: "/images/icon/icon-10x10.png"},
-        {size: "10x15", label: "10'x15'",image: "/images/icon/icon-10x15.png"},
-        {size: "10x20", label: "10'x20'",image: "/images/icon/icon-10x20.png"},
+        {size: "10x10", label: "10'x10'", image: "/images/icon/icon-10x10.png"},
+        {size: "10x15", label: "10'x15'", image: "/images/icon/icon-10x15.png"},
+        {size: "10x20", label: "10'x20'", image: "/images/icon/icon-10x20.png"},
     ]
 }
 

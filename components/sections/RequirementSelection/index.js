@@ -161,13 +161,18 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
 
                         }}
                     >
-                        <Block maxWidth="664px" margin="0 auto" display="flex" flexWrap="wrap" justifyContent="space-between">
-                            <Block width={["44%", "45%", "141px", "141px"]} margin={["0 0px 16px", "0 0px 16px"]}>
+                        <Block maxWidth="664px" margin="0 auto" display="flex" flexWrap="nowrap" justifyContent="space-between">
+                            <Block width="23%">
                                 <MButton
                                     height="auto"
                                     onClick={() => setSide({activeSide: "LEFT"})}
+                                    width="100%"
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
+                                        borderTopLeftRadius:"8px !important",
+                                        borderTopRightRadius:"8px !important",
+                                        borderBottomLeftRadius:"8px !important",
+                                        borderBottomRightRadius:"8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -177,17 +182,20 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                         padding: "17px 0 !important",
                                         boxShadow: activeSide === "LEFT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
                                         transition: "all .15s ease-in-out"
-
                                     }}
                                     text="Side A"
                                 />
                             </Block>
-                            <Block width={["44%", "45%", "141px", "141px"]} margin={["0 0px 16px", "0 0px 16px"]}>
+                            <Block width="23%">
                                 <MButton
                                     height="auto"
                                     onClick={() => setSide({activeSide: "BACK"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
+                                        borderTopLeftRadius:"8px !important",
+                                        borderTopRightRadius:"8px !important",
+                                        borderBottomLeftRadius:"8px !important",
+                                        borderBottomRightRadius:"8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -201,12 +209,16 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                     text="Side B"
                                 />
                             </Block>
-                            <Block width={["44%", "45%", "141px", "141px"]} margin={["0 0px 16px", "0 0px 16px"]}>
+                            <Block width="23%">
                                 <MButton
                                     height="auto"
                                     onClick={() => setSide({activeSide: "RIGHT"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
+                                        borderTopLeftRadius:"8px !important",
+                                        borderTopRightRadius:"8px !important",
+                                        borderBottomLeftRadius:"8px !important",
+                                        borderBottomRightRadius:"8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -220,12 +232,16 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                     text="Side C"
                                 />
                             </Block>
-                            <Block width={["44%", "45%", "141px", "141px"]} margin={["0 0px 16px", "0 0px 16px"]}>
+                            <Block width="23%">
                                 <MButton
                                     height="auto"
                                     onClick={() => setSide({activeSide: "FRONT"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
+                                        borderTopLeftRadius:"8px !important",
+                                        borderTopRightRadius:"8px !important",
+                                        borderBottomLeftRadius:"8px !important",
+                                        borderBottomRightRadius:"8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -249,7 +265,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                         <Block marginTop="8px" font="MinXParagraph12" color="#808080">{label[activeSide] || "A"}</Block>
                                     </Block>
                                 </Block>
-                                <Block width="90px" display="flex" justifyContent="space-between" alignItems="center">
+                                <Block width="140px" display="flex" justifyContent="space-between" alignItems="center">
                                     <MButton
                                         onClick={() => setPeakDetailsIsOpen(true)}
                                         type={Object.keys(requirement.peak[activeSide]).length > 0 ? "solid" : "dashed"}
@@ -292,7 +308,7 @@ const RequirementSelection = ({activeSide = "FRONT", activeTentImage, tentFrame,
                                         <Block marginTop="8px" $style={{textTransform: "capitalize"}} font="MinXParagraph12" color="#808080">{label[activeSide] || "A"}</Block>
                                     </Block>
                                 </Block>
-                                <Block width="90px" display="flex" justifyContent="space-between" alignItems="center">
+                                <Block width="140px" display="flex" justifyContent="space-between" alignItems="center">
                                     <MButton
                                         onClick={() => setValanceDetailsIsOpen(true)}
                                         type="dashed"
