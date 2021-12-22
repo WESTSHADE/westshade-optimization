@@ -15,7 +15,8 @@ const TentSizeCard = ({image, label, value, active, onClick}) => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            padding={["15px 16px", "15px 22px", "24px 38px"]}
+            justifyContent="center"
+            height="100%"
             width="100%"
             marginBottom="32px"
             className={css({
@@ -36,37 +37,11 @@ const TentSizeCard = ({image, label, value, active, onClick}) => {
                 transition: "all .3s ease-in-out"
             })}
         >
-            <Block width="100%">
+            <Block width="50%">
                 <Image src={image} width={155} height={140} alt={label} layout="responsive" objectFit="contain"/>
             </Block>
-            <Block width="100%" marginTop="8px" font="MinXParagraph14">
-                <MButton
-                    width="100%"
-                    height="auto"
-                    onClick={onClick}
-                    buttonStyle={{
-                        backgroundColor: "transparent !important",
-                        color: "#262626 !important",
-                        fontFamily: "Roboto !important",
-                        fontSize: "14px !important",
-                        fontWeight: "400 !important",
-                        width: "100% !important",
-                        borderTopWidth: "2px",
-                        borderBottomWidth: "2px",
-                        borderLeftWidth: "2px",
-                        borderRightWidth: "2px",
-                        borderTopStyle: "solid",
-                        borderBottomStyle: "solid",
-                        borderRightStyle: "solid",
-                        borderLeftStyle: "solid",
-                        borderColor: "#bfbfbf",
-                        paddingTop: "14px !important",
-                        paddingBottom: "14px !important",
-                        paddingRight: "0px !important",
-                        paddingLeft: "0px !important",
-                    }}
-                    text={`Select ${label}`}
-                />
+            <Block width="100%" marginTop="10%" font="MinXParagraph14" $style={{textAlign: "center"}}>
+                {label}
             </Block>
         </Block>
     )
@@ -127,14 +102,15 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                                     overrides={{
                                         Root: {
                                             style: {
-                                                width: "47%",
-                                                maxWidth: "236px",
-                                                '@media (min-width: 480px)': {width: "32%"},
-                                                '@media (min-width: 960px)': {width: "23.5%"}
+                                                width: "104px",
+                                                height: "104px",
+                                                '@media (min-width: 480px)': {width: "158px", height: "158px"},
+                                                '@media (min-width: 960px)': {width: "239px", height: "239px"},
+                                                '@media (min-width: 1310px)': {width: "302px", height: "302px"},
                                             }
                                         },
                                         Label: {
-                                            component: () => (<Block padding="0" width="100%">
+                                            component: () => (<Block padding="0" width="100%" height="100%">
                                                 <TentSizeCard
                                                     value={size.size}
                                                     image={size.image}
@@ -157,8 +133,13 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                         }
                         <Block
                             aria-hidden="true"
-                            width={["136px", "163px", "226px"]}
-                            minWidth="120px"
+                            $style={{
+                                width: "104px",
+                                
+                                '@media (min-width: 480px)': {width: "158px"},
+                                '@media (min-width: 960px)': {width: "239px"},
+                                '@media (min-width: 1310px)': {width: "302px"},
+                            }}
                             className={css({
                                 userSelect: "none",
                                 opacity: 0,
@@ -168,8 +149,13 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                         </Block>
                         <Block
                             aria-hidden="true"
-                            width={["136px", "163px", "226px"]}
-                            minWidth="120px"
+                            $style={{
+                                width: "104px",
+                                
+                                '@media (min-width: 480px)': {width: "158px"},
+                                '@media (min-width: 960px)': {width: "239px"},
+                                '@media (min-width: 1310px)': {width: "302px"},
+                            }}
                             className={css({
                                 userSelect: "none",
                                 opacity: 0,
@@ -179,8 +165,13 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                         </Block>
                         <Block
                             aria-hidden="true"
-                            width={["136px", "163px", "226px"]}
-                            minWidth="120px"
+                            $style={{
+                                width: "104px",
+                                
+                                '@media (min-width: 480px)': {width: "158px"},
+                                '@media (min-width: 960px)': {width: "239px"},
+                                '@media (min-width: 1310px)': {width: "302px"},
+                            }}
                             className={css({
                                 userSelect: "none",
                                 opacity: 0,
@@ -190,8 +181,13 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                         </Block>
                         <Block
                             aria-hidden="true"
-                            width={["136px", "163px", "226px"]}
-                            minWidth="120px"
+                            $style={{
+                                width: "104px",
+                                
+                                '@media (min-width: 480px)': {width: "158px"},
+                                '@media (min-width: 960px)': {width: "239px"},
+                                '@media (min-width: 1310px)': {width: "302px"},
+                            }}
                             className={css({
                                 userSelect: "none",
                                 opacity: 0,

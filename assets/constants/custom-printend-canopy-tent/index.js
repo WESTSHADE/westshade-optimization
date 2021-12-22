@@ -2,6 +2,8 @@ const printingMethods = [
     {
         color: " <span class='highlighted'> More vivid; great contrast </span>",
         fabric: " <span class='highlighted'> 900D, 360 gsm </span> polyester <br/> with PU coating",
+        fabricPrinted: "900D",
+        fastness: "4-5",
         image: "/images/custom-printed-canopy-tent/pmt-uv-printing.png",
         originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
         value: "UV PRINTING",
@@ -12,6 +14,8 @@ const printingMethods = [
     {
         color: "Vivid color; good contrast",
         fabric: "<span class='highlighted'> 600D, 288 gsm </span> polyester <br/> with PU coating",
+        fabricPrinted: "600D",
+        fastness: "2-3",
         image: "/images/custom-printed-canopy-tent/pmt-dye-sublimation.png",
         originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
         value: "DYE SUBLIMATION PRINTING",

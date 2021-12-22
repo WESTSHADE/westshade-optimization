@@ -10,7 +10,7 @@ const ProgressSteps = ({steps, currentStep}) => {
         <Block width="100%" position="relative" height="1px" backgroundColor="#D9D9D9">
             <Block position="absolute" top="50%" left="50%" width="100%" height="100%" display="flex" alignItems="center" justifyContent="space-between" className={css({
                 transform: "translate(-50%, -50%)",
-                zIndex: "10"
+                zIndex: "5"
             })}>
                 {
                     data.map((step, idx) =>(
@@ -25,7 +25,7 @@ const ProgressSteps = ({steps, currentStep}) => {
                                 transition: "all .3s ease-in"
                             })}
                         >
-                            <Block position="relative" width="100%" height="100%" display={["none", "block"]}>
+                            <Block position="relative" width="100%" height="100%" display={["none","none", "block"]}>
                                 <Block 
                                     position="absolute" 
                                     top="16px" 
@@ -61,9 +61,9 @@ const ProgressSteps = ({steps, currentStep}) => {
 
             </Block>
         </Block>
-        <Block placeItems="center" font="MinXLabel14" color="MinXButton" width="100%" marginTop="22px" display={[ "none"]}>
+        {/* <Block placeItems="center" font="MinXLabel14" color="MinXButton" width="100%" marginTop="22px" display={[ "none"]}>
                 {data[currentStep].label}
-        </Block>
+        </Block> */}
         </>
     )
 }
