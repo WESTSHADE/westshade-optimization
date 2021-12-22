@@ -1,7 +1,7 @@
 import {useStyletron} from "baseui"
 import {Block} from "baseui/block"
 import Image from "next/image"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
@@ -82,9 +82,17 @@ const FrameTypeCard = ({frame,framePrice, active, onClick}) => {
     )
 }
 
-const FrameSelection = ({frameTypes, framePrices, frameValue, setFrame}) => {
+const FrameSelection = ({frameTypes,acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
     const [showFrameCompare, setShowFrameCompare] = useState(false);
+    const [frames, setFrames] = useState([]);
     const [css] = useStyletron();
+
+    useEffect(() => {
+        let types = frameTypes.filter((item) => {
+            if(acceptedFrameTypes.includes(item.value)) return item
+        })
+        setFrames(types)
+    }, [acceptedFrameTypes])
     return (
         <>
             <Block width="100%">
@@ -103,7 +111,7 @@ const FrameSelection = ({frameTypes, framePrices, frameValue, setFrame}) => {
                 <Block width="100%" display="grid" placeItems="center" overflow="scrollX">
                     <Block width="100%" width="1016px" display="flex" $style={{flexWrap: "nowrap"}} justifyContent={["flex-start","space-between"]} alignItems="stretch" marginTop="38px">
                         {
-                            frameTypes.map((frame, idx) => (
+                            frames?.map((frame, idx) => (
 
                                 <Block key={frame.value} margin={["0 8.5px 24px", "0 9px 24px", "0 10px"]} maxWidth={["251px", "342px", "410px"]} width={["100%", "100%", "100%"]}>
                                     <FrameTypeCard
