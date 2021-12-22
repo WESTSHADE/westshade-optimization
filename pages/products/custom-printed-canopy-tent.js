@@ -415,7 +415,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
 
     //useEffect for setting frame variant
     useEffect(() => {
-        if (state.size && state.frame && (steps.allSteps.frame.status.done, steps.allSteps.size.status.done)) {
+        if (state.size && state.frame && (steps.allSteps.frame.status.done && steps.allSteps.size.status.done)) {
+            console.log("selected frame variant")
             const frameVariant = getFrameVariant();
             productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
         }
