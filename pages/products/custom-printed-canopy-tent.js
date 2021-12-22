@@ -45,8 +45,16 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
-        dispatch({type: "SET_SIZE", payload});
-        stepDispatch({type: "SET_OPTION_IS_DONE"})
+        console.log(payload)
+        if(!["10x10","10x15","10x20"].includes(payload.size)){
+            dispatch({type: "SET_FRAME", payload: {frame: "Y7"}});
+            dispatch({type: "SET_SIZE", payload});
+            stepDispatch({type: "SET_OPTION_IS_DONE"})
+        }
+        else {
+            dispatch({type: "SET_SIZE", payload});
+            stepDispatch({type: "SET_OPTION_IS_DONE"})
+        }
     }
     const selectFrame = (payload) => {
         if (payload.frame === 'Y7') {
@@ -390,6 +398,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             return {price: variant[0]?.price, frame:frameTypes[index]}
         })
         if(framePrices){
+            framePrices.reverse()
             setFramePrices(framePrices)
         }
     }, [state.size, acceptedFrameTypes])
@@ -416,7 +425,6 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     //useEffect for setting frame variant
     useEffect(() => {
         if (state.size && state.frame && (steps.allSteps.frame.status.done && steps.allSteps.size.status.done)) {
-            console.log("selected frame variant")
             const frameVariant = getFrameVariant();
             productDispatch({type: "SET_FRAME_VARIANT", payload: {frameVariant}})
         }
