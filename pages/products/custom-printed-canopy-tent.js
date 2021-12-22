@@ -37,6 +37,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     ]);
     const [summaryIsOpen, setSummaryIsOpen] = useState(false)
     const [framePrices, setFramePrices] = useState([])
+    const [acceptedFrameTypes, setAcceptedFrameTypes] = useState([...frameTypes])
     const [css] = useStyletron();
     let myData = Object.keys(steps.allSteps).map(key => {
         return steps.allSteps[key];
@@ -380,7 +381,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }
 
     useEffect(() => {
-        const framePrices = ["Y5", "Y6", "Y7"].map((type,index) => {
+        const framePrices = acceptedFrameTypes?.map((type,index) => {
             const variant = productVariant[0].filter((item, idx) => {
                 if (item.attributes[0].option === state.size && item.attributes[1].option.includes(type)) {
                     return {price: item.price, frame:frameTypes[idx]}
@@ -388,8 +389,10 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             })
             return {price: variant[0]?.price, frame:frameTypes[index]}
         })
-        setFramePrices(framePrices)
-    }, [state.size])
+        if(framePrices){
+            setFramePrices(framePrices)
+        }
+    }, [state.size, acceptedFrameTypes])
 
     useEffect(() => {
         if (product.hasOwnProperty("image") && Object.keys(product.image).length !== 0) {
@@ -398,6 +401,17 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             setImages(() => [...product.images])
         }
     }, [product])
+
+    useEffect(() => {
+        let types = []
+        productVariant[0].filter((item) => {
+            if(item.attributes[0].option === state.size){
+                const frameType = item.attributes[1].option.split(" ")[0]
+                if(frameType) types.push(frameType)
+            }
+        })
+        setAcceptedFrameTypes(types)
+    }, [steps.allSteps.size.status.done, state.size])
 
     //useEffect for setting frame variant
     useEffect(() => {
@@ -621,7 +635,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                         </Block>
                         <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
                             {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
-                            {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
+                            {steps.currentStep === 1 && <FrameSelection  framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
                             {steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
                                                       tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}

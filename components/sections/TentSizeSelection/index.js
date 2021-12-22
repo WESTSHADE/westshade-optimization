@@ -93,7 +93,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                         }}
                     >
                         {
-                            tentSizes[frame].map((size) => (
+                            tentSizes.Y7.map((size) => (
                                 <Radio
                                     key={size.size}
                                     value={size.size}
