@@ -22,7 +22,6 @@ import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/cus
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from "react-responsive-carousel"
 
-
 const utils = new Utils();
 
 const Index = ({product, productVariant, productComponent, pageState, printingMethods, frameTypes, tentSizes}) => {
@@ -311,8 +310,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
             69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
             70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
-            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
+            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide ? "Apply to four sides peak" : "",
+            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide ? "Apply to four sides valance" : "",
             36.3: "",
             36.6: "",
             37: "",
@@ -525,33 +524,34 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                     <>
                         <Block width="100%" backgroundColor="MinXBackground">
                             <Block display="flex" alignItems="center" padding="0 16px" minHeight="44px" margin="0 auto" maxWidth="1152px" width="100%">
-                                <Block display="flex" width="100%"  padding="4px 0" justifyContent="space-between" alignItems="center">
-                                        <Block>
-                                            <ButtonM 
-                                                text="Quit"
-                                                font="MinXLabel14"
-                                                buttonBackgroundColor="#ffffff"
-                                                buttonHoverStyle={{opacity: "0.7", color: "inherit", backgroundColor:"unset"}}
-                                                buttonStyle={{padding: "11px 20px !important", border: "1px solid #f0f0f0"}}
-                                                startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-close.png" alt="close" width={14} height={14} objectFit="contain" layout="fixed"/></Block>}
-                                                onClick={closeCustomizer}
-                                            />
+                                <Block display="flex" width="100%" padding="4px 0" justifyContent="space-between" alignItems="center">
+                                    <Block>
+                                        <ButtonM
+                                            text="Quit"
+                                            font="MinXLabel14"
+                                            buttonBackgroundColor="#ffffff"
+                                            buttonHoverStyle={{opacity: "0.7", color: "inherit", backgroundColor: "unset"}}
+                                            buttonStyle={{padding: "11px 20px !important", border: "1px solid #f0f0f0"}}
+                                            startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-close.png" alt="close" width={14} height={14} objectFit="contain" layout="fixed"/></Block>}
+                                            onClick={closeCustomizer}
+                                        />
+                                    </Block>
+                                    <Block color="MinXTitle" display="flex" alignItems="center">
+                                        <Block font="MinXParagraph14">
+                                            Total:
                                         </Block>
-                                        <Block color="MinXTitle" display="flex" alignItems="center">
-                                            <Block font="MinXParagraph14">
-                                                Total:
-                                            </Block>
-                                            <Block marginLeft="8px" font="MinXSubtitle18">
-                                                ${productState.bag?.totalPrice || 0}
-                                            </Block>
+                                        <Block marginLeft="8px" font="MinXSubtitle18">
+                                            ${productState.bag?.totalPrice || 0}
                                         </Block>
+                                    </Block>
                                 </Block>
                             </Block>
                         </Block>
                         <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
                             {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
                             {steps.currentStep === 1 && <FrameSelection frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
-                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
+                            {steps.currentStep === 2 &&
+                                <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
                                                       tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                         </Block>
