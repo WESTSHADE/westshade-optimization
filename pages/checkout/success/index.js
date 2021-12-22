@@ -133,7 +133,7 @@ function Success({router, orderDetail}) {
                                 paddingTop: "16px"
                             }}>
                                 <div style={{fontSize: "16px", lineHeight: "22px", color: "#1D1D1F", fontWeight: "bold"}}>Total</div>
-                                <div style={{fontSize: "14px", lineHeight: "22px", color: "#1D1D1F"}}>{orderDetail.currency_symbol + numberFn.strToFloat(orderDetail.total)}</div>
+                                <div id="totalamount" style={{fontSize: "14px", lineHeight: "22px", color: "#1D1D1F"}}>{orderDetail.currency_symbol + numberFn.strToFloat(orderDetail.total)}</div>
                             </div>
                         </div>
                     </Block>
