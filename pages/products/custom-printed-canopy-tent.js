@@ -17,7 +17,7 @@ import {updateUser} from "../../redux/actions/userActions"
 import {modifyCart} from "../../redux/actions/cartActions"
 import {Modal} from "@material-ui/core"
 import {productReducer, reducer, stepReducer, initialState, initialProduct, initialSteps} from "../../assets/states/custom-printed-canopy-tent"
-import MButton from "../../components/button-n"
+import {ArrowLeft, ArrowRight} from 'baseui/icon'
 import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/custom-printend-canopy-tent"
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from "react-responsive-carousel"
@@ -36,6 +36,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         {src: "/images/custom-printed-canopy-tent/tents/Y7-10x10/0-default-with-logo/Y7-10X10-WH.webp"}
     ]);
     const [summaryIsOpen, setSummaryIsOpen] = useState(false)
+    const [framePrices, setFramePrices] = useState([])
     const [css] = useStyletron();
     let myData = Object.keys(steps.allSteps).map(key => {
         return steps.allSteps[key];
@@ -52,8 +53,10 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         } else {
             dispatch({type: "SET_FRAME", payload});
-            dispatch({type: "SET_SIZE", payload: {size: "10x10"}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
+            if(!["10x10","10x15","10x20"].includes(state.size)){
+                dispatch({type: "SET_SIZE", payload: {size: "10x10"}});
+            }
         }
 
     }
@@ -202,6 +205,11 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         return productList;
     }
 
+    const editDetails = () => {
+        dispatch({type:"SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer:true}})
+        stepDispatch({type:"SET_EDIT_DETAILS"})
+    }
+
     const addToCart = () => {
         if (!steps.done && !productState.entryId) return;
         let cl = JSON.parse(JSON.stringify(cart));
@@ -229,53 +237,57 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }
 
     const handleSendDetails = async () => {
-        // const res = await utils.contact({
-        //     form_id: "6",
-        //     status: "active",
-        //     1: "Custom Printing tent",
-        //     5: (state.printReq.peak.FRONT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.FRONT.background?.value + "; " : "") + (state.printReq.valance.FRONT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.FRONT.background?.value + ";" : ""),
-        //     6: (state.printReq.peak.FRONT.text?.content ? "Peak: " + state.printReq.peak.FRONT.text?.content + "; " : "") + (state.printReq.valance.FRONT.text?.content ? "Valance: " + state.printReq.peak.FRONT.text?.content + ";" : ""),
-        //     7: (state.printReq.peak.FRONT.text?.font || state.printReq.peak.FRONT.text?.color ? "Peak: " + state.printReq.peak.FRONT.text?.font + " " + state.printReq.peak.FRONT.text?.color + "; " : "") + (state.printReq.valance.FRONT.text?.font || state.printReq.valance.FRONT.text?.color ? "Valance: " + state.printReq.valance.FRONT.text?.font + " " + state.printReq.valance.FRONT.text?.color + "; " : ""),
-        //     8: (state.printReq.peak.FRONT.printInstruction ? "Peak: " + state.printReq.peak.FRONT.printInstruction + "; " : "") + (state.printReq.valance.FRONT.printInstruction ? "Valance: " + state.printReq.valance.FRONT.printInstruction + "; " : ""),
-        //     55: state.printReq.peak.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
-        //     56: state.printReq.valance.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
-        //     57: state.printReq.peak.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.logo?.filename : "",
-        //     58: state.printReq.valance.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.FRONT.logo?.filename : "",
-        //     10: (state.printReq.peak.BACK.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.BACK.background?.value + "; " : "") + (state.printReq.valance.BACK.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.BACK.background?.value + ";" : ""),
-        //     13: (state.printReq.peak.BACK.text?.content ? "Peak: " + state.printReq.peak.BACK.text?.content + "; " : "") + (state.printReq.valance.BACK.text?.content ? "Valance: " + state.printReq.peak.BACK.text?.content + ";" : ""),
-        //     14: (state.printReq.peak.BACK.text?.font || state.printReq.peak.BACK.text?.color ? "Peak: " + state.printReq.peak.BACK.text?.font + " " + state.printReq.peak.BACK.text?.color + "; " : "") + (state.printReq.valance.BACK.text?.font || state.printReq.valance.BACK.text?.color ? "Valance: " + state.printReq.valance.BACK.text?.font + " " + state.printReq.valance.BACK.text?.color + "; " : ""),
-        //     15: (state.printReq.peak.BACK.printInstruction ? "Peak: " + state.printReq.peak.BACK.printInstruction + "; " : "") + (state.printReq.valance.BACK.printInstruction ? "Valance: " + state.printReq.valance.BACK.printInstruction + "; " : ""),
-        //     59: state.printReq.peak.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.background?.value.filename : "",
-        //     60: state.printReq.valance.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.background?.value.filename : "",
-        //     61: state.printReq.peak.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.logo?.filename : "",
-        //     62: state.printReq.valance.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.logo?.filename : "",
-        //     16: (state.printReq.peak.LEFT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.LEFT.background?.value + "; " : "") + (state.printReq.valance.LEFT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.LEFT.background?.value + ";" : ""),
-        //     19: (state.printReq.peak.LEFT.text?.content ? "Peak: " + state.printReq.peak.LEFT.text?.content + "; " : "") + (state.printReq.valance.LEFT.text?.content ? "Valance: " + state.printReq.peak.LEFT.text?.content + ";" : ""),
-        //     20: (state.printReq.peak.LEFT.text?.font || state.printReq.peak.LEFT.text?.color ? "Peak: " + state.printReq.peak.LEFT.text?.font + " " + state.printReq.peak.LEFT.text?.color + "; " : "") + (state.printReq.valance.LEFT.text?.font || state.printReq.valance.LEFT.text?.color ? "Valance: " + state.printReq.valance.LEFT.text?.font + " " + state.printReq.valance.LEFT.text?.color + "; " : ""),
-        //     21: (state.printReq.peak.LEFT.printInstruction ? "Peak: " + state.printReq.peak.LEFT.printInstruction + "; " : "") + (state.printReq.valance.LEFT.printInstruction ? "Valance: " + state.printReq.valance.LEFT.printInstruction + "; " : ""),
-        //     63: state.printReq.peak.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.background?.value.filename : "",
-        //     64: state.printReq.valance.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.LEFT.background?.value.filename : "",
-        //     65: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
-        //     66: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
-        //     22: (state.printReq.peak.RIGHT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.RIGHT.background?.value + "; " : "") + (state.printReq.valance.RIGHT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.RIGHT.background?.value + ";" : ""),
-        //     25: (state.printReq.peak.RIGHT.text?.content ? "Peak: " + state.printReq.peak.RIGHT.text?.content + "; " : "") + (state.printReq.valance.RIGHT.text?.content ? "Valance: " + state.printReq.valance.RIGHT.text?.content + ";" : ""),
-        //     26: (state.printReq.peak.RIGHT.text?.font || state.printReq.peak.RIGHT.text?.color ? "Peak: " + state.printReq.peak.RIGHT.text?.font + " " + state.printReq.peak.RIGHT.text?.color + "; " : "") + (state.printReq.valance.RIGHT.text?.font || state.printReq.valance.RIGHT.text?.color ? "Valance: " + state.printReq.valance.RIGHT.text?.font + " " + state.printReq.valance.RIGHT.text?.color + "; " : ""),
-        //     27: (state.printReq.peak.RIGHT.printInstruction ? "Peak: " + state.printReq.peak.RIGHT.printInstruction + "; " : "") + (state.printReq.valance.RIGHT.printInstruction ? "Valance: " + state.printReq.valance.RIGHT.printInstruction + "; " : ""),
-        //     67: state.printReq.peak.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.background?.value.filename : "",
-        //     68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
-        //     69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-        //     70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-        //     3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide ? "Apply to four sides peak" : "",
-        //     3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide ? "Apply to four sides valance" : "",
-        //     36.3: "",
-        //     36.6: "",
-        //     37: "",
-        //     71: ""
-        // })
-        // if (res.id) {
-        //     productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
-        // }
-        console.log({
+        if(productState.entryId) {
+            const res = await utils.updateContact({
+            form_id: "6",
+            id: productState.entryId,
+            status: "active",
+            1: "Custom Printing tent",
+            5: (state.printReq.peak.FRONT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.FRONT.background?.value + "; " : "") + (state.printReq.valance.FRONT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.FRONT.background?.value + ";" : ""),
+            6: (state.printReq.peak.FRONT.text?.content ? "Peak: " + state.printReq.peak.FRONT.text?.content + "; " : "") + (state.printReq.valance.FRONT.text?.content ? "Valance: " + state.printReq.peak.FRONT.text?.content + ";" : ""),
+            7: (state.printReq.peak.FRONT.text?.font || state.printReq.peak.FRONT.text?.color ? "Peak: " + state.printReq.peak.FRONT.text?.font + " " + state.printReq.peak.FRONT.text?.color + "; " : "") + (state.printReq.valance.FRONT.text?.font || state.printReq.valance.FRONT.text?.color ? "Valance: " + state.printReq.valance.FRONT.text?.font + " " + state.printReq.valance.FRONT.text?.color + "; " : ""),
+            8: (state.printReq.peak.FRONT.printInstruction ? "Peak: " + state.printReq.peak.FRONT.printInstruction + "; " : "") + (state.printReq.valance.FRONT.printInstruction ? "Valance: " + state.printReq.valance.FRONT.printInstruction + "; " : ""),
+            55: state.printReq.peak.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+            56: state.printReq.valance.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+            57: state.printReq.peak.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.logo?.filename : "",
+            58: state.printReq.valance.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.FRONT.logo?.filename : "",
+            10: (state.printReq.peak.BACK.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.BACK.background?.value + "; " : "") + (state.printReq.valance.BACK.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.BACK.background?.value + ";" : ""),
+            13: (state.printReq.peak.BACK.text?.content ? "Peak: " + state.printReq.peak.BACK.text?.content + "; " : "") + (state.printReq.valance.BACK.text?.content ? "Valance: " + state.printReq.peak.BACK.text?.content + ";" : ""),
+            14: (state.printReq.peak.BACK.text?.font || state.printReq.peak.BACK.text?.color ? "Peak: " + state.printReq.peak.BACK.text?.font + " " + state.printReq.peak.BACK.text?.color + "; " : "") + (state.printReq.valance.BACK.text?.font || state.printReq.valance.BACK.text?.color ? "Valance: " + state.printReq.valance.BACK.text?.font + " " + state.printReq.valance.BACK.text?.color + "; " : ""),
+            15: (state.printReq.peak.BACK.printInstruction ? "Peak: " + state.printReq.peak.BACK.printInstruction + "; " : "") + (state.printReq.valance.BACK.printInstruction ? "Valance: " + state.printReq.valance.BACK.printInstruction + "; " : ""),
+            59: state.printReq.peak.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.background?.value.filename : "",
+            60: state.printReq.valance.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.background?.value.filename : "",
+            61: state.printReq.peak.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.logo?.filename : "",
+            62: state.printReq.valance.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.logo?.filename : "",
+            16: (state.printReq.peak.LEFT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.LEFT.background?.value + "; " : "") + (state.printReq.valance.LEFT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.LEFT.background?.value + ";" : ""),
+            19: (state.printReq.peak.LEFT.text?.content ? "Peak: " + state.printReq.peak.LEFT.text?.content + "; " : "") + (state.printReq.valance.LEFT.text?.content ? "Valance: " + state.printReq.peak.LEFT.text?.content + ";" : ""),
+            20: (state.printReq.peak.LEFT.text?.font || state.printReq.peak.LEFT.text?.color ? "Peak: " + state.printReq.peak.LEFT.text?.font + " " + state.printReq.peak.LEFT.text?.color + "; " : "") + (state.printReq.valance.LEFT.text?.font || state.printReq.valance.LEFT.text?.color ? "Valance: " + state.printReq.valance.LEFT.text?.font + " " + state.printReq.valance.LEFT.text?.color + "; " : ""),
+            21: (state.printReq.peak.LEFT.printInstruction ? "Peak: " + state.printReq.peak.LEFT.printInstruction + "; " : "") + (state.printReq.valance.LEFT.printInstruction ? "Valance: " + state.printReq.valance.LEFT.printInstruction + "; " : ""),
+            63: state.printReq.peak.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.background?.value.filename : "",
+            64: state.printReq.valance.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.LEFT.background?.value.filename : "",
+            65: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+            66: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+            22: (state.printReq.peak.RIGHT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.RIGHT.background?.value + "; " : "") + (state.printReq.valance.RIGHT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.RIGHT.background?.value + ";" : ""),
+            25: (state.printReq.peak.RIGHT.text?.content ? "Peak: " + state.printReq.peak.RIGHT.text?.content + "; " : "") + (state.printReq.valance.RIGHT.text?.content ? "Valance: " + state.printReq.valance.RIGHT.text?.content + ";" : ""),
+            26: (state.printReq.peak.RIGHT.text?.font || state.printReq.peak.RIGHT.text?.color ? "Peak: " + state.printReq.peak.RIGHT.text?.font + " " + state.printReq.peak.RIGHT.text?.color + "; " : "") + (state.printReq.valance.RIGHT.text?.font || state.printReq.valance.RIGHT.text?.color ? "Valance: " + state.printReq.valance.RIGHT.text?.font + " " + state.printReq.valance.RIGHT.text?.color + "; " : ""),
+            27: (state.printReq.peak.RIGHT.printInstruction ? "Peak: " + state.printReq.peak.RIGHT.printInstruction + "; " : "") + (state.printReq.valance.RIGHT.printInstruction ? "Valance: " + state.printReq.valance.RIGHT.printInstruction + "; " : ""),
+            67: state.printReq.peak.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.background?.value.filename : "",
+            68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
+            69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+            70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide ? "Apply to four sides peak" : "",
+            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide ? "Apply to four sides valance" : "",
+            36.3: "",
+            36.6: "",
+            37: "",
+            71: ""
+            })
+            if (res.id) {
+                productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
+            }
+        }
+        else {
+        const res = await utils.contact({
             form_id: "6",
             status: "active",
             1: "Custom Printing tent",
@@ -311,14 +323,73 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
             69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
             70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
-            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
-            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
+            3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide ? "Apply to four sides peak" : "",
+            3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide ? "Apply to four sides valance" : "",
             36.3: "",
             36.6: "",
             37: "",
             71: ""
         })
+        if (res.id) {
+            productDispatch({type: "SET_ENTRY_ID", payload: {entryId: res.id}})
+        }
+        }
+        // console.log({
+        //     form_id: "6",
+        //     status: "active",
+        //     1: "Custom Printing tent",
+        //     5: (state.printReq.peak.FRONT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.FRONT.background?.value + "; " : "") + (state.printReq.valance.FRONT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.FRONT.background?.value + ";" : ""),
+        //     6: (state.printReq.peak.FRONT.text?.content ? "Peak: " + state.printReq.peak.FRONT.text?.content + "; " : "") + (state.printReq.valance.FRONT.text?.content ? "Valance: " + state.printReq.peak.FRONT.text?.content + ";" : ""),
+        //     7: (state.printReq.peak.FRONT.text?.font || state.printReq.peak.FRONT.text?.color ? "Peak: " + state.printReq.peak.FRONT.text?.font + " " + state.printReq.peak.FRONT.text?.color + "; " : "") + (state.printReq.valance.FRONT.text?.font || state.printReq.valance.FRONT.text?.color ? "Valance: " + state.printReq.valance.FRONT.text?.font + " " + state.printReq.valance.FRONT.text?.color + "; " : ""),
+        //     8: (state.printReq.peak.FRONT.printInstruction ? "Peak: " + state.printReq.peak.FRONT.printInstruction + "; " : "") + (state.printReq.valance.FRONT.printInstruction ? "Valance: " + state.printReq.valance.FRONT.printInstruction + "; " : ""),
+        //     55: state.printReq.peak.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+        //     56: state.printReq.valance.FRONT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.background?.value.filename : "",
+        //     57: state.printReq.peak.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.FRONT.logo?.filename : "",
+        //     58: state.printReq.valance.FRONT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.FRONT.logo?.filename : "",
+        //     10: (state.printReq.peak.BACK.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.BACK.background?.value + "; " : "") + (state.printReq.valance.BACK.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.BACK.background?.value + ";" : ""),
+        //     13: (state.printReq.peak.BACK.text?.content ? "Peak: " + state.printReq.peak.BACK.text?.content + "; " : "") + (state.printReq.valance.BACK.text?.content ? "Valance: " + state.printReq.peak.BACK.text?.content + ";" : ""),
+        //     14: (state.printReq.peak.BACK.text?.font || state.printReq.peak.BACK.text?.color ? "Peak: " + state.printReq.peak.BACK.text?.font + " " + state.printReq.peak.BACK.text?.color + "; " : "") + (state.printReq.valance.BACK.text?.font || state.printReq.valance.BACK.text?.color ? "Valance: " + state.printReq.valance.BACK.text?.font + " " + state.printReq.valance.BACK.text?.color + "; " : ""),
+        //     15: (state.printReq.peak.BACK.printInstruction ? "Peak: " + state.printReq.peak.BACK.printInstruction + "; " : "") + (state.printReq.valance.BACK.printInstruction ? "Valance: " + state.printReq.valance.BACK.printInstruction + "; " : ""),
+        //     59: state.printReq.peak.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.background?.value.filename : "",
+        //     60: state.printReq.valance.BACK.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.background?.value.filename : "",
+        //     61: state.printReq.peak.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.BACK.logo?.filename : "",
+        //     62: state.printReq.valance.BACK.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.BACK.logo?.filename : "",
+        //     16: (state.printReq.peak.LEFT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.LEFT.background?.value + "; " : "") + (state.printReq.valance.LEFT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.LEFT.background?.value + ";" : ""),
+        //     19: (state.printReq.peak.LEFT.text?.content ? "Peak: " + state.printReq.peak.LEFT.text?.content + "; " : "") + (state.printReq.valance.LEFT.text?.content ? "Valance: " + state.printReq.peak.LEFT.text?.content + ";" : ""),
+        //     20: (state.printReq.peak.LEFT.text?.font || state.printReq.peak.LEFT.text?.color ? "Peak: " + state.printReq.peak.LEFT.text?.font + " " + state.printReq.peak.LEFT.text?.color + "; " : "") + (state.printReq.valance.LEFT.text?.font || state.printReq.valance.LEFT.text?.color ? "Valance: " + state.printReq.valance.LEFT.text?.font + " " + state.printReq.valance.LEFT.text?.color + "; " : ""),
+        //     21: (state.printReq.peak.LEFT.printInstruction ? "Peak: " + state.printReq.peak.LEFT.printInstruction + "; " : "") + (state.printReq.valance.LEFT.printInstruction ? "Valance: " + state.printReq.valance.LEFT.printInstruction + "; " : ""),
+        //     63: state.printReq.peak.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.background?.value.filename : "",
+        //     64: state.printReq.valance.LEFT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.LEFT.background?.value.filename : "",
+        //     65: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+        //     66: state.printReq.peak.LEFT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.LEFT.logo?.filename : "",
+        //     22: (state.printReq.peak.RIGHT.background?.type === "COLOR" ? "Peak: " + state.printReq.peak.RIGHT.background?.value + "; " : "") + (state.printReq.valance.RIGHT.background?.type === "COLOR" ? "Valance: " + state.printReq.valance.RIGHT.background?.value + ";" : ""),
+        //     25: (state.printReq.peak.RIGHT.text?.content ? "Peak: " + state.printReq.peak.RIGHT.text?.content + "; " : "") + (state.printReq.valance.RIGHT.text?.content ? "Valance: " + state.printReq.valance.RIGHT.text?.content + ";" : ""),
+        //     26: (state.printReq.peak.RIGHT.text?.font || state.printReq.peak.RIGHT.text?.color ? "Peak: " + state.printReq.peak.RIGHT.text?.font + " " + state.printReq.peak.RIGHT.text?.color + "; " : "") + (state.printReq.valance.RIGHT.text?.font || state.printReq.valance.RIGHT.text?.color ? "Valance: " + state.printReq.valance.RIGHT.text?.font + " " + state.printReq.valance.RIGHT.text?.color + "; " : ""),
+        //     27: (state.printReq.peak.RIGHT.printInstruction ? "Peak: " + state.printReq.peak.RIGHT.printInstruction + "; " : "") + (state.printReq.valance.RIGHT.printInstruction ? "Valance: " + state.printReq.valance.RIGHT.printInstruction + "; " : ""),
+        //     67: state.printReq.peak.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.background?.value.filename : "",
+        //     68: state.printReq.valance.RIGHT.background?.type === "IMAGE" ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.valance.RIGHT.background?.value.filename : "",
+        //     69: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+        //     70: state.printReq.peak.RIGHT.logo?.filename ? "https://westshade.s3.us-west-2.amazonaws.com/contacts/" + state.printReq.peak.RIGHT.logo?.filename : "",
+        //     3.1: state.printReq.peak.FRONT.applyToFullSide || state.printReq.peak.BACK.applyToFullSide || state.printReq.peak.LEFT.applyToFullSide || state.printReq.peak.RIGHT.applyToFullSide  ? "Apply to four sides peak" : "",
+        //     3.2: state.printReq.valance.FRONT.applyToFullSide || state.printReq.valance.BACK.applyToFullSide || state.printReq.valance.LEFT.applyToFullSide || state.printReq.valance.RIGHT.applyToFullSide  ? "Apply to four sides valance" : "",
+        //     36.3: "",
+        //     36.6: "",
+        //     37: "",
+        //     71: ""
+        // })
     }
+
+    useEffect(() => {
+        const framePrices = ["Y5", "Y6", "Y7"].map((type,index) => {
+            const variant = productVariant[0].filter((item, idx) => {
+                if (item.attributes[0].option === state.size && item.attributes[1].option.includes(type)) {
+                    return {price: item.price, frame:frameTypes[idx]}
+                }
+            })
+            return {price: variant[0]?.price, frame:frameTypes[index]}
+        })
+        setFramePrices(framePrices)
+    }, [state.size])
 
     useEffect(() => {
         if (product.hasOwnProperty("image") && Object.keys(product.image).length !== 0) {
@@ -437,7 +508,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                             />
                                         }
                                     </Block>
-                                    <Block width="100%" marginTop="12px">
+                                    <Block width="100%" marginTop="12px" title="edit" $style={{cursor: "pointer"}} onClick={editDetails}>
                                         {
                                             !steps.done ?
                                                 <ButtonM width="100%" type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FAFBFF"
@@ -550,16 +621,15 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                         </Block>
                         <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
                             {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
-                            {steps.currentStep === 1 && <FrameSelection frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
+                            {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
                             {steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
                                                       tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                         </Block>
                         <Block width="100%" backgroundColor="MinXBackground">
-                            <Block padding="20px 0 45px" margin="0 auto" maxWidth="1152px" width="100%">
-                                <Block width="100%" display="flex" justifyContent="space-between" padding="0 16px">
+                            <Block padding={["8px 0px 8px","8px 0px 8px"  ,"8px 0px 26px" ]} margin="0 auto" minHeight={["auto", "auto","70px"]} maxWidth="1152px" width="100%">
+                                <Block width="100%" display="flex" justifyContent="space-between" height="100%" alignItems="center" padding="0 16px">
                                     <ButtonM
-                                        height="32px"
                                         bundle="primary"
                                         onClick={() => prevStep()}
                                         disabled={steps.currentStep === 0}
@@ -574,24 +644,27 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                             borderBottomStyle: "solid !important",
                                             borderLeftStyle: "solid !important",
                                             borderRightStyle: "solid !important",
-                                            borderColor: "#BFBFBF !important"
+                                            borderColor: "#BFBFBF !important",
+                                            padding: "10px 22px !important"
                                         }}
-                                        text="Previous"
-                                        width={["108px", "138px"]}
                                         font={["MinXLabel14", "MinXLabel16"]}
                                         backgroundColor="transparent"
-                                    />
+                                    >
+                                        <ArrowLeft size={26} />
+                                    </ButtonM>
+                                    <Block flex="1" padding={["0 16px","0 24px", "0 75px"]}>
+                                        <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep}/>
+                                    </Block>
                                     <ButtonM
-                                        height="32px"
                                         onClick={() => nextStep()}
-                                        text={steps.currentStep === 3 ? "Done" : "Next"}
-                                        width={["108px", "138px"]}
                                         font={["MinXLabel14", "MinXLabel16"]}
                                         bundle="primary"
-                                    />
-                                </Block>
-                                <Block marginTop="22px" padding={["0 16px", "0 75px"]}>
-                                    <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep}/>
+                                        buttonStyle={{
+                                            padding: "10px 22px !important"
+                                        }}
+                                    >
+                                        <ArrowRight size={26} />
+                                    </ButtonM>
                                 </Block>
                             </Block>
                         </Block>
