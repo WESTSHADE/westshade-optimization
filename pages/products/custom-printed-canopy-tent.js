@@ -15,7 +15,7 @@ import {Checkout_N as Checkout} from "../../components/sections"
 import {useDispatch, useSelector} from "react-redux"
 import {updateUser} from "../../redux/actions/userActions"
 import {modifyCart} from "../../redux/actions/cartActions"
-import {Modal} from "@material-ui/core"
+import {Modal} from "Components/surfaces";
 import {productReducer, reducer, stepReducer, initialState, initialProduct, initialSteps} from "../../assets/states/custom-printed-canopy-tent"
 import {ArrowLeft, ArrowRight} from 'baseui/icon'
 import {printingMethods, frameTypes, tentSizes} from "../../assets/constants/custom-printend-canopy-tent"
@@ -45,7 +45,6 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
-        console.log(payload)
         if(!["10x10","10x15","10x20"].includes(payload.size)){
             dispatch({type: "SET_FRAME", payload: {frame: "Y7"}});
             dispatch({type: "SET_SIZE", payload});
@@ -387,6 +386,13 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         //     71: ""
         // })
     }
+    const openSummary = () => {
+        if(Object.keys(productState.frameVariant).length !== 0 || Object.keys(productState.roofVariant).length !== 0) {
+            setSummaryIsOpen(true)
+        }else {
+            setSummaryIsOpen(false)
+        }
+    }
 
     useEffect(() => {
         const framePrices = acceptedFrameTypes?.map((type,index) => {
@@ -701,13 +707,13 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 onClickMinus={() => productState.bag?.totalCount !== 1 && productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount - 1}})}
                 onClickPlus={() => productDispatch({type: "SET_TOTAL_COUNT", payload: {totalCount: productState.bag.totalCount + 1}})}
                 onClickAddToBag={() => addToCart()}
-                onClick={() => setSummaryIsOpen(true)}
+                onClick={openSummary}
                 onSale={productState.tentVariant?.on_sale || productState.frameVariant?.on_sale}
                 totalPrice={productState.bag?.totalPrice}
                 totalSalesPrice={productState.bag?.sale_price}
             />
-            <Modal type="dialog" isOpen={true} onClose={() => setSummaryIsOpen(false)} content="summary"
-                   dataTable={{productComponent, selectedVariant: productState.variants, totalSalePrice: productState.bag.totalSalePrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
+                   dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant).length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/>
         </Block>
     )
 }
