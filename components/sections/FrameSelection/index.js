@@ -6,7 +6,7 @@ import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
 
 
-const FrameTypeCard = ({frame,framePrice, active, onClick}) => {
+const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
     return (
         <>
             <Block
@@ -48,7 +48,7 @@ const FrameTypeCard = ({frame,framePrice, active, onClick}) => {
                         {frame.description}
                     </Block>
                     <Block font="MinXSubtitle20" marginTop="16px">
-                        + $ {framePrice.price ||  frame.price}
+                        + $ {framePrice.price || frame.price}
                     </Block>
                 </Block>
                 <Block marginTop="40px">
@@ -82,14 +82,14 @@ const FrameTypeCard = ({frame,framePrice, active, onClick}) => {
     )
 }
 
-const FrameSelection = ({frameTypes,acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
+const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
     const [showFrameCompare, setShowFrameCompare] = useState(false);
     const [frames, setFrames] = useState([]);
     const [css] = useStyletron();
 
     useEffect(() => {
         let types = frameTypes.filter((item) => {
-            if(acceptedFrameTypes.includes(item.value)) return item
+            if (acceptedFrameTypes.includes(item.value)) return item
         })
         setFrames(types)
     }, [acceptedFrameTypes])
@@ -108,23 +108,23 @@ const FrameSelection = ({frameTypes,acceptedFrameTypes = [], framePrices, frameV
                     <MButton height="32px" onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}} text="Compare frames"/>
                 </Block>
                 <Block width="100%" display="grid" placeItems="center" overflow="hidden">
-                <Block width="100%" display="grid" placeItems="center" overflow="scrollX">
-                    <Block width="100%" width="1016px" display="flex" $style={{flexWrap: "nowrap"}} justifyContent={["flex-start","space-between"]} alignItems="stretch" marginTop="38px">
-                        {
-                            frames?.map((frame, idx) => (
+                    <Block width="100%" display="grid" placeItems="center" overflow="scrollX">
+                        <Block width="1016px" display="flex" $style={{flexWrap: "nowrap"}} justifyContent={["flex-start", "space-between"]} alignItems="stretch" marginTop="38px">
+                            {
+                                frames?.map((frame, idx) => (
 
-                                <Block key={frame.value} margin={["0 8.5px 24px", "0 9px 24px", "0 10px"]} maxWidth={["251px", "342px", "410px"]} width={["100%", "100%", "100%"]}>
-                                    <FrameTypeCard
-                                        frame={frame}
-                                        framePrice={framePrices[idx]}
-                                        onClick={() => setFrame({frame: frame.value})}
-                                        active={frameValue === frame.value}
-                                    />
-                                </Block>
-                            ))
-                        }
+                                    <Block key={frame.value} margin={["0 8.5px 24px", "0 9px 24px", "0 10px"]} maxWidth={["251px", "342px", "410px"]} width={["100%", "100%", "100%"]}>
+                                        <FrameTypeCard
+                                            frame={frame}
+                                            framePrice={framePrices[idx]}
+                                            onClick={() => setFrame({frame: frame.value})}
+                                            active={frameValue === frame.value}
+                                        />
+                                    </Block>
+                                ))
+                            }
+                        </Block>
                     </Block>
-                </Block>
                 </Block>
             </Block>
             <Modal type="alertdialog" isOpen={showFrameCompare} onClose={() => setShowFrameCompare(false)} content="frame"/>

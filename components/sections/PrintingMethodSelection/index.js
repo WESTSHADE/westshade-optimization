@@ -40,12 +40,12 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                     transition: "all .15s ease-in-out"
                 })}
             >
-                    {
-                        method?.fabricPrinted &&
-                        <Block font="MinXParagraph12" color="MinXTitle">
-                            This sample is printed on {method.fabricPrinted} fabric.
-                        </Block>
-                    }
+                {
+                    method?.fabricPrinted &&
+                    <Block font="MinXParagraph12" color="MinXTitle">
+                        This sample is printed on {method.fabricPrinted} fabric.
+                    </Block>
+                }
                 <Block width="100%" position="relative">
                     <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" bottom="30px" left="50%" $style={{zIndex: "5", transform: "translateX(-50%)"}}>
                         <MButton
@@ -88,7 +88,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                         <Block font="MinXParagraph16" color="MinXSecondaryText">
                             Fastness
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex"> 
+                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex">
                             <Block marginRight="4px" font="MinXHeading16" color="MinXButton">
                                 {method.fastness}
                             </Block>
@@ -130,11 +130,11 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                 </Block>
             </Block>
             {
-                    method.note &&
-                    <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0" >
-                        {method.note}
-                    </Block>
-                }
+                method.note &&
+                <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0">
+                    {method.note}
+                </Block>
+            }
         </>
     )
 }
@@ -156,9 +156,9 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                 <MButton height="32px" onClick={() => setShowPrintingTechnology(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}}
                          text="Compare printing methods"/>
             </Block>
-            <Block width="100%"  marginTop="38px" overflow="hidden">
+            <Block width="100%" marginTop="38px" overflow="hidden">
                 <Block width="100%" display="grid" placeItems="center" overflow="auto">
-                    <Block width="100%" width={["550px","804px"]} display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
+                    <Block width={["550px", "804px"]} display="flex" justifyContent={["flex-start", "center"]} alignItems="stretch" $style={{flexWrap: "nowrap"}}>
                         {
                             printingMethods.map((method) => (
                                 <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["275px", "307px", "376px"]} width="100%">
