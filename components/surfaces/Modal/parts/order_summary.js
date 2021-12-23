@@ -21,7 +21,7 @@ export default function content({dataTable}) {
         if (!variant) return
         
         let cell = {
-            name: productComponent[index].name,
+            name: productComponent[index]?.name,
             quantity: 1,
             regular_price: variant.regular_price,
             sale_price: variant.sale_price,

@@ -1,3 +1,44 @@
+export const newSizeGuide = {
+    overAllHeight: {
+        label: "Overall height",
+        description: "Peak height",
+        y5:{
+            small : `11’3’’`,
+            medium : "-",
+            large : "-",
+        },
+        y6:{
+            small : `10’10’’`,
+            medium : "12’9’’",
+            large : "-",
+        },
+        y7:{
+            small : `10’10’’`,
+            medium : "12’9’’",
+            large : "-",
+        }
+    },
+    clearanceHeight: {
+        label: "Clearance height",
+        description: "Height under valance",
+        y5:{
+            small : `6’3’’<br/> - <br/> 6’10’’`,
+            medium : "-",
+            large : "-",
+        },
+        y6:{
+            small : `5’2’’<br/> - <br/> 6’8’’`,
+            medium : "-",
+            large : "-",
+        },
+        y7:{
+            small : `5’2’’<br/> - <br/> 6’8’’`,
+            medium : "6’8’’<br/> - <br/> 7’",
+            large : "5’2’’<br/> - <br/> 6’8’’",
+        }
+    }
+}
+
 export default {
     overAllHeight: {
         label: "Overall height",
@@ -24,13 +65,16 @@ export default {
                 {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
                 },
@@ -58,13 +102,16 @@ export default {
                 {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
                 },
@@ -92,13 +139,16 @@ export default {
                 {
                     value: "12'9",
                     label: `12'9"`
-                },{
+                },
+                {
                     value: "12'9",
                     label: `12'9"`
-                },{
+                },
+                {
                     value: "10'10",
                     label: `10'10"`
-                },{
+                },
+                {
                     value: "10'10",
                     label: `10'10"`
                 },
@@ -130,13 +180,16 @@ export default {
                 {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
                 },
@@ -164,13 +217,16 @@ export default {
                 {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
-                },{
+                },
+                {
                     value: "-",
                     label: "-"
                 },
@@ -198,13 +254,16 @@ export default {
                 {
                     value: `6'8"-7`,
                     label: `6'8"-7`
-                },{
+                },
+                {
                     value: `6'8"-7`,
                     label: `6'8"-7`
-                },{
+                },
+                {
                     value: `5'2"-6'7`,
                     label: `5'2"-6'7`
-                },{
+                },
+                {
                     value: `5'2"-6'7`,
                     label: `5'2"-6'7`
                 },
