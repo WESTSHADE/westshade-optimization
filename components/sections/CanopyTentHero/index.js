@@ -17,11 +17,23 @@ const SpecSection = ({
                          contentSize = ["MinXTitle32", "MinXTitle32", "MinXTitle36"],
                          unitSize = ["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"],
                          titleColor,
-                         contentColor
+                         contentColor,
+                         annotation
                      }) => {
     return (
         <Block display="grid" gridAutoRows="max-content" gridRowGap="16px" justifyItems="center" maxWidth="160px" padding="0 16px">
-            <Block font={titleSize} color={titleColor} $style={{fontWeight: "400 !important", lineHeight: "100% !important"}}>{title}</Block>
+            <Block annotation={" " + annotation} font={titleSize} color={titleColor} $style={{fontWeight: "400 !important", lineHeight: "100% !important"}}
+                   overrides={{
+                       Block: {
+                           style: {
+                               "::after": annotation ? {
+                                   content: "attr(annotation)",
+                                   fontSize: "10px",
+                                   verticalAlign: "super",
+                               } : {}
+                           }
+                       }
+                   }}>{title}</Block>
             <Block>
                 <Block font={contentSize} color={contentColor} $style={{fontWeight: "300 !important", lineHeight: "100% !important"}}>{content}</Block>
                 {unit ? (
@@ -67,7 +79,7 @@ const Hero = () => {
                            margin={["-68px auto 0", null, "-420px auto 168px"]}
                            $style={{borderRadius: "8px", background: "linear-gradient(180deg, rgba(89, 89, 87, 0.9) 0%, rgba(62, 63, 60, 0.9) 100%), rgba(255, 255, 255, 0.3) !important"}}
                     >
-                        <SpecSection title="Stand in wind*" content="50" unit="mph" titleColor="MinXPrimaryTextAlt" contentColor="#AFFA64" contentSize={["MinXTitle42", "MinXTitle42", "MinXTitle52"]}/>
+                        <SpecSection title="Stand in wind" content="50" unit="mph" titleColor="MinXPrimaryTextAlt" contentColor="#AFFA64" contentSize={["MinXTitle42", "MinXTitle42", "MinXTitle52"]} annotation={1}/>
                         <SpecSection title="UV protection" content="50+" unit="mph" titleColor="MinXPrimaryTextAlt" contentColor="#AFFA64" contentSize={["MinXTitle42", "MinXTitle42", "MinXTitle52"]}/>
                     </Block>
                     <Block className="container-canopy-tent-spec canopy-tent-spec-display-outer" width="100%" maxWidth="1015px" display="grid" gridTemplateRows={["repeat(2, auto)", "repeat(2, auto)", "1fr"]}
@@ -76,14 +88,14 @@ const Hero = () => {
                         <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", null, "158px"]} display="flex" alignItems="center">
                             <Block width="inherit" display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-around">
                                 <SpecSection title="Set up in" content="3" unit="min." titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
-                                <SpecSection title="Pole diameter*" content="2 ¼" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
-                                <SpecSection title="Pole thickness*" content="0.07" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
+                                <SpecSection title="Pole diameter" content="2 ¼" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText" annotation={2}/>
+                                <SpecSection title="Pole thickness" content="0.07" unit="inches" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText" annotation={2}/>
                             </Block>
                         </Block>
                         <Block className="container-canopy-tent-spec canopy-tent-spec-display-inner" width="100%" height={["136px", null, "158px"]} display="flex" alignItems="center">
                             <Block width="inherit" display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-around">
-                                <SpecSection title="Roof top*" content="600D" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
-                                <SpecSection title="Warranty*" content="10" unit="years" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText"/>
+                                <SpecSection title="Roof top" content="600D" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText" annotation={3}/>
+                                <SpecSection title="Warranty" content="10" unit="years" titleColor="MinXSecondaryText" contentColor="MinXPrimaryText" annotation={4}/>
                             </Block>
                         </Block>
                     </Block>

@@ -321,6 +321,14 @@ function Canopy_Tent({router}) {
                          }
                 />
                 <Benefit containerClassName="m-body-section-wrap"/>
+                <Block backgroundColor={"var(--secondary-background)"} padding={"24px 16px"} display="flex" justifyContent="center" marginTop={["-60px", "-80px", "-120px"]}>
+                    <Block width="100%" maxWidth={process.env.maxWidth + "px"} font="MinXParagraph14" color="MinXSecondaryText">
+                        <div>1. Although the tent has passed wind test in the speed of 50 mph, we highly recommend you to not use the product in high wind.</div>
+                        <div>2. The pole diameter and thickness are measurements from Westshade Y7 aluminum frame canopy tent.</div>
+                        <div>3. Westshade uses 900D fabric for roof top on custom printing canopy tents. The fabric of stock color tents is 500D.</div>
+                        <div>4. Westshade provides 10 years warranty for Y7 aluminum frame.</div>
+                    </Block>
+                </Block>
             </Block>
         </React.Fragment>
     )
