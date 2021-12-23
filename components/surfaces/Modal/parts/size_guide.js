@@ -2,7 +2,7 @@ import React from "react";
 
 import {Block} from "baseui/block";
 import Image from "next/image";
-import data, { newSizeGuide } from "../../../../assets/constants/size-guides"
+import data, {newSizeGuide} from "../../../../assets/constants/size-guides"
 
 export default function content() {
     return (
@@ -286,7 +286,7 @@ export default function content() {
         //     </Block>
         // </Block>
         <>
-            <Block className="size-guide-table" width="100%" display="grid" placeItems="center" padding={["0px","24px 30px", "24px 100px"]}>
+            <Block className="size-guide-table" width="100%" display="grid" placeItems="center" padding={["0px", "24px 30px", "24px 100px"]}>
                 <Block className="b-t-1 b-l-1 b-r-1 b-b-1" maxWidth="473px" display="flex" alignItems="stretch">
                     <Block backgroundColor="#f0f0f0" width="77px" display="flex" flexDirection="column">
                         <Block className="b-r-1 b-b-1" height="91px" width="100%">
@@ -339,7 +339,7 @@ export default function content() {
                                 Y7
                             </Block>
                         </Block>
-                        <Block className="b-r-1 b-b-1" width="100%" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
+                        <Block className="b-r-1 b-b-1" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
                             <Block height="100%" className="b-r-1" font="MinXParagraph14" color="MinXTitle" width="69px" display="grid" placeItems="center">
                                 {newSizeGuide.overAllHeight.y5.small}
                             </Block>
@@ -350,7 +350,7 @@ export default function content() {
                                 {newSizeGuide.overAllHeight.y7.small}
                             </Block>
                         </Block>
-                        <Block className="b-r-1 b-b-1" width="100%" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
+                        <Block className="b-r-1 b-b-1" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
                             <Block className="b-r-1" height="100%" font="MinXParagraph14" color="MinXTitle" width="69px" display="grid" placeItems="center">
                                 {newSizeGuide.overAllHeight.y5.medium}
                             </Block>
@@ -361,7 +361,7 @@ export default function content() {
                                 {newSizeGuide.overAllHeight.y7.medium}
                             </Block>
                         </Block>
-                        <Block className="b-r-1" width="100%" width="100%" height="111px" display="flex" alignItems="center" justifyContent="center">
+                        <Block className="b-r-1" width="100%" height="111px" display="flex" alignItems="center" justifyContent="center">
                             <Block height="100%" className="b-r-1" font="MinXParagraph14" color="MinXTitle" width="69px" display="grid" placeItems="center">
                                 {newSizeGuide.overAllHeight.y5.large}
                             </Block>
@@ -389,17 +389,17 @@ export default function content() {
                                 Y7
                             </Block>
                         </Block>
-                        <Block className="b-b-1" width="100%" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
+                        <Block className="b-b-1" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
                             <Block height="100%" className="b-r-1" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y5.small}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block height="100%" className="b-r-1" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y6.small}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y7.small}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                         </Block>
-                        <Block className="b-b-1" width="100%" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
+                        <Block className="b-b-1" width="100%" height="162px" display="flex" alignItems="center" justifyContent="center">
                             <Block className="b-r-1" height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y5.medium}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block className="b-r-1" height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y6.medium}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y7.medium}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                         </Block>
-                        <Block width="100%" width="100%" height="111px" display="flex" alignItems="center" justifyContent="center">
+                        <Block width="100%" height="111px" display="flex" alignItems="center" justifyContent="center">
                             <Block className="b-r-1" height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y5.large}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block className="b-r-1" height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y6.large}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>
                             <Block height="100%" font="MinXParagraph14" dangerouslySetInnerHTML={{__html: newSizeGuide.clearanceHeight.y7.large}} color="MinXTitle" width="69px" display="grid" placeItems="center"/>

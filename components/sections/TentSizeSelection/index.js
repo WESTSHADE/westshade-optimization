@@ -135,7 +135,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
-                                
+
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
                                 '@media (min-width: 1310px)': {width: "302px"},
@@ -151,7 +151,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
-                                
+
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
                                 '@media (min-width: 1310px)': {width: "302px"},
@@ -167,7 +167,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
-                                
+
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
                                 '@media (min-width: 1310px)': {width: "302px"},
@@ -183,7 +183,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
-                                
+
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
                                 '@media (min-width: 1310px)': {width: "302px"},
@@ -198,7 +198,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                     </RadioGroup>
                 </Block>
             </Block>
-            <Modal type="alertdialog" isOpen={showSizeGuide} onClose={() => setShowSizeGuide(false)} content="size"/>
+            <Modal type="dialog" isOpen={showSizeGuide} onClose={() => setShowSizeGuide(false)} content="size"/>
         </>
     )
 }
