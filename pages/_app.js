@@ -209,7 +209,7 @@ function MyApp({Component, pageProps}) {
                                 <Component size={size} phone={businessPhone} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
-                            {!pageProps.noFooter ? <Footer isHomePage={pageProps.homePage}/> : null}
+                            {!pageProps.noFooter ? <Footer/> : null}
                         </div>
                     </BaseProvider>
                 </StyletronProvider>

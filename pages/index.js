@@ -29,6 +29,7 @@ function Home({router}) {
 Home.getInitialProps = () => {
     return {
         homePage: true,
+        noFooter: true,
     };
 };
 

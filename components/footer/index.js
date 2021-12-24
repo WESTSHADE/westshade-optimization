@@ -8,13 +8,11 @@ import {Block} from "baseui/block";
 
 import {List as Menu, Icon as Social, Subscription} from "./parts"
 
-import MENU from "../../assets/menu_footer.json";
+import MENU from "Assets/menu_footer.json";
 
-function Footer({isHomePage}) {
-    if (isHomePage) return null;
-
+function Footer() {
     return (
-        <footer>
+        <footer style={{backgroundColor: "var(--secondary-background)"}}>
             <div className={clsx(["m-footer-wrap", "m-wrap-side"])}>
                 <Block display="flex" flexDirection={["column", "column", "row"]} paddingTop={["16px", "16px", "70px"]} paddingBottom={["32px", "32px", "100px"]}>
                     <Block minWidth={["unset", "unset", "calc((100% + 24px)/3)"]} marginBottom="32px" paddingLeft={["0px", "0px", "calc((100% + 24px)/12)"]}>
