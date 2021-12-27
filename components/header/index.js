@@ -48,7 +48,7 @@ function Header({hideCategories}) {
     return (
         <ThemeProvider theme={customTheme}>
             <React.Fragment>
-                <div className={styles["container-nav"]}>
+                <div className={`${styles["container-nav"]} main-container-nav`}>
                     <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
                         <Block className={styles["root-navigation-top"]}>
                             <Link href="/">

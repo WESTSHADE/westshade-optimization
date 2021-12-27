@@ -66,7 +66,7 @@ const checkout = (props) => {
     const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag"} = props;
 
     return (
-        <Block className={styles["container-checkout"]} position="fixed" width="100vw" height={["94px", "68px"]} paddingRight={["24px", "16px", "32px"]} paddingLeft={["24px", "16px", "32px"]}>
+        <Block className={`${styles["container-checkout"]} main-container-checkout`} position="fixed" width="100vw" height={["94px", "68px"]} paddingRight={["24px", "16px", "32px"]} paddingLeft={["24px", "16px", "32px"]}>
             <Block maxWidth="1440px" height="100%" marginRight="auto" marginLeft="auto">
                 {/* 屏宽 小于 480 */}
                 <Block position={"relative"} display={["block", "none"]} height={"40px"}>

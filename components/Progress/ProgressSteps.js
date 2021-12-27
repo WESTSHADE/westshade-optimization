@@ -54,7 +54,7 @@ const ProgressSteps = ({steps, currentStep}) => {
                 backgroundColor="#23A4AD"
                 className={css({
                     transform: "translateY(-50%)",
-                    zIndex: "9",
+                    zIndex: "4",
                     transition: "all .3s ease-in"
                 })}
                 >

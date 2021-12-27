@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import {Block} from "baseui/block";
 import {Accordion, Panel} from "baseui/accordion";
@@ -98,14 +98,6 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
         }
         return Promise.all(promises)
     }
-
-
-    useEffect(() => {
-        const thirdPartyButton = document.querySelector("#mobile-chat-container");
-        if (thirdPartyButton) thirdPartyButton.style.transform = "translateY(-80px)";
-
-        return () => thirdPartyButton.style.transform = "translateY(0px)"
-    }, [])
 
     return (
         <>

@@ -15,7 +15,7 @@ function Footer({isHomePage}) {
 
     return (
         <footer>
-            <div className={clsx(["m-footer-wrap", "m-wrap-side"])}>
+            <div className={clsx(["m-footer-wrap", "m-wrap-side", "main-container-footer"])}>
                 <Block display="flex" flexDirection={["column", "column", "row"]} paddingTop={["16px", "16px", "70px"]} paddingBottom={["32px", "32px", "100px"]}>
                     <Block minWidth={["unset", "unset", "calc((100% + 24px)/3)"]} marginBottom="32px" paddingLeft={["0px", "0px", "calc((100% + 24px)/12)"]}>
                         <Block className="cursor" position="relative" width={["147px", "147px", "184px"]} onClick={() => document.location.href = "/"}>
