@@ -129,6 +129,8 @@ export class NumberFn {
      * @param defaultValue
      */
     strToFloat(input, defaultValue) {
+        // let str = input.toString();
+        // str = str.slice(0, (str.indexOf(".")) + 2 + 1);
         let value = parseFloat(input);
         if (isNaN(value) || Infinity === value) {
             defaultValue = defaultValue || 0;

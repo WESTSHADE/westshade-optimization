@@ -40,12 +40,12 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                     transition: "all .15s ease-in-out"
                 })}
             >
-                    {
-                        method?.fabricPrinted &&
-                        <Block font="MinXParagraph12" color="MinXTitle">
-                            This sample is printed on {method.fabricPrinted} fabric.
-                        </Block>
-                    }
+                {
+                    method?.fabricPrinted &&
+                    <Block font="MinXParagraph12" color="MinXTitle">
+                        This sample is printed on {method.fabricPrinted} fabric.
+                    </Block>
+                }
                 <Block width="100%" position="relative">
                     <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" bottom="30px" left="50%" $style={{zIndex: "5", transform: "translateX(-50%)"}}>
                         <MButton
@@ -88,7 +88,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                         <Block font="MinXParagraph16" color="MinXSecondaryText">
                             Fastness
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex"> 
+                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex">
                             <Block marginRight="4px" font="MinXHeading16" color="MinXButton">
                                 {method.fastness}
                             </Block>
@@ -130,11 +130,11 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                 </Block>
             </Block>
             {
-                    method.note &&
-                    <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0" >
-                        {method.note}
-                    </Block>
-                }
+                method.note &&
+                <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0">
+                    {method.note}
+                </Block>
+            }
         </>
     )
 }
