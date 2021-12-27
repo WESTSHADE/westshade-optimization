@@ -5,7 +5,7 @@ const initialState = {
     frame: "Y7",
     printingMethod: "UV PRINTING",
     activeCustomizer: false,
-    activeSide: "FRONT",
+    activeSide: "LEFT",
     printReq:{
         peak: {
             LEFT:{},

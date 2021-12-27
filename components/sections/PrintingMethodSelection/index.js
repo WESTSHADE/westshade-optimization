@@ -145,23 +145,25 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
     return (
         <>
             <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column" justifyContent="center">
+                <Block width="100%" display="flex" flexDirection="column" justifyContent="center">
                     <Block font="MinXSubtitle20" color="MinXTitle">
                         Please select prefered printing method.
                     </Block>
-                    <Block font="MinXParagraph16" color="#808080">
-                        {printingMethods.length} methods available
+                    <Block width="100%"  marginTop="2px" padding="6px 0" width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                        <Block font="MinXParagraph16" color="#808080">
+                            {printingMethods.length} methods available
+                        </Block>
+                        <MButton height="32px" onClick={() => setShowPrintingTechnology(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}}
+                            text="Compare"/>
                     </Block>
                 </Block>
-                <MButton height="32px" onClick={() => setShowPrintingTechnology(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}}
-                         text="Compare printing methods"/>
             </Block>
-            <Block width="100%"  marginTop="38px" overflow="hidden">
+            <Block width="100%"  marginTop="38px" overflow="hidden" marginTop="16px">
                 <Block width="100%" display="grid" placeItems="center" overflow="auto">
-                    <Block width="100%" width={["550px","804px"]} display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
+                    <Block width="100%" display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
                         {
                             printingMethods.map((method) => (
-                                <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["275px", "307px", "376px"]} width="100%">
+                                <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["100%", "307px", "518px"]} width="100%">
                                     <PrintingMethodCard
                                         method={method}
                                         active={printingMethodValue === method.value}

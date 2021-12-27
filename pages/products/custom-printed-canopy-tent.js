@@ -165,15 +165,51 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 roofVariant.numbers.number++
             }
         })
-        let variant = productVariant[1].filter((item) => {
-            if (item.attributes[0].option == (roofVariant.roofSize + "ft") &&
-                item.attributes[1].option == (roofVariant.roofSizeII + "ft") &&
-                parseInt(item.attributes[2].option) == roofVariant.numbers.number &&
-                parseInt(item.attributes[3].option) == roofVariant.numbers.number1 &&
-                item.attributes[4].option.toUpperCase() == state.printingMethod) {
-                return item;
-            }
-        })
+        let variant = []
+        if (roofVariant.roofSize === roofVariant.roofSizeII && ((roofVariant.numbers.number === 0 && roofVariant.numbers.number1 === 2) || (roofVariant.numbers.number === 2 && roofVariant.numbers.number1 === 0))) {
+            variant = productVariant[1].filter((item) => {
+                if (item.attributes[0].option === (roofVariant.roofSize + "ft") &&
+                    item.attributes[1].option === (roofVariant.roofSizeII + "ft") &&
+                    parseInt(item.attributes[2].option) === 1 &&
+                    parseInt(item.attributes[3].option) === 1 &&
+                    item.attributes[4].option.toUpperCase() === state.printingMethod) {
+                        return item;
+                }
+            })
+        }
+        else if (roofVariant.roofSize === roofVariant.roofSizeII && ((roofVariant.numbers.number === 1 && roofVariant.numbers.number1 === 0))) {
+            variant = productVariant[1].filter((item) => {
+                if (item.attributes[0].option === (roofVariant.roofSize + "ft") &&
+                    item.attributes[1].option === (roofVariant.roofSizeII + "ft") &&
+                    parseInt(item.attributes[2].option) === 0 &&
+                    parseInt(item.attributes[3].option) === 1 &&
+                    item.attributes[4].option.toUpperCase() === state.printingMethod) {
+                        return item;
+                }
+            })
+        }
+        else if (roofVariant.roofSize === roofVariant.roofSizeII && ((roofVariant.numbers.number === 2 && roofVariant.numbers.number1 === 1))) {
+            variant = productVariant[1].filter((item) => {
+                if (item.attributes[0].option === (roofVariant.roofSize + "ft") &&
+                    item.attributes[1].option === (roofVariant.roofSizeII + "ft") &&
+                    parseInt(item.attributes[2].option) === 1 &&
+                    parseInt(item.attributes[3].option) === 2 &&
+                    item.attributes[4].option.toUpperCase() === state.printingMethod) {
+                        return item;
+                }
+            })
+        }
+        else {
+            variant = productVariant[1].filter((item) => {
+                if (item.attributes[0].option === (roofVariant.roofSize + "ft") &&
+                    item.attributes[1].option === (roofVariant.roofSizeII + "ft") &&
+                    parseInt(item.attributes[2].option) === roofVariant.numbers.number &&
+                    parseInt(item.attributes[3].option) === roofVariant.numbers.number1 &&
+                    item.attributes[4].option.toUpperCase() === state.printingMethod) {
+                        return item;
+                }
+            })
+        }
         return variant[0]
     }
 
@@ -394,6 +430,41 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         }
     }
 
+    //useEffect for manipulating header,footer and third party components when customizing is ongoing
+    useEffect(() => {
+        const main_nav_elem = document.querySelector(".main-container-nav");
+        const main_footer_elem = document.querySelector("footer");
+        const main_checkout_elem = document.querySelector(".main-container-checkout");
+        const thirdPartyButton = document.querySelector("#mobile-chat-container");
+        if (state.activeCustomizer) {
+            main_nav_elem.style.display = "none";
+            main_footer_elem.style.display = "none";
+            main_checkout_elem.style.display = "none";
+        }
+        else {
+            main_nav_elem.style.display = "block";
+            main_footer_elem.style.display = "block";
+            main_checkout_elem.style.display = "block";
+        }
+
+        if (thirdPartyButton && state.activeCustomizer) {
+            thirdPartyButton.style.display = "none"
+        }
+        else if (thirdPartyButton && !state.activeCustomizer) {
+            thirdPartyButton.style.display = "block"
+        }
+
+        return () => {
+            main_nav_elem.style.display = "block";
+            main_footer_elem.style.display = "block";
+            main_checkout_elem.style.display = "block";
+            if(thirdPartyButton) {
+                thirdPartyButton.style.display = "block"
+            }
+        }
+
+    }, [state.activeCustomizer])
+
     useEffect(() => {
         const framePrices = acceptedFrameTypes?.map((type,index) => {
             const variant = productVariant[0].filter((item, idx) => {
@@ -412,10 +483,14 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     useEffect(() => {
         if (product.hasOwnProperty("image") && Object.keys(product.image).length !== 0) {
             setImages(() => [product.image])
-        } else if (product.hasOwnProperty("images") && product.images.length !== 0) {
+        } 
+        else if (product.hasOwnProperty("images") && product.images.length !== 0) {
             setImages(() => [...product.images])
         }
-    }, [product])
+        else {
+            setImages(() => [{src: `/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.split("x").join("X")}-WH.webp`}])
+        }
+    }, [product,state.size,state.frame])
 
     useEffect(() => {
         let types = []
@@ -477,10 +552,10 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }, [state.activeCustomizer])
 
     return (
-        <Block width="100%" position="relative">
+        <Block width="100%" position="relative" minHeight={state.activeCustomizer ? "100vh" : "unset"} display="flex" flexDirection="column" justifyContent="space-between">
             {
                 !state.activeCustomizer ?
-                    <Block maxWidth="1152px" margin="0 auto">
+                    <Block maxWidth="1152px" width="100%" margin="0 auto">
                         <Block width="100%" padding={["40px 20px"]} display="flex" justifyContent="space-between" alignItems="flex-start" flexWrap={["wrap", "nowrap", "nowrap"]}>
                             <Block flex="1" marginRight={["0", "0", "70px"]} minWidth="300px" backgroundColor="#F2F2F2">
                                 <Block
@@ -501,11 +576,11 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                     </Carousel>
                                 </Block>
                             </Block>
-                            <Block $style={{textAlign: "center"}} marginTop={["32px", "32px", "0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%", "100%", "371px"]}>
+                            <Block $style={{textAlign: "center"}} marginTop={["24px", "32px", "0px"]} marginLeft="auto" marginRight="auto" maxWidth={["100%", "100%", "371px"]}>
                                 <Block as="h1" font="MinXParagraph20">
                                     Custom Printed Canopy Tent
                                 </Block>
-                                <Block as="p" $style={{textAlign: "center"}} marginTop="40px" color="MinXPrimaryText" className="price" font="MinXHeading16">
+                                <Block as="p" $style={{textAlign: "center"}} marginTop={["24px", "40px"]} color="MinXPrimaryText" className="price" font="MinXHeading16">
                                     {steps.done ? `$${parseInt(productState.bag.totalPrice)}` : "From $391.00"}
                                 </Block>
                                 {/* <Block font="MinXHeading14" color="#FF7847">
@@ -514,7 +589,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 {/* <Block font="MinXHeading14" color="#FF7847">
                                     Christmas Sale: Use code SANTA for an extra 20% off select styles.
                                 </Block> */}
-                                <Block marginTop="40px">
+                                <Block marginTop={["24px", "40px"]}>
                                     <Block font="MinXPrimaryText" display="flex" justifyContent="space-between">
                                         <Block display="inline-block" font="MinXHeading16" color="MinXTitle">
                                             Customization
@@ -595,7 +670,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                         All custom printing orders will get a mockup before production. You can also <Block display="inline" color="MinXButton" className={css({textDecoration: "underline"})}><Link href="/custom-printing">get a free
                                         mockup </Link></Block> without ordering.
                                     </Block>
-                                    <Block marginTop="40px">
+                                    <Block marginTop={["24px", "40px"]}>
                                         <Block
                                             display="flex"
                                             minWidth="317px"
@@ -623,8 +698,9 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                     </Block>
                     :
                     <>
-                        <Block width="100%" backgroundColor="MinXBackground">
-                            <Block display="flex" alignItems="center" padding="0 16px" minHeight="44px" margin="0 auto" maxWidth="1152px" width="100%">
+                        <Block width="100%" backgroundColor="MinXBackground" position="sticky" top="0" left="0">
+                        {/* <Block width="100%" backgroundColor="MinXBackground" position="fixed" top="0" left="0" width="100%" $style={{zIndex:"10"}}> */}
+                            <Block display="flex" alignItems="center" padding="0 16px" minHeight="44px" margin="0 auto" maxWidth="1272px" width="100%">
                                 <Block display="flex" width="100%"  padding="4px 0" justifyContent="space-between" alignItems="center">
                                         <Block>
                                             <ButtonM 
@@ -648,15 +724,15 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 </Block>
                             </Block>
                         </Block>
-                        <Block margin="0 auto" maxWidth="1152px" width="100%" padding="38px 16px 90px">
+                        <Block margin="0 auto" flex="1" maxWidth="1272px" width="100%" padding="24px 16px 90px">
                             {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
                             {steps.currentStep === 1 && <FrameSelection  framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
-                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={"/images/custom-printed-canopy-tent/tents/${state.frame}-${state.size}/0-default-with-logo/${state.frame}-${state.size.toUpperCase()}-BK.webp"} tentFrame={state.frame}
+                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0]} tentFrame={state.frame}
                                                       tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                         </Block>
-                        <Block width="100%" backgroundColor="MinXBackground">
-                            <Block padding={["8px 0px 8px","8px 0px 8px"  ,"8px 0px 26px" ]} margin="0 auto" minHeight={["auto", "auto","70px"]} maxWidth="1152px" width="100%">
+                        <Block width="100%" backgroundColor="MinXBackground" position="fixed" bottom="0" left="0">
+                            <Block padding={["8px 0px 8px","8px 0px 8px"  ,"8px 0px 26px" ]} margin="0 auto" minHeight={["auto", "auto","70px"]} maxWidth="1272px" width="100%">
                                 <Block width="100%" display="flex" justifyContent="space-between" height="100%" alignItems="center" padding="0 16px">
                                     <ButtonM
                                         bundle="primary"
@@ -712,8 +788,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 totalPrice={productState.bag?.totalPrice}
                 totalSalesPrice={productState.bag?.sale_price}
             />
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
-                   dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant).length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/>
+            {/* <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
+                   dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant)?.length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/> */}
         </Block>
     )
 }
