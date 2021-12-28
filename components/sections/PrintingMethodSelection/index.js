@@ -149,7 +149,7 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                     <Block font="MinXSubtitle20" color="MinXTitle">
                         Please select prefered printing method.
                     </Block>
-                    <Block width="100%"  marginTop="2px" padding="6px 0" width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                    <Block width="100%"  marginTop="2px" padding="6px 0" display="flex" justifyContent="space-between" alignItems="center">
                         <Block font="MinXParagraph16" color="#808080">
                             {printingMethods.length} methods available
                         </Block>
@@ -158,7 +158,7 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                     </Block>
                 </Block>
             </Block>
-            <Block width="100%"  marginTop="38px" overflow="hidden" marginTop="16px">
+            <Block width="100%" overflow="hidden" marginTop="16px">
                 <Block width="100%" display="grid" placeItems="center" overflow="auto">
                     <Block width="100%" display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
                         {

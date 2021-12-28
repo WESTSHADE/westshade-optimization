@@ -102,7 +102,7 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
                         <Block font="MinXSubtitle20" color="MinXTitle">
                             Please select the frame of the tent.
                         </Block>
-                        <Block width="100%" marginTop="2px" padding="6px 0" width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                        <Block width="100%" marginTop="2px" padding="6px 0" display="flex" justifyContent="space-between" alignItems="center">
                             <Block color="#808080" font="MinXParagraph16">
                                 {frameTypes.length} frames available
                             </Block>
