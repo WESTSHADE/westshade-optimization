@@ -488,19 +488,24 @@ ul.bullet-warranty.sub > li {
 .cursor:hover {
     cursor: pointer;
 }
+
 .size-guide-table div {
     text-align: center;
 }
-.b-l-1{
+
+.b-l-1 {
     border-left: 1px solid #d9d9d9;
 }
-.b-t-1{
+
+.b-t-1 {
     border-top: 1px solid #d9d9d9;
 }
-.b-b-1{
+
+.b-b-1 {
     border-bottom: 1px solid #d9d9d9;
 }
-.b-r-1{
+
+.b-r-1 {
     border-right: 1px solid #d9d9d9;
 }
 
@@ -660,11 +665,14 @@ ul.bullet-warranty.sub > li {
     border: 1px dashed #23a4ad;
 }
 
+.scroll-container {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
 @supports (scroll-snap-type: y mandatory) {
     @media screen and (min-width: 960px) {
         .scroll-container {
-            height: 100vh;
-            overflow-y: scroll;
             scroll-snap-type: y mandatory;
         }
 
