@@ -11,13 +11,14 @@ import {Block} from "baseui/block"
 import {ArrowLeft, ArrowRight} from 'baseui/icon'
 
 import {Modal} from "Components/surfaces";
-import ButtonM from "Components/button-n"
+import Button from "Components/button-n"
 import ProgressSteps from "Components/Progress/ProgressSteps"
 import TentSizeSelection from "Components/sections/TentSizeSelection"
 import FrameSelection from "Components/sections/FrameSelection"
 import PrintingMethodSelection from "Components/sections/PrintingMethodSelection"
 import RequirementSelection from "Components/sections/RequirementSelection"
 import {Checkout_N as Checkout} from "Components/sections"
+// import {Checkout_CP as Checkout} from "Components/sections"
 
 import {EventEmitter} from "Utils/events";
 import Utils from "Utils/utils";
@@ -557,7 +558,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 {
                     !state.activeCustomizer ?
                         <Block maxWidth={process.env.maxWidth + "px"} width="100%" margin="0 auto">
-                            <Block width="100%" padding={["40px 20px"]} display="grid" gridTemplateColumns={["1fr", null, "1fr 1fr", "7fr 5fr"]} gridRowGap="24px">
+                            <Block width="100%" padding={["0 20px 40px", null, "40px 20px"]} display="grid" gridTemplateColumns={["1fr", null, "1fr 1fr", "7fr 5fr"]} gridRowGap="24px">
                                 <Carousel emulateTouch showThumbs={false} showStatus={false} showIndicators={false}>
                                     {images.map((image, idx) =>
                                         <Image key={idx} src={image.src} alt="product image" width={568} height={524} objectFit="contain" layout="responsive"/>
@@ -565,25 +566,26 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 </Carousel>
                                 <Block className="text-center" maxWidth={["unset", null, "371px"]} margin="0 auto">
                                     <Block as="h1" marginBottom={["24px", "40px"]} font="MinXParagraph20">Custom Printed Canopy Tent</Block>
-                                    <Block as="p" className="price" marginBottom={["24px", "40px"]} color="MinXPrimaryText" font="MinXHeading16">
-                                        {steps.done ? `$${parseInt(productState.bag.totalPrice)}` : "From $391.00"}
-                                    </Block>
-                                    {/* <Block font="MinXHeading14" color="#FF7847">
+                                    <Block display="grid" gridRowGap="8px" marginBottom={["24px", "40px"]} color="MinXPrimaryText" font="MinXHeading16" $style={{fontWeight: 400}}>
+                                        <Block as="p" className="price">{steps.done ? `$${parseInt(productState.bag.totalPrice)}` : "From $391.00"}</Block>
+                                        <Block as="p">Price may vary based on your configurations.</Block>
+                                        {/* <Block font="MinXHeading14" color="#FF7847">
                                     17% OFF
                                 </Block> */}
-                                    {/* <Block font="MinXHeading14" color="#FF7847">
+                                        {/* <Block font="MinXHeading14" color="#FF7847">
                                     Christmas Sale: Use code SANTA for an extra 20% off select styles.
                                 </Block> */}
+                                    </Block>
                                     <Block>
                                         <Block display="flex" justifyContent="space-between">
                                             <Block display="inline-block" font="MinXHeading16" color="MinXTitle">Customization</Block>
-                                            {steps.done && <ButtonM type="text" font="MinXParagraph14" color="#8C8C8C" text="Clear" disabled={!steps.done} onClick={clearCustomization}/>}
+                                            {steps.done && <Button type="text" font="MinXParagraph14" color="#8C8C8C" text="Clear" disabled={!steps.done} onClick={clearCustomization}/>}
                                         </Block>
                                         <Block className="cursor" width="100%" margin={["8px auto", "12px auto"]} title="edit" onClick={editDetails}>
                                             {
                                                 !steps.done ?
-                                                    <ButtonM type="rainbow" width="100%" height="48px" font="MinXLabel14" color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
-                                                             onClick={() => dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: true}})}
+                                                    <Button type="rainbow" width="100%" height="48px" font="MinXLabel14" color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF" display={["none", null, "block"]}
+                                                            onClick={() => dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: true}})}
                                                     />
                                                     :
                                                     <Block padding="16px 24px" className={css({border: "3px solid #23A4AD", borderRadius: "8px"})}>
@@ -628,9 +630,9 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                    position="fixed" top={[0, null, null, "unset"]} bottom={["unset", null, null, "0"]} left={0}
                                    $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
                             >
-                                <ButtonM bundle="white" width="100px" height="36px" font="MinXLabel14" color="#262626" text="Quit"
-                                         startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-close.png" alt="close" width={14} height={14} objectFit="contain" layout="fixed"/></Block>}
-                                         onClick={closeCustomizer}
+                                <Button bundle="white" width="100px" height="36px" font="MinXLabel14" color="#262626" text="Quit"
+                                        startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-close.png" alt="close" width={14} height={14} objectFit="contain" layout="fixed"/></Block>}
+                                        onClick={closeCustomizer}
                                 />
                                 <Block color="MinXTitle" display="flex" alignItems="center" $style={{gap: "8px"}}>
                                     <Block font="MinXParagraph14">Total:</Block>
@@ -649,27 +651,27 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                    position="fixed" top={["unset", null, null, "0"]} bottom={[0, null, null, "unset"]} left={0}
                                    $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
                             >
-                                <ButtonM type="outline" bundle="primary" width="60px" height="36px" onClick={() => prevStep()} disabled={steps.currentStep === 0}
-                                         buttonStyle={{
-                                             paddingRight: "0 !important",
-                                             paddingLeft: "0 !important",
-                                             color: steps.currentStep === 0 ? "#BFBFBF !important" : "#23A4AD !important",
-                                             borderColor: "#BFBFBF !important",
-                                         }}
+                                <Button type="outline" bundle="primary" width="60px" height="36px" onClick={() => prevStep()} disabled={steps.currentStep === 0}
+                                        buttonStyle={{
+                                            paddingRight: "0 !important",
+                                            paddingLeft: "0 !important",
+                                            color: steps.currentStep === 0 ? "#BFBFBF !important" : "#23A4AD !important",
+                                            borderColor: "#BFBFBF !important",
+                                        }}
                                 >
                                     <ArrowLeft size={26}/>
-                                </ButtonM>
+                                </Button>
                                 <Block flex="1" padding={["0 16px", null, "18px 64px"]} alignSelf={["center", null, "unset"]}>
                                     <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep}/>
                                 </Block>
-                                <ButtonM bundle="primary" width="60px" height="36px" onClick={() => nextStep()}
-                                         buttonStyle={{
-                                             paddingRight: "0 !important",
-                                             paddingLeft: "0 !important",
-                                         }}
+                                <Button bundle="primary" width="60px" height="36px" onClick={() => nextStep()}
+                                        buttonStyle={{
+                                            paddingRight: "0 !important",
+                                            paddingLeft: "0 !important",
+                                        }}
                                 >
                                     <ArrowRight size={26}/>
-                                </ButtonM>
+                                </Button>
                             </Block>
                         </>
                 }
@@ -685,6 +687,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                     onSale={productState.tentVariant?.on_sale || productState.frameVariant?.on_sale}
                     totalPrice={productState.bag?.totalPrice}
                     totalSalesPrice={productState.bag?.sale_price}
+                    stepsDone={steps.done}
                 />
                 {/* <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
                    dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant)?.length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/> */}
