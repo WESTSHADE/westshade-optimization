@@ -135,9 +135,8 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
             <Block className={styles.methodsContainer__desktop} width="100%" justifyContent="center" alignItems="stretch" $style={{flexWrap:"nowrap"}} marginTop="16px">
                 {
                     printingMethods.map((method) => (
-                        <Block className={styles.cardWrapper}>
+                        <Block key={method.value} className={styles.cardWrapper}>
                             <PrintingMethodCard
-                                key={method.value}
                                 method={method}
                                 active={printingMethodValue === method.value}
                                 onClick={() => setMethod({pMethod: method.value})}
@@ -177,9 +176,8 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                 >
                     {
                         printingMethods.map((method) => (
-                            <Block className={styles.cardWrapper}>
+                            <Block key={method.value} className={styles.cardWrapper}>
                                 <PrintingMethodCard
-                                    key={method.value}
                                     method={method}
                                     active={printingMethodValue === method.value}
                                     onClick={() => setMethod({pMethod: method.value})}
