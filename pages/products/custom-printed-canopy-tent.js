@@ -625,8 +625,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                         <>
                             <Block display="flex" justifyContent="space-between" alignItems="center" width="100%" height="44px" backgroundColor="MinXBackground"
                                    padding={"4px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
-                                   position="fixed" top={[0, null, null, "unset"]} bottom={["unset", null, null, "0"]} left={0} $style={{zIndex: 99}}
-                                   $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9"}}
+                                   position="fixed" top={[0, null, null, "unset"]} bottom={["unset", null, null, "0"]} left={0}
+                                   $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
                             >
                                 <ButtonM bundle="white" width="100px" height="36px" font="MinXLabel14" color="#262626" text="Quit"
                                          startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-close.png" alt="close" width={14} height={14} objectFit="contain" layout="fixed"/></Block>}
@@ -646,8 +646,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                             </Block>
                             <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} backgroundColor="MinXBackground"
                                    padding={"8px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
-                                   position="fixed" top={["unset", null, null, "0"]} bottom={[0, null, null, "unset"]} left={0} $style={{zIndex: 99}}
-                                   $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9"}}
+                                   position="fixed" top={["unset", null, null, "0"]} bottom={[0, null, null, "unset"]} left={0}
+                                   $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
                             >
                                 <ButtonM type="outline" bundle="primary" width="60px" height="36px" onClick={() => prevStep()} disabled={steps.currentStep === 0}
                                          buttonStyle={{
