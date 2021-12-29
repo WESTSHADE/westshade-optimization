@@ -56,17 +56,19 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
         <>
             <Block width="100%">
                 <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                    <Block width={["100%", "auto", "auto"]} marginBottom={["16px", "16px", "0"]} display="flex" flexDirection="column" justifyContent="center">
+                    <Block width="100%" display="flex" flexDirection="column" justifyContent="center">
                         <Block font="MinXSubtitle20" color="MinXTitle">
                             Please select the size of the tent.
                         </Block>
-                        <Block font="MinXParagraph16" color="#808080">
-                            {tentSizes[frame].length} sizes available
+                        <Block marginTop="2px" padding="6px 0" width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                            <Block font="MinXParagraph16" color="#808080">
+                                {tentSizes[frame].length} sizes available
+                            </Block>
+                            <MButton height="32px" onClick={() => setShowSizeGuide(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important"}} text="Size Guide"/>
                         </Block>
                     </Block>
-                    <MButton height="32px" onClick={() => setShowSizeGuide(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important"}} text=" size guide"/>
                 </Block>
-                <Block width="100%" marginTop="38px">
+                <Block width="100%" marginTop="16px">
                     <RadioGroup
                         value={sizeValue}
                         onChange={e => setSize(e.currentTarget.value)}

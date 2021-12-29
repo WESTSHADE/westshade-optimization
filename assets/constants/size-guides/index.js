@@ -9,13 +9,13 @@ export const newSizeGuide = {
         },
         y6:{
             small : `10’10’’`,
-            medium : "12’9’’",
+            medium : "-",
             large : "-",
         },
         y7:{
             small : `10’10’’`,
             medium : "12’9’’",
-            large : "-",
+            large : "10’10’’",
         }
     },
     clearanceHeight: {
