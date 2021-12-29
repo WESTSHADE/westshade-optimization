@@ -1,140 +1,69 @@
-import {useStyletron} from "baseui"
-import {Block} from "baseui/block"
+import React, {useState} from "react"
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 import Image from "next/image"
-import {useState} from "react"
-import MButton from "../../button-n"
+
+import {Block} from "baseui/block"
+
+import Button from "../../button-n"
 import {Modal} from "../../surfaces"
 
 const PrintingMethodCard = ({method, active, onClick}) => {
-    const [css] = useStyletron();
-    const [hovered, setHovered] = useState(false)
-
     const createCopy = (copy) => {
         return {__html: copy}
     }
 
     return (
         <>
-            <Block
-                onClick={onClick}
-                width="100%"
-                padding="24px"
-                backgroundColor="MinXTableHeader"
-                position="relative"
-                className={css({
-                    backgroundColor: "#FAFAFA",
-                    borderTopLeftRadius: "16px",
-                    borderTopRightRadius: "16px",
-                    borderBottomLeftRadius: "16px",
-                    borderBottomRightRadius: "16px",
-                    borderBottomStyle: "solid",
-                    borderTopStyle: "solid",
-                    borderRightStyle: "solid",
-                    borderLeftStyle: "solid",
-                    borderTopWidth: "3px",
-                    borderBottomWidth: "3px",
-                    borderLeftWidth: "3px",
-                    borderRightWidth: "3px",
-                    borderColor: active ? "#23A4AD" : "transparent",
-                    cursor: "pointer",
-                    transition: "all .15s ease-in-out"
-                })}
+            <Block className="cursor text-center" height="inherit" padding={[active ? "14px" : "16px", null, active ? "22px 30px" : "24px 32px"]} backgroundColor="#FAFAFA"
+                   display="flex" flexDirection="column" justifyContent="space-between"
+                   $style={{
+                       borderTopLeftRadius: "16px",
+                       borderTopRightRadius: "16px",
+                       borderBottomLeftRadius: "16px",
+                       borderBottomRightRadius: "16px",
+                       borderBottomStyle: "solid",
+                       borderTopStyle: "solid",
+                       borderRightStyle: "solid",
+                       borderLeftStyle: "solid",
+                       borderTopWidth: active ? "3px" : "1px",
+                       borderBottomWidth: active ? "3px" : "1px",
+                       borderLeftWidth: active ? "3px" : "1px",
+                       borderRightWidth: active ? "3px" : "1px",
+                       borderColor: active ? "#23A4AD" : "#D9D9D9",
+                       transition: "all .15s ease-in-out"
+                   }}
+                   onClick={onClick}
             >
-                {
-                    method?.fabricPrinted &&
-                    <Block font="MinXParagraph12" color="MinXTitle">
-                        This sample is printed on {method.fabricPrinted} fabric.
-                    </Block>
-                }
-                <Block width="100%" position="relative">
-                    <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" bottom="30px" left="50%" $style={{zIndex: "5", transform: "translateX(-50%)"}}>
-                        <MButton
-                            buttonClassName={css({
-                                background: "rgba(255, 255, 255, 0.6) !important",
-                                backdropFilter: "blur(6px) !important",
-                                transition: "all .3s ease-in",
-                                padding: "9px 18px !important",
-                                ':hover': {background: "rgba(255, 255, 255, 0.85) !important"}
-                            })}
-                            width="100%"
-                            color="MinXTitle"
-                            font="MinXParagraph14"
-                            startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-pointer.png" alt="hover" width={14} height={17} layout="fixed"/></Block>}
-                            text="See original image"
-                        />
-                    </Block>
-                    <Block marginTop="16px" width="100%" $style={{borderRadius: "16px", overflow: "hidden",}}>
-                        <Image src={method.image} width={370} height={250} alt={method.label} layout="responsive" objectFit="contain"/>
-                    </Block>
-                    <Block
-                        position="absolute"
-                        top="0"
-                        left="0"
-                        width="100%"
-                        height="100%"
-                        $style={{zIndex: "4", borderRadius: "16px", overflow: "hidden", opacity: hovered ? "1" : "0", transition: "all .3s ease-in-out"}}
-                    >
-                        <Image src={method.originalImage} width={370} height={250} alt="original image" layout="responsive" objectFit="contain"/>
-                    </Block>
-                </Block>
-                <Block marginTop="24px">
-                    <Block display="flex" flexDirection="column" alignItems="center">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Color
+                <Block>
+                    <Block width="100%" paddingBottom={["8px", null, "16px"]} font="MinXParagraph20" color="MinXTitle" $style={{fontWeight: 500, borderBottom: "1px solid #D9D9D9"}}>{method.label}</Block>
+                    <Block display="grid" gridRowGap={["10px", null, "24px"]} padding={["8px 0", null, "16px 0"]}>
+                        <Block>
+                            <Block font="MinXParagraph14" color="MinXSecondaryText">Color Fastness</Block>
+                            <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading17"]}><Block as="span" marginRight="4px" color="MinXButton">{method.fastness}</Block>years*</Block>
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.color)}/>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Fastness
-                        </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex">
-                            <Block marginRight="4px" font="MinXHeading16" color="MinXButton">
-                                {method.fastness}
+                        <Block>
+                            <Block font="MinXParagraph14" color="MinXSecondaryText">Thickness</Block>
+                            <Block width="70px" margin="8px auto">
+                                <Image src={method.thicknessImage} height={22} width={78} layout="responsive" objectFit="contain"/>
                             </Block>
-                            years*
+                            <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading17"]} $style={{textTransform: "capitalize"}}>{method.thickness}</Block>
                         </Block>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Fabric
+                        <Block>
+                            <Block font="MinXParagraph16" color="MinXSecondaryText">Fabric</Block>
+                            <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading17"]} dangerouslySetInnerHTML={createCopy(method.fabric)}/>
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.fabric)}/>
-                    </Block>
-                    <Block marginTop="40px">
-                        <MButton
-                            height="auto"
-                            onClick={onClick}
-                            buttonStyle={{
-                                backgroundColor: "transparent !important",
-                                color: "#808080 !important",
-                                fontFamily: "Roboto !important",
-                                fontSize: "14px !important",
-                                fontWeight: "400 !important",
-                                width: "100% !important",
-                                borderTopWidth: "2px",
-                                borderBottomWidth: "2px",
-                                borderLeftWidth: "2px",
-                                borderRightWidth: "2px",
-                                borderTopStyle: "solid",
-                                borderBottomStyle: "solid",
-                                borderRightStyle: "solid",
-                                borderLeftStyle: "solid",
-                                borderColor: "#bfbfbf",
-                                paddingTop: "16px !important",
-                                paddingBottom: "16px !important",
-                            }}
-                            text={`Select ${method.label}`}
-                        />
                     </Block>
                 </Block>
+                <Block>
+                    <Block position="relative" width="100%" height={["140px", null, "180px"]} $style={{borderRadius: "16px", overflow: "hidden"}}>
+                        <Image src={method.image} width={1191} height={810} alt={method.label} layout="fill" objectFit="cover"/>
+                    </Block>
+                    {method?.fabricPrinted && <Block marginTop="2px" font="MinXParagraph12" color="MinXTitle">This sample is printed on {method.fabricPrinted} fabric.</Block>}
+                </Block>
+                <Button type="outline" width="100%" height="48px" marginTop="16px" font="MinXParagraph14" text="Select" buttonStyle={{borderColor: "#BFBFBF"}} onClick={onClick}/>
             </Block>
-            {
-                method.note &&
-                <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0">
-                    {method.note}
-                </Block>
-            }
         </>
     )
 }
@@ -144,37 +73,32 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
 
     return (
         <>
-            <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                <Block width="100%" display="flex" flexDirection="column" justifyContent="center">
-                    <Block font="MinXSubtitle20" color="MinXTitle">
-                        Please select prefered printing method.
-                    </Block>
-                    <Block width="100%"  marginTop="2px" padding="6px 0" display="flex" justifyContent="space-between" alignItems="center">
-                        <Block font="MinXParagraph16" color="#808080">
-                            {printingMethods.length} methods available
+            <Block display="grid" gridRowGap="8px">
+                <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the printing method.</Block>
+                <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
+                    <Block>{printingMethods.length} methods available</Block>
+                    <Button type="solid" height="32px" text='Compare' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowPrintingTechnology(true)}/>
+                </Block>
+                <Block display="flex" paddingTop="20px">
+                    <Block display={["none", null, "block"]} flex={1}>
+                        <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap={["20px", null, "40px"]}>
+                            {printingMethods.map((method) =>
+                                <PrintingMethodCard key={method.value} method={method} active={printingMethodValue === method.value} onClick={() => setMethod({pMethod: method.value})}/>
+                            )}
                         </Block>
-                        <MButton height="32px" onClick={() => setShowPrintingTechnology(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}}
-                            text="Compare"/>
                     </Block>
-                </Block>
-            </Block>
-            <Block width="100%" overflow="hidden" marginTop="16px">
-                <Block width="100%" display="grid" placeItems="center" overflow="auto">
-                    <Block width="100%" display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
-                        {
-                            printingMethods.map((method) => (
-                                <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["100%", "307px", "518px"]} width="100%">
-                                    <PrintingMethodCard
-                                        method={method}
-                                        active={printingMethodValue === method.value}
-                                        onClick={() => setMethod({pMethod: method.value})}
-                                    />
+                    <Block display={["block", null, "none"]} width="100vw" marginRight={["-16px", null, null, "-20px"]} marginLeft={["-16px", null, null, "-20px"]}>
+                        <Carousel className="custom-printing-canopy-tent-frame-carousel" autoPlay={false} showStatus={false} showThumbs={false} showArrows={false} emulateTouch width="100vw">
+                            {printingMethods.map((method) => (
+                                <Block key={method.value} height="100%" margin={["0 16px", null, null, "0 20px"]} paddingTop="24px">
+                                    <PrintingMethodCard method={method} active={printingMethodValue === method.value} onClick={() => setMethod({pMethod: method.value})}/>
                                 </Block>
-                            ))
-                        }
+                            ))}
+                        </Carousel>
                     </Block>
                 </Block>
             </Block>
+            <Block className="text-center" marginTop="16px" font="MinXParagraph12" color="#8C8C8C" bottom="0" left="0">*Color fastness depends on usage and weather condition.</Block>
             <Modal type="alertdialog" isOpen={showPrintingTechnology} onClose={() => setShowPrintingTechnology(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
         </>
     )

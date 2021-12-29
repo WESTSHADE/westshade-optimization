@@ -3,30 +3,30 @@ const initialState = {
     pMethod: "",
     size: "10x10",
     frame: "Y7",
-    printingMethod: "UV PRINTING",
+    printingMethod: "DYE SUBLIMATION PRINTING",
     activeCustomizer: false,
     activeSide: "LEFT",
-    printReq:{
+    printReq: {
         peak: {
-            LEFT:{},
-            RIGHT:{},
-            BACK:{},
-            FRONT:{}
+            LEFT: {},
+            RIGHT: {},
+            BACK: {},
+            FRONT: {}
         },
         valance: {
-            LEFT:{},
-            RIGHT:{},
-            BACK:{},
-            FRONT:{}
+            LEFT: {},
+            RIGHT: {},
+            BACK: {},
+            FRONT: {}
         }
     },
 }
 
 const initialProduct = {
     product: {},
-    variants:[],
+    variants: [],
     frameVariant: {},
-    roofVariant:{},
+    roofVariant: {},
     bag: {
         totalCount: 1,
         totalPrice: 0,
@@ -44,7 +44,7 @@ const initialSteps = {
     allSteps: {
         size: {
             label: "Size",
-            code:"size",
+            code: "size",
             status: {
                 done: false,
                 onGoing: true
@@ -52,7 +52,7 @@ const initialSteps = {
         },
         frame: {
             label: "Frame",
-            code:"frame",
+            code: "frame",
             status: {
                 done: false,
                 onGoing: false
@@ -60,7 +60,7 @@ const initialSteps = {
         },
         requirement: {
             label: "Sides to Print",
-            code:"requirement",
+            code: "requirement",
             status: {
                 done: false,
                 onGoing: false
@@ -100,7 +100,7 @@ const reducer = (state, {type, payload}) => {
     return state;
 }
 
-const productReducer = (state,{type, payload}) => {
+const productReducer = (state, {type, payload}) => {
     switch (type) {
         case "SET_PRODUCT":
             return {...state, product: payload.product}
@@ -109,7 +109,7 @@ const productReducer = (state,{type, payload}) => {
         case "SET_ROOF_VARIANT":
             return {...state, roofVariant: payload.roofVariant}
         case "SET_VARIANTS":
-            return {...state, variants: payload.variants}    
+            return {...state, variants: payload.variants}
         case "SET_BAG":
             return {...state, bag: payload.bag}
         case "SET_TOTAL_COUNT":
@@ -128,19 +128,19 @@ const productReducer = (state,{type, payload}) => {
 const stepReducer = (state, {type, payload}) => {
     switch (type) {
         case "SET_NEXT_STEP":
-            return {...state, error:false, currentStep: state.currentStep + 1,  allSteps: { ...state.allSteps,[payload.key]: {...state.allSteps[payload.key],status: {...state.allSteps[payload.key].status, onGoing:true}}},currentKey: payload.key}
+            return {...state, error: false, currentStep: state.currentStep + 1, allSteps: {...state.allSteps, [payload.key]: {...state.allSteps[payload.key], status: {...state.allSteps[payload.key].status, onGoing: true}}}, currentKey: payload.key}
         case "SET_PREV_STEP":
-            return {...state, error:false, currentStep: state.currentStep - 1, currentKey: payload.key}
+            return {...state, error: false, currentStep: state.currentStep - 1, currentKey: payload.key}
         case "SET_OPTION_IS_DONE":
-            return {...state, error:false, allSteps: { ...state.allSteps,[state.currentKey]: {...state.allSteps[state.currentKey],status: {done: true, onGoing:false}}}}
-        case "SET_DONE": 
-            return {...state, done: true, error:false}
+            return {...state, error: false, allSteps: {...state.allSteps, [state.currentKey]: {...state.allSteps[state.currentKey], status: {done: true, onGoing: false}}}}
+        case "SET_DONE":
+            return {...state, done: true, error: false}
         case "SET_DEFAULT_AND_NEXT":
-            return {...state, error:false, currentStep: state.currentStep + 1, allSteps:{...state.allSteps, ...payload.steps,[payload.key]: {...state.allSteps[payload.key], status: {done: false, onGoing: true}}}, currentKey:payload.key}
+            return {...state, error: false, currentStep: state.currentStep + 1, allSteps: {...state.allSteps, ...payload.steps, [payload.key]: {...state.allSteps[payload.key], status: {done: false, onGoing: true}}}, currentKey: payload.key}
         case "SET_EDIT_DETAILS":
-            return {...state, done: false, error:false, currentKey:"size", currentStep: 0} 
-        case "SET_ERROR": 
-            return {...state, error:true}
+            return {...state, done: false, error: false, currentKey: "size", currentStep: 0}
+        case "SET_ERROR":
+            return {...state, error: true}
         case "RESET":
             return payload
         default:

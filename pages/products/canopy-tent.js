@@ -115,7 +115,6 @@ function Canopy_Tent({router, products, variants}) {
 
     const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
-
     const [productComponent, setProductComponent] = useState([products[2], products[3], products[3], products[3], products[3]]);
     const [productVariant, setProductVariant] = useState([variants[2], variants[3], variants[3], variants[3], variants[3]]);
 

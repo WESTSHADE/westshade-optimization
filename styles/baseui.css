@@ -1146,3 +1146,17 @@ ul.bullet-warranty.sub > li {
         backdrop-filter: unset;
     }
 }
+
+.custom-printing-canopy-tent-frame-carousel .carousel .control-dots {
+    top: 0;
+    bottom: unset;
+    margin: 0;
+}
+
+.custom-printing-canopy-tent-frame-carousel .carousel .control-dots .dot {
+    background-color: #D9D9D9;
+}
+
+.custom-printing-canopy-tent-frame-carousel .carousel .control-dots .dot.selected {
+    background-color: #262626;
+}

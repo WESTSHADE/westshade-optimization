@@ -1,81 +1,54 @@
-import {useStyletron} from "baseui"
-import {Block} from "baseui/block"
-import Image from "next/image"
-import {useEffect, useState} from "react"
-import MButton from "../../button-n"
-import {Modal} from "../../surfaces"
+import React, {useEffect, useState} from "react"
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+import Image from "next/image"
+
+import {Block} from "baseui/block"
+
+import Button from "../../button-n";
+import {Modal} from "../../surfaces"
 
 const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
     return (
         <>
-            <Block
-                onClick={onClick}
-                width="100%"
-                height="100%"
-                padding="20px"
-                backgroundColor="MinXTableHeader"
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="space-between"
-                $style={{
-                    cursor: "pointer",
-                    backgroundColor: "#FAFAFA",
-                    borderTopLeftRadius: "16px",
-                    borderTopRightRadius: "16px",
-                    borderBottomLeftRadius: "16px",
-                    borderBottomRightRadius: "16px",
-                    borderBottomStyle: "solid",
-                    borderTopStyle: "solid",
-                    borderRightStyle: "solid",
-                    borderLeftStyle: "solid",
-                    borderTopWidth: "3px",
-                    borderBottomWidth: "3px",
-                    borderLeftWidth: "3px",
-                    borderRightWidth: "3px",
-                    borderColor: active ? "#23A4AD" : "transparent",
-                    transition: "all .3s ease-in-out"
-                }}
+            <Block className="cursor text-left" height="inherit" padding={active ? "22px 14px" : "24px 16px"} backgroundColor="#FAFAFA"
+                   display="flex" flexDirection="column" justifyContent="space-between"
+                   $style={{
+                       gap: "8px",
+                       borderTopLeftRadius: "16px",
+                       borderTopRightRadius: "16px",
+                       borderBottomLeftRadius: "16px",
+                       borderBottomRightRadius: "16px",
+                       borderBottomStyle: "solid",
+                       borderTopStyle: "solid",
+                       borderRightStyle: "solid",
+                       borderLeftStyle: "solid",
+                       borderTopWidth: active ? "3px" : "1px",
+                       borderBottomWidth: active ? "3px" : "1px",
+                       borderLeftWidth: active ? "3px" : "1px",
+                       borderRightWidth: active ? "3px" : "1px",
+                       borderColor: active ? "#23A4AD" : "#D9D9D9",
+                       transition: "all .3s ease-in-out"
+                   }}
+                   onClick={onClick}
             >
-                <Block width="150px" height="150px">
-                    <Image src={frame.image} width={150} height={150} alt={frame.label} layout="responsive" objectFit="contain"/>
-                </Block>
-                <Block marginTop="24px">
-                    <Block font="MinXSubtitle20">
-                        {frame.label}
+                <Block display="grid" gridRowGap="24px" justifyItems="center">
+                    <Block width="150px" height="150px">
+                        <Image src={frame.image} width={800} height={800} alt={frame.label} layout="responsive" objectFit="contain"/>
                     </Block>
-                    <Block font="MinXParagraph16" marginTop="8px">
-                        {frame.description}
-                    </Block>
-                    <Block font="MinXSubtitle20" marginTop="8px">
-                        + $ {framePrice.price ||  frame.price}
+                    <Block display="grid" gridRowGap="8px">
+                        <Block font="MinXSubtitle20">{frame.label}</Block>
+                        <Block font="MinXParagraph16">{frame.description}</Block>
                     </Block>
                 </Block>
-                <Block marginTop="16px" width="100%">
-                    <MButton
-                        height="auto"
-                        onClick={onClick}
-                        buttonStyle={{
-                            backgroundColor: "transparent !important",
-                            color: "#262626 !important",
-                            fontFamily: "Roboto !important",
-                            fontSize: "14px !important",
-                            fontWeight: "500 !important",
-                            width: "100% !important",
-                            borderTopWidth: "2px",
-                            borderBottomWidth: "2px",
-                            borderLeftWidth: "2px",
-                            borderRightWidth: "2px",
-                            borderTopStyle: "solid",
-                            borderBottomStyle: "solid",
-                            borderRightStyle: "solid",
-                            borderLeftStyle: "solid",
-                            borderColor: "#bfbfbf",
-                            paddingTop: "16px !important",
-                            paddingBottom: "16px !important",
-                        }}
-                        text={`Select ${frame.value}`}
+                <Block display="grid" gridRowGap={["16px", null, "24px"]} width="100%">
+                    <Block font="MinXSubtitle20">+ ${framePrice.price || frame.price}</Block>
+                    <Button type="outline" width="100%" height="48px" font="MinXParagraph14" text={`Select ${frame.value}`}
+                            buttonStyle={{
+                                borderColor: "#BFBFBF"
+                            }}
+                            onClick={onClick}
                     />
                 </Block>
             </Block>
@@ -86,7 +59,6 @@ const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
 const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
     const [showFrameCompare, setShowFrameCompare] = useState(false);
     const [frames, setFrames] = useState([]);
-    const [css] = useStyletron();
 
     useEffect(() => {
         let types = frameTypes.filter((item) => {
@@ -94,39 +66,31 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
         })
         setFrames(types)
     }, [acceptedFrameTypes])
+
     return (
         <>
-            <Block width="100%">
-                <Block width="100%" display="flex" alignItems="center" justifyContent="space-between" flexWrap={["wrap", "nowrap", "nowrap"]}>
-                    <Block width="100%" display="flex" flexDirection="column">
-                        <Block font="MinXSubtitle20" color="MinXTitle">
-                            Please select the frame of the tent.
-                        </Block>
-                        <Block width="100%" marginTop="2px" padding="6px 0" display="flex" justifyContent="space-between" alignItems="center">
-                            <Block color="#808080" font="MinXParagraph16">
-                                {frameTypes.length} frames available
-                            </Block>
-                            <MButton height="32px" onClick={() => setShowFrameCompare(true)} buttonStyle={{backgroundColor: "#F2F2F2 !important", color: "#808080 !important", fontFamily: "Roboto !important", fontSize: "14px"}} text="Compare"/>
+            <Block display="grid" gridRowGap="8px">
+                <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the frame of the tent.</Block>
+                <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
+                    <Block>{frameTypes.length} frames available</Block>
+                    <Button type="solid" height="32px" text='Compare' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowFrameCompare(true)}/>
+                </Block>
+                <Block display="flex" paddingTop="20px">
+                    <Block display={["none", null, "block"]} flex={1}>
+                        <Block display="grid" gridTemplateColumns="repeat(3, 1fr)" gridColumnGap="20px">
+                            {frames?.map((frame, idx) =>
+                                <FrameTypeCard key={frame.value} frame={frame} framePrice={framePrices[idx]} active={frameValue === frame.value} onClick={() => setFrame({frame: frame.value})}/>
+                            )}
                         </Block>
                     </Block>
-                </Block>
-              <Block width="100%" display="grid" placeItems="center" overflow="hidden" marginTop="16px">
-                <Block width="100%" display="grid" placeItems="center" overflow="scrollX">
-                    <Block width="100%" maxWidth="1272px" display="flex" $style={{flexWrap: "nowrap"}} justifyContent={["flex-start","space-between"]} alignItems="stretch">
-                        {
-                            frames?.map((frame, idx) => (
-
-                                    <Block key={frame.value} margin={["0 8.5px 24px", "0 9px 24px", "0 10px"]} maxWidth={["251px", "342px", "410px"]} width={["100%", "100%", "100%"]}>
-                                        <FrameTypeCard
-                                            frame={frame}
-                                            framePrice={framePrices[idx]}
-                                            onClick={() => setFrame({frame: frame.value})}
-                                            active={frameValue === frame.value}
-                                        />
-                                    </Block>
-                                ))
-                            }
-                        </Block>
+                    <Block display={["block", null, "none"]} width="100vw" marginRight={["-16px", null, null, "-20px"]} marginLeft={["-16px", null, null, "-20px"]}>
+                        <Carousel className="custom-printing-canopy-tent-frame-carousel" autoPlay={false} showStatus={false} showThumbs={false} showArrows={false} emulateTouch width="100vw">
+                            {frames?.map((frame, idx) => (
+                                <Block key={frame.value} height="100%" margin={["0 16px", null, null, "0 20px"]} paddingTop="24px">
+                                    <FrameTypeCard frame={frame} framePrice={framePrices[idx]} active={frameValue === frame.value} onClick={() => setFrame({frame: frame.value})}/>
+                                </Block>
+                            ))}
+                        </Carousel>
                     </Block>
                 </Block>
             </Block>
