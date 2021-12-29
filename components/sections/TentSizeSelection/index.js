@@ -137,6 +137,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
+                                marginRight: "6px",
 
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
@@ -153,6 +154,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
+                                marginRight: "6px",
 
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
@@ -169,6 +171,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
+                                marginRight: "6px",
 
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},
@@ -185,6 +188,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                             aria-hidden="true"
                             $style={{
                                 width: "104px",
+                                marginRight: "6px",
 
                                 '@media (min-width: 480px)': {width: "158px"},
                                 '@media (min-width: 960px)': {width: "239px"},

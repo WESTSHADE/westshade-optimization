@@ -4,6 +4,9 @@ import Image from "next/image"
 import {useState} from "react"
 import MButton from "../../button-n"
 import {Modal} from "../../surfaces"
+import styles from "./PrintingMethodSelection.module.scss"
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import {Carousel} from "react-responsive-carousel"
 
 const PrintingMethodCard = ({method, active, onClick}) => {
     const [css] = useStyletron();
@@ -15,102 +18,74 @@ const PrintingMethodCard = ({method, active, onClick}) => {
 
     return (
         <>
-            <Block
-                onClick={onClick}
-                width="100%"
-                padding="24px"
-                backgroundColor="MinXTableHeader"
-                position="relative"
-                className={css({
-                    backgroundColor: "#FAFAFA",
-                    borderTopLeftRadius: "16px",
-                    borderTopRightRadius: "16px",
-                    borderBottomLeftRadius: "16px",
-                    borderBottomRightRadius: "16px",
-                    borderBottomStyle: "solid",
-                    borderTopStyle: "solid",
-                    borderRightStyle: "solid",
-                    borderLeftStyle: "solid",
-                    borderTopWidth: "3px",
-                    borderBottomWidth: "3px",
-                    borderLeftWidth: "3px",
-                    borderRightWidth: "3px",
-                    borderColor: active ? "#23A4AD" : "transparent",
-                    cursor: "pointer",
-                    transition: "all .15s ease-in-out"
-                })}
-            >
-                {
-                    method?.fabricPrinted &&
-                    <Block font="MinXParagraph12" color="MinXTitle">
-                        This sample is printed on {method.fabricPrinted} fabric.
-                    </Block>
-                }
-                <Block width="100%" position="relative">
-                    <Block onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" bottom="30px" left="50%" $style={{zIndex: "5", transform: "translateX(-50%)"}}>
-                        <MButton
-                            buttonClassName={css({
-                                background: "rgba(255, 255, 255, 0.6) !important",
-                                backdropFilter: "blur(6px) !important",
-                                transition: "all .3s ease-in",
-                                padding: "9px 18px !important",
-                                ':hover': {background: "rgba(255, 255, 255, 0.85) !important"}
-                            })}
-                            width="100%"
-                            color="MinXTitle"
-                            font="MinXParagraph14"
-                            startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-pointer.png" alt="hover" width={14} height={17} layout="fixed"/></Block>}
-                            text="See original image"
-                        />
-                    </Block>
-                    <Block marginTop="16px" width="100%" $style={{borderRadius: "16px", overflow: "hidden",}}>
-                        <Image src={method.image} width={370} height={250} alt={method.label} layout="responsive" objectFit="contain"/>
-                    </Block>
-                    <Block
-                        position="absolute"
-                        top="0"
-                        left="0"
-                        width="100%"
-                        height="100%"
-                        $style={{zIndex: "4", borderRadius: "16px", overflow: "hidden", opacity: hovered ? "1" : "0", transition: "all .3s ease-in-out"}}
-                    >
-                        <Image src={method.originalImage} width={370} height={250} alt="original image" layout="responsive" objectFit="contain"/>
-                    </Block>
-                </Block>
-                <Block marginTop="24px">
-                    <Block display="flex" flexDirection="column" alignItems="center">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Color
+                <Block onClick={onClick} width="100%" backgroundColor="MinXTableHeader" className={`${styles.card} ${ active ? styles.active : ""}`}>
+                    <Block width="100%" display="flex" flexDirection="column" alignItems="center">
+                        <Block width="100%" className={styles.cardTitle}>
+                            {method.label}
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.color)}/>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Fastness
-                        </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXHeading16" marginTop="4px" display="flex">
-                            <Block marginRight="4px" font="MinXHeading16" color="MinXButton">
-                                {method.fastness}
+                        <Block width="100%" className={styles.cardDetails}>
+                            <Block className={styles.cardDetails__item}>
+                                <Block className={styles.cardDetails__item__label} font="MinXParagraph14" color="#8c8c8c">
+                                    Fastness
+                                </Block>
+                                <Block className={styles.cardDetails__item__value}>
+                                    <span>{method.fastness}</span> year*
+                                </Block>
                             </Block>
-                            years*
+                            <Block className={styles.cardDetails__item}>
+                                <Block className={styles.cardDetails__item__label} font="MinXParagraph14" color="#8c8c8c">
+                                    Thickness
+                                </Block>
+                                <Block display="flex" flexDirection="column" alignItems="center" className={styles.cardDetails__item__value}>
+                                    <Block marginTop="10px" marginBottom="10px" width="70px">
+                                        <Image src={method.thicknessImage} height={22} width={78} layout="responsive" objectFit="contain" quality={10}/>
+                                    </Block>
+                                    {method.thickness}
+                                </Block>
+                            </Block>
+                            <Block className={styles.cardDetails__item}>
+                                <Block className={styles.cardDetails__item__label} font="MinXParagraph14" color="#8c8c8c">
+                                    Fabric
+                                </Block>
+                                <Block className={styles.cardDetails__item__value} dangerouslySetInnerHTML={createCopy(method.fabric)}/>
+                            </Block>
                         </Block>
-                    </Block>
-                    <Block display="flex" flexDirection="column" alignItems="center" marginTop="24px">
-                        <Block font="MinXParagraph16" color="MinXSecondaryText">
-                            Fabric
+                        <Block display="flex" flexDirection="column" alignItems="center" className={styles.cardImage}>
+                            <div>
+                                <Image src={method.image} width={336} height={180} layout="responsive" quality={30} objectFit="cover"/>
+                                <Block $style={{opacity: hovered ? 1 : 0}}>
+                                    <Image src={method.originalImage} width={336} height={180} layout="responsive" quality={30} objectFit="cover"/>
+                                </Block>
+                                <Block as="span" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} minWidth="163px" position="absolute" top="50%" left="50%" $style={{zIndex: "10", transform: "translate(-50%,-50%)"}}>
+                                    <MButton
+                                        buttonClassName={css({
+                                            background: "rgba(255, 255, 255, 0.6) !important",
+                                            backdropFilter: "blur(6px) !important",
+                                            transition: "all .3s ease-in",
+                                            padding: "9px 18px !important",
+                                            ':hover': {background: "rgba(255, 255, 255, 0.85) !important"}
+                                        })}
+                                        width="100%"
+                                        color="MinXTitle"
+                                        font="MinXParagraph14"
+                                        startEnhancer={() => <Block as="i" display="grid" placeItems="center"><Image src="/images/icon/icon-pointer.png" alt="hover" width={14} height={17} layout="fixed"/></Block>}
+                                        text="See original image"
+                                    />
+                                </Block>
+                            </div>
+                            <Block marginTop="2px" $style={{textAlign: "center"}} color="MinXTitle" font="MinXParagraph12">
+                                {`This sample is printed on ${method.fabricPrinted} fabric.`}
+                            </Block>
                         </Block>
-                        <Block className={css({textAlign: "center"})} font="MinXSubtitle20" marginTop="4px" dangerouslySetInnerHTML={createCopy(method.fabric)}/>
-                    </Block>
-                    <Block marginTop="40px">
-                        <MButton
-                            height="auto"
+                        <Block marginTop="16px" width="100%" className={styles.cardCta}>
+                            <MButton height="auto"
                             onClick={onClick}
                             buttonStyle={{
                                 backgroundColor: "transparent !important",
-                                color: "#808080 !important",
+                                color: "#262626 !important",
                                 fontFamily: "Roboto !important",
                                 fontSize: "14px !important",
-                                fontWeight: "400 !important",
+                                fontWeight: "500 !important",
                                 width: "100% !important",
                                 borderTopWidth: "2px",
                                 borderBottomWidth: "2px",
@@ -124,17 +99,16 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                                 paddingTop: "16px !important",
                                 paddingBottom: "16px !important",
                             }}
-                            text={`Select ${method.label}`}
-                        />
+                            text={`Select ${method.label}`}/>
+                        </Block>
                     </Block>
                 </Block>
-            </Block>
-            {
-                method.note &&
-                <Block marginTop="16px" font="MinXParagraph12" color="#8c8c8c" bottom="0" left="0">
-                    {method.note}
-                </Block>
-            }
+                {
+                    method.note &&
+                    <Block $style={{textAlign: "center"}} font="MinXParagraph14" color="MinXSecondaryText">
+                        {method.note}
+                    </Block>
+                }
         </>
     )
 }
@@ -158,22 +132,62 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                     </Block>
                 </Block>
             </Block>
-            <Block width="100%" overflow="hidden" marginTop="16px">
-                <Block width="100%" display="grid" placeItems="center" overflow="auto">
-                    <Block width="100%" display="flex" justifyContent={["flex-start","center"]} alignItems="stretch" $style={{flexWrap:"nowrap"}}>
-                        {
-                            printingMethods.map((method) => (
-                                <Block key={method.value} padding={["0 8px 16px ", "0px 8px 16px", "0 16px", "0 16px"]} maxWidth={["100%", "307px", "518px"]} width="100%">
-                                    <PrintingMethodCard
-                                        method={method}
-                                        active={printingMethodValue === method.value}
-                                        onClick={() => setMethod({pMethod: method.value})}
-                                    />
-                                </Block>
-                            ))
-                        }
-                    </Block>
-                </Block>
+            <Block className={styles.methodsContainer__desktop} width="100%" justifyContent="center" alignItems="stretch" $style={{flexWrap:"nowrap"}} marginTop="16px">
+                {
+                    printingMethods.map((method) => (
+                        <Block className={styles.cardWrapper}>
+                            <PrintingMethodCard
+                                key={method.value}
+                                method={method}
+                                active={printingMethodValue === method.value}
+                                onClick={() => setMethod({pMethod: method.value})}
+                            />
+                        </Block>
+                    ))
+                }
+            </Block>
+            <Block width="100%" marginTop="16px" className={styles.methodsContainer__mobile}>
+                <Carousel
+                    className={styles.methodsContainer__mobile__carousel}
+                    emulateTouch
+                    showIndicators
+                    showStatus={false}
+                    showArrows={false}
+                    renderIndicator={(onClickHandler, isSelected, index, label) => {
+                        return (
+                            <Block
+                                value={index}
+                                key={index}
+                                role="button"
+                                tabIndex={0}
+                                title={`${label} ${index + 1}`}
+                                aria-label={`${label} ${index + 1}`}
+                                $style={{
+                                    width: "8px",
+                                    height: "8px",
+                                    borderRadius: "50%",
+                                    backgroundColor: isSelected ? "#262626" : "#D9D9D9",
+                                    margin: "0 4px",
+                                    display: "inline-block",
+                                    bottom: "100%"
+                                }}
+                            />
+                        );
+                    }}
+                >
+                    {
+                        printingMethods.map((method) => (
+                            <Block className={styles.cardWrapper}>
+                                <PrintingMethodCard
+                                    key={method.value}
+                                    method={method}
+                                    active={printingMethodValue === method.value}
+                                    onClick={() => setMethod({pMethod: method.value})}
+                                />
+                            </Block>
+                        ))
+                    }
+                </Carousel>
             </Block>
             <Modal type="alertdialog" isOpen={showPrintingTechnology} onClose={() => setShowPrintingTechnology(false)} content="technique" dialogStyles={{transform: "translateY(0) !important"}}/>
         </>
