@@ -3,7 +3,7 @@ const initialState = {
     pMethod: "",
     size: "10x10",
     frame: "Y7",
-    printingMethod: "UV PRINTING",
+    printingMethod: "DYE SUBLIMATION PRINTING",
     activeCustomizer: false,
     activeSide: "LEFT",
     printReq:{

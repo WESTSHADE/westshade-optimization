@@ -1,35 +1,40 @@
 const printingMethods = [
     {
-        color: " <span class='highlighted'> More vivid; great contrast </span>",
-        fabric: " <span class='highlighted'> 900D, 360 gsm </span> polyester <br/> with PU coating",
-        fabricPrinted: "900D",
-        fastness: "4-5",
-        image: "/images/custom-printed-canopy-tent/pmt-uv-printing.png",
-        originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
-        value: "UV PRINTING",
-        label: "UV Printing",
-        years: "4-5",
-        note: ""
-    },
-    {
         color: "Vivid color; good contrast",
         fabric: "<span class='highlighted'> 600D, 288 gsm </span> polyester <br/> with PU coating",
         fabricPrinted: "600D",
-        fastness: "2-3",
-        image: "/images/custom-printed-canopy-tent/pmt-dye-sublimation.png",
+        fastness: "1",
+        thickness: "thick",
+        thicknessImage: "/images/icon/icon-thick.png",
+        image: "/images/custom-printed-canopy-tent/pmt-dye-sublimation-v2.webp",
         originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
         value: "DYE SUBLIMATION PRINTING",
         label: "Dye Sublimation",
         years: "2-3",
         note: "*Color fastness depends on usage and weather condition."
+    },
+    {
+        color: " <span class='highlighted'> More vivid; great contrast </span>",
+        fabric: " <span class='highlighted'> 900D, 360 gsm </span> polyester <br/> with PU coating",
+        fabricPrinted: "900D",
+        fastness: "4-5",
+        thickness: "thicker",
+        thicknessImage: "/images/icon/icon-thicker.png",
+        image: "/images/custom-printed-canopy-tent/pmt-uv-printing-v2.webp",
+        originalImage: "/images/custom-printed-canopy-tent/pmt-original.png",
+        value: "UV PRINTING",
+        label: "UV Printing",
+        years: "4-5",
+        note: ""
     }
 ]
 const frameTypes = [
     {
-        image: "/images/canopy-tent/tent/y5.webp",
-        value: "Y5",
-        label: "Y5 - Economical steel frame",
-        description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is desgined for everyday use, performs exceptionally well all year round.",
+
+        image: "/images/canopy-tent/tent/y7.webp",
+        value: "Y7",
+        label: "Y7 - Heavy-duty aluminum frame",
+        description: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
         price: "0"
     },
     {
@@ -41,11 +46,10 @@ const frameTypes = [
         price: "0"
     },
     {
-
-        image: "/images/canopy-tent/tent/y7.webp",
-        value: "Y7",
-        label: "Y7 - Heavy-duty aluminum frame",
-        description: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
+        image: "/images/canopy-tent/tent/y5.webp",
+        value: "Y5",
+        label: "Y5 - Economical steel frame",
+        description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is desgined for everyday use, performs exceptionally well all year round.",
         price: "0"
     },
 ]
