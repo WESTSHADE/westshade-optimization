@@ -6,14 +6,13 @@ import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 
-import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
-import {ArrowRight, ArrowLeft, ChevronLeft, ChevronRight} from "baseui/icon";
+import {ArrowRight, ArrowLeft} from "baseui/icon";
 
 import Button from "Components/button-n";
+import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 import {Benefit, OrderProcess, Section, FreeMockupForm} from "Components/sections";
-import {responsiveTheme, themedUseStyletron} from "../../utils/theme";
 
 const data = [
     {
@@ -57,19 +56,16 @@ const ImageSlide = ({url}) => {
 };
 
 function Custom_Printing({router}) {
-    const [css, theme] = themedUseStyletron();
-    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
-
     const [tabActiveKey, setTabActiveKey] = useState(0);
 
     return (
-        <ThemeProvider theme={customTheme}>
+        <ThemeProvider>
             <Head>
                 <title>Custom Printing - WESTSHADE</title>
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["32px", null, "64px"]} paddingBottom={["32px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["32px", null, "64px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
                              <>
@@ -81,8 +77,8 @@ function Custom_Printing({router}) {
                                         }}
                                  >I want to customize...</Block>
                                  <Tabs activeKey={tabActiveKey} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + ""))} fill={FILL.fixed} overrides={{TabBorder: {props: {hidden: true}}}}>
-                                     {data.map(({title, content, iconUrl, imageUrl, buttonText = "Learn more >", url}) => (
-                                         <Tab title={title} artwork={() => <Image src={iconUrl} alt={title} width={80} height={80} layout="intrinsic" objectFit="contain"/>}
+                                     {data.map(({title, content, iconUrl, imageUrl, buttonText = "Learn more >", url}, index) => (
+                                         <Tab key={index} title={title} artwork={() => <Image src={iconUrl} alt={title} width={80} height={80} layout="intrinsic" objectFit="contain"/>}
                                               overrides={{
                                                   TabPanel: {
                                                       props: {
@@ -113,7 +109,7 @@ function Custom_Printing({router}) {
                                                  <Block display={["none", null, "block"]} position="relative" width="50%" minHeight="400px">
                                                      <Image src={imageUrl} alt={title} layout="fill" objectFit="cover"/>
                                                  </Block>
-                                                 <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} flex={1} padding="16px 32px" height="100%">
+                                                 <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" gridRowGap={["8px", null, "16px"]} flex={1} padding="16px 32px" height="100%">
                                                      <Block marginRight="auto" marginLeft={["auto", null, "unset"]} width="fit-content" font={["MinXTitle24", "MinXTitle24", "MinXTitle40"]} color="MinXPrimaryText"
                                                             overrides={{
                                                                 Block: {

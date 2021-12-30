@@ -4,14 +4,12 @@ import {withRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 
-import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {ChevronRight} from "baseui/icon";
 
 import Button from "Components/button-n";
 import {BannerDisplay, Section} from "Components/sections";
-
-import {themedUseStyletron, responsiveTheme} from "Utils/theme";
+import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 
 import UMBRELLA from "Assets/spec-umbrella-chart.json";
 
@@ -53,7 +51,8 @@ const SectionBlock = ({title, content, displayList = []}) => {
                          <SectionTitle title={title} content={content}/>
                          <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(" + displayList.length + ", minmax(auto, 410px))"]} gridColumnGap="20px" gridRowGap="24px" margin="auto" alignItems="baseline">
                              {displayList.map(({url, alt, title, content, titleImageUrl}, index) =>
-                                 <Block key={index} display={["flex", null, "grid"]} gridTemplateColumns="1fr" gridRowGap="16px" flexDirection={[index % 2 === 0 ? "row" : "row-reverse", null, "unset"]} justifyItems="center" overflow="hidden"
+                                 <Block key={index} display={["flex", null, "grid"]} gridTemplateColumns="1fr" gridRowGap="16px" flexDirection={[index % 2 === 0 ? "row" : "row-reverse", null, "unset"]} justifyItems="center"
+                                        overflow="hidden"
                                         $style={{gap: "16px"}}>
                                      <Block position="relative" width={["130px", null, "100%"]} height={["130px", null, "300px"]} backgroundColor="#F7F7F7" overflow="hidden" $style={{borderRadius: "16px"}}>
                                          <Image src={url} alt={alt} layout="fill" objectFit="cover"/>
@@ -84,9 +83,6 @@ const SectionBlock = ({title, content, displayList = []}) => {
 }
 
 function Umbrella({router, size}) {
-    const [css, theme] = themedUseStyletron();
-    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
-
     const ref = useRef(null);
 
     const [compareColumnWidth, setCompareColumnWidth] = useState(0);
@@ -97,7 +93,7 @@ function Umbrella({router, size}) {
     }, [size, ref]);
 
     return (
-        <ThemeProvider theme={customTheme}>
+        <ThemeProvider>
             <Head>
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
@@ -155,7 +151,8 @@ function Umbrella({router, size}) {
                                      </Block>
                                      {signDisplay && size.width < 673 ? (
                                          <Block position="absolute" width="100%" height="100%" onClick={() => setSignDisplay(false)}>
-                                             <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center" margin="auto"
+                                             <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
+                                                    margin="auto"
                                                     overrides={{
                                                         Block: {
                                                             style: {

@@ -6,7 +6,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import Image from "next/image"
 import Link from "next/link"
 
-import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block"
 import {ArrowLeft, ArrowRight} from 'baseui/icon'
 
@@ -19,10 +18,10 @@ import PrintingMethodSelection from "Components/sections/PrintingMethodSelection
 import RequirementSelection from "Components/sections/RequirementSelection"
 import {Checkout_N as Checkout} from "Components/sections"
 // import {Checkout_CP as Checkout} from "Components/sections"
+import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 
 import {EventEmitter} from "Utils/events";
 import Utils from "Utils/utils";
-import {responsiveTheme, themedUseStyletron} from "Utils/theme";
 
 import {updateUser} from "../../redux/actions/userActions"
 import {modifyCart} from "../../redux/actions/cartActions"
@@ -33,9 +32,6 @@ import {printingMethods, frameTypes, tentSizes} from "Assets/constants/custom-pr
 const utils = new Utils();
 
 const Index = ({product, productVariant, productComponent, pageState, printingMethods, frameTypes, tentSizes}) => {
-    const [css, theme] = themedUseStyletron();
-    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
-
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();
     const {cart} = useSelector(({cart}) => cart);
@@ -553,7 +549,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }, [state.activeCustomizer])
 
     return (
-        <ThemeProvider theme={customTheme}>
+        <ThemeProvider>
             <Block display="flex" position="relative" width="100%" minHeight={state.activeCustomizer ? "100vh" : "unset"}>
                 {
                     !state.activeCustomizer ?
@@ -588,7 +584,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                                             onClick={() => dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: true}})}
                                                     />
                                                     :
-                                                    <Block padding="16px 24px" className={css({border: "3px solid #23A4AD", borderRadius: "8px"})}>
+                                                    <Block padding="16px 24px" $style={{border: "3px solid #23A4AD", borderRadius: "8px"}}>
                                                         <Block display="flex" justifyContent="space-between" alignItems="center" marginBottom="4px">
                                                             <Block font="MinXLabel14" color="MinXTitle">Summary</Block>
                                                             <Block width="18px" height="18px">
@@ -614,7 +610,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                             All custom printing orders will get a mockup before production. You can also <Block as="span" color="MinXButton" $style={{textDecoration: "underline"}}><Link href="/custom-printing">get a free
                                             mockup </Link></Block> without ordering.
                                         </Block>
-                                        <Block className={css({borderRadius: "24px", border: "1px solid #D9D9D9"})} padding="11px">
+                                        <Block padding="11px" $style={{borderRadius: "24px", border: "1px solid #D9D9D9"}}>
                                             <Link href="/custom-printing-canopy-tent">
                                                 <Block font="MinXLabel14" color="MinXPrimaryText">Artwork not ready? <Block as="span" marginLeft="4px" font="MinXParagraph14" color="MinXPrimaryText">Buy now and upload later</Block></Block>
                                             </Link>
@@ -643,7 +639,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
                                 {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
                                 {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0]} tentFrame={state.frame}
-                                                                                  tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide} setRequirement={selectPrintingRequirement}/>}
+                                                                                  tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide}
+                                                                                  setRequirement={selectPrintingRequirement}/>}
                                 {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                             </Block>
                             <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} backgroundColor="MinXBackground"

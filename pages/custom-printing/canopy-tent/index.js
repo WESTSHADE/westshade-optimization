@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
@@ -11,6 +11,8 @@ import {AspectRatioBox} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
+import {CanopyTentV1 as Hero} from "Components/Hero/CustomPrinting";
+import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 import {Section, Benefit, FreeMockupForm} from "Components/sections"
 
 const ImageSlide = ({url, alt}) => {
@@ -22,14 +24,6 @@ const ImageSlide = ({url, alt}) => {
 };
 
 function Custom_Printing_Canopy_Tent({router, size}) {
-    const refBanner = useRef(null);
-
-    const [circleAD, setCircleAD] = useState(0);
-    const [circleBD, setCircleBD] = useState(0);
-
-    const goCustomPage = () => router.push({pathname: "/products/custom-printed-canopy-tent/buy"});
-    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
-
     const getSizeDesc = (value) => {
         let elm = null;
         switch (value) {
@@ -57,50 +51,14 @@ function Custom_Printing_Canopy_Tent({router, size}) {
         return elm;
     }
 
-    useEffect(() => {
-        if (refBanner && refBanner.current) {
-            setCircleAD(refBanner.current.clientHeight);
-            setCircleBD(refBanner.current.clientWidth / 2);
-        }
-    }, [size]);
-
     return (
-        <React.Fragment>
+        <ThemeProvider>
             <Head>
                 <title>Custom Printing Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Block position="relative">
-                    <Block ref={refBanner} height={["368px", "437px", "582px"]} display="grid" gridTemplateRows="repeat(2, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center"
-                           marginBottom="100px" padding={["32px 30px", "40px 30px", "64px 30px"]}
-                           overrides={{
-                               Block: {
-                                   props: {
-                                       className: "banner-display text-center"
-                                   },
-                                   style: {
-                                       ":after": {background: "linear-gradient(95.25deg, rgba(241, 120, 182, 0.85) 0%, rgba(252, 221, 236, 0) 52.6%, rgba(241, 120, 182, 0.85) 100%), #FFEAF5;"}
-                                   }
-                               },
-                           }}
-                    >
-                        <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                        <Block display="flex" flexDirection={["column", "row"]} marginTop={["16px", 0]} marginBottom={["32px", "48px", "60px"]} $style={{gap: "24px"}}>
-                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Custom online"
-                                    bundle="white" $style={{zIndex: 1}} onClick={() => goCustomPage()}
-                            />
-                            <Button type="outline" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick a package"
-                                    bundle="white" $style={{zIndex: 1}} onClick={() => goPackagePage()}
-                            />
-                        </Block>
-                        <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#5D5FEF", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
-                        <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#EF5DA8", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
-                    </Block>
-                    <Block position="absolute" width={["240px", "320px", "420px"]} height={["240px", "320px", "420px"]} marginRight="auto" marginLeft="auto" right={0} bottom={0} left={0}>
-                        <Image src="/images/custom-printing/canopy-tent/canopy-tent.webp" alt="canopy tent" layout="fill" objectFit="contain" quality={100} priority={true}/>
-                    </Block>
-                </Block>
+                <Hero size={size}/>
                 <Section title="ANY STYLE MULTIPLE SIZE"
                          subtitle="There is no limitation on printing styles and you can configure your tent as you wish. Westshade will meet your special needs."
                          content={
@@ -189,7 +147,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                 />
                 <Benefit containerClassName="m-body-section-wrap"/>
             </Block>
-        </React.Fragment>
+        </ThemeProvider>
     )
 }
 
