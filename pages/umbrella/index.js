@@ -51,14 +51,14 @@ const SectionBlock = ({title, content, displayList = []}) => {
                  content={
                      <Block display="grid" gridRowGap={["24px", null, "64px"]}>
                          <SectionTitle title={title} content={content}/>
-                         <Block display="grid" gridTemplateColumns={["1fr", "repeat(" + displayList.length + ", minmax(auto, 410px))"]} gridColumnGap="20px" gridRowGap="24px" margin="auto" alignItems="baseline">
+                         <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(" + displayList.length + ", minmax(auto, 410px))"]} gridColumnGap="20px" gridRowGap="24px" margin="auto" alignItems="baseline">
                              {displayList.map(({url, alt, title, content, titleImageUrl}, index) =>
                                  <Block key={index} display={["flex", null, "grid"]} gridTemplateColumns="1fr" gridRowGap="16px" flexDirection={[index % 2 === 0 ? "row" : "row-reverse", null, "unset"]} justifyItems="center" overflow="hidden"
                                         $style={{gap: "16px"}}>
                                      <Block position="relative" width={["130px", null, "100%"]} height={["130px", null, "300px"]} backgroundColor="#F7F7F7" overflow="hidden" $style={{borderRadius: "16px"}}>
                                          <Image src={url} alt={alt} layout="fill" objectFit="cover"/>
                                      </Block>
-                                     <Block display="grid" flex={1} gridRowGap={["8px", null, "16px"]}>
+                                     <Block display="grid" flex={1} gridTemplateRows="max-content" gridRowGap={["8px", null, "16px"]}>
                                          {titleImageUrl ? (
                                              <Block position="relative" marginRight="auto" marginLeft={["unset", null, "auto"]} height={["16px", null, "20px"]} $style={{aspectRatio: "7/2"}}>
                                                  <Image src={titleImageUrl} alt={title} width={84} height={24} layout="responsive" objectFit="contain"/>
@@ -102,7 +102,7 @@ function Umbrella({router, size}) {
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
             </Head>
-            <Block display="grid" gridRowGap={["60px", "80px", "120px"]} paddingTop={["32px", null, "64px"]} paddingBottom={["32px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["32px", null, "64px"]} paddingBottom={["32px", null, "64px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
                              <Block display="grid" gridRowGap={["24px", null, "64px"]}>

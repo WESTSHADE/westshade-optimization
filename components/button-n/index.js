@@ -74,9 +74,9 @@ const MButton = ({
 
     const [defaultStyle, setDefaultStyle] = useState({
         style: {
-            color: "inherit",
-            // backgroundColor: "#23A4AD",
-            // borderColor: "#23A4AD"
+            color: "transparent",
+            backgroundColor: "transparent",
+            borderColor: "transparent"
         },
         hover: {
             // backgroundColor: "#43878C",

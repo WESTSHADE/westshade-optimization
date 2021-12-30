@@ -129,6 +129,7 @@
 }
 
 .react-player {
+    position: relative;
     width: 100%;
     height: 100%;
 }
@@ -1159,4 +1160,37 @@ ul.bullet-warranty.sub > li {
 
 .custom-printing-canopy-tent-frame-carousel .carousel .control-dots .dot.selected {
     background-color: #262626;
+}
+
+.tab-custom-printing {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 8px 2px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.tab-artwork-custom-printing {
+    position: relative;
+    height: 80px;
+    margin-right: 0;
+    justify-content: center;
+}
+
+.tab-panel-custom-printing {
+    width: 100%;
+    min-height: 400px;
+    margin-top: 4px;
+    padding: 0;
+    border-top: 1px solid #F2F2F2;
+}
+
+@media screen and (min-width: 672px) {
+    .tab-custom-printing {
+        margin-bottom: 20px;
+    }
 }
