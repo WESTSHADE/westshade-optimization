@@ -196,7 +196,7 @@ function Umbrella({router, size}) {
                                       url: "/images/umbrella/open-crank.webp",
                                       alt: "open crank",
                                       title: "Crank lift",
-                                      content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."
+                                      content: "Rotate the crank to open the umbrella and continue when it is open to tilt the umbrella (tilt umbrella only)."
                                   }
                               ]}
                 />
