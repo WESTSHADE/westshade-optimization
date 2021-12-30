@@ -2,7 +2,7 @@ import React from "react";
 
 import {useRouter} from "next/router";
 
-import {ThemeProvider} from 'baseui';
+import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {ChevronRight} from "baseui/icon";
 
@@ -46,7 +46,7 @@ const SpecSection = ({
 
 const Hero = () => {
     const [css, theme] = themedUseStyletron();
-    const customTheme = {...theme, ...responsiveTheme};
+    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
 
     const router = useRouter();
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});

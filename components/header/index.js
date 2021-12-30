@@ -6,7 +6,7 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 
-import {ThemeProvider} from 'baseui';
+import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {HeaderNavigation, ALIGN, StyledNavigationItem as NavigationItem, StyledNavigationList as NavigationList} from 'baseui/header-navigation';
 import {Button, SHAPE, KIND} from "baseui/button";
@@ -28,7 +28,7 @@ import Cart from "./cart.svg";
 
 function Header({hideCategories}) {
     const [css, theme] = themedUseStyletron();
-    const customTheme = {...theme, ...responsiveTheme};
+    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
 
     const router = useRouter();
     const dispatch = useDispatch();

@@ -2,33 +2,22 @@ import React, {useEffect, useRef, useState} from "react";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 
+import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block";
 import {ChevronRight} from "baseui/icon";
 
 import Button from "Components/button-n";
 import {BannerDisplay, Section} from "Components/sections";
 
-const data = {
-    display: [
-        {title: "Bali", picUrl: "/images/umbrella/spec/bali.webp", alt: "Bali Umbrella Spec", buyUrl: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella'},
-        {title: "Kapri", picUrl: "/images/umbrella/spec/kapri.webp", alt: "Kapri Umbrella Spec", buyUrl: '/products/tilt-umbrellas/kapri-umbrella'},
-        {title: "Marco", picUrl: "/images/umbrella/spec/marco.webp", alt: "Marco Umbrella Spec", buyUrl: '/products/market-umbrellas/marco-umbrella'},
-        {title: "Santorini", picUrl: "/images/umbrella/spec/santorini.webp", alt: "Santorini Umbrella Spec", buyUrl: '/products/market-umbrellas/santorini-umbrella'},
-        {title: "Catalina", picUrl: "/images/umbrella/spec/catalina.webp", alt: "Catalina Umbrella Spec", buyUrl: '/products/cantilever-umbrellas/catalina-umbrella'},
-    ],
-    open_system: [["Crank"], ["Crank"], ["Push up"], ["Pulley"], ["Crank"]],
-    size: [["9'"], ["6.5'", "7.5'", "9'", "10'"], ["6.5'"], ["6.5'", "7.5'", "9'", "10'", "11.5'"], ["10'", "11.5'", "13'", "16.4'"]],
-    frame: [["Steel"], ["Aluminum"], ["Aluminum"], ["Aluminum", "Fiberglass"], ["Aluminum"]],
-    fabric: [["SDP"], ["AGORA"], ["SDP", "AGORA"], ["SDP", "AGORA"], ["AGORA"]],
-    tilt: [true, true, false, true, false],
-};
+import {themedUseStyletron, responsiveTheme} from "Utils/theme";
+
+import UMBRELLA from "Assets/spec-umbrella-chart.json";
 
 const SectionTitle = ({category = "Umbrella", title, content}) => {
     return (
-        <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} maxWidth="676px" justifyItems="center" margin="auto" overflow="hidden">
+        <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} maxWidth="676px" justifyItems="center" margin="auto">
             <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading20"]} color="#33DED2"
                    overrides={{
                        Block: {
@@ -66,7 +55,7 @@ const SectionBlock = ({title, content, displayList = []}) => {
                              {displayList.map(({url, alt, title, content, titleImageUrl}, index) =>
                                  <Block key={index} display={["flex", null, "grid"]} gridTemplateColumns="1fr" gridRowGap="16px" flexDirection={[index % 2 === 0 ? "row" : "row-reverse", null, "unset"]} justifyItems="center" overflow="hidden"
                                         $style={{gap: "16px"}}>
-                                     <Block position="relative" width={["130px", null, "100%"]} height={["130px", null, "300px"]} overflow="hidden" $style={{borderRadius: "16px"}}>
+                                     <Block position="relative" width={["130px", null, "100%"]} height={["130px", null, "300px"]} backgroundColor="#F7F7F7" overflow="hidden" $style={{borderRadius: "16px"}}>
                                          <Image src={url} alt={alt} layout="fill" objectFit="cover"/>
                                      </Block>
                                      <Block display="grid" flex={1} gridRowGap={["8px", null, "16px"]}>
@@ -95,21 +84,20 @@ const SectionBlock = ({title, content, displayList = []}) => {
 }
 
 function Umbrella({router, size}) {
+    const [css, theme] = themedUseStyletron();
+    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
+
     const ref = useRef(null);
 
     const [compareColumnWidth, setCompareColumnWidth] = useState(0);
     const [signDisplay, setSignDisplay] = useState(true);
 
     useEffect(() => {
-        if (ref && ref.current) setCompareColumnWidth(ref.current.clientWidth);
-    }, [ref]);
-
-    useEffect(() => {
         if (size.width && ref && ref.current) setCompareColumnWidth(ref.current.clientWidth);
-    }, [size]);
+    }, [size, ref]);
 
     return (
-        <React.Fragment>
+        <ThemeProvider theme={customTheme}>
             <Head>
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
@@ -129,35 +117,35 @@ function Umbrella({router, size}) {
                                          <Block minHeight="22px" marginBottom="32px">TILT</Block>
                                      </Block>
                                      <Block className="text-center" display="flex" flexDirection="row" overflow={["scrollX", "scrollX", "hidden"]}>
-                                         {data.display.map((item, index) => {
+                                         {UMBRELLA.display.map((item, index) => {
                                              return (
                                                  <Block key={index} width="100%" minWidth={compareColumnWidth + "px"} display="flex" flexDirection="column" alignItems="center" paddingTop="24px" paddingRight="10px" paddingLeft="10px"
                                                         backgroundColor={index % 2 ? "white" : "MinXBackground"}>
                                                      <Block display="grid" gridRowGap="16px" width="100%" minHeight="134px" marginBottom="40px" font="MinXParagraph16" color="MinXPrimaryText">
-                                                         <Block position="relative" width="100%" height="54px" marginRight="auto" marginLeft="auto">
+                                                         <Block position="relative" width="64px" height="54px" marginRight="auto" marginLeft="auto">
                                                              <Image src={item.picUrl} alt={item.alt} layout="fill" objectFit="contain"/>
                                                          </Block>
                                                          <Block>{item.title}</Block>
                                                          <Button height="24px" font="MinXLabel14" text='Buy' bundle="primary" buttonStyle={{paddingRight: "20px", paddingLeft: "20px"}} onClick={() => router.push(item.buyUrl)}/>
                                                      </Block>
                                                      <Block minHeight="22px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                         {data.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}
+                                                         {UMBRELLA.open_system[index].map((os, i) => <Block key={i}>{os}</Block>)}
                                                      </Block>
                                                      <Block minHeight="110px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                         {data.size[index].map((s, i) => <Block key={i}>{s}</Block>)}
+                                                         {UMBRELLA.size[index].map((s, i) => <Block key={i}>{s}</Block>)}
                                                      </Block>
                                                      <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                         {data.frame[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                                         {UMBRELLA.frame[index].map((f, i) => <Block key={i}>{f}</Block>)}
                                                      </Block>
                                                      <Block minHeight="44px" marginBottom="32px" font="MinXLabel14" color="MinXPrimaryText">
-                                                         {data.fabric[index].map((f, i) => <Block key={i}>{f}</Block>)}
+                                                         {UMBRELLA.fabric[index].map((f, i) => <Block key={i}>{f}</Block>)}
                                                      </Block>
                                                      <Block minHeight="22px" marginBottom="32px">
                                                          <Block width="22px" height="22px">
-                                                             {data.tilt[index] ? (
-                                                                 <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                             {UMBRELLA.tilt[index] ? (
+                                                                 <Image src="/images/umbrella/related.webp" alt="related" layout="responsive" objectFit="contain" width={24} height={24}/>
                                                              ) : (
-                                                                 <Image src="/images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24} quality={100}/>
+                                                                 <Image src="/images/umbrella/unrelated.webp" alt="unrelated" layout="responsive" objectFit="contain" width={24} height={24}/>
                                                              )}
                                                          </Block>
                                                      </Block>
@@ -165,10 +153,9 @@ function Umbrella({router, size}) {
                                              )
                                          })}
                                      </Block>
-                                     {signDisplay && size.width < 959 ? (
+                                     {signDisplay && size.width < 673 ? (
                                          <Block position="absolute" width="100%" height="100%" onClick={() => setSignDisplay(false)}>
-                                             <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center"
-                                                    marginTop="auto" marginRight="auto" marginBottom="auto" marginLeft="auto"
+                                             <Block position="absolute" width="132px" height="84px" backgroundColor="rgba(0,0,0,0.6)" top={0} right={0} bottom={0} left={0} display="flex" justifyContent="center" alignItems="center" margin="auto"
                                                     overrides={{
                                                         Block: {
                                                             style: {
@@ -206,7 +193,7 @@ function Umbrella({router, size}) {
                                       content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."
                                   },
                                   {
-                                      url: "/images/umbrella/open-pulley.webp",
+                                      url: "/images/umbrella/open-crank.webp",
                                       alt: "open crank",
                                       title: "Crank lift",
                                       content: "Easier than push up system and raise your umbrella in a few seconds with this heavy duty pulley lift system with ease."
@@ -255,7 +242,7 @@ function Umbrella({router, size}) {
                          }
                 />
             </Block>
-        </React.Fragment>
+        </ThemeProvider>
     )
 }
 

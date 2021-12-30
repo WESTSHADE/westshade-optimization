@@ -6,7 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import Image from "next/image"
 import Link from "next/link"
 
-import {ThemeProvider} from 'baseui';
+import {createTheme, lightThemePrimitives, ThemeProvider} from 'baseui';
 import {Block} from "baseui/block"
 import {ArrowLeft, ArrowRight} from 'baseui/icon'
 
@@ -34,7 +34,7 @@ const utils = new Utils();
 
 const Index = ({product, productVariant, productComponent, pageState, printingMethods, frameTypes, tentSizes}) => {
     const [css, theme] = themedUseStyletron();
-    const customTheme = {...theme, ...responsiveTheme};
+    const customTheme = createTheme(lightThemePrimitives, {...theme, ...responsiveTheme});
 
     const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();

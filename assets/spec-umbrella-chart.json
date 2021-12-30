@@ -1,0 +1,14 @@
+{
+  "display": [
+    { "title": "Bali", "picUrl": "/images/umbrella/spec/bali.webp", "alt": "Bali Umbrella Spec", "buyUrl": "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella" },
+    { "title": "Kapri", "picUrl": "/images/umbrella/spec/kapri.webp", "alt": "Kapri Umbrella Spec", "buyUrl": "/products/tilt-umbrellas/kapri-umbrella" },
+    { "title": "Marco", "picUrl": "/images/umbrella/spec/marco.webp", "alt": "Marco Umbrella Spec", "buyUrl": "/products/market-umbrellas/marco-umbrella" },
+    { "title": "Santorini", "picUrl": "/images/umbrella/spec/santorini.webp", "alt": "Santorini Umbrella Spec", "buyUrl": "/products/market-umbrellas/santorini-umbrella" },
+    { "title": "Catalina", "picUrl": "/images/umbrella/spec/catalina.webp", "alt": "Catalina Umbrella Spec", "buyUrl": "/products/cantilever-umbrellas/catalina-umbrella" }
+  ],
+  "open_system": [ [ "Crank" ], [ "Crank" ], [ "Push up" ], [ "Pulley" ], [ "Crank" ] ],
+  "size": [ [ "9'" ], [ "6.5'", "7.5'", "9'", "10'" ], [ "6.5'" ], [ "6.5'", "7.5'", "9'", "10'", "11.5'" ], [ "10'", "11.5'", "13'", "16.4'" ] ],
+  "frame": [ [ "Steel" ], [ "Aluminum" ], [ "Aluminum" ], [ "Aluminum", "Fiberglass" ], [ "Aluminum" ] ],
+  "fabric": [ [ "SDP" ], [ "AGORA" ], [ "SDP", "AGORA" ], [ "SDP", "AGORA" ], [ "AGORA" ] ],
+  "tilt": [ true, true, false, false, false ]
+}
