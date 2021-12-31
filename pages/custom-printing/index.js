@@ -102,14 +102,14 @@ function Custom_Printing({router}) {
                                                   }
                                               }}
                                          >
-                                             <Block display="flex" flexDirection={["column", null, "row"]} justifyContent="center" alignItems="center">
+                                             <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(2,1fr)"]} gridRowGap="16px" gridColumnGap="32px">
                                                  <Block display={["block", null, "none"]} position="relative" width="100%">
                                                      <Image src={imageUrl} alt={title} layout="responsive" objectFit="cover" width={1600} height={900}/>
                                                  </Block>
-                                                 <Block display={["none", null, "block"]} position="relative" width="50%" minHeight="400px">
+                                                 <Block display={["none", null, "block"]} position="relative" width="100" minHeight="400px">
                                                      <Image src={imageUrl} alt={title} layout="fill" objectFit="cover"/>
                                                  </Block>
-                                                 <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" gridRowGap={["8px", null, "16px"]} flex={1} padding="16px 32px" height="100%">
+                                                 <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" gridRowGap={["8px", null, "16px"]} flex={1} height="100%" alignContent="center">
                                                      <Block marginRight="auto" marginLeft={["auto", null, "unset"]} width="fit-content" font={["MinXTitle24", "MinXTitle24", "MinXTitle40"]} color="MinXPrimaryText"
                                                             overrides={{
                                                                 Block: {
@@ -117,7 +117,7 @@ function Custom_Printing({router}) {
                                                                 },
                                                             }}
                                                      >{title}</Block>
-                                                     <Block as="p" width="fit-content" maxWidth={[null, null, "454px"]} font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
+                                                     <Block as="p" width="fit-content" font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
                                                             overrides={{
                                                                 Block: {
                                                                     style: {
