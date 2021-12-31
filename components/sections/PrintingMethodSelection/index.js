@@ -77,7 +77,7 @@ const PrintingMethodSelection = ({printingMethods, printingMethodValue, setMetho
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the printing method.</Block>
                 <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
                     <Block>{printingMethods.length} methods available</Block>
-                    <Button type="solid" height="32px" text='Compare' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowPrintingTechnology(true)}/>
+                    <Button type="solid" height="32px" text='Compare' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowPrintingTechnology(true)}/>
                 </Block>
                 <Block display="flex" paddingTop="20px">
                     <Block display={["none", null, "block"]} flex={1}>

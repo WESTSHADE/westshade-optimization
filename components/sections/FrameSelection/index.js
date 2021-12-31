@@ -73,7 +73,7 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the frame of the tent.</Block>
                 <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
                     <Block>{frameTypes.length} frames available</Block>
-                    <Button type="solid" height="32px" text='Compare' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowFrameCompare(true)}/>
+                    <Button type="solid" height="32px" text='Compare' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowFrameCompare(true)}/>
                 </Block>
                 <Block display="flex" paddingTop="20px">
                     <Block display={["none", null, "block"]} flex={1}>

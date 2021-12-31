@@ -17,7 +17,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the size of the tent.</Block>
                 <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
                     <Block>{tentSizes[frame].length} sizes available</Block>
-                    <Button type="solid" height="32px" text='Size Guide' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowSizeGuide(true)}/>
+                    <Button type="solid" height="32px" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowSizeGuide(true)}/>
                 </Block>
                 <Block paddingTop="20px">
                     <RadioGroup value={sizeValue} onChange={e => setSize({size: e.currentTarget.value})} align={ALIGN.horizontal} name="sizes"
