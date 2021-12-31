@@ -46,10 +46,11 @@ const Hero = ({size}) => {
 
     return (
         <ThemeProvider>
-            <Block className="banner-display" width="calc(100vw + 2px)" height={["auto", null, "700px", "775px"]} padding="0 16px"
+            <Block className="banner-display" width="calc(100vw + 2px)" height={["auto", null, "700px", "775px"]} padding={["0 16px", null, "0 20px"]}
                    overrides={{
                        Block: {
                            style: {
+                               background: "transparent !important",
                                transform: size.width <= process.env.maxWidth ? "translate(-1px, 0)" : "translate(calc(-50vw + " + (process.env.maxWidth / 2 - 1) + "px), 0)",
                                ":after": {background: "url('/images/custom-printing/canopy-tent/hero-bg.webp')"},
                            }
