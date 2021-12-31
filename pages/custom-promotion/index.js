@@ -332,7 +332,6 @@ const CustomPromotion = () => {
                             onClick={goToFreeMockup}
                             color="#ffffff"
                             font="MinXLabel16"
-                            onClick={mockupRef}
                             buttonStyle={{
                                 backgroundImage: "linear-gradient(270deg, #5611EB 0%, #F02222 102.87%)",
                             }}
@@ -596,7 +595,6 @@ const CustomPromotion = () => {
                 <Block maxWidth="287px" width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
                     <ButtonM
                         width= "100%" 
-                        onClick={() => setShowComparison(!showComparison)}
                         text="GET A FREE MOCKUP"
                         onClick={goToFreeMockup}
                         bundle="primary"
@@ -652,7 +650,6 @@ const CustomPromotion = () => {
                 <Block maxWidth="287px" width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
                     <ButtonM
                         width= "100%" 
-                        onClick={() => setShowComparison(!showComparison)}
                         text="GET A FREE MOCKUP"
                         onClick={goToFreeMockup}
                         bundle="primary"
@@ -770,8 +767,8 @@ const CustomPromotion = () => {
                                 <Block className={styles.service__testimonies__item} key={testimony.owner}>
                                     <Block display="flex" alignItems="center" justifyContent="center">
                                      {
-                                         [...Array(testimony.rating)].map(() => (
-                                             <Block marginLeft="3px" marginRight="3px" as="i" width="34px" height="34px" display="grid" placeItems="center" ><Image src="/images/icon/icon-star.png" alt="star" width={34} height={34} layout="fixed"/> </Block>
+                                         [...Array(testimony.rating)].map((idx) => (
+                                             <Block key={idx} marginLeft="3px" marginRight="3px" as="i" width="34px" height="34px" display="grid" placeItems="center" ><Image src="/images/icon/icon-star.png" alt="star" width={34} height={34} layout="fixed"/> </Block>
                                          ))
                                      }
                                     </Block>
