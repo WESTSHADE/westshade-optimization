@@ -1190,6 +1190,8 @@ ul.bullet-warranty.sub > li {
     border-radius: 8px;
     border-width: 1px;
     border-style: solid;
+    font-size: 12px;
+    line-height: 1em;
 }
 
 .tab-artwork-custom-printing {
@@ -1210,6 +1212,7 @@ ul.bullet-warranty.sub > li {
 @media screen and (min-width: 672px) {
     .tab-custom-printing {
         margin-bottom: 20px;
+        font-size: 16px;
     }
 
     .custom-printing-canopy-tent-hero-image {

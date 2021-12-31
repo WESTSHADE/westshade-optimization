@@ -98,7 +98,7 @@ function Umbrella({router, size}) {
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
             </Head>
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["32px", null, "64px"]} paddingBottom={["32px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["16px", null, "64px"]} paddingBottom={["16px", null, "64px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
                              <Block display="grid" gridRowGap={["24px", null, "64px"]}>

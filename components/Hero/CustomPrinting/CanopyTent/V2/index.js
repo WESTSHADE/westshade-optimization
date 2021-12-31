@@ -8,6 +8,8 @@ import {Block} from "baseui/block";
 import Button from "Components/button-n";
 import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 
+let timeoutOpacity, timeoutCounter;
+
 const Hero = ({size}) => {
     const router = useRouter();
 
@@ -19,20 +21,27 @@ const Hero = ({size}) => {
     const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
 
     useEffect(() => {
-        if (ref && ref.current.children.length > 0) {
+        return () => {
+            clearTimeout(timeoutOpacity);
+            clearTimeout(timeoutCounter);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (ref && ref.current && ref.current.children.length > 0) {
             ref.current.children[counter].style.opacity = 1;
-            setTimeout(() => {
+            timeoutOpacity = setTimeout(() => {
                 ref.current.children[counter].style.opacity = 0;
             }, 3200)
-        }
 
-        setTimeout(() => {
-            if (counter === 2) {
-                setCounter(0);
-            } else {
-                setCounter(counter + 1);
-            }
-        }, 3000);
+            timeoutCounter = setTimeout(() => {
+                if (counter === 2) {
+                    setCounter(0);
+                } else {
+                    setCounter(counter + 1);
+                }
+            }, 3000);
+        }
     }, [ref, counter]);
 
     return (
@@ -89,7 +98,7 @@ const Hero = ({size}) => {
                                overrides={{
                                    Block: {
                                        style: {
-                                           fontWeight: "400 !important", lineHeight: "1.2em !important",
+                                           fontWeight: "400 !important", lineHeight: "1.5em !important",
                                            '@media (min-width: 672px)': {textAlign: "left"},
                                        }
                                    },

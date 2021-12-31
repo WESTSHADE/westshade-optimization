@@ -18,7 +18,7 @@ const nextConfig = {
         // maxWidth: 1440,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.24"
+        version: "2.0.25"
     },
     trailingSlash: true,
     webpack: function (config) {
