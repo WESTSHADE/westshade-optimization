@@ -7,16 +7,17 @@ import {Block} from "baseui/block";
 
 import Button from "../../button-n";
 
-const Bar = ({containerClassName, title, subTitle, subTitleDestination, buttonText, onClick}) => {
+const Bar = ({size, containerClassName, title, subTitle, subTitleDestination, buttonText, onClick}) => {
     return (
-        <Block position="sticky" top="92px" font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
+        <Block position="sticky" top="92px" width="calc(100vw + 2px)" font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                overrides={{
                    Block: {
                        props: {
                            className: clsx(["glassmorphism", containerClassName])
                        },
                        style: {
-                           zIndex: 2
+                           transform: size.width <= process.env.maxWidth ? "translateX(-1px)" : "translateX(calc(-50vw + " + (process.env.maxWidth / 2 - 1) + "px))",
+                           zIndex: 2,
                        },
                    },
                }}

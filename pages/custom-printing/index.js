@@ -17,31 +17,31 @@ import {Benefit, OrderProcess, Section, FreeMockupForm} from "Components/section
 const data = [
     {
         title: "Canopy tent",
-        content: "This is a description for table cover which is longer than it is now and even longer and it takes more than one line.",
+        content: "Westshade provides great quality printed canopy tents. Having a branded tent can give you perfect promotional accessory at any trade fair or event.",
         iconUrl: "/images/custom-printing/tab-canopy-tent.webp",
-        imageUrl: "/images/custom-printing/live-example-01.webp",
+        imageUrl: "/images/custom-printing/tab-display-custom-canopy.webp",
         url: "/custom-printing/canopy-tent/"
     },
     {
         title: "Umbrella",
-        content: "This is a description for table cover which is longer than it is now and even longer and it takes more than one line.",
+        content: "Westshade provides great quality printed umbrellas. Having a branded umbrella can give you perfect promotional accessory at any trade fair or event.",
         iconUrl: "/images/custom-printing/tab-umbrella.webp",
-        imageUrl: "/images/custom-printing/live-example-02.webp",
+        imageUrl: "/images/custom-printing/tab-display-umbrella.webp",
         // buttonText: "Coming Soon",
         url: "/custom-printing/umbrella/"
     },
     {
         title: "Table cover",
-        content: "This is a description for table cover which is longer than it is now and even longer and it takes more than one line.",
+        content: "Westshade provides great quality printed table covers. Having a branded table cover can give you perfect promotional accessory at any trade fair or event.",
         iconUrl: "/images/custom-printing/tab-table-cover.webp",
-        imageUrl: "/images/custom-printing/live-example-03.webp",
+        imageUrl: "/images/custom-printing/tab-display-table-cover.webp",
         url: "/custom-printing/table-cover/"
     },
     {
         title: "Side wall",
-        content: "This is a description for table cover which is longer than it is now and even longer and it takes more than one line.",
+        content: "Westshade provides great quality printed side walls. Having a branded side walls can give you perfect promotional accessory at any trade fair or event.",
         iconUrl: "/images/custom-printing/tab-side-wall.webp",
-        imageUrl: "/images/custom-printing/live-example-01.webp",
+        imageUrl: "/images/custom-printing/tab-display-side-wall.webp",
         buttonText: "Coming Soon",
         url: ""
     },

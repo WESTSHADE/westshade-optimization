@@ -38,7 +38,7 @@ const SpecSection = ({
     )
 }
 
-const Hero = () => {
+const Hero = ({size}) => {
     const router = useRouter();
 
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
@@ -46,10 +46,11 @@ const Hero = () => {
     return (
         <ThemeProvider>
             <Block>
-                <Block className="banner-display text-center" height={["456px", null, "780px"]} display="grid" gridAutoRows="max-content" gridRowGap="8px" justifyItems="center" padding={["102px 30px 0", null, "98px 30px 0"]}
+                <Block className="banner-display text-center" width="calc(100vw + 2px)" height={["456px", null, "780px"]} display="grid" gridAutoRows="max-content" gridRowGap="8px" justifyItems="center" padding={["102px 30px 0", null, "98px 30px 0"]}
                        overrides={{
                            Block: {
                                style: {
+                                   transform: size.width <= process.env.maxWidth ? "translate(-1px, 0)" : "translate(calc(-50vw + " + (process.env.maxWidth / 2 - 1) + "px), 0)",
                                    ":after": {background: "url('/images/canopy-tent/canopy-tent-hero-display.webp')"},
                                }
                            }

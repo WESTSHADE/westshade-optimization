@@ -51,6 +51,7 @@ const overrides = {
         MinXTitle40: {fontFamily: "Roboto", fontSize: "40px", fontWeight: 900, lineHeight: "44px"},
         MinXTitle42: {fontFamily: "Roboto", fontSize: "42px", fontWeight: 900, lineHeight: "46px"},
         MinXTitle44: {fontFamily: "Roboto", fontSize: "44px", fontWeight: 900, lineHeight: "52px"},
+        MinXTitle48: {fontFamily: "Roboto", fontSize: "48px", fontWeight: 900, lineHeight: "54px"},
         MinXTitle52: {fontFamily: "Roboto", fontSize: "52px", fontWeight: 900, lineHeight: "56px"},
         MinXTitle64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 900, lineHeight: "80px"},
         MinXTitle74: {fontFamily: "Roboto", fontSize: "74px", fontWeight: 900, lineHeight: "80px"},

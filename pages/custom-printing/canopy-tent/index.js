@@ -11,8 +11,7 @@ import {AspectRatioBox} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
-import {CanopyTentV1 as Hero} from "Components/Hero/CustomPrinting";
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import {CanopyTentV2 as Hero} from "Components/Hero/CustomPrinting";
 import {Section, Benefit, FreeMockupForm} from "Components/sections"
 
 const ImageSlide = ({url, alt}) => {
@@ -52,7 +51,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
     }
 
     return (
-        <ThemeProvider>
+        <React.Fragment>
             <Head>
                 <title>Custom Printing Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
@@ -147,7 +146,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                 />
                 <Benefit containerClassName="m-body-section-wrap"/>
             </Block>
-        </ThemeProvider>
+        </React.Fragment>
     )
 }
 

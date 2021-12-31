@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Santorini({router}) {
+function Santorini({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/santorini-umbrella"});
@@ -32,7 +32,7 @@ function Santorini({router}) {
                 <title>Umbrella Santorini - WESTSHADE</title>
                 <meta name="description" content="SANTORINI-Pully outdoor umbrella. Safe choice to enjoy out door activities. UPF 50+ protected premium waterproof fabric cover. Choose from two fabric."/>
             </Head>
-            <SubHeaderBar title={"Umbrella Santorini"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Santorini"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="SANTORINI" subtitle="Pully outdoor umbrella" url="/images/umbrella/santorini/santorini_display.webp" alt="santorini display"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}

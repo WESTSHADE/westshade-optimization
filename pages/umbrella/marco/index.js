@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Marco({router}) {
+function Marco({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/marco-umbrella"});
@@ -32,7 +32,7 @@ function Marco({router}) {
                 <title>Umbrella Marco - WESTSHADE</title>
                 <meta name="description" content="Marco-push up outdoor umbrella. Safe choice to enjoy out door activities. UPF 50+ protected premium waterproof fabric cover. Choose from two fabrics."/>
             </Head>
-            <SubHeaderBar title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="MARCO" subtitle="Push up outdoor umbrella" url="/images/umbrella/marco/marco_display.webp" alt="marco display" imageObjectFit="contain"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}

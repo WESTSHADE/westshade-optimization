@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Bali({router}) {
+function Bali({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"});
@@ -32,7 +32,7 @@ function Bali({router}) {
                 <title>Umbrella Bali - WESTSHADE</title>
                 <meta name="description" content="Push-button tilt & crank lift umbrella. Safe to enjoy the out door. Feature with UPF 50+ protected premium fabric cover. Wind resistant which the umbrella stands in 50-70-km/h wind."/>
             </Head>
-            <SubHeaderBar title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="/images/umbrella/bali/bali_display.webp" alt="bali display"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}

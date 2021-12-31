@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Catalina({router}) {
+function Catalina({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella"});
@@ -32,7 +32,7 @@ function Catalina({router}) {
                 <title>Umbrella Catalina - WESTSHADE</title>
                 <meta name="description" content='Oversized Telescopic Umbrella. Heavy duty welded PVC fabric. The fabric is super strong and heavy duty. 1/4" thickness. 1/850 gsm. Self-cleaning finishing.'/>
             </Head>
-            <SubHeaderBar title={"Umbrella Catalina"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Catalina"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="/images/umbrella/catalina/catalina_display.webp" alt="catalina display"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}

@@ -99,7 +99,7 @@ const BlockDisplay = ({title, content, src, button}) => {
     );
 };
 
-function Canopy_Tent({router}) {
+function Canopy_Tent({router, size}) {
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
 
     const onChangeCarousel = (index) => {
@@ -154,10 +154,10 @@ function Canopy_Tent({router}) {
                 <title>Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Different types of canopy tent to meet your special needs. Safe shade, long-lasting fabric and unlimited color."/>
             </Head>
-            <SubHeaderBar title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Hero/>
+                <Hero size={size}/>
                 <Section title="FABRIC FEATURE"
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="20px" gridRowGap={["16px", null, "24px"]} justifyItems="center">
@@ -334,12 +334,5 @@ function Canopy_Tent({router}) {
         </React.Fragment>
     )
 }
-
-Canopy_Tent.getInitialProps = (context) => {
-    return {
-        fullPage: true,
-    };
-};
-
 
 export default withRouter(Canopy_Tent);

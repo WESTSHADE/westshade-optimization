@@ -4,6 +4,7 @@ const breakpoints = {
     small: 320,
     medium: 672,
     large: 1056,
+    xlarge: 1312,
 };
 
 const themedUseStyletron = createThemedUseStyletron();
