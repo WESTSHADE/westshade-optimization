@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Kapri({router}) {
+function Kapri({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella"});
@@ -32,7 +32,7 @@ function Kapri({router}) {
                 <title>Umbrella Kapri - WESTSHADE</title>
                 <meta name="description" content="Crank lift tilt umbrella with height adjustment. Feature with UPF 50+ protected premium fabric cover. Wind resistant which the umbrella stands in 50-70-km/h wind."/>
             </Head>
-            <SubHeaderBar title={"Umbrella Kapri"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Kapri"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="/images/umbrella/kapri/kapri_display.webp" alt="kapri display" imageObjectFit="contain"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}

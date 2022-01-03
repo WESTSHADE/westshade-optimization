@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
@@ -41,6 +41,16 @@ const anatomyPart = [
 ];
 
 const QA = [
+    {
+        title: "What fabric do you use for your umbrella?",
+        content: "We provide fabric from two brands - SDP and AGORA. The SDP fabric is made of solution-dyed polyester while the AGORA fabric is made of solution-dyed acrylic. Both are water-repellent, stain-resistant,  with UPF 50+ protection. Additionally, AGORA has a longer lifespan than SDP."
+    },
+    {title: "Is your umbrella fabric waterproof?", content: "Yes. The fabric we use has a waterproof treatment."},
+    {title: "Does your umbrella fabric block out UV?", content: "Yes. The fabric blocks 98% of harmful UV rays."},
+    {
+        title: "Can I get my umbrella customized?",
+        content: "Yes. You can customize online or feel free to reach out to our customer service representatives with the kind of style you like and we will get back to you with a free mockup and a quote."
+    },
     {title: "What are the dimensions of the Marco Umbrella?", content: "7’6 ½’ x 6 ¼ x 6 ¼ (230cm x 16cm x 16cm)"},
     {
         title: "What is the difference between push and pulley?",
@@ -135,7 +145,7 @@ export default function Description() {
                 </Block>
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
-                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Versatile Tent</Block>
+                <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Versatile Umbrella</Block>
                 <Block width="100%" maxWidth="1152px" marginRight="auto" marginLeft="auto" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "24px", "20px"]}>
                     <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="400px" gridColumnGap="20px">
                         <Block position="relative" width="100%" height="100%" overflow="hidden" $style={{borderRadius: "8px"}}>

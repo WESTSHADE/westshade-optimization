@@ -1,6 +1,9 @@
-import {Block} from "baseui/block"
-import Image from "next/image"
 import {useEffect, useState} from "react"
+
+import Image from "next/image"
+
+import {Block} from "baseui/block"
+
 import {useStyletron} from "styletron-react"
 import MButton from "../../button-n"
 import RoofDetail from "./InputDetails"
@@ -41,54 +44,62 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                 <Block marginTop="40px" width="100%">
                     <Block maxWidth={["350px", "350px", "487px"]} width="100%" margin="0 auto" position="relative" display="flex" justifyContent="center">
                         <Block width="100%" display="flex" flexDirection="column" alignItems="center">
-                            <Block position="relative" width={["220px","320px"]} height={["220px","320px"]}>
+                            <Block position="relative" width={["220px", "320px"]} height={["220px", "320px"]}>
                                 <Image src={mainImage || activeTentImage} alt="custom tent" width={220} height={220} layout="responsive" objectFit="contain"/>
                                 {
-                                    Object.keys(requirement.peak["FRONT"]).length !== 0 && 
+                                    Object.keys(requirement.peak["FRONT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["FRONT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["FRONT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.valance["FRONT"]).length !== 0 && 
+                                    Object.keys(requirement.valance["FRONT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["FRONT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["FRONT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.peak["RIGHT"]).length !== 0 && 
+                                    Object.keys(requirement.peak["RIGHT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["RIGHT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["RIGHT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.valance["RIGHT"]).length !== 0 && 
+                                    Object.keys(requirement.valance["RIGHT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["RIGHT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["RIGHT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.peak["LEFT"]).length !== 0 && 
+                                    Object.keys(requirement.peak["LEFT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["LEFT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["LEFT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.valance["LEFT"]).length !== 0 && 
+                                    Object.keys(requirement.valance["LEFT"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["LEFT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["LEFT"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.peak["BACK"]).length !== 0 && 
+                                    Object.keys(requirement.peak["BACK"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["BACK"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-PEAK${tentSize.split("x")[1]}-${label["BACK"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                                 {
-                                    Object.keys(requirement.valance["BACK"]).length !== 0 && 
+                                    Object.keys(requirement.valance["BACK"]).length !== 0 &&
                                     <Block position="absolute" top="0" left="0" width="100%" height="100%">
-                                        <Image width={220} height={220} layout="responsive" src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["BACK"]}${!frontAngle ? "-FLIPPED" : ""}.webp`} />
+                                        <Image width={220} height={220} layout="responsive"
+                                               src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "1-front-view-dc" : "2-back-view-ab"}/${tentFrame}-VALANCE${tentSize.split("x")[1]}-${label["BACK"]}${!frontAngle ? "-FLIPPED" : ""}.webp`}/>
                                     </Block>
                                 }
                             </Block>
@@ -219,10 +230,10 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                                     width="100%"
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
-                                        borderTopLeftRadius:"8px !important",
-                                        borderTopRightRadius:"8px !important",
-                                        borderBottomLeftRadius:"8px !important",
-                                        borderBottomRightRadius:"8px !important",
+                                        borderTopLeftRadius: "8px !important",
+                                        borderTopRightRadius: "8px !important",
+                                        borderBottomLeftRadius: "8px !important",
+                                        borderBottomRightRadius: "8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -242,10 +253,10 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                                     onClick={() => setSide({activeSide: "BACK"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
-                                        borderTopLeftRadius:"8px !important",
-                                        borderTopRightRadius:"8px !important",
-                                        borderBottomLeftRadius:"8px !important",
-                                        borderBottomRightRadius:"8px !important",
+                                        borderTopLeftRadius: "8px !important",
+                                        borderTopRightRadius: "8px !important",
+                                        borderBottomLeftRadius: "8px !important",
+                                        borderBottomRightRadius: "8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -265,10 +276,10 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                                     onClick={() => setSide({activeSide: "RIGHT"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
-                                        borderTopLeftRadius:"8px !important",
-                                        borderTopRightRadius:"8px !important",
-                                        borderBottomLeftRadius:"8px !important",
-                                        borderBottomRightRadius:"8px !important",
+                                        borderTopLeftRadius: "8px !important",
+                                        borderTopRightRadius: "8px !important",
+                                        borderBottomLeftRadius: "8px !important",
+                                        borderBottomRightRadius: "8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -288,10 +299,10 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                                     onClick={() => setSide({activeSide: "FRONT"})}
                                     buttonStyle={{
                                         backgroundColor: "transparent !important",
-                                        borderTopLeftRadius:"8px !important",
-                                        borderTopRightRadius:"8px !important",
-                                        borderBottomLeftRadius:"8px !important",
-                                        borderBottomRightRadius:"8px !important",
+                                        borderTopLeftRadius: "8px !important",
+                                        borderTopRightRadius: "8px !important",
+                                        borderBottomLeftRadius: "8px !important",
+                                        borderBottomRightRadius: "8px !important",
                                         color: "#262626 !important",
                                         fontFamily: "Roboto !important",
                                         fontSize: "14px !important",
@@ -309,7 +320,8 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                         <Block maxWidth="664px" margin="42px auto 0" display="flex" flexWrap="wrap" justifyContent="space-between">
                             <Block width={["100%", "45%", "45%"]} marginBottom="16px" display="flex" justifyContent="space-between" alignItems="center">
                                 <Block display="flex" alignItems="center">
-                                <Image src={`/images/icon/icon-v2-peak-${activeSide.toLowerCase() || "front"}${Object.keys(requirement.peak[activeSide]).length !== 0 ? "-selected" : ""}.png`} width={60} height={60} layout="fixed" objectFit="contain"/>
+                                    <Image src={`/images/icon/icon-v2-peak-${activeSide.toLowerCase() || "front"}${Object.keys(requirement.peak[activeSide]).length !== 0 ? "-selected" : ""}.png`} width={60} height={60} layout="fixed"
+                                           objectFit="contain"/>
                                     <Block display="flex" flexDirection="column" marginLeft="8px">
                                         <Block $style={{textTransform: "capitalize"}} font="MinXParagraph14" color="#000000">Peak</Block>
                                         <Block marginTop="8px" font="MinXParagraph12" color="#808080">{label[activeSide] || "A"}</Block>
@@ -352,7 +364,8 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                             </Block>
                             <Block width={["100%", "45%", "45%"]} marginBottom="16px" display="flex" justifyContent="space-between" alignItems="center">
                                 <Block display="flex" alignItems="center">
-                                    <Image src={`/images/icon/icon-v2-valance-${activeSide.toLowerCase() || "front"}${Object.keys(requirement.valance[activeSide]).length !== 0 ? "-selected" : ""}.png`} width={60} height={60} layout="fixed" objectFit="contain"/>
+                                    <Image src={`/images/icon/icon-v2-valance-${activeSide.toLowerCase() || "front"}${Object.keys(requirement.valance[activeSide]).length !== 0 ? "-selected" : ""}.png`} width={60} height={60} layout="fixed"
+                                           objectFit="contain"/>
                                     <Block display="flex" flexDirection="column" marginLeft="8px">
                                         <Block font="MinXParagraph14" color="#000000">Valance</Block>
                                         <Block marginTop="8px" $style={{textTransform: "capitalize"}} font="MinXParagraph12" color="#808080">{label[activeSide] || "A"}</Block>

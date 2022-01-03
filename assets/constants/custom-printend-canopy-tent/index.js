@@ -30,7 +30,6 @@ const printingMethods = [
 ]
 const frameTypes = [
     {
-
         image: "/images/canopy-tent/tent/y7.webp",
         value: "Y7",
         label: "Y7 - Heavy-duty aluminum frame",
@@ -38,7 +37,6 @@ const frameTypes = [
         price: "0"
     },
     {
-
         image: "/images/canopy-tent/tent/y6.webp",
         value: "Y6",
         label: "Y6 - Commercial aluminum frame",

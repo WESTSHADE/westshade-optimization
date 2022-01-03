@@ -1,0 +1,29 @@
+.container {
+  border-bottom-color: #F0F0F0;
+}
+
+.header {
+  min-height: 64px;
+  padding: 12px 0;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  &[aria-expanded="true"] {
+    border-bottom: 1px solid #23A4AD;
+  }
+}
+
+.panel {
+  padding: 12px 0;
+  text-align: left;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+  white-space: break-spaces;
+}

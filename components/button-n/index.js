@@ -74,9 +74,9 @@ const MButton = ({
 
     const [defaultStyle, setDefaultStyle] = useState({
         style: {
-            color: "inherit",
-            // backgroundColor: "#23A4AD",
-            // borderColor: "#23A4AD"
+            color: "transparent",
+            backgroundColor: "transparent",
+            borderColor: "transparent"
         },
         hover: {
             // backgroundColor: "#43878C",
@@ -216,7 +216,16 @@ const MButton = ({
                     disabled={disabled}
                     isLoading={isLoading}
             >
-                {type === "rainbow" ? <div className={styles["button-inner"]} style={{backgroundColor: buttonBackgroundColor}}>{text}</div> : text}
+                {type === "rainbow" ?
+                    <Block className={styles["button-inner"]}
+                           style={{
+                               backgroundColor: buttonBackgroundColor,
+                               ":hover": {...defaultStyle.hover, ...buttonHoverStyle},
+                               ":active": {...defaultStyle.active, ...buttonActiveStyle},
+                               ":focus": {...defaultStyle.focus, ...buttonFocusStyle},
+                               ":disabled": {...defaultStyle.disabled, ...buttonDisabledStyle},
+                           }}
+                    >{text}</Block> : text}
                 {props.children}
             </Button>
         </Block>

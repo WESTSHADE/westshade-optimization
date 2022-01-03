@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Select} from "baseui/select";
 
 import Button from "Components/button-n";
-import Compare from "Components/compare";
+import Compare from "Components/Compare";
 import {Section} from "Components/sections";
 
 import DataSpec from "Assets/spec-umbrella.json";

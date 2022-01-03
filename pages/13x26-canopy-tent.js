@@ -83,10 +83,10 @@ function Canopy_Tent({router}) {
                             <Block width="100%" maxWidth="420px" marginRight="auto" marginLeft="auto" font="MinXLabel20">
                                 <Block display="grid" gridTemplateColumns="1fr 1fr" height="90px">
                                     <Block position="relative" onClick={() => setActiveTabKey("0")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "1" ? "grayscale(1)" : "grayscale(0)"}}}}>
-                                        <Image src="/images/canopy-tent/tent/stock-color-tent.webp" alt='stock color tent' layout="fill" objectFit="contain" quality={100}/>
+                                        <Image src="/images/canopy-tent/tent/stock-color-tent.webp" alt='stock color tent' layout="fill" objectFit="contain"/>
                                     </Block>
                                     <Block position="relative" onClick={() => setActiveTabKey("1")} overrides={{Block: {props: {className: "cursor"}, style: {filter: activeTabKey === "0" ? "grayscale(1)" : "grayscale(0)"}}}}>
-                                        <Image src="/images/canopy-tent/tent/custom-printing-tent.webp" alt='custom printing tent' layout="fill" objectFit="contain" quality={100}/>
+                                        <Image src="/images/canopy-tent/tent/custom-printing-tent.webp" alt='custom printing tent' layout="fill" objectFit="contain"/>
                                     </Block>
                                 </Block>
                                 <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={({activeKey}) => setActiveTabKey(activeKey + "")}

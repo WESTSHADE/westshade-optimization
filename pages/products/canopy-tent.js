@@ -115,7 +115,6 @@ function Canopy_Tent({router, products, variants}) {
 
     const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
-
     const [productComponent, setProductComponent] = useState([products[2], products[3], products[3], products[3], products[3]]);
     const [productVariant, setProductVariant] = useState([variants[2], variants[3], variants[3], variants[3], variants[3]]);
 
@@ -1441,7 +1440,7 @@ function Canopy_Tent({router, products, variants}) {
                                                            {/*    ?*/}
                                                            {/*</Button>*/}
                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>
                                                            </Block>
                                                            <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
                                                        </Block>

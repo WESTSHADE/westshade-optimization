@@ -16,7 +16,7 @@ import styles from "../umbrella.module.scss";
 
 const utils = new Utils();
 
-function Marco({router}) {
+function Marco({router, size}) {
     const [productList, setProductList] = useState([]);
 
     const goBuyingPage = () => router.push({pathname: "/products/market-umbrellas/marco-umbrella"});
@@ -32,7 +32,7 @@ function Marco({router}) {
                 <title>Umbrella Marco - WESTSHADE</title>
                 <meta name="description" content="Marco-push up outdoor umbrella. Safe choice to enjoy out door activities. UPF 50+ protected premium waterproof fabric cover. Choose from two fabrics."/>
             </Head>
-            <SubHeaderBar title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
                 <BannerDisplay title="MARCO" subtitle="Push up outdoor umbrella" url="/images/umbrella/marco/marco_display.webp" alt="marco display" imageObjectFit="contain"
                                titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
@@ -44,7 +44,7 @@ function Marco({router}) {
                          content={
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                                     <Image src="/images/umbrella/marco/roof.webp" alt="marco roof" layout="responsive" width={912} height={324} quality={100}/>
+                                     <Image src="/images/umbrella/marco/roof.webp" alt="marco roof" layout="responsive" width={912} height={324} priority/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
@@ -78,7 +78,7 @@ function Marco({router}) {
                 {/*                     <Block position="relative" width={["215px", "215px", "326px"]} height={["138px", "138px", "211px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
                 {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
                 {/*                     >*/}
-                {/*                         <Image src="/images/umbrella/marco/detail1.webp" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                         <Image src="/images/umbrella/marco/detail1.webp" alt="marco detail" layout="fill" objectFit="contain" />*/}
                 {/*                     </Block>*/}
                 {/*                     Stainless steel fixings*/}
                 {/*                 </Block>*/}
@@ -86,7 +86,7 @@ function Marco({router}) {
                 {/*                     <Block position="relative" width={["204px", "204px", "240px"]} height={["268px", "268px", "316px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
                 {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
                 {/*                     >*/}
-                {/*                         <Image src="/images/umbrella/marco/detail2.webp" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                         <Image src="/images/umbrella/marco/detail2.webp" alt="marco detail" layout="fill" objectFit="contain" />*/}
                 {/*                     </Block>*/}
                 {/*                     Stainless steel fixings*/}
                 {/*                 </Block>*/}
@@ -94,7 +94,7 @@ function Marco({router}) {
                 {/*                     <Block position="relative" width={["200px", "215px", "200px"]} height={["200px", "215px", "200px"]} marginBottom={["12px", "16px", "24px"]} overflow="hidden"*/}
                 {/*                            overrides={{Block: {props: {className: "section-round-corner"}}}}*/}
                 {/*                     >*/}
-                {/*                         <Image src="/images/umbrella/marco/detail3.webp" alt="marco detail" layout="fill" objectFit="contain" quality={100}/>*/}
+                {/*                         <Image src="/images/umbrella/marco/detail3.webp" alt="marco detail" layout="fill" objectFit="contain" />*/}
                 {/*                     </Block>*/}
                 {/*                     Stainless steel fixings*/}
                 {/*                 </Block>*/}
@@ -109,19 +109,19 @@ function Marco({router}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail3.webp" alt="santorini detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/marco/detail3.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Arm Joints
                                  </Block>
@@ -134,7 +134,7 @@ function Marco({router}) {
                          subtitleMoreDestination={"/custom-printing/umbrella"}
                          content={
                              <Block className="section-round-corner" position="relative" maxWidth="960px" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden">
-                                 <Image src="/images/umbrella/marco/colors.webp" alt="marco color" layout="fill" objectFit="cover" quality={100}/>
+                                 <Image src="/images/umbrella/marco/colors.webp" alt="marco color" layout="fill" objectFit="cover"/>
                              </Block>
                          }
                 />
@@ -142,7 +142,7 @@ function Marco({router}) {
                          content={
                              <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center" font="MinXLabel16">
                                  <Block position="relative" width="100%" maxWidth="366px" overflow="hidden">
-                                     <Image src="/images/umbrella/marco/size.webp" alt="marco size 6.5'" layout="responsive" objectFit="contain" width={1193} height={643} quality={100}/>
+                                     <Image src="/images/umbrella/marco/size.webp" alt="marco size 6.5'" layout="responsive" objectFit="contain" width={1193} height={643}/>
                                  </Block>
                                  <Block color="MinXPrimaryText">6.5’ Square</Block>
                                  <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/market-umbrellas/marco-umbrella")}/>
@@ -158,10 +158,10 @@ function Marco({router}) {
                                     display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
                              >
                                  <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
-                                     <Image src="/images/umbrella/marco/custom1.webp" alt="marco custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/marco/custom1.webp" alt="marco custom" layout="responsive" objectFit="contain" width={1200} height={1000}/>
                                  </Block>
                                  <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
-                                     <Image src="/images/umbrella/marco/custom2.webp" alt="marco custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/marco/custom2.webp" alt="marco custom" layout="responsive" objectFit="contain" width={1200} height={1000}/>
                                  </Block>
                              </Block>
                          }

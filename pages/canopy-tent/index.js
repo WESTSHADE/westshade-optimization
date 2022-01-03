@@ -11,7 +11,8 @@ import {Block} from "baseui/block";
 import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
-import {Benefit, TentSizeDisplay, Section, SubHeaderBar, CanopyTentHero} from "Components/sections";
+import {CanopyTentV1 as Hero} from "Components/Hero/CanopyTent";
+import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/sections";
 
 const refs = [];
 
@@ -98,7 +99,7 @@ const BlockDisplay = ({title, content, src, button}) => {
     );
 };
 
-function Canopy_Tent({router}) {
+function Canopy_Tent({router, size}) {
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
 
     const onChangeCarousel = (index) => {
@@ -153,10 +154,10 @@ function Canopy_Tent({router}) {
                 <title>Canopy Tent - WESTSHADE</title>
                 <meta name="description" content="Different types of canopy tent to meet your special needs. Safe shade, long-lasting fabric and unlimited color."/>
             </Head>
-            <SubHeaderBar title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
+            <SubHeaderBar size={size} title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <CanopyTentHero/>
+                <Hero/>
                 <Section title="FABRIC FEATURE"
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="20px" gridRowGap={["16px", null, "24px"]} justifyItems="center">
@@ -321,16 +322,18 @@ function Canopy_Tent({router}) {
                          }
                 />
                 <Benefit containerClassName="m-body-section-wrap"/>
+                <Block backgroundColor={"var(--secondary-background)"} paddingRight="16px" paddingLeft="16px" display="flex" justifyContent="center"
+                       marginTop={["-60px", "-80px", "-120px"]}>
+                    <Block width="100%" maxWidth={process.env.maxWidth + "px"} font="MinXParagraph14" color="MinXSecondaryText" paddingTop="24px" paddingBottom="24px" $style={{borderBottom: "1px solid #D9D9D9"}}>
+                        <div>1. Although the tent has passed wind test in the speed of 50 mph, we highly recommend you to not use the product in high wind.</div>
+                        <div>2. The pole diameter and thickness are measurements from Westshade Y7 aluminum frame canopy tent.</div>
+                        <div>3. Westshade uses 900D fabric for roof top on custom printing canopy tents. The fabric of stock color tents is 500D.</div>
+                        <div>4. Westshade provides 10 years warranty for Y7 aluminum frame.</div>
+                    </Block>
+                </Block>
             </Block>
         </React.Fragment>
     )
 }
-
-Canopy_Tent.getInitialProps = (context) => {
-    return {
-        fullPage: true,
-    };
-};
-
 
 export default withRouter(Canopy_Tent);

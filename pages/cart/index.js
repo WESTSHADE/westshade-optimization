@@ -212,14 +212,14 @@ function Cart_Page({router}) {
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top={["104px", "120px", "136px"]} display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
+                            <Block position="sticky" top="92px" display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
                                    color="MinXPrimaryText"
                                    $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
                                 <Button shape={SHAPE.square} kind={KIND.minimal}
                                         startEnhancer={() => (
                                             <Block position="relative" width="20px" marginRight="8px">
-                                                <Image src={"/images/icon/icon-delete.png"} alt="delete" layout="responsive" width={40} height={40} objectFit="contain" quality={100}/>
+                                                <Image src={"/images/icon/icon-delete.png"} alt="delete" layout="responsive" width={40} height={40} objectFit="contain"/>
                                             </Block>
                                         )}
                                         overrides={{
@@ -234,7 +234,7 @@ function Cart_Page({router}) {
                                     Empty cart
                                 </Button>
                             </Block>
-                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "16px", "22px"]} marginTop={["32px", "47px"]}>
+                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "16px", "22px"]} marginTop={["32px", null, "47px"]}>
                                 {cart.length > 0 && cartProduct.length > 0
                                     ? cartProduct.map((product, index) => {
                                         return (
@@ -244,7 +244,7 @@ function Cart_Page({router}) {
                                                         {product.images.length > 0 ? (
                                                             <Image src={product.images[0].src} alt={product.images[0].alt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                                                         ) : (
-                                                            <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                                            <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain"/>
                                                         )}
                                                     </Block>
                                                     <Block>

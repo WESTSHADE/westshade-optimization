@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
@@ -53,6 +53,14 @@ const anatomyPart = [
 ];
 
 const QA = [
+    {
+        title: "How long will the fabric last?",
+        content: "For stock color canopy tents, we use 500D, 320 gsm polyester with PVC coating that is durable even with abrasion and distortion. For custom printed tents, we use 600D (Dye Sublimation) and 900D (UV Printing) polyester with PU coating. Both have no peeling, fading, or extra fabric build-up, and UV printing fabric has 2-3 times lifespan than dye sublimation."
+    },
+    {title: "What material do you use and what are their special features?", content: "Our canopies use CPAI-84 certified material that is resistant to UV, water, fire, and wind, providing a safe shade."},
+    {title: "Does your canopy fabric block out UV?", content: "Yes. The fabric blocks 98% of harmful UV rays."},
+    {title: "How much wind can the canopy stand?", content: "Can stand in wind up to 50 mph"},
+    {title: "How can I get my canopy customized?", content: "You can choose your printing style package from the custom printing tab and send us your design. Once received we will make a free mockup for you before you pay for the order."},
     {title: "Do your canopies set up in seconds?", content: "They sure do! Our canopies can be set up in less than 60 seconds with just two people."},
     {title: "Do you have a video showing proper setup and take down?", content: <>Yes! Check out this one minute video <Link href="https://www.youtube.com/watch?v=J9ygFXvOVn4">https://www.youtube.com/watch?v=J9ygFXvOVn4</Link></>},
     {

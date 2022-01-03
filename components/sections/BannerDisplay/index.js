@@ -42,7 +42,7 @@ const Banner = ({
                 }) => {
 
     return (
-        <Block ref={refD} position="relative" width="100%" height={containerHeight} marginTop={home ? ["-104px", "-120px", "-136px"] : null} marginBottom={containerMarginBottom}
+        <Block ref={refD} position="relative" width="100%" height={containerHeight} marginBottom={containerMarginBottom}
                backgroundColor={containerBackground}
                overrides={{
                    Block: {

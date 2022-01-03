@@ -317,15 +317,13 @@ function Checkout({router, orderID, orderDetail}) {
                 </Alert>
             </Grow>
             {order && order.id ? (
-                <Block display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="60px" gridRowGap="40px" maxWidth="996px"
+                <Block display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridColumnGap="60px" gridRowGap="40px" maxWidth="996px"
                        marginTop={["24px", "32px", "40px"]} marginRight="auto" marginLeft="auto" paddingRight={["16px", "24px", "32px"]} paddingLeft={["16px", "24px", "32px"]}
                 >
-                    <Block display={"grid"} gridRowGap="32px">
-                        <Block overrides={{Block: {props: {className: "container-input-address"}}}}
-                               ref={(ref) => {
-                                   if (ref && ref.clientHeight) HEIGHT = ref.clientHeight;
-                               }}
-                        >
+                    <Block gridArea="a" display="grid" gridRowGap="32px">
+                        <Block className="container-input-address" ref={(ref) => {
+                            if (ref && ref.clientHeight) HEIGHT = ref.clientHeight
+                        }}>
                             <Block font="MinXHeading20">SHIPPING ADDRESS</Block>
                             <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
                                 <InputField value={shippingAddress.first_name} placeholder="First name" error={errorAccountShipping} required
@@ -495,7 +493,7 @@ function Checkout({router, orderID, orderDetail}) {
                         </Block>
                         <Block marginBottom="40px">
                             <Block marginBottom="24px" font="MinXLabel24">Pay with...</Block>
-                            <Block marginBottom="16px" paddingBottom="16px"
+                            <Block marginBottom={["8px", null, "16px"]}
                                    overrides={{
                                        Block: {
                                            style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}
@@ -520,7 +518,7 @@ function Checkout({router, orderID, orderDetail}) {
                                     </Block>
                                 </Block>
                                 <Block paddingBottom="12px" font="MinXParagraph16">Card information</Block>
-                                <div style={{width: "100%"}}>
+                                <Block className="container-input-address" width="100%">
                                     <FormControl>
                                         <PaymentCard value={number} error={numberError}
                                                      onChange={(event) => setNumber(event.currentTarget.value)}
@@ -637,7 +635,7 @@ function Checkout({router, orderID, orderDetail}) {
                                             </div>
                                         </StatefulTooltip>
                                     </div>
-                                </div>
+                                </Block>
                             </Block>
                             <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
                                 <div style={{fontSize: 14, lineHeight: "22px", textAlign: "left"}}>
@@ -672,66 +670,64 @@ function Checkout({router, orderID, orderDetail}) {
                             </Block>
                         </Block>
                     </Block>
-                    <Block marginBottom="40px">
-                        <Block position={["relative", "relative", "sticky"]} top={["", "", "108px"]}>
-                            <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
-                            {lineItem.length > 0 ? (
-                                <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
-                                    {lineItem.map((item, index) => {
-                                        return (
-                                            <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                                <Block font="MinXParagraph14">
-                                                    {item.name}
-                                                    <Block marginLeft="2em">{item.meta_data.map((data, i) => <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block>)}</Block>
-                                                </Block>
-                                                <Block font="MinXParagraph14">{`$` + item.subtotal}</Block>
-                                            </Block>
-                                        )
-                                    })}
-                                </Block>
-                            ) : null}
+                    <Block gridArea="b" position={["relative", null, "sticky"]} top={[null, null, "108px"]}>
+                        <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
+                        {lineItem.length > 0 ? (
                             <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal().toFixed(2)}</Block>
-                                </Block>
-                                {order.discount_total && order.discount_total !== "0.00" ? (
-                                    <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                        <Block font="MinXParagraph14">Discount</Block>
-                                        <Block font="MinXParagraph14">{`-$` + order.discount_total}</Block>
-                                    </Block>
-                                ) : null}
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14">Shipping</Block>
-                                    <Block font="MinXParagraph14">{order.shipping_total === "0.00" ? "Free shipping (Approx 3-7 days)" : `$` + order.shipping_total}</Block>
-                                </Block>
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14">Estimated Tax</Block>
-                                    <Block font="MinXParagraph14">{`$` + order.total_tax || 0}</Block>
-                                </Block>
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14"><strong>Total</strong></Block>
-                                    <Block font="MinXParagraph14"><strong>{`$` + order.total || 0}</strong></Block>
-                                </Block>
-                            </Block>
-                            {lineCoupon.length > 0 ? (
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="16px" paddingBottom="16px">
-                                    <Block font="MinXParagraph14">Applied Coupon</Block>
-                                    <Block>
-                                        {lineCoupon.map((coupon, index) => (
-                                            <Block key={index} display="flex" justifyContent="flex-end" marginBottom="16px">
-                                                <Block font="MinXParagraph14" marginRight="16px">{coupon.code}</Block>
-                                                <Button kind={KIND.tertiary} shape={SHAPE.circle} size={SIZE.mini} overrides={{BaseButton: {style: {width: "20px", height: "20px"}}}} onClick={() => removeCoupon(index)}>
-                                                    <Delete size={12}/>
-                                                </Button>
+                                {lineItem.map((item, index) => {
+                                    return (
+                                        <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                            <Block font="MinXParagraph14">
+                                                {item.name}
+                                                <Block marginLeft="2em">{item.meta_data.map((data, i) => <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block>)}</Block>
                                             </Block>
-                                        ))}
-                                    </Block>
+                                            <Block font="MinXParagraph14">{`$` + item.subtotal}</Block>
+                                        </Block>
+                                    )
+                                })}
+                            </Block>
+                        ) : null}
+                        <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal().toFixed(2)}</Block>
+                            </Block>
+                            {order.discount_total && order.discount_total !== "0.00" ? (
+                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                    <Block font="MinXParagraph14">Discount</Block>
+                                    <Block font="MinXParagraph14">{`-$` + order.discount_total}</Block>
                                 </Block>
                             ) : null}
-                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="16px">
-                                <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
-                                <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD" bundle="primary" overrides={{Block: {style: {zIndex: 1}}}} onClick={() => updateCoupon()}/>
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                <Block font="MinXParagraph14">Shipping</Block>
+                                <Block font="MinXParagraph14">{order.shipping_total === "0.00" ? "Free shipping (Approx 3-7 days)" : `$` + order.shipping_total}</Block>
                             </Block>
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                <Block font="MinXParagraph14">Estimated Tax</Block>
+                                <Block font="MinXParagraph14">{`$` + order.total_tax || 0}</Block>
+                            </Block>
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
+                                <Block font="MinXParagraph14"><strong>Total</strong></Block>
+                                <Block font="MinXParagraph14"><strong>{`$` + order.total || 0}</strong></Block>
+                            </Block>
+                        </Block>
+                        {lineCoupon.length > 0 ? (
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="16px" paddingBottom="16px">
+                                <Block font="MinXParagraph14">Applied Coupon</Block>
+                                <Block>
+                                    {lineCoupon.map((coupon, index) => (
+                                        <Block key={index} display="flex" justifyContent="flex-end" marginBottom="16px">
+                                            <Block font="MinXParagraph14" marginRight="16px">{coupon.code}</Block>
+                                            <Button kind={KIND.tertiary} shape={SHAPE.circle} size={SIZE.mini} overrides={{BaseButton: {style: {width: "20px", height: "20px"}}}} onClick={() => removeCoupon(index)}>
+                                                <Delete size={12}/>
+                                            </Button>
+                                        </Block>
+                                    ))}
+                                </Block>
+                            </Block>
+                        ) : null}
+                        <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="16px">
+                            <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
+                            <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD" bundle="primary" overrides={{Block: {style: {zIndex: 1}}}} onClick={() => updateCoupon()}/>
                         </Block>
                     </Block>
                 </Block>

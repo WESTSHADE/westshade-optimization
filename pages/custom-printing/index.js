@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
@@ -7,10 +7,45 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
+import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {ArrowRight, ArrowLeft} from "baseui/icon";
 
 import Button from "Components/button-n";
+import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 import {Benefit, OrderProcess, Section, FreeMockupForm} from "Components/sections";
+
+const data = [
+    {
+        title: "Canopy tent",
+        content: "Westshade provides great quality printed canopy tents. Having a branded tent can give you perfect promotional accessory at any trade fair or event.",
+        iconUrl: "/images/custom-printing/tab-canopy-tent.webp",
+        imageUrl: "/images/custom-printing/tab-display-custom-canopy.webp",
+        url: "/custom-printing/canopy-tent/"
+    },
+    {
+        title: "Umbrella",
+        content: "Westshade provides great quality printed umbrellas. Having a branded umbrella can give you perfect promotional accessory at any trade fair or event.",
+        iconUrl: "/images/custom-printing/tab-umbrella.webp",
+        imageUrl: "/images/custom-printing/tab-display-umbrella.webp",
+        // buttonText: "Coming Soon",
+        url: "/custom-printing/umbrella/"
+    },
+    {
+        title: "Table cover",
+        content: "Westshade provides great quality printed table covers. Having a branded table cover can give you perfect promotional accessory at any trade fair or event.",
+        iconUrl: "/images/custom-printing/tab-table-cover.webp",
+        imageUrl: "/images/custom-printing/tab-display-table-cover.webp",
+        url: "/custom-printing/table-cover/"
+    },
+    {
+        title: "Side wall",
+        content: "Westshade provides great quality printed side walls. Having a branded side walls can give you perfect promotional accessory at any trade fair or event.",
+        iconUrl: "/images/custom-printing/tab-side-wall.webp",
+        imageUrl: "/images/custom-printing/tab-display-side-wall.webp",
+        buttonText: "Coming Soon",
+        url: ""
+    },
+];
 
 const ImageSlide = ({url}) => {
     return (
@@ -21,31 +56,88 @@ const ImageSlide = ({url}) => {
 };
 
 function Custom_Printing({router}) {
+    const [tabActiveKey, setTabActiveKey] = useState(0);
+
     return (
-        <React.Fragment>
+        <ThemeProvider>
             <Head>
                 <title>Custom Printing - WESTSHADE</title>
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Block className="banner-display text-center" height={["480px", "660px", "900px"]} display="grid" gridTemplateRows="repeat(3, min-content)" gridRowGap={["8px", "16px", "20px"]} justifyItems="center"
-                       padding={["60px 30px 0", "80px 30px 0", "160px 30px 0"]}
-                       backgroundColor="transparent !important"
-                       overrides={{
-                           Block: {
-                               style: {
-                                   ":after": {background: "url('/images/custom-printing/custom-printing-display.webp')"},
-                               }
-                           }
-                       }}
-                >
-                    <Block font={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle28"]} color="MinXSecondaryText">Custom Printing</Block>
-                    <Block maxWidth={["262px", "450px", "659px"]} font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText">Customize it your way</Block>
-                    <Button type="rainbow" height={["36px", "48px", "56px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" text="Create Your Style" buttonBackgroundColor="#FAFBFF"
-                            onClick={() => router.push("/products/custom-printed-canopy-tent/buy")}
-                    />
-                </Block>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["16px", null, "64px"]}>
+                <Section upperContainerProps={{hidden: true}}
+                         content={
+                             <>
+                                 <Block marginBottom={["16px", null, "24px"]} font={["MinXTitle20", "MinXTitle20", "MinXTitle32"]} color="MinXPrimaryText"
+                                        overrides={{
+                                            Block: {
+                                                style: {fontWeight: "500 !important", lineHeight: "1em !important"}
+                                            },
+                                        }}
+                                 >I want to customize...</Block>
+                                 <Tabs activeKey={tabActiveKey} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + ""))} fill={FILL.fixed} overrides={{TabBorder: {props: {hidden: true}}}}>
+                                     {data.map(({title, content, iconUrl, imageUrl, buttonText = "Learn more >", url}, index) => (
+                                         <Tab key={index} title={title} artwork={() => <Image src={iconUrl} alt={title} width={80} height={80} layout="intrinsic" objectFit="contain"/>}
+                                              overrides={{
+                                                  TabPanel: {
+                                                      props: {
+                                                          className: "tab-panel-custom-printing"
+                                                      },
+                                                  },
+                                                  Tab: {
+                                                      props: {
+                                                          className: "tab-custom-printing"
+                                                      },
+                                                      style: ({$isActive}) => ({
+                                                          borderColor: $isActive ? "#23A4AD" : "transparent",
+                                                          background: $isActive ? "#F7F7F7" : "transparent",
+                                                          ":hover": {background: $isActive ? "#F7F7F7" : "transparent"},
+                                                      }),
+                                                  },
+                                                  ArtworkContainer: {
+                                                      props: {
+                                                          className: "tab-artwork-custom-printing"
+                                                      },
+                                                  }
+                                              }}
+                                         >
+                                             <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(2,1fr)"]} gridRowGap="16px" gridColumnGap="32px">
+                                                 <Block display={["block", null, "none"]} position="relative" width="100%">
+                                                     <Image src={imageUrl} alt={title} layout="responsive" objectFit="cover" width={1600} height={900}/>
+                                                 </Block>
+                                                 <Block display={["none", null, "block"]} position="relative" width="100" minHeight="400px">
+                                                     <Image src={imageUrl} alt={title} layout="fill" objectFit="cover"/>
+                                                 </Block>
+                                                 <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" gridRowGap={["8px", null, "16px"]} flex={1} height="100%" alignContent="center">
+                                                     <Block marginRight="auto" marginLeft={["auto", null, "unset"]} width="fit-content" font={["MinXTitle24", "MinXTitle24", "MinXTitle40"]} color="MinXPrimaryText"
+                                                            overrides={{
+                                                                Block: {
+                                                                    style: {fontWeight: "500 !important", lineHeight: "1em !important", textTransform: "capitalize"}
+                                                                },
+                                                            }}
+                                                     >{title}</Block>
+                                                     <Block as="p" width="fit-content" font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
+                                                            overrides={{
+                                                                Block: {
+                                                                    style: {
+                                                                        fontWeight: "400 !important", lineHeight: "1.5em !important", textAlign: "center",
+                                                                        '@media (min-width: 672px)': {textAlign: "left"},
+                                                                    }
+                                                                },
+                                                            }}
+                                                     >{content}</Block>
+                                                     <Button bundle="primary" marginRight="auto" marginLeft={["auto", null, "unset"]} height={["48px", null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} text={buttonText}
+                                                             onClick={() => router.push(url)}
+                                                     />
+                                                 </Block>
+                                             </Block>
+                                         </Tab>
+                                     ))}
+                                 </Tabs>
+                             </>
+                         }
+                />
                 <Section upperContainerDirection="column"
                          title="CUSTOM TENT IN USE"
                          subtitle="You can custom the tent in the way you like for any occasions."
@@ -181,7 +273,7 @@ function Custom_Printing({router}) {
                 />
                 <Benefit containerClassName="m-body-section-wrap" light/>
             </Block>
-        </React.Fragment>
+        </ThemeProvider>
     );
 }
 

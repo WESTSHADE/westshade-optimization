@@ -4,6 +4,8 @@ import React from "react";
 import {withRouter} from "next/router";
 import Head from "next/head";
 
+import {Block} from "baseui/block"
+
 import BannerDisplay from "Components/sections/BannerDisplay";
 
 function Home({router}) {
@@ -29,6 +31,7 @@ function Home({router}) {
 Home.getInitialProps = () => {
     return {
         homePage: true,
+        noFooter: true,
     };
 };
 

@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Select} from "baseui/select";
 
 import Button from "Components/button-n";
-import Compare from "Components/compare";
+import Compare from "Components/Compare";
 import {Section} from "Components/sections";
 
 import DataSpec from "Assets/spec-canopy-tent.json";
@@ -50,7 +50,7 @@ function Canopy_Tent_Spec({router, size}) {
                     if (value.index === cellIndex) {
                         return (
                             <Block key={indexC} display="grid" gridRowGap="8px" justifyItems="center">
-                                <Image src={DataSpec["display"][value.index].picUrl} alt={DataSpec["display"][value.index].alt} width={100} height={100} layout="fixed" objectFit="contain" quality={100}/>
+                                <Image src={DataSpec["display"][value.index].picUrl} alt={DataSpec["display"][value.index].alt} width={100} height={100} layout="fixed" objectFit="contain"/>
                                 <Block font="MinXLabel12" color="MinXSecondaryText">{DataSpec["display"][value.index].subtitle}</Block>
                                 <Block display={["block", "none"]}>
                                     <Select backspaceRemoves={false} clearable={false} options={DataSpec["selection"]} value={[value]} searchable={false}
