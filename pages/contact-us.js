@@ -30,9 +30,11 @@ const Contact_Us = ({phone}) => {
         lastname: "",
         companyName: "",
         phone: "",
-        email: ""
+        email: "",
+        contactMethod: []
     })
     const [formError, setFormError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -45,23 +47,32 @@ const Contact_Us = ({phone}) => {
             setFormState({...formState, interests: newInterests})
         }
     }
+    const hanndleContactMethod = (method) => {
+        if (!formState.contactMethod.includes(method)) setFormState({...formState, contactMethod: [...formState.contactMethod, method]})
+        else {
+            let idx = formState.contactMethod.indexOf(method);
+            let newContactMethod = [...formState.contactMethod];
+            newContactMethod.splice(idx, 1);
+            setFormState({...formState, contactMethod: newContactMethod})
+        }
+    }
 
     const handleContactForm = async (e) => {
         e.preventDefault();
         setFormLoading(true)
-        const {interests, firstname, lastname, message, companyName, email, phone} = formState;
-        if (interests.length > 0 || !!firstname || !!lastname || !!message || !!companyName || !!email || !!phone) {
+        const {interests, contactMethod,firstname, lastname, message, companyName, email, phone} = formState;
+        if (contactMethod.length > 0 && !!firstname && !!lastname && !!message && !!companyName && !!email && !!phone) {
             let result = await utils.contact({
                 form_id: "4",
                 status: "active",
-                10: interests.join(","),
+                10: interests.join(", "),
+                12: contactMethod.join(", "),
                 4: message,
                 6.3: firstname,
                 6.6: lastname,
                 7: companyName,
                 8: phone,
                 9: email,
-                11: "https://westshade.s3.us-west-2.amazonaws.com/contacts/test.jpg"
             });
             setFormLoading(false);
             setFormState({
@@ -71,10 +82,13 @@ const Contact_Us = ({phone}) => {
                 lastname: "",
                 companyName: "",
                 phone: "",
-                email: ""
+                email: "",
+                contactMethod:[]
             });
             setFormSubmitted(true);
         } else {
+            console.log(formError)
+            setErrorMessage("Please fill all the required fields")
             setFormError(true);
             setFormLoading(false)
         }
@@ -332,6 +346,35 @@ const Contact_Us = ({phone}) => {
                                 />
                             </Block>
                         </FormControl>
+                        <FormControl label={() => <CustomLabel>Preferred contact method</CustomLabel>}
+                                     overrides={{
+                                         ControlContainer: {style: {marginBottom: "40px"}}
+                                     }}
+                        >
+                            <Block display="grid" gridColumnGap="16px" gridRowGap="16px" gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}>
+                                <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
+                                    <CustomCheckbox checked={formState.contactMethod.includes("call")}
+                                                    onChange={() => hanndleContactMethod("call")}
+                                    >
+                                        <CustomCheckboxLabel active={formState.contactMethod.includes("call")}>Call</CustomCheckboxLabel>
+                                    </CustomCheckbox>
+                                </Block>
+                                <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
+                                    <CustomCheckbox checked={formState.contactMethod.includes("text")}
+                                                    onChange={() => hanndleContactMethod("text")}
+                                    >
+                                        <CustomCheckboxLabel active={formState.contactMethod.includes("text")}>Text</CustomCheckboxLabel>
+                                    </CustomCheckbox>
+                                </Block>
+                                <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
+                                    <CustomCheckbox checked={formState.contactMethod.includes("email")}
+                                                    onChange={() => hanndleContactMethod("email")}
+                                    >
+                                        <CustomCheckboxLabel active={formState.contactMethod.includes("email")}>Email</CustomCheckboxLabel>
+                                    </CustomCheckbox>
+                                </Block>
+                            </Block>
+                        </FormControl>
                         <CustomSubmitButton isLoading={formLoading}>Submit</CustomSubmitButton>
                     </Block>
                 </Block>
@@ -391,6 +434,61 @@ const Contact_Us = ({phone}) => {
                         </Block>
                     </Notification>
                 }
+                {
+                formError &&
+                <Notification
+                    onClose={() => {
+                        setFormError(false);
+                        setErrorMessage("");
+                    }}
+                    autoHideDuration={3000}
+                    overrides={{
+                        Body: {
+                            style: {
+                                position: "fixed",
+                                top: "50%",
+                                left: "50%",
+                                padding: "24px 32px 24px",
+                                transform: "translate(-50%, -50%)",
+                                boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1);",
+                                borderRadius: "16px",
+                                backgroundColor: "#ffffff",
+                                color: "#23A4AD",
+                                width: "auto"
+                            }
+                        }
+                    }}
+                >
+                    <Block width={["200px", "230px", "250px"]} backgroundColor="#ffffff" display="flex" flexDirection="column" alignItems="center">
+                        <Block as="p" font="MinXParagraph16" color="MinXPrimaryText" marginTop="16px">
+                            {errorMessage || "Ooops, and unexpected error occured"}
+                        </Block>
+                        <Button
+                            onClick={() => {
+                                setFormError(false)
+                                setErrorMessage("")
+                            }}
+                            shape={SHAPE.pill}
+                            overrides={{
+                                BaseButton: {
+                                    style: ($theme) => ({
+                                        marginTop: "24px",
+                                        paddingTop: "17px",
+                                        paddingBottom: "17px",
+                                        paddingLeft: " 48px",
+                                        paddingRight: " 48px",
+                                        color: "#ffffff !important",
+                                        backgroundColor: "#EB512A",
+                                        ":hover": {opacity: "0.8"}
+                                    })
+                                },
+                            }}
+                        >
+                            Close (3s)
+                        </Button>
+                    </Block>
+                </Notification>
+            }
             </Block>
             {/*<FreeMockup/>*/}
             {/* End of Contact Form Section */}
@@ -404,6 +502,11 @@ const Contact_Us = ({phone}) => {
             {/* End of FAQs Section */}
         </React.Fragment>
     )
+}
+Contact_Us.getInitialProps = async (context) => {
+    return {
+        fullPage: true
+    };
 }
 
 export default Contact_Us;

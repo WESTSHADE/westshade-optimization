@@ -30,6 +30,7 @@ const initialState = {
     email: "",
     printInstruction: "",
     interests: [],
+    contactMethod: [],
     logo: [],
 }
 
@@ -45,8 +46,8 @@ const FreeMockupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormLoading(true);
-        const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction} = formState;
-        if ((interests.length !== 0) && formState.printInstruction && formState.phone) {
+        const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction, contactMethod} = formState;
+        if((interests.length !== 0) && (contactMethod.length !== 0) && formState.printInstruction && formState.phone) {
             if (logo.length > 0) {
                 handleUpload()
                     .then(async (result) => {
@@ -64,6 +65,7 @@ const FreeMockupForm = () => {
                             3: phone,
                             4: email,
                             6: interests.join(", "),
+                            22: contactMethod.join(", "),
                             8: printInstruction,
                             ...resultToObj
                         });
@@ -82,8 +84,8 @@ const FreeMockupForm = () => {
                 setFileError({status: true, message: "please attach a file"});
                 setFormLoading(false);
             }
-        } else {
-            console.log("no interests,message and phone", formState.interests, formState.printInstructions, formState.phone);
+        }
+        else {
             setErrorMessage("Please fill all the required fields")
             setFormLoading(false);
             setFormError(true)
@@ -97,6 +99,16 @@ const FreeMockupForm = () => {
             let newInterests = [...formState.interests];
             newInterests.splice(idx, 1);
             setFormState({...formState, interests: newInterests})
+        }
+    }
+
+    const hanndleContactMethod = (method) => {
+        if (!formState.contactMethod.includes(method)) setFormState({...formState, contactMethod: [...formState.contactMethod, method]})
+        else {
+            let idx = formState.contactMethod.indexOf(method);
+            let newContactMethod = [...formState.contactMethod];
+            newContactMethod.splice(idx, 1);
+            setFormState({...formState, contactMethod: newContactMethod})
         }
     }
 
@@ -234,6 +246,43 @@ const FreeMockupForm = () => {
                                     />
                                 </Block>
                             </Block>
+                            <Block display={["none", "block", "block"]} width="100%" marginTop="35px">
+                                <Block width="100%">
+                                    <CustomLabel>Preferred contact method</CustomLabel>
+                                </Block>
+                                <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("call")}
+                                            onChange={() => hanndleContactMethod("call")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("call")} backgroundColor="transparent">
+                                                Call
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("text")}
+                                            onChange={() => hanndleContactMethod("text")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("text")} backgroundColor="transparent">
+                                                Text
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("email")}
+                                            onChange={() => hanndleContactMethod("email")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("email")} backgroundColor="transparent">
+                                                Email
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
+                                </Block>
+                            </Block>
                         </Block>
                         <Block width={["100%", "48%", "48%"]} marginTop={["40px", "0", "0"]}>
                             <Block width="100%">
@@ -328,7 +377,7 @@ const FreeMockupForm = () => {
                             <Block display={["block", "none", "none"]} width="100%" marginTop="35px">
                                 <CustomLabel> Contact information </CustomLabel>
                                 <Block width="100%" display="flex" justifyContent="space-between" flexWrap="wrap">
-                                    <Block marginBottom="16px" width={["48%", "100%", "48%", "48%"]}>
+                                    <Block marginBottom="8px" width={["48%", "100%", "48%", "48%"]}>
                                         <CustomInput
                                             type="text"
                                             placeholder="First name"
@@ -338,7 +387,7 @@ const FreeMockupForm = () => {
                                             onChange={(e) => setFormState({...formState, firstname: e.target.value})}
                                         />
                                     </Block>
-                                    <Block marginBottom="16px" width={["48%", "100%", "48%", "48%"]}>
+                                    <Block marginBottom="8px" width={["48%", "100%", "48%", "48%"]}>
                                         <CustomInput
                                             type="text"
                                             placeholder="Last name"
@@ -349,7 +398,7 @@ const FreeMockupForm = () => {
                                         />
                                     </Block>
                                 </Block>
-                                <Block marginBottom="16px" width="100%">
+                                <Block marginBottom="8px" width="100%">
                                     <CustomInput
                                         type="text"
                                         placeholder="Company name (optional)"
@@ -358,7 +407,7 @@ const FreeMockupForm = () => {
                                         onChange={(e) => setFormState({...formState, companyName: e.target.value})}
                                     />
                                 </Block>
-                                <Block marginBottom="16px" width="100%">
+                                <Block marginBottom="8px" width="100%">
                                     <CustomInput
                                         type="tel"
                                         required
@@ -369,7 +418,7 @@ const FreeMockupForm = () => {
                                         onChange={(e) => setFormState({...formState, phone: e.target.value})}
                                     />
                                 </Block>
-                                <Block marginBottom="16px" width="100%">
+                                <Block marginBottom="8px" width="100%">
                                     <CustomInput
                                         type="email"
                                         placeholder="Email"
@@ -378,6 +427,43 @@ const FreeMockupForm = () => {
                                         value={formState.email}
                                         onChange={(e) => setFormState({...formState, email: e.target.value})}
                                     />
+                                </Block>
+                            </Block>
+                            <Block display={["block", "none", "none"]} width="100%" marginTop="35px">
+                                <Block width="100%">
+                                    <CustomLabel>Preferred contact method</CustomLabel>
+                                </Block>
+                                <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("call")}
+                                            onChange={() => hanndleContactMethod("call")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("call")} backgroundColor="transparent">
+                                                Call
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("text")}
+                                            onChange={() => hanndleContactMethod("text")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("text")} backgroundColor="transparent">
+                                                Text
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
+                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                        <CustomCheckbox
+                                            checked={formState.contactMethod.includes("email")}
+                                            onChange={() => hanndleContactMethod("email")}
+                                        >
+                                            <CustomCheckboxLabel active={formState.contactMethod.includes("email")} backgroundColor="transparent">
+                                                Email
+                                            </CustomCheckboxLabel>
+                                        </CustomCheckbox>
+                                    </Block>
                                 </Block>
                             </Block>
                             <Block width="100%">

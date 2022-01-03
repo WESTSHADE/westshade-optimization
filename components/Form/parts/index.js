@@ -7,7 +7,7 @@ import {Notification} from "baseui/notification";
 import {SIZE, Textarea} from "baseui/textarea";
 import Image from "next/image";
 
-const CustomLabel = ({children}) => <Block marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
+const CustomLabel = ({children}) => <Block $style={{lineHeight: "1 !important"}} marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
 
 const CustomCheckbox = ({children, checked, onChange}) => (
     <Checkbox checked={checked} onChange={onChange}
