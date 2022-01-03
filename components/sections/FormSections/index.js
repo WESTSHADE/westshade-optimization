@@ -39,45 +39,54 @@ const FreeMockupForm = () => {
     const [formLoading, setFormLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [fileError, setFileError] = useState({status: false, message: ""});
+    const [formError, setFormError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormLoading(true);
         const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction} = formState;
-        if (logo.length > 0) {
-            handleUpload()
-                .then(async (result) => {
-                    console.log("upload success", result)
-                    const resultToObj = result.reduce((acc, cur, i) => {
-                        acc[12 + i] = cur.url;
-                        return acc;
-                    }, {});
-                    let res = await utils.contact({
-                        form_id: "5",
-                        status: "active",
-                        1.3: firstname,
-                        1.6: lastname,
-                        2: companyName,
-                        3: phone,
-                        4: email,
-                        6: interests.join(", "),
-                        8: printInstruction,
-                        ...resultToObj
-                    });
-                    console.log(res)
-                    setFormLoading(false);
-                    setFormState(initialState);
-                    setFormSubmitted(true);
-                })
-                .catch(error => {
-                    console.log(error)
-                    console.log("upload failed", uploadResponse)
-                    setFileError({status: true, message: "please try attaching the file again"});
-                    setFormLoading(false);
-                })
+        if ((interests.length !== 0) && formState.printInstruction && formState.phone) {
+            if (logo.length > 0) {
+                handleUpload()
+                    .then(async (result) => {
+                        console.log("upload success", result)
+                        const resultToObj = result.reduce((acc, cur, i) => {
+                            acc[12 + i] = cur.url;
+                            return acc;
+                        }, {});
+                        let res = await utils.contact({
+                            form_id: "5",
+                            status: "active",
+                            1.3: firstname,
+                            1.6: lastname,
+                            2: companyName,
+                            3: phone,
+                            4: email,
+                            6: interests.join(", "),
+                            8: printInstruction,
+                            ...resultToObj
+                        });
+                        console.log(res)
+                        setFormLoading(false);
+                        setFormState(initialState);
+                        setFormSubmitted(true);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        console.log("upload failed", uploadResponse)
+                        setFileError({status: true, message: "please try attaching the file again"});
+                        setFormLoading(false);
+                    })
+            } else {
+                setFileError({status: true, message: "please attach a file"});
+                setFormLoading(false);
+            }
         } else {
-            setFileError({status: true, message: "please attach a file"});
+            console.log("no interests,message and phone", formState.interests, formState.printInstructions, formState.phone);
+            setErrorMessage("Please fill all the required fields")
             setFormLoading(false);
+            setFormError(true)
         }
     }
 
@@ -427,6 +436,61 @@ const FreeMockupForm = () => {
                                         color: "#ffffff !important",
                                         backgroundColor: "#23A4AD",
                                         ":hover": {backgroundColor: "#5FBDBE"}
+                                    })
+                                },
+                            }}
+                        >
+                            Close (3s)
+                        </Button>
+                    </Block>
+                </Notification>
+            }
+            {
+                formError &&
+                <Notification
+                    onClose={() => {
+                        setFormError(false);
+                        setErrorMessage("");
+                    }}
+                    autoHideDuration={3000}
+                    overrides={{
+                        Body: {
+                            style: {
+                                position: "fixed",
+                                top: "50%",
+                                left: "50%",
+                                padding: "24px 32px 24px",
+                                transform: "translate(-50%, -50%)",
+                                boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1);",
+                                borderRadius: "16px",
+                                backgroundColor: "#ffffff",
+                                color: "#23A4AD",
+                                width: "auto"
+                            }
+                        }
+                    }}
+                >
+                    <Block width={["200px", "230px", "250px"]} backgroundColor="#ffffff" display="flex" flexDirection="column" alignItems="center">
+                        <Block as="p" font="MinXParagraph16" color="MinXPrimaryText" marginTop="16px">
+                            {errorMessage || "Ooops, and unexpected error occured"}
+                        </Block>
+                        <Button
+                            onClick={() => {
+                                setFormError(false)
+                                setErrorMessage("")
+                            }}
+                            shape={SHAPE.pill}
+                            overrides={{
+                                BaseButton: {
+                                    style: ($theme) => ({
+                                        marginTop: "24px",
+                                        paddingTop: "17px",
+                                        paddingBottom: "17px",
+                                        paddingLeft: " 48px",
+                                        paddingRight: " 48px",
+                                        color: "#ffffff !important",
+                                        backgroundColor: "#EB512A",
+                                        ":hover": {opacity: "0.8"}
                                     })
                                 },
                             }}

@@ -206,9 +206,11 @@ function MyApp({Component, pageProps}) {
                                 }}
                         />
                         {/* End Google Tag Manager*/}
-                        <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
+                        <div id="WestShadeFrame"
+                             className={pageProps.homePage ? "scroll-container" : ""}
+                             style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
                             <Header/>
-                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? "unset" : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
+                            <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? null : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
                                 <Component size={size} phone={businessPhone} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>

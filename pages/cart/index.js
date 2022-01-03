@@ -212,7 +212,7 @@ function Cart_Page({router}) {
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top={["104px", "120px", "136px"]} display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
+                            <Block position="sticky" top="92px" display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
                                    color="MinXPrimaryText"
                                    $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
@@ -234,7 +234,7 @@ function Cart_Page({router}) {
                                     Empty cart
                                 </Button>
                             </Block>
-                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "16px", "22px"]} marginTop={["32px", "47px"]}>
+                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", "16px", "22px"]} marginTop={["32px", null, "47px"]}>
                                 {cart.length > 0 && cartProduct.length > 0
                                     ? cartProduct.map((product, index) => {
                                         return (

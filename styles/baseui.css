@@ -388,6 +388,12 @@ ul.bullet-warranty.sub > li {
     margin-bottom: 16px;
 }
 
+@media screen and (max-width: 960px) {
+    .container-input-address > div {
+        margin-bottom: 8px;
+    }
+}
+
 .container-input {
     border-width: 1px;
     border-radius: 8px;
@@ -668,6 +674,8 @@ ul.bullet-warranty.sub > li {
 
 .scroll-container {
     height: 100vh;
+    padding-top: 92px;
+    padding-bottom: 80px;
     overflow-y: scroll;
 }
 

@@ -32,12 +32,15 @@ import {printingMethods, frameTypes, tentSizes} from "Assets/constants/custom-pr
 const utils = new Utils();
 
 const Index = ({product, productVariant, productComponent, pageState, printingMethods, frameTypes, tentSizes}) => {
-    const {loggedIn, token, user} = useSelector(({user}) => user);
     const reduxDispatch = useDispatch();
+
+    const {loggedIn, token, user} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
+
     const [state, dispatch] = useReducer(reducer, pageState.initialState);
     const [steps, stepDispatch] = useReducer(stepReducer, pageState.initialSteps);
     const [productState, productDispatch] = useReducer(productReducer, pageState.initialProduct);
+
     const [images, setImages] = useState([
         {src: "/images/custom-printed-canopy-tent/tents/Y7-10x10/0-default-with-logo/Y7-10X10-WH.webp"}
     ]);
@@ -45,9 +48,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     const [framePrices, setFramePrices] = useState([])
     const [acceptedFrameTypes, setAcceptedFrameTypes] = useState([...frameTypes])
 
-    let myData = Object.keys(steps.allSteps).map(key => {
-        return steps.allSteps[key];
-    })
+    let myData = Object.keys(steps.allSteps).map(key => steps.allSteps[key])
     //---- actions for printing details ----//
 
     const selectSize = (payload) => {
@@ -474,7 +475,6 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             return {price: variant[0]?.price, frame: frameTypes[index]}
         })
         if (framePrices) {
-            framePrices.reverse()
             setFramePrices(framePrices)
         }
     }, [state.size, acceptedFrameTypes])
@@ -580,7 +580,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                         <Block className="cursor" width="100%" margin={["8px auto", "12px auto"]} title="edit" onClick={editDetails}>
                                             {
                                                 !steps.done ?
-                                                    <Button type="rainbow" width="100%" height="48px" font="MinXLabel14" color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF" display={["none", null, "block"]}
+                                                    <Button type="rainbow" width="100%" height="48px" font="MinXLabel14" color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF" display={["block", null, "block"]}
                                                             onClick={() => dispatch({type: "SET_ACTIVE_CUSTOMIZER", payload: {activeCustomizer: true}})}
                                                     />
                                                     :
