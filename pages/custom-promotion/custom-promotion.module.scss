@@ -262,6 +262,9 @@
     @media screen and (min-width: 1056px) {
         padding: 96px 16px;
     }
+    @media screen and (min-width: 1920px) {
+        padding: 96px 0px;
+    }
 }
 .service__video {
     margin-top: 24px;
@@ -404,7 +407,7 @@
     margin-top: 16px;
 
     @media screen and (min-width: 1056px) {
-        margin-top: 32px;
+        margin-top: 80px;
     }
 }
 .service__testimonies__item {
@@ -417,5 +420,35 @@
     }
     @media screen and (min-width: 1056px) {
         width: 32%;
+        padding: 0px 40px;
+    }
+}
+
+.hero__benefits {
+    display: none;
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    & span {
+        font-family: "Roboto";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0.04em;
+        text-align: left;
+        color: #ffffff;
+
+    }
+
+    @media screen and (min-width: 1920px) {
+        display: flex;
+
     }
 }

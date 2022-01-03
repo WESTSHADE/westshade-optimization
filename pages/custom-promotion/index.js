@@ -4,6 +4,7 @@ import { Tabs, Tab } from "baseui/tabs-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import ButtonM from "../../components/button-n"
 import BenefitV2 from "../../components/sections/Benefit/BenefitV2.js";
@@ -234,6 +235,8 @@ const CustomTab = ({children, active, backgroundColor}) => {
                    borderColor: active ? "#23A4AD" : "#b2b2b2",
                    backgroundColor: backgroundColor ? backgroundColor : "#ffffff",
                    fontWeight:"500",
+                   boxShadow: active ? "0px 0px 6px 1px #23A4AD" : "none",
+                   transition: "all .3s ease-in-out"
                }}
         >
             {children}
@@ -321,7 +324,7 @@ const CustomPromotion = () => {
     return (
         <>
         <Block backgroundColor="#000000" as="section" className={styles.section}>
-            <Block width="100%" maxWidth="1920px" className={styles.heroWrapper}>
+            <Block width="100%" maxWidth="1920px" className={styles.heroWrapper} position="relative">
                 <Block display="flex" flexDirection="column" alignItems="flex-start" maxWidth="1312px" className={styles.hero}>
                     <Block color="#ffffff" as="h1">
                         Custom printings that <br/> <span> STAND OUT</span>
@@ -345,6 +348,20 @@ const CustomPromotion = () => {
                                 </Block>
                             ))
                         }
+                    </Block>
+                    <Block className={styles.hero__benefits} maxWidth="1312px">
+                        <Block display="flex" alignItems="center">
+                            <Image src="/images/icon/icon-free-shipping-v2-2.png" alt="free shipping" width={30} height={20} layout="fixed" objectFit="contain"/>
+                            <Block marginLeft="12px" as="span"> Free shipping on all custom printing orders </Block>
+                        </Block>
+                        <Block display="flex" alignItems="center">
+                            <Image src="/images/icon/icon-design-2.png" alt="professional design" width={30} height={20} layout="fixed" objectFit="contain"/>
+                            <Block marginLeft="12px" as="span">Professional designs for any occasions</Block>
+                        </Block>
+                        <Block display="flex" alignItems="center">
+                            <Image src="/images/icon/icon-outstanding.png" alt="high resolution printing" width={30} height={20} layout="fixed" objectFit="contain"/>
+                            <Block marginLeft="12px" as="span"> High-resolution digital printing</Block>
+                        </Block>
                     </Block>
                 </Block>
             </Block>
@@ -372,7 +389,12 @@ const CustomPromotion = () => {
                                             backgroundColor: "transparent",
                                             justifyContent: "space-around",
                                             maxWidth: "682px",
-                                            margin: "0 auto",
+                                            marginTop: "0",
+                                            marginBottom: "0",
+                                            marginLeft: "auto",
+                                            marginRight: "auto",
+                                            paddingTop: "10px",
+                                            paddingBottom: "10px",
                                         }
                                     },
                                     TabHighlight: {
@@ -388,7 +410,7 @@ const CustomPromotion = () => {
                                 <Tab
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", padding: "0", ":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
                                         }
                                     }}
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 0}>UV Printing</CustomTab></Block>}
@@ -568,15 +590,18 @@ const CustomPromotion = () => {
                                             <Block dangerouslySetInnerHTML={createDangerousContent(printingSpecs[1].cost.content)}/>
                                         </Block>
                                     </Block>
+                                </Block>
+                                {
+                                    showComparison &&
                                     <Block marginTop="16px" font={["MinXParagraph14","MinXParagraph14","MinXParagraph16"]} $style={{textAlign: "center", }}>
                                     *Color durability depends on usage and weather condition.
-                                </Block>
-                                </Block>
+                                    </Block>
+                                }
                         </Block>
                     </Block>
             </Block>
         </Block>
-        <Block backgroundColor="#F7F7F7" as="section" className={styles.section}>
+        <Block backgroundColor="#F7F7F7" as="section" className={styles.section} display="grid" placeItems="center">
             <BenefitV2 />
         </Block>
         <Block backgroundColor="#ffffff" as="section" className={styles.section}>
