@@ -29,7 +29,8 @@ const SpecSection = ({
                                ":after": annotation ? {content: "attr(annotation)", fontSize: "10px", verticalAlign: "super"} : {}
                            }
                        }
-                   }}>{title}</Block>
+                   }}
+            >{title}</Block>
             <Block>
                 <Block font={contentSize} color={contentColor} $style={{fontWeight: "300 !important", lineHeight: "1em !important"}}>{content}</Block>
                 {unit ? <Block font={unitSize} color={titleColor} $style={{fontWeight: "400 !important", lineHeight: "1em !important"}}>{unit}</Block> : ""}
@@ -38,7 +39,7 @@ const SpecSection = ({
     )
 }
 
-const Hero = ({size}) => {
+const Hero = () => {
     const router = useRouter();
 
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
@@ -46,11 +47,11 @@ const Hero = ({size}) => {
     return (
         <ThemeProvider>
             <Block>
-                <Block className="banner-display text-center" width="calc(100vw + 2px)" height={["456px", null, "780px"]} display="grid" gridAutoRows="max-content" gridRowGap="8px" justifyItems="center" padding={["102px 30px 0", null, "98px 30px 0"]}
+                <Block className="banner-display text-center" width="100vw" height={["456px", null, "780px"]} left="calc(50% - 50vw)" display="grid" gridAutoRows="max-content" gridRowGap="8px" justifyItems="center"
+                       padding={["102px 30px 0", null, "98px 30px 0"]}
                        overrides={{
                            Block: {
                                style: {
-                                   transform: size.width <= process.env.maxWidth ? "translate(-1px, 0)" : "translate(calc(-50vw + " + (process.env.maxWidth / 2 - 1) + "px), 0)",
                                    ":after": {background: "url('/images/canopy-tent/canopy-tent-hero-display.webp')"},
                                }
                            }
@@ -58,9 +59,9 @@ const Hero = ({size}) => {
                 >
                     <Block font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle18"]} color="#AFFA64" $style={{fontWeight: "300 !important"}}>WESTSHADE</Block>
                     <Block marginBottom="8px" font={["MinXTitle42", "MinXTitle42", "MinXTitle74"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "300 !important"}}>Canopy Tent</Block>
-                    <Block marginBottom="8px" font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle20"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "400 !important", fontStyle: "italic", letterSpacing: "0.04em"}}>Protect you and
-                        your family
-                        with our best.</Block>
+                    <Block marginBottom="8px" font={["MinXSubtitle16", "MinXSubtitle16", "MinXSubtitle20"]} color="MinXPrimaryTextAlt" $style={{fontWeight: "400 !important", fontStyle: "italic", letterSpacing: "0.04em"}}>
+                        Protect you and your family with our best.
+                    </Block>
                     <Button width={["194px", null, "202px"]} height={["48px", null, "52px"]} font="MinXLabel20" text="Buy Now" bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => goBuyingPage()}/>
                 </Block>
                 <Block className="text-center" position="relative" width="100%" display={["grid", null, "flex"]} flexDirection={[null, null, "column"]} gridRowGap="12px" gridTemplateColumns="1fr" justifyContent="space-between"

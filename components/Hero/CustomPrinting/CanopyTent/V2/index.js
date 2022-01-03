@@ -10,7 +10,7 @@ import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
 
 let timeoutOpacity, timeoutCounter;
 
-const Hero = ({size}) => {
+const Hero = () => {
     const router = useRouter();
 
     const ref = useRef(null);
@@ -46,12 +46,11 @@ const Hero = ({size}) => {
 
     return (
         <ThemeProvider>
-            <Block className="banner-display" width="calc(100vw + 2px)" height={["auto", null, "700px", "775px"]} padding={["0 16px", null, "0 20px"]}
+            <Block className="banner-display" width="100vw" height={["auto", null, "700px", "775px"]} left="calc(50% - 50vw)" padding={["0 16px", null, "0 20px"]}
                    overrides={{
                        Block: {
                            style: {
                                background: "transparent !important",
-                               transform: size.width <= process.env.maxWidth ? "translate(-1px, 0)" : "translate(calc(-50vw + " + (process.env.maxWidth / 2 - 1) + "px), 0)",
                                ":after": {background: "url('/images/custom-printing/canopy-tent/hero-bg.webp')"},
                            }
                        }
@@ -79,7 +78,8 @@ const Hero = ({size}) => {
                             </Block>
                         </Block>
                     </Block>
-                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" maxWidth={[null, null, "467px"]} marginRight="auto" marginLeft={["auto", null, "unset"]} $style={{zIndex: 9}}>
+                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" maxWidth={[null, null, "467px"]} marginRight="auto" marginLeft={["auto", null, "unset"]}
+                           $style={{zIndex: 9}}>
                         <Block width="fit-content" marginBottom={["32px", null, null, "80px"]} font={["MinXTitle36", "MinXTitle36", "MinXTitle48"]} color="MinXPrimaryText"
                                overrides={{
                                    Block: {

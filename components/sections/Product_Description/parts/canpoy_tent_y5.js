@@ -8,8 +8,8 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
-import CardTabs from "../../../card_tabs";
+import {AccordionV1 as Accordion} from "Components/Accordion";
+import CardTabs from "Components/card_tabs";
 
 const feature_1 = [{
     tabTitle: "Water Resistant",

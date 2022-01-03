@@ -12,7 +12,24 @@
       }
     ],
     [
-      "inline-react-svg"
+      "inline-react-svg",
+      {
+        "svgo": {
+          "plugins": [
+            {
+              "name": "removeAttrs",
+              "params": {
+                "attrs": [
+                  "aria-hidden",
+                  "data-prefix",
+                  "data-icon"
+                ]
+              }
+            },
+            "cleanupIDs"
+          ]
+        }
+      }
     ]
   ]
 }

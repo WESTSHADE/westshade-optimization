@@ -52,7 +52,7 @@ const Hero = ({size}) => {
             </Block>
             <Block position="absolute" width={["240px", "320px", "420px"]} marginRight="auto" marginLeft="auto" right={0} bottom={0} left={0}>
                 <AspectRatioBox width="inherit">
-                    <Image src="/images/custom-printing/canopy-tent/canopy-tent.webp" alt="canopy tent" layout="fill" objectFit="contain" quality={100} priority={true}/>
+                    <Image src="/images/custom-printing/canopy-tent/canopy-tent.webp" alt="canopy tent" layout="fill" objectFit="contain" priority={true}/>
                 </AspectRatioBox>
             </Block>
         </Block>

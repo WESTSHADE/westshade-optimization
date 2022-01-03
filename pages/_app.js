@@ -13,8 +13,8 @@ import {Block} from "baseui/block";
 import {store} from "../redux/store";
 import {styletron} from "../styletron";
 
-import Header from "Components/header";
-import Footer from "Components/footer";
+import {HeaderV1 as Header} from "Components/Header";
+import {FooterV1 as Footer} from "Components/Footer";
 
 import "../styles/old.css";
 import "../styles/globals.css";

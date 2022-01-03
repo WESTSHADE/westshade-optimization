@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
@@ -55,7 +55,10 @@ const QA = [
     },
     {title: "Is your umbrella fabric waterproof?", content: "Yes. The fabric we use has a waterproof treatment."},
     {title: "Does your umbrella fabric block out UV?", content: "Yes. The fabric blocks 98% of harmful UV rays."},
-    {title: "Can I get my umbrella customized?", content: "Yes. You can customize online or feel free to reach out to our customer service representatives with the kind of style you like and we will get back to you with a free mockup and a quote."},
+    {
+        title: "Can I get my umbrella customized?",
+        content: "Yes. You can customize online or feel free to reach out to our customer service representatives with the kind of style you like and we will get back to you with a free mockup and a quote."
+    },
     {title: "Is the Kapri umbrella adjustable?", content: "Yes, the push-button on the frame makes the umbrella adjust to the desirable shade 40-50 cm."},
     {title: "What function does the Kapri Umbrella use?", content: "The Kapri has an automatic tilt function; it is a marine-grade anodized aluminum material frame."},
     {title: "What are the enhanced features?", content: "The Kapri features are its upright frame and smooth crack system to provide adjustment depending on the position of the sun."},

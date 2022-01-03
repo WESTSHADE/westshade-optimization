@@ -219,7 +219,7 @@ function Cart_Page({router}) {
                                 <Button shape={SHAPE.square} kind={KIND.minimal}
                                         startEnhancer={() => (
                                             <Block position="relative" width="20px" marginRight="8px">
-                                                <Image src={"/images/icon/icon-delete.png"} alt="delete" layout="responsive" width={40} height={40} objectFit="contain" quality={100}/>
+                                                <Image src={"/images/icon/icon-delete.png"} alt="delete" layout="responsive" width={40} height={40} objectFit="contain"/>
                                             </Block>
                                         )}
                                         overrides={{
@@ -244,7 +244,7 @@ function Cart_Page({router}) {
                                                         {product.images.length > 0 ? (
                                                             <Image src={product.images[0].src} alt={product.images[0].alt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                                                         ) : (
-                                                            <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain" quality={100}/>
+                                                            <Image src={"/images/product/default-product.webp"} alt={product.name} layout="fill" objectFit="contain"/>
                                                         )}
                                                     </Block>
                                                     <Block>

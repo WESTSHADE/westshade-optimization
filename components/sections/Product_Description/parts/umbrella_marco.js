@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
@@ -47,7 +47,10 @@ const QA = [
     },
     {title: "Is your umbrella fabric waterproof?", content: "Yes. The fabric we use has a waterproof treatment."},
     {title: "Does your umbrella fabric block out UV?", content: "Yes. The fabric blocks 98% of harmful UV rays."},
-    {title: "Can I get my umbrella customized?", content: "Yes. You can customize online or feel free to reach out to our customer service representatives with the kind of style you like and we will get back to you with a free mockup and a quote."},
+    {
+        title: "Can I get my umbrella customized?",
+        content: "Yes. You can customize online or feel free to reach out to our customer service representatives with the kind of style you like and we will get back to you with a free mockup and a quote."
+    },
     {title: "What are the dimensions of the Marco Umbrella?", content: "7’6 ½’ x 6 ¼ x 6 ¼ (230cm x 16cm x 16cm)"},
     {
         title: "What is the difference between push and pulley?",

@@ -44,7 +44,7 @@ function Bali({router, size}) {
                          content={
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" marginRight="auto" marginBottom={["12px", "24px", "32px"]} marginLeft="auto">
-                                     <Image src="/images/umbrella/bali/roof.webp" alt="bali roof" layout="responsive" width={912} height={324} quality={100}/>
+                                     <Image src="/images/umbrella/bali/roof.webp" alt="bali roof" layout="responsive" width={912} height={324} priority/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
@@ -76,25 +76,25 @@ function Bali({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail1.webp" alt="bali detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/bali/detail1.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail2.webp" alt="bali detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/bali/detail2.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & Steel Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail3.webp" alt="bali detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/bali/detail3.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Crank Lift
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail4.webp" alt="bali detail" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/umbrella/bali/detail4.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Push Button To Tilt
                                  </Block>
@@ -107,7 +107,7 @@ function Bali({router, size}) {
                          subtitleMoreDestination={"/custom-printing/umbrella"}
                          content={
                              <Block className="section-round-corner" position="relative" maxWidth="960px" width="100%" height={["138px", "282px", "546px"]} marginRight="auto" marginLeft="auto" overflow="hidden">
-                                 <Image src="/images/umbrella/bali/colors.webp" alt="bali color" layout="fill" objectFit="cover" quality={100}/>
+                                 <Image src="/images/umbrella/bali/colors.webp" alt="bali color" layout="fill" objectFit="cover"/>
                              </Block>
                          }
                 />
@@ -115,7 +115,7 @@ function Bali({router, size}) {
                          content={
                              <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center" font="MinXLabel16">
                                  <Block position="relative" width="100%" maxWidth="475px" overflow="hidden">
-                                     <Image src="/images/umbrella/bali/size.webp" alt="bali size 6.5'" layout="responsive" objectFit="contain" width={2050} height={665} quality={100}/>
+                                     <Image src="/images/umbrella/bali/size.webp" alt="bali size 6.5'" layout="responsive" objectFit="contain" width={2050} height={665}/>
                                  </Block>
                                  <Block color="MinXPrimaryText">6.5’ Square</Block>
                                  <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push("/products/tilt-umbrellas/bali-crank-lift-patio-umbrella")}/>
@@ -131,10 +131,10 @@ function Bali({router, size}) {
                                     display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridRowGap={["24px", "32px", "0"]} alignItems="end"
                              >
                                  <Block position="relative" justifySelf={["start", "start", "center"]} gridArea="a" width={["243px", "345px", "524px"]}>
-                                     <Image src="/images/umbrella/bali/custom1.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/bali/custom1.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000}/>
                                  </Block>
                                  <Block position="relative" justifySelf={["end", "end", "center"]} gridArea="b" width={["189px", "290px", "368px"]}>
-                                     <Image src="/images/umbrella/bali/custom2.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000} quality={100}/>
+                                     <Image src="/images/umbrella/bali/custom2.webp" alt="bali custom" layout="responsive" objectFit="contain" width={1200} height={1000}/>
                                  </Block>
                              </Block>
                          }

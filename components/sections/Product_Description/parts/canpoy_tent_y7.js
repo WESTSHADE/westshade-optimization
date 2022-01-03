@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import Accordion from "../../../accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{

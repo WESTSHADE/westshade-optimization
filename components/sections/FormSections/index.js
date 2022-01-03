@@ -16,7 +16,7 @@ import {
     CustomTextarea,
     CustomFileUploadInput,
     CustomFilePreview
-} from "../../forms/parts";
+} from "../../Form/parts";
 
 import Utils from "Utils/utils";
 

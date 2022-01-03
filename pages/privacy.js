@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import {Block} from "baseui/block";
 
-export default function Privacy({phone}) {
+function Privacy({phone}) {
     return (
         <React.Fragment>
             <Head>
@@ -161,3 +161,5 @@ export default function Privacy({phone}) {
         </React.Fragment>
     );
 };
+
+export default Privacy;

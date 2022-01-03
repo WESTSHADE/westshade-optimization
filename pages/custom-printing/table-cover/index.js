@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React from "react";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
@@ -7,6 +7,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 
 import Button from "Components/button-n";
+import {TableCoverV1 as Hero} from "Components/Hero/CustomPrinting";
 import {Benefit, FreeMockupForm, Section} from "Components/sections"
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
@@ -25,7 +26,7 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
                }}
         >
             <Block position="relative" width="100%" maxWidth={["256px", "320px", "380px"]} marginRight={["auto", "auto", "0px"]} marginBottom={["12px", "24px", "0px"]} marginLeft="auto">
-                <Image src={src} alt={alt} layout="responsive" width={1685} height={1053} quality={100}/>
+                <Image src={src} alt={alt} layout="responsive" width={1685} height={1053}/>
             </Block>
             <Block>
                 <Block marginBottom={["12px", "12px", "16px"]} font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
@@ -37,54 +38,19 @@ const SectionCard = ({router, src, alt, title, content, destination}) => {
 }
 
 function Custom_Printing_Table_Cover({router, size}) {
-    const refBanner = useRef(null);
-
-    const [circleAD, setCircleAD] = useState(0);
-    const [circleBD, setCircleBD] = useState(0);
-
-    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/buy"});
-
-    useEffect(() => {
-        if (refBanner && refBanner.current) {
-            setCircleAD(refBanner.current.clientHeight);
-            setCircleBD(refBanner.current.clientWidth / 2);
-        }
-    }, [size]);
-
     return (
         <React.Fragment>
             <Head>
                 <title>Custom Printing Table Cover - WESTSHADE</title>
                 <meta name="description" content="Customize your table covers for any occasions. Print your logo, icon and choose any color! Choose fabric from fitted and stretched table covers!"/>
             </Head>
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
-                <Block ref={refBanner} display="grid" gridRowGap={["8px", "16px", "20px"]} justifyItems="center" padding={["32px 30px", "40px 30px", "64px 30px"]}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: "banner-display text-center"
-                               },
-                               style: {
-                                   ":after": {background: "linear-gradient(95.25deg, rgba(74, 223, 232, 0.85) 0%, rgba(194, 251, 255, 0) 52.6%, rgba(74, 223, 232, 0.85) 100%), #C2FBFF;"}
-                               }
-                           }
-                       }}
-                >
-                    <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryText" $style={{zIndex: 1}}>Customize It Your Way</Block>
-                    <Button type="outline" height={["36px", "48px", "56px"]} marginBottom={["32px", "48px", "60px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Create My Table Cover" bundle="black" $style={{zIndex: 1}}
-                            onClick={() => goBuyingPage()}
-                    />
-                    <Block position="relative" width="100%" height={["125px", "173px", "180px"]} $style={{zIndex: 1}}>
-                        <Image src="/images/custom-printing/table-cover/stretch-table-cover.webp" alt="stretch table cover" layout="fill" objectFit="contain" quality={100} priority={true}/>
-                    </Block>
-                    <div style={{position: "absolute", top: "-" + circleAD / 2 + "px", right: 0, width: circleAD + "px", height: circleAD + "px", background: "#97F02B", opacity: "0.8", filter: "blur(" + circleAD / 2 + "px)",}}/>
-                    <div style={{position: "absolute", bottom: "-" + circleBD / 2 + "px", left: 0, width: circleBD + "px", height: circleBD + "px", background: "#2275F2", opacity: "0.8", filter: "blur(" + circleBD / 2 + "px)",}}/>
-                </Block>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
+                <Hero size={size}/>
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the product you want."
                          content={
                              <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
-                                 <Image src="/images/custom-printing/table-cover/table-covers.webp" alt="custom printing table covers" layout="responsive" width={1440} height={400} quality={100} priority={true}/>
+                                 <Image src="/images/custom-printing/table-cover/table-covers.webp" alt="custom printing table covers" layout="responsive" width={1440} height={400} priority={true}/>
                              </Block>
                          }
                 />
@@ -146,21 +112,21 @@ function Custom_Printing_Table_Cover({router, size}) {
                              >
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="/images/custom-printing/table-cover/size-small.webp" alt="size small table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-small.webp" alt="size small table cover" layout="fill" objectFit="contain"/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Small</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=4’, W=2’, H=2’4’’</Block>
                                  </Block>
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="/images/custom-printing/table-cover/size-medium.webp" alt="size medium table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-medium.webp" alt="size medium table cover" layout="fill" objectFit="contain"/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Medium</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=6’1’’, W=2’6’’, H=2’4’’</Block>
                                  </Block>
                                  <Block display="flex" flexDirection="column" alignItems="center">
                                      <Block position="relative" width="100%" height={["123px", "207px"]} marginRight="auto" marginBottom={["8px", "8px", "16px"]} marginLeft="auto">
-                                         <Image src="/images/custom-printing/table-cover/size-large.webp" alt="size large table cover" layout="fill" objectFit="contain" quality={100}/>
+                                         <Image src="/images/custom-printing/table-cover/size-large.webp" alt="size large table cover" layout="fill" objectFit="contain"/>
                                      </Block>
                                      <Block marginBottom={["12px", "12px", "16px"]} font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText">Large</Block>
                                      <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">L=8’, W=2’6’’, H=2’4’’</Block>

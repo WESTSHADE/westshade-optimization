@@ -4,7 +4,6 @@ import Head from "next/head"
 import Image from "next/image";
 
 import {useStyletron} from "baseui";
-import {Card, StyledBody} from "baseui/card";
 import {Block} from "baseui/block"
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Notification} from "baseui/notification";
@@ -12,33 +11,14 @@ import {FormControl} from "baseui/form-control";
 
 import QA from "Assets/q&a.json";
 
-import Accordion from "Components/accordion";
-import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea} from "Components/forms/parts";
+import {AccordionV1 as Accordion} from "Components/Accordion";
+import {FreeMockupV1 as FreeMockup} from "Components/Form/FreeMockup";
+import {CustomCheckbox, CustomCheckboxLabel, CustomInput, CustomLabel, CustomSubmitButton, CustomTextarea} from "Components/Form/parts";
 
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import Utils from "Utils/utils";
 
 const utils = new Utils();
-
-const CustomCard = ({children}) => {
-    const [css] = useStyletron();
-
-    return (
-        <Block width={["100%", "100%", "180px", "180px"]}>
-            <Card
-                overrides={{
-                    Root: {style: {backgroundColor: "transparent", outline: "transparent", borderTopWidth: "0", borderBottomWidth: "0", borderLeftWidth: "0", borderRightWidth: "0", width: "100%"}},
-                    Contents: {style: {marginTop: "0px", marginBottom: "0px", marginLeft: "0px", marginRight: "0px"}}
-                }}
-            >
-                <StyledBody className={css({display: "flex", flexDirection: "column", alignItems: "center"})}>
-                    {children}
-                </StyledBody>
-            </Card>
-        </Block>
-    )
-}
-
 
 const Contact_Us = ({phone}) => {
     const [css] = useStyletron();
@@ -120,17 +100,19 @@ const Contact_Us = ({phone}) => {
                 <title>Contact Us - WESTSHADE</title>
                 <meta name="description" content="Frequently asked question about Westshade&apos;s canopy, umbrella and accessories."/>
             </Head>
-            <Block className="text-center" width="100%" display="grid" placeItems="center" backgroundColor="#DFF2EF">
-                <Block maxWidth="1183px" padding={["40px 16px", "100px 16px", "100px 32px"]}>
-                    <Block as="h1" marginBottom={["16px", "24px", "24px"]} font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText" $style={{fontWeight: "500 !important"}}>Contact us</Block>
-                    <Block maxWidth="535px" margin="0 auto" className={css({textAlign: "center"})} color="MinXPrimaryText" font={["MinXParagraph16", "MinXParagraph20"]}>
+            <Block className="text-center" width="100%" display="grid" paddingRight={["16px", null, "32px"]} paddingLeft={["16px", null, "32px"]} backgroundColor="#DFF2EF">
+                <Block width="100%" maxWidth="600px" margin="auto" paddingTop={["40px", null, "100px"]} paddingBottom={["40px", null, "100px"]} color="MinXPrimaryText">
+                    <Block as="h1" marginBottom={["16px", null, "24px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading36"]} $style={{fontWeight: "500 !important"}}>Contact us</Block>
+                    <Block maxWidth="535px" margin="auto" font={["MinXParagraph16", "MinXParagraph16", "MinXParagraph20"]}>
                         We are here to help you from 8:30 AM - 5:30 PM PST, Monday to Friday (except holidays and weekends).
                     </Block>
-                    <Block display="flex" justifyContent="center" flexWrap={[true, false]} marginTop={["24px", "64px"]} className={css({gap: "30px"})}>
-                        <CustomCard>
+                    <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(3, 1fr)"]} gridColumnGap="30px" gridRowGap="24px" marginTop={["24px", "64px"]}>
+                        <Block position="relative">
                             <Image src="/images/contact-us/call-us.webp" alt="call us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
-                            <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Call us</Block>
-                            <Block className="text-center" marginBottom="5px" color="MinXPrimaryText" as="p" font="MinXHeading14">{phone}</Block>
+                            <Block display="flex" marginTop="16px" marginBottom="6px" flexDirection={["column", null, "column-reverse"]} $style={{gap: "4px"}}>
+                                <Block as="p" font="MinXHeading14">{phone}</Block>
+                                <Block as="p" font="MinXParagraph14" $style={{textTransform: "uppercase"}}>Call us</Block>
+                            </Block>
                             <Button onClick={() => {
                             }}
                                     startEnhancer={() =>
@@ -145,6 +127,7 @@ const Contact_Us = ({phone}) => {
                                     overrides={{
                                         BaseButton: {
                                             style: ($theme) => ({
+                                                height: "24px",
                                                 paddingTop: "4.5px",
                                                 paddingBottom: "4.5px",
                                                 paddingLeft: " 24px",
@@ -158,11 +141,13 @@ const Contact_Us = ({phone}) => {
                             >
                                 Call us
                             </Button>
-                        </CustomCard>
-                        <CustomCard>
+                        </Block>
+                        <Block position="relative">
                             <Image src="/images/contact-us/email-us.webp" alt="email us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
-                            <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Email us</Block>
-                            <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">support@westshade.com</Block>
+                            <Block display="flex" marginTop="16px" marginBottom="6px" flexDirection={["column", null, "column-reverse"]} $style={{gap: "4px"}}>
+                                <Block as="p" font="MinXHeading14">support@westshade.com</Block>
+                                <Block as="p" font="MinXParagraph14" $style={{textTransform: "uppercase"}}>Email us</Block>
+                            </Block>
                             <Button
                                 onClick={copyEmail}
                                 startEnhancer={() =>
@@ -177,6 +162,7 @@ const Contact_Us = ({phone}) => {
                                 overrides={{
                                     BaseButton: {
                                         style: ($theme) => ({
+                                            height: "24px",
                                             paddingTop: "4.5px",
                                             paddingBottom: "4.5px",
                                             paddingLeft: " 24px",
@@ -204,11 +190,13 @@ const Contact_Us = ({phone}) => {
                                     ) : "Copy"
                                 }
                             </Button>
-                        </CustomCard>
-                        <CustomCard>
+                        </Block>
+                        <Block position="relative">
                             <Image src="/images/contact-us/online-chat.webp" alt="chat with us" layout="fixed" width="40px" height="40px" objectFit="contain"/>
-                            <Block className={css({textAlign: "center", textTransform: "uppercase"})} color="MinXPrimaryText" as="p" font="MinXParagraph14" marginTop="16px">Online chat</Block>
-                            <Block marginBottom="5px" className={css({textAlign: "center"})} color="MinXPrimaryText" as="p" font="MinXHeading14">Talk to a shade specialist</Block>
+                            <Block display="flex" marginTop="16px" marginBottom="6px" flexDirection={["column", null, "column-reverse"]} $style={{gap: "4px"}}>
+                                <Block as="p" font="MinXHeading14">Talk to a shade specialist</Block>
+                                <Block as="p" font="MinXParagraph14" $style={{textTransform: "uppercase"}}>Online chat</Block>
+                            </Block>
                             <Button
                                 onClick={() => {
                                     document.querySelector(".mobile-chat-container").click();
@@ -224,6 +212,7 @@ const Contact_Us = ({phone}) => {
                                 overrides={{
                                     BaseButton: {
                                         style: ($theme) => ({
+                                            height: "24px",
                                             paddingTop: "4.5px",
                                             paddingBottom: "4.5px",
                                             paddingLeft: " 24px",
@@ -234,9 +223,9 @@ const Contact_Us = ({phone}) => {
                                     },
                                 }}
                             >
-                                Chat with us
+                                Chat
                             </Button>
-                        </CustomCard>
+                        </Block>
                     </Block>
                 </Block>
             </Block>
@@ -348,8 +337,7 @@ const Contact_Us = ({phone}) => {
                 </Block>
 
                 {/* form success notification */}
-                {
-                    formSubmitted &&
+                {formSubmitted &&
                     <Notification
                         onClose={() => setFormSubmitted(false)}
                         autoHideDuration={3000}
@@ -404,11 +392,14 @@ const Contact_Us = ({phone}) => {
                     </Notification>
                 }
             </Block>
+            {/*<FreeMockup/>*/}
             {/* End of Contact Form Section */}
             {/* FAQs Section */}
-            <Block width="100%" maxWidth="660px" display="grid" gridRowGap={["16px", "24px"]} justifyItems="center" margin="auto" padding={["40px 16px", "100px 16px"]}>
-                <Block as="h2" font={["MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText">FAQs</Block>
-                <Accordion list={QA.contact_us}/>
+            <Block className="text-center" padding={["40px 16px", null, "100px 32px"]}>
+                <Block width="100%" maxWidth="600px" display="grid" gridRowGap={["32px", null, "40px"]} margin="auto">
+                    <Block as="h2" font={["MinXHeading20", "MinXHeading20", "MinXHeading36"]} color="MinXPrimaryText">FAQs</Block>
+                    <Accordion list={QA.contact_us}/>
+                </Block>
             </Block>
             {/* End of FAQs Section */}
         </React.Fragment>

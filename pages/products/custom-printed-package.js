@@ -23,7 +23,7 @@ import {EventEmitter} from "Utils/events";
 
 import Button from "Components/button-n";
 import Banner from "Components/banner";
-import Accordion from "Components/accordion";
+import {AccordionV1 as Accordion} from "Components/Accordion";
 import CustomButton from "Components/button";
 import Checkout from "Components/buttonGroup";
 import Selections from "Components/selection_group";

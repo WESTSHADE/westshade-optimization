@@ -22,7 +22,7 @@ const ImageSlide = ({url, alt}) => {
     );
 };
 
-function Custom_Printing_Canopy_Tent({router, size}) {
+function Custom_Printing_Canopy_Tent() {
     const getSizeDesc = (value) => {
         let elm = null;
         switch (value) {
@@ -57,7 +57,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                 <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Hero size={size}/>
+                <Hero/>
                 <Section title="ANY STYLE MULTIPLE SIZE"
                          subtitle="There is no limitation on printing styles and you can configure your tent as you wish. Westshade will meet your special needs."
                          content={
@@ -107,7 +107,7 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                          subtitle={<>Westshade provides free mockup service and we&apos;ll help you to make you special and stand out in important events.</>}
                          content={
                              <Block position="relative" width="100%" height={["187px", "268px", "538px"]}>
-                                 <Image src="/images/custom-printing/canopy-tent/event.webp" alt="custom printing event" layout="fill" objectFit="cover" objectPosition="bottom" quality={100}/>
+                                 <Image src="/images/custom-printing/canopy-tent/event.webp" alt="custom printing event" layout="fill" objectFit="cover" objectPosition="bottom"/>
                              </Block>
                          }
                 />
@@ -116,22 +116,22 @@ function Custom_Printing_Canopy_Tent({router, size}) {
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap={["16px", "16px", "20px"]} gridRowGap={["16px", "16px", "20px"]} justifyItems="center">
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer1.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer1.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer2.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer2.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer3.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer3.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer4.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer4.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer5.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer5.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block position="relative" width="100%" height={["154px", "154px", "216px"]}>
-                                     <Image src="/images/custom-printing/canopy-tent/customer6.webp" alt="customer photo" layout="fill" objectFit="cover" quality={100}/>
+                                     <Image src="/images/custom-printing/canopy-tent/customer6.webp" alt="customer photo" layout="fill" objectFit="cover"/>
                                  </Block>
                              </Block>
                          }

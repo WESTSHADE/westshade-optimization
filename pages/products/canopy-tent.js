@@ -1440,7 +1440,7 @@ function Canopy_Tent({router, products, variants}) {
                                                            {/*    ?*/}
                                                            {/*</Button>*/}
                                                            <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain" quality={100}/>
+                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>
                                                            </Block>
                                                            <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
                                                        </Block>
