@@ -7,7 +7,7 @@ import { Notification } from "baseui/notification";
 import {SIZE, Textarea} from "baseui/textarea";
 import Image from "next/image";
 
-const CustomLabel = ({children}) => <Block marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
+const CustomLabel = ({children}) => <Block $style={{lineHeight: "1 !important"}} marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
 
 const CustomCheckbox = ({children, checked, onChange}) => (
     <Checkbox checked={checked} onChange={onChange}
@@ -127,7 +127,7 @@ const CustomFileUploadInput = ({onChange, id, attachedFile, error, removeAttache
 
     return (
         <>
-            <Block width="100%" as="label" htmlFor={id} borderRadius="8px" padding="8px 0"
+            <Block width="100%" as="label" htmlFor={id} padding="8px 0"
                    className={css({
                        display: "flex",
                        justifyContent: "center",
