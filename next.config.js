@@ -18,7 +18,7 @@ const nextConfig = {
         // maxWidth: 1440,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.26"
+        version: "2.0.27"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -135,6 +135,17 @@ const nextConfig = {
             "/20x20-canopy-tent": {page: "/20x20-canopy-tent"},
         };
     },
+    async rewrites() {
+        return {
+            afterFiles: [{
+                source: '/products/canopy-tent/buy',
+                destination: '/products/canopy-tent'
+            }, {
+                source: '/products/custom-printed-canopy-tent/buy',
+                destination: '/products/custom-printed-canopy-tent'
+            }]
+        }
+    }
     // redirects: async function redirect() {
     //     return [
     //         {source: '/y5-economic/', destination: '/canopy-tent', permanent: true,},

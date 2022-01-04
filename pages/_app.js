@@ -42,6 +42,8 @@ const primitives = {
 
 const overrides = {
     typography: {
+        MinXTitle14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 900, lineHeight: "18px"},
+        MinXTitle16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 900, lineHeight: "20px"},
         MinXTitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 900, lineHeight: "28px"},
         MinXTitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 900, lineHeight: "32px"},
         MinXTitle26: {fontFamily: "Roboto", fontSize: "26px", fontWeight: 900, lineHeight: "34px"},

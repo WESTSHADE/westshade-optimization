@@ -125,9 +125,9 @@ function Custom_Printing_Canopy_Tent({router}) {
                     <FreeMockupForm/>
                 </Block>
             </Block>
-            <Block className="text-center" maxWidth="960px" marginRight="auto" marginLeft="auto" marginBottom={["32px", "40px"]}>
+            <Block className="text-center" marginBottom={["32px", "40px"]}>
                 <Block font={["MinXTitle20", "MinXTitle32"]} color="MinXPrimaryText">DIFFERENCE SIZES</Block>
-                <FlexGrid flexGridColumnCount={[1, 2]} flexGridColumnGap={["scale600", "scale800"]} flexGridRowGap={["scale600", "scale800"]}>
+                <FlexGrid flexGridColumnCount={[1, 2]} flexGridColumnGap={["scale600", "scale800"]} flexGridRowGap={["scale600", "scale800"]} width="100%" maxWidth="960px" margin="auto">
                     {Package.map(({title, imageUrl, alt, url}, index) => (
                         <FlexGridItem key={title} flexGridItemIndex={index} display="grid" gridRowGap="scale600">
                             <PackageItem title={title} imageUrl={imageUrl} alt={alt} url={url} router={router}/>

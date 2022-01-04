@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
+import ReactDOM from 'react-dom';
 
 import Image from "next/image"
 
@@ -8,6 +9,54 @@ import {useStyletron} from "styletron-react"
 import MButton from "../../button-n"
 import RoofDetail from "./InputDetails"
 
+const Canvas = ({selected, customized, ...props}) => {
+    const parentRef = useRef(null);
+    const canvasRef = useRef(null)
+
+    const [cw, setCw] = useState(0);
+    const [ch, setCh] = useState(0);
+
+    const draw = ctx => {
+        let th = cw / 2, rh = cw / 6;
+
+        ctx.fillStyle = customized ? "#F5FCFC" : selected ? "#EBF4F5" : "#FFF";
+        ctx.strokeStyle = customized ? "#23A4AD" : "#D0D9D9";
+
+        ctx.lineWidth = 2;
+
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.moveTo(0, th - 1);
+        ctx.quadraticCurveTo(th * 5 / 7, th * 5 / 7, (cw - 1) / 2, 1);
+        ctx.quadraticCurveTo(cw - (th * 5 / 7), th * 5 / 7, cw - 1, th - 1);
+        ctx.lineTo(1, th - 1);
+        ctx.rect(1, th - 1, cw - 2, rh);
+
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    useEffect(() => {
+        if (parentRef.current) {
+            setCw(parentRef.current.offsetWidth);
+            setCh(parentRef.current.offsetHeight);
+        }
+    }, [parentRef]);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
+
+        //Our draw come here
+        draw(context);
+    }, [draw])
+
+    return (
+        <Block ref={parentRef} {...props}>
+            {cw && ch ? <canvas ref={canvasRef} width={cw} height={ch}/> : null}
+        </Block>
+    );
+}
+
 const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, tentSize, setSide, requirement, setRequirement, error = true}) => {
     const [peakDetailIsOpen, setPeakDetailsIsOpen] = useState(false);
     const [css] = useStyletron();
@@ -15,10 +64,10 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
     const [frontAngle, setFrontAngle] = useState(true);
     const [mainImage, setMainImage] = useState(activeTentImage.src)
     const label = {
-        FRONT: "D",
-        BACK: "B",
-        LEFT: "A",
-        RIGHT: "C"
+        FRONT: "A",
+        BACK: "C",
+        LEFT: "D",
+        RIGHT: "B"
     }
 
     const clearDetails = (type) => {
@@ -37,8 +86,8 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
         <>
             <Block width="100%">
                 <Block width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                    <Block font="MinXSubtitle20" color="MinXTitle">
-                        Please select the sides you’d like to print and tell us your printing requirements.
+                    <Block font={["MinXTitle14", "MinXTitle16", "MinXTitle14", "MinXTitle16"]} color="MinXTitle">
+                        Please select the wall you’d like to print.
                     </Block>
                 </Block>
                 <Block marginTop="40px" width="100%">
@@ -110,7 +159,6 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                                     startEnhancer={() => <i><Image src="/images/icon/icon-angle.png" width={16} height={16} alt="icon" layout="fixed"/></i>}
                                     color="#808080"
                                     buttonStyle={{
-                                        borderRadius: "8px !important",
                                         backgroundColor: "#f2f2f2 !important",
                                         fontFamily: "Roboto !important",
                                         fontWeight: "500 !important",
@@ -222,99 +270,105 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
 
                         }}
                     >
-                        <Block maxWidth="664px" margin="0 auto" display="flex" flexWrap="nowrap" justifyContent="space-between">
-                            <Block width="23%">
-                                <MButton
-                                    height="auto"
-                                    onClick={() => setSide({activeSide: "LEFT"})}
-                                    width="100%"
-                                    buttonStyle={{
-                                        backgroundColor: "transparent !important",
-                                        borderTopLeftRadius: "8px !important",
-                                        borderTopRightRadius: "8px !important",
-                                        borderBottomLeftRadius: "8px !important",
-                                        borderBottomRightRadius: "8px !important",
-                                        color: "#262626 !important",
-                                        fontFamily: "Roboto !important",
-                                        fontSize: "14px !important",
-                                        fontWeight: "400 !important",
-                                        width: "100% !important",
-                                        border: activeSide === "LEFT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
-                                        padding: "17px 0 !important",
-                                        boxShadow: activeSide === "LEFT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
-                                        transition: "all .15s ease-in-out"
-                                    }}
-                                    text="Side A"
-                                />
+                        <Block>
+                            <Block font={["MinXTitle14", "MinXTitle16", "MinXTitle14", "MinXTitle16"]} color="MinXTitle">
+                                Please select the wall you’d like to print.
                             </Block>
-                            <Block width="23%">
-                                <MButton
-                                    height="auto"
-                                    onClick={() => setSide({activeSide: "BACK"})}
-                                    buttonStyle={{
-                                        backgroundColor: "transparent !important",
-                                        borderTopLeftRadius: "8px !important",
-                                        borderTopRightRadius: "8px !important",
-                                        borderBottomLeftRadius: "8px !important",
-                                        borderBottomRightRadius: "8px !important",
-                                        color: "#262626 !important",
-                                        fontFamily: "Roboto !important",
-                                        fontSize: "14px !important",
-                                        fontWeight: "400 !important",
-                                        width: "100% !important",
-                                        border: activeSide === "BACK" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
-                                        padding: "17px 0 !important",
-                                        boxShadow: activeSide === "BACK" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
-                                        transition: "all .15s ease-in-out"
-                                    }}
-                                    text="Side B"
-                                />
-                            </Block>
-                            <Block width="23%">
-                                <MButton
-                                    height="auto"
-                                    onClick={() => setSide({activeSide: "RIGHT"})}
-                                    buttonStyle={{
-                                        backgroundColor: "transparent !important",
-                                        borderTopLeftRadius: "8px !important",
-                                        borderTopRightRadius: "8px !important",
-                                        borderBottomLeftRadius: "8px !important",
-                                        borderBottomRightRadius: "8px !important",
-                                        color: "#262626 !important",
-                                        fontFamily: "Roboto !important",
-                                        fontSize: "14px !important",
-                                        fontWeight: "400 !important",
-                                        width: "100% !important",
-                                        border: activeSide === "RIGHT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
-                                        padding: "17px 0 !important",
-                                        boxShadow: activeSide === "RIGHT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
-                                        transition: "all .15s ease-in-out"
-                                    }}
-                                    text="Side C"
-                                />
-                            </Block>
-                            <Block width="23%">
-                                <MButton
-                                    height="auto"
-                                    onClick={() => setSide({activeSide: "FRONT"})}
-                                    buttonStyle={{
-                                        backgroundColor: "transparent !important",
-                                        borderTopLeftRadius: "8px !important",
-                                        borderTopRightRadius: "8px !important",
-                                        borderBottomLeftRadius: "8px !important",
-                                        borderBottomRightRadius: "8px !important",
-                                        color: "#262626 !important",
-                                        fontFamily: "Roboto !important",
-                                        fontSize: "14px !important",
-                                        fontWeight: "400 !important",
-                                        width: "100% !important",
-                                        border: activeSide === "FRONT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
-                                        padding: "17px 0 !important",
-                                        boxShadow: activeSide === "FRONT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
-                                        transition: "all .15s ease-in-out"
-                                    }}
-                                    text="Side D"
-                                />
+                            <Block maxWidth="664px" margin="0 auto" display="flex" flexWrap="nowrap" justifyContent="space-between">
+                                <Block width="23%">
+                                    <Canvas width={["60px", null, null, "90px"]} $style={{aspectRatio: "1.5"}}/>
+                                    <MButton
+                                        height="auto"
+                                        onClick={() => setSide({activeSide: "LEFT"})}
+                                        width="100%"
+                                        buttonStyle={{
+                                            backgroundColor: "transparent !important",
+                                            borderTopLeftRadius: "8px !important",
+                                            borderTopRightRadius: "8px !important",
+                                            borderBottomLeftRadius: "8px !important",
+                                            borderBottomRightRadius: "8px !important",
+                                            color: "#262626 !important",
+                                            fontFamily: "Roboto !important",
+                                            fontSize: "14px !important",
+                                            fontWeight: "400 !important",
+                                            width: "100% !important",
+                                            border: activeSide === "LEFT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                            padding: "17px 0 !important",
+                                            boxShadow: activeSide === "LEFT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                            transition: "all .15s ease-in-out"
+                                        }}
+                                        text="Side A"
+                                    />
+                                </Block>
+                                <Block width="23%">
+                                    <MButton
+                                        height="auto"
+                                        onClick={() => setSide({activeSide: "BACK"})}
+                                        buttonStyle={{
+                                            backgroundColor: "transparent !important",
+                                            borderTopLeftRadius: "8px !important",
+                                            borderTopRightRadius: "8px !important",
+                                            borderBottomLeftRadius: "8px !important",
+                                            borderBottomRightRadius: "8px !important",
+                                            color: "#262626 !important",
+                                            fontFamily: "Roboto !important",
+                                            fontSize: "14px !important",
+                                            fontWeight: "400 !important",
+                                            width: "100% !important",
+                                            border: activeSide === "BACK" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                            padding: "17px 0 !important",
+                                            boxShadow: activeSide === "BACK" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                            transition: "all .15s ease-in-out"
+                                        }}
+                                        text="Side B"
+                                    />
+                                </Block>
+                                <Block width="23%">
+                                    <MButton
+                                        height="auto"
+                                        onClick={() => setSide({activeSide: "RIGHT"})}
+                                        buttonStyle={{
+                                            backgroundColor: "transparent !important",
+                                            borderTopLeftRadius: "8px !important",
+                                            borderTopRightRadius: "8px !important",
+                                            borderBottomLeftRadius: "8px !important",
+                                            borderBottomRightRadius: "8px !important",
+                                            color: "#262626 !important",
+                                            fontFamily: "Roboto !important",
+                                            fontSize: "14px !important",
+                                            fontWeight: "400 !important",
+                                            width: "100% !important",
+                                            border: activeSide === "RIGHT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                            padding: "17px 0 !important",
+                                            boxShadow: activeSide === "RIGHT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                            transition: "all .15s ease-in-out"
+                                        }}
+                                        text="Side C"
+                                    />
+                                </Block>
+                                <Block width="23%">
+                                    <MButton
+                                        height="auto"
+                                        onClick={() => setSide({activeSide: "FRONT"})}
+                                        buttonStyle={{
+                                            backgroundColor: "transparent !important",
+                                            borderTopLeftRadius: "8px !important",
+                                            borderTopRightRadius: "8px !important",
+                                            borderBottomLeftRadius: "8px !important",
+                                            borderBottomRightRadius: "8px !important",
+                                            color: "#262626 !important",
+                                            fontFamily: "Roboto !important",
+                                            fontSize: "14px !important",
+                                            fontWeight: "400 !important",
+                                            width: "100% !important",
+                                            border: activeSide === "FRONT" ? "2px solid #23A4AD !important" : "2px solid #bfbfbf !important",
+                                            padding: "17px 0 !important",
+                                            boxShadow: activeSide === "FRONT" ? "0px 0px 2px 6px rgba(36,164,173,0.2) !important" : "none",
+                                            transition: "all .15s ease-in-out"
+                                        }}
+                                        text="Side D"
+                                    />
+                                </Block>
                             </Block>
                         </Block>
                         <Block maxWidth="664px" margin="42px auto 0" display="flex" flexWrap="wrap" justifyContent="space-between">
@@ -418,7 +472,6 @@ const RequirementSelection = ({activeSide = "LEFT", activeTentImage, tentFrame, 
                 <Block className={css({zIndex: peakDetailIsOpen || valanceDetailIsOpen ? "100" : "unset"})} position="fixed" top="0" left="0" width={peakDetailIsOpen || valanceDetailIsOpen ? "100vw" : "0"}
                        height={peakDetailIsOpen || valanceDetailIsOpen ? "100vh" : "0"} overflow="hidden">
                     <Block width="100%" height="100%" backgroundColor="MinXBackground" position="relative" overflow="scrollY" padding="0 16px">
-
                         {
                             (peakDetailIsOpen && !valanceDetailIsOpen) &&
                             <RoofDetail
