@@ -235,7 +235,7 @@ const CustomTab = ({children, active, backgroundColor}) => {
                    borderColor: active ? "#23A4AD" : "#b2b2b2",
                    backgroundColor: backgroundColor ? backgroundColor : "#ffffff",
                    fontWeight:"500",
-                   boxShadow: active ? "0px 0px 6px 1px #23A4AD" : "none",
+                   boxShadow: active ? "0px 0px 0px 6px rgba(35,164,173,0.2)" : "none",
                    transition: "all .3s ease-in-out"
                }}
         >
@@ -404,43 +404,64 @@ const CustomPromotion = () => {
                                         style: {
                                             display: "none"
                                         }
-                                    }
+                                    },
                                 }}
                             >
                                 <Tab
                                     overrides={{
                                         Tab: {
                                             style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px"
+                                            }
                                         }
                                     }}
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 0}>UV Printing</CustomTab></Block>}
                                 >
                                     <Block className={styles.printingTech__image}>
-                                        <Image src="/images/custom-printed-canopy-tent/pmt-uv-printing-v2.webp" alt="UV Printing" width={840} height={450} />
+                                        <Image src="/images/custom-printed-canopy-tent/pmt-uv-printing-v2.webp" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center" />
                                     </Block>
                                 </Tab>
                                 <Tab 
                                     overrides={{
                                         Tab: {
                                             style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px"
+                                            }
                                         }
                                     }}
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 1}>
                                         Dye Sublimation</CustomTab></Block>}
                                 >
                                     <Block className={styles.printingTech__image}>
-                                        <Image src="/images/custom-printed-canopy-tent/pmt-dye-sublimation-v2.webp" alt="Dye Sublimation" width={840} height={450} />
+                                        <Image src="/images/custom-printed-canopy-tent/pmt-dye-sublimation-v2.webp" alt="Dye Sublimation" layout="fill" objectFit="cover" objectPosition="center" />
                                     </Block>
                                 </Tab>
                                 <Tab
                                     overrides={{
                                         Tab: {
                                             style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px"
+                                            }
                                         }
                                     }} 
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 2}>Actual Digital image</CustomTab></Block>}>
                                         <Block className={styles.printingTech__image}>
-                                            <Image src="/images/custom-printed-canopy-tent/pmt-original.png" alt="UV Printing" width={840} height={450} />
+                                            <Image src="/images/custom-printed-canopy-tent/pmt-original.png" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center"/>
                                         </Block>
                                 </Tab>
                             </Tabs>
@@ -457,7 +478,8 @@ const CustomPromotion = () => {
                                         font="MinXLabel14"
                                         buttonStyle={{
                                             paddingTop: "20px !important",
-                                            paddingBottom: "20px !important"
+                                            paddingBottom: "20px !important",
+                                            lineHeight: "1 !important"
                                         }}
                                     />
                                 </Block>
@@ -617,17 +639,25 @@ const CustomPromotion = () => {
                     possibilities are endless! Our professional designers will help bring your
                     ideas to life! Check out the examples in the video below."
                 />
-                <Block maxWidth="287px" width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
+                <Block maxWidth={["201px","287px"]} width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
                     <ButtonM
                         width= "100%" 
-                        text="GET A FREE MOCKUP"
+                        text="Get a free mockup"
                         onClick={goToFreeMockup}
                         bundle="primary"
                         font="MinXLabel14"
                         buttonStyle={{
-                            paddingTop: "20px !important",
-                            paddingBottom: "20px !important",
-                            letterSpacing: ".1em"
+                            paddingTop: "11px !important",
+                            paddingBottom: "11px !important",
+                            letterSpacing: "normal",
+                            textTransform: "capitalize",
+                            lineHeight: "1 !important",
+                            "@media (min-width: 1056px)" : {
+                                paddingTop: "20px !important",
+                                paddingBottom: "20px !important",
+                                letterSpacing: ".1em",
+                                textTransform: "uppercase",
+                            }
                         }}
                     />
                 </Block>
@@ -668,21 +698,27 @@ const CustomPromotion = () => {
                             </>
                         }
                         subTitle="service"
-                        body="You can print a variety of colors, styles or any combination. The
-                        possibilities are endless! Our professional designers will help bring your
-                        ideas to life! Check out the examples in the video below."
+                        body="We print great quality on umbrellas and also table covers."
                     />
-                <Block maxWidth="287px" width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
+                <Block maxWidth={["201px","287px"]} width="100%" marginLeft="auto" marginRight="auto" marginTop={["8px","16px"]}>
                     <ButtonM
                         width= "100%" 
-                        text="GET A FREE MOCKUP"
+                        text="Get a free mockup"
                         onClick={goToFreeMockup}
                         bundle="primary"
                         font="MinXLabel14"
                         buttonStyle={{
-                            paddingTop: "20px !important",
-                            paddingBottom: "20px !important",
-                            letterSpacing: ".1em"
+                            paddingTop: "11px !important",
+                            paddingBottom: "11px !important",
+                            letterSpacing: "normal",
+                            textTransform: "capitalize",
+                            lineHeight: "1 !important",
+                            "@media (min-width: 1056px)" : {
+                                paddingTop: "20px !important",
+                                paddingBottom: "20px !important",
+                                letterSpacing: ".1em",
+                                textTransform: "uppercase",
+                            }
                         }}
                     />
                 </Block>
@@ -693,10 +729,10 @@ const CustomPromotion = () => {
                                 <Block width="100%">
                                     <Image src={item.image} alt={item.name} width={498} height={381} layout="responsive" quality={30} />
                                 </Block>
-                                <Block marginTop="24px"color="MinXTitle" font={["MinXLabel16","MinXLabel16","MinXLabel20"]} as="h3">
+                                <Block marginTop="24px"color="MinXTitle" font={["MinXLabel16","MinXLabel16","MinXLabel20"]} as="h3" $style={{lineHeight: "1"}}>
                                     {item.name}
                                 </Block>
-                                <Block as="p" color="#8c8c8c" font="MinXParagraph14" >
+                                <Block marginTop="8px" as="p" color="#8c8c8c" font="MinXParagraph14" >
                                     {item.availability}
                                 </Block>
                             </Block>
@@ -729,16 +765,15 @@ const CustomPromotion = () => {
                             showThumbs={false}
                             showIndicators={true}
                             width="100%"
-                            dynamicHeight
                         >
                             <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
-                                <Image src="/images/custom-promotion/slide1.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
+                                <Image src="/images/custom-promotion/slide1.webp" height={600} width={1272} objectFit="cover" objectPosition="center" layout="fill"/>
                             </Block>
                             <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
-                                <Image src="/images/custom-promotion/slide2.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
+                                <Image src="/images/custom-promotion/slide2.webp" height={600} width={1272} objectFit="cover" objectPosition="center" layout="fill"/>
                             </Block>
                             <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
-                                <Image src="/images/custom-promotion/slide3.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
+                                <Image src="/images/custom-promotion/slide3.webp" height={600} width={1272} objectFit="cover" objectPosition="center" layout="fill"/>
                             </Block>
                         </Carousel>
                     </Block>

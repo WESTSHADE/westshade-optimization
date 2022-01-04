@@ -5,6 +5,7 @@
     margin: 0 auto;
     text-align: center;
     font-family: "Roboto";
+    padding: 0 9px;
 
     & h4 {
         font-weight: 500;
@@ -31,11 +32,16 @@
     }
     & p {
         font-size: 14px;
-        line-height: 1.15;
+        line-height: 1.125;
+        letter-spacing: .03em;
 
         @media screen and (min-width: 1056px) {
             font-size: 16px;
+            letter-spacing: normal;
         }
+    }
+    @media screen and (min-width: 1056px) {
+        padding:  0px;
     }
 }
 
@@ -101,6 +107,7 @@
     & > div button {
         letter-spacing: 0.2em;
         padding: 16px 48px;
+        line-height: 1;
         
         @media screen and (min-width: 1312px) {
             padding: 20px 56px;
@@ -169,12 +176,17 @@
 .printingTech__image {
     max-width: 840px;
     width: 100%;
+    height: 220px;
+    position: relative;
     border-radius: 16px;
-    margin-top: 16px;
+    margin-top: 0;
     overflow: hidden;
 
+    @media screen and (min-width: 500px) {
+        height: 300px;
+    }
     @media screen and (min-width: 1056px) {
-        margin-top: 32px;
+        height: 450px;
     }
 }
 .printingTech__comparison {
@@ -332,15 +344,24 @@
 }
 .service__canopy__slider {
     margin-top: 24px;
+    border-radius: 16px;
+    overflow: hidden;
 
     @media screen and (min-width: 1056px) {
         margin-top: 64px;
     }
 }
 .service__canopy__slider__slide {
-    border-radius: 16px;
     cursor: pointer;
-    overflow: hidden;
+    position: relative;
+    height: 262px;
+
+    @media screen and (min-width: 500px) {
+        height: 357px;
+    }
+    @media screen and (min-width: 1056px) {
+        height: 600px;
+    }
 }
 .service__canopy__features {
     display: flex;
@@ -365,6 +386,8 @@
 
         & > span {
             display: inline-block;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
 
             @media screen and (min-width: 1056px) {
                 display: none;
@@ -433,7 +456,7 @@
 }
 .service__testimonies__item {
     width: 100%;
-    padding: 24px;
+    padding: 0 9px;
     text-align: left;
 
     & > h3, & > p {
