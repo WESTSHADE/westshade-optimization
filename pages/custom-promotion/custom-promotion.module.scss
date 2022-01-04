@@ -152,9 +152,13 @@
 }
 
 .printingTech {
+    max-width: 467px;
     margin: 0 auto;
     padding: 32px 24px;
 
+    @media screen and (min-width: 672px) {
+        max-width: 840px;
+    }
     @media screen and (min-width: 1056px) {
         padding: 120px 24px;
     }
@@ -256,14 +260,26 @@
 }
 
 .service {
+    max-width: 467px;
+    width: 100%;
     padding: 32px 16px;
     margin: 0 auto;
-
+    
+    @media screen and (min-width: 1056px) {
+        max-width: 840px;
+    }
     @media screen and (min-width: 1056px) {
         padding: 96px 16px;
     }
     @media screen and (min-width: 1920px) {
         padding: 96px 0px;
+    }
+}
+.service__wide {
+    max-width: 467px;
+
+    @media screen and (min-width: 1056px) {
+        max-width: 1272px;
     }
 }
 .service__video {
@@ -320,6 +336,11 @@
     @media screen and (min-width: 1056px) {
         margin-top: 64px;
     }
+}
+.service__canopy__slider__slide {
+    border-radius: 16px;
+    cursor: pointer;
+    overflow: hidden;
 }
 .service__canopy__features {
     display: flex;
@@ -423,6 +444,20 @@
         padding: 0px 40px;
     }
 }
+.contact {
+    max-width: 1056px;
+    width: 100%;
+    padding: 32px 16px;
+    margin: 0 auto;
+    
+    @media screen and (min-width: 1056px) {
+        padding: 96px 16px;
+    }
+    @media screen and (min-width: 1920px) {
+        padding: 96px 0px;
+    }
+}
+
 
 .hero__benefits {
     display: none;

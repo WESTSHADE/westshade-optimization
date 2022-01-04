@@ -422,7 +422,7 @@ const CustomPromotion = () => {
                                 <Tab 
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", padding: "0", ":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
                                         }
                                     }}
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 1}>
@@ -435,7 +435,7 @@ const CustomPromotion = () => {
                                 <Tab
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", padding: "0", ":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent"}}
                                         }
                                     }} 
                                     title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 2}>Actual Digital image</CustomTab></Block>}>
@@ -633,7 +633,7 @@ const CustomPromotion = () => {
                 </Block>
                 <Block width="100%" display="grid" placeItems="center" className={styles.service__video}>
                     <ReactPlayer 
-                        url="/images/canopy-tent/strong_support.mp4"
+                        url="https://www.youtube.com/watch?v=ud5m8ET8sE8"
                         playIcon={<Block as="i" width={["57px","57px", "140px"]}><Image src="/images/icon/icon-play-video.png" width={140} height={100} layout="responsive" quality={10} /></Block>}
                         light={"/images/custom-promotion/video-thumb.webp"}
                         width="100%"
@@ -660,7 +660,7 @@ const CustomPromotion = () => {
             </Block>
         </Block>
         <Block backgroundColor="#f7f7f7" as="section" className={styles.section}>
-            <Block maxWidth="1272px" className={styles.service}>
+            <Block className={`${styles.service} ${styles.service__wide}`}>
                 <SectionHeader 
                         title={
                             <>
@@ -706,7 +706,7 @@ const CustomPromotion = () => {
             </Block>
         </Block>
         <Block backgroundColor="#ffffff" as="section" className={styles.section}>
-            <Block maxWidth="1272px" className={styles.service}>
+            <Block className={`${styles.service} ${styles.service__wide}`}>
                 <SectionHeader 
                     title="Reliable For Any Occasion"
                     subTitle="CAUGHT IN THE WILD"
@@ -727,11 +727,18 @@ const CustomPromotion = () => {
                             showArrows={false}
                             showStatus={false}
                             showThumbs={false}
-                            showIndicators={false}
+                            showIndicators={true}
                             width="100%"
+                            dynamicHeight
                         >
-                            <Block width="100%">
-                                <Image src="/images/custom-promotion/slide1.webp" height={500} width={900} layout="responsive"/>
+                            <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
+                                <Image src="/images/custom-promotion/slide1.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
+                            </Block>
+                            <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
+                                <Image src="/images/custom-promotion/slide2.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
+                            </Block>
+                            <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
+                                <Image src="/images/custom-promotion/slide3.webp" height={600} width={1272} objectFit="cover" objectPosition="center bottom" layout="responsive"/>
                             </Block>
                         </Carousel>
                     </Block>
@@ -756,7 +763,7 @@ const CustomPromotion = () => {
             </Block>
         </Block>
         <Block backgroundColor="#f7f7f7" as="section" className={styles.section}>
-            <Block  maxWidth="1272px" className={styles.service}>
+            <Block  maxWidth="1272px" className={`${styles.service} ${styles.service__wide}`}>
                 <SectionHeader 
                     title="Steps to custom"
                     subTitle="Process"                
@@ -781,7 +788,7 @@ const CustomPromotion = () => {
             </Block>
         </Block>
         <Block backgroundColor="#ffffff" as="section" className={styles.section}>
-            <Block  maxWidth="1272px" className={styles.service}>
+            <Block  maxWidth="1272px" className={`${styles.service} ${styles.service__wide}`}>
                 <SectionHeader 
                     title="What Customers Say"
                     subTitle="testimony"                
@@ -810,7 +817,7 @@ const CustomPromotion = () => {
             </Block>
         </Block>
         <Block ref={mockupRef} backgroundColor="#f7f7f7" as="section" className={styles.section}>
-            <Block  maxWidth="1132px" className={styles.service}>
+            <Block  maxWidth="1132px" className={`${styles.contact}`}>
                 
                 <SectionHeader 
                     title="Interested?"
