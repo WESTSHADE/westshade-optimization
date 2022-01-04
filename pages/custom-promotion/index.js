@@ -1,5 +1,5 @@
 import { Block } from "baseui/block";
-import { ChevronDown } from "baseui/icon";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "baseui/icon";
 import { Tabs, Tab } from "baseui/tabs-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -10,6 +10,7 @@ import ButtonM from "../../components/button-n"
 import BenefitV2 from "../../components/sections/Benefit/BenefitV2.js";
 import FreeMockupForm from "../../components/sections/FormSections";
 import styles from "./custom-promotion.module.scss"
+import { Button } from "baseui/button";
 
 const features = [
     {
@@ -760,11 +761,29 @@ const CustomPromotion = () => {
                     <Block className={styles.service__canopy__slider}>
                         <Carousel
                             emulateTouch
-                            showArrows={false}
+                            showArrows={true}
                             showStatus={false}
                             showThumbs={false}
                             showIndicators={true}
                             width="100%"
+                            renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                                hasPrev && (
+                                    <Block position="absolute" width={"8%"} height="100%" display="grid" placeItems="center" top={0} left={0}>
+                                        <Button $style={{opacity: ".50", zIndex: "5",transition: "all .3s ease",":hover": {opacity: "1",}}} shape="circle" buttonClassName={"cursor react-carousel-arrow left"} bundle="gray" onClick={onClickHandler}>
+                                            <ChevronLeft size={28} color={"white"}/>
+                                        </Button>
+                                    </Block>
+                                )
+                            }
+                            renderArrowNext={(onClickHandler, hasNext, label) =>
+                                hasNext && (
+                                    <Block position="absolute" width={"8%"} height="100%" display="grid" placeItems="center" top={0} right={0}>
+                                        <Button $style={{opacity: ".50", zIndex: "5",transition: "all .3s ease",":hover": {opacity: "1",}}} shape="circle" buttonClassName={"cursor react-carousel-arrow right"} bundle="gray" onClick={onClickHandler}>
+                                            <ChevronRight size={28} color={"white"}/>
+                                        </Button>
+                                    </Block>
+                                )
+                            }
                         >
                             <Block className={styles.service__canopy__slider__slide} height="100%" width="100%">
                                 <Image src="/images/custom-promotion/slide1.webp" height={600} width={1272} objectFit="cover" objectPosition="center" layout="fill"/>
