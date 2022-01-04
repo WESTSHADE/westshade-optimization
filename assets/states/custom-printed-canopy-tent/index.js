@@ -5,7 +5,7 @@ const initialState = {
     frame: "Y7",
     printingMethod: "DYE SUBLIMATION PRINTING",
     activeCustomizer: false,
-    activeSide: "LEFT",
+    activeSide: "",
     printReq: {
         peak: {
             LEFT: {},
@@ -128,7 +128,13 @@ const productReducer = (state, {type, payload}) => {
 const stepReducer = (state, {type, payload}) => {
     switch (type) {
         case "SET_NEXT_STEP":
-            return {...state, error: false, currentStep: state.currentStep + 1, allSteps: {...state.allSteps, [payload.key]: {...state.allSteps[payload.key], status: {...state.allSteps[payload.key].status, onGoing: true}}}, currentKey: payload.key}
+            return {
+                ...state,
+                error: false,
+                currentStep: state.currentStep + 1,
+                allSteps: {...state.allSteps, [payload.key]: {...state.allSteps[payload.key], status: {...state.allSteps[payload.key].status, onGoing: true}}},
+                currentKey: payload.key
+            }
         case "SET_PREV_STEP":
             return {...state, error: false, currentStep: state.currentStep - 1, currentKey: payload.key}
         case "SET_OPTION_IS_DONE":
