@@ -13,7 +13,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
 
     return (
         <>
-            <Block display="grid" gridRowGap="8px">
+            <Block display="grid" gridRowGap="8px" width="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["16px", null, null, "24px 20px"]}>
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the size of the tent.</Block>
                 <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
                     <Block>{tentSizes[frame].length} sizes available</Block>

@@ -79,6 +79,11 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         stepDispatch({type: "SET_OPTION_IS_DONE"});
     }
     const selectPrintingRequirement = (key, side, payload, allSides) => {
+        console.log(key);
+        console.log(side);
+        console.log(payload);
+        console.log(allSides);
+
         if (!allSides) {
             dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], [side]: payload}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
@@ -632,10 +637,10 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 <Block font="MinXSubtitle18">${productState.bag?.totalPrice || 0}</Block>
                             </Block>
                         </Block>
-                        <Block margin={["44px auto 52px", null, "44px auto 70px", "70px auto 44px"]} flex="1" maxWidth={process.env.maxWidth + "px"} padding={["16px", null, null, "24px 20px"]}>
+                        <Block margin={["44px auto 52px", null, "44px auto 70px", "70px auto 44px"]} flex="1">
                             {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
                             {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
-                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0]} tentFrame={state.frame}
+                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0].src} tentFrame={state.frame}
                                                                               tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide}
                                                                               setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
