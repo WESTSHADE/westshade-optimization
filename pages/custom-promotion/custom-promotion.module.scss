@@ -326,18 +326,13 @@
     overflow: hidden;
     height: 178px;
 
-    @media screen and (min-width: 500px) {
+    @media screen and (min-width: 501px) {
         height: 240px;
     }
 
     @media screen and (min-width: 673px) {
-        height: 240px;
-        margin-top: 64px;
-    }
-
-
-    @media screen and (min-width: 1056px) {
         height: 406px;
+        margin-top: 64px;
     }
 }
 
@@ -352,7 +347,7 @@
         display: none;
         line-height: 1 !important;
 
-        @media screen and (min-width: 1056px) {
+        @media screen and (min-width: 673px) {
             display: block;
         }
     }
