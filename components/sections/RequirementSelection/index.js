@@ -54,7 +54,7 @@ const Canvas = ({selected, customized, ...props}) => {
     );
 }
 
-const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize, setSide, requirement, setRequirement, error = true}) => {
+const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize, setSide, requirement, setRequirement, clearRequirement, error = true}) => {
     const [peakDetailIsOpen, setPeakDetailsIsOpen] = useState(false);
     const [valanceDetailIsOpen, setValanceDetailsIsOpen] = useState(false);
     const [frontAngle, setFrontAngle] = useState(true);
@@ -66,10 +66,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
         LEFT: "D",
     };
 
-    const clearDetails = () => {
-        setRequirement("peak", activeSide, {});
-        setRequirement("valance", activeSide, {});
-    };
+    const clearDetails = () => clearRequirement(activeSide);
 
     return (
         <>

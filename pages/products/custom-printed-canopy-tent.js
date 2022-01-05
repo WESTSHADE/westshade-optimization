@@ -79,11 +79,6 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         stepDispatch({type: "SET_OPTION_IS_DONE"});
     }
     const selectPrintingRequirement = (key, side, payload, allSides) => {
-        console.log(key);
-        console.log(side);
-        console.log(payload);
-        console.log(allSides);
-
         if (!allSides) {
             dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], [side]: payload}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
@@ -91,6 +86,10 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], LEFT: payload, RIGHT: payload, FRONT: payload, BACK: payload}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         }
+    }
+    const clearRequirement = (side) => {
+        dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, "peak": {...state.printReq["peak"], [side]: {}}, "valance": {...state.printReq["valance"], [side]: {}}}});
+        stepDispatch({type: "SET_OPTION_IS_DONE"});
     }
     const selectSide = (payload) => {
         dispatch({type: "SET_ACTIVE_SIDE", payload});
@@ -642,7 +641,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                             {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
                             {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0].src} tentFrame={state.frame}
                                                                               tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide}
-                                                                              setRequirement={selectPrintingRequirement}/>}
+                                                                              setRequirement={selectPrintingRequirement} clearRequirement={clearRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                         </Block>
                         <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} minWidth="320px" backgroundColor="MinXBackground"
