@@ -1,5 +1,5 @@
 import { Block } from "baseui/block";
-import { ArrowLeft, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "baseui/icon";
+import { ChevronDown, ChevronLeft, ChevronRight } from "baseui/icon";
 import { Tabs, Tab } from "baseui/tabs-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -122,7 +122,7 @@ const tentParts = [
     },
     {
         name: "Side Wall",
-        label:"Tent accessory",
+        label:"TENT ACCESSORY",
         image: "/images/custom-promotion/side-wall.webp"
     },
 ]
@@ -313,7 +313,7 @@ const PrintingTechSpec = (props) => {
 
 const CustomPromotion = () => {
     const [activePrintingSample, setActivePrintingSample] = useState(0);
-    const [showComparison, setShowComparison] = useState(false);
+    const [showComparison, setShowComparison] = useState(true);
     const mockupRef = useRef(null);
     const goToFreeMockup = () => {
         if (window) window.scrollTo({top: mockupRef.current.offsetTop, behavior: 'smooth'});
@@ -328,7 +328,7 @@ const CustomPromotion = () => {
             <Block width="100%" maxWidth="1920px" className={styles.heroWrapper} position="relative">
                 <Block display="flex" flexDirection="column" alignItems="flex-start" maxWidth="1312px" className={styles.hero}>
                     <Block color="#ffffff" as="h1">
-                        Custom printings that <br/> <span> STAND OUT</span>
+                        Custom printings that <br/> <Block marginTop="7px" as="span"> STAND OUT</Block>
                     </Block>
                     <Block marginTop="7px">
                         <ButtonM 
@@ -375,7 +375,7 @@ const CustomPromotion = () => {
                         body="Westshade only prints high-fidelity and high-resolution pieces. You can find the one meet your needs and budgets from two printing technologies."
                     />
                     <Block className={styles.printingTech__samples}>
-                        <Block marginBottom="32px" $style={{textAlign: "center"}} marginTop={["32px","32px","80px"]} font={["MinXLabel20","MinXLabel20","MinXLabel32"]}>
+                        <Block color="MinXTitle" className={styles.printingTech__samples__header} $style={{textAlign: "center"}} font={["MinXLabel20","MinXLabel20","MinXLabel32"]}>
                             Check out real samples below
                         </Block>
                         <Block>
@@ -395,7 +395,7 @@ const CustomPromotion = () => {
                                             marginLeft: "auto",
                                             marginRight: "auto",
                                             paddingTop: "10px",
-                                            paddingBottom: "10px",
+                                            paddingBottom: "0",
                                         }
                                     },
                                     TabHighlight: {
@@ -417,7 +417,10 @@ const CustomPromotion = () => {
                                             style: {
                                                 paddingRight: "0px",
                                                 paddingLeft: "0px",
-                                                paddingBottom: "0px"
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)" : {
+                                                    paddingTop: "32px"
+                                                }
                                             }
                                         }
                                     }}
@@ -616,7 +619,7 @@ const CustomPromotion = () => {
                                 </Block>
                                 {
                                     showComparison &&
-                                    <Block marginTop="16px" font={["MinXParagraph14","MinXParagraph14","MinXParagraph16"]} $style={{textAlign: "center", }}>
+                                    <Block color="#8C8C8C" marginTop="16px" font={["MinXParagraph14","MinXParagraph14","MinXParagraph16"]} $style={{textAlign: "center", }}>
                                     *Color durability depends on usage and weather condition.
                                     </Block>
                                 }
@@ -679,7 +682,7 @@ const CustomPromotion = () => {
                                     <Image src={tent.image} alt={tent.name} width={103} height={77} layout="responsive" quality={30} />
                                 </Block>
                                 <Block marginTop="24px" color="#8c8c8c" font="MinXLabel14" as="p">
-                                    {tent.label}
+                                    {tent.label.toUpperCase()}
                                 </Block>
                                 <Block as="h3" color="MinXTitle" font={["MinXLabel16","MinXLabel16","MinXLabel20"]}>
                                     {tent.name}
@@ -730,10 +733,10 @@ const CustomPromotion = () => {
                                 <Block width="100%">
                                     <Image src={item.image} alt={item.name} width={498} height={381} layout="responsive" quality={30} />
                                 </Block>
-                                <Block marginTop="24px"color="MinXTitle" font={["MinXLabel16","MinXLabel16","MinXLabel20"]} as="h3" $style={{lineHeight: "1"}}>
+                                <Block color="MinXTitle" font={"MinXLabel20"} as="h3" $style={{lineHeight: "1"}}>
                                     {item.name}
                                 </Block>
-                                <Block marginTop="8px" as="p" color="#8c8c8c" font="MinXParagraph14" >
+                                <Block marginTop="8px" as="p" color="#8c8c8c" font="MinXParagraph16" >
                                     {item.availability}
                                 </Block>
                             </Block>
