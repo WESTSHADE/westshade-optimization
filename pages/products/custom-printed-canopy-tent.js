@@ -623,7 +623,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                         </Block>
                     </Block> :
                     <>
-                        <Block display="flex" justifyContent="space-between" alignItems="center" width="100%" height="44px" backgroundColor="MinXBackground"
+                        <Block display="flex" justifyContent="space-between" alignItems="center" width="100%" height="44px" minWidth="320px" backgroundColor="MinXBackground"
                                padding={"4px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
                                position="fixed" top={[0, null, null, "unset"]} bottom={["unset", null, null, "0"]} left={0}
                                $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
@@ -645,7 +645,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                                                               setRequirement={selectPrintingRequirement}/>}
                             {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
                         </Block>
-                        <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} backgroundColor="MinXBackground"
+                        <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} minWidth="320px" backgroundColor="MinXBackground"
                                padding={"8px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
                                position="fixed" top={["unset", null, null, "0"]} bottom={[0, null, null, "unset"]} left={0}
                                $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}

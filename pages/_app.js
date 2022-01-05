@@ -72,6 +72,7 @@ const overrides = {
         MinXHeading14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 500, lineHeight: "22px"},
         MinXHeading16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 500, lineHeight: "24px"},
         MinXHeading17: {fontFamily: "Roboto", fontSize: "17px", fontWeight: 500, lineHeight: "26px"},
+        MinXHeading19: {fontFamily: "Roboto", fontSize: "19px", fontWeight: 500, lineHeight: "22px"},
         MinXHeading20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 700, lineHeight: "28px"},
         MinXHeading24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 500, lineHeight: "22px"},
         MinXHeading26: {fontFamily: "Roboto", fontSize: "26px", fontWeight: 500, lineHeight: "28px"},

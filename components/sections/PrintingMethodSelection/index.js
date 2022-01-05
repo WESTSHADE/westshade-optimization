@@ -62,7 +62,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                     </Block>
                     {method?.fabricPrinted && <Block marginTop="2px" font="MinXParagraph12" color="MinXTitle">This sample is printed on {method.fabricPrinted} fabric.</Block>}
                 </Block>
-                <Button type="outline" width="100%" height="48px" marginTop="16px" font="MinXParagraph14" text="Select" buttonStyle={{borderColor: "#BFBFBF"}} onClick={onClick}/>
+                <Button type="outline" width="100%" height="48px" marginTop="16px" font="MinXParagraph14" color="MinXPrimaryText" text="Select" buttonStyle={{borderColor: "#BFBFBF"}} onClick={onClick}/>
             </Block>
         </>
     )

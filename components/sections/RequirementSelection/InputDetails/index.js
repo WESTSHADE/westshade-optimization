@@ -1,17 +1,17 @@
-import React, {useState} from "react";
-import Image from "next/image";
+import React, {useEffect, useRef, useState} from "react";
+import {useStyletron} from "styletron-react";
+
 import {Block} from "baseui/block";
 import {Accordion, Panel} from "baseui/accordion";
-import {FILL, Tab, Tabs} from "baseui/tabs-motion";
 import {Input} from "baseui/input";
 import {FileUploader} from "baseui/file-uploader";
 import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
-import Utils from "../../../../utils/utils";
-import MButton from "../../../button-n";
-import {useStyletron} from "styletron-react";
 import {Modal} from "../../../surfaces";
+import Button from "../../../button-n";
+
+import Utils from "../../../../utils/utils";
 
 const utils = new Utils();
 
@@ -21,10 +21,72 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
 });
+
 const TAB_VALUES = ["COLOR", "IMAGE"];
+
+const Canvas = ({selected, part, ...props}) => {
+    const parentRef = useRef(null);
+    const canvasRef = useRef(null);
+
+    const draw = (canvas) => {
+        const ctx = canvas.getContext('2d');
+
+        let th = canvas.width / 2, rh = canvas.width / 6;
+
+        ctx.strokeStyle = "#D0D9D9";
+        ctx.lineWidth = 2;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.beginPath();
+        ctx.moveTo(0, th);
+        ctx.quadraticCurveTo(th * 4 / 7, th * 5 / 8, canvas.width / 2, 1);
+        ctx.quadraticCurveTo(canvas.width - (th * 4 / 7), th * 5 / 8, canvas.width, th);
+        ctx.lineTo(0, th);
+        ctx.fillStyle = part === "peak" && selected ? "#EBF4F5" : "#FFF";
+        ctx.closePath();
+
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.rect(1, th, canvas.width - 2, rh - 2);
+        ctx.fillStyle = part === "valance" && selected ? "#EBF4F5" : "#FFF";
+        ctx.closePath();
+
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    useEffect(() => {
+        if (parentRef.current && parentRef.current.offsetWidth) {
+            const canvas = canvasRef.current;
+
+            canvas.width = parentRef.current.offsetWidth;
+            canvas.height = parentRef.current.offsetWidth / 1.5;
+
+            //Our draw come here
+            draw(canvas);
+        }
+    });
+
+    return (
+        <Block ref={parentRef} {...props}>
+            <canvas ref={canvasRef}/>
+        </Block>
+    );
+}
 
 export default function RoofDetail({requirement, setRequirement, part, side, cancelAction, selectedListTemp, setSelectedRoofListTemp, selectedRoofSlide, selectedSlidePart, applyToFullSide, setApplyToFullSide}) {
     const toCustomize = requirement[part][side];
+
+    const label = {
+        FRONT: "A",
+        RIGHT: "B",
+        BACK: "C",
+        LEFT: "D",
+    };
+
     const [activeTabKey, setActiveTabKey] = useState(TAB_VALUES.indexOf(inputState?.background.type || "COLOR"));
     const [isSaving, setIsSaving] = useState(false);
     const [inputState, setInputState] = useState({
@@ -99,339 +161,310 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
         return Promise.all(promises)
     }
 
+
     return (
         <>
-            <Block width="100%" maxWidth="448px" display="flex" flexDirection="column" marginRight="auto" marginLeft="auto" paddingTop={["32px", "40px"]}>
-                <Block
-                    font="MinXLabel28" color="MinXPrimaryText" className={css({textTransform: "capitalize"})}>{side.toLowerCase()} {part}</Block>
-                <Block width="100%" maxWidth="660px" marginRight="auto" marginLeft="auto" paddingTop="44px" font="MinXHeading14" color="MinXPrimaryText">
-                    <Accordion overrides={{
-                        PanelContainer: {
-                            style: {
-                                borderBottomWidth: 0
-                            }
-                        },
-                        Header: {
-                            style: {
-                                minHeight: "48px",
-                                paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit", backgroundColor: "transparent"
-                            }
-                        },
-                        Content: {
-                            style: {
-                                paddingTop: "28px", paddingRight: "0px", paddingBottom: "28px", paddingLeft: "0px",
-                                fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
-                                backgroundColor: "translate"
-                            }
-                        },
-                    }}>
-                        <Panel title="Background">
-                            <Tabs activeKey={activeTabKey} fill={FILL.fixed} onChange={() => setActiveTabKey(!activeTabKey)}
-                                  overrides={{
-                                      TabList: {
-                                          style: {
-                                              display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridColumnGap: "16px", marginBottom: "16px"
-                                          }
-                                      },
-                                      TabBorder: {props: {hidden: true}},
-                                      TabHighlight: {props: {hidden: true}},
-                                  }}
-                            >
-                                <Tab title="Color"
-                                     artwork={() => (
-                                         <Block position="relative" width="20px" height="20px">
-                                             <Image src="/images/icon/icon_pantone.png" layout="responsive" width={60} height={60}/>
-                                         </Block>
-                                     )}
-                                     overrides={{
-                                         Tab: {
-                                             props: {
-                                                 className: "custom-printing-canopy-tent-tab"
-                                             },
-                                             style: ({$isActive}) => ({borderColor: $isActive ? "#23A4AD" : "#D0D9D9"}),
-                                         },
-                                         TabPanel: {style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}
-                                     }}
-                                >
-                                    <Block display="flex" alignItems="center" marginBottom="8px">
-                                        <Block minWidth="100px" marginRight="20px">Pantone Color</Block>
-                                        <Input placeholder="e.g. 7408 C"
-                                               value={inputState.background.type === "COLOR" ? inputState.background.value : ""}
-                                               onChange={(e) => setInputState({...inputState, background: {type: "COLOR", value: e.target.value}})}
-                                               overrides={{
-                                                   Root: {
-                                                       style: {
-                                                           borderTopRightRadius: "8px",
-                                                           borderTopLeftRadius: "8px",
-                                                           borderBottomRightRadius: "8px",
-                                                           borderBottomLeftRadius: "8px",
-                                                       },
-                                                   },
-                                                   Input: {
-                                                       style: {
-                                                           fontSize: "14px",
-                                                           lineHeight: "22px",
-                                                           "::placeholder": {color: "#BFBFBF"},
-                                                       }
-                                                   },
-                                               }}
-                                        />
-                                    </Block>
-                                    <Block font="MinXParagraph12" color="rgba(0,0,0,0.45)" $style={{textAlign: "right", textDecoration: "underline", textTransform: "capitalize"}}>
-                                        <a target="_blank" href="https://www.pantone-colours.com/" rel="noopener noreferrer">
-                                            Go to &quot;Pantone Color Finder&quot;
-                                        </a>
-                                    </Block>
-                                </Tab>
-                                <Tab title="Image"
-                                     artwork={() => (
-                                         <Block position="relative" width="20px" height="20px">
-                                             <Image src="/images/icon/icon_picture.png" layout="responsive" width={60} height={60}/>
-                                         </Block>
-                                     )}
-                                     overrides={{
-                                         Tab: {
-                                             props: {
-                                                 className: "custom-printing-canopy-tent-tab"
-                                             },
-                                             style: ({$isActive}) => ({borderColor: $isActive ? "#23A4AD" : "#D0D9D9"}),
-                                         },
-                                         TabPanel: {style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}
-                                     }}
-                                >
-                                    <FileUploader
-                                        onDropAccepted={(e) => handleFile(e, "background")}
-                                        overrides={{
-                                            FileDragAndDrop: {
-                                                style: {
-                                                    flexDirection: "column-reverse",
-                                                    borderTopStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
-                                                    borderBottomStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
-                                                    borderLeftStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
-                                                    borderRightStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
-                                                    borderTopColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
-                                                    borderBottomColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
-                                                    borderLeftColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
-                                                    borderRightColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
-                                                    boxShadow: inputState.background.value.length != 0 ? "0px 0px 4px 2px #5FBDBE;" : "none"
-                                                }
-                                            },
-                                            ButtonComponent: {
-                                                props: {
-                                                    overrides: {
-                                                        BaseButton: {
-                                                            style: {
-                                                                marginBottom: "12px"
+            <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(2, max-content)" width="100%" height="100%" minWidth="320px" alignItems="flex-start">
+                {/*Image Section*/}
+                <Block position="relative" height="100%" padding={["8px 16px 16px", null, null, "40px 20px 20px"]} backgroundColor={["#F7F7F7", null, null, "white"]}>
+                    <Block position="relative" display="grid" gridTemplateColumns="1fr" gridRowGap="8px" justifyItems="center" width="100%" maxWidth="343px" margin="auto">
+                        <Block position="relative" width="90px" height="90px" margin="auto">
+                            {Object.keys(label).map((s, index) => {
+                                return (
+                                    <Block key={s} position="absolute" bottom={0} left="50%" display="flex" flexDirection="column" width="fit-content" paddingTop="2px"
+                                           $style={{transform: "translate(-50%, 0) rotate(-" + index * 90 + "deg)", transformOrigin: "50% 0"}}
+                                    >
+                                        <Canvas width="60px" selected={s === side} part={part} $style={{aspectRatio: "1.5"}}/>
+                                    </Block>)
+                            })}
+                        </Block>
+                        <Block position="absolute" left={0} top="50%" width="max-content" color="MinXPrimaryText" $style={{textTransform: "capitalize", transform: "translateY(-50%)"}}>
+                            <Block marginBottom="4px" font="MinXHeading19">Side {label[side]}</Block>
+                            <Block font="MinXParagraph16">{part}</Block>
+                        </Block>
+                    </Block>
+                </Block>
+                {/*Selection Section*/}
+                <Block position="relative" height="100%" padding={["16px", null, null, "20px"]}>
+                    <Block position="relative" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, null, "16px"]} justifyItems="center" width="100%" maxWidth="343px" margin="auto" font="MinXHeading14"
+                           color="MinXPrimaryText">
+                        <Block font="MinXParagraph14" color="MinXSecondaryText">You will get a mockup based on the information you provide here.</Block>
+                        {part === "peak" ? (
+                            <>
+                                <Accordion overrides={{
+                                    PanelContainer: {
+                                        style: {
+                                            marginBottom: "8px",
+                                            borderBottomWidth: 0,
+                                            ":last-child": {marginBottom: 0},
+                                            "@media (min-width: 1056px)": {marginBottom: "16px"},
+                                        }
+                                    },
+                                    Header: {
+                                        style: {
+                                            minHeight: "48px",
+                                            paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
+                                            fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit", backgroundColor: "transparent"
+                                        }
+                                    },
+                                    Content: {
+                                        style: {
+                                            paddingTop: "0px", paddingRight: "0px", paddingBottom: "0px", paddingLeft: "0px",
+                                            fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
+                                            backgroundColor: "translate",
+                                        }
+                                    },
+                                }}>
+                                    <Panel title="Image">
+                                        <FileUploader
+                                            onDropAccepted={(e) => handleFile(e, "background")}
+                                            overrides={{
+                                                FileDragAndDrop: {
+                                                    style: {
+                                                        flexDirection: "column-reverse",
+                                                        borderTopStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
+                                                        borderBottomStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
+                                                        borderLeftStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
+                                                        borderRightStyle: inputState.background.value.length != 0 ? "solid" : "dashed",
+                                                        borderTopColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
+                                                        borderBottomColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
+                                                        borderLeftColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
+                                                        borderRightColor: inputState.background.value.length != 0 ? "#23A4AD" : "dashed",
+                                                        boxShadow: inputState.background.value.length != 0 ? "0px 0px 4px 2px #5FBDBE;" : "none"
+                                                    }
+                                                },
+                                                ButtonComponent: {
+                                                    props: {
+                                                        overrides: {
+                                                            BaseButton: {
+                                                                style: {
+                                                                    marginBottom: "12px"
+                                                                }
                                                             }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        }}
-                                    />
-                                </Tab>
-                            </Tabs>
-                        </Panel>
-                        <Panel title="Logo">
-                            <FileUploader
-                                onDropAccepted={(e) => handleFile(e, "logo")}
-                                overrides={{
-                                    FileDragAndDrop: {
+                                            }}
+                                        />
+                                        <Block className="text-center" marginTop="8px" font="MinXParagraph14">File format: .ai, .psd, png, jpg</Block>
+                                    </Panel>
+                                    <Panel title="Note">
+                                        <Textarea placeholder="Tell us how do you want it printed."
+                                                  value={inputState.printInstruction}
+                                                  onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
+                                                  overrides={{
+                                                      Root: {
+                                                          style: {
+                                                              borderTopRightRadius: "8px",
+                                                              borderTopLeftRadius: "8px",
+                                                              borderBottomRightRadius: "8px",
+                                                              borderBottomLeftRadius: "8px",
+                                                          }
+                                                      },
+                                                      Input: {
+                                                          style: {
+                                                              backgroundColor: "white",
+                                                              "::placeholder": {color: "#BFBFBF"},
+                                                          }
+                                                      },
+                                                  }}
+                                        />
+                                    </Panel>
+                                </Accordion>
+                                <Checkbox checked={inputState.applyToFullSide} labelPlacement={LABEL_PLACEMENT.right}
+                                          onChange={(e) => setInputState({...inputState, applyToFullSide: !inputState.applyToFullSide})}
+                                          overrides={{
+                                              Root: {
+                                                  style: {
+                                                      marginRight: "auto"
+                                                  }
+                                              },
+                                              Checkmark: {
+                                                  props: {
+                                                      className: "checkbox-whole-side"
+                                                  }
+                                              },
+                                              Label: {
+                                                  style: {fontSize: "14px", fontWeight: 400}
+                                              },
+                                          }}
+                                >
+                                    Print the same on all peaks
+                                </Checkbox>
+                            </>
+                        ) : (
+                            <>
+                                <Accordion overrides={{
+                                    PanelContainer: {
                                         style: {
-                                            flexDirection: "column-reverse",
-                                            borderTopStyle: inputState.logo.file.length != 0 ? "solid" : "dashed",
-                                            borderBottomStyle: inputState.logo.file.length != 0 ? "solid" : "dashed",
-                                            borderLeftStyle: inputState.logo.file.length != 0 ? "solid" : "dashed",
-                                            borderRightStyle: inputState.logo.file.length != 0 ? "solid" : "dashed",
-                                            borderTopColor: inputState.logo.file.length != 0 ? "#23A4AD" : "dashed",
-                                            borderBottomColor: inputState.logo.file.length != 0 ? "#23A4AD" : "dashed",
-                                            borderLeftColor: inputState.logo.file.length != 0 ? "#23A4AD" : "dashed",
-                                            borderRightColor: inputState.logo.file.length != 0 ? "#23A4AD" : "dashed",
-                                            boxShadow: inputState.logo.file.length != 0 ? "0px 0px 4px 2px #5FBDBE;" : "none"
+                                            marginBottom: "8px",
+                                            borderBottomWidth: 0,
+                                            ":last-child": {marginBottom: 0},
+                                            "@media (min-width: 1056px)": {marginBottom: "16px"},
                                         }
                                     },
-                                    ButtonComponent: {
-                                        props: {
-                                            overrides: {
-                                                BaseButton: {
-                                                    style: {
-                                                        marginBottom: "12px"
-                                                    }
-                                                }
-                                            }
+                                    Header: {
+                                        style: {
+                                            minHeight: "48px",
+                                            paddingTop: "12px", paddingRight: "0px", paddingBottom: "12px", paddingLeft: "0px",
+                                            fontSize: "inherit", fontWeight: "inherit", fontFamily: "inherit", color: "inherit", backgroundColor: "transparent"
                                         }
-                                    }
-                                }}
-                            />
-                        </Panel>
-                        <Panel title="Text">
-                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
-                                <Block display="flex" alignItems="center">
-                                    <Block minWidth="60px" marginRight="20px">Content</Block>
-                                    <Input placeholder="The text you want to print"
-                                           value={inputState.text.content}
-                                           onChange={(e) => setInputState({...inputState, text: {...inputState.text, content: e.target.value}})}
-                                           overrides={{
-                                               Root: {
-                                                   style: {
-                                                       borderTopRightRadius: "8px",
-                                                       borderTopLeftRadius: "8px",
-                                                       borderBottomRightRadius: "8px",
-                                                       borderBottomLeftRadius: "8px",
-                                                   },
-                                               },
-                                               Input: {
-                                                   style: {
-                                                       fontSize: "14px",
-                                                       lineHeight: "22px",
-                                                       "::placeholder": {color: "#BFBFBF"},
-                                                   }
-                                               },
-                                           }}
-                                    />
-                                </Block>
-                                <Block display="flex" alignItems="center">
-                                    <Block minWidth="60px" marginRight="20px">Font</Block>
-                                    <Input placeholder="e.g. Roboto"
-                                           value={inputState.text.font}
-                                           onChange={(e) => setInputState({...inputState, text: {...inputState.text, font: e.target.value}})}
-                                           overrides={{
-                                               Root: {
-                                                   style: {
-                                                       borderTopRightRadius: "8px",
-                                                       borderTopLeftRadius: "8px",
-                                                       borderBottomRightRadius: "8px",
-                                                       borderBottomLeftRadius: "8px",
-                                                   },
-                                               },
-                                               Input: {
-                                                   style: {
-                                                       fontSize: "14px",
-                                                       lineHeight: "22px",
-                                                       "::placeholder": {color: "#BFBFBF"},
-                                                   }
-                                               },
-                                           }}
-                                    />
-                                </Block>
-                                <Block display="flex" alignItems="center">
-                                    <Block minWidth="60px" marginRight="20px">Color</Block>
-                                    <Input placeholder="e.g. #3C3C3C"
-                                           value={inputState.text.color}
-                                           onChange={(e) => setInputState({...inputState, text: {...inputState.text, color: e.target.value}})}
-                                           overrides={{
-                                               Root: {
-                                                   style: {
-                                                       borderTopRightRadius: "8px",
-                                                       borderTopLeftRadius: "8px",
-                                                       borderBottomRightRadius: "8px",
-                                                       borderBottomLeftRadius: "8px",
-                                                   },
-                                               },
-                                               Input: {
-                                                   style: {
-                                                       fontSize: "14px",
-                                                       lineHeight: "22px",
-                                                       "::placeholder": {color: "#BFBFBF"},
-                                                   }
-                                               },
-                                           }}
-                                    />
-                                </Block>
-                            </Block>
-                        </Panel>
-                        <Panel title="Print Instruction">
-                            <Textarea placeholder="Tell us how do you want to get these text and image printed."
-                                      value={inputState.printInstruction}
-                                      onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
-                                      overrides={{
-                                          Root: {
-                                              style: {
-                                                  overflow: "hidden",
-                                                  borderTopRightRadius: "8px",
-                                                  borderTopLeftRadius: "8px",
-                                                  borderBottomRightRadius: "8px",
-                                                  borderBottomLeftRadius: "8px",
-                                              }
-                                          },
-                                      }}
-                            />
-                        </Panel>
-                    </Accordion>
-                </Block>
-                <Checkbox checked={inputState.applyToFullSide} labelPlacement={LABEL_PLACEMENT.right}
-                          onChange={(e) => setInputState({...inputState, applyToFullSide: !inputState.applyToFullSide})}
-                          overrides={{
-                              Root: {
-                                  style: {
-                                      marginTop: "16px"
-                                  }
-                              },
-                              Checkmark: {
-                                  props: {
-                                      className: "checkbox-whole-side"
-                                  }
-                              },
-                              Label: {
-                                  style: ({$theme}) => ({fontSize: "12px", fontWeight: 400}),
-                              },
-                          }}
-                >
-                    Apply it to all four sides
-                </Checkbox>
-            </Block>
-            <Block position="absolute" bottom="0" left="0" width="100%" display="grid" placeItems="center" backgroundColor="#ffffff" padding="22px 16px">
-                <Block maxWidth="1272px" width="100%" display="flex" alignItems="center" justifyContent="space-between">
-                    <Block font={["MinXParagraph12", "MinXParagraph14", "MinXParagraph14"]} color="MinXPrimaryText">
-                        After submitting the order, we’ll email a mockup.
-                    </Block>
-                    <Block display="flex" alignItems="center">
-                        <Block margin={["0 4px", "0 8px"]}>
-                            <MButton
-                                height="auto"
-                                width="85px"
-                                onClick={cancelAction}
-                                disabled={isSaving}
-                                buttonStyle={{
-                                    backgroundColor: "transparent !important",
-                                    color: "#23A4AD !important",
-                                    fontFamily: "Roboto !important",
-                                    fontSize: "14px !important",
-                                    fontWeight: "500 !important",
-                                    width: "100% !important",
-                                    border: "2px solid #BFBFBF !important",
-                                    padding: "12px 0 !important",
-                                    margin: "0 8px",
-                                    transition: "all .15s ease-in-out",
-                                }}
-                                text="Cancel"
-                            />
-                        </Block>
-                        <Block margin={["0 4px", "0 8px"]}>
-                            <MButton
-                                height="auto"
-                                width="85px"
-                                onClick={saveEntries}
-                                isLoading={isSaving}
-                                buttonStyle={{
-                                    fontFamily: "Roboto !important",
-                                    fontSize: "14px !important",
-                                    fontWeight: "500 !important",
-                                    width: "100% !important",
-                                    padding: "12px 0 !important",
-                                    margin: "0 8px",
-                                    transition: "all .15s ease-in-out",
-                                }}
-                                text="Save"
-                                bundle="primary"
-                            />
-                        </Block>
+                                    },
+                                    Content: {
+                                        style: {
+                                            paddingTop: "0px", paddingRight: "0px", paddingBottom: "0px", paddingLeft: "0px",
+                                            fontSize: "inherit", fontWeight: "400", fontFamily: "inherit", color: "inherit",
+                                            backgroundColor: "translate",
+                                        }
+                                    },
+                                }}>
+                                    <Panel title="Text">
+                                        <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
+                                            <Block display="flex" alignItems="center">
+                                                <Block minWidth="60px" marginRight="20px">Content</Block>
+                                                <Input placeholder="The text you want to print"
+                                                       value={inputState.text.content}
+                                                       onChange={(e) => setInputState({...inputState, text: {...inputState.text, content: e.target.value}})}
+                                                       overrides={{
+                                                           Root: {
+                                                               style: {
+                                                                   borderTopRightRadius: "8px",
+                                                                   borderTopLeftRadius: "8px",
+                                                                   borderBottomRightRadius: "8px",
+                                                                   borderBottomLeftRadius: "8px",
+                                                               }
+                                                           },
+                                                           Input: {
+                                                               style: {
+                                                                   backgroundColor: "white",
+                                                                   "::placeholder": {color: "#BFBFBF"},
+                                                               }
+                                                           },
+                                                       }}
+                                                />
+                                            </Block>
+                                            <Block display="flex" alignItems="center">
+                                                <Block minWidth="60px" marginRight="20px">Font</Block>
+                                                <Input placeholder="e.g. Roboto"
+                                                       value={inputState.text.font}
+                                                       onChange={(e) => setInputState({...inputState, text: {...inputState.text, font: e.target.value}})}
+                                                       overrides={{
+                                                           Root: {
+                                                               style: {
+                                                                   borderTopRightRadius: "8px",
+                                                                   borderTopLeftRadius: "8px",
+                                                                   borderBottomRightRadius: "8px",
+                                                                   borderBottomLeftRadius: "8px",
+                                                               }
+                                                           },
+                                                           Input: {
+                                                               style: {
+                                                                   backgroundColor: "white",
+                                                                   "::placeholder": {color: "#BFBFBF"},
+                                                               }
+                                                           },
+                                                       }}
+                                                />
+                                            </Block>
+                                            <Block display="flex" alignItems="center">
+                                                <Block minWidth="60px" marginRight="20px">Color</Block>
+                                                <Input placeholder="e.g. #3C3C3C"
+                                                       value={inputState.text.color}
+                                                       onChange={(e) => setInputState({...inputState, text: {...inputState.text, color: e.target.value}})}
+                                                       overrides={{
+                                                           Root: {
+                                                               style: {
+                                                                   borderTopRightRadius: "8px",
+                                                                   borderTopLeftRadius: "8px",
+                                                                   borderBottomRightRadius: "8px",
+                                                                   borderBottomLeftRadius: "8px",
+                                                               }
+                                                           },
+                                                           Input: {
+                                                               style: {
+                                                                   backgroundColor: "white",
+                                                                   "::placeholder": {color: "#BFBFBF"},
+                                                               }
+                                                           },
+                                                       }}
+                                                />
+                                            </Block>
+                                        </Block>
+                                    </Panel>
+                                    <Panel title="Note">
+                                        <Textarea placeholder="Tell us how do you want it printed."
+                                                  value={inputState.printInstruction}
+                                                  onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
+                                                  overrides={{
+                                                      Root: {
+                                                          style: {
+                                                              borderTopRightRadius: "8px",
+                                                              borderTopLeftRadius: "8px",
+                                                              borderBottomRightRadius: "8px",
+                                                              borderBottomLeftRadius: "8px",
+                                                          }
+                                                      },
+                                                      Input: {
+                                                          style: {
+                                                              backgroundColor: "white"
+                                                          }
+                                                      },
+                                                  }}
+                                        />
+                                    </Panel>
+                                </Accordion>
+                                <Checkbox checked={inputState.applyToFullSide} labelPlacement={LABEL_PLACEMENT.right}
+                                          onChange={(e) => setInputState({...inputState, applyToFullSide: !inputState.applyToFullSide})}
+                                          overrides={{
+                                              Root: {
+                                                  style: {
+                                                      marginRight: "auto"
+                                                  }
+                                              },
+                                              Checkmark: {
+                                                  props: {
+                                                      className: "checkbox-whole-side"
+                                                  }
+                                              },
+                                              Label: {
+                                                  style: {fontSize: "14px", fontWeight: 400}
+                                              },
+                                          }}
+                                >
+                                    Print the same on all valances
+                                </Checkbox>
+                            </>
+                        )}
                     </Block>
                 </Block>
             </Block>
-            <Modal type="alertdialog" isOpen={isSaving} onClose={() => {
-            }} content="loading" description="I'm saving the printing details"/>
+            {/*Button Bar*/}
+            <Block display="flex" justifyContent="space-between" alignItems="center" width="100%" height={["52px", null, "58px"]} minWidth="320px" backgroundColor="MinXBackground"
+                   padding={"4px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
+                   position="fixed" bottom={0} left={0} $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
+            >
+                <Block display={["none", null, "block"]} font="MinXParagraph14" color="MinXPrimaryText">After submitting the order, we’ll email a mockup.</Block>
+                <Block display="flex" flex={[1, null, 0]} justifyContent="space-between" alignItems="center" $style={{gap: "16px"}}>
+                    <Button type="outline" bundle="primary" width="85px" height="40px" text="Cancel" font="MinXLabel14"
+                            buttonStyle={{
+                                paddingRight: "0 !important",
+                                paddingLeft: "0 !important",
+                                borderColor: "#BFBFBF !important",
+                            }}
+                            onClick={cancelAction}
+                            disabled={isSaving}
+                    />
+                    <Button bundle="primary" width="85px" height="40px" text="Save" font="MinXLabel14"
+                            buttonStyle={{
+                                paddingRight: "0 !important",
+                                paddingLeft: "0 !important",
+                            }}
+                            onClick={saveEntries}
+                            isLoading={isSaving}
+                    />
+                </Block>
+            </Block>
+            <Modal type="alertdialog" isOpen={isSaving} content="loading" description="I'm saving the printing details" onClose={null}/>
         </>
     )
 }

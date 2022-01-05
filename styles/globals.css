@@ -6,6 +6,8 @@
 
 body {
     background-color: var(--primary-background);
+    /* for fixing font issues of roboto */
+    -webkit-font-smoothing: antialiased;
 }
 
 .m-subheader-wrap, .m-body-section-wrap, .m-footer-wrap {

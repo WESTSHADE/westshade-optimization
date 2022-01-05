@@ -23,11 +23,13 @@ const Canvas = ({selected, customized, ...props}) => {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        ctx.beginPath();
         ctx.moveTo(0, th);
         ctx.quadraticCurveTo(th * 4 / 7, th * 5 / 8, canvas.width / 2, 1);
         ctx.quadraticCurveTo(canvas.width - (th * 4 / 7), th * 5 / 8, canvas.width, th);
         ctx.lineTo(0, th);
         ctx.rect(1, th, canvas.width - 2, rh - 2);
+        ctx.closePath();
 
         ctx.fill();
         ctx.stroke();
@@ -79,16 +81,18 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                             <Image src={frontAngle ? activeTentImage : `${activeTentImage.split(".")[0]}-FLIPPED.webp`} alt="custom tent" width={1024} height={1024} layout="responsive" objectFit="contain"/>
                             {Object.keys(label).map((side, index) => {
                                     return (
-                                        <>
+                                        <Block key={index}>
                                             {Object.keys(label)[index] === activeSide && Object.keys(requirement.peak[side]).length === 0 && Object.keys(requirement.valance[side]).length === 0 &&
                                                 <>
                                                     <Block key={side + "PEAK-Select"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/PEAK-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024} height={1024}
+                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/PEAK-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024}
+                                                               height={1024}
                                                                layout="responsive"
                                                         />
                                                     </Block>
                                                     <Block key={side + "VALANCE-Select"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/VALANCE-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024} height={1024}
+                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/VALANCE-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024}
+                                                               height={1024}
                                                                layout="responsive"
                                                         />
                                                     </Block>
@@ -108,7 +112,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                                                            layout="responsive"
                                                     />
                                                 </Block>}
-                                        </>)
+                                        </Block>)
                                 }
                             )}
                         </Block>
@@ -270,7 +274,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
             <Block position="fixed" top="0" left="0" width={peakDetailIsOpen || valanceDetailIsOpen ? "100vw" : "0"} height={peakDetailIsOpen || valanceDetailIsOpen ? "100vh" : "0"} overflow="hidden"
                    $style={{zIndex: peakDetailIsOpen || valanceDetailIsOpen ? "100" : "unset"}}
             >
-                <Block width="100%" height="100%" backgroundColor="MinXBackground" position="relative" overflow="scrollY" padding="0 16px">
+                <Block position="relative" width="100%" height="100%" backgroundColor="white" overflow="scrollY">
                     {(peakDetailIsOpen && !valanceDetailIsOpen) &&
                         <RoofDetail part="peak" requirement={requirement} side={activeSide} setRequirement={setRequirement} cancelAction={() => setPeakDetailsIsOpen(false)}/>
                     }
