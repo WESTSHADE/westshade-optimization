@@ -7,7 +7,7 @@ import {Notification} from "baseui/notification";
 import {SIZE, Textarea} from "baseui/textarea";
 import Image from "next/image";
 
-const CustomLabel = ({children}) => <Block $style={{lineHeight: "1 !important"}} marginBottom={["20px", "24px"]} font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
+const CustomLabel = ({children}) => <Block $style={{lineHeight: "1 !important"}} marginBottom={["20px", "24px"]} color="MinXPrimaryText" font={["MinXSubtitle20", "MinXSubtitle24"]}>{children}</Block>
 
 const CustomCheckbox = ({children, checked, onChange}) => (
     <Checkbox checked={checked} onChange={onChange}
@@ -115,7 +115,7 @@ const CustomTextarea = ({customClassname, message, onChange, id, placeholder, re
             className={`${css({borderTopColor: "transparent", borderBottomColor: "transparent", borderRightColor: "transparent", borderLeftColor: "transparent"})} ${customClassname}`}
             overrides={{
                 Root: {style: {borderTopWidth: "0px", borderLeftWidth: "0px", borderBottomWidth: "0px", borderRightWidth: "0px"}},
-                Input: {style: {height: "180px", backgroundColor: backgroundColor ? backgroundColor : "#ffffff", outline: "none", borderRadius: "4px", resize: "both", ":focus": {border: "1px solid #23A4AD"}}},
+                Input: {style: {minHeight: "180px", height: "100%", backgroundColor: backgroundColor ? backgroundColor : "#ffffff", outline: "none", borderRadius: "4px", resize: "both", ":focus": {border: "1px solid #23A4AD"}}},
                 InputContainer: {style: {outline: "none", ":focus": {border: "1px solid #23A4AD"}}}
             }}
         />
