@@ -13,6 +13,7 @@ import ProductDescription from "./Product_Description";
 import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 import UmbrellaProductItem from "./Umbrella_Product_Item";
+import BenefitV2 from "./Benefit/BenefitV2"
 
 module.exports = {
     BannerDisplay,
@@ -29,5 +30,6 @@ module.exports = {
     ProductDescription,
     FreeMockupForm,
     ProductImages,
-    UmbrellaProductItem
+    UmbrellaProductItem,
+    BenefitV2
 };

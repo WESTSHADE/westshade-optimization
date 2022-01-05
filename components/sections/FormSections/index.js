@@ -42,6 +42,7 @@ const FreeMockupForm = () => {
     const [fileError, setFileError] = useState({status: false, message: ""});
     const [formError, setFormError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [showRequiredMarkers, setShowRequiredMarkers] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -73,6 +74,7 @@ const FreeMockupForm = () => {
                         setFormLoading(false);
                         setFormState(initialState);
                         setFormSubmitted(true);
+                        setShowRequiredMarkers(false);
                     })
                     .catch(error => {
                         console.log(error)
@@ -83,12 +85,14 @@ const FreeMockupForm = () => {
             } else {
                 setFileError({status: true, message: "please attach a file"});
                 setFormLoading(false);
+                setShowRequiredMarkers(true)
             }
         }
         else {
             setErrorMessage("Please fill all the required fields")
             setFormLoading(false);
             setFormError(true)
+            setShowRequiredMarkers(true)
         }
     }
 
@@ -187,7 +191,7 @@ const FreeMockupForm = () => {
             <Block width="100%" display="grid" placeItems="center">
                 <Block maxWidth="1520px" width="100%" backgroundColor="MinXBackground" padding={["17px 16px", "36px 16px", "54px 16px", "80px 16px"]}>
                     <Block as="form" onSubmit={handleSubmit} maxWidth="1140px" display="flex" flexWrap="wrap" justifyContent="space-between" margin="0 auto">
-                        <Block width={["100%", "48%", "48%"]}>
+                        <Block width={["100%", "100%", "48%"]}>
                             <Block width="100%">
                                 <Image src="/images/custom-printing/umbrella-free-mockup.webp" alt="umbrella" width={534} height={345} layout="responsive" objectFit="contain" quality={30}/>
                             </Block>
@@ -248,7 +252,7 @@ const FreeMockupForm = () => {
                             </Block>
                             <Block display={["none", "block", "block"]} width="100%" marginTop="35px">
                                 <Block width="100%">
-                                    <CustomLabel>Preferred contact method</CustomLabel>
+                                    <CustomLabel>Preferred contact method {showRequiredMarkers && formState.contactMethod.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                                 </Block>
                                 <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
                                     <Block width="32%" maxWidth="167px" marginBottom="16px">
@@ -284,9 +288,9 @@ const FreeMockupForm = () => {
                                 </Block>
                             </Block>
                         </Block>
-                        <Block width={["100%", "48%", "48%"]} marginTop={["40px", "0", "0"]}>
+                        <Block display="flex" flexDirection="column" width={["100%", "100%", "48%"]} marginTop={["40px", "0", "0"]}>
                             <Block width="100%">
-                                <CustomLabel>Interested in</CustomLabel>
+                                <CustomLabel>Interested in {showRequiredMarkers && formState.interests.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                             </Block>
                             <Block width="100%" display="flex" justifyContent="space-between" flexWrap="wrap">
                                 <Block width={["100%", "100%", "48%", "48%"]} marginBottom="16px">
@@ -334,7 +338,7 @@ const FreeMockupForm = () => {
                             </Block>
 
                             <Block width="100%" marginTop="40px" marginBottom="40px">
-                                <CustomLabel>Logo</CustomLabel>
+                                <CustomLabel>Logo {showRequiredMarkers && formState.logo.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                                 <Block width="100%">
                                     {
                                         formState.logo.map((logo) => (
@@ -362,7 +366,7 @@ const FreeMockupForm = () => {
                             <FormControl
                                 label={() => <CustomLabel> {"Print instruction"} </CustomLabel>}
                                 overrides={{
-                                    ControlContainer: {style: {display: "flex", flexWrap: "wrap", marginBottom: "24px"}}
+                                    ControlContainer: {style: {display: "flex", flexWrap: "wrap", marginBottom: "24px", flex: "1"}}
                                 }}
                             >
                                 <CustomTextarea
@@ -431,7 +435,7 @@ const FreeMockupForm = () => {
                             </Block>
                             <Block display={["block", "none", "none"]} width="100%" marginTop="35px">
                                 <Block width="100%">
-                                    <CustomLabel>Preferred contact method</CustomLabel>
+                                    <CustomLabel>Preferred contact method {showRequiredMarkers && formState.contactMethod.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                                 </Block>
                                 <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
                                     <Block width="32%" maxWidth="167px" marginBottom="16px">
@@ -545,7 +549,10 @@ const FreeMockupForm = () => {
                                 position: "fixed",
                                 top: "50%",
                                 left: "50%",
-                                padding: "24px 32px 24px",
+                                paddingTop: "24px",
+                                paddingBottom: "24px",
+                                paddingLeft: " 32px",
+                                paddingRight: " 32px",
                                 transform: "translate(-50%, -50%)",
                                 boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1);",
                                 borderRadius: "16px",
