@@ -396,6 +396,7 @@ const CustomPromotion = () => {
                                             marginRight: "auto",
                                             paddingTop: "10px",
                                             paddingBottom: "0",
+                                            overflow: "visible"
                                         }
                                     },
                                     TabHighlight: {
@@ -411,7 +412,7 @@ const CustomPromotion = () => {
                                 <Tab
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent !important"}}
                                         },
                                         TabPanel: {
                                             style: {
@@ -433,13 +434,16 @@ const CustomPromotion = () => {
                                 <Tab 
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0",":hover": {backgroundColor: "transparent !important"}}
                                         },
                                         TabPanel: {
                                             style: {
                                                 paddingRight: "0px",
                                                 paddingLeft: "0px",
-                                                paddingBottom: "0px"
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)" : {
+                                                    paddingTop: "32px"
+                                                }
                                             }
                                         }
                                     }}
@@ -453,13 +457,16 @@ const CustomPromotion = () => {
                                 <Tab
                                     overrides={{
                                         Tab: {
-                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent"}}
+                                            style: { width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
                                         },
                                         TabPanel: {
                                             style: {
                                                 paddingRight: "0px",
                                                 paddingLeft: "0px",
-                                                paddingBottom: "0px"
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)" : {
+                                                    paddingTop: "32px"
+                                                }
                                             }
                                         }
                                     }} 
