@@ -15,10 +15,10 @@ const nextConfig = {
         // 自定义环境变量
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
-        // maxWidth: 1440,
+        minWidth: 320,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.27"
+        version: "2.0.28"
     },
     trailingSlash: true,
     webpack: function (config) {
