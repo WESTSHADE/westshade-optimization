@@ -87,7 +87,7 @@ const BlockDisplay = ({title, content, src, button}) => {
                            className: "banner-display section-round-corner text-center"
                        },
                        style: {
-                           ":after": {background: "url(" + src + ")"},
+                           ":after": {background: `url(${process.env.imageBaseUrl}${src})`},
                        }
                    },
                }}

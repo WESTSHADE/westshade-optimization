@@ -51,7 +51,7 @@ const Hero = () => {
                        Block: {
                            style: {
                                background: "transparent !important",
-                               ":after": {background: "url('/images/custom-printing/canopy-tent/hero-bg.webp')"},
+                               ":after": {background: `url('${process.env.imageBaseUrl}/images/custom-printing/canopy-tent/hero-bg.webp')`},
                            }
                        }
                    }}

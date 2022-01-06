@@ -52,7 +52,7 @@ const Hero = () => {
                        overrides={{
                            Block: {
                                style: {
-                                   ":after": {background: "url('/images/canopy-tent/canopy-tent-hero-display.webp')"},
+                                   ":after": {background: `url('${process.env.imageBaseUrl}/images/canopy-tent/canopy-tent-hero-display.webp')`},
                                }
                            }
                        }}

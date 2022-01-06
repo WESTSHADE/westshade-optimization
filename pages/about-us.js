@@ -26,7 +26,7 @@ const BlockSection = ({title, content, imageContainerHeight, src, backgroundSize
                          <Block font={["MinXHeading20", "MinXHeading32", "MinXHeading44"]} color="MinXPrimaryText">{title}</Block>
                          <Block className="text-left" font={["MinXParagraph14", "MinXParagraph16"]} color="MinXPrimaryText">{content}</Block>
                          <Block position="relative" width="100%" height={imageContainerHeight ? imageContainerHeight : ["280px", "320px", "480px", "640px"]}
-                                backgroundImage={"url(" + src + ")"} backgroundSize={backgroundSize} backgroundPosition="center" backgroundRepeat="no-repeat"
+                                backgroundImage={`url("${process.env.imageBaseUrl}${src}")`} backgroundSize={backgroundSize} backgroundPosition="center" backgroundRepeat="no-repeat"
                          />
                      </Block>
                  }
@@ -43,7 +43,7 @@ function About_Us() {
                       content="Our goal is to bring comfort, quality, and convenience in enhancing our customers outdoor and indoor experience. In addition to our recreational and optimal business solution shelters, we also provide full custom-printing services in creating the ideal advertising method for your next product & service promotion!"/>
             </Head>
             <Block display="flex" flexDirection="column" position="relative" alignItems="flex-start" justifyContent="center" width="960px" height={["181px", "272px", "517px"]} margin={["auto auto 32px", null, "auto auto 40px"]}
-                   padding="0 30px" backgroundImage={"url('/images/about-us/about-us-display.webp')"} backgroundSize="cover" backgroundPosition="center" backgroundRepeat="no-repeat"
+                   padding="0 30px" backgroundImage={`url('${process.env.imageBaseUrl}/images/about-us/about-us-display.webp')`} backgroundSize="cover" backgroundPosition="center" backgroundRepeat="no-repeat"
             >
                 <div>
                     <Block marginBottom="8px" font={["MinXSubtitle10", "MinXSubtitle14"]} color="MinXPrimaryText">EITHER IT’S YOUR BUSINESS OR FAMILY ACTIVITIES</Block>

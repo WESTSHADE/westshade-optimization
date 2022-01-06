@@ -44,6 +44,7 @@ const overrides = {
     typography: {
         MinXTitle14: {fontFamily: "Roboto", fontSize: "14px", fontWeight: 900, lineHeight: "18px"},
         MinXTitle16: {fontFamily: "Roboto", fontSize: "16px", fontWeight: 900, lineHeight: "20px"},
+        MinXTitle18: {fontFamily: "Roboto", fontSize: "18px", fontWeight: 900, lineHeight: "22px"},
         MinXTitle20: {fontFamily: "Roboto", fontSize: "20px", fontWeight: 900, lineHeight: "28px"},
         MinXTitle24: {fontFamily: "Roboto", fontSize: "24px", fontWeight: 900, lineHeight: "32px"},
         MinXTitle26: {fontFamily: "Roboto", fontSize: "26px", fontWeight: 900, lineHeight: "34px"},
@@ -98,6 +99,8 @@ const overrides = {
         MinXLabel26: {fontFamily: "Roboto", fontSize: "26px", fontWeight: 500, lineHeight: "34px"},
         MinXLabel28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 500, lineHeight: "36px"},
         MinXLabel32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 500, lineHeight: "40px"},
+        MinXLabel40: {fontFamily: "Roboto", fontSize: "40px", fontWeight: 500, lineHeight: "40px"},
+        MinXLabel64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 500, lineHeight: "64px"},
     },
     colors: {
         Test: "red",

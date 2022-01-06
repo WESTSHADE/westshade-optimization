@@ -52,7 +52,7 @@ const Banner = ({
                        style: {
                            ...containerStyle,
                            ":after": {
-                               background: `url('${url}') ${backgroundColor} ${containerBackgroundPosition}/${imageObjectFit}`,
+                               background: `url('${process.env.imageBaseUrl}${url}') ${backgroundColor} ${containerBackgroundPosition}/${imageObjectFit}`,
                            }
                        }
                    },

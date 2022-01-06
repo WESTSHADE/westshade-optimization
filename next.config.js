@@ -6,19 +6,19 @@ const path = require("path");
 const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
-    /* config options here */
     // basePath: '',
-    // reactStrictMode: true,
+    reactStrictMode: true,
     compress: true,
     poweredByHeader: false,
     env: {
         // 自定义环境变量
         appleBusinessId: "5c460d0d-a6a4-4460-a9db-8267edd70c7b",
         apiBaseUrl: "https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1",
+        imageBaseUrl: "https://static.westshade.com",
         minWidth: 320,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.28"
+        version: "2.0.29"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -143,6 +143,12 @@ const nextConfig = {
             }, {
                 source: '/products/custom-printed-canopy-tent/buy',
                 destination: '/products/custom-printed-canopy-tent'
+            }, {
+                source: '/westshade-terms-and-conditions',
+                destination: '/terms-and-conditions'
+            }, {
+                source: '/westshade-privacy',
+                destination: '/privacy'
             }]
         }
     }
