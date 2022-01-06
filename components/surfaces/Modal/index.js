@@ -12,6 +12,7 @@ import Technique from "./parts/printing_technique";
 import Loading from "./parts/loading";
 import CustomPrintingRoof from "./parts/custom_printing_roof";
 import CustomPrintingRoofDetail from "./parts/custom_printing_roof_detail";
+import FabricCompare from "./parts/fabric_compare";
 
 import styles from "./modal.module.scss";
 
@@ -71,19 +72,20 @@ const modal = (props) => {
             ) : null}
             <ModalBody className={clsx([styles["container-body"], "hideScrollBar", bodyClassName])}>
                 {content ? content === "frame" ? <FrameCompare/> :
-                    content === "size" ? <SizeGuide/> :
-                        content === "summary" ? <OrderSummary dataTable={dataTable}/> :
-                            content === "loading" ? <Loading/> :
-                                content === "technique" ? <Technique/> :
-                                    content === "customPrintingRoof" ?
-                                        <CustomPrintingRoof selectedListTemp={selectedRoofListTemp} openDetailModal={openDetailModal} removeDetail={removeDetail}
-                                                            selectedRoofSlide={selectedRoofSlide} onSelectedRoofSlide={onSelectedRoofSlide}
-                                        /> :
-                                        content === "customPrintingRoofDetail" ?
-                                            <CustomPrintingRoofDetail selectedListTemp={selectedRoofListTemp} setSelectedRoofListTemp={setSelectedRoofListTemp}
-                                                                      selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
-                                                                      applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}
-                                            /> : null : children}
+                    content === "fabric" ? <FabricCompare/> :
+                        content === "size" ? <SizeGuide/> :
+                            content === "summary" ? <OrderSummary dataTable={dataTable}/> :
+                                content === "loading" ? <Loading/> :
+                                    content === "technique" ? <Technique/> :
+                                        content === "customPrintingRoof" ?
+                                            <CustomPrintingRoof selectedListTemp={selectedRoofListTemp} openDetailModal={openDetailModal} removeDetail={removeDetail}
+                                                                selectedRoofSlide={selectedRoofSlide} onSelectedRoofSlide={onSelectedRoofSlide}
+                                            /> :
+                                            content === "customPrintingRoofDetail" ?
+                                                <CustomPrintingRoofDetail selectedListTemp={selectedRoofListTemp} setSelectedRoofListTemp={setSelectedRoofListTemp}
+                                                                        selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
+                                                                        applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}
+                                                /> : null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={clsx([styles["container-footer"], footerClassName])}>
