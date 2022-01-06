@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import Button from "Components/button-n";
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import Button from "../../../../button-n";
+import ThemeProvider from "../../../../ThemeProvider";
 
 let timeoutOpacity, timeoutCounter;
 
@@ -45,7 +45,7 @@ const Hero = () => {
     }, [ref, counter]);
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V1>
             <Block className="banner-display" width="100vw" height={["auto", null, "700px", "775px"]} left="calc(50% - 50vw)" padding={["0 16px", null, "0 20px"]}
                    overrides={{
                        Block: {
@@ -118,7 +118,7 @@ const Hero = () => {
                     </Block>
                 </Block>
             </Block>
-        </ThemeProvider>
+        </ThemeProvider.V1>
     )
 }
 

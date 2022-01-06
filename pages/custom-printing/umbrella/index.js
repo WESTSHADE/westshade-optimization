@@ -10,7 +10,7 @@ import {Input} from "baseui/input";
 import {AspectRatioBox} from 'baseui/aspect-ratio-box';
 
 import Button from "Components/button-n";
-import {UmbrellaV1 as Hero} from "Components/Hero/CustomPrinting";
+import {Umbrella as Hero} from "Components/Hero/CustomPrinting";
 import {Benefit, FreeMockupForm, Section} from "Components/sections"
 import {Modal} from "Components/surfaces";
 
@@ -99,7 +99,7 @@ function Custom_Printing_Umbrella({router, size, phone}) {
                       content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
-                <Hero size={size} onClick={() => goBuyingSection()}/>
+                <Hero.V1 size={size} onClick={() => goBuyingSection()}/>
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={

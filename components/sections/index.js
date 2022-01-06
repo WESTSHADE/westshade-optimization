@@ -1,9 +1,5 @@
 import BannerDisplay from "./BannerDisplay";
 import Benefit from "./Benefit";
-import Checkout from "./Checkout";
-import Checkout_L from "./Checkout_L";
-import Checkout_N from "./Checkout_N";
-import Checkout_CP from "./Checkout_CP";
 import Selection from "./Selection";
 import Section from "./Section";
 import SubHeaderBar from "./SubHeaderBar";
@@ -15,13 +11,12 @@ import FreeMockupForm from "./FormSections";
 import UmbrellaProductItem from "./Umbrella_Product_Item";
 import BenefitV2 from "./Benefit/BenefitV2"
 
+
+import SectionTitle from "./Title"
+
 module.exports = {
     BannerDisplay,
     Benefit,
-    Checkout,
-    Checkout_L,
-    Checkout_N,
-    Checkout_CP,
     Section,
     Selection,
     SubHeaderBar,
@@ -31,5 +26,6 @@ module.exports = {
     FreeMockupForm,
     ProductImages,
     UmbrellaProductItem,
-    BenefitV2
+    BenefitV2,
+    SectionTitle
 };

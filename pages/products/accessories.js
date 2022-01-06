@@ -12,10 +12,10 @@ import {Block} from "baseui/block";
 import {ALIGN, Radio, RadioGroup} from "baseui/radio";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Checkout_L as Checkout} from "Components/sections";
+import Checkout from "Components/Checkout";
 import Selection from "Components/selection-n";
 
-import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
@@ -25,7 +25,6 @@ import {modifyCart} from "../../redux/actions/cartActions";
 
 import styles from "./Product.module.scss";
 
-const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const urlFn = new UrlFn();
@@ -73,8 +72,6 @@ function Accessories({router, product, productComponent, productVariant}) {
     const [message, setMessage] = useState("");
 
     const [availableToCheckout, setAvailable] = useState(false);
-
-    const [shippedDay, setShippedDay] = useState("");
 
     ////////////////////////////////////////
 
@@ -240,7 +237,6 @@ function Accessories({router, product, productComponent, productVariant}) {
                 router.push("/")
             }
         }
-        setShippedDay(dateFn.getReceivedDay());
 
         if (router.query.type) {
             setWallType(router.query.type);
@@ -508,9 +504,9 @@ function Accessories({router, product, productComponent, productVariant}) {
                             ) : null}
                             <SelectionList index={0} data={uProductComponent[0]}/>
                         </Block>
-                        <Checkout totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice} quantity={totalCount} shippedDay={shippedDay}
-                                  isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
-                                  onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
+                        <Checkout.V1 totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice} quantity={totalCount}
+                                     isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
+                                     onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
                         />
                     </Block>
                 </Block>

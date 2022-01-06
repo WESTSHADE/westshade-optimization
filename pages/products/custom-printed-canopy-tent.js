@@ -11,14 +11,13 @@ import {ArrowLeft, ArrowRight} from 'baseui/icon'
 
 import {Modal} from "Components/surfaces";
 import Button from "Components/button-n"
-import ProgressSteps from "Components/Progress/ProgressSteps"
+import ProgressBar from "Components/ProgressBar"
 import TentSizeSelection from "Components/sections/TentSizeSelection"
 import FrameSelection from "Components/sections/FrameSelection"
 import PrintingMethodSelection from "Components/sections/PrintingMethodSelection"
 import RequirementSelection from "Components/sections/RequirementSelection"
-import {Checkout_N as Checkout} from "Components/sections"
-// import {Checkout_CP as Checkout} from "Components/sections"
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import Checkout from "Components/Checkout";
+import ThemeProvider from "Components/ThemeProvider";
 
 import {EventEmitter} from "Utils/events";
 import Utils from "Utils/utils";
@@ -552,7 +551,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }, [state.activeCustomizer])
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V1>
             <Block display="flex" position="relative" width="100%" minHeight={state.activeCustomizer ? "100vh" : "unset"}>
                 {!state.activeCustomizer ?
                     <Block maxWidth={process.env.maxWidth + "px"} width="100%" margin="0 auto">
@@ -660,7 +659,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                 <ArrowLeft size={26}/>
                             </Button>
                             <Block flex="1" padding={["0 16px", null, "18px 64px"]} alignSelf={["center", null, "unset"]}>
-                                <ProgressSteps steps={steps.allSteps} currentStep={steps.currentStep}/>
+                                <ProgressBar.V1 steps={steps.allSteps} currentStep={steps.currentStep}/>
                             </Block>
                             <Button bundle="primary" width="60px" height="36px" onClick={() => nextStep()}
                                     buttonStyle={{
@@ -673,7 +672,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                         </Block>
                     </>
                 }
-                <Checkout
+                <Checkout.V2
                     quantity={productState.bag.totalCount}
                     isInStock={((productState.roofVariant?.stock_status === "instock") && (productState.roofVariant?.stock_status === "instock"))}
                     buttonText={steps.done ? productState.roofVariant.stock_status === "instock" ? "Add to Bag" : "Out of Stock" : "No customizations added"}
@@ -690,7 +689,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 {/* <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
                    dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant)?.length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/> */}
             </Block>
-        </ThemeProvider>
+        </ThemeProvider.V1>
     )
 }
 

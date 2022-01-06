@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import {AccordionV1 as Accordion} from "Components/Accordion";
+import Accordion from "Components/Accordion";
 import CardTabs from "../../../card_tabs";
 
 const feature_1 = [{
@@ -165,7 +165,7 @@ export default function Description() {
             </Block>
             <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                 <Block marginBottom={["24px", "36px", "64px"]} font="MinXHeading28" overrides={{Block: {style: {fontWeight: 400, textAlign: "center"}}}}>Let’s answer your questions</Block>
-                <Accordion maxWidth="660px" list={QA}/>
+                <Accordion.V1 maxWidth="660px" list={QA}/>
             </Block>
         </Block>
     )

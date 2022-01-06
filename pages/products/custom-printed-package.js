@@ -23,7 +23,7 @@ import {EventEmitter} from "Utils/events";
 
 import Button from "Components/button-n";
 import Banner from "Components/banner";
-import {AccordionV1 as Accordion} from "Components/Accordion";
+import Accordion from "Components/Accordion";
 import CustomButton from "Components/button";
 import Checkout from "Components/buttonGroup";
 import Selections from "Components/selection_group";
@@ -754,7 +754,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                                     <Image src="/images/product/custom-printed-package/intro@1x.webp" alt="intro" layout="responsive" width={905} height={529} objectFit="contain"/>
                                                 </Block>
                                                 <h3 className="section-title" style={{fontSize: "1.25rem"}}>Frequently Asked Questions</h3>
-                                                <Accordion
+                                                <Accordion.V1
                                                     list={[
                                                         {
                                                             title: "Q: Do you offer design services?",

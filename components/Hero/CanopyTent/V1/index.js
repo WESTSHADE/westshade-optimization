@@ -5,8 +5,8 @@ import {useRouter} from "next/router";
 import {Block} from "baseui/block";
 import {ChevronRight} from "baseui/icon";
 
-import Button from "Components/button-n";
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import Button from "../../../button-n";
+import ThemeProvider from "../../../ThemeProvider";
 
 const SpecSection = ({
                          title,
@@ -45,7 +45,7 @@ const Hero = () => {
     const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V1>
             <Block>
                 <Block className="banner-display text-center" width="100vw" height={["456px", null, "780px"]} left="calc(50% - 50vw)" display="grid" gridAutoRows="max-content" gridRowGap="8px" justifyItems="center"
                        padding={["102px 30px 0", null, "98px 30px 0"]}
@@ -93,7 +93,7 @@ const Hero = () => {
                     </Block>
                 </Block>
             </Block>
-        </ThemeProvider>
+        </ThemeProvider.V1>
     );
 };
 

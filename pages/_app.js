@@ -13,8 +13,8 @@ import {Block} from "baseui/block";
 import {store} from "../redux/store";
 import {styletron} from "../styletron";
 
-import {HeaderV1 as Header} from "Components/Header";
-import {FooterV1 as Footer} from "Components/Footer";
+import Header from "Components/Header";
+import Footer from "Components/Footer";
 
 import "../styles/old.css";
 import "../styles/globals.css";
@@ -212,12 +212,12 @@ function MyApp({Component, pageProps}) {
                         <div id="WestShadeFrame"
                              className={pageProps.homePage ? "scroll-container" : ""}
                              style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
-                            <Header/>
+                            <Header.V1/>
                             <Block position="relative" flex={1} width="100%" maxWidth={(pageProps.homePage || pageProps.fullPage) ? null : process.env.maxWidth + "px"} marginRight="auto" marginLeft="auto">
                                 <Component size={size} phone={businessPhone} {...pageProps} />
                             </Block>
                             <div id="modal-root"/>
-                            {!pageProps.noFooter ? <Footer/> : null}
+                            {!pageProps.noFooter ? <Footer.V1/> : null}
                         </div>
                     </BaseProvider>
                 </StyletronProvider>

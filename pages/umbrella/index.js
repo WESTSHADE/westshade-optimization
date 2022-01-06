@@ -9,47 +9,17 @@ import {FlexGrid, FlexGridItem} from 'baseui/flex-grid';
 import {ChevronRight} from "baseui/icon";
 
 import Button from "Components/button-n";
-import {BannerDisplay, Section} from "Components/sections";
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import {BannerDisplay, Section, SectionTitle} from "Components/sections";
+import ThemeProvider from "Components/ThemeProvider";
 
 import UMBRELLA from "Assets/spec-umbrella-chart.json";
-
-const SectionTitle = ({category = "Umbrella", title, content}) => {
-    return (
-        <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} maxWidth="676px" justifyItems="center" margin="auto">
-            <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading20"]} color="#33DED2"
-                   overrides={{
-                       Block: {
-                           style: {
-                               fontWeight: "500 !important", letterSpacing: "0.1em", lineHeight: "1em !important", textTransform: "uppercase"
-                           }
-                       },
-                   }}
-            >{category}</Block>
-            <Block font={["MinXTitle24", "MinXTitle24", "MinXTitle44"]} color="MinXPrimaryText"
-                   overrides={{
-                       Block: {
-                           style: {fontWeight: "700 !important", lineHeight: "1em !important", textTransform: "capitalize"}
-                       },
-                   }}
-            >{title}</Block>
-            <Block as="p" font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
-                   overrides={{
-                       Block: {
-                           style: {fontWeight: "400 !important", lineHeight: "1.5em !important"}
-                       },
-                   }}
-            >{content}</Block>
-        </Block>
-    )
-}
 
 const SectionBlock = ({title, content, displayList = []}) => {
     return (
         <Section upperContainerProps={{hidden: true}}
                  content={
                      <Block display="grid" gridRowGap={["24px", null, "64px"]}>
-                         <SectionTitle title={title} content={content}/>
+                         <SectionTitle.V2 category="Umbrella" title={title} content={content}/>
                          <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(" + displayList.length + ", minmax(auto, 410px))"]} gridColumnGap="20px" gridRowGap="24px" margin="auto" alignItems="baseline">
                              {displayList.map(({url, alt, title, content, titleImageUrl}, index) =>
                                  <Block key={index} display={["flex", null, "grid"]} gridTemplateColumns="1fr" gridRowGap="16px" flexDirection={[index % 2 === 0 ? "row" : "row-reverse", null, "unset"]} justifyItems="center"
@@ -94,7 +64,7 @@ function Umbrella({router, size}) {
     }, [size, ref]);
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V1>
             <Head>
                 <title>Umbrella - WESTSHADE</title>
                 <meta name="description" content="Best commercial umbrella in Southern California. Find your desired umbrella with different frames, different shape and different fabric!"/>
@@ -104,7 +74,8 @@ function Umbrella({router, size}) {
                     <Section upperContainerProps={{hidden: true}}
                              content={
                                  <Block display="grid" gridRowGap={["24px", null, "64px"]}>
-                                     <SectionTitle title="comparison of all ranges" content="Westshade provide five umbrella ranges to meet your special needs. Check out the comparison to find the one that meets your need best."/>
+                                     <SectionTitle.V2 category="Umbrella" title="comparison of all ranges"
+                                                      content="Westshade provide five umbrella ranges to meet your special needs. Check out the comparison to find the one that meets your need best."/>
                                      <Block position="relative" display="grid" gridTemplateColumns={["1fr 1fr", "1fr 2fr", "1fr 5fr"]}>
                                          <Block ref={ref} backgroundColor="white" paddingTop="24px" font="MinXParagraph14" color="MinXSecondaryText">
                                              <Block maxWidth="110px" minHeight="134px" marginBottom="40px" font="MinXHeading20" color="MinXPrimaryText">UMBRELLA SERIES</Block>
@@ -255,7 +226,7 @@ function Umbrella({router, size}) {
                     />
                 </FlexGridItem>
             </FlexGrid>
-        </ThemeProvider>
+        </ThemeProvider.V1>
     )
 }
 

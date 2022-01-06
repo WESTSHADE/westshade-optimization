@@ -1,5 +1,5 @@
-import ThemeV1 from "./V1";
+import V1 from "./V1";
 
 module.exports = {
-    ThemeV1
+    V1
 }

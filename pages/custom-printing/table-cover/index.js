@@ -7,7 +7,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 
 import Button from "Components/button-n";
-import {TableCoverV1 as Hero} from "Components/Hero/CustomPrinting";
+import {TableCover as Hero} from "Components/Hero/CustomPrinting";
 import {Benefit, FreeMockupForm, Section} from "Components/sections"
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
@@ -45,7 +45,7 @@ function Custom_Printing_Table_Cover({router, size}) {
                 <meta name="description" content="Customize your table covers for any occasions. Print your logo, icon and choose any color! Choose fabric from fitted and stretched table covers!"/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Hero size={size}/>
+                <Hero.V1 size={size}/>
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the product you want."
                          content={

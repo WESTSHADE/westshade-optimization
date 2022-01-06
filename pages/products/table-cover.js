@@ -11,10 +11,12 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import Checkout from "Components/Checkout";
+import {Selection} from "Components/sections";
+
+import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
-import {Checkout_L as Checkout, Selection} from "Components/sections";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 import {updateUser} from "../../redux/actions/userActions";
@@ -22,7 +24,6 @@ import {modifyCart} from "../../redux/actions/cartActions";
 
 import styles from "./Product.module.scss";
 
-const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const urlFn = new UrlFn();
@@ -63,7 +64,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     const [availableToCheckout, setAvailable] = useState(false);
 
     const [showAddProgress, setShowAddProgress] = useState(false);
-    const [shippedDay, setShippedDay] = useState("");
 
     const [tableCoverType, setTableCoverType] = useState("");
 
@@ -119,10 +119,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     };
 
     const handleChangeRadio = (event, index, id) => {
-        console.log(event);
-        console.log(index);
-        console.log(id);
-
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
         selection[index].forEach((attribute) => {
@@ -222,7 +218,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
         if (product.id) {
             setProductId(product.id.toString());
         }
-        setShippedDay(dateFn.getReceivedDay());
 
         if (router.query.type) {
             setTableCoverType(router.query.type);
@@ -467,9 +462,9 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                             ) : null}
                             <SelectionList index={0} data={uProductComponent[0]}/>
                         </Block>
-                        <Checkout totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice} quantity={totalCount} shippedDay={shippedDay}
-                                  isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
-                                  onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
+                        <Checkout.V1 totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice}
+                                     quantity={totalCount} isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
+                                     onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
                         />
                     </Block>
                 </Block>

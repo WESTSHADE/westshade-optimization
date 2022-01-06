@@ -93,6 +93,7 @@ const MButton = ({
         disabled: {
             // backgroundColor: "#23A4AD",
             // borderColor: "#23A4AD",
+            color: "#D9D9D9 !important"
         },
     });
 

@@ -26,7 +26,8 @@ import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {Checkout_N as Checkout, ProductDescription} from "Components/sections";
+import {ProductDescription} from "Components/sections";
+import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
 import MButton from "Components/button-n";
 import SelectionArea from "Components/selection_area";
@@ -1307,12 +1308,12 @@ function Canopy_Tent({router, products, variants}) {
                 </Block>
             </Block>
             <ProductDescription product={selectedFrame}/>
-            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                      onClick={() => openSummaryModal()}
-                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                      onClickPlus={() => setTotalCount(totalCount + 1)}
-                      onClickAddToBag={() => updateCart()}
-                      onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                         onClick={() => openSummaryModal()}
+                         onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                         onClickPlus={() => setTotalCount(totalCount + 1)}
+                         onClickAddToBag={() => updateCart()}
+                         onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>

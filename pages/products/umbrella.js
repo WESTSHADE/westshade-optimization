@@ -10,7 +10,8 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Checkout_N as Checkout, Selection, ProductImages, ProductDescription} from "Components/sections";
+import {Selection, ProductImages, ProductDescription} from "Components/sections";
+import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
 import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
@@ -489,12 +490,12 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                                     null}
                                 santoriniFrame={santoriniFrame}
             />
-            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                      onClick={() => openSummaryModal()}
-                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                      onClickPlus={() => setTotalCount(totalCount + 1)}
-                      onClickAddToBag={() => updateCart()}
-                      onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                         onClick={() => openSummaryModal()}
+                         onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                         onClickPlus={() => setTotalCount(totalCount + 1)}
+                         onClickAddToBag={() => updateCart()}
+                         onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
             <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
         </React.Fragment>

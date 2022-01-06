@@ -1,11 +1,11 @@
-import CanopyTentV1 from "./CanopyTent/V1";
-import CanopyTentV2 from "./CanopyTent/V2";
-import UmbrellaV1 from "./Umbrella/V1";
-import TableCoverV1 from "./TableCover/V1";
+import CustomPrinting from "./CustomPrinting";
+import CanopyTent from "./CanopyTent";
+import Umbrella from "./Umbrella";
+import TableCover from "./TableCover";
 
 module.exports = {
-    CanopyTentV1,
-    CanopyTentV2,
-    UmbrellaV1,
-    TableCoverV1
+    CustomPrinting,
+    CanopyTent,
+    Umbrella,
+    TableCover
 }
