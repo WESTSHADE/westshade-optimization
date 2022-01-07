@@ -58,7 +58,7 @@ const Hero = () => {
             >
                 <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(2,1fr)"]} height="100%" alignContent="center">
                     <Block position="relative">
-                        <Block display={[null, null, "inline-grid"]} width="auto" height="fit-content" position={["relative", null, "absolute"]} top={[null, null, "50%"]} right={[null, null, "-200px"]}
+                        <Block display={[null, null, "inline-grid"]} width="auto" height="fit-content" position={["relative", null, "absolute"]} top={[null, null, "50%"]} right={[null, null, "-175px"]}
                                overrides={{
                                    Block: {
                                        style: {
