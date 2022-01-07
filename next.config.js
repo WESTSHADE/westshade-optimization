@@ -1,5 +1,3 @@
-const path = require("path");
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -66,6 +64,14 @@ const nextConfig = {
             "/": {page: "/"},
             "/canopy-tent": {page: "/canopy-tent"},
             "/canopy-tent/spec": {page: "/canopy-tent/spec"},
+            "/10x10-canopy-tent": {page: "/10x10-canopy-tent"},
+            "/10x15-canopy-tent": {page: "/10x15-canopy-tent"},
+            "/10x20-canopy-tent": {page: "/10x20-canopy-tent"},
+            "/13x13-canopy-tent": {page: "/13x13-canopy-tent"},
+            "/13x20-canopy-tent": {page: "/13x20-canopy-tent"},
+            "/13x26-canopy-tent": {page: "/13x26-canopy-tent"},
+            "/16x16-canopy-tent": {page: "/16x16-canopy-tent"},
+            "/20x20-canopy-tent": {page: "/20x20-canopy-tent"},
             "/custom-printing": {page: "/custom-printing"},
             "/custom-printing/canopy-tent": {page: "/custom-printing/canopy-tent"},
             "/custom-printing/umbrella": {page: "/custom-printing/umbrella"},
@@ -127,14 +133,6 @@ const nextConfig = {
             // 将要被删除页面
             "/custom-printing-canopy-tent": {page: "/custom-printing-canopy-tent"},
             "/our-custom-printing-process": {page: "/our-custom-printing-process"},
-            "/10x10-canopy-tent": {page: "/10x10-canopy-tent"},
-            "/10x15-canopy-tent": {page: "/10x15-canopy-tent"},
-            "/10x20-canopy-tent": {page: "/10x20-canopy-tent"},
-            "/13x13-canopy-tent": {page: "/13x13-canopy-tent"},
-            "/13x20-canopy-tent": {page: "/13x20-canopy-tent"},
-            "/13x26-canopy-tent": {page: "/13x26-canopy-tent"},
-            "/16x16-canopy-tent": {page: "/16x16-canopy-tent"},
-            "/20x20-canopy-tent": {page: "/20x20-canopy-tent"},
         };
     },
     async rewrites() {

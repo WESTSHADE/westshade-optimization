@@ -25,7 +25,7 @@ function Canopy_Tent({router}) {
     const [frameCompareOpen, setFrameCompareOpen] = useState(false);
     const [technologyCompareOpen, setTechnologyCompareOpen] = useState(false);
 
-    const goBuyingPage = (param) => router.push(param);
+    const goBuyingPage = (url, as) => router.push(url, as);
 
     const frame = [{
         tabTitle: "Y5",
@@ -33,7 +33,7 @@ function Canopy_Tent({router}) {
         tabContentContent: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is designed for everyday use, performs exceptionally well all year round.",
         tabContentPrice: "",
         url: "/images/canopy-tent/tent/y5.webp",
-        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x10"}}),
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent', query: {series: "y5", size: "10x10"}}, {pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x10"}}),
         onClickLink: () => setFrameCompareOpen(true)
     }, {
         tabTitle: "Y6",
@@ -41,7 +41,7 @@ function Canopy_Tent({router}) {
         tabContentContent: "Y6 range is an ideal entry level of aluminum tent. It's lightweight yet remaining the strength of heavy duty steel frame.  It is ideal for the regular professional user.",
         tabContentPrice: "",
         url: "/images/canopy-tent/tent/y6.webp",
-        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y6", size: "10x10"}}),
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent', query: {series: "y6", size: "10x10"}}, {pathname: '/products/canopy-tent/buy', query: {series: "y6", size: "10x10"}}),
         onClickLink: () => setFrameCompareOpen(true)
     }, {
         tabTitle: "Y7",
@@ -49,7 +49,7 @@ function Canopy_Tent({router}) {
         tabContentContent: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
         tabContentPrice: "",
         url: "/images/canopy-tent/tent/y7.webp",
-        onClick: () => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y7", size: "10x10"}}),
+        onClick: () => goBuyingPage({pathname: '/products/canopy-tent', query: {series: "y7", size: "10x10"}}, {pathname: '/products/canopy-tent/buy', query: {series: "y7", size: "10x10"}}),
         onClickLink: () => setFrameCompareOpen(true)
     }];
 
@@ -59,8 +59,7 @@ function Canopy_Tent({router}) {
         tabContentContent: "Full color dye sublimation printing, unlimited colors, scratch-free, fading resistance. It is best choice of brand marketing and activity display.",
         tabContentPrice: "",
         url: "/images/canopy-tent/tent/uv-printer.webp",
-        onClick: () => {
-        },
+        onClick: () => goBuyingPage({pathname: '/products/custom-printed-canopy-tent'}, {pathname: "/products/custom-printed-canopy-tent/buy"}),
         onClickLink: () => setTechnologyCompareOpen(true)
     }, {
         tabTitle: "UV Printing",
@@ -68,8 +67,7 @@ function Canopy_Tent({router}) {
         tabContentContent: "Take your branding to the next level with our digital printing process using our high-quality UV ink to take your logo directly onto the canopy fabric. Provides high resolution service that dries and strengthens onto your canopy in an instant.",
         tabContentPrice: "",
         url: "/images/canopy-tent/tent/dye-sublimation-printer.webp",
-        onClick: () => {
-        },
+        onClick: () => goBuyingPage({pathname: '/products/custom-printed-canopy-tent'}, {pathname: "/products/custom-printed-canopy-tent/buy"}),
         onClickLink: () => setTechnologyCompareOpen(true)
     }];
 
@@ -148,7 +146,7 @@ function Canopy_Tent({router}) {
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXHeading24", "MinXHeading24", "MinXHeading28"]}>STOCK COLORS</Block>
                                         <Block marginBottom={["8px", "12px", "16px"]} font={["MinXParagraph14", "MinXParagraph16"]} color="MinXSecondaryText">Pick a color to light up your mood.</Block>
                                         <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
-                                                onClick={() => goBuyingPage({pathname: '/products/canopy-tent/buy', query: {series: "y5", size: "10x10"}})}
+                                                onClick={() => goBuyingPage({pathname: '/products/canopy-tent', query: {series: "y5", size: "10x10"}}, {pathname: "/products/canopy-tent/buy", query: {series: "y5", size: "10x10"}})}
                                         />
                                         <Block position="relative" height={["159px", "260px", "494px"]}>
                                             <Image src="/images/canopy-tent/tent/fabric-stock-color.webp" alt="fabric stock color" layout="fill" objectFit="contain"/>
@@ -166,8 +164,7 @@ function Canopy_Tent({router}) {
                                                 </Block>
                                                 <Block font="MinXParagraph16" color="MinXSecondaryText">
                                                     Your comfort and safety is our first priority. The fabric Westshade uses for plain canopy tent is 500D, 320gsm, PVC coated polyester. It’s water-resistant, fading resistant, fire
-                                                    resistant,
-                                                    and it provides UV protection.
+                                                    resistant, and it provides UV protection.
                                                 </Block>
                                             </Block>
                                         </Block>
@@ -201,8 +198,7 @@ function Canopy_Tent({router}) {
                                             You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
                                         </Block>
                                         <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
-                                                onClick={() => {
-                                                }}
+                                                onClick={() => goBuyingPage({pathname: '/products/custom-printed-canopy-tent'}, {pathname: "/products/custom-printed-canopy-tent/buy"})}
                                         />
                                         <Block display="grid" gridRowGap="20px" overrides={{Block: {style: {textAlign: "left"}}}}>
                                             <Block display="grid" gridColumnGap="20px" gridRowGap="20px" gridTemplateAreas={[`"a" "b" "c"`, `"a" "b" "c"`, `"a a" "b c"`]}>

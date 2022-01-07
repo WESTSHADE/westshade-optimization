@@ -63,7 +63,7 @@ const Checkout = (props) => {
                                 <Block position="absolute" left={0} display={["block", null, "none"]} font="MinXParagraph12" color="MinXSecondaryText">Quantity:</Block>
                                 <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
                             </Block>
-                            <Button bundle="primary" minWidth={["128px", null, "182px"]} height={["40px", null, "48px"]} font="MinXParagraph16" color="white" text={buttonText} disabled={!isAvailable}
+                            <Button bundle="primary" width={["128px", null, "100%"]} minWidth={["128px", null, "182px"]} height={["40px", null, "48px"]} font="MinXParagraph16" color="white" text={buttonText} disabled={!isAvailable}
                                     onClick={props.onClickAddToBag}/>
                         </Block>
                     </Block>
