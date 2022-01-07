@@ -44,11 +44,17 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                           TabBorder: {
                               props: {
                                   hidden: true
+                              },
+                              style: {
+                                  display: "none"
                               }
                           },
                           TabHighlight: {
                               props: {
                                   hidden: true
+                              },
+                              style: {
+                                  display: "none"
                               }
                           },
                       }}
