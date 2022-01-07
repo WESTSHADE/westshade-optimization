@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
@@ -6,68 +6,16 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {FlexGrid, FlexGridItem} from 'baseui/flex-grid';
+import {Alert} from 'baseui/icon'
 
 import Button from "Components/button-n";
+import {Modal} from "Components/surfaces"
 import {Section, SectionTitle} from "Components/sections"
 import ThemeProvider from "Components/ThemeProvider";
 
-const Package = [{
-    imageUrl: "/images/custom-printed-package/custom-printed-package-01.webp",
-    alt: "custom-printed-package-01",
-    title: "Package 1",
-    subtitle: "1 valance",
-    url: "/custom-printed-package/f1010cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-02.webp",
-    alt: "custom-printed-package-02",
-    title: "Package 2",
-    subtitle: "4 valances",
-    url: "/custom-printed-package/f1015cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-03.webp",
-    alt: "custom-printed-package-03",
-    title: "Package 3",
-    subtitle: "4 Peaks",
-    url: "/custom-printed-package/f1020cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-04.webp",
-    alt: "custom-printed-package-04",
-    title: "Package 4",
-    subtitle: "1 valance + 1 Peak",
-    url: "/custom-printed-package/f1313cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-05.webp",
-    alt: "custom-printed-package-05",
-    title: "Package 5",
-    subtitle: "Full roof",
-    url: "/custom-printed-package/f1320cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-06.webp",
-    alt: "custom-printed-package-06",
-    title: "Package 6",
-    subtitle: "1 valance + 1 Peak + 1 Full wall",
-    url: "/custom-printed-package/f1326cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-07.webp",
-    alt: "custom-printed-package-07",
-    title: "Package 7",
-    subtitle: "1 valance + 1 Peak + 3 Full walls",
-    url: "/custom-printed-package/f1616cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-08.webp",
-    alt: "custom-printed-package-08",
-    title: "Package 8",
-    subtitle: "Full roof + 1 full wall + 2 half wall",
-    url: "/custom-printed-package/f2020cpp"
-}, {
-    imageUrl: "/images/custom-printed-package/custom-printed-package-09.webp",
-    alt: "custom-printed-package-09",
-    title: "Package 9",
-    subtitle: "Full roof + 2 full walls + 2 half wall",
-    url: "/custom-printed-package/f2020cpp"
-}]
+import DATA from "Assets/custom-printing-package.json";
 
-const PackageItem = ({imageUrl, alt, title, subtitle, url, router}) => {
+const PackageItem = ({imageUrl, alt, title, subtitle, url, alertClick, router}) => {
     return (
         <Block display="flex" flexDirection="column" padding={["8px", null, "24px 16px"]} backgroundColor="#FAFAFA" overflow="hidden" $style={{borderRadius: "8px"}}>
             <Block position="relative" width="100%" height="150px" margin={["auto auto 8px", null, "auto auto 24px"]} backgroundColor="white">
@@ -75,13 +23,14 @@ const PackageItem = ({imageUrl, alt, title, subtitle, url, router}) => {
             </Block>
             <Block className="text-left" display="flex" flexDirection="column" justifyContent="space-between" flex={1} $style={{gap: "8px"}}>
                 <Block>
-                    <Block display="flex" justifyContent="space-between" marginBottom="8px" padding="16px 0">
+                    <Block display="flex" justifyContent="space-between" alignItems="center" marginBottom="8px" padding="16px 0">
                         <Block font="MinXHeading16" color="MinXPrimaryText">{title}</Block>
+                        <Block className="cursor" width="20px" height="20px" onClick={alertClick}><Alert color="#8C8C8C" size={20}/></Block>
                     </Block>
                     <Block font="MinXHeading16" color="MinXPrimaryText" $style={{fontWeight: "400 !important", lineHeight: "1.2 !important"}}>{subtitle}</Block>
                 </Block>
                 <Block>
-                    <Block marginBottom="16px" font="MinXHeading16" color="MinXPrimaryText" $style={{fontWeight: "400 !important", lineHeight: "1 !important"}}>{`From`}</Block>
+                    {/*<Block marginBottom="16px" font="MinXHeading16" color="MinXPrimaryText" $style={{fontWeight: "400 !important", lineHeight: "1 !important"}}>{`From`}</Block>*/}
                     <Button bundle="primary" width="100%" height="36px" marginBottom="8px" text="Choose" font="MinXLabel14" onClick={() => router.push(url)}/>
                 </Block>
             </Block>
@@ -89,7 +38,10 @@ const PackageItem = ({imageUrl, alt, title, subtitle, url, router}) => {
     )
 }
 
-function Custom_Printing_Canopy_Tent({router}) {
+function Custom_Printing_Package({router}) {
+    const [showModal, setShowModal] = useState(false);
+    const [activePackage, setActivePackage] = useState(0);
+
     return (
         <ThemeProvider.V1>
             <Head>
@@ -105,7 +57,7 @@ function Custom_Printing_Canopy_Tent({router}) {
                                  <FlexGrid gridRowGap="24px">
                                      <FlexGridItem>
                                          <SectionTitle.V2 category="custom printing package" title="Customize in 3 steps"
-                                                          content="This space is for SEO. Say something that users would search, any key words, products name, blabla. Westshade provides various custom printing packages to make it easy for you to custom even when your artwork is not ready."
+                                                          content="Custom print your own logo and design on our pop up canopy tents! Sidewalls on our canopy can also be printed as well. Our high quality inks and long-lasting printing technology are fade resistant that keeps your logo looking fresh time after time. Our fabric is also Waterproof, Wind-Proof, Fire Retardant, and has UPF 50+ Protection. Easy to set up and pack away when not needed. Personalized portable tents are great for trade shows, events, or for any other special occasion."
                                          />
                                      </FlexGridItem>
                                      <FlexGridItem>
@@ -147,9 +99,12 @@ function Custom_Printing_Canopy_Tent({router}) {
                     <Section upperContainerProps={{hidden: true}}
                              content={
                                  <FlexGrid flexGridColumnCount={[2, 2, 3, 4]} flexGridColumnGap={["scale600", null, null, "scale700"]} flexGridRowGap={["scale800", null, null, "scale900"]} width="100%">
-                                     {Package.map(({title, subtitle, imageUrl, alt, url}, index) => (
+                                     {DATA.map(({title, subtitle, imageUrl, alt, url}, index) => (
                                          <FlexGridItem key={title} flexGridItemIndex={index} display="grid" gridRowGap="scale600">
-                                             <PackageItem title={title} subtitle={subtitle} imageUrl={imageUrl} alt={alt} url={url} router={router}/>
+                                             <PackageItem title={title} subtitle={subtitle} imageUrl={imageUrl} alt={alt} url={url} alertClick={() => {
+                                                 setActivePackage(index);
+                                                 setShowModal(true);
+                                             }} router={router}/>
                                          </FlexGridItem>
                                      ))}
                                  </FlexGrid>
@@ -157,8 +112,51 @@ function Custom_Printing_Canopy_Tent({router}) {
                     />
                 </FlexGridItem>
             </FlexGrid>
+            <Modal type="alertdialog" bodyClassName="modal-body-no-margin" closeStyles={{top: "21px !important", right: "21px !important"}} isOpen={showModal} onClose={() => setShowModal(false)}>
+                <Block display="grid" gridRowGap={["21px", null, "45px"]} maxWidth="672px" padding={[null, null, "56px 40px"]}>
+                    <Block display="grid" gridTemplateColumns={["1fr", null, "auto 1fr"]} gridRowGap="8px" gridColumnGap="16px" padding={["16px", null, "0 16px"]} backgroundColor="white" overflow="hidden" $style={{borderRadius: "16px"}}>
+                        <Block position="relative" width={["160px", null, "200px"]} height={["160px", null, "200px"]} margin="auto">
+                            <Image src={DATA[activePackage].imageUrl} alt={DATA[activePackage].alt} layout="intrinsic" width={1024} height={1024} objectFit="contain"/>
+                        </Block>
+                        <Block className="text-left" display="flex" flexDirection="column" flex={1} padding={[null, null, "16px 0"]} $style={{gap: "8px"}}>
+                            <Block font="MinXHeading18" color="MinXPrimaryText">{DATA[activePackage].title}</Block>
+                            <Block font="MinXHeading14" color="MinXPrimaryText" $style={{lineHeight: "1.2 !important"}}>{DATA[activePackage].subtitle}</Block>
+                            <Block font="MinXParagraph14" color="MinXSecondaryText" $style={{lineHeight: "1.2 !important"}}>{DATA[activePackage].description}</Block>
+                            <Button bundle="primary" width="123px" height="36px" marginTop={["4px", null, "auto"]} marginRight="auto" marginLeft={["auto", null, "unset"]} text="Choose" font="MinXLabel14"
+                                    onClick={() => router.push(DATA[activePackage].url)}/>
+                        </Block>
+                    </Block>
+                    <Block padding={["0 16px 32px", null, "0"]}>
+                        <Block display="flex" alignItems="center" marginBottom={["12px", null, "20px"]} $style={{gap: "12px"}}>
+                            <Image src="/images/icon/icon-gift.png" alt={DATA[activePackage].alt} layout="fixed" width={20} height={20} objectFit="contain"/>
+                            <Block>We have gift(s) below for you if you order now</Block>
+                        </Block>
+                        <Block className="text-center" display="grid" gridTemplateColumns={["repeat(3, min(100%,100px))", null, "repeat(3, min(100%, 120px))"]} width="100%" overflow="scroll" font="MinXLabel14" color="MinXPrimaryText"
+                               $style={{gap: "8px"}}>
+                            <Block>
+                                <Block position="relative" width="100%" marginBottom="12px">
+                                    <Image src="/images/product/accessories/protective-cover.webp" alt="protective-cover" layout="responsive" width={1024} height={1024} objectFit="contain"/>
+                                </Block>
+                                Protective cover
+                            </Block>
+                            <Block>
+                                <Block position="relative" width="100%" marginBottom="12px">
+                                    <Image src="/images/product/accessories/tie-down-straps.webp" alt="tie-down-straps" layout="responsive" width={1024} height={1024} objectFit="contain"/>
+                                </Block>
+                                <Block>Tie down straps</Block>
+                            </Block>
+                            <Block>
+                                <Block position="relative" width="100%" marginBottom="12px">
+                                    <Image src="/images/product/accessories/steel-stakes.webp" alt="steel-stakes" layout="responsive" width={1024} height={1024} objectFit="contain"/>
+                                </Block>
+                                <Block>Steel Stakes</Block>
+                            </Block>
+                        </Block>
+                    </Block>
+                </Block>
+            </Modal>
         </ThemeProvider.V1>
     );
 }
 
-export default withRouter(Custom_Printing_Canopy_Tent);
+export default withRouter(Custom_Printing_Package);

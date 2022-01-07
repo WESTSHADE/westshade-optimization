@@ -1,0 +1,74 @@
+[
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-01.webp",
+    "alt": "custom-printed-package-01",
+    "title": "Package 1",
+    "subtitle": "1 valance",
+    "description": "Print one valance. Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1010cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-02.webp",
+    "alt": "custom-printed-package-02",
+    "title": "Package 2",
+    "subtitle": "4 valances",
+    "description": "Print four valances. Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1015cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-03.webp",
+    "alt": "custom-printed-package-03",
+    "title": "Package 3",
+    "subtitle": "4 Peaks",
+    "description": "Print four peaks. Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1020cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-04.webp",
+    "alt": "custom-printed-package-04",
+    "title": "Package 4",
+    "subtitle": "1 valance + 1 Peak",
+    "description": "Print one valance + one peak. Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1313cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-05.webp",
+    "alt": "custom-printed-package-05",
+    "title": "Package 5",
+    "subtitle": "Full roof",
+    "description": "Print full roof (four valances + four peaks). Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1320cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-06.webp",
+    "alt": "custom-printed-package-06",
+    "title": "Package 6",
+    "subtitle": "1 valance + 1 Peak + 1 Full wall",
+    "description": "Print one valance + one peak + one full wall (outside only). Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1326cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-07.webp",
+    "alt": "custom-printed-package-07",
+    "title": "Package 7",
+    "subtitle": "1 valance + 1 Peak + 3 Full walls",
+    "description": "Print one valance + one peak + three full walls (outside only). Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f1616cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-08.webp",
+    "alt": "custom-printed-package-08",
+    "title": "Package 8",
+    "subtitle": "Full roof + 1 full wall + 2 half wall",
+    "description": "Print full roof (four valances + four peaks) + one full wall (outside only) + two half walls (outside only). Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f2020cpp"
+  },
+  {
+    "imageUrl": "/images/custom-printed-package/custom-printed-package-09.webp",
+    "alt": "custom-printed-package-09",
+    "title": "Package 9",
+    "subtitle": "Full roof + 2 full walls + 2 half wall",
+    "description": "Print full roof (four valances + four peaks) + two full walls (outside only) + two half walls (outside only). Please choose the size, frame, and printing method based on your needs and budgets. We will reach out to you and make a free mockup for you before printing.",
+    "url": "/custom-printed-package/f2020cpp"
+  }
+]

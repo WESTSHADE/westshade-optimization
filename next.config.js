@@ -1,4 +1,5 @@
 const path = require("path");
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -69,6 +70,7 @@ const nextConfig = {
             "/custom-printing/canopy-tent": {page: "/custom-printing/canopy-tent"},
             "/custom-printing/umbrella": {page: "/custom-printing/umbrella"},
             "/custom-printing/table-cover": {page: "/custom-printing/table-cover"},
+            "/custom-promotion": {page: "/custom-promotion"},
             "/umbrella": {page: "/umbrella"},
             "/umbrella/spec": {page: "/umbrella/spec"},
             "/umbrella/marco": {page: "/umbrella/marco"},

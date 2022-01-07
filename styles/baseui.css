@@ -1240,4 +1240,8 @@ ul.bullet-warranty.sub > li {
     transition: all 1000ms;
 }
 
+.modal-body-no-margin {
+    margin: 0;
+    background-color: #F7F7F7;
+}
 
