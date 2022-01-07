@@ -18,7 +18,7 @@ const Hero = () => {
     const [counter, setCounter] = useState(0);
 
     const goCustomPage = () => router.push("/products/custom-printed-canopy-tent", "/products/custom-printed-canopy-tent/buy");
-    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
+    const goPackagePage = () => router.push({pathname: "/custom-printing-package"});
 
     useEffect(() => {
         return () => {

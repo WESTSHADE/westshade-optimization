@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import NumberFormat from "react-number-format";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
@@ -13,9 +14,13 @@ import {Modal} from "Components/surfaces"
 import {Section, SectionTitle} from "Components/sections"
 import ThemeProvider from "Components/ThemeProvider";
 
+import Utils from "Utils/utils";
+
+const utils = new Utils();
+
 import DATA from "Assets/custom-printing-package.json";
 
-const PackageItem = ({imageUrl, alt, title, subtitle, url, alertClick, router}) => {
+const PackageItem = ({productDetail, imageUrl, alt, title, subtitle, url, asUrl, alertClick, router}) => {
     return (
         <Block display="flex" flexDirection="column" padding={["8px", null, "24px 16px"]} backgroundColor="#FAFAFA" overflow="hidden" $style={{borderRadius: "8px"}}>
             <Block position="relative" width="100%" height="150px" margin={["auto auto 8px", null, "auto auto 24px"]} backgroundColor="white">
@@ -30,15 +35,19 @@ const PackageItem = ({imageUrl, alt, title, subtitle, url, alertClick, router}) 
                     <Block font="MinXHeading16" color="MinXPrimaryText" $style={{fontWeight: "400 !important", lineHeight: "1.2 !important"}}>{subtitle}</Block>
                 </Block>
                 <Block>
-                    {/*<Block marginBottom="16px" font="MinXHeading16" color="MinXPrimaryText" $style={{fontWeight: "400 !important", lineHeight: "1 !important"}}>{`From`}</Block>*/}
-                    <Button bundle="primary" width="100%" height="36px" marginBottom="8px" text="Choose" font="MinXLabel14" onClick={() => router.push(url)}/>
+                    {productDetail && productDetail.price ? (
+                        <Block marginBottom="16px" font="MinXParagraph14" color="MinXPrimaryText" $style={{lineHeight: "1 !important"}}>
+                            From <Block as={"span"}><NumberFormat thousandSeparator={true} prefix={"$"} value={productDetail.price} displayType={"text"}/></Block>
+                        </Block>
+                    ) : null}
+                    <Button bundle="primary" width="100%" height="36px" marginBottom="8px" text="Choose" font="MinXLabel14" onClick={() => router.push(url, asUrl)}/>
                 </Block>
             </Block>
         </Block>
     )
 }
 
-function Custom_Printing_Package({router}) {
+function Custom_Printing_Package({router, products}) {
     const [showModal, setShowModal] = useState(false);
     const [activePackage, setActivePackage] = useState(0);
 
@@ -99,9 +108,9 @@ function Custom_Printing_Package({router}) {
                     <Section upperContainerProps={{hidden: true}}
                              content={
                                  <FlexGrid flexGridColumnCount={[2, 2, 3, 4]} flexGridColumnGap={["scale600", null, null, "scale700"]} flexGridRowGap={["scale800", null, null, "scale900"]} width="100%">
-                                     {DATA.map(({title, subtitle, imageUrl, alt, url}, index) => (
+                                     {DATA.map(({title, subtitle, imageUrl, alt, url, asUrl}, index) => (
                                          <FlexGridItem key={title} flexGridItemIndex={index} display="grid" gridRowGap="scale600">
-                                             <PackageItem title={title} subtitle={subtitle} imageUrl={imageUrl} alt={alt} url={url} alertClick={() => {
+                                             <PackageItem productDetail={products[index]} title={title} subtitle={subtitle} imageUrl={imageUrl} alt={alt} url={url} asUrl={asUrl} alertClick={() => {
                                                  setActivePackage(index);
                                                  setShowModal(true);
                                              }} router={router}/>
@@ -158,5 +167,19 @@ function Custom_Printing_Package({router}) {
         </ThemeProvider.V1>
     );
 }
+
+export async function getStaticProps() {
+    const ids = [61953, 62002, 62031, 62060, 62089, 62118, 62147, 62205, 62176];
+    let products = [];
+
+    products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+
+    return {
+        props: {
+            products: products
+        }, // will be passed to the page component as props
+        revalidate: 10
+    }
+};
 
 export default withRouter(Custom_Printing_Package);

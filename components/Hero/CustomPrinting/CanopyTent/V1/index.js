@@ -17,7 +17,7 @@ const Hero = ({size}) => {
     const [circleBD, setCircleBD] = useState(0);
 
     const goCustomPage = () => router.push({pathname: "/products/custom-printed-canopy-tent/buy"});
-    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
+    const goPackagePage = () => router.push({pathname: "/custom-printing-package"});
 
     useEffect(() => {
         if (size && ref && ref.current) {

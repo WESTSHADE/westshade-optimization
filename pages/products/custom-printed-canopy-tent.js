@@ -612,7 +612,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                         mockup </Link></Block> without ordering.
                                     </Block>
                                     <Block padding="11px" $style={{borderRadius: "24px", border: "1px solid #D9D9D9"}}>
-                                        <Link href="/custom-printing-canopy-tent">
+                                        <Link href="/custom-printing-package">
                                             <Block font="MinXLabel14" color="MinXPrimaryText">Artwork not ready? <Block as="span" marginLeft="4px" font="MinXParagraph14" color="MinXPrimaryText">Buy now and upload later</Block></Block>
                                         </Link>
                                     </Block>

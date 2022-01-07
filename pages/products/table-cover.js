@@ -102,7 +102,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -122,7 +121,6 @@ function Table_Cover({router, product, productComponent, productVariant}) {
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
         selection[index].forEach((attribute) => {
-            console.log(attribute);
             if (attribute.id === id) attribute.option = event.target.value;
         });
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
@@ -435,15 +433,7 @@ function Table_Cover({router, product, productComponent, productVariant}) {
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
                     </Block>
                     {/* 选择区域 */}
-                    <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}
-                           overrides={{
-                               Block: {
-                                   props: {
-                                       className: "hideScrollBar"
-                                   },
-                               },
-                           }}
-                    >
+                    <Block className="hideScrollBar" width={["auto", null, "440px"]} overflow={[null, null, "scroll"]}>
                         <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
                             <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
                             {product && product.short_description ? (

@@ -1,0 +1,119 @@
+.container-nav {
+  position: relative;
+  z-index: 99;
+  height: 92px;
+
+  .root-navigation-top {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    white-space: nowrap;
+    width: 100%;
+    height: 40px;
+    margin: auto;
+    padding: 0 16px;
+    background-color: #FBFBFB;
+
+    .site-logo {
+      display: none;
+
+      @media screen and (min-width: 916px) {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 916px) {
+      flex-direction: row;
+    }
+
+    @media screen and (min-width: 1440px) {
+      padding-right: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
+      padding-left: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
+    }
+  }
+
+  .root-navigation {
+    width: 100%;
+    height: 52px;
+    margin: auto;
+    padding: 0 16px;
+    border-bottom: none;
+    background-color: #F2F2F2;
+
+    .nav-left {
+      @media screen and (min-width: 916px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .nav-center {
+      &.logo {
+        @media screen and (min-width: 916px) {
+          display: none;
+          visibility: hidden;
+        }
+      }
+
+      &.menu {
+        display: none;
+        visibility: hidden;
+
+        @media screen and (min-width: 916px) {
+          display: flex;
+          visibility: visible;
+          letter-spacing: 0.1em;
+        }
+      }
+    }
+
+    .nav-left, .nav-center, .nav-right {
+      & > li {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      & > li:first-child {
+        padding-left: 0;
+      }
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      justify-content: center;
+      align-items: center;
+      min-width: 18px;
+      height: 18px;
+      background-color: #23A4Ad;
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      overflow: hidden;
+    }
+
+    @media screen and (min-width: 916px) {
+      padding-right: 24px;
+      padding-left: 24px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      padding-right: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
+      padding-left: calc((100vw - var(--maximum-display-width)) / 2 + 24px);
+    }
+  }
+  .hidden {
+    display: none;
+  }
+
+  .site-logo {
+    position: relative;
+    height: 32px;
+    aspect-ratio: 5;
+  }
+}
+
+

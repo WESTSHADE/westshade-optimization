@@ -10,8 +10,12 @@
 
   .container-product-section {
     min-height: 64px;
-    margin-bottom: 12px;
-    padding: 12px 0;
+    margin-bottom: 16px;
+    //padding: 12px 0;
+
+    &.short-description {
+      min-height: unset;
+    }
 
     &.b-b {
       border-bottom: 1px solid #7f7f7f;

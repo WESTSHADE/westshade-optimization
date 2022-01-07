@@ -279,8 +279,7 @@ function Canopy_Tent({router, products, variants}) {
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            // url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
-            url = "https://static.westshade.com" + url
+            url = process.env.imageBaseUrl + url;
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -461,7 +460,7 @@ function Canopy_Tent({router, products, variants}) {
             const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
             const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
             const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            wallPicturesList[index] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
         });
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
@@ -527,7 +526,6 @@ function Canopy_Tent({router, products, variants}) {
         setAvailableList(available);
 
         setTotalRegularPrice(regularPrice);
-        // setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
         setTotalSalePrice(salePrice);
     };
 
@@ -723,7 +721,7 @@ function Canopy_Tent({router, products, variants}) {
                     const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
                     const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                     const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
-                    wallPicturesList[index - 1] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    wallPicturesList[index - 1] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
                 } else {
                     wallPicturesList[index - 1] = "";
                 }
@@ -800,6 +798,8 @@ function Canopy_Tent({router, products, variants}) {
         setAvailable(available);
     }, [availableList]);
 
+    //////////////////////////////////////
+
     return (
         <React.Fragment>
             <Head>
@@ -808,7 +808,7 @@ function Canopy_Tent({router, products, variants}) {
             </Head>
             <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
                 {/* 图片区域 */}
-                <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block flex={[0, 0, 1]} position={[null, null, "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                     <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
                           overrides={{
                               Root: {
@@ -919,15 +919,8 @@ function Canopy_Tent({router, products, variants}) {
                     </Tabs>
                 </Block>
                 {/* 选择区域 */}
-                <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
+                <Block className="hideScrollBar" width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
                        paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: "hideScrollBar"
-                               },
-                           },
-                       }}
                 >
                     <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
                     <Block marginTop="4px" marginBottom="24px" font="MinXLabel14" color="MinXButton">
