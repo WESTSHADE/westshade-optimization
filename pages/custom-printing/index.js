@@ -45,7 +45,7 @@ const printingSpecs = [
         },
         application: {
             title: "APPLICATION",
-            content: "Good for whole tent printing"
+            content: "Excellent for whole tent printing"
         },
         cost: {
             title: "COST",
@@ -77,7 +77,7 @@ const printingSpecs = [
         },
         application: {
             title: "APPLICATION",
-            content: "Good for logo printing"
+            content: "Excellent for logo printing"
         },
         cost: {
             title: "COST",

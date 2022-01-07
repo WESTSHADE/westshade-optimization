@@ -78,9 +78,8 @@ const Hero = () => {
                             </Block>
                         </Block>
                     </Block>
-                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" maxWidth={[null, null, "467px"]} marginRight="auto" marginLeft={["auto", null, "unset"]}
-                           $style={{zIndex: 9}}>
-                        <Block width="fit-content" marginBottom={["32px", null, null, "80px"]} font={["MinXTitle36", "MinXTitle36", "MinXTitle48"]} color="MinXPrimaryText"
+                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" marginRight="auto" marginLeft={["auto", null, "unset"]} $style={{zIndex: 9}}>
+                        <Block width="fit-content" maxWidth={[null, null, "467px"]} marginBottom={["32px", null, null, "80px"]} font={["MinXTitle36", "MinXTitle36", "MinXTitle48"]} color="MinXPrimaryText"
                                overrides={{
                                    Block: {
                                        style: {fontWeight: "400 !important", lineHeight: "1em !important", textTransform: "capitalize"}
@@ -95,7 +94,8 @@ const Hero = () => {
                             </Block>
                             <Block>canopy tent</Block>
                         </Block>
-                        <Block as="p" width="fit-content" marginBottom={["16px", null, null, "32px"]} font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
+                        <Block as="p" width="fit-content" maxWidth={[null, null, process.env.maxWidth / 2 + "px"]} marginBottom={["16px", null, null, "32px"]} font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]}
+                               color="MinXSecondaryText"
                                overrides={{
                                    Block: {
                                        style: {
@@ -105,7 +105,7 @@ const Hero = () => {
                                    },
                                }}
                         >Westshade aims to provide the best printing service in producing high-end custom printed canopy tents. High-quality fabric and state-of-art printing technology are adopted to offer the best to our customers.</Block>
-                        <Block display="flex" flexDirection="row" $style={{gap: "24px"}}>
+                        <Block display="flex" flexDirection="row" width="100%" maxWidth={[null, null, "467px"]} $style={{gap: "24px"}}>
                             <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
                                     buttonStyle={{boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
                                     onClick={() => goCustomPage()}
