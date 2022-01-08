@@ -12,7 +12,7 @@ import {ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
 import {CanopyTent as Hero} from "Components/Hero/CustomPrinting";
-import {Section, Benefit, FreeMockupForm} from "Components/sections"
+import {Section, Benefit, FreeMockupForm} from "Components/Sections"
 
 const ImageSlide = ({url, alt}) => {
     return (

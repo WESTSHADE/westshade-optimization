@@ -10,7 +10,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Selection, ProductImages, ProductDescription} from "Components/sections";
+import {Selection, ProductImages, ProductDescription} from "Components/Sections";
 import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
 import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";

@@ -7,8 +7,8 @@ import ReactPlayer from "react-player";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from "react-responsive-carousel";
 import ButtonM from "../../components/button-n"
-import BenefitV2 from "../../components/sections/Benefit/BenefitV2.js";
-import FreeMockupForm from "../../components/sections/FormSections";
+import BenefitV2 from "../../Components/Sections/Benefit/BenefitV2.js";
+import FreeMockupForm from "../../Components/Sections/FormSections";
 import styles from "./custom-promotion.module.scss"
 import {Button} from "baseui/button";
 

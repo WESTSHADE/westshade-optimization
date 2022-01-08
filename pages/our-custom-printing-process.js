@@ -3,7 +3,7 @@ import React from "react";
 import {Block} from "baseui/block";
 
 import Accordion from "Components/Accordion";
-import {Section} from "Components/sections";
+import {Section} from "Components/Sections";
 
 import QA from "Assets/q&a.json";
 

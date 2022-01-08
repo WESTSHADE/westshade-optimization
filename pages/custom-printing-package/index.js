@@ -11,7 +11,7 @@ import {Alert} from 'baseui/icon'
 
 import Button from "Components/button-n";
 import {Modal} from "Components/surfaces"
-import {Section, SectionTitle} from "Components/sections"
+import {Section, SectionTitle} from "Components/Sections"
 import ThemeProvider from "Components/ThemeProvider";
 
 import Utils from "Utils/utils";
@@ -52,7 +52,7 @@ function Custom_Printing_Package({router, products}) {
     const [activePackage, setActivePackage] = useState(0);
 
     return (
-        <ThemeProvider.V1>
+        <ThemeProvider.V2>
             <Head>
                 <title>Printed Package - Custom Printing Canopy Tent | WESTSHADE</title>
                 <meta name="description" content="Printing packages are based on your needs with a large selection of sizes and colors to promo your business, get free design today!"/>
@@ -164,7 +164,7 @@ function Custom_Printing_Package({router, products}) {
                     </Block>
                 </Block>
             </Modal>
-        </ThemeProvider.V1>
+        </ThemeProvider.V2>
     );
 }
 

@@ -28,7 +28,7 @@ const ProductItem = ({detail}) => {
 
     return (
         <Block display="grid" gridRowGap="14px" justifyItems="center" width="100%" maxWidth="120px" margin="auto">
-            <AspectRatioBox aspectRatio={1} width="inherit">
+            <AspectRatioBox width="inherit">
                 <AspectRatioBoxBody as={Image} src={imageSrc} alt="umbrella accessories" layout="fill" objectFit="contain"/>
             </AspectRatioBox>
             <Block className="text-center" font="MinXLabel14" color="MinXPrimaryText">{detail.name}</Block>

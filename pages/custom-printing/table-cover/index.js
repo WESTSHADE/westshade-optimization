@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 
 import Button from "Components/button-n";
 import {TableCover as Hero} from "Components/Hero/CustomPrinting";
-import {Benefit, FreeMockupForm, Section} from "Components/sections"
+import {Benefit, FreeMockupForm, Section} from "Components/Sections"
 
 const SectionCard = ({router, src, alt, title, content, destination}) => {
     return (

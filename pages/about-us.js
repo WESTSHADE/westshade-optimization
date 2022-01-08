@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import {Section} from "Components/sections";
+import {Section} from "Components/Sections";
 
 const BlockGridIcon = ({src, alt, title}) => {
     return (

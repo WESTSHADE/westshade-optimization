@@ -24,7 +24,7 @@ import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {ProductDescription} from "Components/sections";
+import {ProductDescription} from "Components/Sections";
 import Button from "Components/button-n";
 import {Modal} from "Components/surfaces";
 import Checkout from "Components/Checkout";

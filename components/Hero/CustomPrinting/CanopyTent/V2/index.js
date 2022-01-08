@@ -45,7 +45,7 @@ const Hero = () => {
     }, [ref, counter]);
 
     return (
-        <ThemeProvider.V1>
+        <ThemeProvider.V2>
             <Block className="banner-display" width="100vw" height={["auto", null, "700px", "775px"]} left="calc(50% - 50vw)" padding={["0 16px", null, "0 20px"]}
                    overrides={{
                        Block: {
@@ -117,7 +117,7 @@ const Hero = () => {
                     </Block>
                 </Block>
             </Block>
-        </ThemeProvider.V1>
+        </ThemeProvider.V2>
     )
 }
 

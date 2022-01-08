@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {FILL, Tab, Tabs} from "baseui/tabs-motion";
 
 import Button from "Components/button-n";
-import {Section} from "Components/sections";
+import {Section} from "Components/Sections";
 
 const data = [
     {

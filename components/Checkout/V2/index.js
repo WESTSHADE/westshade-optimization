@@ -34,7 +34,7 @@ const Checkout = (props) => {
     const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag", showShippedDay = true} = props;
 
     return (
-        <ThemeProvider.V1>
+        <ThemeProvider.V2>
             <Block className={`${styles["container-checkout"]} main-container-checkout`} height={["92px", null, "68px"]} paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "20px"]}>
                 <Block className={`${styles["inner-container"]}`} maxWidth={process.env.maxWidth + "px"}>
                     <Block className={`${styles["section-bottom"]}`} height={["48px", null, "100%"]}>
@@ -73,7 +73,7 @@ const Checkout = (props) => {
                     </Block>
                 </Block>
             </Block>
-        </ThemeProvider.V1>
+        </ThemeProvider.V2>
     );
 };
 

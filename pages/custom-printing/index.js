@@ -14,7 +14,7 @@ import {Button} from "baseui/button";
 
 import ThemeProvider from "Components/ThemeProvider";
 import {CustomPrinting as Hero} from "Components/Hero/CustomPrinting";
-import {BenefitV2, FreeMockupForm, SectionTitle} from "Components/sections";
+import {BenefitV2, FreeMockupForm, SectionTitle} from "Components/Sections";
 import ButtonM from "Components/button-n"
 
 import styles from "./custom-printing.module.scss"
@@ -221,7 +221,7 @@ function Custom_Printing({router}) {
     }
 
     return (
-        <ThemeProvider.V1>
+        <ThemeProvider.V2>
             <Head>
                 <title>Custom Printing - WESTSHADE</title>
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
@@ -733,7 +733,7 @@ function Custom_Printing({router}) {
                 </Block>
 
             </Block>
-        </ThemeProvider.V1>
+        </ThemeProvider.V2>
     );
 }
 

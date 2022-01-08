@@ -12,7 +12,7 @@ import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
 import Checkout from "Components/Checkout";
-import {Selection} from "Components/sections";
+import {Selection} from "Components/Sections";
 
 import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";

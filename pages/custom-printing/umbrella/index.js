@@ -11,7 +11,7 @@ import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 
 import Button from "Components/button-n";
 import {Umbrella as Hero} from "Components/Hero/CustomPrinting";
-import {Benefit, FreeMockupForm, Section} from "Components/sections"
+import {Benefit, FreeMockupForm, Section} from "Components/Sections"
 import {Modal} from "Components/surfaces";
 
 import Utils from "Utils/utils";

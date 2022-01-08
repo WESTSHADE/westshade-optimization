@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 import {ChevronRight} from "baseui/icon";
 
-import {BannerDisplay, Section, SubHeaderBar, UmbrellaProductItem} from "Components/sections";
+import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
 import Button from "Components/button-n";
 import Utils from "Utils/utils";
 
@@ -34,10 +34,10 @@ function Bali({router, size}) {
             </Head>
             <SubHeaderBar size={size} title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="/images/umbrella/bali/bali_display.webp" alt="bali display"
-                               titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
-                               containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
-                               containerBackground="rgba(0,0,0,0.5)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
+                <Banner title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="/images/umbrella/bali/bali_display.webp" alt="bali display"
+                        titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
+                        containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
+                        containerBackground="rgba(0,0,0,0.5)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
                 />
                 <Section title={<>SAFE TO ENJOY<br/>THE OUTDOOR</>}
                          subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}

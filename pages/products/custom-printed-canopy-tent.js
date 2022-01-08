@@ -12,10 +12,10 @@ import {ArrowLeft, ArrowRight} from 'baseui/icon'
 import {Modal} from "Components/surfaces";
 import Button from "Components/button-n"
 import ProgressBar from "Components/ProgressBar"
-import TentSizeSelection from "Components/sections/TentSizeSelection"
-import FrameSelection from "Components/sections/FrameSelection"
-import PrintingMethodSelection from "Components/sections/PrintingMethodSelection"
-import RequirementSelection from "Components/sections/RequirementSelection"
+import TentSizeSelection from "Components/Sections/TentSizeSelection"
+import FrameSelection from "Components/Sections/FrameSelection"
+import PrintingMethodSelection from "Components/Sections/PrintingMethodSelection"
+import RequirementSelection from "Components/Sections/RequirementSelection"
 import Checkout from "Components/Checkout";
 import ThemeProvider from "Components/ThemeProvider";
 
@@ -551,7 +551,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }, [state.activeCustomizer])
 
     return (
-        <ThemeProvider.V1>
+        <ThemeProvider.V2>
             <Block display="flex" position="relative" width="100%" minHeight={state.activeCustomizer ? "100vh" : "unset"}>
                 {!state.activeCustomizer ?
                     <Block maxWidth={process.env.maxWidth + "px"} width="100%" margin="0 auto">
@@ -690,7 +690,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                 {/* <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
                    dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant)?.length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/> */}
             </Block>
-        </ThemeProvider.V1>
+        </ThemeProvider.V2>
     )
 }
 

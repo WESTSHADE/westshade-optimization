@@ -12,7 +12,7 @@ import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
 import Hero from "Components/Hero/CanopyTent";
-import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/sections";
+import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/Sections";
 
 const refs = [];
 
