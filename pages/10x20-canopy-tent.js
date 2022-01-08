@@ -93,7 +93,9 @@ function Canopy_Tent({router}) {
                                       props: {
                                           className: "tab-highlight-horizon long"
                                       },
-                                      style: {left: tabLeft + "px"}
+                                      style: {
+                                          left: activeTabKey === "0" ? "25%" : "75%", transform: "translateX(-50%)", transition: "all 300ms linear"
+                                      }
                                   },
                               }}
                         >
@@ -181,8 +183,7 @@ function Canopy_Tent({router}) {
                                 You can get an extensive selection of custom branding solutions for events and businesses of all sizes.
                             </Block>
                             <Button width="97px" height="36px" marginRight="auto" marginBottom={["24px", "40px", "64px"]} marginLeft="auto" font="MinXParagraph14" text='Buy' bundle="primary"
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => () => goBuyingPage({pathname: '/products/custom-printed-canopy-tent'}, {pathname: "/products/custom-printed-canopy-tent/buy"})}
                             />
                             <Block display="grid" gridRowGap="20px" overrides={{Block: {style: {textAlign: "left"}}}}>
                                 <Block display="grid" gridColumnGap="20px" gridRowGap="20px" gridTemplateAreas={[`"a" "b" "c"`, `"a" "b" "c"`, `"a a" "b c"`]}>

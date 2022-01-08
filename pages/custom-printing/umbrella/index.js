@@ -7,7 +7,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
-import {AspectRatioBox} from 'baseui/aspect-ratio-box';
+import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 
 import Button from "Components/button-n";
 import {Umbrella as Hero} from "Components/Hero/CustomPrinting";
@@ -23,7 +23,7 @@ const SectionCard = ({router, src, alt, title, content, destination, onClick, bu
         <Block display={["grid", null, "flex"]} flexDirection={["column", null, "row-reverse"]} alignItems={[null, null, "center"]} justifyContent={[null, null, "space-between"]} gridTemplateColumns={["1fr", null, "unset"]}
                gridRowGap={["20px", "24px", "unset"]} padding={["32px 16px", "48px 64px", "20px 0 0"]} $style={{boxShadow: "0px 16px 40px rgba(0, 0, 0, 0.05)"}}
         >
-            <AspectRatioBox position="relative" width={["256px", "320px", "380px"]} margin="auto"><Image src={src} alt={alt} layout="fill" priority/></AspectRatioBox>
+            <AspectRatioBox position="relative" width={["256px", "320px", "380px"]} margin="auto"><AspectRatioBoxBody as={Image} src={src} alt={alt} layout="fill" priority/></AspectRatioBox>
             <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", null, "16px"]} flex={1} paddingLeft={[null, null, "40px"]}>
                 <Block font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
                 <Block maxWidth="400px" font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>

@@ -83,7 +83,7 @@ function Catalina({router, size}) {
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/catalina/icon_upf.webp" alt="catalina udf"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/icon_upf.webp" alt="catalina udf" layout='fill' objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>UPF 50+</Block>
@@ -92,7 +92,7 @@ function Catalina({router, size}) {
                                      </Block>
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/catalina/icon_water.webp" alt="catalina water"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/icon_water.webp" alt="catalina water" layout='fill' objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Waterproof</Block>
@@ -111,31 +111,31 @@ function Catalina({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail1.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail1.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail2.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail2.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      <span style={{color: "#23A4AD"}}>Aluminum</span> Hub & Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail3.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail3.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Crank Lift
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail4.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail4.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Internal With Reinforced Channel
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail5.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail5.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Cast Alloy Base-Plate
                                  </Block>

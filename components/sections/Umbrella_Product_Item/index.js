@@ -1,6 +1,7 @@
 import React from "react";
 
 import {useRouter} from "next/router";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
@@ -28,7 +29,7 @@ const ProductItem = ({detail}) => {
     return (
         <Block display="grid" gridRowGap="14px" justifyItems="center" width="100%" maxWidth="120px" margin="auto">
             <AspectRatioBox aspectRatio={1} width="inherit">
-                <AspectRatioBoxBody as="img" src={imageSrc} alt="umbrella accessories"/>
+                <AspectRatioBoxBody as={Image} src={imageSrc} alt="umbrella accessories" layout="fill" objectFit="contain"/>
             </AspectRatioBox>
             <Block className="text-center" font="MinXLabel14" color="MinXPrimaryText">{detail.name}</Block>
             <Button height="28px" font="MinXLabel12" text='Learn More' bundle="primary" onClick={() => router.push(link)}/>

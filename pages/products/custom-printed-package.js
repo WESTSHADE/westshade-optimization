@@ -53,6 +53,10 @@ function Custom_printed_Package({router, product, productComponent, productVaria
 
     const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
+    const [uProduct, setProduct] = useState({...product});
+    const [uProductComponent, setProductComponent] = useState([...productComponent]);
+    const [uProductVariant, setProductVariant] = useState([...productVariant]);
+
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productType, setProductType] = useState("");
@@ -121,6 +125,16 @@ function Custom_printed_Package({router, product, productComponent, productVaria
 
     const closeSummaryModal = () => setSummaryIsOpen(false);
 
+    const fetchProduct = async (id) => {
+        if (!id) return;
+        return await utils.getProductByWooId(id);
+    };
+
+    const fetchProductVariant = async (id) => {
+        if (!id) return;
+        return await utils.getVariantByWooProductId(id);
+    };
+
     function renderCustomImage(props) {
         return (
             <AspectRatioBox aspectRatio={1} minHeight="230px">
@@ -166,7 +180,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
         }
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
         let selectionVariant = [...selectedVariant];
-        let selected = productVariant[index].filter((variant) => {
+        let selected = uProductVariant[index].filter((variant) => {
             if (!variant || !variant.attributes) return false;
 
             let equal = true;
@@ -191,7 +205,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
         let available = [...availableList];
 
         selectedVariant.forEach((variant, index) => {
-            if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
+            if ((!variant || !variant.attributes) && uProductComponent[index].type !== "simple") {
                 available[index].status = false;
                 return;
             }
@@ -250,7 +264,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
             EventEmitter.dispatch("handleCart", true);
         }
 
-        addToCart(productComponent, selectedVariant, totalCount);
+        addToCart(uProductComponent, selectedVariant, totalCount);
     };
 
     const handleSendQuote = async () => {
@@ -276,10 +290,21 @@ function Custom_printed_Package({router, product, productComponent, productVaria
         }
     };
 
-    useEffect(() => {
+    useEffect(async () => {
         setTabsRefs((tabsRefs) => Array(3).fill(null).map((_, i) => tabsRefs[i] || createRef()));
 
-        setProductId(product.id.toString());
+        if (uProduct.id) {
+            setProductId(uProduct.id.toString());
+        } else {
+            let id = urlFn.getParam("id");
+            if (id) {
+                setProductId(id.toString());
+                let p = await utils.getProductByWooId(id);
+                setProduct(p);
+            } else {
+                router.push("/")
+            }
+        }
 
         let series = router.query.series || urlFn.getParam("series");
         if (series) {
@@ -303,52 +328,67 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     }, [tabsRefs]);
 
     useEffect(() => {
-        if (!product) return;
+        if (!uProduct) return;
 
-        viewItem(product);
+        viewItem(uProduct);
 
-        setProductName(product.name);
-        setProductType(product.type);
+        setProductName(uProduct.name);
+        setProductType(uProduct.type);
 
-        if (product.hasOwnProperty("image")) {
-            setMainImage([product.image]);
-        } else if (product.hasOwnProperty("images")) {
-            setMainImage(product.images);
+        if (uProduct.hasOwnProperty("image")) {
+            setMainImage([uProduct.image]);
+        } else if (uProduct.hasOwnProperty("images")) {
+            setMainImage(uProduct.images);
         }
-    }, [product]);
+
+        // 获取,保存各组件信息
+        if (uProduct.type === "simple" || uProduct.type === "variable") {
+            setProductComponent([{...uProduct}]);
+        }
+    }, [uProduct]);
 
     useEffect(() => {
-        if (!productComponent || productComponent.length === 0) return;
+        if (!uProductComponent || uProductComponent.length === 0) return;
 
-        if (productComponent[0].hasOwnProperty("image")) {
-            setMainImage([productComponent[0].image]);
-        } else if (productComponent[0].hasOwnProperty("images")) {
-            setMainImage(productComponent[0].images);
+        if (uProductComponent[0].hasOwnProperty("image")) {
+            setMainImage([uProductComponent[0].image]);
+        } else if (uProductComponent[0].hasOwnProperty("images")) {
+            setMainImage(uProductComponent[0].images);
         }
 
-        let selectedAttrList = [];
-        productComponent.map((component, indexA) => {
-            // 修改默认选项值 与 Variant里的attr相匹配
-            let defaultAttr = [...component.default_attributes];
-            defaultAttr.forEach((attr, indexB) => {
-                if (attr.id === id_attribute_canopySize) {
-                    let size = router.query.size || urlFn.getParam("size");
+        if (uProduct.type === "simple") {
+            setSelectedVariant(uProductComponent);
 
-                    if (size) attr.option = size;
-                } else if (attr.id === id_attribute_canopyColor) {
-                    let color = urlFn.getParam("color");
+            // 获取,保存各组件变体产品信息
+            // setProductVariant([uProductComponent]);
+        } else if (uProduct.type === "variable") {
+            let selectedAttrList = [];
+            Promise.all(
+                uProductComponent.map((component) => {
+                    let defaultAttr = [...component.default_attributes];
 
-                    if (color) attr.option = color;
-                }
+                    defaultAttr.forEach((attr) => {
+                        if (attr.id === id_attribute_canopySize) {
+                            let size = router.query.size || urlFn.getParam("size");
+
+                            if (size) attr.option = size;
+                        }
+                    });
+
+                    selectedAttrList.push(defaultAttr);
+
+                    return fetchProductVariant(component.id);
+                })
+            ).then((result) => {
+                setSelectedAttribute(selectedAttrList);
+                setInitSelectedAttribute(true);
+
+                // 获取,保存各组件变体产品信息
+                setProductVariant(result);
+                setTimeout(() => setInitProductVariant(true), 250);
             });
-            selectedAttrList.push([...defaultAttr]);
-        });
-        // 初始化各产品默认变体参数
-        setSelectedAttribute(selectedAttrList);
-        setInitSelectedAttribute(true);
-        // 获取,保存各组件变体产品信息
-        setInitProductVariant(true);
-    }, [productComponent]);
+        }
+    }, [uProductComponent]);
 
     useEffect(() => {
         if (!initSelectedAttribute || !initProductVariant) return;
@@ -357,7 +397,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
         let selectedVariantList = [];
         selectedAttribute.forEach((attr, index) => {
             if (!attr) return;
-            let selected = productVariant[index].filter((variant) => {
+            let selected = uProductVariant[index].filter((variant) => {
                 if (!variant || !variant.attributes) return false;
                 // variant.attributes.push({id: 2, name: "Color", option: "white"});
                 // if (attr.length !== variant.attributes.length) return false;
@@ -419,7 +459,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                 if (!item.optional) {
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 } else {
                     return;
@@ -431,7 +471,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                 if (item.needed > item.quantity) {
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 }
             }
@@ -454,7 +494,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     checkoutProductList.splice(i, 1);
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 } else {
                     checkoutProductList[i].quantity = needed;
@@ -592,17 +632,17 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                        paddingTop={"24px"} paddingRight={["16px", null, "24px"]} paddingLeft={["16px", null, "0"]}
                 >
                     <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
-                    {product && product.short_description ? (
+                    {uProduct && uProduct.short_description ? (
                         <Block className={clsx([styles["container-product-section"], styles["short-description"]])} font="MinXParagraph14" color="MinXPrimaryText"
                                dangerouslySetInnerHTML={{
-                                   __html: `${stringFn.modifyShortDescription(product.short_description)}`,
+                                   __html: `${stringFn.modifyShortDescription(uProduct.short_description)}`,
                                }}
                         />
                     ) : null}
-                    {product && product.description ? (
+                    {uProduct && uProduct.description ? (
                         <Block className={clsx(styles["container-product-section"], styles["align-left"])} font="MinXParagraph14" color="MinXSecondaryText"
                                dangerouslySetInnerHTML={{
-                                   __html: `${stringFn.modifyShortDescription(product.description)}`,
+                                   __html: `${stringFn.modifyShortDescription(uProduct.description)}`,
                                }}
                         />
                     ) : null}
@@ -619,7 +659,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     </Block>
                     <SelectionArea title="Size">
                         <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} id={id_attribute_canopySize} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => {
+                            {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => {
                                 if ((selectedFrame === "y5" || selectedFrame === "y6") && index > 2) return;
                                 return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                             })) : null}
@@ -647,7 +687,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     <SelectionArea>
                         <Selection name="Printing Technique" value={selectedAttribute[0] ? selectedAttribute[0][2].option.toLowerCase() : ""} id={id_attribute_printingTechnique}
                                    onChange={(event) => handleChangeRadio(event, 0, id_attribute_printingTechnique)}>
-                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
+                            {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>)) : null}
                         </Selection>
                         <Button type="solid" height="32px" font="MinXParagraph16" text='Compare Frames' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
@@ -663,12 +703,13 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                          onClickPlus={() => setTotalCount(totalCount + 1)}
                          onClickAddToBag={() => updateCart()}
                          onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+                         showShippedDay={false}
             />
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
             <Modal type="alertdialog" isOpen={showPrintServiceModal} onClose={() => setShowPrintServiceModal(false)} content="technique"/>
             <Modal type="alertdialog" isOpen={showSizeModal} onClose={() => setShowSizeModal(false)}>
-                <img className="popup-image" src="/images/tent-spec/choose-size.jpg"/>
+                <img className="popup-image" src={process.env.imageBaseUrl + "/images/tent-spec/choose-size.jpg"}/>
             </Modal>
             <Modal type="alertdialog" isOpen={showModal} onClose={() => setShowModal(false)} dialogStyles={{background: "rgb(237, 247, 237)", paddingTop: '24px'}}>
                 <Alert severity="success">
@@ -676,7 +717,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     Email has been sent successfully.
                 </Alert>
             </Modal>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{uProductComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => setShowGetQuote(false)}>
                 <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
                        display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"

@@ -132,7 +132,7 @@ function Custom_Printing_Package({router, products}) {
                             <Block font="MinXHeading14" color="MinXPrimaryText" $style={{lineHeight: "1.2 !important"}}>{DATA[activePackage].subtitle}</Block>
                             <Block font="MinXParagraph14" color="MinXSecondaryText" $style={{lineHeight: "1.2 !important"}}>{DATA[activePackage].description}</Block>
                             <Button bundle="primary" width="123px" height="36px" marginTop={["4px", null, "auto"]} marginRight="auto" marginLeft={["auto", null, "unset"]} text="Choose" font="MinXLabel14"
-                                    onClick={() => router.push(DATA[activePackage].url)}/>
+                                    onClick={() => router.push(DATA[activePackage].url, DATA[activePackage].asUrl)}/>
                         </Block>
                     </Block>
                     <Block padding={["0 16px 32px", null, "0"]}>

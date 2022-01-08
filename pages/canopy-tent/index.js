@@ -28,22 +28,22 @@ const BlockVideo = ({src, isSelected, step}) => {
 
             if (box) {
                 box.muted = true; // without this line it's not working although I have "muted" in HTML
-            }
 
-            // 全部显现
-            if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                if (isSelected) {
-                    if (box.paused) box.play();
-                } else {
-                    if (!box.paused) box.pause();
+                // 全部显现
+                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    if (isSelected) {
+                        if (box.paused) box.play();
+                    } else {
+                        if (!box.paused) box.pause();
+                    }
                 }
+                // 全部不显示
+                if ((rect.top > window.innerHeight && rect.bottom > window.innerHeight) || (rect.top < 0 && rect.bottom < 0)) {
+                    box.pause();
+                }
+                // 部分显现
+                // if (rect.top < window.innerHeight && rect.bottom >= 0) {}
             }
-            // 全部不显示
-            if ((rect.top > window.innerHeight && rect.bottom > window.innerHeight) || (rect.top < 0 && rect.bottom < 0)) {
-                box.pause();
-            }
-            // 部分显现
-            // if (rect.top < window.innerHeight && rect.bottom >= 0) {}
         }
     };
 
@@ -72,7 +72,7 @@ const BlockVideo = ({src, isSelected, step}) => {
 const VideoSlide = ({url, isSelected, step}) => {
     return (
         <div className="react-player">
-            <BlockVideo src={url} type="video/mp4" isSelected={isSelected} step={step}/>
+            <BlockVideo src={process.env.imageBaseUrl + url} type="video/mp4" isSelected={isSelected} step={step}/>
         </div>
     );
 };

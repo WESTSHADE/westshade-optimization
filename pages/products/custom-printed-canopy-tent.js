@@ -685,6 +685,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                     totalPrice={productState.bag?.totalPrice}
                     totalSalesPrice={productState.bag?.sale_price}
                     stepsDone={steps.done}
+                    showShippedDay={false}
                 />
                 {/* <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => setSummaryIsOpen(false)} content="summary"
                    dataTable={{productComponent, selectedVariant: [(Object.keys(productState.frameVariant).length !==0 && productState.frameVariant), (Object.keys(productState.roofVariant)?.length !==0 && productState.roofVariant)], totalSalePrice: productState.bag?.totalPrice, totalRegularPrice: productState.bag.totalRegularPrice, totalCount: productState.bag.totalCount}}/> */}

@@ -31,7 +31,7 @@ const Quantity = (props) => {
 };
 
 const Checkout = (props) => {
-    const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag"} = props;
+    const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag", showShippedDay = true} = props;
 
     return (
         <ThemeProvider.V1>
@@ -39,10 +39,14 @@ const Checkout = (props) => {
                 <Block className={`${styles["inner-container"]}`} maxWidth={process.env.maxWidth + "px"}>
                     <Block className={`${styles["section-bottom"]}`} height={["48px", null, "100%"]}>
                         <Block display={["none", null, "flex"]} alignItems="center" justifyContent="center" $style={{gap: "12px"}}>
-                            <AspectRatioBox aspectRatio={1} width="20px" height="20px" minWidth="20px">
-                                <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
-                            </AspectRatioBox>
-                            <Block font="MinXParagraph14">{`Order today, shipped by ${shippedDay}.`}</Block>
+                            {showShippedDay ? (
+                                <>
+                                    <AspectRatioBox aspectRatio={1} width="20px" height="20px" minWidth="20px">
+                                        <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
+                                    </AspectRatioBox>
+                                    <Block font="MinXParagraph14">{`Order today, shipped by ${shippedDay}.`}</Block>
+                                </>
+                            ) : null}
                         </Block>
                         <Block display="flex" justifyContent="space-between" width={["100%", null, "max-content"]} alignItems="center" $style={{gap: "32px"}}>
                             <Button shape="circle" width="32px" height="32px" buttonClassName={`${styles["button-summary"]}`} buttonHoverBackgroundColor="#E8E8E8" onClick={props.onClick}>

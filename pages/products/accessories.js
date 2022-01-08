@@ -10,7 +10,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {ALIGN, Radio, RadioGroup} from "baseui/radio";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 
 import Checkout from "Components/Checkout";
 import Selection from "Components/selection-n";
@@ -102,7 +102,7 @@ function Accessories({router, product, productComponent, productVariant}) {
         function renderCustomImage(props) {
             return (
                 <AspectRatioBox aspectRatio={1} minHeight="230px">
-                    <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                    <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 </AspectRatioBox>
             );
         }

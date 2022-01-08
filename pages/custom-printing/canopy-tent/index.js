@@ -7,7 +7,7 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
 import Button from "Components/button-n";
@@ -17,7 +17,7 @@ import {Section, Benefit, FreeMockupForm} from "Components/sections"
 const ImageSlide = ({url, alt}) => {
     return (
         <AspectRatioBox width="inherit">
-            <Image src={url} alt={alt} layout="fill" objectFit="contain"/>
+            <AspectRatioBoxBody as={Image} src={url} alt={alt} layout="fill" objectFit="contain"/>
         </AspectRatioBox>
     );
 };

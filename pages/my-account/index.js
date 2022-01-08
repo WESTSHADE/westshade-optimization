@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, SHAPE, KIND} from "baseui/button";
@@ -361,7 +362,7 @@ function Orders({size}) {
                                                }}
                                         >
                                             <AspectRatioBox width={["60px", "75px"]}>
-                                                <AspectRatioBoxBody as="img" src={item.image.src ? item.image.src : "/images/product/default-product.webp"} alt={item.name}/>
+                                                <AspectRatioBoxBody as={Image} src={item.image.src ? item.image.src : "/images/product/default-product.webp"} alt={item.name} layout="fill" objectFit="contain"/>
                                             </AspectRatioBox>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>
                                                 <Block display="flex" flex={1} flexDirection={["column", "row"]} marginBottom={["12px", "20px"]}>

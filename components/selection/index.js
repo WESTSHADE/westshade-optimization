@@ -55,11 +55,11 @@ export default function Selection(props) {
                     root: styles["root"],
                 }}
                 disableRipple
-                icon={<img className={styles["radio-image"]} src={"/images/icon/" + value + ".svg"}/>}
+                icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + value + ".svg"}/>}
                 checkedIcon={
                     <>
                         <div className={styles["radio-outer-border"]}/>
-                        <img className={styles["radio-image"]} src={"/images/icon/" + value + ".svg"}/>
+                        <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + value + ".svg"}/>
                     </>
                 }
                 {...props}
@@ -71,11 +71,11 @@ export default function Selection(props) {
                 classes={{
                     root: styles["root"],
                 }}
-                icon={<img className={styles["radio-image"]} src={"/images/icon/10x10.svg"}/>}
+                icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/10x10.svg"}/>}
                 checkedIcon={
                     <>
                         <div className={styles["radio-outer-border"]}/>
-                        <img className={styles["radio-image"]} src={"/images/icon/10x10.svg"}/>
+                        <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/10x10.svg"}/>
                     </>
                 }
                 disableRipple
@@ -89,11 +89,11 @@ export default function Selection(props) {
                     classes={{
                         root: styles["root"],
                     }}
-                    icon={<img className={styles["radio-image"]} src={"/images/icon/" + value.substring(0, 2) + ".png"}/>}
+                    icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + value.substring(0, 2) + ".png"}/>}
                     checkedIcon={
                         <>
                             <div className={styles["radio-outer-border"]}/>
-                            <img className={styles["radio-image"]} src={"/images/icon/" + value.substring(0, 2) + ".png"}/>
+                            <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + value.substring(0, 2) + ".png"}/>
                         </>
                     }
                     disableRipple
@@ -106,11 +106,11 @@ export default function Selection(props) {
                     classes={{
                         root: styles["root"],
                     }}
-                    icon={<img className={styles["radio-image"]} src={"/images/icon/" + stringFn.replaceSpace(value) + ".png"}/>}
+                    icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + stringFn.replaceSpace(value) + ".png"}/>}
                     checkedIcon={
                         <>
                             <div className={styles["radio-outer-border-large"]}/>
-                            <img className={styles["radio-image"]} src={"/images/icon/" + stringFn.replaceSpace(value) + ".png"}/>
+                            <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/" + stringFn.replaceSpace(value) + ".png"}/>
                         </>
                     }
                     disableRipple
@@ -124,11 +124,11 @@ export default function Selection(props) {
                 classes={{
                     root: styles["root"],
                 }}
-                icon={<img className={styles["radio-image"]} src={"/images/icon/wall-" + value + ".png"}/>}
+                icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/wall-" + value + ".png"}/>}
                 checkedIcon={
                     <>
                         <div className={styles["radio-outer-border"]}/>
-                        <img className={styles["radio-image"]} src={"/images/icon/wall-" + value + ".png"}/>
+                        <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/wall-" + value + ".png"}/>
                     </>
                 }
                 disableRipple
@@ -161,11 +161,11 @@ export default function Selection(props) {
                     classes={{
                         root: styles["root"],
                     }}
-                    icon={<img className={styles["radio-image"]} src={"/images/icon/canopy-tent-" + value + ".png"}/>}
+                    icon={<img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/canopy-tent-" + value + ".png"}/>}
                     checkedIcon={
                         <>
                             <div className={styles["radio-outer-border-large"]}/>
-                            <img className={styles["radio-image"]} src={"/images/icon/canopy-tent-" + value + ".png"}/>
+                            <img className={styles["radio-image"]} src={process.env.imageBaseUrl + "/images/icon/canopy-tent-" + value + ".png"}/>
                         </>
                     }
                     disableRipple

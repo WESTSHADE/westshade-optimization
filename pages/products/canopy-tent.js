@@ -19,8 +19,7 @@ import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Plus, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
-import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 
 import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
@@ -252,10 +251,10 @@ function Canopy_Tent({router, products, variants}) {
     function renderCustomImage(props) {
         return (
             <AspectRatioBox aspectRatio={1} minHeight="230px">
-                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPictures.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={process.env.imageBaseUrl + pic} alt="side-wall"/>;
                 })}
             </AspectRatioBox>
         );
@@ -264,10 +263,10 @@ function Canopy_Tent({router, products, variants}) {
     function renderCustomImageTemp(props) {
         return (
             <AspectRatioBox aspectRatio={1} minHeight="230px">
-                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPicturesTemp.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={process.env.imageBaseUrl + pic} alt="side-wall"/>;
                 })}
             </AspectRatioBox>
         );
@@ -826,7 +825,7 @@ function Canopy_Tent({router, products, variants}) {
                                       overflowX: "scroll",
                                   },
                               },
-                              TabBorder: {props: {hidden: true}},
+                              TabBorder: {props: {hidden: true}, style: {display: "none"}},
                               TabHighlight: {props: {hidden: true}, style: {display: "none"}},
                           }}
                     >

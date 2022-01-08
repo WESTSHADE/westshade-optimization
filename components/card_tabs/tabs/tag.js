@@ -18,17 +18,17 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange}) => {
                       props: {
                           hidden: true
                       },
-                      // style: {
-                      //     display: "none"
-                      // }
+                      style: {
+                          display: "none"
+                      }
                   },
                   TabHighlight: {
                       props: {
                           hidden: true
                       },
-                      // style: {
-                      //     display: "none"
-                      // }
+                      style: {
+                          display: "none"
+                      }
                   },
               }}
         >

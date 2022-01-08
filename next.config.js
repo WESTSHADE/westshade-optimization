@@ -17,7 +17,7 @@ const nextConfig = {
         minWidth: 320,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.29"
+        version: "2.0.30"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -57,7 +57,8 @@ const nextConfig = {
         ],
         formats: ['image/webp'],
         loader: "imgix",
-        path: isProd ? "https://static.westshade.com" : "http://localhost:3000",
+        // path: isProd ? "https://static.westshade.com" : "http://localhost:3000",
+        path: "https://static.westshade.com",
     },
     exportPathMap: async function () {
         return {

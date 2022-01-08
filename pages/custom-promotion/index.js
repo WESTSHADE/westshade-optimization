@@ -676,7 +676,7 @@ const CustomPromotion = () => {
                         <ReactPlayer
                             url="https://www.youtube.com/watch?v=ud5m8ET8sE8"
                             playIcon={<Block as="i" width={["57px", "57px", "140px"]}><Image src="/images/icon/icon-play-video.png" width={140} height={100} layout="responsive" quality={10}/></Block>}
-                            light={"/images/custom-promotion/video-thumb.webp"}
+                            light={process.env.imageBaseUrl + "/images/custom-promotion/video-thumb.webp"}
                             width="100%"
                             height="100%"
                         />
