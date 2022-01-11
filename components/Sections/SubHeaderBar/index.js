@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import {Block} from "baseui/block";
 
-import Button from "../../button-n";
+import Button from "../../Button/V1";
 
 const Bar = ({size, containerClassName, title, subTitle, subTitleDestination, buttonText, onClick}) => {
     return (

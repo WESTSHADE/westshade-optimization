@@ -9,7 +9,7 @@ import {Block} from "baseui/block";
 import {FlexGrid, FlexGridItem} from 'baseui/flex-grid';
 import {Alert} from 'baseui/icon'
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {Modal} from "Components/surfaces"
 import {Section, SectionTitle} from "Components/Sections"
 import ThemeProvider from "Components/ThemeProvider";

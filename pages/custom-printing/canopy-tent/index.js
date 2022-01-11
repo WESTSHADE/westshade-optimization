@@ -10,7 +10,7 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {CanopyTent as Hero} from "Components/Hero/CustomPrinting";
 import {Section, Benefit, FreeMockupForm} from "Components/Sections"
 

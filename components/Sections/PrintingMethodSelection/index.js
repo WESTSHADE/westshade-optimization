@@ -6,7 +6,7 @@ import Image from "next/image"
 
 import {Block} from "baseui/block"
 
-import Button from "../../button-n"
+import Button from "../../Button/V1"
 import {Modal} from "../../surfaces"
 
 const PrintingMethodCard = ({method, active, onClick}) => {

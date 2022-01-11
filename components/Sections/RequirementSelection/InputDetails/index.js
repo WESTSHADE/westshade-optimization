@@ -9,7 +9,7 @@ import {Textarea} from "baseui/textarea";
 import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 
 import {Modal} from "../../../surfaces";
-import Button from "../../../button-n";
+import Button from "../../../Button/V1";
 
 import Utils from "../../../../utils/utils";
 

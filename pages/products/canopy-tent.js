@@ -28,7 +28,7 @@ import {EventEmitter} from "Utils/events";
 import {ProductDescription} from "Components/Sections";
 import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
-import MButton from "Components/button-n";
+import MButton from "Components/Button/V1";
 import SelectionArea from "Components/selection_area";
 import Selection from "Components/selection-n";
 

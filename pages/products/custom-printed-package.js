@@ -25,7 +25,7 @@ import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
 import {ProductDescription} from "Components/Sections";
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {Modal} from "Components/surfaces";
 import Checkout from "Components/Checkout";
 import SelectionArea from "Components/selection_area";
@@ -651,11 +651,10 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                             startEnhancer={<Image src="/images/icon/icon-exchange.png" alt="exchange" layout="fixed" width="20px" height="20px" objectFit="contain"/>}
                             onClick={() => router.push({pathname: "/custom-printing-package"})}
                     />
-                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap={["16px", null, "12px"]} justifyItems="center" justifyContent="center" marginTop="32px">
-                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel64"]} color="#23A4AD">2</Block>
-                        <Block font={["MinXTitle20", "MinXTitle20", "MinXTitle28"]} $style={{fontWeight: "700 !important"}}>Choose size and frame</Block>
-                        <Block position="absolute" right={0} bottom={0} left={0} width={["64px", null, "88px"]} height={["64px", null, "88px"]} margin="auto" backgroundColor="#E5F5F1"
-                               $style={{borderRadius: "50%", zIndex: "-1"}}/>
+                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
+                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">2</Block>
+                        <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose size and frame</Block>
+                        <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
                     </Block>
                     <SelectionArea title="Size">
                         <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} id={id_attribute_canopySize} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
@@ -678,11 +677,10 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                 onClick={() => setFrameCompareOpen(true)}
                         />
                     </SelectionArea>
-                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap={["16px", null, "12px"]} justifyItems="center" justifyContent="center" marginTop="32px">
-                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel64"]} color="#23A4AD">3</Block>
-                        <Block font={["MinXTitle20", "MinXTitle20", "MinXTitle28"]} $style={{fontWeight: "700 !important"}}>Choose Printing method</Block>
-                        <Block position="absolute" right={0} bottom={0} left={0} width={["64px", null, "88px"]} height={["64px", null, "88px"]} margin="auto" backgroundColor="#E5F5F1"
-                               $style={{borderRadius: "50%", zIndex: "-1"}}/>
+                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
+                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">3</Block>
+                        <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose Printing method</Block>
+                        <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
                     </Block>
                     <SelectionArea>
                         <Selection name="Printing Technique" value={selectedAttribute[0] ? selectedAttribute[0][2].option.toLowerCase() : ""} id={id_attribute_printingTechnique}
@@ -690,7 +688,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                             {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>)) : null}
                         </Selection>
-                        <Button type="solid" height="32px" font="MinXParagraph16" text='Compare Frames' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                        <Button type="solid" height="32px" font="MinXParagraph16" text='Compare Printing Method' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                 onClick={() => setShowPrintServiceModal(true)}
                         />
                     </SelectionArea>

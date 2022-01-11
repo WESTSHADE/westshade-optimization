@@ -3,7 +3,7 @@ import React from "react";
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 import {Block} from "baseui/block";
 
-import Button from "../../button-n";
+import Button from "../../Button/V1";
 
 import styles from "./tabs.module.scss";
 

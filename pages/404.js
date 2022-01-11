@@ -6,7 +6,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import ChevronLeft from 'baseui/icon/chevron-left'
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 
 function Custom404({router}) {
     return (

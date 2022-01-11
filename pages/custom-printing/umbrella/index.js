@@ -9,7 +9,7 @@ import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
 import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {Umbrella as Hero} from "Components/Hero/CustomPrinting";
 import {Benefit, FreeMockupForm, Section} from "Components/Sections"
 import {Modal} from "Components/surfaces";

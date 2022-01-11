@@ -10,7 +10,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import Hero from "Components/Hero/CanopyTent";
 import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/Sections";
 
