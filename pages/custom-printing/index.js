@@ -15,6 +15,7 @@ import ReactPlayer from "react-player";
 import ButtonM from "../../components/button-n"
 import styles from "./custom-printing.module.scss"
 import { Button } from "baseui/button";
+import SectionHeader from "../../components/sections/SectionHeader";
 
 const data = [
     {
@@ -200,21 +201,6 @@ const testimonies = [
         message:"The logo on our 10x10 tents looks fantastic. How easy it is to put up is incredible. The roller bag and weights were great additions. Very pleased with the investment."
     }
 ]
-const SectionHeader = ({title, subTitle, body}) => {
-    return (
-        <Block maxWidth="676px" width="100%" className={styles.sectionHeader}>
-            <Block as="h4" color="#33DED2">
-                {subTitle}
-            </Block>
-            <Block marginTop={["8px","8px","16px"]} as="h2" color="MinXPrimaryText">
-                {title}
-            </Block>
-            <Block marginTop={["8px","8px","16px"]} as="p" color="#8c8c8c">
-                {body}
-            </Block>
-        </Block>
-    )
-}
 
 const CustomTab = ({children, active, backgroundColor}) => {
     return (
@@ -270,7 +256,7 @@ function Custom_Printing({router}) {
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["16px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" paddingTop={["16px", null, "32px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
                              <>

@@ -255,7 +255,7 @@ const FreeMockupForm = () => {
                                     <CustomLabel>Preferred contact method {showRequiredMarkers && formState.contactMethod.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                                 </Block>
                                 <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
-                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("call")}
                                             onChange={() => hanndleContactMethod("call")}
@@ -265,7 +265,7 @@ const FreeMockupForm = () => {
                                             </CustomCheckboxLabel>
                                         </CustomCheckbox>
                                     </Block>
-                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("text")}
                                             onChange={() => hanndleContactMethod("text")}
@@ -275,7 +275,7 @@ const FreeMockupForm = () => {
                                             </CustomCheckboxLabel>
                                         </CustomCheckbox>
                                     </Block>
-                                    <Block width="32%" maxWidth="167px" marginBottom="16px">
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("email")}
                                             onChange={() => hanndleContactMethod("email")}
