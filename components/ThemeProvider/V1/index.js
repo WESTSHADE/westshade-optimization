@@ -79,6 +79,7 @@ const overrides = {
         MinXLabel28: {fontFamily: "Roboto", fontSize: "28px", fontWeight: 500, lineHeight: "36px"},
         MinXLabel32: {fontFamily: "Roboto", fontSize: "32px", fontWeight: 500, lineHeight: "40px"},
         MinXLabel40: {fontFamily: "Roboto", fontSize: "40px", fontWeight: 500, lineHeight: "40px"},
+        MinXLabel48: {fontFamily: "Roboto", fontSize: "48px", fontWeight: 500, lineHeight: "48px"},
         MinXLabel64: {fontFamily: "Roboto", fontSize: "64px", fontWeight: 500, lineHeight: "64px"},
     },
     colors: {

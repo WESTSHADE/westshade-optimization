@@ -7,7 +7,7 @@ import {Block} from "baseui/block";
 import {FlexGrid, FlexGridItem} from 'baseui/flex-grid';
 import {ChevronRight} from "baseui/icon";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {Banner, Section, SectionTitle, UmbrellaComparison, UmbrellaBlock} from "Components/Sections";
 import ThemeProvider from "Components/ThemeProvider";
 

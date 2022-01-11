@@ -6,7 +6,7 @@ import {Block} from "baseui/block";
 import {StyledNavigationItem as NavigationItem} from "baseui/header-navigation";
 import {ChevronDown} from "baseui/icon";
 
-import Button from "../../../button-n";
+import Button from "../../../Button/V1";
 import DropMenu from "./drop_menu";
 
 const NavItem = ({detail = {}, router}) => {

@@ -6,7 +6,7 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 
 const Hero = ({size}) => {
     const router = useRouter();

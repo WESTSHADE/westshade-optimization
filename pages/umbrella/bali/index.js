@@ -9,7 +9,7 @@ import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 import {ChevronRight} from "baseui/icon";
 
 import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import Utils from "Utils/utils";
 
 import styles from "../umbrella.module.scss";

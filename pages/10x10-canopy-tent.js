@@ -10,7 +10,7 @@ import {Block} from "baseui/block";
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import CardTabs from "Components/card_tabs";
 import {Modal} from "Components/surfaces";
 

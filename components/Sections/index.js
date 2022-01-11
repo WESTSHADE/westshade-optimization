@@ -9,12 +9,13 @@ import ProductDescription from "./Product_Description";
 import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 import UmbrellaProductItem from "./Umbrella_Product_Item";
-import BenefitV2 from "./Benefit/BenefitV2"
-import UmbrellaComparison from "./UmbrellaComparison"
-import UmbrellaBlock from "./UmbrellaBlock"
+import BenefitV2 from "./Benefit/BenefitV2";
 
+import SearchBar from "./SearchBar";
+import UmbrellaComparison from "./UmbrellaComparison";
+import UmbrellaBlock from "./UmbrellaBlock";
 
-import SectionTitle from "./Title"
+import SectionTitle from "./Title";
 
 module.exports = {
     Banner,
@@ -30,6 +31,7 @@ module.exports = {
     UmbrellaProductItem,
     BenefitV2,
     SectionTitle,
+    SearchBar,
     UmbrellaComparison,
     UmbrellaBlock
 };

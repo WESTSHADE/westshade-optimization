@@ -54,6 +54,7 @@ const nextConfig = {
         domains: [
             "static.westshade.com",
             "static-woo.westshade.com",
+            "static-woo.westshade.com/wp-content/uploads"
         ],
         formats: ['image/webp'],
         loader: "imgix",
@@ -113,6 +114,7 @@ const nextConfig = {
             "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: 57917}},
             "/products/accessories": {page: "/products/accessories"},
             // 功能页
+            "/search": {page: "/search"},
             "/my-account": {page: "/my-account"},
             "/cart": {page: "/cart"},
             "/checkout": {page: "/checkout"},

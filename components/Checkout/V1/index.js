@@ -4,7 +4,7 @@ import clsx from "clsx";
 import {Block} from "baseui/block";
 import {CheckIndeterminate, Plus} from "baseui/icon";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import Shipping from "Components/Sections/ShippingNote";
 
 import styles from "./checkout.module.scss";

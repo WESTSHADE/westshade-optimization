@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {ArrowDown} from "baseui/icon";
 
 const Hero = ({size, onClick}) => {

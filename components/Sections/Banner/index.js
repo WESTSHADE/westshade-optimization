@@ -8,7 +8,7 @@ import {ChevronRight, ArrowRight} from 'baseui/icon'
 
 import styles from "./banner.module.scss";
 
-import Button from "../../button-n";
+import Button from "../../Button/V1";
 
 const Banner = ({
                     refD,

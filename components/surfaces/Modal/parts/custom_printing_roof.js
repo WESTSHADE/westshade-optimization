@@ -7,7 +7,7 @@ import {ListItem, ListItemLabel} from "baseui/list";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {Delete} from "baseui/icon";
 
-import MButton from "../../../button-n";
+import MButton from "../../../Button/V1";
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;

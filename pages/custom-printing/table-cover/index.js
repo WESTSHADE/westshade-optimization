@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import {TableCover as Hero} from "Components/Hero/CustomPrinting";
 import {Benefit, FreeMockupForm, Section} from "Components/Sections"
 

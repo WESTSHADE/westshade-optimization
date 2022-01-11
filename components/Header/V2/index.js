@@ -12,6 +12,7 @@ import {Button, SHAPE, KIND} from "baseui/button";
 import {Menu} from 'baseui/icon'
 
 import {Cart, MobileMenu, NavItem} from "./parts";
+import {SearchBar} from "../../Sections";
 
 import MENU from "Assets/menu.json";
 
@@ -130,6 +131,9 @@ function Header({hideCategories}) {
                             {MENU.map((item, index) => <NavItem key={index} detail={item} router={router}/>)}
                         </NavigationList>
                         <NavigationList className={styles["nav-right"]} $align={ALIGN.right}>
+                            <NavigationItem>
+                                <SearchBar router={router}/>
+                            </NavigationItem>
                             <NavigationItem>
                                 <Link href="/cart">
                                     <Block className="cursor" position="relative" display="flex">

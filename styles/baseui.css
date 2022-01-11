@@ -705,6 +705,14 @@ ul.bullet-warranty.sub > li {
     -webkit-box-orient: vertical;
 }
 
+.text-ellipsis-search * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
 .radio-dot {
     width: 38px;
     height: 38px;

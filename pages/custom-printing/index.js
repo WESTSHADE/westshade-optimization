@@ -15,7 +15,7 @@ import {Button} from "baseui/button";
 import ThemeProvider from "Components/ThemeProvider";
 import {CustomPrinting as Hero} from "Components/Hero/CustomPrinting";
 import {BenefitV2, FreeMockupForm, SectionTitle} from "Components/Sections";
-import ButtonM from "Components/button-n"
+import ButtonM from "Components/Button/V1"
 
 import styles from "./custom-printing.module.scss"
 

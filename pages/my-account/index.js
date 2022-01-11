@@ -14,7 +14,7 @@ import {Avatar} from 'baseui/avatar';
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ChevronRight, ChevronDown, ChevronUp} from 'baseui/icon';
 
-import MButton from "Components/button-n";
+import MButton from "Components/Button/V1";
 
 import {register, logIn, logOut, getUser, updateUser, clearUserErrors} from "../../redux/actions/userActions";
 import {getOrder} from "../../redux/actions/orderActions";

@@ -4,7 +4,7 @@ import {Block} from "baseui/block";
 import {PLACEMENT, StatefulTooltip, TRIGGER_TYPE} from "baseui/tooltip";
 
 import {Modal} from "../surfaces";
-import MButton from "../button-n";
+import MButton from "../Button/V1";
 
 export default function CustomPrintingRoof({isOpen, onClose, selectedRoofList, applyToFullSide, setApplyToFullSide}) {
     const [printDetailIsOpen, setPrintDetailIsOpen] = useState(false);

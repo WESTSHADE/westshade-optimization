@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {Block} from "baseui/block";
 import {ChevronRight} from "baseui/icon";
 
-import Button from "../../../button-n";
+import Button from "../../../Button/V1";
 import ThemeProvider from "../../../ThemeProvider";
 
 const SpecSection = ({
