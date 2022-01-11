@@ -14,9 +14,7 @@ import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
 import {Radio} from "baseui/radio";
 import {AspectRatioBox} from 'baseui/aspect-ratio-box';
-import {KIND, SHAPE} from "baseui/button";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
-import {ChevronLeft, ChevronRight} from "baseui/icon";
 
 import styles from "../../styles/Product.module.scss";
 
@@ -550,43 +548,18 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                          paddingBottom: "5px",
                                          paddingRight: "24px",
                                          paddingLeft: "24px",
-                                         borderRadius: "24px",
+                                         borderBottomLeftRadius: "24px",
+                                         borderBottomRightRadius: "24px",
+                                         borderTopLeftRadius: "24px",
+                                         borderTopRightRadius: "24px",
                                          ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
                                      }),
                                  },
                              }}
                         >
                             <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
-                                          renderLeftNav={(onClick, disabled) => (
-                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                      onClick={onClick}
-                                                      overrides={{
-                                                          BaseButton: {
-                                                              props: {
-                                                                  className: "cursor react-image-gallery-arrow left",
-                                                              },
-                                                          },
-                                                      }}
-                                                      disabled={disabled}
-                                              >
-                                                  <ChevronLeft size={28} color={"white"}/>
-                                              </Button>
-                                          )}
-                                          renderRightNav={(onClick, disabled) => (
-                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                      onClick={onClick}
-                                                      overrides={{
-                                                          BaseButton: {
-                                                              props: {
-                                                                  className: "cursor react-image-gallery-arrow right",
-                                                              },
-                                                          },
-                                                      }}
-                                                      disabled={disabled}
-                                              >
-                                                  <ChevronRight size={28} color={"white"}/>
-                                              </Button>
-                                          )}
+                                          renderLeftNav={(onClick, disabled) => null}
+                                          renderRightNav={(onClick, disabled) => null}
                             />
                         </Tab>
                         {/*<Tab title="Video" overrides={{*/}
@@ -715,7 +688,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                     Email has been sent successfully.
                 </Alert>
             </Modal>
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{uProductComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
+            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent: uProductComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => setShowGetQuote(false)}>
                 <Block marginTop={["64px", "64px", "30px"]} marginRight={["auto", "auto", "32px"]} marginLeft={["auto", "auto", "32px"]}
                        display="grid" gridTemplateColumns={["1fr", "1fr", "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="16px"
