@@ -24,7 +24,7 @@ const PackageItem = ({productDetail, imageUrl, alt, title, subtitle, url, asUrl,
     return (
         <Block display="flex" flexDirection="column" padding={["8px", null, "24px 16px"]} backgroundColor="#FAFAFA" overflow="hidden" $style={{borderRadius: "8px"}}>
             <Block position="relative" width="100%" height="150px" margin={["auto auto 8px", null, "auto auto 24px"]} backgroundColor="white">
-                <Image src={imageUrl} alt={alt} layout="fill" width={1024} height={1024} objectFit="contain"/>
+                <Image src={imageUrl} alt={alt} layout="fill" objectFit="contain"/>
             </Block>
             <Block className="text-left" display="flex" flexDirection="column" justifyContent="space-between" flex={1} $style={{gap: "8px"}}>
                 <Block>
