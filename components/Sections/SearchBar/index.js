@@ -103,9 +103,7 @@ const SearchBar = ({router}) => {
             {/*For Desktop*/}
             <Block className={styles["search-content-desktop"]} display={["none", null, null, "flex"]} font="MinXParagraph14" $style={{...searchDesktopStyle}}
                    onMouseEnter={() => {
-                       if (inputRef && inputRef.current && inputRef.current.state.isFocused) {
-                           showDropdown()
-                       }
+                       if (inputRef && inputRef.current && inputRef.current.state.isFocused) showDropdown();
                    }}
                    onMouseLeave={() => hideDropdown()}
             >
@@ -187,39 +185,6 @@ const SearchBar = ({router}) => {
                     </>
                 </Block>
             ) : null}
-            {/*Result Page*/}
-            {/*{showResultPage ? (*/}
-            {/*    <Block position="fixed" right={0} left={0} bottom={0} width="100vw" height="calc(100vh - 92px)" backgroundColor="white" $style={{zIndex: "0"}}>*/}
-            {/*        <Block display="flex" flexDirection="column" width="100%" height="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["0 16px", null, "0 20px"]}>*/}
-            {/*            <Block display="flex" alignItems="center" height="48px" paddingTop={["10px", null, "18px"]}>*/}
-            {/*                <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading32"]} color="MinXPrimaryText" $style={{fontWeight: "500", lineHeight: 1}}>{`${resultList.length} items found`}</Block>*/}
-            {/*            </Block>*/}
-            {/*            <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", null, "20px"]} gridRowGap={["16px", null, "20px"]}>*/}
-            {/*                {resultList.map((item, index) => {*/}
-            {/*                    let imageUrl = "";*/}
-            {/*                    if (item.hasOwnProperty("images")) {*/}
-            {/*                        imageUrl = item.images[0].src;*/}
-            {/*                    } else if (item.hasOwnProperty("image")) {*/}
-            {/*                        imageUrl = item.image.src;*/}
-            {/*                    }*/}
-
-            {/*                    return (*/}
-            {/*                        <Block key={item.name} padding={["8px 8px 8px 0", null, "8px"]}>*/}
-            {/*                            <Block position="relative" width={["100%", null, "190px"]} margin="auto">*/}
-            {/*                                <Image src={imageUrl} alt={item.name} width={1024} height={1024} layout="responsive" objectFit="contain" loader={({src, width}) => src} unoptimized/>*/}
-            {/*                            </Block>*/}
-            {/*                            <Block display="grid" gridTemplateRows="1fr auto" gridRowGap="8px" marginBottom="8px" color="MinXPrimaryText">*/}
-            {/*                                <Block font="MinXLabel16" $style={{fontWeight: "500", lineHeight: 1}}>{item.name}</Block>*/}
-            {/*                                <Block className={styles["text-ellipsis"]} height={item.short_description ? "60px" : "unset"} font="MinXParagraph14" overflow="hidden" dangerouslySetInnerHTML={{__html: item.short_description}}/>*/}
-            {/*                            </Block>*/}
-            {/*                            <Block font="MinXLabel14" color="MinXPrimaryText" $style={{fontWeight: "500", lineHeight: 1}}>From <NumberFormat thousandSeparator={true} prefix={"$"} value={item.price} displayType={"text"}/></Block>*/}
-            {/*                        </Block>*/}
-            {/*                    )*/}
-            {/*                })}*/}
-            {/*            </Block>*/}
-            {/*        </Block>*/}
-            {/*    </Block>*/}
-            {/*) : null}*/}
         </>
     )
 }

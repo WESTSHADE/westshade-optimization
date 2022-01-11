@@ -82,43 +82,43 @@ const Gallery = ({gallery = []}) => {
                                   )}
                     />
                 </Tab>
-                <Tab title="Video"
-                     overrides={{
-                         TabPanel: {props: {className: styles["container-tab-panel"]}},
-                         Tab: {
-                             props: {
-                                 className: styles["tab"]
-                             },
-                             style: ({$isActive}) => ({
-                                 background: $isActive ? "black" : "transparent",
-                                 color: $isActive ? "white" : "black",
-                                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                             }),
-                         },
-                     }}>
-                </Tab>
-                <Tab title="3D"
-                     overrides={{
-                         TabPanel: {props: {className: styles["container-tab-panel"]}},
-                         Tab: {
-                             props: {
-                                 className: styles["tab"]
-                             },
-                             style: ({$isActive}) => ({
-                                 background: $isActive ? "black" : "transparent",
-                                 color: $isActive ? "white" : "black",
-                                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                             }),
-                         },
-                     }}
-                >
-                    <Block width="100%" height="100%" maxHeight="566px" margin="auto" $style={{aspectRatio: 16 / 9}}>
-                        <model-viewer camera-orbit="120deg 75deg 100%" alt="3D model" minimumRenderScale={1} shadow-intensity="1" camera-controls
-                                      style={{width: "inherit", height: "inherit", margin: "auto"}}
-                                      src="/images/3D/umbrella.glb"
-                        />
-                    </Block>
-                </Tab>
+                {/*<Tab title="Video"*/}
+                {/*     overrides={{*/}
+                {/*         TabPanel: {props: {className: styles["container-tab-panel"]}},*/}
+                {/*         Tab: {*/}
+                {/*             props: {*/}
+                {/*                 className: styles["tab"]*/}
+                {/*             },*/}
+                {/*             style: ({$isActive}) => ({*/}
+                {/*                 background: $isActive ? "black" : "transparent",*/}
+                {/*                 color: $isActive ? "white" : "black",*/}
+                {/*                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                {/*             }),*/}
+                {/*         },*/}
+                {/*     }}>*/}
+                {/*</Tab>*/}
+                {/*<Tab title="3D"*/}
+                {/*     overrides={{*/}
+                {/*         TabPanel: {props: {className: styles["container-tab-panel"]}},*/}
+                {/*         Tab: {*/}
+                {/*             props: {*/}
+                {/*                 className: styles["tab"]*/}
+                {/*             },*/}
+                {/*             style: ({$isActive}) => ({*/}
+                {/*                 background: $isActive ? "black" : "transparent",*/}
+                {/*                 color: $isActive ? "white" : "black",*/}
+                {/*                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                {/*             }),*/}
+                {/*         },*/}
+                {/*     }}*/}
+                {/*>*/}
+                {/*    <Block width="100%" height="100%" maxHeight="566px" margin="auto" $style={{aspectRatio: 16 / 9}}>*/}
+                {/*        <model-viewer camera-orbit="120deg 75deg 100%" alt="3D model" minimumRenderScale={1} shadow-intensity="1" camera-controls*/}
+                {/*                      style={{width: "inherit", height: "inherit", margin: "auto"}}*/}
+                {/*                      src="/images/3D/umbrella.glb"*/}
+                {/*        />*/}
+                {/*    </Block>*/}
+                {/*</Tab>*/}
             </Tabs>
         </>
     )

@@ -106,12 +106,12 @@ const Hero = () => {
                                }}
                         >Westshade aims to provide the best printing service in producing high-end custom printed canopy tents. High-quality fabric and state-of-art printing technology are adopted to offer the best to our customers.</Block>
                         <Block display="flex" flexDirection="row" width="100%" maxWidth={[null, null, "467px"]} $style={{gap: "24px"}}>
+                            <Button type="outline" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Pick a package" buttonBackgroundColor="#FFF"
+                                    buttonStyle={{paddingRight: "4px !important", paddingLeft: "4px !important", borderColor: "#262626", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
+                                    onClick={() => goPackagePage()}
+                            />
                             <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
                                     buttonStyle={{boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}} onClick={() => goCustomPage()}
-                            />
-                            <Button type="outline" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Pick a package" buttonBackgroundColor="#FFF"
-                                    buttonStyle={{paddingRight: "4px !important", paddingLeft: "4px !important", borderColor: "#D0D9D9", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
-                                    onClick={() => goPackagePage()}
                             />
                         </Block>
                     </Block>

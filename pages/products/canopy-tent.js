@@ -819,7 +819,7 @@ function Canopy_Tent({router, products, variants}) {
                                   },
                                   style: {
                                       display: "grid",
-                                      gridTemplateColumns: " repeat(3,auto)",
+                                      // gridTemplateColumns: " repeat(3,auto)",
                                       gridColumnGap: "12px",
                                       justifyContent: "center",
                                       overflowX: "scroll",
@@ -881,40 +881,40 @@ function Canopy_Tent({router, products, variants}) {
                                           )}
                             />
                         </Tab>
-                        <Tab title="Video" overrides={{
-                            TabPanel: {
-                                style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
-                        <Tab title="3D" overrides={{
-                            TabPanel: {
-                                style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
+                        {/*<Tab title="Video" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
+                        {/*<Tab title="3D" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
                     </Tabs>
                 </Block>
                 {/* 选择区域 */}
