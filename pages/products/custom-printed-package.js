@@ -527,7 +527,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                   },
                                   style: {
                                       display: "grid",
-                                      gridTemplateColumns: " repeat(3,auto)",
+                                      // gridTemplateColumns: " repeat(3,auto)",
                                       gridColumnGap: "12px",
                                       justifyContent: "center",
                                       overflowX: "scroll",
@@ -589,40 +589,40 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                           )}
                             />
                         </Tab>
-                        <Tab title="Video" overrides={{
-                            TabPanel: {
-                                style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
-                        <Tab title="3D" overrides={{
-                            TabPanel: {
-                                style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
+                        {/*<Tab title="Video" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
+                        {/*<Tab title="3D" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
                     </Tabs>
                     <Block className="text-center" width="100%" padding="16px" marginTop="24px" backgroundColor="#F7F7F7" font="MinXParagraph14" color="MinXPrimaryText" $style={{border: "1px solid #D9D9D9", borderRadius: "48px"}}
                     >We will reach out to you to get the artwork and information after placing the order.</Block>

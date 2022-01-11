@@ -54,7 +54,7 @@ const nextConfig = {
         domains: [
             "static.westshade.com",
             "static-woo.westshade.com",
-            "static-woo.westshade.com/wp-content/uploads"
+            // "static-woo.westshade.com/wp-content/uploads"
         ],
         formats: ['image/webp'],
         loader: "imgix",
