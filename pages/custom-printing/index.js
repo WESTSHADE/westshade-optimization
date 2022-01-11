@@ -256,7 +256,7 @@ function Custom_Printing({router}) {
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
-            <Block display="grid" gridTemplateColumns="100%" paddingTop={["16px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" paddingTop={["16px", null, "32px"]}>
                 <Section upperContainerProps={{hidden: true}}
                          content={
                              <>
