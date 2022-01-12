@@ -60,11 +60,11 @@ function Custom_Printing_Table_Cover({router, size}) {
                              <>
                                  <SectionCard router={router} title={"Fitted Table Cover"} content={"The fitted table cover is made of the same fabric as canopy tent and features two zips at the back."}
                                               src={"/images/custom-printing/table-cover/back-zip.webp"} alt={"back zip table cover"}
-                                              destination={{pathname: "/custom-print/table-cover/buy", query: {type: "fitted"}, as: "/custom-print/table-cover/buy"}}
+                                              destination={{pathname: "/products/table-cover", query: {id: "57917", type: "fitted"}, as: "/custom-print/table-cover/buy"}}
                                  />
                                  <SectionCard router={router} title={"Stretch Table Cover"} content={"The stretch table cover is made of a lightweight stretch fabric. It secures itself with pocket at the bottom."}
                                               src={"/images/custom-printing/table-cover/self-secure.webp"} alt={"self secure table cover"}
-                                              destination={{pathname: "/custom-print/table-cover/buy", query: {type: "stretch"}, as: "/custom-print/table-cover/buy"}}
+                                              destination={{pathname: "/products/table-cover", query: {id: "57917", type: "stretch"}, as: "/custom-print/table-cover/buy"}}
                                  />
                              </>
                          }

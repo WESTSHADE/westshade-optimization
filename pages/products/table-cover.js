@@ -1,51 +1,40 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 import clsx from "clsx";
 
 import {withRouter} from "next/router";
-import Script from "next/script";
 import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {Selection, ProductImages, ProductDescription} from "Components/Sections";
 import Checkout from "Components/Checkout";
-import {Modal} from "Components/surfaces";
-import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
+import {Selection} from "Components/Sections";
+
+import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {viewItem, addToCart} from "../../../redux/actions/gtagActions";
-import {updateUser} from "../../../redux/actions/userActions";
-import {modifyCart} from "../../../redux/actions/cartActions";
+import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+import {updateUser} from "../../redux/actions/userActions";
+import {modifyCart} from "../../redux/actions/cartActions";
 
-import styles from "../Product.module.scss";
+import styles from "./Product.module.scss";
 
-const dateFn = new DateFn();
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
 const urlFn = new UrlFn();
 const utils = new Utils();
 
-const id_product_umbrella_marco = "49555";
-const id_product_umbrella_santorini = "47943";
-const id_product_umbrella_bali = "30361";
-const id_product_umbrella_kapri = "59850";
-const id_product_umbrella_catalina = "30441";
-
-
-const id_attribute_color = 2;
-const id_attribute_umbrellaSize = 15;
-const id_attribute_umbrellaMaterial = 37;
-const id_attribute_umbrellaFrame = 48;
+const id_attribute_tableCoverType = 47;
+const id_attribute_tableCoverSize = 49;
 
 let checkoutProductList = [];
 
-let santoriniFrame = "aluminum";
-
-function Umbrella({router, product, productComponent = [], productVariant = []}) {
+function Table_Cover({router, product, productComponent, productVariant}) {
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productType, setProductType] = useState("");
@@ -53,6 +42,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     const [productImageGallery, setProductImageGallery] = useState([]);
     const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
+    const [uProductComponent, setProductComponent] = useState([...productComponent]);
+    const [uProductVariant, setProductVariant] = useState([...productVariant]);
     const [selectedAttribute, setSelectedAttribute] = useState([]);
     const [selectedVariant, setSelectedVariant] = useState([]);
 
@@ -71,16 +62,14 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     const [message, setMessage] = useState("");
 
     const [availableToCheckout, setAvailable] = useState(false);
-    const [shippedDay, setShippedDay] = useState("");
 
-    const [summaryIsOpen, setSummaryIsOpen] = useState(false);
+    const [showAddProgress, setShowAddProgress] = useState(false);
+
+    const [tableCoverType, setTableCoverType] = useState("");
 
     ////////////////////////////////////////
 
     const [availableList, setAvailableList] = useState([{id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true}]);
-
-    const [umbrellaSize, setUmbrellaSize] = useState("");
-    const [umbrellaFrame, setUmbrellaFrame] = useState("");
 
     ////////////////////////////////////////
 
@@ -89,12 +78,14 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     const {loggedIn, token} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
 
-    const openSummaryModal = () => {
-        setSummaryIsOpen(true);
+    const fetchProduct = async (id) => {
+        if (!id) return;
+        return await utils.getProductByWooId(id);
     };
 
-    const closeSummaryModal = () => {
-        setSummaryIsOpen(false);
+    const fetchProductVariant = async (id) => {
+        if (!id) return;
+        return await utils.getVariantByWooProductId(id);
     };
 
     const renderCustomImage = (props) => {
@@ -111,7 +102,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -133,14 +123,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         selection[index].forEach((attribute) => {
             if (attribute.id === id) attribute.option = event.target.value;
         });
-
-        if (id === id_attribute_umbrellaFrame) {
-            santoriniFrame = event.target.value;
-        }
-
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
         let selectionVariant = [...selectedVariant];
-        let selected = productVariant[index].filter((variant) => {
+        let selected = uProductVariant[index].filter((variant) => {
             if (!variant || !variant.attributes) return false;
 
             let equal = true;
@@ -153,9 +138,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             return equal;
         });
         selectionVariant[index] = selected[0];
-        if (selectionVariant.length === 1 && !selectionVariant[0]) {
-            selectionVariant = [];
-        }
         // Part 3: 保存更改项
         setSelectedAttribute(selection);
         setSelectedVariant(selectionVariant);
@@ -168,8 +150,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         let available = [...availableList];
 
         selectedVariant.forEach((variant, index) => {
-            console.log(variant);
-            if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
+            if ((!variant || !variant.attributes) && uProductComponent[index].type !== "simple") {
                 available[index].status = false;
                 return;
             }
@@ -203,9 +184,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             }
         });
         setAvailableList(available);
+
         setTotalRegularPrice(regularPrice);
-        // setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
-        setTotalSalePrice(salePrice);
+        setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
     };
 
     const updateCart = async () => {
@@ -231,22 +212,16 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         addToCart(productComponent, selectedVariant, totalCount);
     };
 
-    useEffect(() => {
-        setProductId(product.id.toString());
-        setShippedDay(dateFn.getReceivedDay());
-
-        if (router.query.size) {
-            setUmbrellaSize(router.query.size);
-        } else {
-            let size = urlFn.getParam("size");
-            setUmbrellaSize(size);
+    useEffect(async () => {
+        if (product.id) {
+            setProductId(product.id.toString());
         }
 
         if (router.query.type) {
-            setUmbrellaFrame(router.query.type);
+            setTableCoverType(router.query.type);
         } else {
-            let type = urlFn.getParam("type");
-            setUmbrellaFrame(type);
+            let size = urlFn.getParam("type");
+            setTableCoverType(size);
         }
     }, []);
 
@@ -264,48 +239,45 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
             setMainImage(product.images);
         }
 
+        // 获取,保存各组件信息
+        if (product.type === "simple" || product.type === "variable") {
+            setProductComponent([{...product}]);
+        } else if (product.type === "composite") {
+            Promise.all(product.composite_components.map(({default_option_id}) => fetchProduct(default_option_id))).then((responses) => setProductComponent(responses));
+        }
+
         setRegularPrice(product.regular_price);
         setSalePrice(product.sale_price);
     }, [product]);
 
     useEffect(() => {
-        if (!productComponent || productComponent.length === 0) return;
+        if (!uProductComponent || uProductComponent.length === 0) return;
         if (product.type === "simple") {
-            setSelectedVariant(productComponent);
+            setSelectedVariant(uProductComponent);
+            // 获取,保存各组件变体产品信息
+            // setProductVariant([uProductComponent]);
         } else if (product.type === "variable") {
             let selectedAttrList = [];
-            productComponent.map((component) => {
-                let defaultAttr = [...component.default_attributes];
+            Promise.all(
+                uProductComponent.map((component) => {
+                    let defaultAttr = [...component.default_attributes];
 
-                defaultAttr.forEach((attr) => {
-                    if (attr.id === id_attribute_umbrellaSize) {
-                        if (router.query.size) {
-                            attr.option = router.query.size;
-                        } else if (umbrellaSize) {
-                            attr.option = umbrellaSize;
-                        } else {
-                            attr.option = stringFn.replaceDash(attr.option, 2);
-                        }
-                    } else if (attr.id === id_attribute_umbrellaFrame) {
-                        if (router.query.type) {
-                            attr.option = router.query.type;
-                        } else if (umbrellaFrame) {
-                            attr.option = umbrellaFrame.toLowerCase();
-                        }
-                        santoriniFrame = attr.option;
-                    } else if (attr.id === id_attribute_color) {
-                        attr.option = stringFn.replaceDash(attr.option, 1);
-                    }
-                });
-                selectedAttrList.push(defaultAttr);
+                    defaultAttr.forEach((attr) => (tableCoverType && attr.id === id_attribute_tableCoverType ? (attr.option = tableCoverType.toLowerCase()) : null));
+
+                    selectedAttrList.push(defaultAttr);
+
+                    return fetchProductVariant(component.id);
+                })
+            ).then((result) => {
+                setSelectedAttribute(selectedAttrList);
+                setInitSelectedAttribute(true);
+
+                // 获取,保存各组件变体产品信息
+                setProductVariant(result);
+                setTimeout(() => setInitProductVariant(true), 250);
             });
-            setSelectedAttribute(selectedAttrList);
-            setInitSelectedAttribute(true);
-
-            // 获取,保存各组件变体产品信息
-            setInitProductVariant(true);
         }
-    }, [productComponent]);
+    }, [uProductComponent]);
 
     useEffect(() => {
         if (!initSelectedAttribute || !initProductVariant) return;
@@ -314,10 +286,9 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         let selectedVariantList = [];
         selectedAttribute.forEach((attr, index) => {
             if (!attr) return;
-            let selected = productVariant[index].filter((variant) => {
+            let selected = uProductVariant[index].filter((variant) => {
                 if (!variant || !variant.attributes) return false;
                 if (attr.length !== variant.attributes.length) return false;
-
                 let equal = true;
                 for (let i = 0; i < variant.attributes.length; i++) {
                     if (attr[i].option.toLowerCase() !== variant.attributes[i].option.toLowerCase()) {
@@ -374,7 +345,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                 if (!item.optional) {
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 } else {
                     return;
@@ -386,7 +357,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                 if (item.needed > item.quantity) {
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 }
             }
@@ -409,7 +380,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                     checkoutProductList.splice(i, 1);
                     available = false;
                     setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
+                    setMessage("Insufficient stock → " + uProductComponent[index].name);
                     return;
                 } else {
                     checkoutProductList[i].quantity = needed;
@@ -420,6 +391,8 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         });
         setAvailable(available);
     }, [availableList]);
+
+    //////////////////////////////////////
 
     const SelectionList = ({index, data = {attributes: []}}) => {
         let sl = data.attributes.filter((attribute) => attribute.variation);
@@ -451,112 +424,66 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
     return (
         <React.Fragment>
             <Head>
-                <title>{productName ? productName + " - Umbrella | WESTSHADE" : ""}</title>
+                <title>Table Cover | WESTSHADE</title>
             </Head>
-            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
-            <Block width={["100%", "480px", "100%"]} display="flex" flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
-                {/* 图片区域 */}
-                <Block position={[null, null, "relative"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                    <ProductImages gallery={productImageGallery}/>
-                </Block>
-                {/* 选择区域 */}
-                <Block width={["auto", "auto", "440px"]} overflow={[null, null, "scroll"]} overrides={{Block: {props: {className: "hideScrollBar"}}}}>
-                    <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
-                        <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
-                        {product && product.short_description ? (
-                            <Block font="MinXParagraph14"
-                                   overrides={{
-                                       Block: {
-                                           props: {
-                                               className: clsx(styles["container-product-section"], styles["align-left"])
+            <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
+                <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
+                    {/* 图片区域 */}
+                    <Block flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                        <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                    </Block>
+                    {/* 选择区域 */}
+                    <Block className="hideScrollBar" width={["auto", null, "440px"]} overflow={[null, null, "scroll"]}>
+                        <Block display="flex" flexDirection="column" alignItems="center" paddingTop={["40px", "24px"]} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]}>
+                            <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
+                            {product && product.short_description ? (
+                                <Block font="MinXParagraph14"
+                                       overrides={{
+                                           Block: {
+                                               props: {
+                                                   className: clsx(styles["container-product-section"], styles["align-left"])
+                                               },
                                            },
-                                       },
-                                   }}
-                                   dangerouslySetInnerHTML={{
-                                       __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
-                                   }}
-                            />
-                        ) : null}
-                        <SelectionList index={0} data={productComponent[0]}/>
+                                       }}
+                                       dangerouslySetInnerHTML={{
+                                           __html: `Description: ${stringFn.modifyShortDescription(product.short_description)}`,
+                                       }}
+                                />
+                            ) : null}
+                            <SelectionList index={0} data={uProductComponent[0]}/>
+                        </Block>
+                        <Checkout.V1 totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} regularPrice={regularPrice} salePrice={salePrice}
+                                     quantity={totalCount} isAvailable={availableToCheckout} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"}
+                                     onClickMinus={() => setTotalCount(totalCount - 1)} onClickPlus={() => setTotalCount(totalCount + 1)} addToBag={updateCart}
+                        />
                     </Block>
                 </Block>
             </Block>
-            <ProductDescription product={
-                productId === id_product_umbrella_bali ? "bali" :
-                    productId === id_product_umbrella_catalina ? "catalina" :
-                        productId === id_product_umbrella_kapri ? "kapri" :
-                            productId === id_product_umbrella_marco ? "marco" :
-                                productId === id_product_umbrella_santorini ? "santorini" :
-                                    null}
-                                santoriniFrame={santoriniFrame}
-            />
-            <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                         onClick={() => openSummaryModal()}
-                         onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                         onClickPlus={() => setTotalCount(totalCount + 1)}
-                         onClickAddToBag={() => updateCart()}
-                         onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
-            />
-            <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
         </React.Fragment>
     );
 }
 
-// Umbrella.getInitialProps = async (context) => {
-//     const {query} = context;
-//     const {id} = query;
-//     let product = null,
-//         component = [],
-//         variant = [];
-//
-//     product = await utils.getProductByWooId(id);
-//     if (product && product.type === "simple") {
-//         component[0] = {...product};
-//     } else if (product && product.type === "variable") {
-//         component[0] = {...product};
-//         variant[0] = await utils.getVariantByWooProductId(id);
-//     }
-//
-//     return {
-//         product: product,
-//         productComponent: component,
-//         productVariant: variant,
-//     };
-// };
+Table_Cover.getInitialProps = async (context) => {
+    const {query} = context;
+    const {id} = query;
+    let product,
+        component = [],
+        variant = [];
 
-export default withRouter(Umbrella);
-
-export function getStaticPaths() {
-    return {
-        paths: [
-            {params: {id: "49555"}},
-            {params: {id: "47943"}},
-            {params: {id: "30361"}},
-            {params: {id: "59850"}},
-            {params: {id: "30441"}},
-        ],
-        fallback: false
-    };
-}
-
-export async function getStaticProps({params}) {
-    let product, component = [], variant = [];
-
-    product = await utils.getProductByWooId(params.id);
+    product = await utils.getProductByWooId(id);
     if (product && product.type === "simple") {
         component[0] = {...product};
     } else if (product && product.type === "variable") {
         component[0] = {...product};
-        variant[0] = await utils.getVariantByWooProductId(params.id);
+        variant[0] = await utils.getVariantByWooProductId(id);
     }
 
     return {
-        props: {
-            product: product,
-            productComponent: component,
-            productVariant: variant,
-        },
-        revalidate: 10,
-    }
-}
+        product: product,
+        productComponent: component,
+        productVariant: variant,
+        noFooter: true,
+    };
+};
 
+export default withRouter(Table_Cover);
