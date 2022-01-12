@@ -16,7 +16,7 @@ import {Radio} from "baseui/radio";
 import {AspectRatioBox} from 'baseui/aspect-ratio-box';
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 
-import styles from "../../styles/Product.module.scss";
+import styles from "../../../styles/Product.module.scss";
 
 import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
@@ -29,10 +29,10 @@ import Checkout from "Components/Checkout";
 import SelectionArea from "Components/selection_area";
 import Selection from "Components/selection-n";
 
-import {viewItem, addToCart} from "../../redux/actions/gtagActions";
+import {viewItem, addToCart} from "../../../redux/actions/gtagActions";
 
-import {updateUser} from "../../redux/actions/userActions";
-import {modifyCart} from "../../redux/actions/cartActions";
+import {updateUser} from "../../../redux/actions/userActions";
+import {modifyCart} from "../../../redux/actions/cartActions";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();
@@ -52,8 +52,8 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
     const [uProduct, setProduct] = useState({...product});
-    const [uProductComponent, setProductComponent] = useState([...productComponent]);
-    const [uProductVariant, setProductVariant] = useState([...productVariant]);
+    const [uProductComponent, setProductComponent] = useState(productComponent);
+    const [uProductVariant, setProductVariant] = useState(productVariant);
 
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
@@ -122,11 +122,6 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     const openSummaryModal = () => setSummaryIsOpen(true);
 
     const closeSummaryModal = () => setSummaryIsOpen(false);
-
-    const fetchProduct = async (id) => {
-        if (!id) return;
-        return await utils.getProductByWooId(id);
-    };
 
     const fetchProductVariant = async (id) => {
         if (!id) return;
@@ -872,26 +867,64 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     );
 }
 
-Custom_printed_Package.getInitialProps = async (context) => {
-    const {query} = context;
-    const {id} = query;
-    let product,
-        component = [],
-        variant = [];
+// Custom_printed_Package.getInitialProps = async (context) => {
+//     const {query} = context;
+//     const {id} = query;
+//     let product,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(id);
+//     if (product && product.type === "simple") {
+//         component[0] = {...product};
+//     } else if (product && product.type === "variable") {
+//         component[0] = {...product};
+//         variant[0] = await utils.getVariantByWooProductId(id);
+//     }
+//
+//     return {
+//         product: product,
+//         productComponent: component,
+//         productVariant: variant,
+//     };
+// };
 
-    product = await utils.getProductByWooId(id);
-    if (product && product.type === "simple") {
+export default withRouter(Custom_printed_Package);
+
+export function getStaticPaths() {
+    return {
+        paths: [
+            {params: {id: "61953"}},
+            {params: {id: "62002"}},
+            {params: {id: "62031"}},
+            {params: {id: "62060"}},
+            {params: {id: "62089"}},
+            {params: {id: "62118"}},
+            {params: {id: "62147"}},
+            {params: {id: "62205"}},
+            {params: {id: "62176"}},
+        ],
+        fallback: false
+        // fallback: true
+    };
+}
+
+export async function getStaticProps({params}) {
+    let product, component = [], variant = [];
+
+    product = await utils.getProductByWooId(params.id);
+    if (product && product.type === "variable") {
         component[0] = {...product};
-    } else if (product && product.type === "variable") {
-        component[0] = {...product};
-        variant[0] = await utils.getVariantByWooProductId(id);
+        variant[0] = await utils.getVariantByWooProductId(params.id);
     }
 
     return {
-        product: product,
-        productComponent: component,
-        productVariant: variant,
-    };
-};
+        props: {
+            product: product,
+            productComponent: component,
+            productVariant: variant,
+        },
+        revalidate: 10,
+    }
+}
 
-export default withRouter(Custom_printed_Package);

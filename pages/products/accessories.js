@@ -96,16 +96,16 @@ function Accessories({router, product, productComponent, productVariant}) {
         return await utils.getVariantByWooProductId(id);
     };
 
+    const renderCustomImage = (props) => {
+        return (
+            <AspectRatioBox aspectRatio={1} minHeight="230px">
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+            </AspectRatioBox>
+        );
+    }
+
     const setMainImage = (images) => {
         if (!images || images.length === 0) return;
-
-        function renderCustomImage(props) {
-            return (
-                <AspectRatioBox aspectRatio={1} minHeight="230px">
-                    <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
-                </AspectRatioBox>
-            );
-        }
 
         let i = [];
         images.map((img, index) => {

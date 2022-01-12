@@ -56,15 +56,16 @@ const BlockVideo = ({src, isSelected, step}) => {
 
     return (
         <div ref={refBlockVideo} style={{height: "100%"}}>
-            <ReactPlayer className="react-player" width="100%" height="100%" url={src} playsinline loop
+            <ReactPlayer className="react-player" width="100%" height="100%" url={process.env.imageBaseUrl + src} playsinline loop
                          config={{
                              file: {
                                  attributes: {
-                                     crossOrigin: "anonymous",
+                                     // crossOrigin: "anonymous",
                                      controlsList: "nofullscreen",
                                  },
                              },
-                         }}/>
+                         }}
+            />
         </div>
     )
 };
@@ -72,7 +73,7 @@ const BlockVideo = ({src, isSelected, step}) => {
 const VideoSlide = ({url, isSelected, step}) => {
     return (
         <div className="react-player">
-            <BlockVideo src={process.env.imageBaseUrl + url} type="video/mp4" isSelected={isSelected} step={step}/>
+            <BlockVideo src={url} type="video/mp4" isSelected={isSelected} step={step}/>
         </div>
     );
 };

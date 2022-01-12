@@ -15,7 +15,7 @@ const Hero = ({size}) => {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/buy"});
+    const goBuyingPage = () => router.push("/custom-print/table-cover/buy");
 
     useEffect(() => {
         if (size && ref && ref.current) {

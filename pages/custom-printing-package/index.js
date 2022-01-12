@@ -40,7 +40,7 @@ const PackageItem = ({productDetail, imageUrl, alt, title, subtitle, url, asUrl,
                             From <Block as={"span"}><NumberFormat thousandSeparator={true} prefix={"$"} value={productDetail.price} displayType={"text"}/></Block>
                         </Block>
                     ) : null}
-                    <Button bundle="primary" width="100%" height="36px" marginBottom="8px" text="Choose" font="MinXLabel14" onClick={() => router.push(url, asUrl)}/>
+                    <Button bundle="primary" width="100%" height="36px" marginBottom="8px" text="Choose" font="MinXLabel14" onClick={() => router.push(url)}/>
                 </Block>
             </Block>
         </Block>

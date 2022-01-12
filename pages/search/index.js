@@ -6,11 +6,13 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
+import Button from "Components/Button";
 import {Section} from "Components/Sections";
 
+import {UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
-import Button from "../../components/Button";
 
+const urlFn = new UrlFn();
 const utils = new Utils();
 
 function Search({router}) {
@@ -18,9 +20,10 @@ function Search({router}) {
     const [searchResult, setSearchResult] = useState([]);
 
     useEffect(async () => {
-        if (router.query && Object.keys(router.query).length > 0 && router.query.q) {
-            let result = await utils.getProductByKeyword(router.query.q) || [];
-            console.log(result);
+        let keyword = urlFn.getParam("q") || router.query.q;
+
+        if (keyword.trim()) {
+            let result = await utils.getProductByKeyword(keyword) || [];
 
             setSearchResult(result);
 
@@ -28,7 +31,8 @@ function Search({router}) {
         } else {
             router.push({pathname: "/"});
         }
-    }, [router.query]);
+
+    }, []);
 
     return (
         <React.Fragment>

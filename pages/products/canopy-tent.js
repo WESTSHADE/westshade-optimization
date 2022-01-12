@@ -254,7 +254,7 @@ function Canopy_Tent({router, products, variants}) {
                 <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPictures.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={process.env.imageBaseUrl + pic} alt="side-wall"/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
                 })}
             </AspectRatioBox>
         );
@@ -266,7 +266,7 @@ function Canopy_Tent({router, products, variants}) {
                 <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPicturesTemp.map((pic, index) => {
                     if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={process.env.imageBaseUrl + pic} alt="side-wall"/>;
+                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
                 })}
             </AspectRatioBox>
         );
