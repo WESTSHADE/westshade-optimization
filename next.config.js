@@ -186,22 +186,22 @@ const nextConfig = {
                 destination: '/products/custom-printed-canopy-tent'
             }, {
                 source: '/products/market-umbrellas/marco-umbrella/',
-                destination: '/products/umbrella/49555'
+                destination: '/products/umbrella?id=49555'
             }, {
                 source: '/products/market-umbrellas/santorini-umbrella/',
-                destination: '/products/umbrella/47943'
+                destination: '/products/umbrella?id=47943'
             }, {
                 source: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella/',
-                destination: '/products/umbrella/30361'
+                destination: '/products/umbrella?id=30361'
             }, {
                 source: '/products/tilt-umbrellas/kapri-umbrella/',
-                destination: '/products/umbrella/59850'
+                destination: '/products/umbrella?id=59850'
             }, {
                 source: '/products/cantilever-umbrellas/catalina-umbrella/',
-                destination: '/products/umbrella/30441'
+                destination: '/products/umbrella?id=30441'
             }, {
                 source: '/custom-print/table-cover/buy',
-                destination: '/products/table-cover/57917'
+                destination: '/products/table-cover?id=57917'
             }, {
                 source: '/westshade-terms-and-conditions',
                 destination: '/terms-and-conditions'
