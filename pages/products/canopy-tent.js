@@ -19,16 +19,16 @@ import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
 import {Search, Plus, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
-import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 
 import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {Checkout_N as Checkout, ProductDescription} from "Components/sections";
+import {ProductDescription} from "Components/Sections";
+import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
-import MButton from "Components/button-n";
+import MButton from "Components/Button/V1";
 import SelectionArea from "Components/selection_area";
 import Selection from "Components/selection-n";
 
@@ -251,7 +251,7 @@ function Canopy_Tent({router, products, variants}) {
     function renderCustomImage(props) {
         return (
             <AspectRatioBox aspectRatio={1} minHeight="230px">
-                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPictures.map((pic, index) => {
                     if (!pic) return;
                     return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
@@ -263,7 +263,7 @@ function Canopy_Tent({router, products, variants}) {
     function renderCustomImageTemp(props) {
         return (
             <AspectRatioBox aspectRatio={1} minHeight="230px">
-                <Image src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPicturesTemp.map((pic, index) => {
                     if (!pic) return;
                     return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
@@ -278,8 +278,7 @@ function Canopy_Tent({router, products, variants}) {
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            // url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
-            url = "https://static.westshade.com" + url
+            url = process.env.imageBaseUrl + url;
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -460,7 +459,7 @@ function Canopy_Tent({router, products, variants}) {
             const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
             const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
             const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            wallPicturesList[index] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
         });
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
@@ -526,7 +525,6 @@ function Canopy_Tent({router, products, variants}) {
         setAvailableList(available);
 
         setTotalRegularPrice(regularPrice);
-        // setTotalSalePrice(salePrice === regularPrice ? 0 : salePrice);
         setTotalSalePrice(salePrice);
     };
 
@@ -722,7 +720,7 @@ function Canopy_Tent({router, products, variants}) {
                     const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
                     const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
                     const sideUrl = wallMap.get("side").find((w) => w.key === index).value;
-                    wallPicturesList[index - 1] = "https://static.westshade.com/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+                    wallPicturesList[index - 1] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
                 } else {
                     wallPicturesList[index - 1] = "";
                 }
@@ -799,6 +797,8 @@ function Canopy_Tent({router, products, variants}) {
         setAvailable(available);
     }, [availableList]);
 
+    //////////////////////////////////////
+
     return (
         <React.Fragment>
             <Head>
@@ -807,7 +807,7 @@ function Canopy_Tent({router, products, variants}) {
             </Head>
             <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
                 {/* 图片区域 */}
-                <Block flex={[0, 0, 1]} position={["unset", "unset", "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                <Block flex={[0, 0, 1]} position={[null, null, "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                     <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
                           overrides={{
                               Root: {
@@ -819,13 +819,13 @@ function Canopy_Tent({router, products, variants}) {
                                   },
                                   style: {
                                       display: "grid",
-                                      gridTemplateColumns: " repeat(3,auto)",
+                                      // gridTemplateColumns: " repeat(3,auto)",
                                       gridColumnGap: "12px",
                                       justifyContent: "center",
                                       overflowX: "scroll",
                                   },
                               },
-                              TabBorder: {props: {hidden: true}},
+                              TabBorder: {props: {hidden: true}, style: {display: "none"}},
                               TabHighlight: {props: {hidden: true}, style: {display: "none"}},
                           }}
                     >
@@ -881,52 +881,45 @@ function Canopy_Tent({router, products, variants}) {
                                           )}
                             />
                         </Tab>
-                        <Tab title="Video" overrides={{
-                            TabPanel: {
-                                style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
-                        <Tab title="3D" overrides={{
-                            TabPanel: {
-                                style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                            },
-                            Tab: {
-                                style: ({$isActive}) => ({
-                                    background: $isActive ? "black" : "transparent",
-                                    color: $isActive ? "white" : "black",
-                                    paddingTop: "5px",
-                                    paddingBottom: "5px",
-                                    paddingRight: "24px",
-                                    paddingLeft: "24px",
-                                    borderRadius: "24px",
-                                    ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                }),
-                            },
-                        }}/>
+                        {/*<Tab title="Video" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
+                        {/*<Tab title="3D" overrides={{*/}
+                        {/*    TabPanel: {*/}
+                        {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                        {/*    },*/}
+                        {/*    Tab: {*/}
+                        {/*        style: ({$isActive}) => ({*/}
+                        {/*            background: $isActive ? "black" : "transparent",*/}
+                        {/*            color: $isActive ? "white" : "black",*/}
+                        {/*            paddingTop: "5px",*/}
+                        {/*            paddingBottom: "5px",*/}
+                        {/*            paddingRight: "24px",*/}
+                        {/*            paddingLeft: "24px",*/}
+                        {/*            borderRadius: "24px",*/}
+                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                        {/*        }),*/}
+                        {/*    },*/}
+                        {/*}}/>*/}
                     </Tabs>
                 </Block>
                 {/* 选择区域 */}
-                <Block width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
+                <Block className="hideScrollBar" width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
                        paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
-                       overrides={{
-                           Block: {
-                               props: {
-                                   className: "hideScrollBar"
-                               },
-                           },
-                       }}
                 >
                     <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
                     <Block marginTop="4px" marginBottom="24px" font="MinXLabel14" color="MinXButton">
@@ -1307,12 +1300,12 @@ function Canopy_Tent({router, products, variants}) {
                 </Block>
             </Block>
             <ProductDescription product={selectedFrame}/>
-            <Checkout quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                      onClick={() => openSummaryModal()}
-                      onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                      onClickPlus={() => setTotalCount(totalCount + 1)}
-                      onClickAddToBag={() => updateCart()}
-                      onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+            <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                         onClick={() => openSummaryModal()}
+                         onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                         onClickPlus={() => setTotalCount(totalCount + 1)}
+                         onClickAddToBag={() => updateCart()}
+                         onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
             <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
             <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>

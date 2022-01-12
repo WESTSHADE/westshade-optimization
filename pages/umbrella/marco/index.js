@@ -8,8 +8,8 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ChevronRight} from "baseui/icon";
 
-import {BannerDisplay, Section, SubHeaderBar, UmbrellaProductItem} from "Components/sections";
-import Button from "Components/button-n";
+import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
+import Button from "Components/Button/V1";
 import Utils from "Utils/utils";
 
 import styles from "../umbrella.module.scss";
@@ -34,10 +34,10 @@ function Marco({router, size}) {
             </Head>
             <SubHeaderBar size={size} title={"Umbrella Marco"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="MARCO" subtitle="Push up outdoor umbrella" url="/images/umbrella/marco/marco_display.webp" alt="marco display" imageObjectFit="contain"
-                               titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
-                               containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
-                               containerBackground="transparent" backgroundColor="#C5E4F2" textColor="MinXPrimaryText" renderButton={<></>}
+                <Banner title="MARCO" subtitle="Push up outdoor umbrella" url="/images/umbrella/marco/marco_display.webp" alt="marco display" imageObjectFit="contain"
+                        titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
+                        containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
+                        containerBackground="transparent" backgroundColor="#C5E4F2" textColor="MinXPrimaryText" renderButton={<></>}
                 />
                 <Section title={<>SAFE TO ENJOY<br/>THE OUTDOOR</>}
                          subtitle="Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."
@@ -49,7 +49,7 @@ function Marco({router, size}) {
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/marco/icon_upf.webp" alt="marco udf"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/icon_upf.webp" alt="marco udf" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>UPF 50+</Block>
@@ -58,7 +58,7 @@ function Marco({router, size}) {
                                      </Block>
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/marco/icon_water.webp" alt="marco water"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/icon_water.webp" alt="marco water" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Waterproof</Block>
@@ -109,19 +109,19 @@ function Marco({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/marco/detail3.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail3.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Arm Joints
                                  </Block>

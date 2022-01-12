@@ -8,8 +8,8 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ChevronRight} from "baseui/icon";
 
-import {BannerDisplay, Section, SubHeaderBar, UmbrellaProductItem} from "Components/sections";
-import Button from "Components/button-n";
+import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
+import Button from "Components/Button/V1";
 import Utils from "Utils/utils";
 
 import styles from "../umbrella.module.scss";
@@ -34,10 +34,10 @@ function Catalina({router, size}) {
             </Head>
             <SubHeaderBar size={size} title={"Umbrella Catalina"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="/images/umbrella/catalina/catalina_display.webp" alt="catalina display"
-                               titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
-                               containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
-                               containerBackground="rgba(0,0,0,0.2)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
+                <Banner title="CATALINA" subtitle="Oversized Telescopic Umbrella" url="/images/umbrella/catalina/catalina_display.webp" alt="catalina display"
+                        titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
+                        containerStyle={{display: "flex", justifyContent: "center", paddingBottom: "0 !important"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
+                        containerBackground="rgba(0,0,0,0.2)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
                 />
                 <Section title={<>SAFE TO ENJOY<br/>THE OUTDOOR</>}
                          subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}
@@ -45,7 +45,7 @@ function Catalina({router, size}) {
                              <>
                                  <Block position="relative" width="100%" maxWidth="960px" height={["312px", "400px", "450px"]} display="flex" flexDirection="column" alignItems="center"
                                         marginRight="auto" marginBottom={["24px", "24px", "40px"]} marginLeft="auto" paddingTop={["32px", "40px"]}
-                                        backgroundImage={"url(\"/images/umbrella/catalina/fabric.webp\")"} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
+                                        backgroundImage={`url("${process.env.imageBaseUrl}/images/umbrella/catalina/fabric.webp")`} backgroundSize={"cover"} backgroundPosition="center" backgroundRepeat="no-repeat"
                                  >
                                      <Block marginBottom={["4px", "4px", "12px"]} font={["MinXHeading20", "MinXHeading24"]} color="MinXPrimaryText"
                                             overrides={{
@@ -83,7 +83,7 @@ function Catalina({router, size}) {
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/catalina/icon_upf.webp" alt="catalina udf"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/icon_upf.webp" alt="catalina udf" layout='fill' objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>UPF 50+</Block>
@@ -92,7 +92,7 @@ function Catalina({router, size}) {
                                      </Block>
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/catalina/icon_water.webp" alt="catalina water"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/icon_water.webp" alt="catalina water" layout='fill' objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Waterproof</Block>
@@ -111,31 +111,31 @@ function Catalina({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail1.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail1.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail2.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail2.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      <span style={{color: "#23A4AD"}}>Aluminum</span> Hub & Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail3.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail3.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Crank Lift
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail4.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail4.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Internal With Reinforced Channel
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/catalina/detail5.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/catalina/detail5.webp" alt="catalina detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Cast Alloy Base-Plate
                                  </Block>

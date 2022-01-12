@@ -8,8 +8,8 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 import {ChevronRight} from "baseui/icon";
 
-import {BannerDisplay, Section, SubHeaderBar, UmbrellaProductItem} from "Components/sections";
-import Button from "Components/button-n";
+import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
+import Button from "Components/Button/V1";
 import Utils from "Utils/utils";
 
 import styles from "../umbrella.module.scss";
@@ -34,10 +34,10 @@ function Bali({router, size}) {
             </Head>
             <SubHeaderBar size={size} title={"Umbrella Bali"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="/images/umbrella/bali/bali_display.webp" alt="bali display"
-                               titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
-                               containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
-                               containerBackground="rgba(0,0,0,0.5)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
+                <Banner title="BALI" subtitle="Push-button tilt & crank lift umbrella" url="/images/umbrella/bali/bali_display.webp" alt="bali display"
+                        titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
+                        containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
+                        containerBackground="rgba(0,0,0,0.5)" textColor="MinXPrimaryTextAlt" renderButton={<></>}
                 />
                 <Section title={<>SAFE TO ENJOY<br/>THE OUTDOOR</>}
                          subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}
@@ -49,7 +49,7 @@ function Bali({router, size}) {
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/bali/icon_upf.webp" alt="bali udf"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/icon_upf.webp" alt="bali udf" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>UPF 50+</Block>
@@ -58,7 +58,7 @@ function Bali({router, size}) {
                                      </Block>
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/bali/icon_water.webp" alt="bali water"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/icon_water.webp" alt="bali water" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Waterproof</Block>
@@ -76,25 +76,25 @@ function Bali({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail1.webp" alt="bali detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/detail1.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail2.webp" alt="bali detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/detail2.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & Steel Frame
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail3.webp" alt="bali detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/detail3.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Crank Lift
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/bali/detail4.webp" alt="bali detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/bali/detail4.webp" alt="bali detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Push Button To Tilt
                                  </Block>

@@ -456,6 +456,7 @@ ul.bullet-warranty.sub > li {
     margin: 4px 0;
     border-width: 1px;
     border-radius: 2px;
+    border-color: #D9D9D9;
 }
 
 .modal-empty-footer {
@@ -701,6 +702,14 @@ ul.bullet-warranty.sub > li {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.text-ellipsis-search * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
 
@@ -1239,4 +1248,8 @@ ul.bullet-warranty.sub > li {
     transition: all 1000ms;
 }
 
+.modal-body-no-margin {
+    margin: 0;
+    background-color: #F7F7F7;
+}
 

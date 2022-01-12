@@ -6,7 +6,7 @@ import {Block} from "baseui/block";
 
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import Shipping from "../../../sections/ShippingNote";
+import Shipping from "../../../Sections/ShippingNote";
 
 import styles from "./parts.module.scss";
 
@@ -19,7 +19,7 @@ export default function content({dataTable}) {
     selectedVariant.map((variant, index) => {
         console.log(variant);
         if (!variant) return
-        
+
         let cell = {
             name: productComponent[index]?.name,
             quantity: 1,
@@ -38,7 +38,8 @@ export default function content({dataTable}) {
     const PriceCell = ({priceRegular, priceSale, onSale}) => {
         return (
             <Block font="MinXLabel14" className={clsx([styles["cell"], styles["cell-price"], "text-right"])}>
-                {onSale ? <Block color="#F07C7C">{(priceSale === "" || priceSale === "0" || priceSale === 0 || !priceSale) ? "Free" : <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"}/>}</Block> : null}
+                {onSale ?
+                    <Block color="#F07C7C">{(priceSale === "" || priceSale === "0" || priceSale === 0 || !priceSale) ? "Free" : <NumberFormat thousandSeparator={true} prefix={"$"} value={priceSale} displayType={"text"}/>}</Block> : null}
                 <NumberFormat thousandSeparator={true} prefix={"$"} value={priceRegular} displayType={"text"} style={onSale ? {textDecoration: "line-through"} : {}}/>
             </Block>
         )

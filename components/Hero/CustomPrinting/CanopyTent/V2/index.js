@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import Button from "Components/button-n";
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import Button from "../../../../Button/V1";
+import ThemeProvider from "../../../../ThemeProvider";
 
 let timeoutOpacity, timeoutCounter;
 
@@ -17,8 +17,8 @@ const Hero = () => {
 
     const [counter, setCounter] = useState(0);
 
-    const goCustomPage = () => router.push({pathname: "/products/custom-printed-canopy-tent/buy"});
-    const goPackagePage = () => router.push({pathname: "/custom-printing-canopy-tent"});
+    const goCustomPage = () => router.push("/products/custom-printed-canopy-tent", "/products/custom-printed-canopy-tent/buy");
+    const goPackagePage = () => router.push({pathname: "/custom-printing-package"});
 
     useEffect(() => {
         return () => {
@@ -45,20 +45,20 @@ const Hero = () => {
     }, [ref, counter]);
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V2>
             <Block className="banner-display" width="100vw" height={["auto", null, "700px", "775px"]} left="calc(50% - 50vw)" padding={["0 16px", null, "0 20px"]}
                    overrides={{
                        Block: {
                            style: {
                                background: "transparent !important",
-                               ":after": {background: "url('/images/custom-printing/canopy-tent/hero-bg.webp')"},
+                               ":after": {background: `url('${process.env.imageBaseUrl}/images/custom-printing/canopy-tent/hero-bg.webp')`},
                            }
                        }
                    }}
             >
                 <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(2,1fr)"]} height="100%" alignContent="center">
                     <Block position="relative">
-                        <Block display={[null, null, "inline-grid"]} width="auto" height="fit-content" position={["relative", null, "absolute"]} top={[null, null, "50%"]} right={[null, null, "-200px"]}
+                        <Block display={[null, null, "inline-grid"]} width="auto" height="fit-content" position={["relative", null, "absolute"]} top={[null, null, "50%"]} right={[null, null, "-175px"]}
                                overrides={{
                                    Block: {
                                        style: {
@@ -78,9 +78,8 @@ const Hero = () => {
                             </Block>
                         </Block>
                     </Block>
-                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" maxWidth={[null, null, "467px"]} marginRight="auto" marginLeft={["auto", null, "unset"]}
-                           $style={{zIndex: 9}}>
-                        <Block width="fit-content" marginBottom={["32px", null, null, "80px"]} font={["MinXTitle36", "MinXTitle36", "MinXTitle48"]} color="MinXPrimaryText"
+                    <Block display="grid" gridTemplateColumns="1fr" gridTemplateRows="repeat(3, max-content)" flex={1} paddingBottom="40px" marginRight="auto" marginLeft={["auto", null, "unset"]} $style={{zIndex: 9}}>
+                        <Block width="fit-content" maxWidth={[null, null, "467px"]} marginBottom={["32px", null, null, "80px"]} font={["MinXTitle36", "MinXTitle36", "MinXTitle48"]} color="MinXPrimaryText"
                                overrides={{
                                    Block: {
                                        style: {fontWeight: "400 !important", lineHeight: "1em !important", textTransform: "capitalize"}
@@ -95,7 +94,8 @@ const Hero = () => {
                             </Block>
                             <Block>canopy tent</Block>
                         </Block>
-                        <Block as="p" width="fit-content" marginBottom={["16px", null, null, "32px"]} font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]} color="MinXSecondaryText"
+                        <Block as="p" width="fit-content" maxWidth={[null, null, process.env.maxWidth / 2 + "px"]} marginBottom={["16px", null, null, "32px"]} font={["MinXSubtitle14", "MinXSubtitle14", "MinXSubtitle16"]}
+                               color="MinXSecondaryText"
                                overrides={{
                                    Block: {
                                        style: {
@@ -105,20 +105,19 @@ const Hero = () => {
                                    },
                                }}
                         >Westshade aims to provide the best printing service in producing high-end custom printed canopy tents. High-quality fabric and state-of-art printing technology are adopted to offer the best to our customers.</Block>
-                        <Block display="flex" flexDirection="row" $style={{gap: "24px"}}>
-                            <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
-                                    buttonStyle={{boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
-                                    onClick={() => goCustomPage()}
-                            />
+                        <Block display="flex" flexDirection="row" width="100%" maxWidth={[null, null, "467px"]} $style={{gap: "24px"}}>
                             <Button type="outline" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Pick a package" buttonBackgroundColor="#FFF"
-                                    buttonStyle={{paddingRight: "4px !important", paddingLeft: "4px !important", borderColor: "#D0D9D9", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
+                                    buttonStyle={{paddingRight: "4px !important", paddingLeft: "4px !important", borderColor: "#262626", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
                                     onClick={() => goPackagePage()}
+                            />
+                            <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
+                                    buttonStyle={{boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}} onClick={() => goCustomPage()}
                             />
                         </Block>
                     </Block>
                 </Block>
             </Block>
-        </ThemeProvider>
+        </ThemeProvider.V2>
     )
 }
 

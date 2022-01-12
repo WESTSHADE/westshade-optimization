@@ -12,7 +12,7 @@ import {Button, KIND, SHAPE} from "baseui/button";
 import {Input} from 'baseui/input';
 import {CheckIndeterminate, Plus} from 'baseui/icon'
 
-import Shipping from "Components/sections/ShippingNote";
+import Shipping from "Components/Sections/ShippingNote";
 import {Modal} from "Components/surfaces";
 
 import Utils from "Utils/utils";

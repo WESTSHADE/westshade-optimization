@@ -7,11 +7,11 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {FormControl} from "baseui/form-control";
 import {Input} from "baseui/input";
-import {AspectRatioBox} from 'baseui/aspect-ratio-box';
+import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 
-import Button from "Components/button-n";
-import {UmbrellaV1 as Hero} from "Components/Hero/CustomPrinting";
-import {Benefit, FreeMockupForm, Section} from "Components/sections"
+import Button from "Components/Button/V1";
+import {Umbrella as Hero} from "Components/Hero/CustomPrinting";
+import {Benefit, FreeMockupForm, Section} from "Components/Sections"
 import {Modal} from "Components/surfaces";
 
 import Utils from "Utils/utils";
@@ -23,7 +23,7 @@ const SectionCard = ({router, src, alt, title, content, destination, onClick, bu
         <Block display={["grid", null, "flex"]} flexDirection={["column", null, "row-reverse"]} alignItems={[null, null, "center"]} justifyContent={[null, null, "space-between"]} gridTemplateColumns={["1fr", null, "unset"]}
                gridRowGap={["20px", "24px", "unset"]} padding={["32px 16px", "48px 64px", "20px 0 0"]} $style={{boxShadow: "0px 16px 40px rgba(0, 0, 0, 0.05)"}}
         >
-            <AspectRatioBox position="relative" width={["256px", "320px", "380px"]} margin="auto"><Image src={src} alt={alt} layout="fill" priority/></AspectRatioBox>
+            <AspectRatioBox position="relative" width={["256px", "320px", "380px"]} margin="auto"><AspectRatioBoxBody as={Image} src={src} alt={alt} layout="fill" priority/></AspectRatioBox>
             <Block display="grid" gridTemplateColumns="1fr" gridRowGap={["12px", null, "16px"]} flex={1} paddingLeft={[null, null, "40px"]}>
                 <Block font={["MinXTitle20", "MinXTitle28", "MinXTitle32"]} color="MinXPrimaryText">{title}</Block>
                 <Block maxWidth="400px" font={["MinXParagraph14", "MinXParagraph16", "MinXParagraph20"]} color="MinXPrimaryText">{content}</Block>
@@ -99,7 +99,7 @@ function Custom_Printing_Umbrella({router, size, phone}) {
                       content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
-                <Hero size={size} onClick={() => goBuyingSection()}/>
+                <Hero.V1 size={size} onClick={() => goBuyingSection()}/>
                 <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={

@@ -10,9 +10,9 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {ChevronRight, ArrowLeft, ArrowRight} from "baseui/icon";
 
-import Button from "Components/button-n";
-import {CanopyTentV1 as Hero} from "Components/Hero/CanopyTent";
-import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/sections";
+import Button from "Components/Button/V1";
+import Hero from "Components/Hero/CanopyTent";
+import {Benefit, TentSizeDisplay, Section, SubHeaderBar} from "Components/Sections";
 
 const refs = [];
 
@@ -28,22 +28,22 @@ const BlockVideo = ({src, isSelected, step}) => {
 
             if (box) {
                 box.muted = true; // without this line it's not working although I have "muted" in HTML
-            }
 
-            // 全部显现
-            if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                if (isSelected) {
-                    if (box.paused) box.play();
-                } else {
-                    if (!box.paused) box.pause();
+                // 全部显现
+                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    if (isSelected) {
+                        if (box.paused) box.play();
+                    } else {
+                        if (!box.paused) box.pause();
+                    }
                 }
+                // 全部不显示
+                if ((rect.top > window.innerHeight && rect.bottom > window.innerHeight) || (rect.top < 0 && rect.bottom < 0)) {
+                    box.pause();
+                }
+                // 部分显现
+                // if (rect.top < window.innerHeight && rect.bottom >= 0) {}
             }
-            // 全部不显示
-            if ((rect.top > window.innerHeight && rect.bottom > window.innerHeight) || (rect.top < 0 && rect.bottom < 0)) {
-                box.pause();
-            }
-            // 部分显现
-            // if (rect.top < window.innerHeight && rect.bottom >= 0) {}
         }
     };
 
@@ -56,15 +56,16 @@ const BlockVideo = ({src, isSelected, step}) => {
 
     return (
         <div ref={refBlockVideo} style={{height: "100%"}}>
-            <ReactPlayer className="react-player" width="100%" height="100%" url={src} playsinline loop
+            <ReactPlayer className="react-player" width="100%" height="100%" url={process.env.imageBaseUrl + src} playsinline loop
                          config={{
                              file: {
                                  attributes: {
-                                     crossOrigin: "anonymous",
+                                     // crossOrigin: "anonymous",
                                      controlsList: "nofullscreen",
                                  },
                              },
-                         }}/>
+                         }}
+            />
         </div>
     )
 };
@@ -87,7 +88,7 @@ const BlockDisplay = ({title, content, src, button}) => {
                            className: "banner-display section-round-corner text-center"
                        },
                        style: {
-                           ":after": {background: "url(" + src + ")"},
+                           ":after": {background: `url(${process.env.imageBaseUrl}${src})`},
                        }
                    },
                }}
@@ -157,7 +158,7 @@ function Canopy_Tent({router, size}) {
             <SubHeaderBar size={size} title="Canopy Tent" subTitle="Spec" subTitleDestination="/canopy-tent/spec" buttonText="Buy Now" onClick={() => goBuyingPage()}/>
             {/* 主要显示区域 */}
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Hero/>
+                <Hero.V1/>
                 <Section title="FABRIC FEATURE"
                          content={
                              <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"]} gridColumnGap="20px" gridRowGap={["16px", null, "24px"]} justifyItems="center">

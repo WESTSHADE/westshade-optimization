@@ -204,7 +204,7 @@ const CustomFilePreview = ({type, file, removeHandler}) => {
                 </Block>
             </Block>
             <Block width="20px" height="22px">
-                <i onClick={removeHandler}><Block as="img" className={css({width: "100%", objectFit: "contain", cursor: "pointer"})} src="/images/icon/icon-delete-black.png" alt="trash"/></i>
+                <i onClick={removeHandler}><Block as="img" className={css({width: "100%", objectFit: "contain", cursor: "pointer"})} src={process.env.imageBaseUrl + "/images/icon/icon-delete-black.png"} alt="trash"/></i>
             </Block>
         </Block>
     )

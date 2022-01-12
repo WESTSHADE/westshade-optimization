@@ -40,8 +40,8 @@ function Footer() {
                        paddingTop={["24px", null, "32px"]}
                        paddingBottom={["24px", "24px", "32px"]} font="MinXParagraph12" color="MinXSecondaryText">
                     <Block display="grid" gridTemplateColumns="repeat(2, max-content)" gridColumnGap="40px" marginBottom={["16px", "24px", "0"]}>
-                        <div><Link href={"/privacy"}>Privacy & security</Link></div>
-                        <div><Link href={"/terms-and-conditions"}>Term & conditions</Link></div>
+                        <div><Link href="/privacy" as="/westshade-privacy">Privacy & security</Link></div>
+                        <div><Link href="/terms-and-conditions" as="/westshade-terms-and-conditions">Term & conditions</Link></div>
                     </Block>
                     <div className="text-center">©Westshade</div>
                 </Block>

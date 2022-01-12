@@ -6,9 +6,9 @@ import Image from "next/image";
 import {Block} from "baseui/block";
 import {Select} from "baseui/select";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 import Compare from "Components/Compare";
-import {Section} from "Components/sections";
+import {Section} from "Components/Sections";
 
 import DataSpec from "Assets/spec-canopy-tent.json";
 

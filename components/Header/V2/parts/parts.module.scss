@@ -1,0 +1,119 @@
+.drop-menu-container {
+  box-shadow: rgb(0 0 0 / 14%) 0 4px 5px 0;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+
+  .menu-list-container {
+    .list {
+      padding-top: 34px;
+      padding-bottom: 0;
+      box-shadow: none;
+
+      &:focus {
+        outline: none
+      }
+
+      .list-header {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+
+      .list-item {
+        padding: 4px 8px;
+      }
+    }
+  }
+}
+
+/* ============================================================ */
+
+.drawer-container {
+  z-index: 999;
+
+  .close {
+    left: 16px;
+    right: unset;
+  }
+
+  .drawer-menu-container {
+    margin-top: 68px;
+
+    .panel-container {
+      border-bottom: none;
+
+      .menu-title {
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        &.toggle-hidden {
+          svg {
+            display: none
+          }
+        }
+      }
+
+      .menu-content {
+        display: grid;
+        grid-row-gap: 12px;
+        padding: 0;
+
+        ul {
+          padding: 0 0 0 45px;
+          box-shadow: none;
+
+          &:first-child {
+            margin-top: 12px;
+          }
+
+          li {
+            padding: 6px 8px;
+          }
+        }
+
+        .button-more {
+          padding: 0;
+          color: #262626;
+          font-size: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+
+          &:hover {
+            background-color: transparent
+          }
+
+          &:active {
+            background-color: transparent
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ============================================================ */
+
+.drawer-cart-container {
+  z-index: 98;
+
+  .body-container {
+    margin: 48px 0 0;
+    padding: 0 16px;
+
+    @media screen and (min-width: 960px) {
+      margin-top: 96px;
+      padding: 0 40px;
+    }
+  }
+
+  .close {
+    top: 72px;
+    right: 21px;
+
+    @media screen and (min-width: 960px) {
+      top: 120px;
+    }
+  }
+}

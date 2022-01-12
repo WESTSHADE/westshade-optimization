@@ -35,7 +35,8 @@ const modal = (props) => {
         selectedRoofListTemp, setSelectedRoofListTemp,
         openDetailModal, removeDetail,
         selectedRoofSlide, selectedSlidePart, onSelectedRoofSlide, onSelectedSlidePart,
-        applyToFullSide, setApplyToFullSide
+        applyToFullSide, setApplyToFullSide,
+        closeStyles
     } = props;
 
     return (
@@ -62,6 +63,7 @@ const modal = (props) => {
                        props: {
                            className: styles["close"],
                        },
+                       style: {...closeStyles}
                    },
                }}
         >

@@ -8,8 +8,8 @@ import {Block} from "baseui/block";
 import {AspectRatioBox, AspectRatioBoxBody} from 'baseui/aspect-ratio-box';
 import {ChevronRight} from "baseui/icon";
 
-import {BannerDisplay, Section, SubHeaderBar, UmbrellaProductItem} from "Components/sections";
-import Button from "Components/button-n";
+import {Banner, Section, SubHeaderBar, UmbrellaProductItem} from "Components/Sections";
+import Button from "Components/Button/V1";
 import Utils from "Utils/utils";
 
 import styles from "../umbrella.module.scss";
@@ -34,10 +34,10 @@ function Kapri({router, size}) {
             </Head>
             <SubHeaderBar size={size} title={"Umbrella Kapri"} subTitle={"Spec"} subTitleDestination={"/umbrella/spec"} buttonText={"Buy Now"} onClick={() => goBuyingPage()}/>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom={["16px", "16px", "32px"]}>
-                <BannerDisplay title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="/images/umbrella/kapri/kapri_display.webp" alt="kapri display" imageObjectFit="contain"
-                               titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
-                               containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
-                               containerBackground="transparent" backgroundColor="#EEF3FA" textColor="MinXPrimaryText" renderButton={<></>}
+                <Banner title="Kapri" subtitle="Crank lift tilt umbrella with height adjustment" url="/images/umbrella/kapri/kapri_display.webp" alt="kapri display" imageObjectFit="contain"
+                        titleMarginBottom={["12px", "16px", "20px"]} titleFont={["MinXTitle28", "MinXTitle32", "MinXTitle44"]} subtitleFont={["MinXSubtitle16", "MinXSubtitle20", "MinXSubtitle24"]}
+                        containerStyle={{display: "flex", justifyContent: "center"}} containerHeight={["160px", "180px", "200px"]} containerTextPosition="center"
+                        containerBackground="transparent" backgroundColor="#EEF3FA" textColor="MinXPrimaryText" renderButton={<></>}
                 />
                 <Section title={<>SAFE TO ENJOY<br/>THE OUTDOOR</>}
                          subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}
@@ -49,7 +49,7 @@ function Kapri({router, size}) {
                                  <Block display="grid" gridTemplateColumns={["1fr", "repeat(2, 1fr)"]} gridRowGap={["32px", "unset"]} width="100%" maxWidth="662px" margin="auto">
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/kapri/icon_upf.webp" alt="kapri udf"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/icon_upf.webp" alt="kapri udf" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>UPF 50+</Block>
@@ -58,7 +58,7 @@ function Kapri({router, size}) {
                                      </Block>
                                      <Block display="grid" gridTemplateColumns={["auto 1fr", "1fr"]} gridRowGap={[0, "24px", "32px"]} gridColumnGap={["22px", 0]} justifyItems="center" marginRight="auto" marginLeft={[null, "auto"]}>
                                          <AspectRatioBox width={["60px", "80px"]}>
-                                             <AspectRatioBoxBody as="img" src="/images/umbrella/kapri/icon_water.webp" alt="kapri water"/>
+                                             <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/icon_water.webp" alt="kapri water" layout="fill" objectFit="contain"/>
                                          </AspectRatioBox>
                                          <Block className={styles["text-section-card"]} width="100%" maxWidth={["unset", "167px"]} color="MinXPrimaryText">
                                              <Block marginBottom={["4px", "20px"]} font={["MinXHeading14", "MinXHeading16", "MinXHeading20"]}>Waterproof</Block>
@@ -76,25 +76,25 @@ function Kapri({router, size}) {
                              >
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/kapri/detail1.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/detail1.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Self-Tensioning Tips
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/kapri/detail2.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/detail2.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/kapri/detail3.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/detail3.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Crank Lift & Tilt
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
                                      <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
-                                         <Image src="/images/umbrella/kapri/detail4.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
+                                         <AspectRatioBoxBody as={Image} src="/images/umbrella/kapri/detail4.webp" alt="kapri detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Height Adjustment
                                  </Block>
@@ -119,14 +119,16 @@ function Kapri({router, size}) {
                                          <Image src="/images/umbrella/kapri/size1.webp" alt="kapri size 6.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">6.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
+                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "6.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">
                                          <Image src="/images/umbrella/kapri/size2.webp" alt="kapri size 7.5'ft" layout="responsive" objectFit="contain" width={992} height={624}/>
                                      </Block>
                                      <Block color="MinXPrimaryText">7.5’ Octagon</Block>
-                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>} onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
+                                     <Button height="40px" text='Buy' bundle="primary" endEnhancer={() => <ChevronRight size={24}/>}
+                                             onClick={() => router.push({pathname: "/products/tilt-umbrellas/kapri-umbrella", query: {size: "7.5ft"}})}/>
                                  </Block>
                                  <Block display="grid" gridTemplateColumns="1fr" gridRowGap="12px" justifyItems="center">
                                      <Block position="relative" maxWidth="366px" width="100%" overflow="hidden">

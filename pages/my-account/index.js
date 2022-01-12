@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, SHAPE, KIND} from "baseui/button";
@@ -13,7 +14,7 @@ import {Avatar} from 'baseui/avatar';
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ChevronRight, ChevronDown, ChevronUp} from 'baseui/icon';
 
-import MButton from "Components/button-n";
+import MButton from "Components/Button/V1";
 
 import {register, logIn, logOut, getUser, updateUser, clearUserErrors} from "../../redux/actions/userActions";
 import {getOrder} from "../../redux/actions/orderActions";
@@ -183,8 +184,8 @@ function Signup() {
                     Password must contain at least 1 number and 1 letter; it must be at least 6 characters in length.
                 </Block>
                 <Block font="MinXHeading14">
-                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions" passHref><span className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link
-                    color="inherit" href="/privacy" passHref><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
+                    By creating your account, you agree to our <Link color="inherit" href="/terms-and-conditions" as="/westshade-terms-and-conditions" passHref><span
+                    className="cursor text-sign-up-desc">Terms and Conditions</span></Link> & <Link color="inherit" href="/privacy" as="/westshade-privacy" passHref><span className="cursor text-sign-up-desc">Privacy Policy</span></Link>.
                 </Block>
                 <MButton type="solid" width="100%" height="56px" marginBottom="24px" font="MinXLabel16" text='Join Westshade' bundle="primary" onClick={handleSignUp}/>
             </Block>
@@ -361,7 +362,7 @@ function Orders({size}) {
                                                }}
                                         >
                                             <AspectRatioBox width={["60px", "75px"]}>
-                                                <AspectRatioBoxBody as="img" src={item.image.src ? item.image.src : "/images/product/default-product.webp"} alt={item.name}/>
+                                                <AspectRatioBoxBody as={Image} src={item.image.src ? item.image.src : "/images/product/default-product.webp"} alt={item.name} layout="fill" objectFit="contain"/>
                                             </AspectRatioBox>
                                             <Block position="relative" display="flex" flex={1} flexDirection="column" paddingLeft={["8px", "16px"]}>
                                                 <Block display="flex" flex={1} flexDirection={["column", "row"]} marginBottom={["12px", "20px"]}>

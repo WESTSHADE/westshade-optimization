@@ -17,11 +17,17 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange}) => {
                   TabBorder: {
                       props: {
                           hidden: true
+                      },
+                      style: {
+                          display: "none"
                       }
                   },
                   TabHighlight: {
                       props: {
                           hidden: true
+                      },
+                      style: {
+                          display: "none"
                       }
                   },
               }}

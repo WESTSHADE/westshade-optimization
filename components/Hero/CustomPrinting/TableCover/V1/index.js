@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 
-import Button from "Components/button-n";
+import Button from "Components/Button/V1";
 
 const Hero = ({size}) => {
     const router = useRouter();
@@ -15,7 +15,7 @@ const Hero = ({size}) => {
     const [circleAD, setCircleAD] = useState(0);
     const [circleBD, setCircleBD] = useState(0);
 
-    const goBuyingPage = () => router.push({pathname: "/custom-print/table-cover/buy"});
+    const goBuyingPage = () => router.push("/custom-print/table-cover/buy");
 
     useEffect(() => {
         if (size && ref && ref.current) {

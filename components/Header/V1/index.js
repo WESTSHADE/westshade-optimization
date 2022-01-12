@@ -15,7 +15,7 @@ import {Cart, MobileMenu, NavItem} from "./parts";
 
 import MENU from "Assets/menu.json";
 
-import {ThemeV1 as ThemeProvider} from "Components/ThemeProvider";
+import ThemeProvider from "../../ThemeProvider";
 
 import {EventEmitter} from "Utils/events";
 
@@ -43,7 +43,7 @@ function Header({hideCategories}) {
     }, []);
 
     return (
-        <ThemeProvider>
+        <ThemeProvider.V2>
             <div className={`${styles["container-nav"]} main-container-nav`}>
                 <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
                     <Block className={styles["root-navigation-top"]}>
@@ -152,7 +152,7 @@ function Header({hideCategories}) {
                 <MobileMenu isOpen={isMenuDrawerOpen} onClose={() => setMenuDrawerOpen(false)}/>
                 <Cart isOpen={isCartDrawerOpen} onClose={() => setCartDrawerOpen(false)}/>
             </div>
-        </ThemeProvider>
+        </ThemeProvider.V2>
     );
 }
 

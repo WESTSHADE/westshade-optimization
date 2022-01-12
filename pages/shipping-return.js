@@ -8,7 +8,7 @@ import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 
 import {Modal} from "Components/surfaces";
-import {Section} from "Components/sections";
+import {Section} from "Components/Sections";
 
 function Shipping_Return() {
     const [tabsRefs, setTabsRefs] = useState([]);

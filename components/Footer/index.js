@@ -1,5 +1,5 @@
-import FooterV1 from "./V1";
+import V1 from "./V1";
 
 module.exports = {
-    FooterV1
+    V1
 }

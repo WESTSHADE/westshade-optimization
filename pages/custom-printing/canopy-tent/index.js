@@ -7,17 +7,17 @@ import Head from "next/head";
 import Image from "next/image";
 
 import {Block} from "baseui/block";
-import {AspectRatioBox} from "baseui/aspect-ratio-box";
+import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 import {ArrowLeft, ArrowRight} from "baseui/icon";
 
-import Button from "Components/button-n";
-import {CanopyTentV2 as Hero} from "Components/Hero/CustomPrinting";
-import {Section, Benefit, FreeMockupForm} from "Components/sections"
+import Button from "Components/Button/V1";
+import {CanopyTent as Hero} from "Components/Hero/CustomPrinting";
+import {Section, Benefit, FreeMockupForm} from "Components/Sections"
 
 const ImageSlide = ({url, alt}) => {
     return (
         <AspectRatioBox width="inherit">
-            <Image src={url} alt={alt} layout="fill" objectFit="contain"/>
+            <AspectRatioBoxBody as={Image} src={url} alt={alt} layout="fill" objectFit="contain"/>
         </AspectRatioBox>
     );
 };
@@ -57,7 +57,7 @@ function Custom_Printing_Canopy_Tent() {
                 <meta name="description" content="Customize your canopy tent. Any style and Multiple size. Unlimited printing style for special events and campaigns. Configure your tents as you wish NOW!"/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
-                <Hero/>
+                <Hero.V2/>
                 <Section title="ANY STYLE MULTIPLE SIZE"
                          subtitle="There is no limitation on printing styles and you can configure your tent as you wish. Westshade will meet your special needs."
                          content={

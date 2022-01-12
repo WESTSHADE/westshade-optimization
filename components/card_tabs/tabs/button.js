@@ -3,7 +3,7 @@ import React from "react";
 import {Tab, Tabs, FILL} from "baseui/tabs-motion";
 import {Block} from "baseui/block";
 
-import Button from "../../button-n";
+import Button from "../../Button/V1";
 
 import styles from "./tabs.module.scss";
 
@@ -44,11 +44,17 @@ const Tabs_Tag = ({tabList = [], activeKey = "0", onChange, linkText = ""}) => {
                           TabBorder: {
                               props: {
                                   hidden: true
+                              },
+                              style: {
+                                  display: "none"
                               }
                           },
                           TabHighlight: {
                               props: {
                                   hidden: true
+                              },
+                              style: {
+                                  display: "none"
                               }
                           },
                       }}

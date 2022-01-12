@@ -34,5 +34,6 @@
     --primary-background: white;
     --secondary-background: #F7F7F7;
 
-    --maximum-display-width: 1440px;
+    /*--maximum-display-width: 1440px;*/
+    --maximum-display-width: 1312px;
 }
