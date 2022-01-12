@@ -227,7 +227,7 @@ function Custom_Printing({router}) {
                 <meta name="description" content="Print your canopy and make it unique! All occasions. Choose from Dye Sublimation and UV Printing."/>
             </Head>
             {/* 主要显示区域 */}
-            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingTop={["16px", null, "64px"]}>
+            <Block display="grid" gridTemplateColumns="100%" gridRowGap={["32px", null, "96px"]} paddingTop={["16px", null, "32px"]}>
                 <Hero.V1/>
                 <Block as="section" className={styles.section}>
                     <Block maxWidth="840px" as="section" className={styles.printingTech}>
@@ -237,102 +237,99 @@ function Custom_Printing({router}) {
                             <Block color="MinXTitle" className={styles.printingTech__samples__header} $style={{textAlign: "center"}} font={["MinXLabel20", "MinXLabel20", "MinXLabel32"]}>
                                 Check out real samples below
                             </Block>
-                            <Block>
-                                <Tabs activeKey={activePrintingSample} onChange={({activeKey}) => setActivePrintingSample(activeKey + "")}
-                                      overrides={{
-                                          TabList: {
-                                              style: {
-                                                  backgroundColor: "transparent",
-                                                  justifyContent: "space-around",
-                                                  maxWidth: "682px",
-                                                  marginTop: "0",
-                                                  marginBottom: "0",
-                                                  marginLeft: "auto",
-                                                  marginRight: "auto",
-                                                  paddingTop: "10px",
-                                                  paddingBottom: "0",
-                                                  overflow: "visible"
-                                              }
-                                          },
-                                          TabHighlight: {
-                                              style: {display: "none"}
-                                          },
-                                          TabBorder: {
-                                              style: {
-                                                  display: "none"
-                                              }
-                                          },
-                                      }}
+                            <Tabs activeKey={activePrintingSample} onChange={({activeKey}) => setActivePrintingSample(activeKey + "")}
+                                  overrides={{
+                                      TabList: {
+                                          style: {
+                                              backgroundColor: "transparent",
+                                              justifyContent: "space-around",
+                                              maxWidth: "682px",
+                                              marginTop: "0",
+                                              marginBottom: "0",
+                                              marginLeft: "auto",
+                                              marginRight: "auto",
+                                              paddingTop: "10px",
+                                              paddingBottom: "0",
+                                              overflow: "visible"
+                                          }
+                                      },
+                                      TabHighlight: {
+                                          style: {display: "none"}
+                                      },
+                                      TabBorder: {
+                                          style: {
+                                              display: "none"
+                                          }
+                                      },
+                                  }}
+                            >
+                                <Tab
+                                    overrides={{
+                                        Tab: {
+                                            style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)": {
+                                                    paddingTop: "32px"
+                                                }
+                                            }
+                                        }
+                                    }}
+                                    title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 0}>UV Printing</CustomTab></Block>}
                                 >
-                                    <Tab
-                                        overrides={{
-                                            Tab: {
-                                                style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
-                                            },
-                                            TabPanel: {
-                                                style: {
-                                                    paddingRight: "0px",
-                                                    paddingLeft: "0px",
-                                                    paddingBottom: "0px",
-                                                    "@media (min-width: 673px)": {
-                                                        paddingTop: "32px"
-                                                    }
+                                    <Block className={styles.printingTech__image}>
+                                        <Image src="/images/custom-printed-canopy-tent/pmt-uv-printing-v2.webp" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center"/>
+                                    </Block>
+                                </Tab>
+                                <Tab
+                                    overrides={{
+                                        Tab: {
+                                            style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)": {
+                                                    paddingTop: "32px"
                                                 }
                                             }
-                                        }}
-                                        title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 0}>UV Printing</CustomTab></Block>}
-                                    >
-                                        <Block className={styles.printingTech__image}>
-                                            <Image src="/images/custom-printed-canopy-tent/pmt-uv-printing-v2.webp" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center"/>
-                                        </Block>
-                                    </Tab>
-                                    <Tab
-                                        overrides={{
-                                            Tab: {
-                                                style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
-                                            },
-                                            TabPanel: {
-                                                style: {
-                                                    paddingRight: "0px",
-                                                    paddingLeft: "0px",
-                                                    paddingBottom: "0px",
-                                                    "@media (min-width: 673px)": {
-                                                        paddingTop: "32px"
-                                                    }
+                                        }
+                                    }}
+                                    title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 1}>
+                                        Dye Sublimation</CustomTab></Block>}
+                                >
+                                    <Block className={styles.printingTech__image}>
+                                        <Image src="/images/custom-printed-canopy-tent/pmt-dye-sublimation-v2.webp" alt="Dye Sublimation" layout="fill" objectFit="cover" objectPosition="center"/>
+                                    </Block>
+                                </Tab>
+                                <Tab
+                                    overrides={{
+                                        Tab: {
+                                            style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
+                                        },
+                                        TabPanel: {
+                                            style: {
+                                                paddingRight: "0px",
+                                                paddingLeft: "0px",
+                                                paddingBottom: "0px",
+                                                "@media (min-width: 673px)": {
+                                                    paddingTop: "32px"
                                                 }
                                             }
-                                        }}
-                                        title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 1}>
-                                            Dye Sublimation</CustomTab></Block>}
-                                    >
-                                        <Block className={styles.printingTech__image}>
-                                            <Image src="/images/custom-printed-canopy-tent/pmt-dye-sublimation-v2.webp" alt="Dye Sublimation" layout="fill" objectFit="cover" objectPosition="center"/>
-                                        </Block>
-                                    </Tab>
-                                    <Tab
-                                        overrides={{
-                                            Tab: {
-                                                style: {width: "30%", paddingTop: "0", paddingBottom: "0", paddingLeft: "0", paddingRight: "0", ":hover": {backgroundColor: "transparent !important"}}
-                                            },
-                                            TabPanel: {
-                                                style: {
-                                                    paddingRight: "0px",
-                                                    paddingLeft: "0px",
-                                                    paddingBottom: "0px",
-                                                    "@media (min-width: 673px)": {
-                                                        paddingTop: "32px"
-                                                    }
-                                                }
-                                            }
-                                        }}
-                                        title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 2}>Actual Digital image</CustomTab></Block>}>
-                                        <Block className={styles.printingTech__image}>
-                                            <Image src="/images/custom-printed-canopy-tent/pmt-original.png" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center"/>
-                                        </Block>
-                                    </Tab>
-                                </Tabs>
-                            </Block>
-
+                                        }
+                                    }}
+                                    title={<Block width="100%"><CustomTab active={parseInt(activePrintingSample) === 2}>Actual Digital image</CustomTab></Block>}>
+                                    <Block className={styles.printingTech__image}>
+                                        <Image src="/images/custom-printed-canopy-tent/pmt-original.png" alt="UV Printing" layout="fill" objectFit="cover" objectPosition="center"/>
+                                    </Block>
+                                </Tab>
+                            </Tabs>
                             <Block className={styles.printingTech__comparison}>
                                 <Block maxWidth="287px" width="100%">
                                     <ButtonM
@@ -607,7 +604,7 @@ function Custom_Printing({router}) {
                     </Block>
                 </Block>
                 <Block backgroundColor="#ffffff" as="section" className={styles.section}>
-                    <Block className={`${styles.service} ${styles.service__wide}`}>
+                    <Block className={`${styles.service} ${styles.service__wide_Occasion}`}>
                         <SectionTitle.V2 category="CAUGHT IN THE WILD"
                                          title="Reliable For Any Occasion"
                                          content="The reliability of Westshade lies on our professional design, heavy-duty fabric, and state of the art printing technology. We provide satisfactory service for various kinds of customers. From individual use to corporate business usage. You can always count on us!"
@@ -696,7 +693,7 @@ function Custom_Printing({router}) {
                     </Block>
                 </Block>
                 <Block backgroundColor="#ffffff" as="section" className={styles.section}>
-                    <Block maxWidth="1272px" className={`${styles.service} ${styles.service__wide}`}>
+                    <Block maxWidth="1272px" className={`${styles.service} ${styles.service__wide_Occasion}`}>
                         <SectionTitle.V2 category="testimony" title="What Customers Say"/>
                         <Block className={styles.service__testimonies}>
                             {

@@ -24,7 +24,6 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 1;
-    text-transform: uppercase;
     letter-spacing: normal;
     text-transform: capitalize;
 
@@ -171,17 +170,15 @@
 .printingTech {
   max-width: 467px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 0 24px;
 
   @media screen and (min-width: 673px) {
     max-width: 840px;
-    padding: 96px 24px;
   }
 }
 
 .printingTech__samples__header {
-  margin-top: 32px;
-  margin-bottom: 6px;
+  margin: 32px auto 6px;
   line-height: 1;
   font-size: 20px;
 
@@ -315,15 +312,15 @@
 .service {
   max-width: 467px;
   width: 100%;
-  padding: 32px 16px;
+  padding: 0 16px;
   margin: 0 auto;
 
   @media screen and (min-width: 673px) {
-    padding: 32px 16px;
+    padding: 0 16px;
     max-width: 840px;
   }
   @media screen and (min-width: 1057px) {
-    padding: 96px 16px;
+    padding: 0 16px;
   }
 }
 
@@ -336,6 +333,18 @@
   }
   @media screen and (min-width: 1057px) {
     padding: 96px 20px;
+  }
+}
+
+.service__wide_Occasion {
+  max-width: 467px;
+
+  @media screen and (min-width: 673px) {
+    padding: 0 20px;
+    max-width: 1272px;
+  }
+  @media screen and (min-width: 1057px) {
+    padding: 0 20px;
   }
 }
 
@@ -559,14 +568,14 @@
 .contact {
   max-width: 1056px;
   width: 100%;
-  padding: 32px 16px;
+  padding: 32px 16px 0;
   margin: 0 auto;
 
   @media screen and (min-width: 1056px) {
-    padding: 96px 16px;
+    padding: 96px 16px 0;
   }
   @media screen and (min-width: 1920px) {
-    padding: 96px 0px;
+    padding: 96px 0 0;
   }
 }
 

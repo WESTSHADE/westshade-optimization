@@ -20,7 +20,6 @@ const Sandwich = ({
                       titleColor = "MinXPrimaryText",
                       contentColor = "MinXPrimaryText"
                   }) => {
-
     return (
         <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap="8px" width="100%" height="fit-content" {...containerProps}>
             {src ? (

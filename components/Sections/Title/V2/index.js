@@ -6,7 +6,7 @@ const Title = ({category, title, content}) => {
     return (
         <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} maxWidth="676px" justifyItems="center" margin="auto">
             {category ? (
-                <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading20"]} color="#33DED2"
+                <Block as="h4" font={["MinXHeading14", "MinXHeading14", "MinXHeading20"]} color="#33DED2"
                        overrides={{
                            Block: {
                                style: {
@@ -17,7 +17,7 @@ const Title = ({category, title, content}) => {
                 >{category}</Block>
             ) : null}
             {title ? (
-                <Block font={["MinXTitle24", "MinXTitle24", "MinXTitle44"]} color="MinXPrimaryText"
+                <Block as="h2" font={["MinXTitle24", "MinXTitle24", "MinXTitle44"]} color="MinXPrimaryText"
                        overrides={{
                            Block: {
                                style: {fontWeight: "700 !important", lineHeight: "1em !important", textTransform: "capitalize"}
