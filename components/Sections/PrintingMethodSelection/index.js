@@ -46,7 +46,7 @@ const PrintingMethodCard = ({method, active, onClick}) => {
                         <Block>
                             <Block font="MinXParagraph14" color="MinXSecondaryText">Thickness</Block>
                             <Block width="70px" margin="8px auto">
-                                <Image src={method.thicknessImage} height={22} width={78} layout="responsive" objectFit="contain"/>
+                                <Image src={method.thicknessImage} alt="thickness" height={22} width={78} layout="responsive" objectFit="contain"/>
                             </Block>
                             <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading17"]} $style={{textTransform: "capitalize"}}>{method.thickness}</Block>
                         </Block>

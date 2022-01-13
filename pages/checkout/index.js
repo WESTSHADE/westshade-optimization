@@ -65,12 +65,12 @@ function Checkout({router, orderID, orderDetail}) {
 
     const {loggedIn, token, user} = useSelector(({user}) => user);
 
-    const [id, setOrderID] = useState(numberFn.strToInt(orderID));
-    const [order, setOrderDetail] = useState(orderDetail);
+    const [id, setOrderID] = useState(0);
+    const [order, setOrderDetail] = useState(null);
 
+    const [different, setDifferent] = useState(false);
     const [billingAddress, setBillingAddress] = useState({...user.billing});
     const [shippingAddress, setShippingAddress] = useState({...user.shipping});
-    const [different, setDifferent] = useState(false);
 
     const [coupon, setCoupon] = useState("");
 
@@ -99,7 +99,9 @@ function Checkout({router, orderID, orderDetail}) {
 
 
     const {card} = valid.number(number);
+
     let codeLength;
+
     if (card && card.code && card.code.size) {
         codeLength = card.code.size;
     }
@@ -241,38 +243,47 @@ function Checkout({router, orderID, orderDetail}) {
         });
     };
 
-    useEffect(async () => {
+    useEffect(() => {
+        if (!router) return;
+
         let i = null;
-        if (!id) {
-            i = urlFn.getParam("id");
+        if (!orderID) {
+            i = numberFn.strToInt(urlFn.getParam("id") + "", 0);
+
             if (!i) {
                 router.push("/");
                 return;
             } else {
-                setOrderID(numberFn.strToInt(i));
+                setOrderID(i);
             }
         } else {
-            i = numberFn.strToInt(id);
+            i = numberFn.strToInt(orderID + "", 0);
         }
 
-        if (!order || !order.id) {
-            let result = await utils.updateOrder(null, {id: i});
-            if (result.date_paid && result.date_completed) {
-                router.push("/");
-            } else {
-                setOrderDetail(result);
-                if (result.shipping) {
-                    setShippingAddress(result.shipping);
+        if (!orderDetail || !orderDetail.id) {
+
+            async function upOrder(id) {
+                const result = await utils.updateOrder(null, {id})
+
+                if ((result.date_paid && result.date_completed) || result.data.status === 400) {
+                    router.push("/");
+                } else {
+                    setOrderDetail(result);
+
+                    if (result.hasOwnProperty("shipping")) setShippingAddress(result.shipping);
                 }
             }
+
+            upOrder(i).then(() => null);
+        } else {
+            setOrderDetail(orderDetail);
         }
-    }, []);
+    }, [router, orderID, orderDetail]);
 
     useEffect(() => {
-        if (!order || !order.id) return;
-
-        setLineItem(order.line_items);
-        setLineCoupon(order.coupon_lines);
+        if (!order) return;
+        if (order.hasOwnProperty("line_items")) setLineItem(order.line_items);
+        if (order.hasOwnProperty("coupon_lines")) setLineCoupon(order.coupon_lines);
     }, [order]);
 
     useEffect(() => {
@@ -296,7 +307,7 @@ function Checkout({router, orderID, orderDetail}) {
             let error = card.lengths.findIndex((l) => l === number.length) === -1;
             setNumberError(error);
         }
-    }, [number]);
+    }, [card, number]);
 
     useEffect(() => {
         let error = Boolean(expiration && expiration.length && !valid.expirationDate(expiration).isPotentiallyValid);
@@ -304,9 +315,11 @@ function Checkout({router, orderID, orderDetail}) {
     }, [expiration]);
 
     useEffect(() => {
+        if (!codeLength) return;
+
         let error = Boolean(code && code.trim().length && !valid.cvv(code, codeLength).isPotentiallyValid);
         setCodeError(error);
-    }, [code]);
+    }, [code, codeLength]);
 
     return (
         <React.Fragment>

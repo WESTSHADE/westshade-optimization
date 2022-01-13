@@ -29,7 +29,7 @@ const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
                        borderLeftWidth: active ? "3px" : "1px",
                        borderRightWidth: active ? "3px" : "1px",
                        borderColor: active ? "#23A4AD" : "#D9D9D9",
-                       transition: "all .3s ease-in-out"
+                       transition: "all 250ms ease-in-out"
                    }}
                    onClick={onClick}
             >
@@ -65,7 +65,7 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
             if (acceptedFrameTypes.includes(item.value)) return item
         })
         setFrames(types)
-    }, [acceptedFrameTypes])
+    }, [frameTypes, acceptedFrameTypes])
 
     return (
         <>

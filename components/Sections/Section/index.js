@@ -7,7 +7,7 @@ import SectionTitle from "../Title/V1"
 
 const Section = ({containerProps, containerClassName, containerStyles, contentProps, content, ...titleProps}) => {
     return (
-        <Block width="100%" display="flex" flexDirection="column" {...containerProps}
+        <Block as="section" width="100%" display="flex" flexDirection="column" {...containerProps}
                overrides={{
                    Block: {
                        props: {

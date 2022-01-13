@@ -2,7 +2,7 @@ import React from "react";
 
 import {Block} from "baseui/block";
 
-const Title = ({category, title, content}) => {
+const Title = ({category, title, content, button}) => {
     return (
         <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["8px", null, "16px"]} maxWidth="676px" justifyItems="center" margin="auto">
             {category ? (
@@ -34,6 +34,7 @@ const Title = ({category, title, content}) => {
                        }}
                 >{content}</Block>
             ) : null}
+            {button}
         </Block>
     )
 }

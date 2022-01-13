@@ -1253,3 +1253,12 @@ ul.bullet-warranty.sub > li {
     background-color: #F7F7F7;
 }
 
+.section-full-width {
+    position: relative;
+    width: 100vw;
+    left: calc(50% - 50vw);
+}
+
+.basic-transition {
+    transition: all 0.3s ease-in-out;
+}

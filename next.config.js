@@ -7,7 +7,7 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
     // basePath: '',
     reactStrictMode: true,
-    swcMinify: true,
+    // swcMinify: true,
     compress: true,
     poweredByHeader: false,
     env: {

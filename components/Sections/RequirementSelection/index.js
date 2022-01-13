@@ -82,15 +82,13 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                                             {Object.keys(label)[index] === activeSide && Object.keys(requirement.peak[side]).length === 0 && Object.keys(requirement.valance[side]).length === 0 &&
                                                 <>
                                                     <Block key={side + "PEAK-Select"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/PEAK-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024}
-                                                               height={1024}
-                                                               layout="responsive"
+                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/PEAK-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`}
+                                                               alt="selected peak" width={1024} height={1024} layout="responsive"
                                                         />
                                                     </Block>
                                                     <Block key={side + "VALANCE-Select"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/VALANCE-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`} width={1024}
-                                                               height={1024}
-                                                               layout="responsive"
+                                                        <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/1-selected/VALANCE-${label[Object.keys(label)[frontAngle ? index : (index + 2) % 4]]}.webp`}
+                                                               alt="selected valance" width={1024} height={1024} layout="responsive"
                                                         />
                                                     </Block>
                                                 </>
@@ -98,15 +96,15 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                                             {/*Peak Images*/}
                                             {Object.keys(requirement.peak[side]).length !== 0 &&
                                                 <Block key={side + "PEAK"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                    <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "2-front-view-ab" : "3-back-view-cd"}/PEAK-${label[side]}.webp`} width={1024} height={1024}
-                                                           layout="responsive"
+                                                    <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "2-front-view-ab" : "3-back-view-cd"}/PEAK-${label[side]}.webp`}
+                                                           alt="peak" width={1024} height={1024} layout="responsive"
                                                     />
                                                 </Block>}
                                             {/*Valance Images*/}
                                             {Object.keys(requirement.valance[side]).length !== 0 &&
                                                 <Block key={side + "VALANCE"} position="absolute" top="0" left="0" width="100%" height="100%">
-                                                    <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "2-front-view-ab" : "3-back-view-cd"}/VALANCE-${label[side]}.webp`} width={1024} height={1024}
-                                                           layout="responsive"
+                                                    <Image src={`images/custom-printed-canopy-tent/tents/${tentFrame}-${tentSize}/${frontAngle ? "2-front-view-ab" : "3-back-view-cd"}/VALANCE-${label[side]}.webp`}
+                                                           alt="valance" width={1024} height={1024} layout="responsive"
                                                     />
                                                 </Block>}
                                         </Block>)
@@ -114,7 +112,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                             )}
                         </Block>
                         <Button type="outline" bundle="gray" position={["absolute", null, null, "relative"]} bottom={["8px", null, null, 0]} right={0} height="32px" font="MinXParagraph14" color="#808080"
-                                startEnhancer={() => <Image src="/images/icon/icon-angle.png" width={16} height={16} alt="icon" layout="fixed"/>}
+                                startEnhancer={() => <Image src="/images/icon/icon-angle.png" width={16} height={16} alt="icon angle" layout="fixed"/>}
                                 buttonStyle={{
                                     paddingTop: "8px !important",
                                     paddingRight: "12px !important",
@@ -213,7 +211,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                                         onClick={() => setPeakDetailsIsOpen(true)}
                                 >
                                     <Block display="block" alignItems="center">
-                                        <Image src="/images/icon/icon-peak.png" width={40} height={20} layout="fixed" objectFit="contain"/>
+                                        <Image src="/images/icon/icon-peak.png" alt="icon peak" width={40} height={20} layout="fixed" objectFit="contain"/>
                                         <Block marginTop="8px" font="MinXParagraph14" color="MinXPrimaryText" $style={{textTransform: "capitalize"}}>Peak</Block>
                                     </Block>
                                 </Button>
@@ -237,7 +235,7 @@ const RequirementSelection = ({activeSide, activeTentImage, tentFrame, tentSize,
                                         onClick={() => setValanceDetailsIsOpen(true)}
                                 >
                                     <Block display="block" alignItems="center">
-                                        <Image src="/images/icon/icon-valance.png" width={40} height={12} layout="fixed" objectFit="contain"/>
+                                        <Image src="/images/icon/icon-valance.png" alt="icon valance" width={40} height={12} layout="fixed" objectFit="contain"/>
                                         <Block marginTop="8px" font="MinXParagraph14" color="MinXPrimaryText" $style={{textTransform: "capitalize"}}>Valance</Block>
                                     </Block>
                                 </Button>

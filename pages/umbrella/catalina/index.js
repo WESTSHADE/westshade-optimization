@@ -21,9 +21,13 @@ function Catalina({router, size}) {
 
     const goBuyingPage = () => router.push({pathname: "/products/cantilever-umbrellas/catalina-umbrella"});
 
-    useEffect(async () => {
-        let products = await utils.getProductByCategoryId(693);
-        setProductList(products);
+    useEffect(() => {
+        async function fetchProduct() {
+            const products = await utils.getProductByCategoryId(693);
+            setProductList(products);
+        }
+
+        fetchProduct().then(() => null);
     }, []);
 
     return (
