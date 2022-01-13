@@ -1,0 +1,13 @@
+.ul-list {
+  & li {
+    letter-spacing: 0.04em;
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  & span {
+    transform: rotate(45deg);
+  }
+}

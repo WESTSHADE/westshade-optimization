@@ -21,9 +21,13 @@ function Bali({router, size}) {
 
     const goBuyingPage = () => router.push({pathname: "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella"});
 
-    useEffect(async () => {
-        let products = await utils.getProductByCategoryId(693);
-        setProductList(products);
+    useEffect(() => {
+        async function fetchProduct() {
+            const products = await utils.getProductByCategoryId(693);
+            setProductList(products);
+        }
+
+        fetchProduct().then(() => null);
     }, []);
 
     return (

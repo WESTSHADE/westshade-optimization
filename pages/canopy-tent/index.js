@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useCallback} from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import ReactPlayer from "react-player";
@@ -21,7 +21,7 @@ const BlockVideo = ({src, isSelected, step}) => {
 
     if (step && step > 0) refs[step - 1] = refBlockVideo;
 
-    const handleScroll = (x) => {
+    const handleScroll = useCallback(() => {
         if (refBlockVideo.current) {
             const box = refBlockVideo.current.children[0].children[0];
             const rect = refBlockVideo.current.children[0].getBoundingClientRect();
@@ -45,7 +45,7 @@ const BlockVideo = ({src, isSelected, step}) => {
                 // if (rect.top < window.innerHeight && rect.bottom >= 0) {}
             }
         }
-    };
+    }, [isSelected])
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -322,7 +322,7 @@ function Canopy_Tent({router, size}) {
                              </>
                          }
                 />
-                <Benefit containerClassName="m-body-section-wrap"/>
+                <Benefit.V1/>
                 <Block backgroundColor={"var(--secondary-background)"} paddingRight="16px" paddingLeft="16px" display="flex" justifyContent="center"
                        marginTop={["-60px", "-80px", "-120px"]}>
                     <Block width="100%" maxWidth={process.env.maxWidth + "px"} font="MinXParagraph14" color="MinXSecondaryText" paddingTop="24px" paddingBottom="24px" $style={{borderBottom: "1px solid #D9D9D9"}}>

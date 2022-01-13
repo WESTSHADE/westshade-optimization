@@ -12,23 +12,20 @@ import Utils from "Utils/utils";
 
 const utils = new Utils();
 
-const setImage = (images) => {
-    if (!images || images.length === 0) return;
-    return images[0].src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
-};
-
 const Product = ({name, product, showDesc = true, onClick}) => {
     const [url, setUrl] = useState("");
 
     useEffect(() => {
-        let urlPic;
-        if (product.hasOwnProperty("images") && product.images.length > 0) {
-            urlPic = product.images[0].src || "";
-        } else if (product.hasOwnProperty("image")) {
-            urlPic = product.image.src || "";
+        if (product) {
+            let urlPic;
+            if (product.hasOwnProperty("images") && product.images.length > 0) {
+                urlPic = product.images[0].src || "";
+            } else if (product.hasOwnProperty("image")) {
+                urlPic = product.image.src || "";
+            }
+            setUrl(urlPic);
         }
-        setUrl(urlPic);
-    }, []);
+    }, [product]);
 
     return (
         <Block className='cursor' display="grid" gridTemplateColumns="1fr" gridTemplateRows="auto 1fr" gridRowGap={["12px", "16px"]} width="100%" marginRight="auto" marginLeft="auto" paddingRight={["0", "16px"]} paddingLeft={["0", "16px"]}

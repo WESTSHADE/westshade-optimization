@@ -39,16 +39,18 @@ function Header({hideCategories}) {
 
     useEffect(() => {
         EventEmitter.subscribe("handleCart", (event) => setCartDrawerOpen(event));
-
-        if (loggedIn) dispatch(getUser(token));
     }, []);
+
+    useEffect(() => {
+        if (dispatch && loggedIn && token) dispatch(getUser(token));
+    }, [loggedIn, dispatch, token]);
 
     return (
         <ThemeProvider.V2>
             <div className={`${styles["container-nav"]} main-container-nav`}>
                 <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
                     <Block className={styles["root-navigation-top"]}>
-                        <Link href="/">
+                        <Link href="/" passHref>
                             <Block className={clsx([styles["site-logo"], "cursor"])}>
                                 <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
                             </Block>
@@ -120,7 +122,7 @@ function Header({hideCategories}) {
                         </NavigationList>
                         <NavigationList className={clsx([styles["nav-center"], styles["logo"]])} $align={ALIGN.center}>
                             <NavigationItem>
-                                <Link href="/">
+                                <Link href="/" passHref>
                                     <Block className={clsx([styles["site-logo"], "cursor"])}>
                                         <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} priority={true}/>
                                     </Block>
@@ -135,7 +137,7 @@ function Header({hideCategories}) {
                                 <SearchBar router={router}/>
                             </NavigationItem>
                             <NavigationItem>
-                                <Link href="/cart">
+                                <Link href="/cart" passHref>
                                     <Block className="cursor" position="relative" display="flex">
                                         <IconCart color="#323232"/>
                                         <Block className={styles["badge"]} display={badge > 0 ? "flex" : "none"} font="MinXLabel12" color="MinXPrimaryTextAlt">{badge}</Block>

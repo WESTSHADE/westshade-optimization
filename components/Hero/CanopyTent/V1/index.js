@@ -42,7 +42,7 @@ const SpecSection = ({
 const Hero = () => {
     const router = useRouter();
 
-    const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
+    const goBuyingPage = () => router.push("/products/canopy-tent", "/products/canopy-tent/buy");
 
     return (
         <ThemeProvider.V2>

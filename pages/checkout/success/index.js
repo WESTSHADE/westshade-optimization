@@ -23,8 +23,10 @@ function Success({router, orderDetail}) {
         }
         return price;
     };
+    
+    useEffect(() => {
+        if (!router) return;
 
-    useEffect(async () => {
         if (!orderDetail) {
             // 直接进入页面， 无order数据 退至主页
             router.push({pathname: "/"});
@@ -33,7 +35,7 @@ function Success({router, orderDetail}) {
             // 有order数据，从支付页过来，显示结果，触发Google event
             purchase(orderDetail);
             // Tracks the purchase event in Oribi
-            let products = [];
+            const products = [];
             orderDetail.line_items.map(item => products.push({
                 name: item.name,
                 id: item.id + "",
@@ -42,6 +44,7 @@ function Success({router, orderDetail}) {
                 taxPrice: numberFn.strToFloat(item.total_tax),
                 quantity: numberFn.strToInt(item.quantity),
             }));
+
             let paramsObject = {
                 totalPrice: numberFn.strToFloat(orderDetail.total),
                 currency: orderDetail.currency,
@@ -53,13 +56,13 @@ function Success({router, orderDetail}) {
             };
             ORIBI.api('trackPurchase', paramsObject);
         }
-    }, []);
+    }, [router, orderDetail]);
 
     return (
         <React.Fragment>
             {display && orderDetail ? (
                 //  主屏部分
-                <Block height={"100vh"} paddingTop={["48px", "48px", "96px"]} display={"flex"} justifyContent={"center"} overflow={"scroll"} style={{paddingTop: 146}}>
+                <Block height="calc(100vh - 92px)" paddingTop={["48px", null, "86px"]} display="flex" justifyContent="center" overflow="scroll">
                     {/* 主要显示区域 */}
                     <Block width={["100%", "480px"]} display={"flex"} flexDirection={"column"}>
                         <div className="container-selection" style={{paddingLeft: 16, paddingRight: 16, marginBottom: "60px", alignItems: "center"}}>
@@ -149,7 +152,7 @@ Success.getInitialProps = async (context) => {
 
     let orderDetail = null;
     if (id) {
-        orderDetail = await utils.updateOrder(null, {id: numberFn.strToInt(id)});
+        orderDetail = await utils.updateOrder(null, {id: numberFn.strToInt(id, 0)});
     }
 
     return {

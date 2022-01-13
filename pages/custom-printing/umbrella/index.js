@@ -155,7 +155,7 @@ function Custom_Printing_Umbrella({router, size, phone}) {
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                 />
-                <Benefit containerClassName="m-body-section-wrap"/>
+                <Benefit.V1/>
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
                 <Block display="grid" gridTemplateRows="auto" gridTemplateColumns={["1fr", null, "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="32px" margin={["32px auto", null, "30px 32px"]}>

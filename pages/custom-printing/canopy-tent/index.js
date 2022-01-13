@@ -144,7 +144,7 @@ function Custom_Printing_Canopy_Tent() {
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                          subtitleStyles={{maxWidth: "unset !important"}}
                 />
-                <Benefit containerClassName="m-body-section-wrap"/>
+                <Benefit.V1/>
             </Block>
         </React.Fragment>
     )

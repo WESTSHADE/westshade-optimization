@@ -1,20 +1,21 @@
 import Banner from "./Banner";
-import Benefit from "./Benefit";
 import Selection from "./Selection";
 import Section from "./Section";
 import SubHeaderBar from "./SubHeaderBar";
 import TentSizeDisplay from "./TentSizeDisplay";
-import OrderProcess from "./OrderProcess";
 import ProductDescription from "./Product_Description";
 import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 import UmbrellaProductItem from "./Umbrella_Product_Item";
-import BenefitV2 from "./Benefit/BenefitV2";
 
 import SearchBar from "./SearchBar";
 import UmbrellaComparison from "./UmbrellaComparison";
 import UmbrellaBlock from "./UmbrellaBlock";
+import Sandwich from "./Sandwich";
+import PrintingTechnologyComparison from "./PrintingTechnologyComparison";
+import PrintingTechnologySample from "./PrintingTechnologySample";
 
+import Benefit from "./Benefit";
 import SectionTitle from "./Title";
 
 module.exports = {
@@ -23,15 +24,16 @@ module.exports = {
     Section,
     Selection,
     SubHeaderBar,
-    OrderProcess,
     TentSizeDisplay,
     ProductDescription,
     FreeMockupForm,
     ProductImages,
     UmbrellaProductItem,
-    BenefitV2,
     SectionTitle,
+    Sandwich,
     SearchBar,
     UmbrellaComparison,
+    PrintingTechnologyComparison,
+    PrintingTechnologySample,
     UmbrellaBlock
 };

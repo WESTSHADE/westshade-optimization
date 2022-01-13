@@ -22,11 +22,10 @@ const numberFn = new NumberFn();
 const utils = new Utils();
 
 import {removeFromCart, clearCart, beginCheckout} from "../../redux/actions/gtagActions";
-
-import styles from "./cart.module.scss";
-
 import {modifyCart} from "../../redux/actions/cartActions";
 import {updateUser} from "../../redux/actions/userActions";
+
+import styles from "./cart.module.scss";
 
 import Cart from "./cart.svg";
 
@@ -171,26 +170,20 @@ function Cart_Page({router}) {
     //     }
     // }, [user]);
 
-    useEffect(async () => {
-        if (cartProduct.length < 1) return;
-        let itemList = [];
-        cartProduct.forEach(({parent_id, id}, index) => {
-            if (parent_id) {
-                itemList.push({
-                    product_id: parent_id,
-                    variation_id: id,
-                    quantity: cart[index].quantity,
-                });
-            } else {
-                itemList.push({
-                    product_id: id,
-                    quantity: cart[index].quantity,
-                });
-            }
+    useEffect(() => {
+        if (cart.length < 1 || cartProduct.length < 1 || cart.length !== cartProduct.length) return;
+
+        const itemList = cartProduct.map(({parent_id, id}, idx) => parent_id ? {
+            product_id: parent_id,
+            variation_id: id,
+            quantity: cart[idx].quantity,
+        } : {
+            product_id: id,
+            quantity: cart[idx].quantity,
         });
 
         setLineItem(itemList);
-    }, [cartProduct]);
+    }, [cart, cartProduct]);
 
     return (
         <React.Fragment>

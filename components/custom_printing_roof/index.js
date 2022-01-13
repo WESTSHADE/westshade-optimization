@@ -17,13 +17,6 @@ export default function CustomPrintingRoof({isOpen, onClose, selectedRoofList, a
 
     const [applyToFullSideTemp, setApplyToFullSideTemp] = useState([false, false]);
 
-    useEffect(() => {
-        if (isOpen) {
-            setTempList(JSON.parse(JSON.stringify(selectedRoofList)));
-            setApplyToFullSideTemp(JSON.parse(JSON.stringify(applyToFullSide)))
-        }
-    }, [isOpen]);
-
     const openPrintingDetail = (part) => {
         const temp = JSON.parse(JSON.stringify(tempList));
         setTempTempList(temp);
@@ -78,6 +71,13 @@ export default function CustomPrintingRoof({isOpen, onClose, selectedRoofList, a
         setApplyToFullSide(tempFull);
     }
 
+    useEffect(() => {
+        if (isOpen) {
+            setTempList(JSON.parse(JSON.stringify(selectedRoofList)));
+            setApplyToFullSideTemp(JSON.parse(JSON.stringify(applyToFullSide)))
+        }
+    }, [isOpen, selectedRoofList, applyToFullSide]);
+    
     return (
         <>
             <Modal isOpen={isOpen} onClose={() => onClose()} content="customPrintingRoof"

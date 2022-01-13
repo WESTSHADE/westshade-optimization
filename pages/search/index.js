@@ -8,6 +8,7 @@ import {Block} from "baseui/block";
 
 import Button from "Components/Button";
 import {Section} from "Components/Sections";
+import {Modal} from "Components/surfaces";
 
 import {UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
@@ -19,20 +20,33 @@ function Search({router}) {
     const [showResult, setShowResult] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
 
-    useEffect(async () => {
+    const [showLoading, setShowLoading] = useState(false);
+
+    useEffect(() => {
+        if (!router) return;
+
         let keyword = urlFn.getParam("q") || router.query.q;
 
         if (keyword.trim()) {
-            let result = await utils.getProductByKeyword(keyword) || [];
+            async function fetchProduct() {
+                setShowLoading(true);
 
-            setSearchResult(result);
+                const result = await utils.getProductByKeyword(keyword) || [];
 
-            setTimeout(() => setShowResult(true), 500)
+                setSearchResult(result);
+            }
+
+            fetchProduct().then(() => null);
         } else {
-            router.push({pathname: "/"});
+            // router.push({pathname: "/"});
+            setSearchResult([]);
         }
 
-    }, []);
+        setTimeout(() => {
+            setShowResult(true);
+            setShowLoading(false);
+        }, 500)
+    }, [router]);
 
     return (
         <React.Fragment>
@@ -42,7 +56,7 @@ function Search({router}) {
                              <>
                                  {showResult ? (
                                      <>
-                                         <Block display="flex" alignItems="center" height="48px" paddingTop={["10px", null, "18px"]}>
+                                         <Block display="flex" alignItems="center" height="48px" paddingTop={["10px", null, "18px"]} paddingBottom="10px">
                                              <Block font={["MinXHeading14", "MinXHeading14", "MinXHeading32"]} color="MinXPrimaryText" $style={{fontWeight: "500", lineHeight: 1}}>{`${searchResult.length} items found`}</Block>
                                          </Block>
                                          <Block display="grid" gridTemplateColumns={["1fr", null, "repeat(3, 1fr)", "repeat(4, 1fr)"]} gridColumnGap={["16px", null, "20px"]} gridRowGap={["16px", null, "20px"]}>
@@ -57,8 +71,6 @@ function Search({router}) {
                                                  } else if (item.hasOwnProperty("image")) {
                                                      imageUrl = item.image.src;
                                                  }
-
-                                                 console.log(item)
 
                                                  return (
                                                      <Block key={item.name} display="grid" gridTemplateColumns={["auto 1fr", null, "1fr"]} gridTemplateRows={["auto 1fr"]} gridColumnGap="16px" gridRowGap="28px"
@@ -126,6 +138,7 @@ function Search({router}) {
                          }
                 />
             </Block>
+            <Modal type="alertdialog" isOpen={showLoading} onClose={() => setShowLoading(false)} content="loading"/>
         </React.Fragment>
     )
 }
