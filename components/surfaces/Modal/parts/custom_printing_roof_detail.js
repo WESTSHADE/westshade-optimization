@@ -324,7 +324,7 @@ export default function RoofDetail({selectedListTemp, setSelectedRoofListTemp, s
                         </Block>
                     </Panel>
                     <Panel title="Print Instruction">
-                        <Textarea placeholder="Tell us how do you want to get these text and image printed."
+                        <Textarea placeholder="Let us know how you want your text and image to be printed."
                                   value={inputValue("instruction")}
                                   onChange={(e) => inputOnChange(e, "instruction")}
                                   clearOnEscape

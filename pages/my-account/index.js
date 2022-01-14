@@ -836,7 +836,7 @@ function Account({size}) {
             </Head>
             {loggedIn ? (
                 <>
-                    <Block position="absolute" maxWidth="1920px" height="100%" right={0} left={0} top={0} bottom={0} backgroundColor={["white", "white", "MinXBackground"]} marginRight="auto" marginLeft="auto"/>
+                    <Block position="absolute" width="100vw" height="100%" top={0} left="calc(50% - 50vw)" backgroundColor={["white", null, "MinXBackground"]} marginRight="auto" marginLeft="auto"/>
                     <Block position="relative" maxWidth={["auto", "auto", "960px"]} display="grid" gridTemplateColumns={["100vw 100vw", "100vw 100vw", "213px 679px"]} gridColumnGap={["0", "0", "20px"]} justifyContent={["", "", "center"]}
                            marginRight="auto" overflow="hidden"
                            overrides={{

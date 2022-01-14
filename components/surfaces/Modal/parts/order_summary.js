@@ -12,12 +12,10 @@ import styles from "./parts.module.scss";
 
 export default function content({dataTable}) {
     const {productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount} = dataTable;
-    console.log(dataTable);
 
     let rowDate = [];
 
     selectedVariant.map((variant, index) => {
-        console.log(variant);
         if (!variant) return
 
         let cell = {
@@ -53,7 +51,6 @@ export default function content({dataTable}) {
                     <TableBuilderColumn header="Quantity" numeric overrides={{TableHeadCell: {props: {className: "text-center"}}}}>{(row) => <QuantityCell value={row.quantity}/>}</TableBuilderColumn>
                     <TableBuilderColumn header="Price" overrides={{TableHeadCell: {props: {className: "text-right"}}}}>
                         {(row) => {
-                            console.log(row);
                             return <PriceCell priceRegular={row.on_sale ? row.regular_price : row.price} priceSale={row.sale_price} onSale={row.on_sale}/>
                         }}
                     </TableBuilderColumn>

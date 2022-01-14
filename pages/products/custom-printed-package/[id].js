@@ -631,7 +631,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                                 return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                             })) : null}
                         </Selection>
-                        <Button type="solid" height="32px" font="MinXParagraph16" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                        <Button type="solid" height="32px" text='Size Guide' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                 onClick={() => setSizeGuideOpen(true)}
                         />
                     </SelectionArea>
@@ -641,7 +641,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                             <Radio value="y6">Y6 Commercial Aluminum</Radio>
                             <Radio value="y5">Y5 Economic Steel</Radio>
                         </Selection>
-                        <Button type="solid" height="32px" font="MinXParagraph16" color="MinXSecondaryText" text='Compare Frames' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                        <Button type="solid" height="32px" text='Compare Frames' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                 onClick={() => setFrameCompareOpen(true)}
                         />
                     </SelectionArea>
@@ -656,7 +656,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                             {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>)) : null}
                         </Selection>
-                        <Button type="solid" height="32px" font="MinXParagraph16" text='Compare Printing Method' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                        <Button type="solid" height="32px" text='Compare Printing Method' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                 onClick={() => setShowPrintServiceModal(true)}
                         />
                     </SelectionArea>

@@ -249,7 +249,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                         <Block className="text-center" marginTop="8px" font="MinXParagraph14">File format: .ai, .psd, png, jpg</Block>
                                     </Panel>
                                     <Panel title="Note">
-                                        <Textarea placeholder="Tell us how do you want it printed."
+                                        <Textarea placeholder="Let us know how you want your text and image to be printed."
                                                   value={inputState.printInstruction}
                                                   onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
                                                   overrides={{
@@ -392,7 +392,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                         </Block>
                                     </Panel>
                                     <Panel title="Note">
-                                        <Textarea placeholder="Tell us how do you want it printed."
+                                        <Textarea placeholder="Let us know how you want your text and image to be printed."
                                                   value={inputState.printInstruction}
                                                   onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
                                                   overrides={{

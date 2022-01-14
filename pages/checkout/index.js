@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {withRouter} from "next/router";
@@ -8,7 +8,6 @@ import {Grow} from "@material-ui/core";
 import {Alert, AlertTitle} from "@material-ui/lab";
 
 import {Block} from "baseui/block";
-import {Button, KIND, SIZE, SHAPE} from "baseui/button";
 import {PaymentCard, valid} from "baseui/payment-card";
 import {MaskedInput, Input} from "baseui/input";
 import {FormControl} from "baseui/form-control";
@@ -17,21 +16,20 @@ import {Checkbox, LABEL_PLACEMENT} from "baseui/checkbox";
 import Delete from 'baseui/icon/delete'
 import {AspectRatioBox} from "baseui/aspect-ratio-box";
 
-import {viewPromotion} from "../../redux/actions/gtagActions";
+import {Modal} from "Components/surfaces";
+import Button from "Components/Button";
+import {OrderSummary} from "Components/Sections";
 
 import Utils from "Utils/utils";
 import {NumberFn, UrlFn} from "Utils/tools";
 
+import {viewPromotion} from "../../redux/actions/gtagActions";
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-import {Modal} from "Components/surfaces";
-import MButton from "Components/Button/V1";
 
 const utils = new Utils();
 const numberFn = new NumberFn();
 const urlFn = new UrlFn();
-
-let HEIGHT = 0;
 
 const InputField = (props) => {
     const {value, placeholder, error, onChange} = props;
@@ -65,54 +63,47 @@ function Checkout({router, orderID, orderDetail}) {
 
     const {loggedIn, token, user} = useSelector(({user}) => user);
 
+    const billRef = useRef(null);
+
+    // Base Info
     const [id, setOrderID] = useState(0);
-    const [order, setOrderDetail] = useState(null);
-
-    const [different, setDifferent] = useState(false);
-    const [billingAddress, setBillingAddress] = useState({...user.billing});
-    const [shippingAddress, setShippingAddress] = useState({...user.shipping});
-
-    const [coupon, setCoupon] = useState("");
-
-    const [lineItem, setLineItem] = useState([]);
+    const [detail, setOrderDetail] = useState(null);
+    // Order Detail
     const [lineCoupon, setLineCoupon] = useState([]);
-    const [addressesDone, setAddressesDone] = useState(false);
+    const [shipping, setShipping] = useState({...user.shipping});
+    const [billing, setBilling] = useState({...user.billing});
 
-    const [showError, setShowError] = useState(false);
-    const [error, setError] = useState("");
-
+    const [diff, setDiff] = useState(false);
+    const [shippingDone, setShippingDone] = useState(false);
+    const [billingStyle, setBillingStyle] = useState({visibility: "hidden", opacity: 0});
     const [errorAccountBilling, setErrorAccountBilling] = useState(false);
     const [errorAccountShipping, setErrorAccountShipping] = useState(false);
+    const [addressesDone, setAddressesDone] = useState(false);
 
+    const [coupon, setCoupon] = useState("");
+    // Credit Card
     const [number, setNumber] = useState("");
     const [expiration, setExpiration] = useState("");
     const [code, setCode] = useState("");
     const [checked, setChecked] = useState(false);
-
     const [numberError, setNumberError] = useState(false);
     const [expirationError, setExpirationError] = useState(false);
     const [codeError, setCodeError] = useState(false);
-
-    const [addressHeight, setAddressHeight] = useState(0);
+    // Others
+    const [showError, setShowError] = useState(false);
+    const [error, setError] = useState("");
 
     const [showLoading, setShowLoading] = useState(false);
 
+    // ================================================================================
+    
+    let codeLength;
 
     const {card} = valid.number(number);
-
-    let codeLength;
 
     if (card && card.code && card.code.size) {
         codeLength = card.code.size;
     }
-
-    const getSubtotal = () => {
-        let price = 0;
-        if (lineItem.length > 0) {
-            lineItem.forEach((p) => (price += numberFn.strToFloat(p.subtotal)));
-        }
-        return price;
-    };
 
     const handleUpdateCart = (cartList) => {
         if (loggedIn) {
@@ -137,12 +128,12 @@ function Checkout({router, orderID, orderDetail}) {
             cl.push({code: coupon});
             setCoupon("");
 
-            let result = await utils.updateOrder(null, {id: numberFn.strToInt(id), coupon_lines: cl});
+            let result = await utils.updateOrder(null, {id: numberFn.strToInt(id + "", 0), coupon_lines: cl});
 
             if (result.message) {
                 setShowError(true);
                 setError(result.message);
-                setTimeout(function () {
+                setTimeout(() => {
                     setShowError(false);
                     setError("");
                 }, 4000);
@@ -161,10 +152,11 @@ function Checkout({router, orderID, orderDetail}) {
         cl.map(c => cll.push({code: c.code,}))
 
         let result = await utils.updateOrder(null, {id: id, coupon_lines: cll});
+
         if (result.message) {
             setShowError(true);
             setError(result.message);
-            setTimeout(function () {
+            setTimeout(() => {
                 setShowError(false);
                 setError("");
             }, 4000);
@@ -181,56 +173,36 @@ function Checkout({router, orderID, orderDetail}) {
             id: id,
             payment_method: "bacs",
             payment_method_title: "Credit Card",
-            billing: {
-                first_name: "",
-                last_name: "",
-                company: "",
-                address_1: "",
-                address_2: "",
-                city: "",
-                state: "",
-                postcode: "",
-                country: "US",
-                email: "",
-                phone: ""
-            },
-            shipping: null,
-            line_items: null,
+            billing: diff ? {...billing} : {...shipping},
+            shipping: {...shipping},
         };
 
-        checkoutData.shipping = {...shippingAddress};
-        if (!different) {
-            checkoutData.billing = {...shippingAddress};
-        } else {
-            checkoutData.billing = {...billingAddress};
-        }
-        // checkoutData.line_items = order.line_items;
-        // checkoutData.coupon_lines = [...lineCoupon];
-
-        utils.updateOrder(null, checkoutData).then((result) => {
-            if (result.message) {
+        utils.updateOrder(null, checkoutData).then((res) => {
+            if (res.message) {
                 setShowLoading(false);
 
                 setShowError(true);
-                setError(result.message);
-                setTimeout(function () {
+                setError(res.message);
+
+                setTimeout(() => {
                     setShowError(false);
                     setError("");
                 }, 4000);
             } else {
-                utils.checkout({id: numberFn.strToInt(id), cc: number, exp: expiration, cvv: code}).then((res) => {
+                utils.checkout({id: numberFn.strToInt(id, 0), cc: number, exp: expiration, cvv: code}).then((result) => {
                     setShowLoading(false);
 
-                    if (res.transactionResponse.errors) {
+                    if (result.transactionResponse.errors) {
                         setShowError(true);
-                        setError(res.transactionResponse.errors.error[0].errorText);
-                        setTimeout(function () {
+                        setError(result.transactionResponse.errors.error[0].errorText);
+
+                        setTimeout(() => {
                             setShowError(false);
                             setError("");
                         }, 4000);
                     }
-                    if (res.transactionResponse.messages) {
-                        if (res.transactionResponse.messages.message[0].code === "1") {
+                    if (result.transactionResponse.messages) {
+                        if (result.transactionResponse.messages.message[0].code === "1") {
                             viewPromotion(lineCoupon);
 
                             handleUpdateCart([]);
@@ -246,79 +218,88 @@ function Checkout({router, orderID, orderDetail}) {
     useEffect(() => {
         if (!router) return;
 
-        let i = null;
+        // Get Order ID
+        let ID = null;
         if (!orderID) {
-            i = numberFn.strToInt(urlFn.getParam("id") + "", 0);
+            ID = numberFn.strToInt(urlFn.getParam("id"), 0);
 
-            if (!i) {
+            if (!ID) {
                 router.push("/");
                 return;
-            } else {
-                setOrderID(i);
             }
+
+            setOrderID(ID);
         } else {
-            i = numberFn.strToInt(orderID + "", 0);
+            ID = numberFn.strToInt(orderID + "", 0);
+            setOrderID(ID);
         }
 
-        if (!orderDetail || !orderDetail.id) {
+        // Get Order Detail
+        if (ID && (!orderDetail || !orderDetail.id)) {
+            async function upOrder(i) {
+                const result = await utils.updateOrder(null, {id: i});
 
-            async function upOrder(id) {
-                const result = await utils.updateOrder(null, {id})
-
-                if ((result.date_paid && result.date_completed) || result.data.status === 400) {
+                if (result.date_paid && result.date_completed) {
                     router.push("/");
                 } else {
                     setOrderDetail(result);
-
-                    if (result.hasOwnProperty("shipping")) setShippingAddress(result.shipping);
                 }
             }
 
-            upOrder(i).then(() => null);
+            upOrder(ID).then(() => null);
         } else {
             setOrderDetail(orderDetail);
         }
     }, [router, orderID, orderDetail]);
 
     useEffect(() => {
-        if (!order) return;
-        if (order.hasOwnProperty("line_items")) setLineItem(order.line_items);
-        if (order.hasOwnProperty("coupon_lines")) setLineCoupon(order.coupon_lines);
-    }, [order]);
+        if (!detail) return;
+
+        if (detail.hasOwnProperty("coupon_lines")) setLineCoupon(detail.coupon_lines);
+        if (detail.hasOwnProperty("shipping") && detail.hasOwnProperty("billing")) {
+            setShipping({...detail.shipping, email: detail.billing.email});
+
+            if (detail.shipping.first_name && detail.shipping.last_name && detail.shipping.address_1 && detail.shipping.city && detail.shipping.state && detail.shipping.postcode && detail.shipping.country && detail.shipping.phone && detail.billing.email) {
+                setShippingDone(true);
+            }
+        }
+
+    }, [detail]);
 
     useEffect(() => {
-        if (!shippingAddress.first_name || !shippingAddress.last_name || !shippingAddress.address_1 || !shippingAddress.city || !shippingAddress.state || !shippingAddress.postcode || !shippingAddress.country || !shippingAddress.email || !shippingAddress.phone) {
+        if (!shipping.first_name || !shipping.last_name || !shipping.address_1 || !shipping.city || !shipping.state || !shipping.postcode || !shipping.country || !shipping.email || !shipping.phone) {
             setAddressesDone(false);
         } else {
-            if (!different) {
+            if (!diff) {
+                setBillingStyle({visibility: "hidden", opacity: 0});
+
                 setAddressesDone(true);
             } else {
-                if (!billingAddress.first_name || !billingAddress.last_name || !billingAddress.address_1 || !billingAddress.city || !billingAddress.state || !billingAddress.postcode || !billingAddress.country || !billingAddress.email || !billingAddress.phone) {
+                setTimeout(() => setBillingStyle({visibility: "visible", opacity: 1}), 300);
+
+                if (!billing.first_name || !billing.last_name || !billing.address_1 || !billing.city || !billing.state || !billing.postcode || !billing.country || !billing.email || !billing.phone) {
                     setAddressesDone(false);
                 } else {
                     setAddressesDone(true);
                 }
             }
         }
-    }, [different, billingAddress, shippingAddress]);
+    }, [diff, shipping, billing]);
 
     useEffect(() => {
         if (card && card.lengths) {
-            let error = card.lengths.findIndex((l) => l === number.length) === -1;
-            setNumberError(error);
+            setNumberError(card.lengths.findIndex((l) => l === number.length) === -1);
         }
     }, [card, number]);
 
     useEffect(() => {
-        let error = Boolean(expiration && expiration.length && !valid.expirationDate(expiration).isPotentiallyValid);
-        setExpirationError(error);
+        setExpirationError(Boolean(expiration && expiration.length && !valid.expirationDate(expiration).isPotentiallyValid));
     }, [expiration]);
 
     useEffect(() => {
         if (!codeLength) return;
 
-        let error = Boolean(code && code.trim().length && !valid.cvv(code, codeLength).isPotentiallyValid);
-        setCodeError(error);
+        setCodeError(Boolean(code && code.trim().length && !valid.cvv(code, codeLength).isPotentiallyValid));
     }, [code, codeLength]);
 
     return (
@@ -329,182 +310,199 @@ function Checkout({router, orderID, orderDetail}) {
                     {error}
                 </Alert>
             </Grow>
-            {order && order.id ? (
-                <Block display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridColumnGap="60px" gridRowGap="40px" maxWidth="996px"
-                       marginTop={["24px", "32px", "40px"]} marginRight="auto" marginLeft="auto" paddingRight={["16px", "24px", "32px"]} paddingLeft={["16px", "24px", "32px"]}
+            {detail && detail.id ? (
+                <Block display="grid" gridTemplateAreas={[`"b" "a"`, `"b" "a"`, `"a b"`]} gridTemplateColumns={["1fr", null, "repeat(2, 1fr)"]} gridColumnGap="60px" gridRowGap="40px" maxWidth="996px"
+                       margin="auto" padding={["24px 16px", "32px 24px", "40px 32px"]}
                 >
-                    <Block gridArea="a" display="grid" gridRowGap="32px">
-                        <Block className="container-input-address" ref={(ref) => {
-                            if (ref && ref.clientHeight) HEIGHT = ref.clientHeight
-                        }}>
-                            <Block font="MinXHeading20">SHIPPING ADDRESS</Block>
-                            <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
-                                <InputField value={shippingAddress.first_name} placeholder="First name" error={errorAccountShipping} required
-                                            onChange={(event) => {
-                                                setErrorAccountShipping(false);
-                                                setShippingAddress({...shippingAddress, first_name: event.target.value});
-                                            }}
-                                />
-                                <InputField value={shippingAddress.last_name} placeholder="Last name" error={errorAccountShipping} required
-                                            onChange={(event) => {
-                                                setErrorAccountShipping(false);
-                                                setShippingAddress({...shippingAddress, last_name: event.target.value});
-                                            }}
-                                />
-                            </Block>
-                            <InputField value={shippingAddress.company} placeholder="Company name (optional)" error={errorAccountShipping}
-                                        onChange={(event) => {
-                                            setErrorAccountShipping(false);
-                                            setShippingAddress({...shippingAddress, company: event.target.value});
-                                        }}
-                            />
-                            <InputField value={shippingAddress.address_1} placeholder="Address line 1" error={errorAccountShipping} required
-                                        onChange={(event) => {
-                                            setErrorAccountShipping(false);
-                                            setShippingAddress({...shippingAddress, address_1: event.target.value});
-                                        }}
-                            />
-                            <InputField value={shippingAddress.address_2} placeholder="Address line 2" error={errorAccountShipping}
-                                        onChange={(event) => {
-                                            setErrorAccountShipping(false);
-                                            setShippingAddress({...shippingAddress, address_2: event.target.value});
-                                        }}
-                            />
-                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
-                                <InputField value={shippingAddress.city} placeholder="City" error={errorAccountShipping} required
-                                            onChange={(event) => {
-                                                setErrorAccountShipping(false);
-                                                setShippingAddress({...shippingAddress, city: event.target.value});
-                                            }}
-                                />
-                                <InputField value={shippingAddress.state} placeholder="State" error={errorAccountShipping} required
-                                            onChange={(event) => {
-                                                setErrorAccountShipping(false);
-                                                setShippingAddress({...shippingAddress, state: event.target.value});
-                                            }}
-                                />
-                            </Block>
-                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
-                                <InputField value={shippingAddress.postcode} placeholder="Zip code" error={errorAccountShipping} required
-                                            onChange={(event) => {
-                                                setErrorAccountShipping(false);
-                                                setShippingAddress({...shippingAddress, postcode: event.target.value});
-                                            }}
-                                />
-                                <InputField value={"United States"} disabled/>
-                            </Block>
-                            <InputField value={shippingAddress.phone} placeholder="Phone Number" error={errorAccountShipping} required
-                                        onChange={(event) => {
-                                            setErrorAccountShipping(false);
-                                            setShippingAddress({...shippingAddress, phone: event.target.value});
-                                        }}
-                            />
-                            <InputField value={shippingAddress.email} placeholder="Email" error={errorAccountShipping} required
-                                        onChange={(event) => {
-                                            setErrorAccountShipping(false);
-                                            setShippingAddress({...shippingAddress, email: event.target.value});
-                                        }}
-                            />
-                            <Checkbox checked={different} labelPlacement={LABEL_PLACEMENT.right} onChange={(e) => {
-                                setDifferent(e.target.checked);
-                                if (e.target.checked) {
-                                    setAddressHeight(HEIGHT);
-                                } else {
-                                    setAddressHeight(0)
-                                }
-                            }}
-                                      overrides={{
-                                          Checkmark: {
-                                              props: {
-                                                  className: "checkbox-address"
-                                              }
-                                          },
-                                          Label: {
-                                              style: ({$theme}) => ({fontSize: "14px", fontWeight: 400}),
-                                          },
-                                      }}
+                    <Block gridArea="a" display="grid" gridRowGap="32px" paddingBottom={["24px", "32px", "40px"]}>
+                        {shippingDone ? (
+                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap="8px" padding={["8px", null, "8px 16px"]} font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]}
+                                   $style={{border: "1px solid #EEEEEE", borderRadius: "8px"}}
                             >
-                                A different billing address
-                            </Checkbox>
-                        </Block>
-                        <Block overflow="hidden"
-                               overrides={{
-                                   Block: {
-                                       props: {className: "container-input-address"},
-                                       style: {height: addressHeight + "px", transition: "height 500ms ease-out, height 500ms ease-out"}
-                                   }
-                               }}
+                                <Block font="MinXHeading20">SHIPPING ADDRESS</Block>
+                                <Block>{`First Name: ${shipping.first_name || ""}`}</Block>
+                                <Block>{`Last name: ${shipping.last_name || ""}`}</Block>
+                                <Block>{`Company name (optional): ${shipping.company || ""}`}</Block>
+                                <Block>{`Address line 1: ${shipping.address_1 || ""}`}</Block>
+                                <Block>{`Address line 2: ${shipping.address_2 || ""}`}</Block>
+                                <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                    <Block>{`City: ${shipping.city || ""}`}</Block>
+                                    <Block>{`State: ${shipping.state || ""}`}</Block>
+                                </Block>
+                                <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                    <Block>{`Zip Code: ${shipping.postcode || ""}`}</Block>
+                                    <Block>{`Country: US`}</Block>
+                                </Block>Phone Number
+                                <Block>{`Phone Number: ${shipping.phone || ""}`}</Block>
+                                <Block>{`Email: ${shipping.email || ""}`}</Block>
+                            </Block>
+                        ) : (
+                            <>
+                                <Block font="MinXHeading20">SHIPPING ADDRESS</Block>
+                                <Block className="container-input-address">
+                                    <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
+                                        <InputField value={shipping.first_name} placeholder="First name" error={errorAccountShipping} required
+                                                    onChange={(event) => {
+                                                        setErrorAccountShipping(false);
+                                                        setShipping({...shipping, first_name: event.target.value});
+                                                    }}
+                                        />
+                                        <InputField value={shipping.last_name} placeholder="Last name" error={errorAccountShipping} required
+                                                    onChange={(event) => {
+                                                        setErrorAccountShipping(false);
+                                                        setShipping({...shipping, last_name: event.target.value});
+                                                    }}
+                                        />
+                                    </Block>
+                                    <InputField value={shipping.company} placeholder="Company name (optional)" error={errorAccountShipping}
+                                                onChange={(event) => {
+                                                    setErrorAccountShipping(false);
+                                                    setShipping({...shipping, company: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={shipping.address_1} placeholder="Address line 1" error={errorAccountShipping} required
+                                                onChange={(event) => {
+                                                    setErrorAccountShipping(false);
+                                                    setShipping({...shipping, address_1: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={shipping.address_2} placeholder="Address line 2" error={errorAccountShipping}
+                                                onChange={(event) => {
+                                                    setErrorAccountShipping(false);
+                                                    setShipping({...shipping, address_2: event.target.value});
+                                                }}
+                                    />
+                                    <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                        <InputField value={shipping.city} placeholder="City" error={errorAccountShipping} required
+                                                    onChange={(event) => {
+                                                        setErrorAccountShipping(false);
+                                                        setShipping({...shipping, city: event.target.value});
+                                                    }}
+                                        />
+                                        <InputField value={shipping.state} placeholder="State" error={errorAccountShipping} required
+                                                    onChange={(event) => {
+                                                        setErrorAccountShipping(false);
+                                                        setShipping({...shipping, state: event.target.value});
+                                                    }}
+                                        />
+                                    </Block>
+                                    <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                        <InputField value={shipping.postcode} placeholder="Zip code" error={errorAccountShipping} required
+                                                    onChange={(event) => {
+                                                        setErrorAccountShipping(false);
+                                                        setShipping({...shipping, postcode: event.target.value});
+                                                    }}
+                                        />
+                                        <InputField value={"United States"} disabled/>
+                                    </Block>
+                                    <InputField value={shipping.phone} placeholder="Phone Number" error={errorAccountShipping} required
+                                                onChange={(event) => {
+                                                    setErrorAccountShipping(false);
+                                                    setShipping({...shipping, phone: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={shipping.email} placeholder="Email" error={errorAccountShipping} required
+                                                onChange={(event) => {
+                                                    setErrorAccountShipping(false);
+                                                    setShipping({...shipping, email: event.target.value});
+                                                }}
+                                    />
+                                </Block>
+                            </>
+                        )}
+                        <Checkbox checked={diff} labelPlacement={LABEL_PLACEMENT.right}
+                                  onChange={(e) => setDiff(e.target.checked)}
+                                  overrides={{
+                                      Root: {
+                                          style: {
+                                              marginTop: "-22px"
+                                          }
+                                      },
+                                      Checkmark: {
+                                          props: {
+                                              className: "checkbox-address"
+                                          }
+                                      },
+                                      Label: {
+                                          style: {fontSize: "14px", fontWeight: 400},
+                                      },
+                                  }}
                         >
-                            <Block font="MinXHeading20">BILLING ADDRESS</Block>
-                            <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
-                                <InputField value={billingAddress.first_name} placeholder="First name" error={errorAccountBilling} required
+                            A different billing address
+                        </Checkbox>
+                        <Block height={diff ? billRef.current.clientHeight + "px" : 0} $style={{transition: "all 300ms ease-in-out", ...billingStyle}}>
+                            <Block ref={billRef} className="container-input-address" overflow="hidden">
+                                <Block font="MinXHeading20">BILLING ADDRESS</Block>
+                                <Block display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap="12px">
+                                    <InputField value={billing.first_name} placeholder="First name" error={errorAccountBilling} required
+                                                onChange={(event) => {
+                                                    setErrorAccountBilling(false);
+                                                    setBilling({...billing, first_name: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={billing.last_name} placeholder="Last name" error={errorAccountBilling} required
+                                                onChange={(event) => {
+                                                    setErrorAccountBilling(false);
+                                                    setBilling({...billing, last_name: event.target.value});
+                                                }}
+                                    />
+                                </Block>
+                                <InputField value={billing.company} placeholder="Company name (optional)" error={errorAccountBilling}
                                             onChange={(event) => {
                                                 setErrorAccountBilling(false);
-                                                setBillingAddress({...billingAddress, first_name: event.target.value});
+                                                setBilling({...billing, company: event.target.value});
                                             }}
                                 />
-                                <InputField value={billingAddress.last_name} placeholder="Last name" error={errorAccountBilling} required
+                                <InputField value={billing.address_1} placeholder="Address line 1" error={errorAccountBilling} required
                                             onChange={(event) => {
                                                 setErrorAccountBilling(false);
-                                                setBillingAddress({...billingAddress, last_name: event.target.value});
+                                                setBilling({...billing, address_1: event.target.value});
+                                            }}
+                                />
+                                <InputField value={billing.address_2} placeholder="Address line 2" error={errorAccountBilling}
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBilling({...billing, address_2: event.target.value});
+                                            }}
+                                />
+                                <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                    <InputField value={billing.city} placeholder="City" error={errorAccountBilling} required
+                                                onChange={(event) => {
+                                                    setErrorAccountBilling(false);
+                                                    setBilling({...billing, city: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={billing.state} placeholder="State" error={errorAccountBilling} required
+                                                onChange={(event) => {
+                                                    setErrorAccountBilling(false);
+                                                    setBilling({...billing, state: event.target.value});
+                                                }}
+                                    />
+                                </Block>
+                                <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
+                                    <InputField value={billing.postcode} placeholder="Zip code" error={errorAccountBilling} required
+                                                onChange={(event) => {
+                                                    setErrorAccountBilling(false);
+                                                    setBilling({...billing, postcode: event.target.value});
+                                                }}
+                                    />
+                                    <InputField value={"United States"} disabled/>
+                                </Block>
+                                <InputField value={billing.phone} placeholder="Phone Number" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBilling({...billing, phone: event.target.value});
+                                            }}
+                                />
+                                <InputField value={billing.email} placeholder="Email" error={errorAccountBilling} required
+                                            onChange={(event) => {
+                                                setErrorAccountBilling(false);
+                                                setBilling({...billing, email: event.target.value});
                                             }}
                                 />
                             </Block>
-                            <InputField value={billingAddress.company} placeholder="Company name (optional)" error={errorAccountBilling}
-                                        onChange={(event) => {
-                                            setErrorAccountBilling(false);
-                                            setBillingAddress({...billingAddress, company: event.target.value});
-                                        }}
-                            />
-                            <InputField value={billingAddress.address_1} placeholder="Address line 1" error={errorAccountBilling} required
-                                        onChange={(event) => {
-                                            setErrorAccountBilling(false);
-                                            setBillingAddress({...billingAddress, address_1: event.target.value});
-                                        }}
-                            />
-                            <InputField value={billingAddress.address_2} placeholder="Address line 2" error={errorAccountBilling}
-                                        onChange={(event) => {
-                                            setErrorAccountBilling(false);
-                                            setBillingAddress({...billingAddress, address_2: event.target.value});
-                                        }}
-                            />
-                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
-                                <InputField value={billingAddress.city} placeholder="City" error={errorAccountBilling} required
-                                            onChange={(event) => {
-                                                setErrorAccountBilling(false);
-                                                setBillingAddress({...billingAddress, city: event.target.value});
-                                            }}
-                                />
-                                <InputField value={billingAddress.state} placeholder="State" error={errorAccountBilling} required
-                                            onChange={(event) => {
-                                                setErrorAccountBilling(false);
-                                                setBillingAddress({...billingAddress, state: event.target.value});
-                                            }}
-                                />
-                            </Block>
-                            <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="12px">
-                                <InputField value={billingAddress.postcode} placeholder="Zip code" error={errorAccountBilling} required
-                                            onChange={(event) => {
-                                                setErrorAccountBilling(false);
-                                                setBillingAddress({...billingAddress, postcode: event.target.value});
-                                            }}
-                                />
-                                <InputField value={"United States"} disabled/>
-                            </Block>
-                            <InputField value={billingAddress.phone} placeholder="Phone Number" error={errorAccountBilling} required
-                                        onChange={(event) => {
-                                            setErrorAccountBilling(false);
-                                            setBillingAddress({...billingAddress, phone: event.target.value});
-                                        }}
-                            />
-                            <InputField value={billingAddress.email} placeholder="Email" error={errorAccountBilling} required
-                                        onChange={(event) => {
-                                            setErrorAccountBilling(false);
-                                            setBillingAddress({...billingAddress, email: event.target.value});
-                                        }}
-                            />
                         </Block>
-                        <Block marginBottom="40px">
+                        <Block>
                             <Block marginBottom="24px" font="MinXLabel24">Pay with...</Block>
                             <Block marginBottom={["8px", null, "16px"]}
                                    overrides={{
@@ -650,8 +648,8 @@ function Checkout({router, orderID, orderDetail}) {
                                     </div>
                                 </Block>
                             </Block>
-                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px">
-                                <div style={{fontSize: 14, lineHeight: "22px", textAlign: "left"}}>
+                            <Block display="grid" gridTemplateColumns="1fr" gridRowGap="16px" font="MinXParagraph14">
+                                <div style={{lineHeight: "22px", textAlign: "left"}}>
                                     Your personal data will be used to process your order, support your experience throughout this website, and for other purposes
                                     described in our <strong>privacy policy</strong>
                                 </div>
@@ -669,8 +667,8 @@ function Checkout({router, orderID, orderDetail}) {
                                 >
                                     I have read and agree to the website <strong>terms and conditions</strong> <span style={{color: "red"}}>*</span>
                                 </Checkbox>
-                                <MButton type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel12" text='PAY NOW' bundle="primary" onClick={() => pay()}
-                                         disabled={!number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
+                                <Button.V1 type="solid" width="100%" height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel12" text='PAY NOW' bundle="primary" onClick={() => pay()}
+                                           disabled={!addressesDone || !number.length || !expiration.length || !code.length || expirationError || codeError || !checked}
                                 />
                                 <Block display="flex" flexDirection="row" alignItems="center">
                                     <AspectRatioBox aspectRatio={1} width="35px">
@@ -683,56 +681,19 @@ function Checkout({router, orderID, orderDetail}) {
                             </Block>
                         </Block>
                     </Block>
-                    <Block gridArea="b" position={["relative", null, "sticky"]} top={[null, null, "108px"]}>
-                        <Block marginBottom="24px" font="MinXHeading20">Order Summary</Block>
-                        {lineItem.length > 0 ? (
-                            <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
-                                {lineItem.map((item, index) => {
-                                    return (
-                                        <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                            <Block font="MinXParagraph14">
-                                                {item.name}
-                                                <Block marginLeft="2em">{item.meta_data.map((data, i) => <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block>)}</Block>
-                                            </Block>
-                                            <Block font="MinXParagraph14">{`$` + item.subtotal}</Block>
-                                        </Block>
-                                    )
-                                })}
-                            </Block>
-                        ) : null}
-                        <Block marginBottom="16px" overrides={{Block: {style: {borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#F0F0F0"}}}}>
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                <Block font="MinXParagraph14">Subtotal</Block><Block font="MinXParagraph14">{`$` + getSubtotal().toFixed(2)}</Block>
-                            </Block>
-                            {order.discount_total && order.discount_total !== "0.00" ? (
-                                <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                    <Block font="MinXParagraph14">Discount</Block>
-                                    <Block font="MinXParagraph14">{`-$` + order.discount_total}</Block>
-                                </Block>
-                            ) : null}
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                <Block font="MinXParagraph14">Shipping</Block>
-                                <Block font="MinXParagraph14">{order.shipping_total === "0.00" ? "Free shipping (Approx 3-7 days)" : `$` + order.shipping_total}</Block>
-                            </Block>
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                <Block font="MinXParagraph14">Estimated Tax</Block>
-                                <Block font="MinXParagraph14">{`$` + order.total_tax || 0}</Block>
-                            </Block>
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px">
-                                <Block font="MinXParagraph14"><strong>Total</strong></Block>
-                                <Block font="MinXParagraph14"><strong>{`$` + order.total || 0}</strong></Block>
-                            </Block>
-                        </Block>
+                    <Block gridArea="b" position={["relative", null, "sticky"]} top={[null, null, "108px"]} height="fit-content">
+                        <OrderSummary.V1 orderDetail={detail}/>
                         {lineCoupon.length > 0 ? (
-                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="16px" paddingBottom="16px">
+                            <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom={["16px", null, "24px"]}>
                                 <Block font="MinXParagraph14">Applied Coupon</Block>
-                                <Block>
+                                <Block display="grid" gridRowGap={["16px", null, "20px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                     {lineCoupon.map((coupon, index) => (
-                                        <Block key={index} display="flex" justifyContent="flex-end" marginBottom="16px">
-                                            <Block font="MinXParagraph14" marginRight="16px">{coupon.code}</Block>
-                                            <Button kind={KIND.tertiary} shape={SHAPE.circle} size={SIZE.mini} overrides={{BaseButton: {style: {width: "20px", height: "20px"}}}} onClick={() => removeCoupon(index)}>
-                                                <Delete size={12}/>
-                                            </Button>
+                                        <Block key={index} display="flex" justifyContent="flex-end">
+                                            <Block font="MinXParagraph14" marginRight="16px">{coupon.code.toUpperCase()}</Block>
+                                            <Button.V1 bundle="gray" type="solid" shape="circle" width="20px" height="20px" buttonHoverBackgroundColor="#EEE" buttonStyle={{paddingLeft: 0, paddingRight: 0}}
+                                                       onClick={() => removeCoupon(index)}>
+                                                <Delete color="#262626" size={12}/>
+                                            </Button.V1>
                                         </Block>
                                     ))}
                                 </Block>
@@ -740,7 +701,7 @@ function Checkout({router, orderID, orderDetail}) {
                         ) : null}
                         <Block display="grid" gridTemplateColumns="2fr 1fr" gridColumnGap="16px">
                             <InputField value={coupon} placeholder="Coupon code" onChange={(event) => setCoupon(event.target.value)}/>
-                            <MButton type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD" bundle="primary" overrides={{Block: {style: {zIndex: 1}}}} onClick={() => updateCoupon()}/>
+                            <Button.V1 type="outline" width="100%" height="50px" font="MinXLabel14" text="APPLY" color="#23A4AD" bundle="primary" overrides={{Block: {style: {zIndex: 1}}}} onClick={() => updateCoupon()}/>
                         </Block>
                     </Block>
                 </Block>
@@ -754,15 +715,15 @@ Checkout.getInitialProps = async (context) => {
     const {query} = context;
     const {id} = query;
 
+    const orderID = numberFn.strToInt(id, 0);
     let orderDetail = null;
 
-    let i = numberFn.strToInt(id);
-    if (i) {
-        orderDetail = await utils.updateOrder(null, {id: numberFn.strToInt(i)});
+    if (orderID) {
+        orderDetail = await utils.updateOrder(null, {id: orderID});
     }
 
     return {
-        orderID: i,
+        orderID: orderID,
         orderDetail: orderDetail,
     };
 };

@@ -73,7 +73,7 @@ function Bali({router, size}) {
                              </>
                          }
                 />
-                <Section title={<>NO DETAILS<br/>WILL BE MISSED</>}
+                <Section title={<>ALL OF OUR PRODUCTS<br/>ARE HIGHLY DETAILED</>}
                          content={
                              <Block className="text-center" width="100%" maxWidth="960px" display="grid" gridTemplateColumns={["repeat(2, 1fr)", null, "repeat(4, 1fr)"]} gridColumnGap={["16px", "48px", "20px"]} gridRowGap={["24px", "40px"]}
                                     justifyItems="center" margin="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}

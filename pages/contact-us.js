@@ -47,7 +47,7 @@ const Contact_Us = ({phone}) => {
             setFormState({...formState, interests: newInterests})
         }
     }
-    const hanndleContactMethod = (method) => {
+    const handleContactMethod = (method) => {
         if (!formState.contactMethod.includes(method)) setFormState({...formState, contactMethod: [...formState.contactMethod, method]})
         else {
             let idx = formState.contactMethod.indexOf(method);
@@ -87,7 +87,6 @@ const Contact_Us = ({phone}) => {
             });
             setFormSubmitted(true);
         } else {
-            console.log(formError)
             setErrorMessage("Please fill all the required fields")
             setFormError(true);
             setFormLoading(false)
@@ -354,21 +353,21 @@ const Contact_Us = ({phone}) => {
                             <Block display="grid" gridColumnGap="16px" gridRowGap="16px" gridTemplateColumns={["1fr", "repeat(3, 1fr)"]}>
                                 <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
                                     <CustomCheckbox checked={formState.contactMethod.includes("call")}
-                                                    onChange={() => hanndleContactMethod("call")}
+                                                    onChange={() => handleContactMethod("call")}
                                     >
                                         <CustomCheckboxLabel active={formState.contactMethod.includes("call")}>Call</CustomCheckboxLabel>
                                     </CustomCheckbox>
                                 </Block>
                                 <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
                                     <CustomCheckbox checked={formState.contactMethod.includes("text")}
-                                                    onChange={() => hanndleContactMethod("text")}
+                                                    onChange={() => handleContactMethod("text")}
                                     >
                                         <CustomCheckboxLabel active={formState.contactMethod.includes("text")}>Text</CustomCheckboxLabel>
                                     </CustomCheckbox>
                                 </Block>
                                 <Block width="100%" marginLeft="auto" marginRight="auto" maxWidth={["190px", "100%", "100%"]}>
                                     <CustomCheckbox checked={formState.contactMethod.includes("email")}
-                                                    onChange={() => hanndleContactMethod("email")}
+                                                    onChange={() => handleContactMethod("email")}
                                     >
                                         <CustomCheckboxLabel active={formState.contactMethod.includes("email")}>Email</CustomCheckboxLabel>
                                     </CustomCheckbox>
@@ -461,7 +460,7 @@ const Contact_Us = ({phone}) => {
                     >
                         <Block width={["200px", "230px", "250px"]} backgroundColor="#ffffff" display="flex" flexDirection="column" alignItems="center">
                             <Block as="p" font="MinXParagraph16" color="MinXPrimaryText" marginTop="16px">
-                                {errorMessage || "Ooops, and unexpected error occured"}
+                                {errorMessage || "Ooops, and unexpected error occurred"}
                             </Block>
                             <Button
                                 onClick={() => {

@@ -168,7 +168,6 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         let available = [...availableList];
 
         selectedVariant.forEach((variant, index) => {
-            console.log(variant);
             if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
                 available[index].status = false;
                 return;

@@ -3,31 +3,70 @@
     {
       "title": "Where can I use my WestShade pop-up canopy?",
       "content": "Our canopies stand securely on grass, dirt, or pavement without ropes or poles. In windy conditions, However, we recommend using our Weight Bags to anchor and prevent your canopy from tipping over."
-    }, {
+    },
+    {
       "title": "Can I buy a replacement canopy covering?",
       "content": "Yes, we offer many replacement cover options. Please call customer service at 877-702-1872 or contact us online."
-    }, {
+    },
+    {
+      "title": "Can I buy replacement canopy parts from you?",
+      "content": "If you did purchase your canopy from us we certainly offer replacement cover or replacement part options. Please contact customer service at (949)-751-1070 or chat with us online. \nUnfortunately, we do not sell replacement parts if you purchased your canopy from another company."
+    },
+    {
+      "title": "I bought a canopy from another company,  will your replacement fit my current frame?",
+      "content": "Our tops are designed to fit Westshade brand frames. We do not recommend using our frame or top with another company's product."
+    },
+    {
       "title": "Do you have any accessories available?",
       "content": "Yes, our full line of accessories includes sidewalls, half sidewalls, sidewalls with roll up doors, sidewalls with windows and sand bags."
-    }, {
+    },
+    {
       "title": "What fire ratings do your fabric items have?",
       "content": " Our fabric meets CPAI-84, NFPA-71 and the California Administrative Code Title 19 fire resistant requirements."
-    }, {
+    },
+    {
       "title": "What are your shipping costs?",
       "content": "We provide free shipping and handling costs for any orders over $149 within the U.S., with the exception of AK, HI and PR. \n\nShipping costs for customers located in those 3 states will be provided after further order estimates."
+    },
+    {
+      "title": "How to setup and take down the canopy tent?",
+      "content": "Check out this one minute video <a href='https://www.youtube.com/watch?v=J9ygFXvOVn4'>https://www.youtube.com/watch?v=J9ygFXvOVn4</a>"
+    },
+    {
+      "title": "What file format do you need for my artwork into print?",
+      "content": "Artwork needs to be in vector format so it can be scaled to size and printed on larger areas without reducing the clarity of becoming pixelated. These file types typically have an extension such as “.ai or .eps”."
+    },
+    {
+      "title": "Where do I send my artwork?",
+      "content": "Please send all your artwork to <a  href='mailto: support@westshade.com'>support@westshade.com</a>. Please reference your contact name and phone number."
+    },
+    {
+      "title": "How do I take care of my canopy?",
+      "content": "Fabric care is an important part of maintaining your canopy so it will continue to offer shade and protection from the weather for years. Your canopy is a retractable model that retracts into a cassette or is covered by a hood cover to protect it, under an overhang, soffit or eave, or just a tight roll against a wall. \n\nYou should always regularly clean outdoor fabric canopies. The canopy experiences temperature extremes and rain. It is exposed to airborne pollutants, dirt, grease, bird droppings, insects, leaf tannins and tree pitch, plus other substances which can stain or bleach cloth. The rain may wash some off; however, dirt can get into the weave and cause the growth of mold. Covers rolled up damp, will most likely lead to fabric mildew, even fixed material may stay damp and develop mildew.\n\nNot all fabrics are cleaned with the same soaps or techniques, and different materials need to be coated with water-resistant or waterproof and mildew resisting solutions. You can hire a professional to maintain and clean your canopy or do it yourself."
+    },
+    {
+      "title": "What does my warranty cover?",
+      "content": "All products and accessories purchased from Westshade Canopy & Umbrellas are covered by manufacturer's default defects only, defined as products and other merchandise either defective or damaged upon unpackaging of merchandise. Packages are checked thoroughly and inspected at the facility for final inspection."
+    },
+    {
+      "title": "What does my warranty NOT cover?",
+      "content": "Warranty does not cover products and accessories that are damaged by improper use, product damage caused by harmful weather conditions, or damages from improper set up."
     }
   ],
   "custom_printing_process": [
     {
       "title": "Start the conversation with a quote request.",
       "content": "We work where it’s easiest for you. After answering just a few quick questions, we can make sure your request is directed to the best person to help bring your project to life."
-    }, {
+    },
+    {
       "title": "We’ll help guide you to the perfect solution.",
       "content": "Our team consists of skilled event experts, artists and customer representatives. We’ll learn about your specific use case and guide you into a tailored solution."
-    }, {
+    },
+    {
       "title": "We’ll show you how awesome it’ll look.",
       "content": "Once we figure out your product fit, our team of professional artists will craft a document to help you visually see what the finished product will look like at no cost. If you don’t like the first version, we’ll keep working with you until you approve it."
-    }, {
+    },
+    {
       "title": "We’ll build it and ship it.",
       "content": "All within 7-days your custom product is printed, cut, hand-sewn, assembled, quality checked and shipped out our door and on its way to you. That is all printing process."
     }
@@ -36,13 +75,16 @@
     {
       "title": "Q: Do you offer design services?",
       "content": "A: Yes, Our talented and attentive art & design team is happy to help you as much or as little as you’d like in the overall design of your project."
-    }, {
+    },
+    {
       "title": "Q: Will I receive a proof before print production begins?",
       "content": "A: Yes. You will need to approve a digital proof for all custom-printed products prior to print production."
-    }, {
+    },
+    {
       "title": "Q: Can I change my artwork once it has been approved and is in production?",
       "content": "A: Can I change my artwork once it has been approved and is in production?"
-    }, {
+    },
+    {
       "title": "Q: Can I cancel my order?",
       "content": "A: No. In order to get products into our client’s hands quickly, we begin production as soon as you give us approval. There are no cancellations or returns on any custom-printed products."
     }

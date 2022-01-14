@@ -58,7 +58,7 @@ function Custom_Printing_Package({router, products}) {
                 <meta name="description" content="Printing packages are based on your needs with a large selection of sizes and colors to promo your business, get free design today!"/>
             </Head>
             <Block position="absolute" width="100vw" height="auto" top={0} left="calc(50% - 50vw)"
-                   $style={{aspectRatio: "32/13", background: `url('${process.env.imageBaseUrl}/images/custom-printing/canopy-tent/hero-bg.webp')`, zIndex: "-1"}}/>
+                   $style={{aspectRatio: "32/13", backgroundImage: `url('${process.env.imageBaseUrl}/images/custom-printing/canopy-tent/hero-bg.webp')`, backgroundRepeat: "no-repeat", backgroundSize: "cover", zIndex: "-1"}}/>
             <FlexGrid className="text-center" flexGridColumnCount={1} flexGridRowGap={["scale900", null, "scale1000"]} justifyContent="center" paddingTop={["scale900", null, "scale1600"]} paddingBottom={["scale900", null, "scale1600"]}>
                 <FlexGridItem>
                     <Section upperContainerProps={{hidden: true}}

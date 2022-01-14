@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
     // basePath: '',
-    reactStrictMode: true,
+    // reactStrictMode: true,
     // swcMinify: true,
     compress: true,
     poweredByHeader: false,
@@ -18,7 +18,7 @@ const nextConfig = {
         minWidth: 320,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.31"
+        version: "2.0.33"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -109,6 +109,7 @@ const nextConfig = {
             "/search": {page: "/search"},
             "/my-account": {page: "/my-account"},
             "/cart": {page: "/cart"},
+            "/pre-checkout": {page: "/pre-checkout"},
             "/checkout": {page: "/checkout"},
             "/checkout/success": {page: "/checkout/success"},
             // 被替换页

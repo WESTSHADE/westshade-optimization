@@ -32,22 +32,22 @@ const frameTypes = [
     {
         image: "/images/canopy-tent/tent/y7.webp",
         value: "Y7",
-        label: "Y7 - Heavy-duty aluminum frame",
+        label: "Heavy-Duty Aluminum Frame",
         description: "Y7 range is the most heavy duty pop-up canopy on the market with unchallenged strength and durability. It is perfect for outdoor events, job fairs, trade fair exhibitors and wedding venues.",
         price: "0"
     },
     {
         image: "/images/canopy-tent/tent/y6.webp",
         value: "Y6",
-        label: "Y6 - Commercial aluminum frame",
+        label: "Commercial Aluminum Frame",
         description: "Y6 range is an ideal entry level of aluminum tent. It's lightweight yet remaining the strength of heavy duty steel frame. It is ideal for the regular professional user.",
         price: "0"
     },
     {
         image: "/images/canopy-tent/tent/y5.webp",
         value: "Y5",
-        label: "Y5 - Economical steel frame",
-        description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is desgined for everyday use, performs exceptionally well all year round.",
+        label: "Economical Steel Frame",
+        description: "Y5 ranges is a commercial grade heavy duty steel frame, friendly budget, suitable for the regular user and start-up traders. It is designed for everyday use, performs exceptionally well all year round.",
         price: "0"
     },
 ]

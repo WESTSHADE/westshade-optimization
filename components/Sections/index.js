@@ -8,6 +8,8 @@ import ProductImages from "./Product_Images";
 import FreeMockupForm from "./FormSections";
 import UmbrellaProductItem from "./Umbrella_Product_Item";
 
+import ShippingNote from "./ShippingNote";
+
 import SearchBar from "./SearchBar";
 import UmbrellaComparison from "./UmbrellaComparison";
 import UmbrellaBlock from "./UmbrellaBlock";
@@ -17,6 +19,7 @@ import PrintingTechnologySample from "./PrintingTechnologySample";
 
 import Benefit from "./Benefit";
 import SectionTitle from "./Title";
+import OrderSummary from "./OrderSummary";
 
 module.exports = {
     Banner,
@@ -28,6 +31,7 @@ module.exports = {
     ProductDescription,
     FreeMockupForm,
     ProductImages,
+    ShippingNote,
     UmbrellaProductItem,
     SectionTitle,
     Sandwich,
@@ -35,5 +39,6 @@ module.exports = {
     UmbrellaComparison,
     PrintingTechnologyComparison,
     PrintingTechnologySample,
-    UmbrellaBlock
+    UmbrellaBlock,
+    OrderSummary
 };

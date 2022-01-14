@@ -48,7 +48,7 @@ const FreeMockupForm = () => {
         e.preventDefault();
         setFormLoading(true);
         const {firstname, lastname, companyName, phone, email, interests, logo, printInstruction, contactMethod} = formState;
-        if((interests.length !== 0) && (contactMethod.length !== 0) && formState.printInstruction && formState.phone) {
+        if ((interests.length !== 0) && (contactMethod.length !== 0) && formState.printInstruction && formState.phone) {
             if (logo.length > 0) {
                 handleUpload()
                     .then(async (result) => {
@@ -87,8 +87,7 @@ const FreeMockupForm = () => {
                 setFormLoading(false);
                 setShowRequiredMarkers(true)
             }
-        }
-        else {
+        } else {
             setErrorMessage("Please fill all the required fields")
             setFormLoading(false);
             setFormError(true)
@@ -255,7 +254,7 @@ const FreeMockupForm = () => {
                                     <CustomLabel>Preferred contact method {showRequiredMarkers && formState.contactMethod.length === 0 && <Block color="#F07C7C" as="span">*</Block>}</CustomLabel>
                                 </Block>
                                 <Block width="100%" display="flex" justifyContent="space-between" alignItems="center">
-                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px", "16px", "0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("call")}
                                             onChange={() => hanndleContactMethod("call")}
@@ -265,7 +264,7 @@ const FreeMockupForm = () => {
                                             </CustomCheckboxLabel>
                                         </CustomCheckbox>
                                     </Block>
-                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px", "16px", "0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("text")}
                                             onChange={() => hanndleContactMethod("text")}
@@ -275,7 +274,7 @@ const FreeMockupForm = () => {
                                             </CustomCheckboxLabel>
                                         </CustomCheckbox>
                                     </Block>
-                                    <Block width="32%" maxWidth="167px" marginBottom={["16px","16px","0px"]}>
+                                    <Block width="32%" maxWidth="167px" marginBottom={["16px", "16px", "0px"]}>
                                         <CustomCheckbox
                                             checked={formState.contactMethod.includes("email")}
                                             onChange={() => hanndleContactMethod("email")}
@@ -370,7 +369,7 @@ const FreeMockupForm = () => {
                                 }}
                             >
                                 <CustomTextarea
-                                    placeholder="Tell us how do you want to get these text and image printed."
+                                    placeholder="Let us know how you want your text and image to be printed."
                                     id="form-instruction-message"
                                     backgroundColor="#ededed"
                                     value={formState.printInstruction}

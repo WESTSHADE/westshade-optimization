@@ -96,11 +96,11 @@ function Custom_Printing_Umbrella({router, size, phone}) {
             <Head>
                 <title>Custom Printing Umbrella - WESTSHADE</title>
                 <meta name="description"
-                      content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed for your specially.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
+                      content="Customize umbrella with your preference. Print your own artwork on any umbrella. Designed specially for your.  Provides free mockup service. Give us your idea and we will give you the tent you want."/>
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]} paddingBottom="0px">
                 <Hero.V1 size={size} onClick={() => goBuyingSection()}/>
-                <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
+                <Section title={<>DESIGNED SPECIALLY<br/>FOR YOUR</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the tent you want."
                          content={
                              <Image src="/images/custom-printing/umbrella/custom-printing-banner.webp" alt="custom printing display" layout="responsive" width={1920} height={610} priority={true}/>
@@ -149,13 +149,15 @@ function Custom_Printing_Umbrella({router, size, phone}) {
                 </Block>
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
-                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         subtitle="Want to know what your brand or logo looks like on our product? Just fill out the form and a graphic team member will reach out to you."
                          subtitleStyles={{maxWidth: "unset !important"}}
                          content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                 />
-                <Benefit.V1/>
+                <Block className="section-full-width" backgroundColor="#F7F7F7">
+                    <Benefit.V2 as="section"/>
+                </Block>
             </Block>
             <Modal type="dialog" isOpen={showGetQuote} onClose={() => handleEnquiry()}>
                 <Block display="grid" gridTemplateRows="auto" gridTemplateColumns={["1fr", null, "repeat(2, 1fr)"]} gridColumnGap="32px" gridRowGap="32px" margin={["32px auto", null, "30px 32px"]}>

@@ -965,7 +965,7 @@ function Canopy_Tent({router, products, variants}) {
                                                 <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
                                             ))) : null}
                                         </Selection>
-                                        <MButton type="solid" height="32px" font="MinXParagraph16" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                        <MButton type="solid" height="32px" text='Size Guide' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                                  onClick={() => setSizeGuideOpen(true)}
                                         />
                                     </SelectionArea>
@@ -989,7 +989,7 @@ function Canopy_Tent({router, products, variants}) {
                                             <Radio value="y6">Y6 Commercial Aluminum</Radio>
                                             <Radio value="y5">Y5 Economic Steel</Radio>
                                         </Selection>
-                                        <MButton type="solid" height="32px" font="MinXParagraph16" color="MinXSecondaryText" text='Compare Frames' buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                        <MButton type="solid" height="32px" text='Compare Frames' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
                                                  onClick={() => setFrameCompareOpen(true)}
                                         />
                                     </SelectionArea>
