@@ -64,7 +64,7 @@ function Checkout({router}) {
         let checkoutData = {
             payment_method: "bacs",
             payment_method_title: "Credit Card",
-            billing: null,
+            billing: {email: shippingAddress.email},
             shipping: {...shippingAddress},
             line_items: lineItem,
         };
