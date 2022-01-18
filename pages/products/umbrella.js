@@ -20,7 +20,7 @@ import {EventEmitter} from "Utils/events";
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 import {updateUser} from "../../redux/actions/userActions";
 import {modifyCart} from "../../redux/actions/cartActions";
-
+import MButton from "Components/Button/V1";
 import styles from "./Product.module.scss";
 
 const dateFn = new DateFn();
@@ -72,6 +72,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
     const [availableToCheckout, setAvailable] = useState(false);
     const [shippedDay, setShippedDay] = useState("");
+    const [fabricCompare, setFabricCompare] = useState(false)
 
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
 
@@ -230,6 +231,15 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
 
         addToCart(productComponent, selectedVariant, totalCount);
     };
+
+    const compareSpecHandler = (spec) => {
+        switch (spec) {
+            case "fabric":
+                setFabricCompare(true);
+            default:
+                break;
+        }
+    }
 
     useEffect(() => {
         setProductId(product.id.toString());
@@ -421,7 +431,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
         setAvailable(available);
     }, [availableList]);
 
-    const SelectionList = ({index, data = {attributes: []}}) => {
+    const SelectionList = ({index, data = {attributes: []}, onClick}) => {
         let sl = data.attributes.filter((attribute) => attribute.variation);
         return (
             <>
@@ -441,12 +451,21 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                                        value={selectedAttribute[index] ? selectedAttribute[index][i].option.toLowerCase() : ""}
                                        onChange={(event) => handleChangeRadio(event, index, attribute.id)}
                             />
+                                                        {
+                                i === 2 &&
+                                <Block marginTop="16px">
+                                    <MButton type="solid" height="32px" font="MinXParagraph16" text='Compare Fabrics' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                                 onClick={() => onClick(["size", "frame", "fabric", "color"][i])}
+                                        />
+                                </Block>
+                            }
                         </Block>
                     )
                 })}
             </>
         )
     }
+    console.log(productComponent[0])
 
     return (
         <React.Fragment>
@@ -477,7 +496,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                                    }}
                             />
                         ) : null}
-                        <SelectionList index={0} data={productComponent[0]}/>
+                        <SelectionList index={0} data={productComponent[0]} onClick={compareSpecHandler}/>
                     </Block>
                 </Block>
             </Block>
@@ -497,6 +516,7 @@ function Umbrella({router, product, productComponent = [], productVariant = []})
                          onClickAddToBag={() => updateCart()}
                          onSale={selectedVariant.length > 0 ? selectedVariant[0].on_sale : false} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
             />
+            <Modal type="alertdialog" isOpen={fabricCompare} onClose={() => setFabricCompare(false)} content="fabric"/>
             <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
         </React.Fragment>
     );
