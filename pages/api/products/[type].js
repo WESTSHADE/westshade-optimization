@@ -5,7 +5,6 @@ const utils = new Utils();
 export default async function handler(req, res) {
     if (req.query.type === 'tag') {
         const resData = await utils.getProductByTagId(req.query.id);
-        console.log(resData);
 
         const ids = resData.map(item => item.id);
         res.status(200).json({data: ids});

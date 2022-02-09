@@ -13,7 +13,22 @@ import {Button as TabsB, Tag as TabsT} from "./tabs"
 
 import styles from "./card.module.scss";
 
-const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = ["200px", "226px", "380px"], objectFit = "cover", tabType = "tag", linkText, containerProps, containerStyles, containerImageProps, containerTabsProps, carouselProps}) => {
+const CardTabs = ({
+                      title = "",
+                      tabList = [],
+                      reverse = false,
+                      imageMinHeight = ["200px", "226px", "380px"],
+                      objectFit = "cover",
+                      tabType = "tag",
+                      linkText,
+                      downloadLink,
+                      downLoadText,
+                      containerProps,
+                      containerStyles,
+                      containerImageProps,
+                      containerTabsProps,
+                      carouselProps
+                  }) => {
     const [tabActiveKey, setTabActiveKey] = useState(0);
 
     return (
@@ -67,17 +82,22 @@ const CardTabs = ({title = "", tabList = [], reverse = false, imageMinHeight = [
                     )}
                 </Carousel>
             </Block>
-            <Block gridArea="b" padding={["16px", "16px", "32px 40px"]} {...containerTabsProps}>
-                {tabType === "tag" ? (
-                    <>
-                        <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
-                        <TabsT activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList}/>
-                    </>
-                ) : tabType === "button" ? (
-                    <>
-                        <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">{title}</Block>
-                        <TabsB activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList} linkText={linkText}/>
-                    </>
+            <Block gridArea="b" display="flex" flexDirection="column" justifyContent="space-between" padding={["16px", "16px", "32px 40px"]} {...containerTabsProps}>
+                <Block>
+                    {tabType === "tag" ? (
+                        <>
+                            <Block marginBottom="12px" font="MinXHeading20">{title}</Block>
+                            <TabsT activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList}/>
+                        </>
+                    ) : tabType === "button" ? (
+                        <>
+                            <Block marginBottom={["15px", "15px", "21px"]} font="MinXParagraph16" color="MinXSecondaryText">{title}</Block>
+                            <TabsB activeKey={tabActiveKey + ""} onChange={({activeKey}) => setTabActiveKey(parseInt(activeKey + "", 0))} tabList={tabList} downLoadText={downLoadText}/>
+                        </>
+                    ) : null}
+                </Block>
+                {downLoadText ? (
+                    <Block as="a" font="MinXParagraph14" href={downloadLink} target="_blank"><Block $style={{textDecoration: "underline"}}>{downLoadText}</Block></Block>
                 ) : null}
             </Block>
         </Block>

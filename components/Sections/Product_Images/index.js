@@ -36,7 +36,11 @@ const Gallery = ({gallery = []}) => {
             >
                 <Tab title="Photo"
                      overrides={{
-                         TabPanel: {props: {className: styles["container-tab-panel"]}},
+                         TabPanel: {
+                             props: {
+                                 className: clsx(["product", "images", styles["container-tab-panel"]])
+                             }
+                         },
                          Tab: {
                              props: {
                                  className: styles["tab"]

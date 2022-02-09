@@ -1,9 +1,9 @@
 const data = {
-    "trade-show" : {
+    "trade-show": {
         name: "Trade Fair",
         hasVariants: true,
-        accessories : [19927,19214,19378,19336],
-        variants : [
+        accessories: [19927, 19214, 19378, 19336],
+        variants: [
             {
                 id: "stock-color-tent",
                 name: "Stock Color",
@@ -49,7 +49,7 @@ const data = {
     "restaurant": {
         name: "Restaurant",
         hasVariants: false,
-        accessories: [19927,20510,19212,19214],
+        accessories: [19927, 20510, 19212, 19214],
         variants: [],
         parts: [
             {
@@ -90,8 +90,8 @@ const specs = {
             summary: `65"x13"x13"`,
             all: `65" * 13" * 13" (164cm * 34cm * 34cm)`
         },
-        frameWarranty: "10 years",
-        frameWarranty: "1 year",
+        // frameWarranty: "10 years",
+        // frameWarranty: "1 year",
         windResistance: true,
         waterResistance: true,
         fireRetardant: "CPAI-84",
@@ -111,8 +111,8 @@ const specs = {
             summary: `65"x13"x13"`,
             all: `65" * 13" * 13" (164cm * 34cm * 34cm)`
         },
-        frameWarranty: "10 years",
-        frameWarranty: "1 year",
+        // frameWarranty: "10 years",
+        // frameWarranty: "1 year",
         windResistance: true,
         waterResistance: true,
         fireRetardant: "CPAI-85",

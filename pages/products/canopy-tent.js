@@ -1,36 +1,39 @@
-import React, {useEffect, useState, createRef} from "react";
+import React, {useEffect, useState, createRef, useRef} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import {SketchPicker, SwatchesPicker} from "react-color";
 import NumberFormat from "react-number-format";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import ReactPlayer from "react-player";
 
 import {withRouter} from "next/router";
 import Head from "next/head";
+import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 
-import {useStyletron} from "baseui";
 import {Block} from "baseui/block";
 import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 import {Button, KIND, SHAPE} from "baseui/button";
 import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import {ListItem, ListItemLabel} from "baseui/list";
-import {Search, Plus, Delete, ChevronLeft, ChevronRight, Upload} from "baseui/icon";
+import {Plus, ChevronLeft, ChevronRight, CheckIndeterminate} from "baseui/icon";
 import {StatefulTooltip, PLACEMENT, TRIGGER_TYPE} from "baseui/tooltip";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
+import {Select, TYPE} from 'baseui/select';
 
 import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {ProductDescription} from "Components/Sections";
+import {ProductDescription, ShippingNote} from "Components/Sections";
 import Checkout from "Components/Checkout";
 import {Modal} from "Components/surfaces";
 import MButton from "Components/Button/V1";
 import SelectionArea from "Components/selection_area";
 import Selection from "Components/selection-n";
+import BackToTop from "Components/BackToTop";
+import ThemeProvider from "Components/ThemeProvider";
 
 import {viewItem, addToCart} from "../../redux/actions/gtagActions";
 import {updateUser} from "../../redux/actions/userActions";
@@ -109,9 +112,65 @@ const selectionColor = ["White", "Black", "Red", "Yellow", "Blue", "Green"];
 
 let checkoutProductList = [];
 
-function Canopy_Tent({router, products, variants}) {
-    const [displayTabs, setDisplayTabs] = useState(false);
-    const [tabSelectionActiveKey, setTabSelectionActiveKey] = useState(0);
+const getSizeLabel = (text) => {
+    let stringList = text ? text.split("x") : [];
+
+    return stringList.length > 0 ? `${stringList[0]}' x ${stringList[1]}'` : text;
+}
+
+const SectionPrice = (props) => {
+    const {totalRegularPrice, totalSalePrice, priceBeatOnClick} = props;
+
+    return (
+        <>
+            {totalRegularPrice !== totalSalePrice ? (
+                <Block className="text-center">
+                    <Block marginBottom={["4px", null, null, "8px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel12", "MinXLabel14"]}
+                           $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}
+                    >
+                        ( <NumberFormat decimalScale={0} suffix={"%"} value={((totalRegularPrice - totalSalePrice) / totalRegularPrice * 100)} displayType="text"/> OFF )
+                    </Block>
+                    <Block font={["MinXLabel16", "MinXLabel16", "MinXLabel14", "MinXLabel16"]} color="#E51717"
+                           $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}
+                    >
+                        Save <NumberFormat thousandSeparator={true} prefix={"$"} value={totalRegularPrice - totalSalePrice} displayType="text"/>
+                    </Block>
+                </Block>
+            ) : null}
+            <Block>
+                <Block display="flex" alignItems="flex-start" font={["MinXLabel28", "MinXLabel28", "MinXLabel30", "MinXLabel40"]}
+                       $style={{fontFamily: "Gothic A1 !important", fontWeight: "900 !important", lineHeight: "1 !important"}}
+                >
+                    <Block as="span" marginTop={["2px", "2px", "4px", "5px"]} font={["MinXLabel18", "MinXLabel18", "MinXLabel18", "MinXLabel24"]}
+                           $style={{fontFamily: "Gothic A1 !important",}}
+                    >$</Block>
+                    <NumberFormat thousandSeparator={true} value={totalRegularPrice !== totalSalePrice ? totalSalePrice : totalRegularPrice} displayType="text"/>
+                </Block>
+                {totalRegularPrice !== totalSalePrice ? (
+                    <Block className="text-line-through" marginTop="4px" font={["MinXHeading14", "MinXHeading14", "MinXHeading12", "MinXHeading14"]} color="#8C8C8C"
+                           $style={{fontFamily: "Gothic A1 !important", fontWeight: "400 !important", lineHeight: "1 !important"}}>
+                        MSRP: <NumberFormat thousandSeparator={true} prefix={"$"} value={totalRegularPrice} displayType="text"/>
+                    </Block>
+                ) : null}
+            </Block>
+            <Block className="cursor" display="flex" alignItems="center" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="#356DB6" $style={{gap: "8px"}}
+                   onClick={priceBeatOnClick}
+            >
+                <Block position="relative" width={["16px", null, null, "20px"]} height={["16px", null, null, "20px"]}>
+                    <Image src="/images/icon/icon-price-beat.png" alt="icon-price-beat" layout="fill" objectFit="contain"/>
+                </Block>
+                <Block as="span">Price Beat Guarantee</Block>
+            </Block>
+        </>
+    )
+};
+
+function Canopy_Tent({router, products, variants, phone}) {
+    const refSelectA = useRef(null);
+    const refSelectB = useRef(null);
+    const refSelectC = useRef(null);
+
+    const refAddToCart = useRef(null);
 
     const [tabPictureActiveKey, setTabPictureActiveKey] = useState(0);
 
@@ -140,22 +199,32 @@ function Canopy_Tent({router, products, variants}) {
     const [availableToCheckout, setAvailable] = useState(false);
 
     const [wallIsOpen, setWallIsOpen] = useState(false);
-    const [printIsOpen, setPrintIsOpen] = useState(false);
-    const [printColorIsOpen, setPrintColorIsOpen] = useState(false);
 
-    const [activeRoofSlide, setActiveRoofSlide] = useState(0);
-    const [isPeakOrValance, setIsPeakOrValance] = useState(0);
+    const [selectedWallColor, setSelectedWallColor] = useState("white");
 
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
+    const [priceBeatIsOpen, setPriceBeatIsOpen] = useState(false);
+    const [freeItemIsOpen, setFreeItemIsOpen] = useState(false);
+    const [questionIsOpen, setQuestionIsOpen] = useState(false);
 
     const [isInStock, setIsInStock] = useState(true);
 
     const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
     const [frameCompareOpen, setFrameCompareOpen] = useState(false);
 
-    ////////////////////////////////////////
+    const [addToCartOffset, setAddToCartOffset] = useState(0);
 
-    const [css, theme] = useStyletron();
+    const [wallAdded, setWallAdded] = useState(false);
+
+    const [error, setError] = useState(false);
+
+    const [activeTempWallTypeRadio, setActiveTempWallTypeRadio] = useState(-1);
+
+    const [wallPrices, setWallPrices] = useState([]);
+    const [wallPrice, setWallPrice] = useState(0);
+
+    const [wallPriceList, setWallPriceList] = useState([]);
+    const [wallPriceListTemp, setWallPriceListTemp] = useState([]);
 
     ////////////////////////////////////////
 
@@ -176,9 +245,6 @@ function Canopy_Tent({router, products, variants}) {
     const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
     const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
 
-    const [tabsRefs, setTabsRefs] = useState([]);
-    const [value3, setValue3] = useState("1");
-
     ////////////////////////////////////////
 
     const dispatch = useDispatch();
@@ -188,6 +254,7 @@ function Canopy_Tent({router, products, variants}) {
 
     const openWallModal = (index) => {
         setActiveWall(index);
+        setSelectedWallColor("white");
 
         const temp = JSON.parse(JSON.stringify(wallPlainAttributeList));
         setWallPlainAttributeListTemp(temp);
@@ -198,12 +265,47 @@ function Canopy_Tent({router, products, variants}) {
         const wallPicsTemp = JSON.parse(JSON.stringify(wallPictures));
         setWallPicturesTemp(wallPicsTemp);
 
+        const wallPriceTemp = JSON.parse(JSON.stringify(wallPriceList));
+        setWallPriceListTemp(wallPriceTemp);
+
+        if (temp[0][0].option.toLowerCase() === "none") {
+            setActiveTempWallTypeRadio(-1);
+        } else if (temp[0][0].option.toLowerCase() === "full") {
+            setActiveTempWallTypeRadio(0);
+        } else if (temp[0][0].option.toLowerCase() === "half") {
+            setActiveTempWallTypeRadio(1);
+        } else if (temp[0][0].option.toLowerCase() === "mesh") {
+            setActiveTempWallTypeRadio(2);
+        } else if (temp[0][0].option.toLowerCase() === "pvc") {
+            setActiveTempWallTypeRadio(3);
+        } else {
+            setActiveTempWallTypeRadio(4);
+        }
+
         setWallIsOpen(true);
     };
 
     const closeWallModal = (save) => {
         if (save) {
+            const wallPrice = JSON.parse(JSON.stringify(wallPriceListTemp));
+            setWallPriceList(wallPrice);
+
             const temp = JSON.parse(JSON.stringify(wallPlainAttributeListTemp));
+            let noValue = false;
+
+            temp.map((attribute) => {
+                attribute.forEach((attr) => {
+                    if (attr.id === id_attribute_wallType && attr.option !== "none") {
+                        noValue = true;
+                    }
+                });
+            })
+
+            if (!noValue) {
+                setError(true);
+                return;
+            }
+
             setWallPlainAttributeList(temp);
 
             let selection = JSON.parse(JSON.stringify(selectedAttribute));
@@ -241,6 +343,8 @@ function Canopy_Tent({router, products, variants}) {
             });
             setSelectedVariant(selectedVariantList);
         }
+
+        setError(false);
         setWallIsOpen(false);
     };
 
@@ -262,11 +366,32 @@ function Canopy_Tent({router, products, variants}) {
 
     function renderCustomImageTemp(props) {
         return (
+            // <Block position="relative" width="100%" minWidth="230px" minHeight="230px" $style={{aspectRatio: 1}}>
+            //     <Image src={props.original} alt={props.originalAlt} width={1024} height={1024} layout="intrinsic" objectFit="contain"/>
+            //     {wallPicturesTemp.map((pic, index) => {
+            //         if (!pic) return;
+            //         return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+            //     })}
+            // </Block>
             <AspectRatioBox aspectRatio={1} minHeight="230px">
                 <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+                {/*{activeWall > -1 ? (*/}
+                {/*    <img className="image-gallery-image-wall" style={{zIndex: activeWall === 0 ? 1 : activeWall === 1 ? 3 : activeWall === 2 ? 4 : activeWall === 3 ? 2 : 1}}*/}
+                {/*         src={`${process.env.imageBaseUrl}/images/icon/icon-wall-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator-${selectedSize}.png`}*/}
+                {/*         alt="side-wall-indicator"/>*/}
+                {/*) : null}*/}
                 {wallPicturesTemp.map((pic, index) => {
-                    if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+                    if (!pic) {
+                        if (activeWall === index && selectedSize === "10x10") {
+                            return <img key={index} className="image-gallery-image-wall"
+                                        style={{zIndex: activeWall === 0 ? 1 : activeWall === 1 ? 3 : activeWall === 2 ? 4 : activeWall === 3 ? 2 : 1}}
+                                        src={`${process.env.imageBaseUrl}/images/icon/icon-wall-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator-border-${selectedSize}.png`}
+                                        alt="side-wall-indicator"/>;
+                        }
+                    } else {
+                        return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic}
+                                    alt="side-wall"/>;
+                    }
                 })}
             </AspectRatioBox>
         );
@@ -295,6 +420,98 @@ function Canopy_Tent({router, products, variants}) {
     };
 
     useEffect(() => {
+        if (wallIsOpen) {
+            let resultList = [];
+
+            let side = selectedSize.split("x")[(activeWall === 0 || activeWall === 1) ? 0 : 1] + "ft";
+            if (side === "26ft") {
+                side = "13ft"
+            }
+
+            let productList = productVariant[1].filter((variant, index) => {
+                let resultSize = false;
+                let resultColor = false;
+
+                variant.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallSize && attr.option === side) {
+                        resultSize = true;
+                    } else if (attr.id === id_attribute_canopyColor && attr.option.toLowerCase() === selectedWallColor) {
+                        resultColor = true;
+                    }
+                })
+
+                if (resultSize && resultColor) {
+                    return variant;
+                }
+            })
+
+            resultList[0] = productList.find(product => {
+                let p = false;
+
+                product.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallType && attr.option === "Full") p = true;
+                })
+
+                if (p) return product;
+            })
+            resultList[1] = productList.find(product => {
+                let p = false;
+
+                product.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallType && attr.option === "Half") p = true;
+                })
+
+                if (p) return product;
+            })
+            resultList[2] = productList.find(product => {
+                let p = false;
+
+                product.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallType && attr.option === "Mesh") p = true;
+                })
+
+                if (p) return product;
+            })
+            resultList[3] = productList.find(product => {
+                let p = false;
+
+                product.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallType && attr.option === "PVC") p = true;
+                })
+
+                if (p) return product;
+            })
+            resultList[4] = productList.find(product => {
+                let p = false;
+
+                product.attributes.map(attr => {
+                    if (attr.id === id_attribute_wallType && attr.option === "Rollup") p = true;
+                })
+
+                if (p) return product;
+            })
+
+            setWallPrices(resultList);
+        }
+    }, [wallIsOpen, activeWall]);
+
+    useEffect(() => {
+        let price = 0;
+
+        let side = selectedSize.split("x")[1];
+
+        wallPriceListTemp.map((p, index) => {
+            if (side === "26" && (index === 2 || index === 3)) {
+                price += p
+            }
+
+            price += p
+        });
+
+        setWallPrice(price);
+    }, [wallPriceListTemp]);
+
+    useEffect(() => {
         if (!productImageGallery || productImageGallery.length === 0) return;
         let images = [...productImageGallery];
         images[0].renderItem = renderCustomImage;
@@ -304,6 +521,7 @@ function Canopy_Tent({router, products, variants}) {
     useEffect(() => {
         if (!productImageGalleryTemp || productImageGalleryTemp.length === 0) return;
         let images = [...productImageGalleryTemp];
+
         images[0].renderItem = renderCustomImageTemp;
         setProductImageGalleryTemp(images);
     }, [wallPicturesTemp]);
@@ -336,17 +554,17 @@ function Canopy_Tent({router, products, variants}) {
             }
             return equal;
         });
+
         selectionVariant[index] = selected[0];
         // Part 2.5: Canopy Tent订制选项，根据Tent Size变更Wall Size, Roof Size
         if (index === 0 && id === id_attribute_canopySize) {
             let sizes = event.target.value.split("x");
-            let wallPicturesList = [...wallPictures];
             selection.forEach((item, indexA) => {
                 if (indexA < 1) return;
 
                 item.forEach((attribute) => {
                     if (attribute.id === id_attribute_canopySize) attribute.option = event.target.value;
-                    if (attribute.id === id_attribute_wallSize) attribute.option = indexA % 2 === 0 ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
+                    if (attribute.id === id_attribute_wallSize) attribute.option = (indexA === 1 || indexA === 2) ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
                 });
 
                 // 挑选出对应 Roof/Wall Variant.
@@ -355,6 +573,7 @@ function Canopy_Tent({router, products, variants}) {
 
                     let equal = true;
                     for (let i = 0; i < variant.attributes.length; i++) {
+
                         if (!item[i] || variant.attributes[i].option.toLowerCase() !== item[i].option.toLowerCase()) {
                             equal = false;
                             break;
@@ -373,7 +592,8 @@ function Canopy_Tent({router, products, variants}) {
     const handleChangeWallRadio = (event, index, id) => {
         // Part 1: 更改选项List信息 并 保存
         let selection = JSON.parse(JSON.stringify(wallPlainAttributeList));
-        selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
+        selection.map(item => item.forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null)));
+        // selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
         // Part 2: 保存更改项
         setWallPlainAttributeList(selection);
 
@@ -414,9 +634,61 @@ function Canopy_Tent({router, products, variants}) {
     };
 
     const handleChangeWallRadioTemp = (event, index, id) => {
+        setError(false);
+
         // Part 1: 更改选项List信息 并 保存
         let selection = JSON.parse(JSON.stringify(wallPlainAttributeListTemp));
         selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
+        // Part 2: 保存更改项
+        setWallPlainAttributeListTemp(selection);
+
+        // Part 2.5: Canopy Tent订制选项，根据Tent Size变更Wall Size
+        let selectedVariantList = JSON.parse(JSON.stringify(selectedVariant));
+        selection.forEach((attr, indexD) => {
+            let selected = productVariant[index + 1].filter((variant) => {
+                if (!variant || !variant.attributes) return false;
+                let equal = true;
+                const initSelectedVariant = (a, b, indexA, indexB) => {
+                    let indexC = indexB;
+                    for (let i = indexA; i < a.length; i++) {
+                        if (indexC < b.length) {
+                            if (a[i].id === b[indexC].id) {
+                                if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
+                                    equal = false;
+                                    break;
+                                }
+                                indexC++;
+                            } else {
+                                initSelectedVariant(a, b, i + 1, indexC);
+                                break;
+                            }
+                        }
+                    }
+                };
+                initSelectedVariant(attr, variant.attributes, 0, 0);
+                return equal;
+            });
+            selectedVariantList[indexD + 1] = selected[0];
+        });
+        setSelectedVariant(selectedVariantList);
+    };
+
+    const handleResetWallRadioTemp = () => {
+        setActiveTempWallTypeRadio(-1);
+
+        let selection = JSON.parse(JSON.stringify(wallPlainAttributeListTemp));
+
+        // Part 1: 更改所有Wall Type选项List信息 并 保存
+        selection.map((attribute) => {
+            attribute.forEach((attr) => {
+                if (attr.id === id_attribute_wallType) {
+                    attr.option = "none";
+                } else if (attr.id === id_attribute_canopyColor) {
+                    attr.option = "white";
+                }
+            });
+        });
+
         // Part 2: 保存更改项
         setWallPlainAttributeListTemp(selection);
     };
@@ -454,16 +726,19 @@ function Canopy_Tent({router, products, variants}) {
             let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
             // 设置Wall图片
             let type = attribute.filter((attr) => attr.id === id_attribute_wallType)[0].option.toLowerCase();
-            if (type === "none") return;
-            const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
-            const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
-            const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
-            const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
-            wallPicturesList[index] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            if (type === "none") {
+                wallPicturesList[index] = "";
+            } else {
+                const typeUrl = wallMap.get("type").find((w) => w.key === type).value;
+                const sizeUrl = wallMap.get("size").find((w) => w.key === size.toLowerCase()).value;
+                const colorUrl = wallMap.get("color").find((w) => w.key === color).value;
+                const sideUrl = wallMap.get("side").find((w) => w.key === index + 1).value;
+                wallPicturesList[index] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
+            }
         });
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
-    }, [wallPlainAttributeListTemp]);
+    }, [wallPlainAttributeListTemp, activeWall]);
 
     const checkProduct_getPrice = () => {
         let regularPrice = 0,
@@ -475,6 +750,7 @@ function Canopy_Tent({router, products, variants}) {
 
         selectedVariant.forEach((variant, index) => {
             if ((!variant || !variant.attributes) && productComponent[index].type !== "simple") {
+                available[index].id = "";
                 available[index].status = false;
                 return;
             }
@@ -510,7 +786,7 @@ function Canopy_Tent({router, products, variants}) {
             if (index === 0) {
                 size = variant.attributes.filter((attr) => attr.id === id_attribute_canopySize)[0].option.toUpperCase();
             } else {
-                if (size === "13x26" && (index === 2 || index === 4)) {
+                if (size === "13X26" && (index === 3 || index === 4)) {
                     if (!variant.on_sale) {
                         regularPrice += numberFn.strToFloat(variant.regular_price) * totalCount;
                         salePrice += numberFn.strToFloat(variant.regular_price) * totalCount;
@@ -554,8 +830,6 @@ function Canopy_Tent({router, products, variants}) {
     //////////////////////////////////////
 
     useEffect(() => {
-        setTabsRefs((tabsRefs) => Array(3).fill(null).map((_, i) => tabsRefs[i] || createRef()));
-
         let series = router.query.series || urlFn.getParam("series");
         if (series) {
             setSelectedFrame(series);
@@ -586,8 +860,30 @@ function Canopy_Tent({router, products, variants}) {
     }, []);
 
     useEffect(() => {
-        if (tabsRefs.length > 0) setDisplayTabs(true);
-    }, [tabsRefs]);
+        if (refAddToCart && refAddToCart.current) {
+            setAddToCartOffset(refAddToCart.current.offsetTop);
+        } else {
+            setAddToCartOffset(0);
+        }
+    }, [refAddToCart]);
+
+    useEffect(() => {
+        if (refSelectA) {
+            refSelectA.current.disabled = true;
+        }
+    }, [refSelectA]);
+
+    useEffect(() => {
+        if (refSelectB) {
+            refSelectB.current.disabled = true;
+        }
+    }, [refSelectB]);
+
+    useEffect(() => {
+        if (refSelectC) {
+            refSelectC.current.disabled = true;
+        }
+    }, [refSelectC]);
 
     useEffect(() => {
         if (!productComponent || productComponent.length === 0) return;
@@ -622,6 +918,7 @@ function Canopy_Tent({router, products, variants}) {
         });
         // 初始化各产品默认变体参数
         setSelectedAttribute(selectedAttrList);
+
         setWallPlainAttributeList(wallPlainAttributeList);
         setInitSelectedAttribute(true);
         // 获取,保存各组件变体产品信息
@@ -633,6 +930,22 @@ function Canopy_Tent({router, products, variants}) {
 
         handleChangeRadio(null, 0)
     }, [productVariant]);
+
+    useEffect(() => {
+        let added = false;
+
+        if (wallPlainAttributeList.length > 0) {
+            wallPlainAttributeList.map(item => {
+                const found = item.find(element => element.id === id_attribute_wallType);
+
+                if (found && found.option !== "none") {
+                    added = true;
+                }
+            })
+        }
+
+        setWallAdded(added);
+    }, [wallPlainAttributeList]);
 
     useEffect(() => {
         if (!initSelectedAttribute || !initProductVariant) return;
@@ -695,9 +1008,12 @@ function Canopy_Tent({router, products, variants}) {
             series = "Y7";
         }
 
+        let pList = JSON.parse(JSON.stringify(wallPriceList));
         selectedVariant.forEach((variant, index) => {
             if (!variant || !variant.attributes) {
                 if (index > 0) wallPicturesList[index - 1] = "";
+
+                checkProduct_getPrice();
                 return;
             }
 
@@ -724,8 +1040,12 @@ function Canopy_Tent({router, products, variants}) {
                 } else {
                     wallPicturesList[index - 1] = "";
                 }
+
+                pList[index - 1] = numberFn.strToFloat(variant.price);
             }
         });
+        setWallPriceList(pList);
+
         // Set墙面图片
         setWallPictures(wallPicturesList);
         checkProduct_getPrice();
@@ -743,18 +1063,18 @@ function Canopy_Tent({router, products, variants}) {
         checkoutProductList = [];
 
         let available = true;
-        availableList.forEach((item, index) => {
-            if (!item || !available) return;
+        availableList.map((item, index) => {
+            if (!item || !item.id || !available) return;
             // 没货 直接返回
             if (!item.status) {
-                if (!item.optional) {
-                    available = false;
-                    setIsInStock(false);
-                    setMessage("Insufficient stock → " + productComponent[index].name);
-                    return;
-                } else {
-                    return;
-                }
+                // if (!item.optional) {
+                available = false;
+                setIsInStock(false);
+                setMessage("Insufficient stock → " + productComponent[index].name);
+                return;
+                // } else {
+                //     return;
+                // }
             }
             // 有货 判定是否有明细
             if (item.quantity) {
@@ -768,6 +1088,7 @@ function Canopy_Tent({router, products, variants}) {
             }
 
             const i = checkoutProductList.findIndex(({id}) => id === item.id);
+
             if (i === -1) {
                 const variation = item.attribute.map((attr) => ({
                     attribute: attr.name,
@@ -800,536 +1121,597 @@ function Canopy_Tent({router, products, variants}) {
     //////////////////////////////////////
 
     return (
-        <React.Fragment>
+        <ThemeProvider.V2>
             <Head>
                 <title>Canopy Tent | WESTSHADE</title>
                 <meta name="description" content="Customized your own canopy. Buy it with desired frames, Heavy Duty Aluminum, Commercial Aluminum, Economic Steel and more!"/>
             </Head>
-            <Block width={["100%", "480px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px">
-                {/* 图片区域 */}
-                <Block flex={[0, 0, 1]} position={[null, null, "relative"]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
-                    <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
-                          overrides={{
-                              Root: {
-                                  style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
-                              },
-                              TabList: {
-                                  props: {
-                                      className: "hideScrollBar"
-                                  },
-                                  style: {
-                                      display: "grid",
-                                      // gridTemplateColumns: " repeat(3,auto)",
-                                      gridColumnGap: "12px",
-                                      justifyContent: "center",
-                                      overflowX: "scroll",
-                                  },
-                              },
-                              TabBorder: {props: {hidden: true}, style: {display: "none"}},
-                              TabHighlight: {props: {hidden: true}, style: {display: "none"}},
-                          }}
-                    >
-                        <Tab title="Photo"
-                             overrides={{
-                                 TabPanel: {
-                                     style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                 },
-                                 Tab: {
-                                     style: ({$isActive}) => ({
-                                         background: $isActive ? "black" : "transparent",
-                                         color: $isActive ? "white" : "black",
-                                         paddingTop: "5px",
-                                         paddingBottom: "5px",
-                                         paddingRight: "24px",
-                                         paddingLeft: "24px",
-                                         borderRadius: "24px",
-                                         ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                     }),
-                                 },
-                             }}
-                        >
-                            <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
-                                          renderLeftNav={(onClick, disabled) => (
-                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                      onClick={onClick}
-                                                      overrides={{
-                                                          BaseButton: {
-                                                              props: {
-                                                                  className: "cursor react-image-gallery-arrow left",
-                                                              },
-                                                          },
-                                                      }}
-                                                      disabled={disabled}
-                                              >
-                                                  <ChevronLeft size={28} color={"white"}/>
-                                              </Button>
-                                          )}
-                                          renderRightNav={(onClick, disabled) => (
-                                              <Button shape={SHAPE.circle} kind={KIND.secondary}
-                                                      onClick={onClick}
-                                                      overrides={{
-                                                          BaseButton: {
-                                                              props: {
-                                                                  className: "cursor react-image-gallery-arrow right",
-                                                              },
-                                                          },
-                                                      }}
-                                                      disabled={disabled}
-                                              >
-                                                  <ChevronRight size={28} color={"white"}/>
-                                              </Button>
-                                          )}
-                            />
-                        </Tab>
-                        {/*<Tab title="Video" overrides={{*/}
-                        {/*    TabPanel: {*/}
-                        {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
-                        {/*    },*/}
-                        {/*    Tab: {*/}
-                        {/*        style: ({$isActive}) => ({*/}
-                        {/*            background: $isActive ? "black" : "transparent",*/}
-                        {/*            color: $isActive ? "white" : "black",*/}
-                        {/*            paddingTop: "5px",*/}
-                        {/*            paddingBottom: "5px",*/}
-                        {/*            paddingRight: "24px",*/}
-                        {/*            paddingLeft: "24px",*/}
-                        {/*            borderRadius: "24px",*/}
-                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
-                        {/*        }),*/}
-                        {/*    },*/}
-                        {/*}}/>*/}
-                        {/*<Tab title="3D" overrides={{*/}
-                        {/*    TabPanel: {*/}
-                        {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
-                        {/*    },*/}
-                        {/*    Tab: {*/}
-                        {/*        style: ({$isActive}) => ({*/}
-                        {/*            background: $isActive ? "black" : "transparent",*/}
-                        {/*            color: $isActive ? "white" : "black",*/}
-                        {/*            paddingTop: "5px",*/}
-                        {/*            paddingBottom: "5px",*/}
-                        {/*            paddingRight: "24px",*/}
-                        {/*            paddingLeft: "24px",*/}
-                        {/*            borderRadius: "24px",*/}
-                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
-                        {/*        }),*/}
-                        {/*    },*/}
-                        {/*}}/>*/}
-                    </Tabs>
-                </Block>
-                {/* 选择区域 */}
-                <Block className="hideScrollBar" width={["auto", "auto", "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={["unset", "unset", "scroll"]}
-                       paddingTop={"24px"} paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "0"]}
-                >
-                    <Block marginBottom="16px" font="MinXHeading20">Canopy Tent</Block>
-                    <Block marginTop="4px" marginBottom="24px" font="MinXLabel14" color="MinXButton">
-                        <Link color="inherit" href={"/canopy-tent/spec"}>Spec</Link>
+            <Script id="model-viewer" type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
+            <Block width="100%" minWidth="320px" display="flex" flexDirection={["column", null, "row"]} overflow="hidden">
+                {/* 图片区域 - Contain Layer*/}
+                <Block flex={[0, null, 1]} marginBottom={["16px", null, "unset"]} paddingLeft={[null, null, "calc(50vw - " + process.env.maxWidth / 2 + "px)"]} backgroundColor={["white", null, "#F7F7F7"]}>
+                    <Block display={["flex", null, "grid"]} flexDirection="column" justifyContent="space-between" width="100%" height="100%" paddingRight={["16px", null, "10px", "16px"]} paddingLeft={["16px", null, "20px"]}
+                           paddingBottom={[null, null, "30px"]}>
+                        {/*Content Layer*/}
+                        <Block>
+                            {/*Section Breadcrumbs*/}
+                            <Block className="breadcrumb" as="ul" display={["flex", null, "none"]} alignItems="center" height="40px" font="MinXParagraph12" color="MinXSecondaryText">
+                                <Block as="li"><Link href="/">Home</Link></Block>
+                                <Block as="li"><Link href="/canopy-tent">Canopy tent</Link></Block>
+                                <Block as="li"><Link href="#">Pop up canopy tent - stock color</Link></Block>
+                            </Block>
+                            <Block display={["flex", null, "none"]} justifyContent="space-between" marginBottom="4px" font="MinXParagraph14">
+                                {/*Section Rated*/}
+                                <Block display="flex" justifyContent="flex-start" alignItems="center" marginBottom="4px">
+                                    <Block display="flex" alignItems="center" position="relative" height="14px" marginRight={["8px", null, "12px", "16px"]}>
+                                        <Image src="/images/icon/icon-rate.png" alt="icon-rate" width={78} height={14} layout="intrinsic" objectFit="contain"/>
+                                    </Block>
+                                    <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>4.8/5</Block>
+                                </Block>
+                                {selectedFrame === "y7" ? (
+                                    <Block width="max-content" padding="0 8px" backgroundColor="rgba(235, 81, 42, 0.05)" color="#EB512A" $style={{border: "1px solid #EB512A", borderRadius: "3px"}}>BEST SELLER</Block>
+                                ) : null}
+                            </Block>
+                            {/*Section Title*/}
+                            <Block className="text-uppercase" display={["flex", null, "none"]} alignItems="center" marginBottom="4px" font={["MinXHeading20", "MinXHeading20", "MinXHeading14", "MinXHeading20"]}
+                                   $style={{fontWeight: "500 !important", lineHeight: "1 !important", whiteSpace: "nowrap"}}>
+                                <Block>{`Pop up Canopy tent`}</Block>
+                                <Block font={["MinXHeading16", "MinXHeading16", "MinXHeading12", "MinXHeading16"]} $style={{lineHeight: "1 !important"}}>{` - stock color`}</Block>
+                            </Block>
+                            {/*Section Price*/}
+                            <Block display={["grid", null, "none"]} gridTemplateColumns="repeat(3, max-content)" gridColumnGap="12px" alignItems="baseline">
+                                <SectionPrice totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} priceBeatOnClick={() => setPriceBeatIsOpen(true)}/>
+                            </Block>
+                            {/*Section Image*/}
+                            <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
+                                  overrides={{
+                                      Root: {
+                                          style: {width: "100%", height: "100%", display: "flex", flexDirection: "column-reverse", '@media (min-width: 672px)': {paddingBottom: "24px"}},
+                                      },
+                                      TabList: {
+                                          props: {
+                                              className: "hideScrollBar"
+                                          },
+                                          style: {
+                                              display: "grid",
+                                              gridTemplateColumns: " repeat(3,auto)",
+                                              gridColumnGap: "12px",
+                                              justifyContent: "center",
+                                              overflowX: "scroll",
+                                          },
+                                      },
+                                      TabBorder: {props: {hidden: true}, style: {display: "none"}},
+                                      TabHighlight: {props: {hidden: true}, style: {display: "none"}},
+                                  }}
+                            >
+                                <Tab title="Photo"
+                                     overrides={{
+                                         TabPanel: {
+                                             props: {
+                                                 className: "product images"
+                                             },
+                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                         },
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 background: $isActive ? "black" : "transparent",
+                                                 color: $isActive ? "white" : "black",
+                                                 paddingTop: "5px",
+                                                 paddingBottom: "5px",
+                                                 paddingRight: "24px",
+                                                 paddingLeft: "24px",
+                                                 borderRadius: "24px",
+                                                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                             }),
+                                         },
+                                     }}
+                                >
+                                    <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
+                                                  renderLeftNav={(onClick, disabled) => (
+                                                      <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                              onClick={onClick}
+                                                              overrides={{
+                                                                  BaseButton: {
+                                                                      props: {
+                                                                          className: "cursor react-image-gallery-arrow left",
+                                                                      },
+                                                                  },
+                                                              }}
+                                                              disabled={disabled}
+                                                      >
+                                                          <ChevronLeft size={28} color={"white"}/>
+                                                      </Button>
+                                                  )}
+                                                  renderRightNav={(onClick, disabled) => (
+                                                      <Button shape={SHAPE.circle} kind={KIND.secondary}
+                                                              onClick={onClick}
+                                                              overrides={{
+                                                                  BaseButton: {
+                                                                      props: {
+                                                                          className: "cursor react-image-gallery-arrow right",
+                                                                      },
+                                                                  },
+                                                              }}
+                                                              disabled={disabled}
+                                                      >
+                                                          <ChevronRight size={28} color={"white"}/>
+                                                      </Button>
+                                                  )}
+                                    />
+                                </Tab>
+                                <Tab title="Video" overrides={{
+                                    TabPanel: {
+                                        props: {
+                                            className: "product video"
+                                        },
+                                        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                    },
+                                    Tab: {
+                                        style: ({$isActive}) => ({
+                                            background: $isActive ? "black" : "transparent",
+                                            color: $isActive ? "white" : "black",
+                                            paddingTop: "5px",
+                                            paddingBottom: "5px",
+                                            paddingRight: "24px",
+                                            paddingLeft: "24px",
+                                            borderRadius: "24px",
+                                            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                        }),
+                                    },
+                                }}>
+                                    <Block width="100%" height="100%" display="flex" alignItems="center" maxHeight="500px" margin="auto" padding="0 0 20px">
+                                        <ReactPlayer className="react-player" url="https://www.youtube.com/watch?v=YGX1N5997iY" playsinline loop
+                                                     config={{
+                                                         file: {
+                                                             attributes: {
+                                                                 controlsList: "nofullscreen",
+                                                             },
+                                                         },
+                                                     }}
+                                        />
+                                    </Block>
+                                </Tab>
+                                <Tab title="3D" overrides={{
+                                    TabPanel: {
+                                        props: {
+                                            className: "product modal"
+                                        },
+                                        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                    },
+                                    Tab: {
+                                        style: ({$isActive}) => ({
+                                            background: $isActive ? "black" : "transparent",
+                                            color: $isActive ? "white" : "black",
+                                            paddingTop: "5px",
+                                            paddingBottom: "5px",
+                                            paddingRight: "24px",
+                                            paddingLeft: "24px",
+                                            borderRadius: "24px",
+                                            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                        }),
+                                    },
+                                }}>
+                                    <Block width="100%" height="100%" maxHeight="500px" margin="auto" padding="0 0 20px" $style={{aspectRatio: 1}}>
+                                        <model-viewer camera-orbit="120deg 75deg 100%" alt="3D model" minimumRenderScale={1} shadow-intensity="1" camera-controls
+                                                      style={{width: "inherit", height: "inherit", margin: "auto"}}
+                                                      src="/images/3D/canopy_tent_10x10.gltf"
+                                        />
+                                    </Block>
+                                </Tab>
+                            </Tabs>
+                        </Block>
+                        <Block display={["none", null, "flex"]} alignItems="flex-end" font="MinXParagraph12" color="MinXSecondaryText">
+                            Your event whether it is a farmers market, trade show, art show, or pet show would not be complete without the coverage of a high quality water and scratch resistant pop-up tent. Our pop up tents come
+                            with UV resistant and fire retardant fabric that can withstand all weather conditions. So whether you’re in the market for selling produce or art; our pop up tents can take your business to higher
+                            levels. We provide free mock-ups and also free shipping. We are here to provide custom canopy tents that help your brand.
+                        </Block>
                     </Block>
-                    {displayTabs ? (
-                        <Tabs activeKey={tabSelectionActiveKey} fill={FILL.fixed} activateOnFocus onChange={({activeKey}) => setTabSelectionActiveKey(parseInt(activeKey))}
-                              overrides={{
-                                  Root: {
-                                      style: ({$theme}) => ({width: "100%"}),
-                                  },
-                                  TabList: {
-                                      props: {
-                                          className: "hideScrollBar"
-                                      },
-                                      style: {
-                                          overflowX: "scroll",
-                                      },
-                                  },
-                                  TabBorder: {props: {hidden: true}},
-                                  TabHighlight: {
-                                      props: {
-                                          className: "tab-highlight-horizon"
-                                      },
-                                      style: {left: tabsRefs[tabSelectionActiveKey].current ? `${(tabsRefs[tabSelectionActiveKey].current.clientWidth - 24) / 2}px` : 0},
-                                  },
-                              }}
-                        >
-                            <Tab title="Basic" tabRef={tabsRefs[0]}
-                                 overrides={{
-                                     TabPanel: {
-                                         style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                     },
-                                     Tab: {
-                                         style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                     },
-                                 }}
-                            >
-                                <>
-                                    <SelectionArea title="Size">
-                                        <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => (
-                                                <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
-                                            ))) : null}
-                                        </Selection>
-                                        <MButton type="solid" height="32px" text='Size Guide' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
-                                                 onClick={() => setSizeGuideOpen(true)}
-                                        />
-                                    </SelectionArea>
-                                    <SelectionArea title="Frame">
-                                        <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
-                                                   onChange={(event) => {
-                                                       setSelectedFrame(event.target.value);
-                                                       if (event.target.value === "y5") {
-                                                           setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
-                                                           setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
-                                                       } else if (event.target.value === "y6") {
-                                                           setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
-                                                           setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
-                                                       } else if (event.target.value === "y7") {
-                                                           setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
-                                                           setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
-                                                       }
-                                                   }}
+                </Block>
+                {/* 选择区域 - Contain Layer*/}
+                <Block flex={[0, null, 1]} paddingRight={[null, null, "calc(50vw - " + process.env.maxWidth / 2 + "px)"]} paddingBottom={["24px", null, 0]} backgroundColor={["#F7F7F7", null, "white"]}>
+                    <Block width="100%" height="100%" paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "10px", "16px"]}>
+                        {/*Content Layer*/}
+                        <Block width="100%" maxWidth={["500px", null, "533px"]} marginRight="auto" marginLeft="auto" paddingBottom={[null, null, "10px"]}>
+                            {/*Section Breadcrumbs*/}
+                            <Block className="breadcrumb" as="ul" display={["none", null, "flex"]} alignItems="center" height="46px" font={["MinXParagraph12", "MinXParagraph12", "MinXParagraph12", "MinXParagraph14"]}
+                                   color="MinXSecondaryText">
+                                <Block as="li"><Link href="/">Home</Link></Block>
+                                <Block as="li"><Link href="/canopy-tent">Canopy tent</Link></Block>
+                                <Block as="li"><Link href="/products/canopy-tent" as="/products/canopy-tent/buy">Pop up canopy tent - stock color</Link></Block>
+                            </Block>
+                            <Block position="relative" display="grid" gridRowGap={["12px", null, null, "16px"]} width="100%" padding={[null, null, "12px 16px", "16px 24px"]} overflow="hidden"
+                                   $style={{'@media (min-width: 672px)': {border: "1px solid #D9D9D9"}}}>
+                                {/*Corner Ribbon*/}
+                                {selectedFrame === "y7" ? (
+                                    <Block className="text-center" display={["none", null, "block"]} width="150px" position="absolute" top={[null, null, "25px", "30px"]} right={[null, null, "-40px", "-34px"]} backgroundColor="#F5FCFC"
+                                           font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="#23A4AD" $style={{border: "1px solid #23A4AD", transform: "rotate(45deg)"}}>
+                                        BEST SELLER
+                                    </Block>
+                                ) : null}
+                                {/*Section Rated*/}
+                                <Block display={["none", null, "flex"]} justifyContent="flex-start" alignItems="center">
+                                    <Block display="flex" alignItems="center" position="relative" height={[null, null, "14px", "20px"]} marginRight={["8px", null, "12px", "16px"]}>
+                                        <Image src="/images/icon/icon-rate.png" alt="icon-rate" width={78} height={14} layout="intrinsic" objectFit="contain"/>
+                                    </Block>
+                                    <Block font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>4.8/5</Block>
+                                </Block>
+                                {/*Section Title*/}
+                                <Block className="text-uppercase" display={["none", null, "flex"]} alignItems="center" font={["MinXHeading20", "MinXHeading20", "MinXHeading14", "MinXHeading20"]}
+                                       $style={{fontWeight: "500 !important", lineHeight: "1 !important", whiteSpace: "nowrap"}}>
+                                    <Block>{`Pop up Canopy tent`}</Block>
+                                    <Block font={["MinXHeading16", "MinXHeading16", "MinXHeading12", "MinXHeading16"]} $style={{lineHeight: "1 !important"}}>{` - stock color`}</Block>
+                                </Block>
+                                {/*Section Price*/}
+                                <Block display={["none", null, "grid"]} gridTemplateColumns="max-content max-content 1fr" gridColumnGap={["12px", null, null, "16px"]} alignItems="baseline">
+                                    <SectionPrice totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} priceBeatOnClick={() => setPriceBeatIsOpen(true)}/>
+                                </Block>
+                                {/*Section Selection*/}
+                                <Block display="grid" gridTemplateAreas={[`"frame size" "wall color"`, null, `"frame" "size" "color" "wall"`]} gridTemplateColumns={["3fr 2fr", null, "1fr"]} gridColumnGap="16px"
+                                       gridRowGap={[null, null, "10px", "12px"]}>
+                                    <Block gridArea="frame" display="grid" gridColumnGap="10px" gridTemplateAreas={[`"a b" "c c"`, null, `"a c b"`]} gridTemplateColumns={["1fr 86px", null, "60px 1fr 90px", "68px 1fr 128px"]}
+                                           gridTemplateRows={["repeat(2, 44px)", null, "30px", "44px"]} alignItems="center"
+                                    >
+                                        <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Frame</Block>
+                                        <Block gridArea="b">
+                                            <MButton type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Frame Spec'
+                                                     font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
+                                                     color="MinXSecondaryText" buttonStyle={{borderWidth: "1px !important", borderColor: "#D9D9D9"}} onClick={() => setFrameCompareOpen(true)}
+                                            />
+                                        </Block>
+                                        <Block gridArea="c" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
+                                            <Select controlRef={refSelectA}
+                                                    backspaceRemoves={false}
+                                                    backspaceClearsInputValue={false}
+                                                    clearable={false}
+                                                    searchable={false}
+                                                    deleteRemoves={false}
+                                                    options={[
+                                                        {label: 'Y7 Heavy Duty', option: 'y7'},
+                                                        {label: 'Y6 Commercial', option: 'y6'},
+                                                        {label: 'Y5 Economic', option: 'y5'},
+                                                    ]}
+                                                    labelKey="label"
+                                                    valueKey="option"
+                                                    onChange={({value}) => {
+                                                        setSelectedFrame(value[0].option);
+                                                        if (value[0].option === "y5") {
+                                                            setProductComponent([products[0], products[3], products[3], products[3], products[3]]);
+                                                            setProductVariant([variants[0], variants[3], variants[3], variants[3], variants[3]])
+                                                        } else if (value[0].option === "y6") {
+                                                            setProductComponent([products[1], products[3], products[3], products[3], products[3]]);
+                                                            setProductVariant([variants[1], variants[3], variants[3], variants[3], variants[3]])
+                                                        } else if (value[0].option === "y7") {
+                                                            setProductComponent([products[2], products[3], products[3], products[3], products[3]]);
+                                                            setProductVariant([variants[2], variants[3], variants[3], variants[3], variants[3]])
+                                                        }
+                                                    }}
+                                                    value={selectedFrame === "y5" ? [{label: 'Y5 Economic', option: 'y5'}] : selectedFrame === "y6" ? [{label: 'Y6 Commercial', option: 'y6'}] : [{label: 'Y7 Heavy Duty', option: 'y7'}]}
+                                                    overrides={{
+                                                        Root: {
+                                                            style: {
+                                                                height: "inherit",
+                                                                fontFamily: "inherit", fontSize: "inherit"
+                                                            }
+                                                        },
+                                                        ControlContainer: {
+                                                            style: {
+                                                                height: "inherit",
+                                                                borderTopWidth: "1px",
+                                                                borderRightWidth: "1px",
+                                                                borderBottomWidth: "1px",
+                                                                borderLeftWidth: "1px",
+                                                                borderColor: "#BFBFBF",
+                                                                borderRadius: "4px",
+                                                                backgroundColor: "transparent",
+                                                                alignItems: "center"
+                                                            }
+                                                        },
+                                                        ValueContainer: {
+                                                            style: {
+                                                                paddingTop: 0, paddingBottom: 0, height: "min-content"
+                                                            }
+                                                        },
+                                                        Popover: {
+                                                            props: {
+                                                                overrides: {
+                                                                    Body: {
+                                                                        style: {
+                                                                            zIndex: 4
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                    }}
+                                            />
+                                        </Block>
+                                    </Block>
+                                    {productComponent && productComponent[0] && productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).length > 0 ? (
+                                        <Block gridArea="size" display="grid" gridColumnGap="10px" gridTemplateAreas={[`"a b" "c c"`, null, `"a c b"`]} gridTemplateColumns={["1fr 86px", null, "60px 1fr 90px", "68px 1fr 128px"]}
+                                               gridTemplateRows={["repeat(2, 44px)", null, "30px", "44px"]} alignItems="center"
                                         >
-                                            <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
-                                            <Radio value="y6">Y6 Commercial Aluminum</Radio>
-                                            <Radio value="y5">Y5 Economic Steel</Radio>
-                                        </Selection>
-                                        <MButton type="solid" height="32px" text='Compare Frames' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
-                                                 onClick={() => setFrameCompareOpen(true)}
-                                        />
-                                    </SelectionArea>
-                                    <SelectionArea title="Color">
-                                        <Selection name="color" value={selectedAttribute[0] ? selectedAttribute[0][1].option.toLowerCase() : ""} id={id_attribute_canopyColor}
-                                                   onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopyColor)}
+                                            <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Size</Block>
+                                            <Block gridArea="b">
+                                                <MButton type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Size guide'
+                                                         font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
+                                                         color="MinXSecondaryText" buttonStyle={{borderWidth: "1px !important", borderColor: "#D9D9D9"}} onClick={() => setSizeGuideOpen(true)}
+                                                />
+                                            </Block>
+                                            <Block gridArea="c" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
+                                                <Select controlRef={refSelectB}
+                                                        backspaceRemoves={false}
+                                                        backspaceClearsInputValue={false}
+                                                        clearable={false}
+                                                        searchable={false}
+                                                        deleteRemoves={false}
+                                                        options={productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation)[0].options.map(item => ({
+                                                            label: getSizeLabel(item),
+                                                            option: item
+                                                        })) || []}
+                                                        labelKey="label"
+                                                        valueKey="option"
+                                                        onChange={({value}) => {
+                                                            setSelectedSize(value[0].option);
+                                                            handleChangeRadio({target: {value: value[0].option}}, 0, id_attribute_canopySize);
+                                                        }}
+                                                        value={selectedAttribute[0] ? [{label: getSizeLabel(selectedAttribute[0][0].option.toLowerCase()), option: selectedAttribute[0][0].option.toLowerCase()}] : [{
+                                                            label: "10'x10'",
+                                                            option: "10x10"
+                                                        }]}
+                                                        overrides={{
+                                                            Root: {
+                                                                style: {
+                                                                    height: "inherit",
+                                                                    fontFamily: "inherit", fontSize: "inherit"
+                                                                }
+                                                            },
+                                                            ControlContainer: {
+                                                                style: {
+                                                                    height: "inherit",
+                                                                    borderTopWidth: "1px",
+                                                                    borderRightWidth: "1px",
+                                                                    borderBottomWidth: "1px",
+                                                                    borderLeftWidth: "1px",
+                                                                    borderColor: "#BFBFBF",
+                                                                    borderRadius: "4px",
+                                                                    backgroundColor: "transparent",
+                                                                    alignItems: "center"
+                                                                }
+                                                            },
+                                                            ValueContainer: {
+                                                                style: {
+                                                                    paddingTop: 0, paddingBottom: 0, height: "min-content"
+                                                                }
+                                                            },
+                                                            Popover: {
+                                                                props: {
+                                                                    overrides: {
+                                                                        Body: {
+                                                                            style: {
+                                                                                zIndex: 4
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                        }}
+                                                />
+                                            </Block>
+                                        </Block>
+                                    ) : null}
+                                    {productComponent && productComponent[0] && productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).length > 0 ? (
+                                        <Block gridArea="color" display="grid" gridColumnGap="10px" gridTemplateAreas={[`"a b" "c c"`, null, `"a c b"`]} gridTemplateColumns={["1fr 86px", null, "60px 1fr 90px", "68px 1fr 128px"]}
+                                               gridTemplateRows={["repeat(2, 44px)", null, "30px", "44px"]} alignItems="center"
                                         >
-                                            {productComponent && productComponent[0] ? productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) => options.map((option, index) => (
-                                                        <Radio key={index} value={option.toLowerCase()}
-                                                               overrides={{
-                                                                   Label: ({$value}) => (
-                                                                       <div className="radio-dot"
-                                                                            style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
-                                                                       />
-                                                                   ),
-                                                               }}
-                                                        />
-                                                    ))
-                                                )
-                                                : null}
-                                        </Selection>
-                                    </SelectionArea>
-                                </>
-                            </Tab>
-                            <Tab title="+Wall" tabRef={tabsRefs[1]}
-                                 overrides={{
-                                     TabPanel: {
-                                         style: ({$theme}) => ({paddingRight: 0, paddingLeft: 0}),
-                                     },
-                                     Tab: {
-                                         style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},
-                                     },
-                                 }}
-                            >
-                                <ul className={css({paddingLeft: 0, paddingRight: 0,})}>
-                                    {wallPlainAttributeList.map((component, index) => {
-                                        return (
-                                            <ListItem key={index}
-                                                      artwork={(props) => {
-                                                          return component[0].option !== "none" ? (
-                                                              <>
-                                                                  {index === 0 ? (
-                                                                      <Image src="/images/icon/icon-wall-left-added.png" alt="icon-wall-left" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 1 ? (
-                                                                      <Image src="/images/icon/icon-wall-right-added.png" alt="icon-wall-right" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 2 ? (
-                                                                      <Image src="/images/icon/icon-wall-front-added.png" alt="icon-wall-front" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 3 ? (
-                                                                      <Image src="/images/icon/icon-wall-back-added.png" alt="icon-wall-back" layout="fill" objectFit="contain"/>
-                                                                  ) : null}
-                                                              </>
-                                                          ) : (
-                                                              <>
-                                                                  {index === 0 ? (
-                                                                      <Image src="/images/icon/icon-wall-left.png" alt="icon-wall-left" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 1 ? (
-                                                                      <Image src="/images/icon/icon-wall-right.png" alt="icon-wall-right" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 2 ? (
-                                                                      <Image src="/images/icon/icon-wall-front.png" alt="icon-wall-front" layout="fill" objectFit="contain"/>
-                                                                  ) : index === 3 ? (
-                                                                      <Image src="/images/icon/icon-wall-back.png" alt="icon-wall-back" layout="fill" objectFit="contain"/>
-                                                                  ) : null}
-                                                              </>
-                                                          );
-                                                      }}
-                                                      overrides={{
-                                                          Root: {
-                                                              style: ({$theme}) => ({
-                                                                  height: "68px",
-                                                                  paddingRight: "8px",
-                                                                  paddingLeft: "8px",
-                                                                  backgroundColor: component[0].option !== "none" ? "#F5FCFC" : "transparent",
-                                                              }),
-                                                          },
-                                                          Content: {
-                                                              style: {paddingRight: 0, paddingLeft: "12px", borderBottomWidth: 0},
-                                                          },
-                                                          ArtworkContainer: {
-                                                              style: {position: "relative", width: "44px", height: "44px"},
-                                                          },
-                                                      }}
-                                                      endEnhancer={() => {
-                                                          return (
-                                                              <>
-                                                                  {component[0].option !== "none" ? (
-                                                                      <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                          <Button shape={SHAPE.pill}
-                                                                                  overrides={{
-                                                                                      BaseButton: {props: {className: "button-edit"}},
-                                                                                  }}
-                                                                                  onClick={() => openWallModal(index)}
-                                                                          >
-                                                                              Edit
-                                                                          </Button>
-                                                                          <Button kind={KIND.tertiary} shape={SHAPE.circle}
-                                                                                  overrides={{
-                                                                                      BaseButton: {
-                                                                                          style: ({$theme}) => ({
-                                                                                              marginLeft: "17px",
-                                                                                              width: "20px",
-                                                                                              height: "20px",
-                                                                                              backgroundColor: "transparent",
-                                                                                          }),
-                                                                                      },
-                                                                                  }}
-                                                                                  onClick={() => handleChangeWallRadio({target: {value: "none"}}, index, id_attribute_wallType)}
-                                                                          >
-                                                                              <Delete size={20}/>
-                                                                          </Button>
-                                                                      </div>
-                                                                  ) : (
-                                                                      <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                                                          <Button
-                                                                              shape={SHAPE.pill}
-                                                                              overrides={{
-                                                                                  BaseButton: {props: {className: "button-add"}},
-                                                                                  StartEnhancer: {style: {marginRight: 0}}
-                                                                              }}
-                                                                              startEnhancer={() => <Plus/>}
-                                                                              onClick={() => openWallModal(index)}
-                                                                          >
-                                                                              Add
-                                                                          </Button>
-                                                                      </div>
-                                                                  )}
-                                                              </>
-                                                          );
-                                                      }}
-                                            >
-                                                <ListItemLabel description={index === 0 ? "left" : index === 1 ? "Right" : index === 2 ? "Front" : index === 3 ? "Back" : ""}
-                                                               overrides={{
-                                                                   LabelContent: {
-                                                                       style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", marginBottom: "4px"}),
-                                                                   },
-                                                                   LabelDescription: {
-                                                                       style: ({$theme}) => ({fontSize: "14px", lineHeight: "20px", color: "#808080"}),
-                                                                   },
-                                                               }}
-                                                >
-                                                    {component[0].option.toLowerCase() === "rollup" ? "Roll-up" : stringFn.changeCase(component[0].option, 1)}
-                                                </ListItemLabel>
-                                            </ListItem>
-                                        );
-                                    })}
-                                </ul>
-                            </Tab>
-                            {/*<Tab title="+Accessory" tabRef={tabsRefs[2]}*/}
-                            {/*    overrides={{*/}
-                            {/*        TabPanel: {*/}
-                            {/*            style: ({$theme}) => ({paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}),*/}
-                            {/*        },*/}
-                            {/*        Tab: {*/}
-                            {/*            style: {":hover": {background: "none"}, paddingTop: "8px", paddingBottom: "8px"},*/}
-                            {/*        },*/}
-                            {/*    }}*/}
-                            {/*>*/}
-                            {/*    <>*/}
-                            {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
-                            {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For production</div>*/}
-                            {/*            <RadioGroup*/}
-                            {/*                value={value3}*/}
-                            {/*                onChange={(event) => setValue3(event.target.value)}*/}
-                            {/*                name="slide"*/}
-                            {/*                align={ALIGN.horizontal}*/}
-                            {/*                overrides={{*/}
-                            {/*                    RadioGroupRoot: {*/}
-                            {/*                        style: ({$theme}) => ({*/}
-                            {/*                            display: "grid",*/}
-                            {/*                            width: "100%",*/}
-                            {/*                            flexWrap: "wrap",*/}
-                            {/*                            justifyContent: "space-between",*/}
-                            {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
-                            {/*                        }),*/}
-                            {/*                    },*/}
-                            {/*                    Root: {*/}
-                            {/*                        style: ({$checked}) => ({*/}
-                            {/*                            height: "162px",*/}
-                            {/*                            justifyContent: "center",*/}
-                            {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
-                            {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
-                            {/*                            boxSizing: "border-box",*/}
-                            {/*                            borderRadius: "16px",*/}
-                            {/*                            marginTop: 0,*/}
-                            {/*                            marginRight: "12px",*/}
-                            {/*                            marginBottom: "16px",*/}
-                            {/*                            marginLeft: "12px",*/}
-                            {/*                        }),*/}
-                            {/*                    },*/}
-                            {/*                    RadioMarkOuter: {*/}
-                            {/*                        style: () => ({display: "none"}),*/}
-                            {/*                    },*/}
-                            {/*                    RadioMarkInner: {*/}
-                            {/*                        style: () => ({display: "none"}),*/}
-                            {/*                    },*/}
-                            {/*                    Label: {*/}
-                            {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
-                            {/*                    },*/}
-                            {/*                }}*/}
-                            {/*            >*/}
-                            {/*                <Radio*/}
-                            {/*                    value={"1"}*/}
-                            {/*                    overrides={{*/}
-                            {/*                        Label: ({$value}) => (*/}
-                            {/*                            <div style={{position: "relative"}}>*/}
-                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
-                            {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Wheeled cover</div>*/}
-                            {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94</div>*/}
-                            {/*                                <Button*/}
-                            {/*                                    size={SIZE.mini}*/}
-                            {/*                                    kind={KIND.minimal}*/}
-                            {/*                                    overrides={{*/}
-                            {/*                                        BaseButton: {*/}
-                            {/*                                            style: ({$theme}) => ({*/}
-                            {/*                                                height: "20px",*/}
-                            {/*                                                fontSize: "12px",*/}
-                            {/*                                                lineHeight: "20px",*/}
-                            {/*                                                color: "#23A4AD",*/}
-                            {/*                                            }),*/}
-                            {/*                                        },*/}
-                            {/*                                    }}*/}
-                            {/*                                >*/}
-                            {/*                                    Add to cart*/}
-                            {/*                                </Button>*/}
-                            {/*                            </div>*/}
-                            {/*                        ),*/}
-                            {/*                    }}*/}
-                            {/*                />*/}
-                            {/*            </RadioGroup>*/}
-                            {/*            <div style={{marginBottom: 20}}/>*/}
-                            {/*        </div>*/}
-                            {/*        <div style={{display: "flex", flexDirection: "column", paddingTop: "32px", textAlign: "center", alignItems: "center"}}>*/}
-                            {/*            <div style={{fontSize: 16, fontWeight: "500", marginBottom: 16}}>For stabilization</div>*/}
-                            {/*            <RadioGroup*/}
-                            {/*                value={value3}*/}
-                            {/*                onChange={(event) => setValue3(event.target.value)}*/}
-                            {/*                name="slide"*/}
-                            {/*                align={ALIGN.horizontal}*/}
-                            {/*                overrides={{*/}
-                            {/*                    RadioGroupRoot: {*/}
-                            {/*                        style: ({$theme}) => ({*/}
-                            {/*                            display: "grid",*/}
-                            {/*                            width: "100%",*/}
-                            {/*                            flexWrap: "wrap",*/}
-                            {/*                            justifyContent: "space-between",*/}
-                            {/*                            gridTemplateColumns: "repeat(auto-fill, 50%)",*/}
-                            {/*                        }),*/}
-                            {/*                    },*/}
-                            {/*                    Root: {*/}
-                            {/*                        style: ({$checked}) => ({*/}
-                            {/*                            height: "162px",*/}
-                            {/*                            justifyContent: "center",*/}
-                            {/*                            padding: $checked ? "4px 0" : "6px 0",*/}
-                            {/*                            border: $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",*/}
-                            {/*                            boxSizing: "border-box",*/}
-                            {/*                            borderRadius: "16px",*/}
-                            {/*                            marginTop: 0,*/}
-                            {/*                            marginRight: "12px",*/}
-                            {/*                            marginBottom: "16px",*/}
-                            {/*                            marginLeft: "12px",*/}
-                            {/*                        }),*/}
-                            {/*                    },*/}
-                            {/*                    RadioMarkOuter: {*/}
-                            {/*                        style: () => ({display: "none"}),*/}
-                            {/*                    },*/}
-                            {/*                    RadioMarkInner: {*/}
-                            {/*                        style: () => ({display: "none"}),*/}
-                            {/*                    },*/}
-                            {/*                    Label: {*/}
-                            {/*                        style: ({$checked}) => ({paddingLeft: 0, fontWeight: $checked ? "bold" : "500", fontSize: "14px", lineHeight: "22px"}),*/}
-                            {/*                    },*/}
-                            {/*                }}*/}
-                            {/*            >*/}
-                            {/*                <Radio*/}
-                            {/*                    value={"1"}*/}
-                            {/*                    overrides={{*/}
-                            {/*                        Label: ({$value}) => (*/}
-                            {/*                            <div style={{position: "relative"}}>*/}
-                            {/*                                <img style={{height: 80, width: 80, objectFit: "contain", marginBottom: 4}} src="/images/icon/wall-pvc.png"/>*/}
-                            {/*                                <div style={{fontSize: 14, lineHeight: "14px", fontWeight: "500", marginBottom: 6}}>Water weight</div>*/}
-                            {/*                                <div style={{fontSize: 12, lineHeight: "12px", marginBottom: 6}}>+ $94 each</div>*/}
-                            {/*                                <Button*/}
-                            {/*                                    size={SIZE.mini}*/}
-                            {/*                                    kind={KIND.minimal}*/}
-                            {/*                                    overrides={{*/}
-                            {/*                                        BaseButton: {*/}
-                            {/*                                            style: ({$theme}) => ({*/}
-                            {/*                                                height: "20px",*/}
-                            {/*                                                fontSize: "12px",*/}
-                            {/*                                                lineHeight: "20px",*/}
-                            {/*                                                color: "#23A4AD",*/}
-                            {/*                                            }),*/}
-                            {/*                                        },*/}
-                            {/*                                    }}*/}
-                            {/*                                >*/}
-                            {/*                                    Add to cart*/}
-                            {/*                                </Button>*/}
-                            {/*                            </div>*/}
-                            {/*                        ),*/}
-                            {/*                    }}*/}
-                            {/*                />*/}
-                            {/*            </RadioGroup>*/}
-                            {/*            <div style={{marginBottom: 20}}/>*/}
-                            {/*        </div>*/}
-                            {/*    </>*/}
-                            {/*</Tab>*/}
-                        </Tabs>
-                    ) : null}
+                                            <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Color</Block>
+                                            <Block gridArea="b">
+                                                <MButton type="rainbow" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Customize'
+                                                         font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
+                                                         color="MinXPrimaryText" buttonBackgroundColor="#FFF" buttonStyle={{padding: "1px !important", zIndex: 1}}
+                                                         buttonHoverStyle={{color: "#8C8C8C"}}
+                                                         onClick={() => router.push("/products/custom-printed-canopy-tent", "/products/custom-printed-canopy-tent/buy")}
+                                                />
+                                            </Block>
+                                            <Block gridArea="c" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
+                                                <Select controlRef={refSelectC}
+                                                        backspaceRemoves={false}
+                                                        backspaceClearsInputValue={false}
+                                                        clearable={false}
+                                                        searchable={false}
+                                                        deleteRemoves={false}
+                                                        options={productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation)[0].options.map(item => ({
+                                                            label: stringFn.changeCase(item, 1),
+                                                            option: item
+                                                        })) || []}
+                                                        labelKey="label"
+                                                        valueKey="option"
+                                                        onChange={({value}) => {
+                                                            setSelectedColor(value[0].option);
+                                                            handleChangeRadio({target: {value: value[0].option}}, 0, id_attribute_canopyColor);
+                                                        }}
+                                                        value={selectedAttribute[0] ? [{label: stringFn.changeCase(selectedAttribute[0][1].option, 1), option: selectedAttribute[0][1].option.toLowerCase()}] : [{
+                                                            label: "White",
+                                                            option: "white"
+                                                        }]}
+                                                        overrides={{
+                                                            Root: {
+                                                                style: {
+                                                                    height: "inherit",
+                                                                    fontFamily: "inherit", fontSize: "inherit"
+                                                                }
+                                                            },
+                                                            ControlContainer: {
+                                                                style: {
+                                                                    height: "inherit",
+                                                                    borderTopWidth: "1px",
+                                                                    borderRightWidth: "1px",
+                                                                    borderBottomWidth: "1px",
+                                                                    borderLeftWidth: "1px",
+                                                                    borderColor: "#BFBFBF",
+                                                                    borderRadius: "4px",
+                                                                    backgroundColor: "transparent",
+                                                                    alignItems: "center"
+                                                                }
+                                                            },
+                                                            ValueContainer: {
+                                                                style: {
+                                                                    paddingTop: 0, paddingBottom: 0, height: "min-content"
+                                                                }
+                                                            },
+                                                            Popover: {
+                                                                props: {
+                                                                    overrides: {
+                                                                        Body: {
+                                                                            style: {
+                                                                                zIndex: 4
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }}
+                                                />
+                                            </Block>
+                                        </Block>
+                                    ) : null}
+                                    <Block gridArea="wall" display="grid" gridColumnGap="10px" gridTemplateAreas={[`"a b" "c c"`, null, `"a c b"`]} gridTemplateColumns={["1fr auto", null, "60px 1fr 90px", "68px 1fr 128px"]}
+                                           gridTemplateRows={["repeat(2, 44px)", null, "30px", "44px"]} alignItems="center"
+                                    >
+                                        <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]} $style={{whiteSpace: "nowrap"}}>
+                                            <Block display={["none", null, "block"]}>Side Wall</Block>
+                                            <Block display={["block", null, "none"]}>Side Wall (optional)</Block>
+                                        </Block>
+                                        <Block gridArea="b" display="flex" justifyContent="center" alignItems="center">
+                                            <Block position="relative" width={["32px", null, null, "44px"]} height={["32px", null, null, "44px"]}>
+                                                <Image src="/images/icon/icon-side-wall.png" alt="icon-side-wall" width="44px" height="44px" layout="responsive" objectFit="contain"/>
+                                            </Block>
+                                        </Block>
+                                        <Block gridArea="c" display="flex" height="100%" $style={{gap: "8px"}}>
+                                            <MButton type="outline" width="100%" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}
+                                                     text={<><Block display={["none", null, "block"]}>{wallAdded ? "Edit" : "Add(optional)"}</Block><Block display={["block", null, "none"]}>{wallAdded ? "Edit" : "Add"}</Block></>}
+                                                     color="MinXPrimaryText" buttonStyle={{paddingLeft: 0, paddingRight: 0, borderColor: "#8C8C8C", borderWidth: "1px !important"}}
+                                                     onClick={() => openWallModal(0)}
+                                            />
+                                            {wallAdded ? (
+                                                <MButton type="text" text="Remove" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}
+                                                         color="MinXPrimaryText"
+                                                         onClick={() => {
+                                                             setWallPriceList([]);
+                                                             handleChangeWallRadio({target: {value: "none"}}, 0, id_attribute_wallType)
+                                                         }}
+                                                />
+                                            ) : null}
+                                        </Block>
+                                    </Block>
+                                </Block>
+                                <Block display="grid" gridColumnGap="12px" gridRowGap="12px" gridTemplateAreas={[`"a" "b" "f" "d" "e" "c"`, null, `"a a" "b c" "d d" "e e" "f f"`]} alignItems="center" paddingBottom={["16px", null, 0]}>
+                                    {/*Section Free Items*/}
+                                    <Block className="cursor" gridArea="a" display="grid" gridTemplateColumns="max-content 1fr" gridColumnGap="6px" width="100%" height={["66px", null, null, "90px"]} padding="0 16px"
+                                           backgroundColor={["white", null, "#F7F7F7"]} $style={{borderRadius: "8px"}}
+                                           onClick={() => setFreeItemIsOpen(true)}
+                                    >
+                                        <Block margin="auto">
+                                            <Block position="relative" marginBottom={["8px", null, null, "12px"]}>
+                                                <Image src="/images/icon/icon-gift.png" alt="icon gifts" width={14} height={14} layout="fixed" objectFit="contain"/>
+                                                <Block as="span" marginLeft={["6px", null, null, "8px"]} font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph20"]} $style={{fontWeight: "500 !important"}}>
+                                                    Buy tent, get 4 for free
+                                                </Block>
+                                            </Block>
+                                            <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph14">
+                                                <Block display="flex" alignItems="center">Cost: <Block as="span" className="text-line-through" marginRight={["6px", null, null, "16px"]}>$280+</Block>
+                                                    <Block as="span" color="#E51717" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph20"]} $style={{fontWeight: "700 !important"}}>$0</Block>
+                                                </Block>
+                                                <Block color="#356DB6">Detail</Block>
+                                            </Block>
+                                        </Block>
+                                        <Block position="relative" height="inherit" $style={{aspectRatio: "2"}}>
+                                            <Image src="/images/product/canopy-tent/gifts.webp" alt="gifts" layout="fill" objectFit="contain"/>
+                                        </Block>
+                                    </Block>
+                                    {/*Section Stock*/}
+                                    <Block gridArea="b" display="flex" alignItems="center" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
+                                        <Block className="round" width="5px" height="5px" minWidth="5px" marginRight="6px" backgroundColor={isInStock ? "#2DCA59" : "#E51717"}/>
+                                        {isInStock ? "In Stock" : "Out of Stock"}
+                                        {selectedFrame === "y7" && selectedSize !== "10x10" && selectedSize !== "10x15" && selectedSize !== "10x20" ? (
+                                            <Block marginLeft={["8px", null, "10px", "16px"]}>
+                                                <Block width="max-content" padding="2px 8px" backgroundColor="#F5FCFC" $style={{border: "1px solid #23A4AD", borderRadius: "3px"}}>Limited
+                                                    Stock</Block>
+                                            </Block>
+                                        ) : null}
+                                    </Block>
+                                    {/*Section Question*/}
+                                    <Block gridArea="c">
+                                        <MButton width="max-content" height={["32px", null, "18px"]} marginLeft="auto" marginRight={["auto", null, "unset"]} color={["#262626", null, "#8C8C8C"]}
+                                                 buttonBackgroundColor="#F2F2F2" buttonHoverBackgroundColor="#F2F2F2" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}
+                                                 text="Have question? Ask an expert" buttonStyle={{paddingRight: "12px", paddingLeft: "12px", '@media (max-width: 672px)': {backgroundColor: "#D9D9D9", borderRadius: "4px !important"}}}
+                                                 onClick={() => setQuestionIsOpen(true)}
+                                        />
+                                    </Block>
+                                    {/*Section AddToBag*/}
+                                    <Block ref={refAddToCart} gridArea="d" display="flex" $style={{gap: "8px"}}>
+                                        <Block width="33%" display="flex" flexDirection="row" alignItems="center" justifyContent="center" $style={{border: "1px solid #BFBFBF", borderRadius: "4px"}}>
+                                            <MButton type="text" shape="circle" display="flex" justifyContent="center" flex={1} width="100%" height={["43px", null, "29px", "39px"]} color="#262626" buttonBackgroundColor="transparent"
+                                                     buttonStyle={{width: "100% !important"}}
+                                                     onClick={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                                                     disabled={totalCount === 1}><CheckIndeterminate size={12}/></MButton>
+                                            <Block margin="auto 12px" font="MinXLabel14">{totalCount}</Block>
+                                            <MButton type="text" shape="circle" display="flex" justifyContent="center" flex={1} width="100%" height={["43px", null, "29px", "39px"]} color="#262626" buttonBackgroundColor="transparent"
+                                                     buttonStyle={{width: "100% !important"}}
+                                                     onClick={() => setTotalCount(totalCount + 1)} disabled={!isInStock}><Plus size={12}/></MButton>
+                                        </Block>
+                                        <Block flex={1}>
+                                            <MButton shape="square" width="100%" height={["44px", null, "30px", "40px"]} color="#262626" buttonBackgroundColor="#FFD747" buttonHoverBackgroundColor="rgb(255, 215, 71, 0.6)" text="Add To Bag"
+                                                     font={["MinXParagraph16", "MinXParagraph16", "MinXParagraph12", "MinXParagraph16"]} buttonStyle={{paddingLeft: 0, paddingRight: 0}}
+                                                     onClick={() => updateCart()} disabled={!availableToCheckout}/>
+                                        </Block>
+                                    </Block>
+                                    {/*Section Shipping Note*/}
+                                    <Block gridArea="e">
+                                        <ShippingNote.V2/>
+                                    </Block>
+                                    {/*Section Price*/}
+                                    <Block gridArea="f" display={["grid", null, "none"]} gridTemplateColumns="max-content max-content 1fr" gridColumnGap={["12px", null, null, "16px"]} alignItems="baseline">
+                                        <SectionPrice totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} priceBeatOnClick={() => setPriceBeatIsOpen(true)}/>
+                                    </Block>
+                                </Block>
+                            </Block>
+                        </Block>
+                    </Block>
                 </Block>
             </Block>
             <ProductDescription product={selectedFrame}/>
-            <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
-                         onClick={() => openSummaryModal()}
-                         onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
-                         onClickPlus={() => setTotalCount(totalCount + 1)}
-                         onClickAddToBag={() => updateCart()}
-                         onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
-            />
-            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
-            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
-            <Modal isOpen={wallIsOpen} onClose={() => closeWallModal()}
+            {addToCartOffset ? (
+                <Checkout.V2 quantity={totalCount} isInStock={isInStock} buttonText={isInStock ? "Add to Bag" : "Out of Stock"} isAvailable={availableToCheckout}
+                             onClick={() => openSummaryModal()}
+                             onClickMinus={() => totalCount !== 1 && setTotalCount(totalCount - 1)}
+                             onClickPlus={() => setTotalCount(totalCount + 1)}
+                             onClickAddToBag={() => updateCart()}
+                             onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
+                             scrollDisplay
+                             offSetHeight={addToCartOffset}
+                />
+            ) : null}
+            <BackToTop.V1/>
+            <Modal type="alertdialog" isOpen={priceBeatIsOpen} onClose={() => setPriceBeatIsOpen(false)} content="priceBeat"
+                   dialogStyles={{width: "100% !important", maxWidth: "min((100vw - 48px), 434px) !important", margin: 0, borderRadius: "4px !important"}}/>
+            <Modal type="alertdialog" isOpen={freeItemIsOpen} onClose={() => setFreeItemIsOpen(false)} content="freeItem"
+                   dialogStyles={{width: "100% !important", maxWidth: "min((100vw - 48px), 720px) !important", margin: 0, borderRadius: "4px !important"}}/>
+            <Modal type="alertdialog" isOpen={questionIsOpen} onClose={() => setQuestionIsOpen(false)} content="contact" phone={phone}
+                   dialogStyles={{width: "100% !important", maxWidth: "min((100vw - 48px), 720px) !important", margin: 0, borderRadius: "4px !important"}}/>
+            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size_canopy"/>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame_canopy"/>
+            <Modal type="alertdialog" isOpen={wallIsOpen} onClose={() => closeWallModal()}
+                   containerStyles={{overflowX: "unset !important"}}
+                   dialogContainerStyles={{overflow: "hidden"}}
+                   dialogClassName="canopy-tent-wall-modal-dialog"
+                   bodyClassName="canopy-tent-wall-modal-body"
+                   footerClassName="canopy-tent-wall-modal-footer"
                    footer={
-                       <Block width={"100%"} height={["54px", "70px", "80px"]} backgroundColor={"white"} display={"flex"} alignItems={"center"}
-                              justifyContent={"space-between"} paddingLeft={"16px"} paddingRight={"16px"}
-                       >
-                           <Block>
-                               <Block display={["none", "block"]}>
-                                   <div style={{fontSize: "12px", marginRight: "24px", textAlign: "left"}}>After submitting the order, we’ll contact you with a free mockup based on
-                                       the information you provide us here.
-                                   </div>
-                               </Block>
-                               <Block display={["block", "none"]}>
-                                   <StatefulTooltip placement={PLACEMENT.top} triggerType={TRIGGER_TYPE.click} content={() => <div style={{zIndex: 999}}>xxx</div>}>
-                                       <div style={{width: 20, height: 20, border: "2px solid black", borderRadius: "50%", textAlign: "center", fontSize: 12, fontWeight: "bold", lineHeight: "17px", marginRight: 2, marginLeft: 2,}}>
-                                           !
-                                       </div>
-                                   </StatefulTooltip>
-                               </Block>
-                           </Block>
-                           <Block display="flex" flexDirection="row">
-                               <Block minWidth={["85px"]} height={"40px"} marginRight={"24px"}>
+                       <Block width={"100%"} height="54px" backgroundColor="#F7F7F7" paddingLeft={"16px"} paddingRight={"16px"} display="flex" alignItems="center">
+                           <Block display="grid" gridTemplateAreas={[`"b a c"`, null, `"a b c"`]} gridTemplateColumns={["85px 1fr 85px", null, "max-content 85px 85px"]} gridColumnGap="24px" width={"100%"} justifyContent="end"
+                                  alignItems="center">
+                               <Block gridArea="a" className="text-center">Total for wall: <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={wallPrice} displayType="text"/></Block>
+                               <Block gridArea="b" width="85px" height="40px">
                                    <Button shape={SHAPE.pill}
                                            overrides={{
                                                BaseButton: {
@@ -1355,12 +1737,12 @@ function Canopy_Tent({router, products, variants}) {
                                                    }),
                                                },
                                            }}
-                                           onClick={() => closeWallModal()}
+                                           onClick={() => handleResetWallRadioTemp()}
                                    >
-                                       Cancel
+                                       Reset
                                    </Button>
                                </Block>
-                               <Block minWidth={["85px"]} height={"40px"}>
+                               <Block gridArea="c" width="85px" height="40px">
                                    <Button shape={SHAPE.pill}
                                            overrides={{
                                                BaseButton: {
@@ -1376,96 +1758,308 @@ function Canopy_Tent({router, products, variants}) {
                        </Block>
                    }
             >
-                <Block width={["100%", "440px", "100%"]} display={"flex"} flexDirection={["column", "column", "row"]} marginLeft={"auto"} marginRight={"auto"}>
-                    {/* 图片区域 */}
-                    <Block flex={[0, 0, 1]} position={"relative"} className={"modalGallery"} paddingRight={["16px", "52px", "0"]} paddingLeft={["16px", "52px", "64px"]}>
-                        <ImageGallery showNav={false} items={[productImageGalleryTemp[0]]} showPlayButton={false} showFullscreenButton={false}/>
-                    </Block>
-                    <Block display={"flex"} flexDirection={"column"} alignItems={"center"} width={["100%", "100%", "424px"]}
-                           paddingTop={["24px", "24px", "40px"]} paddingRight={["16px", "52px", "64px"]} paddingLeft={["16px", "52px", "0"]} overflow={["unset", "unset", "scroll"]}
-                           overrides={{
-                               Block: {
-                                   props: {
-                                       className: "hideScrollBar"
-                                   },
-                               }
-                           }}
-                    >
-                        <SelectionArea title="Wall Type">
-                            <Selection name="wall-type" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} id={id_attribute_wallType}
-                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)}
-                            >
-                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
-                                    options.map((option, indexWall) => (
-                                        <Radio key={indexWall} value={option.toLowerCase()}
-                                               overrides={{
-                                                   Label: ({$value}) => (
-                                                       <Block>
-                                                           {/*<Button*/}
-                                                           {/*    kind={KIND.tertiary}*/}
-                                                           {/*    shape={SHAPE.circle}*/}
-                                                           {/*    overrides={{*/}
-                                                           {/*        BaseButton: {*/}
-                                                           {/*            style: ({$theme}) => ({*/}
-                                                           {/*                position: "absolute",*/}
-                                                           {/*                right: "-12px",*/}
-                                                           {/*                top: "-12px",*/}
-                                                           {/*                width: "12px",*/}
-                                                           {/*                height: "12px",*/}
-                                                           {/*                borderTopWidth: "1px",*/}
-                                                           {/*                borderTopStyle: "solid",*/}
-                                                           {/*                borderTopColor: "#B2B2B2",*/}
-                                                           {/*                borderRightWidth: "1px",*/}
-                                                           {/*                borderRightStyle: "solid",*/}
-                                                           {/*                borderRightColor: "#B2B2B2",*/}
-                                                           {/*                borderBottomWidth: "1px",*/}
-                                                           {/*                borderBottomStyle: "solid",*/}
-                                                           {/*                borderBottomColor: "#B2B2B2",*/}
-                                                           {/*                borderLeftWidth: "1px",*/}
-                                                           {/*                borderLeftStyle: "solid",*/}
-                                                           {/*                borderLeftColor: "#B2B2B2",*/}
-                                                           {/*                fontSize: "10px",*/}
-                                                           {/*                color: "#B2B2B2",*/}
-                                                           {/*            }),*/}
-                                                           {/*        },*/}
-                                                           {/*    }}*/}
-                                                           {/*>*/}
-                                                           {/*    ?*/}
-                                                           {/*</Button>*/}
-                                                           <Block position="relative" width="39px" height="39px" marginBottom="27px">
-                                                               <Image src={"/images/icon/wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>
-                                                           </Block>
-                                                           <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>
-                                                       </Block>
-                                                   ),
-                                               }}
-                                        />
-                                    ))) : null}
-                            </Selection>
-                        </SelectionArea>
-                        <SelectionArea title="Color">
-                            <Selection name="wall-color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} id={id_attribute_canopyColor}
-                                       onChange={(event) => handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)}
-                            >
-                                {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation).map(({options}) =>
-                                    options.map((option, index) => (
-                                        <Radio key={index} value={option.toLowerCase()}
-                                               overrides={{
-                                                   Label: ({$value}) => (
-                                                       <div className="radio-dot"
-                                                            style={{backgroundColor: $value === "yellow" ? "#F4C84E" : $value === "green" ? "#275D3D" : $value === "blue" ? "#1A4A8B" : $value === "red" ? "#991F34" : $value}}
-                                                       />
-                                                   ),
-                                               }}
-                                        />
-                                    ))) : null}
-                            </Selection>
-                        </SelectionArea>
+                <Block padding={["0 16px", null, "0 20px"]}>
+                    <Block marginTop={["16px", null, "32px"]} padding="0 16px" font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]}
+                           $style={{textAlign: "center", lineHeight: "1 !important", fontWeight: "700 !important", '@media (min-width: 1056px)': {textAlign: "left"}}}
+                    >Please select walls for each side.</Block>
+                    <Block width="100%" display="flex" flexDirection="column" marginLeft="auto" marginRight="auto" paddingBottom={["94px", null, "134px"]}>
+                        {/* 图片区域 */}
+                        <Block className="modalGallery modalGallery-wall" position="relative" display="flex" alignItems="center" justifyContent="center" width={["fit-content", null, "456px"]} margin="auto">
+                            <Block position="absolute" top="12px" left={0} width="44px" height="44px">
+                                <Image src={`/images/icon/icon-wall-cube-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator.png`}
+                                       alt="wall-cube-indicator" width={52} height={52} layout="responsive" objectFit="contain"/>
+                            </Block>
+                            <MButton shape="circle" width="44px" height="44px" color="#262626" buttonBackgroundColor="#262626" buttonStyle={{paddingLeft: 0, paddingRight: 0}}
+                                     onClick={() => {
+                                         let fIndex = 0;
+
+                                         if (activeWall === 2) {
+                                             setActiveWall(1);
+                                             fIndex = 1;
+                                         } else if (activeWall === 1) {
+                                             setActiveWall(3);
+                                             fIndex = 3;
+                                         } else if (activeWall === 3) {
+                                             setActiveWall(0);
+                                             fIndex = 0;
+                                         } else if (activeWall === 0) {
+                                             setActiveWall(2);
+                                             fIndex = 2;
+                                         }
+
+                                         if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "none") {
+                                             setActiveTempWallTypeRadio(-1);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "full") {
+                                             setActiveTempWallTypeRadio(0);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "half") {
+                                             setActiveTempWallTypeRadio(1);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "mesh") {
+                                             setActiveTempWallTypeRadio(2);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "pvc") {
+                                             setActiveTempWallTypeRadio(3);
+                                         } else {
+                                             setActiveTempWallTypeRadio(4);
+                                         }
+                                     }}
+                            ><ChevronLeft size={22} color="white"/></MButton>
+                            <ImageGallery showNav={false} items={[productImageGalleryTemp[0]]} showPlayButton={false} showFullscreenButton={false}/>
+                            {/*<Block flex={1} width="100%">*/}
+                            {/*    {productImageGalleryTemp.length > 0 ? (*/}
+                            {/*        <Image src={productImageGalleryTemp[0].original} alt="canopy-tent" width={1024} height={1024} layout="responsive" objectFit="contain" loader={({src, width}) => src} unoptimized/>*/}
+                            {/*    ) : null}*/}
+                            {/*</Block>*/}
+                            <MButton shape="circle" width="44px" height="44px" color="#262626" buttonBackgroundColor="#262626" buttonStyle={{paddingLeft: 0, paddingRight: 0}}
+                                     onClick={() => {
+                                         let fIndex = 0;
+
+                                         if (activeWall === 0) {
+                                             setActiveWall(3);
+                                             fIndex = 3;
+                                         } else if (activeWall === 3) {
+                                             setActiveWall(1);
+                                             fIndex = 1;
+                                         } else if (activeWall === 1) {
+                                             setActiveWall(2);
+                                             fIndex = 2;
+                                         } else if (activeWall === 2) {
+                                             setActiveWall(0);
+                                             fIndex = 0;
+                                         }
+
+                                         if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "none") {
+                                             setActiveTempWallTypeRadio(-1);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "full") {
+                                             setActiveTempWallTypeRadio(0);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "half") {
+                                             setActiveTempWallTypeRadio(1);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "mesh") {
+                                             setActiveTempWallTypeRadio(2);
+                                         } else if (wallPlainAttributeListTemp[fIndex][0].option.toLowerCase() === "pvc") {
+                                             setActiveTempWallTypeRadio(3);
+                                         } else {
+                                             setActiveTempWallTypeRadio(4);
+                                         }
+                                     }}
+                            ><ChevronRight size={22} color="white"/></MButton>
+                        </Block>
+                        <Block className="hideScrollBar" display="flex" flexDirection="column" alignItems="center" width="100%" maxWidth="618px" margin="auto" overflow={["unset", null, "scroll"]}>
+                            <SelectionArea title="Type" containerStyle={{marginTop: 0}}>
+                                {/*<Selection name="wall-type" radioStyle={{minWidth: "98px"}}*/}
+                                {/*           radioGroupStyle={{*/}
+                                {/*               padding: "4px",*/}
+                                {/*               borderTopLeftRadius: "4px",*/}
+                                {/*               borderTopRightRadius: "4px",*/}
+                                {/*               borderBottomLeftRadius: "4px",*/}
+                                {/*               borderBottomRightRadius: "4px",*/}
+                                {/*               borderTopWidth: "1px",*/}
+                                {/*               borderBottomWidth: "1px",*/}
+                                {/*               borderLeftWidth: "1px",*/}
+                                {/*               borderRightWidth: "1px",*/}
+                                {/*               borderTopStyle: "solid",*/}
+                                {/*               borderBottomStyle: "solid",*/}
+                                {/*               borderLeftStyle: "solid",*/}
+                                {/*               borderRightStyle: "solid",*/}
+                                {/*               borderColor: error ? "#EB512A" : "transparent",*/}
+                                {/*           }}*/}
+                                {/*           value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} id={id_attribute_wallType}*/}
+                                {/*           onChange={(event) => {*/}
+                                {/*               if (wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() === "none") {*/}
+                                {/*                   handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)*/}
+                                {/*               } else {*/}
+                                {/*                   handleChangeWallRadioTemp({target: {value: "none"}}, activeWall, id_attribute_wallType)*/}
+                                {/*               }*/}
+                                {/*           }}*/}
+                                {/*>*/}
+                                {/*    {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>*/}
+                                {/*        options.map((option, indexWall) => (*/}
+                                {/*            <Radio key={indexWall} value={option.toLowerCase()}*/}
+                                {/*                   overrides={{*/}
+                                {/*                       Label: ({$value}) => (*/}
+                                {/*                           <Block>*/}
+                                {/*                               /!*<Button*!/*/}
+                                {/*                               /!*    kind={KIND.tertiary}*!/*/}
+                                {/*                               /!*    shape={SHAPE.circle}*!/*/}
+                                {/*                               /!*    overrides={{*!/*/}
+                                {/*                               /!*        BaseButton: {*!/*/}
+                                {/*                               /!*            style: ({$theme}) => ({*!/*/}
+                                {/*                               /!*                position: "absolute",*!/*/}
+                                {/*                               /!*                right: "-12px",*!/*/}
+                                {/*                               /!*                top: "-12px",*!/*/}
+                                {/*                               /!*                width: "12px",*!/*/}
+                                {/*                               /!*                height: "12px",*!/*/}
+                                {/*                               /!*                borderTopWidth: "1px",*!/*/}
+                                {/*                               /!*                borderTopStyle: "solid",*!/*/}
+                                {/*                               /!*                borderTopColor: "#B2B2B2",*!/*/}
+                                {/*                               /!*                borderRightWidth: "1px",*!/*/}
+                                {/*                               /!*                borderRightStyle: "solid",*!/*/}
+                                {/*                               /!*                borderRightColor: "#B2B2B2",*!/*/}
+                                {/*                               /!*                borderBottomWidth: "1px",*!/*/}
+                                {/*                               /!*                borderBottomStyle: "solid",*!/*/}
+                                {/*                               /!*                borderBottomColor: "#B2B2B2",*!/*/}
+                                {/*                               /!*                borderLeftWidth: "1px",*!/*/}
+                                {/*                               /!*                borderLeftStyle: "solid",*!/*/}
+                                {/*                               /!*                borderLeftColor: "#B2B2B2",*!/*/}
+                                {/*                               /!*                fontSize: "10px",*!/*/}
+                                {/*                               /!*                color: "#B2B2B2",*!/*/}
+                                {/*                               /!*            }),*!/*/}
+                                {/*                               /!*        },*!/*/}
+                                {/*                               /!*    }}*!/*/}
+                                {/*                               /!*>*!/*/}
+                                {/*                               /!*    ?*!/*/}
+                                {/*                               /!*</Button>*!/*/}
+                                {/*                               <Block position="relative" width="80px" height="80px" marginBottom="4px">*/}
+                                {/*                                   <Image src={"/images/icon/icon-wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>*/}
+                                {/*                               </Block>*/}
+                                {/*                               <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>*/}
+                                {/*                           </Block>*/}
+                                {/*                       ),*/}
+                                {/*                   }}*/}
+                                {/*            />*/}
+                                {/*        ))) : null}*/}
+                                {/*</Selection>*/}
+                                <Block width="100%" display="grid" gridTemplateColumns={["repeat(3, 1fr)", null, "repeat(5, 1fr)"]} gridColumnGap="8px" gridRowGap="8px" justifyContent="flex-start"
+                                       overrides={{
+                                           Block: {
+                                               style: {
+                                                   padding: "4px",
+                                                   borderTopLeftRadius: "4px",
+                                                   borderTopRightRadius: "4px",
+                                                   borderBottomLeftRadius: "4px",
+                                                   borderBottomRightRadius: "4px",
+                                                   borderTopWidth: "1px",
+                                                   borderBottomWidth: "1px",
+                                                   borderLeftWidth: "1px",
+                                                   borderRightWidth: "1px",
+                                                   borderTopStyle: "solid",
+                                                   borderBottomStyle: "solid",
+                                                   borderLeftStyle: "solid",
+                                                   borderRightStyle: "solid",
+                                                   borderColor: error ? "#EB512A" : "transparent",
+                                               }
+                                           }
+                                       }}
+                                >
+                                    {productComponent && productComponent[1] && wallPrices.length > 0 ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>
+                                        options.map((option, indexWall) => (
+                                            <Button key={indexWall}
+                                                    onClick={() => {
+                                                        let priceList = JSON.parse(JSON.stringify(wallPriceListTemp));
+
+                                                        if (wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() === "none") {
+                                                            setActiveTempWallTypeRadio(indexWall);
+
+                                                            handleChangeWallRadioTemp({target: {value: option.toLowerCase()}}, activeWall, id_attribute_wallType)
+
+                                                            let result = wallPrices.find((product) => {
+                                                                if (!product) return false;
+
+                                                                let p = false;
+                                                                product.attributes.map(attr => {
+                                                                    if (attr.id === id_attribute_wallType && attr.option.toLowerCase() === option.toLowerCase()) {
+                                                                        p = true;
+                                                                    }
+                                                                })
+
+                                                                if (p) return product;
+                                                            });
+
+                                                            priceList[activeWall] = result ? numberFn.strToFloat(result.price) : 0;
+
+                                                            setWallPriceListTemp(priceList);
+                                                        } else {
+                                                            if (activeTempWallTypeRadio === indexWall) {
+                                                                setActiveTempWallTypeRadio(-1);
+
+                                                                handleChangeWallRadioTemp({target: {value: "none"}}, activeWall, id_attribute_wallType)
+
+                                                                priceList[activeWall] = 0;
+                                                                setWallPriceListTemp(priceList);
+                                                            } else {
+                                                                setActiveTempWallTypeRadio(indexWall);
+
+                                                                handleChangeWallRadioTemp({target: {value: option.toLowerCase()}}, activeWall, id_attribute_wallType)
+
+                                                                let result = wallPrices.find((product) => {
+                                                                    if (!product) return false;
+
+                                                                    let p = false;
+                                                                    product.attributes.map(attr => {
+                                                                        if (attr.id === id_attribute_wallType && attr.option.toLowerCase() === option.toLowerCase()) {
+                                                                            p = true;
+                                                                        }
+                                                                    })
+
+                                                                    if (p) return product;
+                                                                });
+
+                                                                priceList[activeWall] = result ? numberFn.strToFloat(result.price) : 0;
+
+                                                                setWallPriceListTemp(priceList);
+                                                            }
+                                                        }
+                                                    }}
+                                                    overrides={{
+                                                        BaseButton: {
+                                                            style: {
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                width: "100%",
+                                                                height: "130px",
+                                                                // minWidth: "98px",
+                                                                margin: "auto",
+                                                                paddingTop: "8px",
+                                                                padding: activeTempWallTypeRadio === indexWall ? "6px 0 14px" : "8px 0 16px",
+                                                                borderTopLeftRadius: "16px",
+                                                                borderTopRightRadius: "16px",
+                                                                borderBottomLeftRadius: "16px",
+                                                                borderBottomRightRadius: "16px",
+                                                                borderTopWidth: activeTempWallTypeRadio === indexWall ? "3px" : "1px",
+                                                                borderBottomWidth: activeTempWallTypeRadio === indexWall ? "3px" : "1px",
+                                                                borderLeftWidth: activeTempWallTypeRadio === indexWall ? "3px" : "1px",
+                                                                borderRightWidth: activeTempWallTypeRadio === indexWall ? "3px" : "1px",
+                                                                borderTopStyle: "solid",
+                                                                borderBottomStyle: "solid",
+                                                                borderLeftStyle: "solid",
+                                                                borderRightStyle: "solid",
+                                                                borderColor: activeTempWallTypeRadio === indexWall ? "rgb(35, 164, 173)" : "rgb(217, 217, 217)",
+                                                                backgroundColor: "white",
+                                                                ":hover": {backgroundColor: "white"}
+                                                            }
+                                                        }
+                                                    }}
+                                            >
+                                                <Block>
+                                                    <Block position="relative" width="80px" height="80px" marginBottom="4px">
+                                                        <Image src={"/images/icon/icon-wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>
+                                                    </Block>
+                                                    <Block color="#262626" font="MinXParagraph14" $style={{lineHeight: "1 !important"}}>
+                                                        {option.toLowerCase() === "rollup" ? "Roll-up" : option}
+                                                        <Block marginTop="4px">
+                                                            <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={wallPrices[indexWall].price} displayType="text"/>
+                                                        </Block>
+                                                    </Block>
+                                                </Block>
+                                            </Button>
+                                        ))) : null}
+                                </Block>
+                            </SelectionArea>
+                            <Block width="100%" height="20px" marginTop="2px" marginRight="auto" font="MinXParagraph14" color="#EB512A">{error && "Please choose side wall type."}</Block>
+                            <SelectionArea title="Color" containerStyle={{marginTop: "20px !important"}}>
+                                <Selection name="wall-color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} id={id_attribute_canopyColor}
+                                           attributes={productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation) : []}
+                                           onChange={(event) => {
+                                               setSelectedWallColor(event.target.value);
+                                               handleChangeWallRadioTemp(event, activeWall, id_attribute_canopyColor)
+                                           }}
+                                >
+                                </Selection>
+                            </SelectionArea>
+                        </Block>
                     </Block>
                 </Block>
             </Modal>
             <Modal type="dialog" isOpen={summaryIsOpen} onClose={() => closeSummaryModal()} content="summary" dataTable={{productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount}}/>
-        </React.Fragment>
+        </ThemeProvider.V2>
     );
 }
 
@@ -1484,6 +2078,7 @@ Canopy_Tent.getInitialProps = async (context) => {
     return {
         products: products,
         variants: variants,
+        fullPage: true
     };
 };
 

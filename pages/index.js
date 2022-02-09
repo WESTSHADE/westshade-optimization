@@ -15,11 +15,11 @@ function Home({router}) {
             <Banner title="CUSTOM PRINTING" subtitle="Custom the product to amplify up your special occasions." url="/images/home/custom-printing-1.webp" router={router} destination="/custom-printing" home
                     containerBackground={null}
             />
-            <Banner title="CANOPY TENT" subtitle="The exceptional heavy duty canopy with distinguished strength and durability." url="/images/home/tent.webp" router={router} destination="/canopy-tent" home
+            <Banner title="CANOPY TENT" subtitle="The exceptional heavy duty canopy with distinguished strength and durability." url="/images/home/tent-1.webp" router={router} destination="/canopy-tent" home
                     containerBackgroundPosition="bottom"
             />
-            <Banner title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella.webp" router={router} destination="/umbrella" home
-                    containerBackgroundPosition="bottom"
+            <Banner title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella-1.webp" router={router} destination="/umbrella" home
+                    containerBackgroundPosition="top"
             />
         </React.Fragment>
     )

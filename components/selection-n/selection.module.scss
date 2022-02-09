@@ -9,10 +9,22 @@
     grid-template-columns: repeat(1, 1fr);
   }
 
+  &.attr-wall-type {
+    justify-content: flex-start;
+
+    @media screen and (min-width: 480px) {
+      grid-template-columns: repeat(5, auto);
+      //grid-template-columns: repeat(6, auto);
+    }
+  }
+
   &.attr-color {
+    max-width: 360px;
+    margin: auto;
     justify-content: space-evenly;
     justify-items: center;
-    grid-template-columns: repeat(3, auto);
+    //grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(6, auto);
     grid-column-gap: unset;
 
     @media screen and (min-width: 480px) {
@@ -27,8 +39,9 @@
     box-sizing: border-box;
 
     &.attr-color {
-      width: 52px;
-      height: 52px;
+      width: 44px;
+      height: 44px;
+      padding: 4px;
       border-radius: 50%
     }
 
@@ -48,8 +61,8 @@
     }
 
     .radio-dot {
-      width: 38px;
-      height: 38px;
+      width: 32px;
+      height: 32px;
       border: 1px solid #D9D9D9;
       border-radius: 50%;
     }

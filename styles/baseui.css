@@ -130,8 +130,8 @@
 
 .react-player {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .react-player video,
@@ -226,9 +226,15 @@
 
 .spec-sticky-bar {
     position: sticky;
-    top: calc(92px - 100px - 20px);
+    top: calc(64px - 100px - 20px);
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(6px);
+}
+
+@media screen and (min-width: 672px) {
+    .spec-sticky-bar {
+        top: calc(116px - 100px - 20px);
+    }
 }
 
 ul.bullet-warranty > li {
@@ -280,10 +286,33 @@ ul.bullet-warranty.sub > li {
     box-sizing: border-box;
 }
 
+.image-gallery-content.left {
+    display: flex;
+}
+
 .image-gallery-slide-wrapper {
-    /* width: 80%; */
-    margin: auto;
-    padding: 0 10%;
+
+    margin: auto 32px;
+    /*padding: 0 10%;*/
+}
+
+.product.images div[data-baseweb=aspect-ratio-box] {
+    min-height: 203px;
+}
+
+@media screen and (max-width: 672px) {
+    .product.images {
+        width: 203px;
+        margin: auto;
+    }
+
+    .product.video, .product.modal {
+        height: 203px;
+    }
+}
+
+.product .image-gallery-slide-wrapper {
+    padding: 0;
 }
 
 .image-gallery-content.left .image-gallery-slide .image-gallery-image,
@@ -307,6 +336,20 @@ ul.bullet-warranty.sub > li {
 
 .modalGallery .image-gallery-thumbnails {
     display: none;
+}
+
+.modalGallery-wall .image-gallery-slide-wrapper {
+    width: 200px;
+}
+
+.modalGallery-wall div[data-baseweb=aspect-ratio-box] {
+    min-height: 200px;
+}
+
+@media screen and (min-width: 672px) {
+    .modalGallery-wall .image-gallery-slide-wrapper {
+        width: 280px;
+    }
 }
 
 .modalDialog {
@@ -675,9 +718,15 @@ ul.bullet-warranty.sub > li {
 
 .scroll-container {
     height: 100vh;
-    padding-top: 92px;
+    padding-top: 64px;
     padding-bottom: 80px;
     overflow-y: scroll;
+}
+
+@media screen and (min-width: 672px) {
+    .scroll-container {
+        height: 116px;
+    }
 }
 
 @supports (scroll-snap-type: y mandatory) {
@@ -714,8 +763,8 @@ ul.bullet-warranty.sub > li {
 }
 
 .radio-dot {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #D9D9D9;
     border-radius: 50%;
 }
@@ -1261,4 +1310,64 @@ ul.bullet-warranty.sub > li {
 
 .basic-transition {
     transition: all 0.3s ease-in-out;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+ul.breadcrumb li {
+    white-space: nowrap;
+}
+
+ul.breadcrumb li + li:before {
+    padding: 4px;
+    content: "/\00a0";
+}
+
+.hover-underline:hover {
+    text-decoration: underline;
+}
+
+.radio-recommended #recommended {
+    display: none;
+}
+
+
+.canopy-tent-wall-modal-dialog {
+    width: 100% !important;
+    height: calc(85vh - 129px) !important;
+    max-width: 500px !important;
+    max-height: 679px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/*@media screen and (min-width: 1056px) {*/
+@media screen and (min-width: 672px) {
+    .canopy-tent-wall-modal-dialog {
+        max-height: 742px;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .canopy-tent-wall-modal-dialog {
+        max-width: min(calc(100vw - 48px), 864px) !important;
+    }
+}
+
+.canopy-tent-wall-modal-body {
+    height: 100%;
+    flex: 1;
+    margin: 0;
+    background-color: white;
+}
+
+.canopy-tent-wall-modal-footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
 }

@@ -6,7 +6,7 @@ import {Block} from "baseui/block";
 
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import Shipping from "../../../Sections/ShippingNote";
+import ShippingNote from "../../../Sections/ShippingNote";
 
 import styles from "./parts.module.scss";
 
@@ -17,6 +17,7 @@ export default function content({dataTable}) {
 
     selectedVariant.map((variant, index) => {
         if (!variant) return
+        console.log(selectedVariant)
 
         let cell = {
             name: productComponent[index]?.name,
@@ -26,6 +27,15 @@ export default function content({dataTable}) {
             price: variant.price,
             on_sale: variant.on_sale,
         };
+        
+        if (index === 3 || index === 4) {
+            variant.attributes.map(attr => {
+                if (attr.id === 14 && attr.option === "13ft") {
+                    cell.quantity = 2;
+                }
+            })
+        }
+
         rowDate.push(cell);
     });
 
@@ -60,7 +70,7 @@ export default function content({dataTable}) {
                     <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalePrice ? totalSalePrice : totalRegularPrice} displayType={"text"} style={{fontSize: 16, fontWeight: "bold"}}/>
                 </Block>
             </Block>
-            <Shipping/>
+            <ShippingNote.V1/>
         </Block>
     )
 }

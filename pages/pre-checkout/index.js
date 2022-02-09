@@ -66,11 +66,15 @@ function Checkout({router}) {
             payment_method_title: "Credit Card",
             billing: {email: shippingAddress.email},
             shipping: {...shippingAddress},
-            line_items: lineItem,
+            line_items: lineItem
         };
 
         utils.createOrder(token, checkoutData).then((res) => {
-            if (res.message) {
+            if (!res) {
+                setShowLoading(false);
+
+                setTimeout(() => setError(""), 4000);
+            } else if (res.message) {
                 setShowLoading(false);
                 setError(res.message);
 
@@ -99,6 +103,22 @@ function Checkout({router}) {
             product_id: parent_id,
             variation_id: id,
             quantity: cart[idx].quantity,
+        } : id === 61289 ? {
+            product_id: id,
+            quantity: cart[idx].quantity,
+            composite_configuration: [{
+                component_id: "1635440611",
+                product_id: 58944,
+                quantity: cart[idx].component[1].quantity,
+                variation_id: cart[idx].component[1].id,
+                attributes: cart[idx].component[1].attributes,
+            }, {
+                component_id: "1635440732",
+                product_id: 59880,
+                quantity: cart[idx].component[0].quantity,
+                variation_id: cart[idx].component[0].id,
+                attributes: cart[idx].component[0].attributes,
+            }]
         } : {
             product_id: id,
             quantity: cart[idx].quantity,

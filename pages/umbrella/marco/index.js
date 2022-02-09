@@ -112,13 +112,13 @@ function Marco({router, size}) {
                                     justifyItems="center" margin="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}
                              >
                                  <Block width={["136px", "200px", "212px"]}>
-                                     <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
+                                     <AspectRatioBox className="section-round-corner" aspectRatio={327 / 211} width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
                                          <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
-                                     <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
+                                     <AspectRatioBox className="section-round-corner" aspectRatio={241 / 317} width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
                                          <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame

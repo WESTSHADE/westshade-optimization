@@ -107,7 +107,7 @@ function Cart_Page({router}) {
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top="92px" display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
+                            <Block position="sticky" top={["64px", null, "116px"]} display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
                                    color="MinXPrimaryText"
                                    $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
@@ -243,7 +243,7 @@ function Cart_Page({router}) {
                                         CHECKOUT
                                     </Button>
                                 </Block>
-                                <ShippingNote direction="column"/>
+                                <ShippingNote.V1 direction="column"/>
                             </Block>
                         </Block>
                     </Block>

@@ -62,6 +62,7 @@ function Checkout({router, orderID, orderDetail}) {
     const dispatch = useDispatch();
 
     const {loggedIn, token, user} = useSelector(({user}) => user);
+    const {cart, cartProduct} = useSelector(({cart}) => cart);
 
     const billRef = useRef(null);
 
@@ -96,7 +97,7 @@ function Checkout({router, orderID, orderDetail}) {
     const [showLoading, setShowLoading] = useState(false);
 
     // ================================================================================
-    
+
     let codeLength;
 
     const {card} = valid.number(number);
@@ -239,7 +240,8 @@ function Checkout({router, orderID, orderDetail}) {
             async function upOrder(i) {
                 const result = await utils.updateOrder(null, {id: i});
 
-                if (result.date_paid && result.date_completed) {
+                if (!result) {
+                } else if (result.date_paid && result.date_completed) {
                     router.push("/");
                 } else {
                     setOrderDetail(result);
@@ -257,7 +259,7 @@ function Checkout({router, orderID, orderDetail}) {
 
         if (detail.hasOwnProperty("coupon_lines")) setLineCoupon(detail.coupon_lines);
         if (detail.hasOwnProperty("shipping") && detail.hasOwnProperty("billing")) {
-            setShipping({...detail.shipping, email: detail.billing.email});
+            setShipping({...detail.shipping, country: "US", email: detail.billing.email});
 
             if (detail.shipping.first_name && detail.shipping.last_name && detail.shipping.address_1 && detail.shipping.city && detail.shipping.state && detail.shipping.postcode && detail.shipping.country && detail.shipping.phone && detail.billing.email) {
                 setShippingDone(true);

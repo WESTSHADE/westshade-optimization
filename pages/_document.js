@@ -44,7 +44,7 @@ class MyDocument extends Document {
                 <Head>
                     {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>*/}
                     <link rel="icon" href="/logo.png"/>
-                    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800,900&display=fallback" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Roboto|Gothic+A1:300,400,500,600,700,800,900&display=fallback" rel="stylesheet"/>
                     {this.props.stylesheets.map((sheet, i) => (
                         <style key={i} className="_styletron_hydrate_" dangerouslySetInnerHTML={{__html: sheet.css}} media={sheet.attrs.media} data-hydrate={sheet.attrs["data-hydrate"]}/>
                     ))}

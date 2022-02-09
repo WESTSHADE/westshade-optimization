@@ -8,16 +8,27 @@ import {RadioGroup, Radio, ALIGN} from "baseui/radio";
 import Button from "../../Button/V1"
 import {Modal} from "../../surfaces";
 
-const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
+const TentSizeSelection = ({steps, prevClick, nextClick, tentSizes, frame, sizeValue, setSize, error}) => {
     const [showSizeGuide, setShowSizeGuide] = useState(false);
 
     return (
         <>
-            <Block display="grid" gridRowGap="8px" width="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["16px", null, null, "24px 20px"]}>
+            <Block display="grid" gridRowGap="16px" width="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["16px", null, null, "24px 20px"]}>
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the size of the tent.</Block>
-                <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
+                <Block display="flex" flexDirection={["row", null, null, "column"]} justifyContent="space-between" alignItems="flex-start" font="MinXParagraph16" color="MinXSecondaryText" $style={{gap: "16px"}}>
                     <Block>{tentSizes[frame].length} sizes available</Block>
-                    <Button type="solid" height="32px" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowSizeGuide(true)}/>
+                    <Block display="flex" width={[null, null, null, "100%"]} justifyContent="space-between" alignItems="center">
+                        <Button type="solid" height="32px" text='Size Guide' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowSizeGuide(true)}/>
+                        <Block display={["none", null, null, "flex"]} alignItems="center" $style={{gap: "16px"}}>
+                            <Button type="outline" bundle="primary" width="108px" height="36px" text="Previous" onClick={() => prevClick()} disabled={steps.currentStep === 0}
+                                    buttonStyle={{
+                                        color: steps.currentStep === 0 ? "#BFBFBF !important" : "#23A4AD !important",
+                                        borderColor: "#BFBFBF !important",
+                                    }}
+                            />
+                            <Button bundle="primary" width="108px" height="36px" text="Next" onClick={() => nextClick()} disabled={!sizeValue}/>
+                        </Block>
+                    </Block>
                 </Block>
                 <Block paddingTop="20px">
                     <RadioGroup value={sizeValue} onChange={e => setSize({size: e.currentTarget.value})} align={ALIGN.horizontal} name="sizes"
@@ -78,7 +89,7 @@ const TentSizeSelection = ({tentSizes, frame, sizeValue, setSize, error}) => {
                     </RadioGroup>
                 </Block>
             </Block>
-            <Modal type="dialog" isOpen={showSizeGuide} onClose={() => setShowSizeGuide(false)} content="size"/>
+            <Modal type="dialog" isOpen={showSizeGuide} onClose={() => setShowSizeGuide(false)} content="size_canopy"/>
         </>
     )
 }

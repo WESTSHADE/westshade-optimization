@@ -160,6 +160,7 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     const handleChangeRadio = (event, index, id) => {
         // Part 1: 更改选项List信息 并 保存
         let selection = [...selectedAttribute];
+
         if (event && id) {
             selection[index].forEach((attribute) => {
                 if (attribute.id === id) attribute.option = event.target.value;
@@ -168,6 +169,8 @@ function Custom_printed_Package({router, product, productComponent, productVaria
             selection[index].forEach((attribute) => {
                 if (attribute.id === id_attribute_canopySize && selectedFrame !== "y7" && (attribute.option !== "10x10" && attribute.option !== "10x15" && attribute.option !== "10x20")) {
                     attribute.option = "10x20";
+                } else if (attribute.id === id_attribute_frameSeries) {
+                    attribute.option = selectedFrame === "y5" ? "y5 economic" : selectedFrame === "y6" ? "y6 commercial" : selectedFrame === "y7" ? "y7 heavy duty" : "";
                 }
             });
         }
@@ -503,163 +506,171 @@ function Custom_printed_Package({router, product, productComponent, productVaria
 
     return (
         <React.Fragment>
-            <Block className={styles["container-page"]} width={["100%", "480px", "100%"]} display="flex" flexDirection={["column", null, "row"]} marginRight="auto" marginLeft="auto" marginBottom="40px" paddingBottom="40px"
-                   $style={{gap: "18px"}}
-            >
-                {/* 图片区域 */}
-                <Block flex={[0, 0, 1]} maxWidth="626px" width="100%" position={[null, null, "relative"]} marginRight="auto" marginLeft="auto" paddingTop={["0", "24px", "48px"]} paddingRight={["16px", null, "0"]}
-                       paddingLeft={["16px", null, "24px"]}>
-                    <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
-                          overrides={{
-                              Root: {
-                                  style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
-                              },
-                              TabList: {
-                                  props: {
-                                      className: "hideScrollBar"
-                                  },
-                                  style: {
-                                      display: "grid",
-                                      // gridTemplateColumns: " repeat(3,auto)",
-                                      gridColumnGap: "12px",
-                                      justifyContent: "center",
-                                      overflowX: "scroll",
-                                  },
-                              },
-                              TabBorder: {props: {hidden: true}},
-                              TabHighlight: {props: {hidden: true}, style: {display: "none"}},
-                          }}
-                    >
-                        <Tab title="Photo"
-                             overrides={{
-                                 TabPanel: {
-                                     style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
-                                 },
-                                 Tab: {
-                                     style: ({$isActive}) => ({
-                                         background: $isActive ? "black" : "transparent",
-                                         color: $isActive ? "white" : "black",
-                                         paddingTop: "5px",
-                                         paddingBottom: "5px",
-                                         paddingRight: "24px",
-                                         paddingLeft: "24px",
-                                         borderBottomLeftRadius: "24px",
-                                         borderBottomRightRadius: "24px",
-                                         borderTopLeftRadius: "24px",
-                                         borderTopRightRadius: "24px",
-                                         ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
-                                     }),
-                                 },
-                             }}
-                        >
-                            <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
-                                          renderLeftNav={(onClick, disabled) => null}
-                                          renderRightNav={(onClick, disabled) => null}
-                            />
-                        </Tab>
-                        {/*<Tab title="Video" overrides={{*/}
-                        {/*    TabPanel: {*/}
-                        {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
-                        {/*    },*/}
-                        {/*    Tab: {*/}
-                        {/*        style: ({$isActive}) => ({*/}
-                        {/*            background: $isActive ? "black" : "transparent",*/}
-                        {/*            color: $isActive ? "white" : "black",*/}
-                        {/*            paddingTop: "5px",*/}
-                        {/*            paddingBottom: "5px",*/}
-                        {/*            paddingRight: "24px",*/}
-                        {/*            paddingLeft: "24px",*/}
-                        {/*            borderRadius: "24px",*/}
-                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
-                        {/*        }),*/}
-                        {/*    },*/}
-                        {/*}}/>*/}
-                        {/*<Tab title="3D" overrides={{*/}
-                        {/*    TabPanel: {*/}
-                        {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
-                        {/*    },*/}
-                        {/*    Tab: {*/}
-                        {/*        style: ({$isActive}) => ({*/}
-                        {/*            background: $isActive ? "black" : "transparent",*/}
-                        {/*            color: $isActive ? "white" : "black",*/}
-                        {/*            paddingTop: "5px",*/}
-                        {/*            paddingBottom: "5px",*/}
-                        {/*            paddingRight: "24px",*/}
-                        {/*            paddingLeft: "24px",*/}
-                        {/*            borderRadius: "24px",*/}
-                        {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
-                        {/*        }),*/}
-                        {/*    },*/}
-                        {/*}}/>*/}
-                    </Tabs>
-                    <Block className="text-center" width="100%" padding="16px" marginTop="24px" backgroundColor="#F7F7F7" font="MinXParagraph14" color="MinXPrimaryText" $style={{border: "1px solid #D9D9D9", borderRadius: "48px"}}
-                    >We will reach out to you to get the artwork and information after placing the order.</Block>
+            <Block width="100%" minWidth="320px" display="flex" flexDirection={["column", null, "row"]} overflow="hidden">
+                {/* 图片区域 - Contain Layer*/}
+                <Block flex={[0, null, 1]} marginBottom={["16px", null, "unset"]} paddingLeft={[null, null, "calc(50vw - " + process.env.maxWidth / 2 + "px)"]}>
+                    <Block display={["flex", null, "grid"]} gridTemplateRows="1fr auto" flexDirection="column" justifyContent="space-between" width="100%" height="100%" paddingRight={["16px", null, "10px", "16px"]}
+                           paddingLeft={["16px", null, "20px"]} paddingBottom={[null, null, "30px"]}>
+                        {/*Content Layer*/}
+                        <Block>
+                            <Tabs activeKey={tabPictureActiveKey} fill={FILL.intrinsic} activateOnFocus onChange={({activeKey}) => setTabPictureActiveKey(parseInt(activeKey))}
+                                  overrides={{
+                                      Root: {
+                                          style: {width: "100%", display: "flex", flexDirection: "column-reverse"},
+                                      },
+                                      TabList: {
+                                          props: {
+                                              className: "hideScrollBar"
+                                          },
+                                          style: {
+                                              display: "grid",
+                                              // gridTemplateColumns: " repeat(3,auto)",
+                                              gridColumnGap: "12px",
+                                              justifyContent: "center",
+                                              overflowX: "scroll",
+                                          },
+                                      },
+                                      TabBorder: {props: {hidden: true}},
+                                      TabHighlight: {props: {hidden: true}, style: {display: "none"}},
+                                  }}
+                            >
+                                <Tab title="Photo"
+                                     overrides={{
+                                         TabPanel: {
+                                             style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},
+                                         },
+                                         Tab: {
+                                             style: ({$isActive}) => ({
+                                                 background: $isActive ? "black" : "transparent",
+                                                 color: $isActive ? "white" : "black",
+                                                 paddingTop: "5px",
+                                                 paddingBottom: "5px",
+                                                 paddingRight: "24px",
+                                                 paddingLeft: "24px",
+                                                 borderBottomLeftRadius: "24px",
+                                                 borderBottomRightRadius: "24px",
+                                                 borderTopLeftRadius: "24px",
+                                                 borderTopRightRadius: "24px",
+                                                 ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},
+                                             }),
+                                         },
+                                     }}
+                                >
+                                    <ImageGallery items={productImageGallery} showNav={true} showThumbnails={false} showPlayButton={false} showFullscreenButton={false}
+                                                  renderLeftNav={(onClick, disabled) => null}
+                                                  renderRightNav={(onClick, disabled) => null}
+                                    />
+                                </Tab>
+                                {/*<Tab title="Video" overrides={{*/}
+                                {/*    TabPanel: {*/}
+                                {/*        style: {paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                                {/*    },*/}
+                                {/*    Tab: {*/}
+                                {/*        style: ({$isActive}) => ({*/}
+                                {/*            background: $isActive ? "black" : "transparent",*/}
+                                {/*            color: $isActive ? "white" : "black",*/}
+                                {/*            paddingTop: "5px",*/}
+                                {/*            paddingBottom: "5px",*/}
+                                {/*            paddingRight: "24px",*/}
+                                {/*            paddingLeft: "24px",*/}
+                                {/*            borderRadius: "24px",*/}
+                                {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                                {/*        }),*/}
+                                {/*    },*/}
+                                {/*}}/>*/}
+                                {/*<Tab title="3D" overrides={{*/}
+                                {/*    TabPanel: {*/}
+                                {/*        style: {height: "100%", paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0},*/}
+                                {/*    },*/}
+                                {/*    Tab: {*/}
+                                {/*        style: ({$isActive}) => ({*/}
+                                {/*            background: $isActive ? "black" : "transparent",*/}
+                                {/*            color: $isActive ? "white" : "black",*/}
+                                {/*            paddingTop: "5px",*/}
+                                {/*            paddingBottom: "5px",*/}
+                                {/*            paddingRight: "24px",*/}
+                                {/*            paddingLeft: "24px",*/}
+                                {/*            borderRadius: "24px",*/}
+                                {/*            ":hover": {background: $isActive ? "rgba(0,0,0,0.5)" : "transparent"},*/}
+                                {/*        }),*/}
+                                {/*    },*/}
+                                {/*}}/>*/}
+                            </Tabs>
+                        </Block>
+                        <Block className="text-center" width="100%" padding="16px" marginTop="24px" backgroundColor="#F7F7F7" font="MinXParagraph14" color="MinXPrimaryText" $style={{border: "1px solid #D9D9D9", borderRadius: "48px"}}
+                        >We will reach out to you to get the artwork and information after placing the order.</Block>
+                    </Block>
                 </Block>
                 {/* 选择区域 */}
-                <Block className="hideScrollBar" width={["auto", null, "413px"]} display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={[null, null, "scroll"]}
-                       paddingTop={"24px"} paddingRight={["16px", null, "24px"]} paddingLeft={["16px", null, "0"]}
-                >
-                    <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
-                    {uProduct && uProduct.short_description ? (
-                        <Block className={clsx([styles["container-product-section"], styles["short-description"]])} font="MinXParagraph14" color="MinXPrimaryText"
-                               dangerouslySetInnerHTML={{
-                                   __html: `${stringFn.modifyShortDescription(uProduct.short_description)}`,
-                               }}
-                        />
-                    ) : null}
-                    {uProduct && uProduct.description ? (
-                        <Block className={clsx(styles["container-product-section"], styles["align-left"])} font="MinXParagraph14" color="MinXSecondaryText"
-                               dangerouslySetInnerHTML={{
-                                   __html: `${stringFn.modifyShortDescription(uProduct.description)}`,
-                               }}
-                        />
-                    ) : null}
-                    <Button bundle="gray" type="outline" shape="square" width="195px" height="40px" font="MinXLabel14" color="MinXPrimaryText" text="Change Package"
-                            buttonStyle={{borderColor: "#D9D9D9 !important", borderRadius: "8px !important"}}
-                            startEnhancer={<Image src="/images/icon/icon-exchange.png" alt="exchange" layout="fixed" width="20px" height="20px" objectFit="contain"/>}
-                            onClick={() => router.push({pathname: "/custom-printing-package"})}
-                    />
-                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
-                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">2</Block>
-                        <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose size and frame</Block>
-                        <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
+                <Block flex={[0, null, 1]} paddingRight={[null, null, "calc(50vw - " + process.env.maxWidth / 2 + "px)"]} paddingBottom={["24px", null, 0]} backgroundColor={["#F7F7F7", null, "white"]}>
+                    <Block width="100%" height="100%" paddingTop={["16px", null, "20px"]} paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "10px", "16px"]}>
+                        <Block className="text-center hideScrollBar" width="100%" maxWidth={["500px", null, "413px"]} marginRight="auto" marginLeft="auto" paddingBottom={[null, null, "10px"]}>
+                            <Block marginBottom="16px" font="MinXHeading20">{productName}</Block>
+                            {uProduct && uProduct.short_description ? (
+                                <Block className={clsx([styles["container-product-section"], styles["short-description"]])} font="MinXParagraph14" color="MinXPrimaryText"
+                                       dangerouslySetInnerHTML={{
+                                           __html: `${stringFn.modifyShortDescription(uProduct.short_description)}`,
+                                       }}
+                                />
+                            ) : null}
+                            {uProduct && uProduct.description ? (
+                                <Block className={clsx(styles["container-product-section"], styles["align-left"])} font="MinXParagraph14" color="MinXSecondaryText" marginBottom="16px"
+                                       dangerouslySetInnerHTML={{
+                                           __html: `${stringFn.modifyShortDescription(uProduct.description)}`,
+                                       }}
+                                />
+                            ) : null}
+                            <Button bundle="gray" type="outline" shape="square" width="195px" height="40px" font="MinXLabel14" color="MinXPrimaryText" text="Change Package" margin="auto"
+                                    buttonStyle={{borderColor: "#D9D9D9 !important", borderRadius: "8px !important"}}
+                                    startEnhancer={<Image src="/images/icon/icon-exchange.png" alt="exchange" layout="fixed" width="20px" height="20px" objectFit="contain"/>}
+                                    onClick={() => router.push({pathname: "/custom-printing-package"})}
+                            />
+                            <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
+                                <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">2</Block>
+                                <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose size and frame</Block>
+                                <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
+                            </Block>
+                            <SelectionArea title="Size">
+                                <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} id={id_attribute_canopySize} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
+                                    {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => {
+                                        if ((selectedFrame === "y5" || selectedFrame === "y6") && index > 2) return;
+                                        return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
+                                    })) : null}
+                                </Selection>
+                                <Button type="solid" height="32px" text='Size Guide' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                        onClick={() => setSizeGuideOpen(true)}
+                                />
+                            </SelectionArea>
+                            <SelectionArea title="Frame">
+                                <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries}
+                                           onChange={(event) => setSelectedFrame(event.target.value)}
+                                    // onChange={(event) => handleChangeRadio(event, 0, id_attribute_frameSeries)}
+                                >
+                                    <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
+                                    <Radio value="y6">Y6 Commercial Aluminum</Radio>
+                                    <Radio value="y5">Y5 Economic Steel</Radio>
+                                </Selection>
+                                <Button type="solid" height="32px" text='Compare Frames' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                        onClick={() => setFrameCompareOpen(true)}
+                                />
+                            </SelectionArea>
+                            <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
+                                <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">3</Block>
+                                <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose Printing method</Block>
+                                <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
+                            </Block>
+                            <SelectionArea>
+                                <Selection name="Printing Technique" value={selectedAttribute[0] ? selectedAttribute[0][2].option.toLowerCase() : ""} id={id_attribute_printingTechnique}
+                                           onChange={(event) => handleChangeRadio(event, 0, id_attribute_printingTechnique)}>
+                                    {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
+                                        <Radio key={index} value={option.toLowerCase()}>{option}</Radio>)) : null}
+                                </Selection>
+                                <Button type="solid" height="32px" text='Compare Printing Method' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
+                                        onClick={() => setShowPrintServiceModal(true)}
+                                />
+                            </SelectionArea>
+                        </Block>
                     </Block>
-                    <SelectionArea title="Size">
-                        <Selection name="size" value={selectedAttribute[0] ? selectedAttribute[0][0].option.toLowerCase() : ""} id={id_attribute_canopySize} onChange={(event) => handleChangeRadio(event, 0, id_attribute_canopySize)}>
-                            {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_canopySize && attribute.variation).map(({options}) => options.map((option, index) => {
-                                if ((selectedFrame === "y5" || selectedFrame === "y6") && index > 2) return;
-                                return <Radio key={index} value={option.toLowerCase()}>{option}</Radio>
-                            })) : null}
-                        </Selection>
-                        <Button type="solid" height="32px" text='Size Guide' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
-                                onClick={() => setSizeGuideOpen(true)}
-                        />
-                    </SelectionArea>
-                    <SelectionArea title="Frame">
-                        <Selection name="frame" value={selectedFrame} id={id_attribute_frameSeries} onChange={(event) => setSelectedFrame(event.target.value)}>
-                            <Radio value="y7">Y7 Heavy Duty Aluminum</Radio>
-                            <Radio value="y6">Y6 Commercial Aluminum</Radio>
-                            <Radio value="y5">Y5 Economic Steel</Radio>
-                        </Selection>
-                        <Button type="solid" height="32px" text='Compare Frames' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
-                                onClick={() => setFrameCompareOpen(true)}
-                        />
-                    </SelectionArea>
-                    <Block position="relative" display="grid" gridTemplateRows="repeat(2, max-content)" gridRowGap="4px" justifyItems="center" justifyContent="center" marginTop="32px">
-                        <Block font={["MinXLabel40", "MinXLabel40", "MinXLabel48"]} color="#23A4AD">3</Block>
-                        <Block font={["MinXLabel16", "MinXLabel16", "MinXTitle20"]} $style={{fontWeight: "700 !important"}}>Choose Printing method</Block>
-                        <Block position="absolute" right={0} bottom={0} left={0} width="62px" height="62px" margin="auto" backgroundColor="#E5F5F1" $style={{borderRadius: "50%", zIndex: "-1"}}/>
-                    </Block>
-                    <SelectionArea>
-                        <Selection name="Printing Technique" value={selectedAttribute[0] ? selectedAttribute[0][2].option.toLowerCase() : ""} id={id_attribute_printingTechnique}
-                                   onChange={(event) => handleChangeRadio(event, 0, id_attribute_printingTechnique)}>
-                            {uProductComponent && uProductComponent[0] ? uProductComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_printingTechnique && attribute.variation).map(({options}) => options.map((option, index) =>
-                                <Radio key={index} value={option.toLowerCase()}>{option}</Radio>)) : null}
-                        </Selection>
-                        <Button type="solid" height="32px" text='Compare Printing Method' font="MinXParagraph14" color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)"
-                                onClick={() => setShowPrintServiceModal(true)}
-                        />
-                    </SelectionArea>
                 </Block>
             </Block>
             <ProductDescription product={selectedFrame}/>
@@ -671,8 +682,8 @@ function Custom_printed_Package({router, product, productComponent, productVaria
                          onSale={totalRegularPrice !== totalSalePrice} totalPrice={totalRegularPrice} totalSalesPrice={totalSalePrice}
                          showShippedDay={false}
             />
-            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size"/>
-            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} content="size_canopy"/>
+            <Modal type="alertdialog" isOpen={frameCompareOpen} onClose={() => setFrameCompareOpen(false)} content="frame_canopy"/>
             <Modal type="alertdialog" isOpen={showPrintServiceModal} onClose={() => setShowPrintServiceModal(false)} content="technique"/>
             <Modal type="alertdialog" isOpen={showSizeModal} onClose={() => setShowSizeModal(false)}>
                 <img className="popup-image" src={process.env.imageBaseUrl + "/images/tent-spec/choose-size.jpg"}/>
@@ -923,6 +934,7 @@ export async function getStaticProps({params}) {
             product: product,
             productComponent: component,
             productVariant: variant,
+            fullPage: true
         },
         revalidate: 10,
     }

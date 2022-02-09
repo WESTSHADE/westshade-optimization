@@ -9,8 +9,11 @@ import {Tabs, Tab, FILL} from "baseui/tabs-motion";
 
 import {Modal} from "Components/surfaces";
 import {Section} from "Components/Sections";
+import {UrlFn} from "Utils/tools";
 
-function Shipping_Return() {
+const urlFn = new UrlFn();
+
+function Shipping_Return({router}) {
     const [tabsRefs, setTabsRefs] = useState([]);
     const [tabLeft, setTabLeft] = useState(0);
     const [displayTabs, setDisplayTabs] = useState(false);
@@ -19,7 +22,14 @@ function Shipping_Return() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef())), []);
+    useEffect(() => {
+        setTabsRefs((tabsRefs) => Array(2).fill(null).map((_, i) => tabsRefs[i] || createRef()))
+
+        let tabsIndex = router.query.hasOwnProperty('tab') ? router.query.tab : urlFn.getParam("tab");
+        if (tabsIndex) {
+            setActiveTabKey(tabsIndex + "")
+        }
+    }, []);
 
     useEffect(() => {
         if (tabsRefs.length > 0) {
@@ -95,6 +105,9 @@ function Shipping_Return() {
                                          <Block marginBottom={["16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Basic Shipping Information</Block>
                                          <Block marginBottom={["32px", "40px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                              <ul className="bullet-warranty">
+                                                 <li>We ship the products on the same day of purchase if the order is placed before 5:30 PST. Orders that are placed past that time will be shipped out the next following business day.
+                                                     Holidays may delay the shipping time by a day or two.
+                                                 </li>
                                                  <li>Delivery takes <strong>3-7 business days</strong> (excluding weekends and holidays) depends on the location. To find out exactly how long it will take, <span
                                                      style={{color: "#23A4AD", cursor: 'pointer'}}
                                                      onClick={() => setIsModalOpen(true)}>click here</span> to

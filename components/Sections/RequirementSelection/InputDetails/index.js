@@ -106,25 +106,22 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
         printInstruction: toCustomize.printInstruction || "",
         applyToFullSide: toCustomize.applyToFullSide || false
     })
-    const [css] = useStyletron();
 
     const saveEntries = () => {
         setIsSaving(true)
         handleUpload()
             .then((res) => {
-                console.log(res)
                 setRequirement(part, side, inputState, inputState.applyToFullSide);
                 setIsSaving(false)
                 cancelAction();
             })
     }
 
-
     const handleFile = (files, key) => {
-        console.log(files, key);
+        // console.log(files, key);
         let fileExt = files[0].name.substring(files[0].name.lastIndexOf('.') + 1, files[0].name.length) || files[0].name;
         let fileName = key + "-" + side + "-" + new Date().valueOf() + "-" + files[0].name.split(' ').join('-');
-        console.log(fileName)
+        // console.log(fileName)
         if (key === "logo") {
             setInputState({...inputState, logo: {file: files[0], filename: fileName}})
         } else if (key === "background") {

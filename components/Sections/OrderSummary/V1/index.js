@@ -3,11 +3,14 @@ import NumberFormat from "react-number-format";
 
 import {Block} from "baseui/block";
 
-import {NumberFn} from "Utils/tools";
+import {NumberFn, StringFn} from "Utils/tools";
 
 import styles from "./summary.module.scss";
 
 const numberFn = new NumberFn();
+const stringFn = new StringFn();
+
+let customPrintedIndex = -1;
 
 const OrderSummary = ({cart = [], cartProduct = [], orderDetail, bottomDivider}) => {
     const getSubtotal = () => {
@@ -49,9 +52,12 @@ const OrderSummary = ({cart = [], cartProduct = [], orderDetail, bottomDivider})
 
                         return (
                             <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px" font="MinXParagraph14" color="MinXPrimaryText">
-                                <Block>
+                                <Block flex={1}>
                                     {item.name}
-                                    <Block marginLeft="2em">{item.attributes.map((data, i) => <Block key={i} marginTop="4px">{`${data.name}: ${data.option}`}</Block>)}</Block>
+                                    <Block marginLeft="2em">
+                                        {item.id === 61289 ? cart[index].variation.map((data, i) => <Block key={i} marginTop="4px">{`${data.attribute}: ${data.value}`}</Block>) : item.attributes.map((data, i) =>
+                                            <Block key={i} marginTop="4px">{`${data.name}: ${data.option}`}</Block>)}
+                                    </Block>
                                 </Block>
                                 {item.on_sale ? (
                                     <Block display="flex" $style={{gap: "12px"}}>
@@ -61,7 +67,11 @@ const OrderSummary = ({cart = [], cartProduct = [], orderDetail, bottomDivider})
                                         </Block>
                                     </Block>
                                 ) : (
-                                    <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={regularPrice ? regularPrice : price} displayType={"text"} fixedDecimalScale/>
+                                    <Block>
+                                        {/*<NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={regularPrice ? regularPrice : price} displayType={"text"} fixedDecimalScale/>{` x ${cart[index].quantity}`}*/}
+                                        <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={numberFn.strToFloat(regularPrice ? regularPrice : price, 0) * cart[index].quantity} displayType={"text"}
+                                                      fixedDecimalScale/>
+                                    </Block>
                                 )}
                             </Block>
                         )
@@ -72,11 +82,52 @@ const OrderSummary = ({cart = [], cartProduct = [], orderDetail, bottomDivider})
             {orderDetail && orderDetail.line_items && orderDetail.line_items.length > 0 ? (
                 <Block className={styles["divider"]} marginBottom={["16px", null, "24px"]}>
                     {orderDetail.line_items.map((item, index) => {
+                        if (item.product_id === 61289) customPrintedIndex = index;
+
+                        if (customPrintedIndex > -1 && (index === customPrintedIndex + 1 || index === customPrintedIndex + 2)) return;
+
+                        if (item.product_id === 61289) {
+                            let roofSize = orderDetail.line_items[index + 1].meta_data.find(data => data.key === "pa_canopy-size");
+                            let printedSidesAC = orderDetail.line_items[index + 2].meta_data.find(data => data.key === "number");
+                            let printedSidesBD = orderDetail.line_items[index + 2].meta_data.find(data => data.key === "number-ii");
+                            let printingMethod = orderDetail.line_items[index + 2].meta_data.find(data => data.key === "pa_printing-technique");
+
+                            function getPrintedSides(a, b) {
+                                let ac = a ? numberFn.strToInt(a.display_value, 0) : 0;
+                                let bd = b ? numberFn.strToInt(b.display_value, 0) : 0;
+
+                                return ac + bd;
+                            }
+
+                            function getSubTotal() {
+                                let priceA = numberFn.strToFloat(orderDetail.line_items[index + 1].subtotal || 0, 0);
+                                let priceB = numberFn.strToFloat(orderDetail.line_items[index + 2].subtotal || 0, 0);
+
+                                return priceA + priceB;
+                            }
+
+                            return (
+                                <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px" font="MinXParagraph14" color="MinXPrimaryText">
+                                    <Block flex={1}>
+                                        {item.name}
+                                        <Block marginLeft="2em">
+                                            <Block marginTop="4px">{`Roof Size: ${roofSize ? roofSize.display_value : ""}`}</Block>
+                                            <Block marginTop="4px">{`Printed Sides: ${getPrintedSides(printedSidesAC, printedSidesBD)}`}</Block>
+                                            <Block marginTop="4px">{`Printing Method: ${printingMethod ? stringFn.changeCase(printingMethod.display_value, 4) : ""}`}</Block>
+                                        </Block>
+                                    </Block>
+                                    <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={getSubTotal()} displayType={"text"} fixedDecimalScale/>
+                                </Block>
+                            )
+                        }
+
                         return (
                             <Block key={index} display="flex" flexDirection="row" justifyContent="space-between" marginBottom="20px" font="MinXParagraph14" color="MinXPrimaryText">
-                                <Block>
+                                <Block flex={1}>
                                     {item.name}
-                                    <Block marginLeft="2em">{item.meta_data.map((data, i) => <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block>)}</Block>
+                                    <Block marginLeft="2em">
+                                        {item.meta_data.map((data, i) => data.display_value && !data.display_key.startsWith('_') ? <Block key={i} marginTop="4px">{`${data.display_key}: ${data.display_value}`}</Block> : null)}
+                                    </Block>
                                 </Block>
                                 <NumberFormat decimalScale={2} thousandSeparator={true} prefix={"$"} value={item.subtotal} displayType={"text"} fixedDecimalScale/>
                             </Block>
@@ -123,6 +174,7 @@ const OrderSummary = ({cart = [], cartProduct = [], orderDetail, bottomDivider})
                     </>
                 ) : null}
                 <Block className={orderDetail && orderDetail.coupon_lines && orderDetail.coupon_lines.length > 0 ? styles["divider"] : null} display="flex" flexDirection="row" justifyContent="space-between"
+                       marginBottom={["16px", null, "24px"]}
                        paddingBottom={orderDetail && orderDetail.coupon_lines && orderDetail.coupon_lines.length > 0 ? ["16px", null, "24px"] : null}
                        $style={{fontWeight: "bold"}}
                 >

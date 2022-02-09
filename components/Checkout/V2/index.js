@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NumberFormat from "react-number-format";
 
 import Image from "next/image";
@@ -31,50 +31,86 @@ const Quantity = (props) => {
 };
 
 const Checkout = (props) => {
-    const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag", showShippedDay = true} = props;
+    const {totalPrice = 0, totalSalesPrice = 0, onSale = false, isAvailable = true, isInStock = true, buttonText = "Add to Bag", showShippedDay = true, scrollDisplay = false, offSetHeight} = props;
 
-    return (
-        <ThemeProvider.V2>
-            <Block className={`${styles["container-checkout"]} main-container-checkout`} height={["92px", null, "68px"]} paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "20px"]}>
-                <Block className={`${styles["inner-container"]}`} maxWidth={process.env.maxWidth + "px"}>
-                    <Block className={`${styles["section-bottom"]}`} height={["48px", null, "100%"]}>
-                        <Block display={["none", null, "flex"]} alignItems="center" justifyContent="center" $style={{gap: "12px"}}>
-                            {showShippedDay ? (
-                                <>
-                                    <AspectRatioBox aspectRatio={1} width="20px" height="20px" minWidth="20px">
-                                        <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
-                                    </AspectRatioBox>
-                                    <Block font="MinXParagraph14">{`Order today, shipped by ${shippedDay}.`}</Block>
-                                </>
-                            ) : null}
-                        </Block>
-                        <Block display="flex" justifyContent="space-between" width={["100%", null, "max-content"]} alignItems="center" $style={{gap: "32px"}}>
-                            <Button shape="circle" width="32px" height="32px" buttonClassName={`${styles["button-summary"]}`} buttonHoverBackgroundColor="#E8E8E8" onClick={props.onClick}>
-                                <ChevronUp color="#808080" size="25px"/>
-                            </Button>
-                            <Block font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" $style={{fontWeight: "700 !important"}}>
-                                {onSale ? (
-                                    <Block display="flex" flexDirection="row" justifyContent="flex-end" $style={{gap: "10px"}}>
-                                        {totalSalesPrice === 0 ? <Block color="#F07C7C">Free</Block> :
-                                            <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalesPrice} displayType={"text"} style={{color: "#F07C7C"}}/>}
-                                        <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"} style={{textDecoration: "line-through"}}/>
-                                    </Block>
-                                ) : (
-                                    <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"}/>
-                                )}
+    const [isCheckoutVisible, setIsCheckoutVisible] = useState(!scrollDisplay);
+    const [isCheckoutDisplay, setIsCheckoutDisplay] = useState(!scrollDisplay);
+
+    const listenToScroll = () => {
+        if (scrollDisplay) {
+            let heightToHideFrom = offSetHeight || 0;
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+
+            if (winScroll > heightToHideFrom) {
+                !isCheckoutVisible && setIsCheckoutVisible(true);
+            } else {
+                setIsCheckoutVisible(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", listenToScroll);
+
+        return () => window.removeEventListener("scroll", listenToScroll);
+    }, []);
+
+    useEffect(() => {
+        if (isCheckoutVisible) {
+            setIsCheckoutDisplay(true);
+        } else {
+            setTimeout(() => setIsCheckoutDisplay(false), 300)
+        }
+    }, [isCheckoutVisible]);
+
+    if (isCheckoutDisplay) {
+        return (
+            <ThemeProvider.V2>
+                <Block className={`${styles["container-checkout"]} main-container-checkout`} height={["92px", null, "68px"]} paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "20px"]}
+                       $style={{opacity: isCheckoutVisible ? 1 : 0}}
+                >
+                    <Block className={`${styles["inner-container"]}`} maxWidth={process.env.maxWidth + "px"}>
+                        <Block className={`${styles["section-bottom"]}`} height={["48px", null, "100%"]}>
+                            <Block display={["none", null, "flex"]} alignItems="center" justifyContent="center" $style={{gap: "12px"}}>
+                                {showShippedDay ? (
+                                    <>
+                                        <AspectRatioBox aspectRatio={1} width="20px" height="20px" minWidth="20px">
+                                            <Image src="/images/icon/delivery.png" alt="free shipping" layout="fill" objectFit="contain"/>
+                                        </AspectRatioBox>
+                                        <Block font="MinXParagraph14">{`Order today, shipped by ${shippedDay}.`}</Block>
+                                    </>
+                                ) : null}
                             </Block>
-                            <Block className={`${styles["section-top"]}`} position={["absolute", null, "relative"]} top={[0, null, "unset"]} width={["100%", null, "unset"]} height={["44px", null, "unset"]}>
-                                <Block position="absolute" left={0} display={["block", null, "none"]} font="MinXParagraph12" color="MinXSecondaryText">Quantity:</Block>
-                                <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
+                            <Block display="flex" justifyContent="space-between" width={["100%", null, "max-content"]} alignItems="center" $style={{gap: "32px"}}>
+                                <Button shape="circle" width="32px" height="32px" buttonClassName={`${styles["button-summary"]}`} buttonHoverBackgroundColor="#E8E8E8" onClick={props.onClick}>
+                                    <ChevronUp color="#808080" size="25px"/>
+                                </Button>
+                                <Block font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]} color="MinXPrimaryText" $style={{fontWeight: "700 !important"}}>
+                                    {onSale ? (
+                                        <Block display="flex" flexDirection="row" justifyContent="flex-end" $style={{gap: "10px"}}>
+                                            {totalSalesPrice === 0 ? <Block color="#F07C7C">Free</Block> :
+                                                <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalesPrice} displayType={"text"} style={{color: "#F07C7C"}}/>}
+                                            <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"} style={{textDecoration: "line-through"}}/>
+                                        </Block>
+                                    ) : (
+                                        <NumberFormat thousandSeparator={true} prefix={"$"} value={totalPrice} displayType={"text"}/>
+                                    )}
+                                </Block>
+                                <Block className={`${styles["section-top"]}`} position={["absolute", null, "relative"]} top={[0, null, "unset"]} width={["100%", null, "unset"]} height={["44px", null, "unset"]}>
+                                    <Block position="absolute" left={0} display={["block", null, "none"]} font="MinXParagraph12" color="MinXSecondaryText">Quantity:</Block>
+                                    <Quantity quantity={props.quantity} isInStock={isInStock} onClickMinus={props.onClickMinus} onClickPlus={props.onClickPlus}/>
+                                </Block>
+                                <Button bundle="primary" width={["128px", null, "100%"]} minWidth={["128px", null, "182px"]} height={["40px", null, "48px"]} font="MinXParagraph16" color="white" text={buttonText} disabled={!isAvailable}
+                                        onClick={props.onClickAddToBag}/>
                             </Block>
-                            <Button bundle="primary" width={["128px", null, "100%"]} minWidth={["128px", null, "182px"]} height={["40px", null, "48px"]} font="MinXParagraph16" color="white" text={buttonText} disabled={!isAvailable}
-                                    onClick={props.onClickAddToBag}/>
                         </Block>
                     </Block>
                 </Block>
-            </Block>
-        </ThemeProvider.V2>
-    );
+            </ThemeProvider.V2>
+        );
+    } else {
+        return null;
+    }
 };
 
 export default Checkout;

@@ -210,4 +210,43 @@ export class DateFn {
                 return "Monday";
         }
     }
+
+    getReceivedDayV2(time) {
+        let date = new Date();
+        let day = date.getDay() % 7;
+
+        switch (day) {
+            case 0:
+                return "Monday";
+            case 1:
+                if (!time || time.hour < 3 || (time.hour < 4 && time.min < 30)) {
+                    return "Next Day"
+                }
+                return "Today";
+            case 2:
+                if (!time || time.hour < 3 || (time.hour < 4 && time.min < 30)) {
+                    return "Next Day"
+                }
+                return "Today";
+            case 3:
+                if (!time || time.hour < 3 || (time.hour < 4 && time.min < 30)) {
+                    return "Next Day"
+                }
+                return "Today";
+            case 4:
+                if (!time || time.hour < 3 || (time.hour < 4 && time.min < 30)) {
+                    return "Next Day"
+                }
+                return "Today";
+            case 5:
+                if (!time || time.hour < 3 || (time.hour < 4 && time.min < 30)) {
+                    return "Monday"
+                }
+                return "Today";
+            case 6:
+                return "Monday";
+            default:
+                return "Monday";
+        }
+    }
 }

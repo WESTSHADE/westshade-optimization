@@ -1,7 +1,8 @@
 const initialState = {
     finalImage: "/images/product/y5-economic-canopy-tent/frame/Y5-10X10-BK.png",
     pMethod: "",
-    size: "10x10",
+    // size: "10x10",
+    size: "",
     frame: "Y7",
     printingMethod: "DYE SUBLIMATION PRINTING",
     activeCustomizer: false,

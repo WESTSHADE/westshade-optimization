@@ -4,18 +4,19 @@
   z-index: 99;
 
   .container-dialog {
-
     .dialog {
       align-self: center;
       width: fit-content;
       height: fit-content;
       max-width: calc(100vw - 48px);
-      //transform: translateY(-15vh);
       overflow: hidden;
+      border-radius: 16px;
 
       .close {
-        top: 29px;
-        right: 29px;
+        width: 44px;
+        height: 44px;
+        top: 9px;
+        right: 9px;
         border-radius: 50%;
 
         &:active {
@@ -49,8 +50,10 @@
       overflow: hidden;
 
       .close {
-        top: 21px;
-        right: 21px;
+        width: 44px;
+        height: 44px;
+        top: 0;
+        right: 0;
         border-radius: 50%;
 
         &:active {
@@ -58,8 +61,8 @@
         }
 
         @media screen and (min-width: 480px) {
-          top: 29px;
-          right: 29px;
+          top: 10px;
+          right: 10px;
         }
       }
 
@@ -92,25 +95,26 @@
 
 .container-root {
   height: 100vh;
-  padding-top: 24px;
   z-index: 99;
 
   .container-dialog {
-    height: 100%;
     overflow: hidden;
 
     .dialog {
       display: flex;
       flex-direction: column;
+      height: 100vh;
       max-width: 1170px;
-      margin: 0 auto 0 auto;
+      margin: auto auto 0;
       background-color: #f7f7f7;
       border-radius: 0;
       overflow: hidden;
 
       .close {
-        top: 29px;
-        right: 29px;
+        width: 44px;
+        height: 44px;
+        top: 9px;
+        right: 9px;
         border-radius: 50%;
 
         &:active {
@@ -198,20 +202,19 @@
         }
       }
 
+      @media screen and (min-width: 480px) {
+        height: calc(100vh - 32px);
+        margin-top: 32px;
+      }
+
       @media screen and (min-width: 960px) {
+        height: auto;
+        margin-top: 5%;
         margin-right: 5%;
         margin-left: 5%;
         border-radius: 16px 16px 0 0;
       }
     }
-  }
-
-  @media screen and (min-width: 480px) {
-    padding-top: 32px;
-  }
-
-  @media screen and (min-width: 960px) {
-    padding-top: 5%;
   }
 }
 

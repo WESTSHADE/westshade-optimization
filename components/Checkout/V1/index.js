@@ -5,7 +5,7 @@ import {Block} from "baseui/block";
 import {CheckIndeterminate, Plus} from "baseui/icon";
 
 import Button from "Components/Button/V1";
-import Shipping from "Components/Sections/ShippingNote";
+import ShippingNote from "Components/Sections/ShippingNote";
 
 import styles from "./checkout.module.scss";
 
@@ -40,7 +40,7 @@ const Checkout = (props) => {
                     <Block display="flex" flexDirection="row" marginBottom="12px" $style={salePrice ? {textDecoration: "line-through"} : null}>{`Price: $${parseFloat(regularPrice).toFixed(2)} each`}</Block>
                     <Block>{`Qty: ${quantity}`}</Block>
                 </Block>
-                <Shipping direction="column" marginLeft="unset"/>
+                <ShippingNote.V1 direction="column" marginLeft="unset"/>
                 <Button bundle="primary" width={["100%", "448px", "100%"]} height="56px" marginRight="auto" marginLeft="auto" font="MinXLabel16" text={buttonText} onClick={addToBag} disabled={!isAvailable}/>
             </Block>
         </>

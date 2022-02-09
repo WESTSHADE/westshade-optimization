@@ -27,7 +27,7 @@ const BlockVideo = ({src, isSelected, step}) => {
             const rect = refBlockVideo.current.children[0].getBoundingClientRect();
 
             if (box) {
-                box.muted = true; // without this line it's not working although I have "muted" in HTML
+                box.muted = true; // without this line it's not working, so I have "muted" in HTML
 
                 // 全部显现
                 if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
@@ -101,7 +101,7 @@ const BlockDisplay = ({title, content, src, button}) => {
 };
 
 function Canopy_Tent({router, size}) {
-    const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
+    const goBuyingPage = () => router.push("/products/canopy-tent", "/products/canopy-tent/buy");
 
     const onChangeCarousel = (index) => {
         if (refs.length > 0) {

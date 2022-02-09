@@ -39,7 +39,7 @@ export default class Utils {
                 "Access-Control-Allow-Origin": "*",
             },
             body: JSON.stringify(data),
-        }).then(response => response.ok ? response.json() : Promise.reject(response)).catch((error) => console.error('Error:', error));
+        }).then(response => response.json()).catch((error) => console.error('Error:', error));
     }
 
     async getProductByWooId(pid) {

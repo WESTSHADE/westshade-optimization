@@ -110,7 +110,7 @@ const Hero = () => {
                                     buttonStyle={{paddingRight: "4px !important", paddingLeft: "4px !important", borderColor: "#262626", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}}
                                     onClick={() => goPackagePage()}
                             />
-                            <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize online" buttonBackgroundColor="#FFF"
+                            <Button type="rainbow" width="100%" height={["48px", null, null, "56px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText" text="Customize Now" buttonBackgroundColor="#FFF"
                                     buttonStyle={{boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.1)", zIndex: 1}} buttonHoverStyle={{color: "#8C8C8C"}} onClick={() => goCustomPage()}
                             />
                         </Block>
