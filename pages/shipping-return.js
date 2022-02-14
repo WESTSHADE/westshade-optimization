@@ -135,7 +135,9 @@ function Shipping_Return({router}) {
                                          <Block marginBottom={["32px", "40px"]} font="MinXParagraph14" color="MinXPrimaryText">
                                              <ul className="bullet-warranty">
                                                  <li>If you’re ordering a tent, the top roof and frame will arrive in separate packages. Each package has its own tracking number. Thus, you will receive multiple tracking numbers.</li>
-                                                 <li>If you’re ordering a custom printing tent, it will take a few days longer.</li>
+                                                 <li>If you order a custom printed product, the printing and packaging will be completed within hours once the design is confirmed. Also, delivery will take a few days depending on third party
+                                                     courier.
+                                                 </li>
                                                  <li>A signature may be required on receipt of your order.</li>
                                                  <li>If you’re not in, your order may be left in the front door.</li>
                                              </ul>

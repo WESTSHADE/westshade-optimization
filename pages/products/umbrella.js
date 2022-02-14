@@ -745,72 +745,82 @@ function Umbrella({router, products, variants, phone}) {
                                                 />
                                             </Block>
                                             <Block gridArea="c" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
-                                                <Select controlRef={refSelectA}
-                                                        backspaceRemoves={false}
-                                                        clearable={false}
-                                                        searchable={false}
-                                                        deleteRemoves={false}
-                                                        options={[{label: "Aluminum", option: "aluminum"}, {label: "Fiberglass", option: "fiberglass", disabled: umbrellaSize === "10ft"}]}
-                                                        labelKey="label"
-                                                        valueKey="option"
-                                                        onChange={({value}) => {
-                                                            setUmbrellaFrame(value[0].option.toLowerCase());
-                                                            handleChangeRadio({target: {value: value[0].option}}, 0, id_attribute_umbrellaFrame);
-                                                        }}
-                                                        value={productId === id_product_umbrella_santorini && selectedAttribute[0] && [{
-                                                            label: stringFn.changeCase(selectedAttribute[0][3].option, 1),
-                                                            option: selectedAttribute[0][3].option.toLowerCase()
-                                                        }] || productId === id_product_umbrella_bali ? [{label: "Steel", option: "steel"}] : [{label: "Aluminum", option: "aluminum"}]}
-                                                        overrides={{
-                                                            Root: {
-                                                                style: {
-                                                                    height: "inherit",
-                                                                    fontFamily: "inherit", fontSize: "inherit"
-                                                                }
-                                                            },
-                                                            ControlContainer: {
-                                                                style: {
-                                                                    height: "inherit",
-                                                                    borderTopWidth: "1px",
-                                                                    borderRightWidth: "1px",
-                                                                    borderBottomWidth: "1px",
-                                                                    borderLeftWidth: "1px",
-                                                                    borderColor: "#BFBFBF !important",
-                                                                    borderRadius: "4px",
-                                                                    backgroundColor: "transparent",
-                                                                    alignItems: "center"
-                                                                }
-                                                            },
-                                                            ValueContainer: {
-                                                                style: {
-                                                                    paddingTop: 0, paddingBottom: 0, height: "min-content"
-                                                                }
-                                                            },
-                                                            SelectArrow: {
-                                                                props: {
-                                                                    overrides: {
-                                                                        Svg: {
-                                                                            style: {
-                                                                                display: productId !== id_product_umbrella_santorini ? "none" : "block"
+                                                {productId !== id_product_umbrella_santorini ? (
+                                                    <Block ref={refSelectA} display="flex" alignItems="center" height="100%" paddingLeft="10px" $style={{border: "1px solid rgb(191, 191, 191)", borderRadius: "4px"}}>
+                                                        {productId === id_product_umbrella_bali ? "Steel" : "Aluminum"}
+                                                    </Block>
+                                                ) : (
+                                                    <Select controlRef={refSelectA}
+                                                            backspaceRemoves={false}
+                                                            clearable={false}
+                                                            searchable={false}
+                                                            deleteRemoves={false}
+                                                            options={umbrellaSize === "10ft" ? [{label: "Aluminum", option: "aluminum"}] : [{label: "Aluminum", option: "aluminum"}, {label: "Fiberglass", option: "fiberglass"}]}
+                                                            labelKey="label"
+                                                            valueKey="option"
+                                                            onChange={({value}) => {
+                                                                setUmbrellaFrame(value[0].option.toLowerCase());
+                                                                handleChangeRadio({target: {value: value[0].option}}, 0, id_attribute_umbrellaFrame);
+                                                            }}
+                                                            value={productId === id_product_umbrella_santorini && selectedAttribute[0] ? [{
+                                                                label: stringFn.changeCase(selectedAttribute[0][3].option, 1),
+                                                                option: selectedAttribute[0][3].option.toLowerCase()
+                                                            }] : productId === id_product_umbrella_bali ? [{label: "Steel", option: "steel"}] : [{label: "Aluminum", option: "aluminum"}]}
+                                                            overrides={{
+                                                                Root: {
+                                                                    style: {
+                                                                        height: "inherit",
+                                                                        fontFamily: "inherit", fontSize: "inherit"
+                                                                    }
+                                                                },
+                                                                ControlContainer: {
+                                                                    style: {
+                                                                        height: "inherit",
+                                                                        borderTopWidth: "1px",
+                                                                        borderRightWidth: "1px",
+                                                                        borderBottomWidth: "1px",
+                                                                        borderLeftWidth: "1px",
+                                                                        borderColor: "#BFBFBF !important",
+                                                                        borderRadius: "4px",
+                                                                        backgroundColor: "transparent",
+                                                                        alignItems: "center"
+                                                                    }
+                                                                },
+                                                                ValueContainer: {
+                                                                    style: {
+                                                                        paddingTop: 0, paddingBottom: 0, height: "min-content"
+                                                                    }
+                                                                },
+                                                                SelectArrow: {
+                                                                    props: {
+                                                                        overrides: {
+                                                                            Svg: {
+                                                                                style: productId !== id_product_umbrella_santorini ? {
+                                                                                    display: "none"
+                                                                                } : {
+                                                                                    display: "inline-block",
+                                                                                    width: "20px",
+                                                                                    height: "20px"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                Popover: {
+                                                                    props: {
+                                                                        overrides: {
+                                                                            Body: {
+                                                                                style: {
+                                                                                    zIndex: 4
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
                                                                 }
-                                                            },
-                                                            Popover: {
-                                                                props: {
-                                                                    overrides: {
-                                                                        Body: {
-                                                                            style: {
-                                                                                zIndex: 4
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }}
-                                                        disabled={productId !== id_product_umbrella_santorini}
-                                                />
+                                                            }}
+                                                        // disabled={productId !== id_product_umbrella_santorini}
+                                                    />
+                                                )}
                                             </Block>
                                         </Block>
                                         {productComponent && productComponent[0] && productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_umbrellaSize && attribute.variation).length > 0 ? (
@@ -900,7 +910,7 @@ function Umbrella({router, products, variants, phone}) {
                                                                     RadioGroupRoot: {
                                                                         style: {
                                                                             display: "grid",
-                                                                            gridTemplateColumns: "repeat(" + productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_umbrellaMaterial && attribute.variation)[0].options.length + ", 1fr)",
+                                                                            gridTemplateColumns: productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass" ? "1fr" : "repeat(" + productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_umbrellaMaterial && attribute.variation)[0].options.length + ", 1fr)",
                                                                             gridColumnGap: "8px",
                                                                             height: "inherit"
                                                                         }
@@ -976,12 +986,11 @@ function Umbrella({router, products, variants, phone}) {
                                                         {/*})}*/}
                                                         {productComponent[0].attributes.filter((attribute) => attribute.id === id_attribute_umbrellaMaterial && attribute.variation)[0].options.map((option, i) => {
                                                             if (option.toLowerCase() === "agora") {
+                                                                if (productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass") return;
                                                                 return (
                                                                     <Radio key={i} value={option.toLowerCase()} disabled={productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass"}>
-                                                                        {productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass" ? null : (
-                                                                            <Block id="recommended" display="block" position="absolute" top="-5px" left="9px" padding="0 1px" backgroundColor="white" font="MinXParagraph10" color="#23A4AD"
-                                                                                   $style={{lineHeight: 1}}>RECOMMENDED</Block>
-                                                                        )}
+                                                                        <Block id="recommended" display="block" position="absolute" top="-5px" left="9px" padding="0 1px" backgroundColor="white" font="MinXParagraph10" color="#23A4AD"
+                                                                               $style={{lineHeight: 1}}>RECOMMENDED</Block>
                                                                         <Block position="relative" width="60px" height="16px">
                                                                             <Image src="/images/icon/icon-agora.png" alt="icon-agora" layout="fill" objectFit="contain"/>
                                                                         </Block>
@@ -1125,10 +1134,11 @@ function Umbrella({router, products, variants, phone}) {
                                     <Block gridArea="b" display="flex" alignItems="center" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>
                                         <Block className="round" width="5px" height="5px" minWidth="5px" marginRight="6px" backgroundColor={isInStock ? "#2DCA59" : "#E51717"}/>
                                         {isInStock ? "In Stock" : "Out of Stock"}
-                                        <Block marginLeft={["8px", null, "10px", "16px"]}>
-                                            <Block width="max-content" padding="2px 8px" backgroundColor="#F5FCFC" $style={{border: "1px solid #23A4AD", borderRadius: "3px"}}>Limited
-                                                Stock</Block>
-                                        </Block>
+                                        {productId === id_product_umbrella_bali ? null : (
+                                            <Block marginLeft={["8px", null, "10px", "16px"]}>
+                                                <Block width="max-content" padding="2px 8px" backgroundColor="#F5FCFC" $style={{border: "1px solid #23A4AD", borderRadius: "3px"}}>Limited Stock</Block>
+                                            </Block>
+                                        )}
                                     </Block>
                                     {/*Section Question*/}
                                     <Block gridArea="c">

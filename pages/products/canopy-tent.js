@@ -54,13 +54,6 @@ const id_attribute_canopyColor = 3;
 const id_attribute_canopySize = 4;
 const id_attribute_wallType = 11;
 const id_attribute_wallSize = 14;
-const id_attribute_roofColor = 21;
-const id_attribute_roofSize = 31;
-const id_attribute_frameSeries = 34;
-const id_attribute_poleMaterial = 43;
-const id_attribute_printing_tech = 44;
-const id_attribute_qty_peak = 45;
-const id_attribute_qty_valance = 46;
 
 const wallMap = new Map([
     [
@@ -198,8 +191,6 @@ function Canopy_Tent({router, products, variants, phone}) {
 
     const [availableToCheckout, setAvailable] = useState(false);
 
-    const [wallIsOpen, setWallIsOpen] = useState(false);
-
     const [selectedWallColor, setSelectedWallColor] = useState("white");
 
     const [summaryIsOpen, setSummaryIsOpen] = useState(false);
@@ -218,19 +209,29 @@ function Canopy_Tent({router, products, variants, phone}) {
 
     const [error, setError] = useState(false);
 
+    ////////////////////////////////////////
+
+    const [wallIsOpen, setWallIsOpen] = useState(false);
+
     const [activeTempWallTypeRadio, setActiveTempWallTypeRadio] = useState(-1);
 
-    const [wallPrices, setWallPrices] = useState([]);
     const [wallPrice, setWallPrice] = useState(0);
+    const [wallPrices, setWallPrices] = useState([]);
+
+    const [selectedWallVariantTemp, setSelectedWallVariantTemp] = useState([]);
 
     const [wallPriceList, setWallPriceList] = useState([]);
     const [wallPriceListTemp, setWallPriceListTemp] = useState([]);
 
-    ////////////////////////////////////////
-
     const [wallPlainAttributeList, setWallPlainAttributeList] = useState([]);
     const [wallPlainAttributeListTemp, setWallPlainAttributeListTemp] = useState([]);
+
     const [activeWall, setActiveWall] = useState(0);
+
+    const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
+    const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
+
+    ////////////////////////////////////////
 
     const [availableList, setAvailableList] = useState([
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
@@ -239,11 +240,6 @@ function Canopy_Tent({router, products, variants, phone}) {
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
         {id: "", status: false, quantity: 0, needed: 0, attribute: null, optional: true},
     ]);
-
-    ////////////////////////////////////////
-
-    const [wallPictures, setWallPictures] = useState(["", "", "", ""]);
-    const [wallPicturesTemp, setWallPicturesTemp] = useState(["", "", "", ""]);
 
     ////////////////////////////////////////
 
@@ -267,6 +263,9 @@ function Canopy_Tent({router, products, variants, phone}) {
 
         const wallPriceTemp = JSON.parse(JSON.stringify(wallPriceList));
         setWallPriceListTemp(wallPriceTemp);
+
+        const variant = JSON.parse(JSON.stringify(selectedVariant));
+        setSelectedWallVariantTemp(variant.slice(1));
 
         if (temp[0][0].option.toLowerCase() === "none") {
             setActiveTempWallTypeRadio(-1);
@@ -308,42 +307,13 @@ function Canopy_Tent({router, products, variants, phone}) {
 
             setWallPlainAttributeList(temp);
 
-            let selection = JSON.parse(JSON.stringify(selectedAttribute));
-            temp.forEach((attribute, index) => {
-                selection[index + 1] = attribute;
-            });
+            let selection = [JSON.parse(JSON.stringify(selectedAttribute))[0]].concat(temp);
             setSelectedAttribute(selection);
 
-            let selectedVariantList = [];
-            selection.forEach((attr, index) => {
-                let selected = productVariant[index].filter((variant) => {
-                    if (!variant || !variant.attributes) return false;
-                    let equal = true;
-                    const initSelectedVariant = (a, b, indexA, indexB) => {
-                        let indexC = indexB;
-                        for (let i = indexA; i < a.length; i++) {
-                            if (indexC < b.length) {
-                                if (a[i].id === b[indexC].id) {
-                                    if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
-                                        equal = false;
-                                        break;
-                                    }
-                                    indexC++;
-                                } else {
-                                    initSelectedVariant(a, b, i + 1, indexC);
-                                    break;
-                                }
-                            }
-                        }
-                    };
-                    initSelectedVariant(attr, variant.attributes, 0, 0);
-                    return equal;
-                });
-                selectedVariantList[index] = selected[0];
-            });
-            setSelectedVariant(selectedVariantList);
+            let variantA = JSON.parse(JSON.stringify(selectedVariant));
+            let variantB = JSON.parse(JSON.stringify(selectedWallVariantTemp));
+            setSelectedVariant([variantA[0]].concat(variantB));
         }
-
         setError(false);
         setWallIsOpen(false);
     };
@@ -357,8 +327,13 @@ function Canopy_Tent({router, products, variants, phone}) {
             <AspectRatioBox aspectRatio={1} minHeight="230px">
                 <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
                 {wallPictures.map((pic, index) => {
-                    if (!pic) return;
-                    return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
+                    return (
+                        <>
+                            {pic ? (
+                                <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>
+                            ) : null}
+                        </>
+                    )
                 })}
             </AspectRatioBox>
         );
@@ -366,32 +341,23 @@ function Canopy_Tent({router, products, variants, phone}) {
 
     function renderCustomImageTemp(props) {
         return (
-            // <Block position="relative" width="100%" minWidth="230px" minHeight="230px" $style={{aspectRatio: 1}}>
-            //     <Image src={props.original} alt={props.originalAlt} width={1024} height={1024} layout="intrinsic" objectFit="contain"/>
-            //     {wallPicturesTemp.map((pic, index) => {
-            //         if (!pic) return;
-            //         return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic} alt="side-wall"/>;
-            //     })}
-            // </Block>
             <AspectRatioBox aspectRatio={1} minHeight="230px">
                 <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
-                {/*{activeWall > -1 ? (*/}
-                {/*    <img className="image-gallery-image-wall" style={{zIndex: activeWall === 0 ? 1 : activeWall === 1 ? 3 : activeWall === 2 ? 4 : activeWall === 3 ? 2 : 1}}*/}
-                {/*         src={`${process.env.imageBaseUrl}/images/icon/icon-wall-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator-${selectedSize}.png`}*/}
-                {/*         alt="side-wall-indicator"/>*/}
-                {/*) : null}*/}
                 {wallPicturesTemp.map((pic, index) => {
-                    if (!pic) {
-                        if (activeWall === index && selectedSize === "10x10") {
-                            return <img key={index} className="image-gallery-image-wall"
-                                        style={{zIndex: activeWall === 0 ? 1 : activeWall === 1 ? 3 : activeWall === 2 ? 4 : activeWall === 3 ? 2 : 1}}
-                                        src={`${process.env.imageBaseUrl}/images/icon/icon-wall-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator-border-${selectedSize}.png`}
-                                        alt="side-wall-indicator"/>;
-                        }
-                    } else {
-                        return <img key={index} className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 4 : index === 3 ? 2 : 1}} src={pic}
-                                    alt="side-wall"/>;
-                    }
+                    return (
+                        <div key={index}>
+                            {activeWall === index ? (
+                                <img className="image-gallery-image-wall"
+                                     style={{zIndex: activeWall === 0 ? 2 : activeWall === 1 ? 6 : activeWall === 2 ? 8 : activeWall === 3 ? 4 : 2}}
+                                     src={`${process.env.imageBaseUrl}/images/icon/icon-wall-${activeWall === 0 ? "left" : activeWall === 3 ? "back" : activeWall === 1 ? "right" : activeWall === 2 ? "front" : ""}-indicator-border-${selectedFrame}-${selectedSize}.png`}
+                                     alt="side-wall-indicator"/>
+                            ) : null}
+                            {pic ? (
+                                <img className="image-gallery-image-wall" style={{zIndex: index === 0 ? 1 : index === 1 ? 5 : index === 2 ? 7 : index === 3 ? 3 : 1}} src={pic}
+                                     alt="side-wall"/>
+                            ) : null}
+                        </div>
+                    )
                 })}
             </AspectRatioBox>
         );
@@ -513,22 +479,24 @@ function Canopy_Tent({router, products, variants, phone}) {
 
     useEffect(() => {
         if (!productImageGallery || productImageGallery.length === 0) return;
-        let images = [...productImageGallery];
+        let images = JSON.parse(JSON.stringify(productImageGallery));
+
         images[0].renderItem = renderCustomImage;
         setProductImageGallery(images);
     }, [wallPictures]);
 
     useEffect(() => {
         if (!productImageGalleryTemp || productImageGalleryTemp.length === 0) return;
-        let images = [...productImageGalleryTemp];
+        let images = JSON.parse(JSON.stringify(productImageGalleryTemp));
 
         images[0].renderItem = renderCustomImageTemp;
+
         setProductImageGalleryTemp(images);
     }, [wallPicturesTemp]);
 
     const handleChangeRadio = (event, index, id) => {
         // Part 1: 更改选项List信息 并 保存
-        let selection = [...selectedAttribute];
+        let selection = JSON.parse(JSON.stringify(selectedAttribute));
         if (event && id) {
             selection[index].forEach((attribute) => {
                 if (attribute.id === id) attribute.option = event.target.value;
@@ -541,7 +509,7 @@ function Canopy_Tent({router, products, variants, phone}) {
             });
         }
         // Part 2: 根据选项从VariantList中查找对应产品数据 并 保存
-        let selectionVariant = [...selectedVariant];
+        let selectionVariant = JSON.parse(JSON.stringify(selectedVariant));
         let selected = productVariant[index].filter((variant) => {
             if (!variant || !variant.attributes) return false;
 
@@ -562,11 +530,10 @@ function Canopy_Tent({router, products, variants, phone}) {
             selection.forEach((item, indexA) => {
                 if (indexA < 1) return;
 
-                item.forEach((attribute) => {
+                item.map((attribute) => {
                     if (attribute.id === id_attribute_canopySize) attribute.option = event.target.value;
                     if (attribute.id === id_attribute_wallSize) attribute.option = (indexA === 1 || indexA === 2) ? sizes[0] + "ft" : sizes[1] === "26" ? "13ft" : sizes[1] + "ft";
                 });
-
                 // 挑选出对应 Roof/Wall Variant.
                 let selectedWall = productVariant[indexA].filter((variant) => {
                     if (!variant.attributes) return false;
@@ -583,54 +550,30 @@ function Canopy_Tent({router, products, variants, phone}) {
                 });
                 selectionVariant[indexA] = selectedWall[0];
             });
+            setWallPlainAttributeList(selection.slice(-4));
         }
         // Part 3: 保存更改项
         setSelectedAttribute(selection);
         setSelectedVariant(selectionVariant);
     };
 
-    const handleChangeWallRadio = (event, index, id) => {
+    const handleRemoveWall = () => {
+        setWallPriceList([]);
+
         // Part 1: 更改选项List信息 并 保存
         let selection = JSON.parse(JSON.stringify(wallPlainAttributeList));
-        selection.map(item => item.forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null)));
-        // selection[index].forEach((attribute) => (attribute.id === id ? (attribute.option = event.target.value) : null));
+        selection.map(item => item.forEach((attribute) => (attribute.id === id_attribute_wallType ? (attribute.option = "none") : null)));
         // Part 2: 保存更改项
         setWallPlainAttributeList(selection);
 
+        // Part 1: 更改选项List信息 并 保存
         let selectionA = JSON.parse(JSON.stringify(selectedAttribute));
-        selection.forEach((attribute, index) => {
-            selectionA[index + 1] = attribute;
-        });
+        selection.forEach((attribute, index) => selectionA[index + 1] = attribute);
+        // Part 2: 保存更改项
         setSelectedAttribute(selectionA);
 
-        let selectedVariantList = [];
-        selectionA.forEach((attr, index) => {
-            let selected = productVariant[index].filter((variant) => {
-                if (!variant || !variant.attributes) return false;
-                let equal = true;
-                const initSelectedVariant = (a, b, indexA, indexB) => {
-                    let indexC = indexB;
-                    for (let i = indexA; i < a.length; i++) {
-                        if (indexC < b.length) {
-                            if (a[i].id === b[indexC].id) {
-                                if (a[i].option.toLowerCase() !== b[indexC].option.toLowerCase()) {
-                                    equal = false;
-                                    break;
-                                }
-                                indexC++;
-                            } else {
-                                initSelectedVariant(a, b, i + 1, indexC);
-                                break;
-                            }
-                        }
-                    }
-                };
-                initSelectedVariant(attr, variant.attributes, 0, 0);
-                return equal;
-            });
-            selectedVariantList[index] = selected[0];
-        });
-        setSelectedVariant(selectedVariantList);
+        // Part 2: 保存更改项
+        setSelectedVariant([selectedVariant[0], null, null, null, null]);
     };
 
     const handleChangeWallRadioTemp = (event, index, id) => {
@@ -643,7 +586,7 @@ function Canopy_Tent({router, products, variants, phone}) {
         setWallPlainAttributeListTemp(selection);
 
         // Part 2.5: Canopy Tent订制选项，根据Tent Size变更Wall Size
-        let selectedVariantList = JSON.parse(JSON.stringify(selectedVariant));
+        let selectedVariantList = JSON.parse(JSON.stringify(selectedWallVariantTemp));
         selection.forEach((attr, indexD) => {
             let selected = productVariant[index + 1].filter((variant) => {
                 if (!variant || !variant.attributes) return false;
@@ -668,9 +611,9 @@ function Canopy_Tent({router, products, variants, phone}) {
                 initSelectedVariant(attr, variant.attributes, 0, 0);
                 return equal;
             });
-            selectedVariantList[indexD + 1] = selected[0];
+            selectedVariantList[indexD] = selected[0];
         });
-        setSelectedVariant(selectedVariantList);
+        setSelectedWallVariantTemp(selectedVariantList);
     };
 
     const handleResetWallRadioTemp = () => {
@@ -698,7 +641,7 @@ function Canopy_Tent({router, products, variants, phone}) {
         let wallPicturesList = JSON.parse(JSON.stringify(wallPicturesTemp));
 
         let product_name = "";
-        let size = "";
+        let size = selectedSize;
         let series = "Y5";
 
         if (selectedFrame === "y5") {
@@ -715,13 +658,12 @@ function Canopy_Tent({router, products, variants, phone}) {
             series = "Y7";
         }
 
-        selectedVariant[0].attributes.map(({id, option}) => id === id_attribute_canopySize ? size = option.toUpperCase() : null);
-
         wallPlainAttributeListTemp.forEach((attribute, index) => {
             if (!attribute) {
                 wallPicturesList[index] = "";
                 return;
             }
+
             let colorResult = attribute.filter(({id}) => id === id_attribute_canopyColor);
             let color = colorResult.length > 0 ? colorResult[0].option.toLowerCase() : "white";
             // 设置Wall图片
@@ -736,6 +678,7 @@ function Canopy_Tent({router, products, variants, phone}) {
                 wallPicturesList[index] = process.env.imageBaseUrl + "/images/product/" + product_name + "/wall/" + series + "-" + typeUrl + sizeUrl + colorUrl + "-" + sideUrl + ".png";
             }
         });
+
         // Set墙面图片
         setWallPicturesTemp(wallPicturesList);
     }, [wallPlainAttributeListTemp, activeWall]);
@@ -1044,11 +987,14 @@ function Canopy_Tent({router, products, variants, phone}) {
                 pList[index - 1] = numberFn.strToFloat(variant.price);
             }
         });
-        setWallPriceList(pList);
 
-        // Set墙面图片
-        setWallPictures(wallPicturesList);
-        checkProduct_getPrice();
+        if (!wallIsOpen) {
+            setWallPriceList(pList);
+
+            // Set墙面图片
+            setWallPictures(wallPicturesList);
+            checkProduct_getPrice();
+        }
     }, [selectedVariant]);
 
     useEffect(() => {
@@ -1593,13 +1539,8 @@ function Canopy_Tent({router, products, variants, phone}) {
                                                      onClick={() => openWallModal(0)}
                                             />
                                             {wallAdded ? (
-                                                <MButton type="text" text="Remove" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}
-                                                         color="MinXPrimaryText"
-                                                         onClick={() => {
-                                                             setWallPriceList([]);
-                                                             handleChangeWallRadio({target: {value: "none"}}, 0, id_attribute_wallType)
-                                                         }}
-                                                />
+                                                <MButton type="text" text="Remove" height="100%" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]} color="MinXPrimaryText"
+                                                         onClick={() => handleRemoveWall()}/>
                                             ) : null}
                                         </Block>
                                     </Block>
@@ -1844,79 +1785,6 @@ function Canopy_Tent({router, products, variants, phone}) {
                         </Block>
                         <Block className="hideScrollBar" display="flex" flexDirection="column" alignItems="center" width="100%" maxWidth="618px" margin="auto" overflow={["unset", null, "scroll"]}>
                             <SelectionArea title="Type" containerStyle={{marginTop: 0}}>
-                                {/*<Selection name="wall-type" radioStyle={{minWidth: "98px"}}*/}
-                                {/*           radioGroupStyle={{*/}
-                                {/*               padding: "4px",*/}
-                                {/*               borderTopLeftRadius: "4px",*/}
-                                {/*               borderTopRightRadius: "4px",*/}
-                                {/*               borderBottomLeftRadius: "4px",*/}
-                                {/*               borderBottomRightRadius: "4px",*/}
-                                {/*               borderTopWidth: "1px",*/}
-                                {/*               borderBottomWidth: "1px",*/}
-                                {/*               borderLeftWidth: "1px",*/}
-                                {/*               borderRightWidth: "1px",*/}
-                                {/*               borderTopStyle: "solid",*/}
-                                {/*               borderBottomStyle: "solid",*/}
-                                {/*               borderLeftStyle: "solid",*/}
-                                {/*               borderRightStyle: "solid",*/}
-                                {/*               borderColor: error ? "#EB512A" : "transparent",*/}
-                                {/*           }}*/}
-                                {/*           value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() : "none"} id={id_attribute_wallType}*/}
-                                {/*           onChange={(event) => {*/}
-                                {/*               if (wallPlainAttributeListTemp[activeWall][0].option.toLowerCase() === "none") {*/}
-                                {/*                   handleChangeWallRadioTemp(event, activeWall, id_attribute_wallType)*/}
-                                {/*               } else {*/}
-                                {/*                   handleChangeWallRadioTemp({target: {value: "none"}}, activeWall, id_attribute_wallType)*/}
-                                {/*               }*/}
-                                {/*           }}*/}
-                                {/*>*/}
-                                {/*    {productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_wallType && attribute.variation).map(({options}) =>*/}
-                                {/*        options.map((option, indexWall) => (*/}
-                                {/*            <Radio key={indexWall} value={option.toLowerCase()}*/}
-                                {/*                   overrides={{*/}
-                                {/*                       Label: ({$value}) => (*/}
-                                {/*                           <Block>*/}
-                                {/*                               /!*<Button*!/*/}
-                                {/*                               /!*    kind={KIND.tertiary}*!/*/}
-                                {/*                               /!*    shape={SHAPE.circle}*!/*/}
-                                {/*                               /!*    overrides={{*!/*/}
-                                {/*                               /!*        BaseButton: {*!/*/}
-                                {/*                               /!*            style: ({$theme}) => ({*!/*/}
-                                {/*                               /!*                position: "absolute",*!/*/}
-                                {/*                               /!*                right: "-12px",*!/*/}
-                                {/*                               /!*                top: "-12px",*!/*/}
-                                {/*                               /!*                width: "12px",*!/*/}
-                                {/*                               /!*                height: "12px",*!/*/}
-                                {/*                               /!*                borderTopWidth: "1px",*!/*/}
-                                {/*                               /!*                borderTopStyle: "solid",*!/*/}
-                                {/*                               /!*                borderTopColor: "#B2B2B2",*!/*/}
-                                {/*                               /!*                borderRightWidth: "1px",*!/*/}
-                                {/*                               /!*                borderRightStyle: "solid",*!/*/}
-                                {/*                               /!*                borderRightColor: "#B2B2B2",*!/*/}
-                                {/*                               /!*                borderBottomWidth: "1px",*!/*/}
-                                {/*                               /!*                borderBottomStyle: "solid",*!/*/}
-                                {/*                               /!*                borderBottomColor: "#B2B2B2",*!/*/}
-                                {/*                               /!*                borderLeftWidth: "1px",*!/*/}
-                                {/*                               /!*                borderLeftStyle: "solid",*!/*/}
-                                {/*                               /!*                borderLeftColor: "#B2B2B2",*!/*/}
-                                {/*                               /!*                fontSize: "10px",*!/*/}
-                                {/*                               /!*                color: "#B2B2B2",*!/*/}
-                                {/*                               /!*            }),*!/*/}
-                                {/*                               /!*        },*!/*/}
-                                {/*                               /!*    }}*!/*/}
-                                {/*                               /!*>*!/*/}
-                                {/*                               /!*    ?*!/*/}
-                                {/*                               /!*</Button>*!/*/}
-                                {/*                               <Block position="relative" width="80px" height="80px" marginBottom="4px">*/}
-                                {/*                                   <Image src={"/images/icon/icon-wall-" + option.toLowerCase() + ".png"} layout="fill" objectFit="contain"/>*/}
-                                {/*                               </Block>*/}
-                                {/*                               <div>{option.toLowerCase() === "rollup" ? "Roll-up" : option}</div>*/}
-                                {/*                           </Block>*/}
-                                {/*                       ),*/}
-                                {/*                   }}*/}
-                                {/*            />*/}
-                                {/*        ))) : null}*/}
-                                {/*</Selection>*/}
                                 <Block width="100%" display="grid" gridTemplateColumns={["repeat(3, 1fr)", null, "repeat(5, 1fr)"]} gridColumnGap="8px" gridRowGap="8px" justifyContent="flex-start"
                                        overrides={{
                                            Block: {
@@ -2044,7 +1912,7 @@ function Canopy_Tent({router, products, variants, phone}) {
                                 </Block>
                             </SelectionArea>
                             <Block width="100%" height="20px" marginTop="2px" marginRight="auto" font="MinXParagraph14" color="#EB512A">{error && "Please choose side wall type."}</Block>
-                            <SelectionArea title="Color" containerStyle={{marginTop: "20px !important"}}>
+                            <SelectionArea title="Color" containerStyle={{marginTop: "2px !important"}}>
                                 <Selection name="wall-color" value={wallPlainAttributeListTemp[activeWall] ? wallPlainAttributeListTemp[activeWall][2].option.toLowerCase() : "white"} id={id_attribute_canopyColor}
                                            attributes={productComponent && productComponent[1] ? productComponent[1].attributes.filter((attribute) => attribute.id === id_attribute_canopyColor && attribute.variation) : []}
                                            onChange={(event) => {

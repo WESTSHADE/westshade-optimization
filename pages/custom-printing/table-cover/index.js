@@ -82,14 +82,14 @@ function Custom_Printing_Table_Cover({router, size}) {
                                     }}
                              >
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="a1">
-                                     320 gsm, 500D polyester with PVC coating
+                                     288 gsm, 600D PU Coated Polyester
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
                                      <Image src="/images/custom-printing/table-cover/fabric.webp" alt="fabric" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
-                                     229 gsm stretch fabric
+                                     210 gsm stretch fabric
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">

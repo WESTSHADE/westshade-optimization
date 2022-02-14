@@ -93,8 +93,20 @@ function Custom_Printing() {
     const [ptComparisonStyle, setPtComparisonStyle] = useState({visibility: "hidden", opacity: 0});
 
     const goToFreeMockup = () => {
-        if (window) window.scrollTo({top: mockupRef.current.offsetTop, behavior: 'smooth'});
+        if (window) window.scrollTo({top: mockupRef.current.offsetTop + 60, behavior: 'smooth'});
     };
+
+    useEffect(() => {
+        let currentLocation = window.location.href;
+        const hasCommentAnchor = currentLocation.includes("/#");
+
+        if (hasCommentAnchor) {
+            const anchorCommentId = `${currentLocation.substring(currentLocation.indexOf("#") + 1)}`;
+            if (anchorCommentId === "form") {
+                goToFreeMockup();
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (ptComparisonRef.current) {

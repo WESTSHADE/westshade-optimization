@@ -17,7 +17,6 @@ export default function content({dataTable}) {
 
     selectedVariant.map((variant, index) => {
         if (!variant) return
-        console.log(selectedVariant)
 
         let cell = {
             name: productComponent[index]?.name,
@@ -27,7 +26,7 @@ export default function content({dataTable}) {
             price: variant.price,
             on_sale: variant.on_sale,
         };
-        
+
         if (index === 3 || index === 4) {
             variant.attributes.map(attr => {
                 if (attr.id === 14 && attr.option === "13ft") {

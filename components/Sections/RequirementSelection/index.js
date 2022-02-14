@@ -186,7 +186,7 @@ const RequirementSelection = ({steps, prevClick, nextClick, activeSide, activeTe
                            }}
                     >
                         <Block className="text-center" display="grid" gridTemplateColumns="1fr" gridRowGap={["16px", null, null, "24px"]}>
-                            <Block font={["MinXTitle14", "MinXTitle14", "MinXTitle14", "MinXTitle16"]} color="MinXTitle" $style={{fontWeight: "400 !important"}}>Please select the wall you’d like to print.</Block>
+                            <Block font={["MinXTitle14", "MinXTitle14", "MinXTitle14", "MinXTitle16"]} color="MinXTitle" $style={{fontWeight: "400 !important"}}>Please select A, B, C, or D.</Block>
                             <Block position="relative" width={["200px", null, null, "272px"]} height={["200px", null, null, "272px"]} margin="auto">
                                 {Object.keys(label).map((side, index) => {
                                     return (
@@ -224,7 +224,8 @@ const RequirementSelection = ({steps, prevClick, nextClick, activeSide, activeTe
                                     );
                                 })}
                             </Block>
-                            <Block display={activeSide ? "block" : "none"} font={["MinXTitle14", "MinXTitle14", "MinXTitle14", "MinXTitle16"]} color="MinXTitle" $style={{fontWeight: "400 !important"}}>Please select the type of wall.</Block>
+                            <Block display={activeSide ? "block" : "none"} font={["MinXTitle14", "MinXTitle14", "MinXTitle14", "MinXTitle16"]} color="MinXTitle" $style={{fontWeight: "400 !important"}}>Please select the peak and/or
+                                valance.</Block>
                             <Block display={activeSide ? "grid" : "none"} gridTemplateColumns="1fr 1fr 1fr" gridColumnGap={["16px", null, null, "24px"]}>
                                 <Block position="relative">
                                     <Button type="outline" bundle="gray" width="100%" height="82px" font="MinXParagraph14"

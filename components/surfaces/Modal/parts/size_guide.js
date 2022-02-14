@@ -133,7 +133,7 @@ export default function content({product}) {
     } else if (product === "umbrella") {
         return (
             <>
-                <Block display="grid" gridTemplateColumns="120px max-content" marginTop="48px" marginRight="24px" marginLeft="24px" overflow="hidden">
+                <Block display="grid" gridTemplateColumns="120px max-content" marginTop={["48px", null, "24px"]} marginRight="24px" marginLeft="24px" overflow="hidden">
                     <Block display="grid" gridTemplateRows="repeat(6, 48px)" alignItems="center">
                         <div/>
                         <Block font="MinXLabel14" color="MinXPrimaryText">Marco</Block>

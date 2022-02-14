@@ -21,7 +21,7 @@ const selection_area = (props) => {
                    }
                }}
         >
-            <Block font="MinXLabel14" color="MinXPrimaryText" $style={{lineHeight: "1 !important", ...titleStyle}}>{title}</Block>
+            <Block font="MinXLabel14" color="MinXPrimaryText" $style={{fontWeight: "600 !important", lineHeight: "1 !important", ...titleStyle}}>{title}</Block>
             {children}
         </Block>
     )

@@ -266,7 +266,7 @@ export default function Description() {
                             </Block>
                         </Block>
                     </Block>
-                    <Block display="grid" gridTemplateColumns={["1fr", null, "1fr auto"]} gridColumnGap="70px" gridRowGap="16px" marginBottom={["27px", null, "40px"]}>
+                    <Block display="grid" gridTemplateColumns={["1fr", null, "1fr auto"]} gridColumnGap="70px" gridRowGap="16px" maxWidth="1152px" marginRight="auto" marginLeft="auto" marginBottom={["27px", null, "40px"]}>
                         <Block className="text-center" display="grid" gridTemplateColumns="repeat(2, 1fr)" gridColumnGap={["14px", null, "21px"]} height={["165px", null, "410px"]}>
                             <Block position="relative" display="flex" flexDirection="column" justifyContent="center" alignItems="center" width="100%" backgroundColor="rgba(0, 0, 0, 0.4)" overflow="hidden"
                                    $style={{borderRadius: "8px"}}>

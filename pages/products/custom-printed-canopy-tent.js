@@ -655,7 +655,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                         }
                                     </Block>
                                     <Block className="text-left" marginBottom={["24px", "40px"]} font="MinXParagraph14" color="MinXTitle">
-                                        All custom printing orders will get a mockup before production. You can also <Block as="span" color="MinXButton" $style={{textDecoration: "underline"}}><Link href="/custom-printing">get a free
+                                        All custom printing orders will get a mockup before production. You can also <Block as="span" color="MinXButton" $style={{textDecoration: "underline"}}><Link href="/custom-printing/#form">get a free
                                         mockup </Link></Block> without ordering.
                                     </Block>
                                     <Block padding="11px" $style={{borderRadius: "24px", border: "1px solid #D9D9D9"}}>
