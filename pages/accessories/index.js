@@ -140,7 +140,21 @@ function Accessories({router, products}) {
     )
 }
 
-Accessories.getInitialProps = async () => {
+// Accessories.getInitialProps = async () => {
+//     const ids = [26553, 26523, 26804, 26774, 26744];
+//     let products = [];
+//
+//     products[0] = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     products[1] = await utils.getProductByCategoryId(167);
+//     products[2] = await utils.getProductByCategoryId(483);
+//
+//     return {
+//         products: products,
+//         fullPage: true
+//     };
+// };
+
+export async function getStaticProps() {
     const ids = [26553, 26523, 26804, 26774, 26744];
     let products = [];
 
@@ -149,9 +163,11 @@ Accessories.getInitialProps = async () => {
     products[2] = await utils.getProductByCategoryId(483);
 
     return {
-        products: products,
-        fullPage: true
+        props: {
+            products: products,
+            fullPage: true
+        }
     };
-};
+}
 
 export default withRouter(Accessories);
