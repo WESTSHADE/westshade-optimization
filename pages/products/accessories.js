@@ -516,9 +516,8 @@ function Accessories({router, product, productComponent, productVariant}) {
 }
 
 // Accessories.getInitialProps = async (context) => {
-Accessories.getServerSideProps = async (context) => {
-    const {query} = context;
-    const {id} = query;
+export const getServerSideProps = async (context) => {
+    const {id} = context;
     let product = null,
         component = [],
         variant = [];
