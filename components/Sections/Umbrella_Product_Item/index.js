@@ -13,7 +13,7 @@ let imageSrc = '/images/product/default-product.webp';
 const ProductItem = ({detail}) => {
     const router = useRouter();
 
-    let link = 'https://www.westshade.com/products/accessories/?id=' + detail.id;
+    let link = 'https://www.westshade.com/products/accessories/' + detail.id;
 
     const setMainImage = (images) => {
         if (!images || images.length === 0) return;

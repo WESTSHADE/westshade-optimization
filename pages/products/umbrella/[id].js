@@ -1243,7 +1243,7 @@ export async function getStaticProps({params}) {
             variants: variants,
             fullPage: true
         },
-        revalidate: 3600, // In seconds
+        revalidate: 120, // In seconds
     };
 }
 

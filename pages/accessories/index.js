@@ -29,12 +29,12 @@ const Product = ({name, product, showDesc = true, onClick}) => {
 
     return (
         <Block className='cursor' display="grid" gridTemplateColumns="1fr" gridTemplateRows="auto 1fr" gridRowGap={["12px", "16px"]} width="100%" marginRight="auto" marginLeft="auto" paddingRight={["0", "16px"]} paddingLeft={["0", "16px"]}
-               onClick={() => onClick(product.id === 26553 ? {pathname: "/products/accessories/", query: {id: 26516, type: "half"}} :
-                   product.id === 26523 ? {pathname: "/products/accessories/", query: {id: 26516, type: "full"}} :
-                       product.id === 26804 ? {pathname: "/products/accessories/", query: {id: 26516, type: "rollup"}} :
-                           product.id === 26774 ? {pathname: "/products/accessories/", query: {id: 26516, type: "pvc"}} :
-                               product.id === 26744 ? {pathname: "/products/accessories/", query: {id: 26516, type: "mesh"}} :
-                                   "/products/accessories?id=" + product.id)}
+               onClick={() => onClick(product.id === 26553 ? {pathname: "/products/accessories/26516", query: {type: "half"}} :
+                   product.id === 26523 ? {pathname: "/products/accessories/26516", query: {type: "full"}} :
+                       product.id === 26804 ? {pathname: "/products/accessories/26516", query: {type: "rollup"}} :
+                           product.id === 26774 ? {pathname: "/products/accessories/26516", query: {type: "pvc"}} :
+                               product.id === 26744 ? {pathname: "/products/accessories/26516", query: {type: "mesh"}} :
+                                   "/products/accessories/" + product.id)}
         >
             <Block position="relative" width="inherit" margin="auto" $style={{aspectRatio: 1}}>
                 {url ? (
@@ -167,7 +167,7 @@ export async function getStaticProps() {
             products: products,
             fullPage: true
         },
-        revalidate: 3600, // In seconds
+        revalidate: 240, // In seconds
     };
 }
 

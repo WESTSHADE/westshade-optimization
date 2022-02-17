@@ -104,7 +104,7 @@ const nextConfig = {
             // "/products/tilt-umbrellas/kapri-umbrella": {page: "/products/umbrella", query: {id: "59850"}},
             // "/products/cantilever-umbrellas/catalina-umbrella": {page: "/products/umbrella", query: {id: "30441"}},
             "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: "57917"}},
-            "/products/accessories": {page: "/products/accessories"},
+            // "/products/accessories": {page: "/products/accessories"},
             // 功能页
             "/search": {page: "/search"},
             "/my-account": {page: "/my-account"},
@@ -172,13 +172,13 @@ const nextConfig = {
                 destination: '/umbrella/spec'
             }, {
                 source: '/y5-economic/buy',
-                destination: '/products/canopy-tent?id=25649'
+                destination: '/products/canopy-tent?series=25649'
             }, {
                 source: '/y6-commercial/buy',
-                destination: '/products/canopy-tent?id=24229'
+                destination: '/products/canopy-tent?series=24229'
             }, {
                 source: '/y7-heavy-duty/buy',
-                destination: '/products/canopy-tent?id=25659'
+                destination: '/products/canopy-tent?series=25659'
             }, {
                 source: '/products/canopy-tent/buy',
                 destination: '/products/canopy-tent'
