@@ -1931,23 +1931,41 @@ function Canopy_Tent({router, products, variants, phone}) {
     );
 }
 
-Canopy_Tent.getInitialProps = async (context) => {
-    const {query} = context;
+// Canopy_Tent.getInitialProps = async (context) => {
+//     const {query} = context;
+//     const ids = [26338, 26385, 26405, 26516];
+//     let products = null,
+//         variants = [];
+//
+//     // product = await utils.getProductByWooId(id);
+//     // if (product.type === "composite") {
+//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+//     // }
+//
+//     return {
+//         products: products,
+//         variants: variants,
+//         fullPage: true
+//     };
+// };
+
+export async function getStaticProps() {
     const ids = [26338, 26385, 26405, 26516];
     let products = null,
         variants = [];
 
-    // product = await utils.getProductByWooId(id);
-    // if (product.type === "composite") {
     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
-    // }
 
     return {
-        products: products,
-        variants: variants,
-        fullPage: true
+        props: {
+            products: products,
+            variants: variants,
+            fullPage: true
+        },
+        revalidate: 10, // In seconds
     };
-};
+}
 
 export default withRouter(Canopy_Tent);

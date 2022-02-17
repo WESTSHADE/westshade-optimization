@@ -1213,48 +1213,6 @@ function Umbrella({router, products, variants, phone}) {
     );
 }
 
-// Umbrella.getInitialProps = async (context) => {
-//     const {query} = context;
-//     const {id} = query;
-//     // let product = null,
-//     //     component = [],
-//     //     variant = [];
-//
-//     // const id_product_umbrella_marco = "49555";
-//     // const id_product_umbrella_santorini = "47943";
-//     // const id_product_umbrella_bali = "30361";
-//     // const id_product_umbrella_kapri = "59850";
-//     // const id_product_umbrella_catalina = "30441";
-//
-//     const ids = [id, 62455];
-//     let products = null,
-//         variants = [];
-//
-//     // product = await utils.getProductByWooId(id);
-//     // if (product && product.type === "simple") {
-//     //     component[0] = {...product};
-//     // } else if (product && product.type === "variable") {
-//     //     component[0] = {...product};
-//     //     variant[0] = await utils.getVariantByWooProductId(id);
-//     // }
-//
-//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
-//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
-//
-//
-//     // return {
-//     //     product: product,
-//     //     productComponent: component,
-//     //     productVariant: variant,
-//     // };
-//
-//     return {
-//         products: products,
-//         variants: variants,
-//         fullPage: true
-//     };
-// };
-
 export async function getStaticPaths() {
     return {
         paths: [
