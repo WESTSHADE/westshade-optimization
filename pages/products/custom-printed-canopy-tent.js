@@ -744,9 +744,36 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     )
 }
 
-export default Index;
+//
+// Index.getInitialProps = async (context) => {
+//     let product = null,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(61289);
+//     if (product && product.type === "composite") {
+//         let cc = [product.composite_components[0], product.composite_components[1]];
+//         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
+//         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
+//     }
+//
+//     return {
+//         product: product,
+//         productComponent: [component[0], component[1]],
+//         productVariant: [variant[0], variant[1]],
+//         pageState: {
+//             initialState,
+//             initialSteps,
+//             initialProduct
+//         },
+//         printingMethods,
+//         frameTypes,
+//         tentSizes,
+//         fullPage: true
+//     };
+// }
 
-Index.getInitialProps = async (context) => {
+export async function getStaticProps() {
     let product = null,
         component = [],
         variant = [];
@@ -759,17 +786,22 @@ Index.getInitialProps = async (context) => {
     }
 
     return {
-        product: product,
-        productComponent: [component[0], component[1]],
-        productVariant: [variant[0], variant[1]],
-        pageState: {
-            initialState,
-            initialSteps,
-            initialProduct
+        props: {
+            product: product,
+            productComponent: [component[0], component[1]],
+            productVariant: [variant[0], variant[1]],
+            pageState: {
+                initialState,
+                initialSteps,
+                initialProduct
+            },
+            printingMethods,
+            frameTypes,
+            tentSizes,
+            fullPage: true
         },
-        printingMethods,
-        frameTypes,
-        tentSizes,
-        fullPage: true
+        revalidate: 3600, // In seconds
     };
 }
+
+export default Index;
