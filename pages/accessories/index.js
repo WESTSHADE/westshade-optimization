@@ -166,7 +166,8 @@ export async function getStaticProps() {
         props: {
             products: products,
             fullPage: true
-        }
+        },
+        revalidate: 10, // In seconds
     };
 }
 

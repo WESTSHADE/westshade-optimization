@@ -25,11 +25,11 @@ import {DateFn, NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-import {updateUser} from "../../redux/actions/userActions";
-import {modifyCart} from "../../redux/actions/cartActions";
+import {viewItem, addToCart} from "../../../redux/actions/gtagActions";
+import {updateUser} from "../../../redux/actions/userActions";
+import {modifyCart} from "../../../redux/actions/cartActions";
 
-import styles from "./Product.module.scss";
+import styles from "../Product.module.scss";
 
 const dateFn = new DateFn();
 const numberFn = new NumberFn();
@@ -1213,46 +1213,80 @@ function Umbrella({router, products, variants, phone}) {
     );
 }
 
-Umbrella.getInitialProps = async (context) => {
-    const {query} = context;
-    const {id} = query;
-    // let product = null,
-    //     component = [],
-    //     variant = [];
+// Umbrella.getInitialProps = async (context) => {
+//     const {query} = context;
+//     const {id} = query;
+//     // let product = null,
+//     //     component = [],
+//     //     variant = [];
+//
+//     // const id_product_umbrella_marco = "49555";
+//     // const id_product_umbrella_santorini = "47943";
+//     // const id_product_umbrella_bali = "30361";
+//     // const id_product_umbrella_kapri = "59850";
+//     // const id_product_umbrella_catalina = "30441";
+//
+//     const ids = [id, 62455];
+//     let products = null,
+//         variants = [];
+//
+//     // product = await utils.getProductByWooId(id);
+//     // if (product && product.type === "simple") {
+//     //     component[0] = {...product};
+//     // } else if (product && product.type === "variable") {
+//     //     component[0] = {...product};
+//     //     variant[0] = await utils.getVariantByWooProductId(id);
+//     // }
+//
+//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+//
+//
+//     // return {
+//     //     product: product,
+//     //     productComponent: component,
+//     //     productVariant: variant,
+//     // };
+//
+//     return {
+//         products: products,
+//         variants: variants,
+//         fullPage: true
+//     };
+// };
 
-    // const id_product_umbrella_marco = "49555";
-    // const id_product_umbrella_santorini = "47943";
-    // const id_product_umbrella_bali = "30361";
-    // const id_product_umbrella_kapri = "59850";
-    // const id_product_umbrella_catalina = "30441";
+export async function getStaticPaths() {
+    return {
+        paths: [
+            {params: {id: '49555'}},
+            {params: {id: '47943'}},
+            {params: {id: '30361'}},
+            {params: {id: '59850'}},
+            {params: {id: '30441'}},
+        ],
+        fallback: true // false or 'blocking'
+    };
+}
+
+export async function getStaticProps({params}) {
+    const {id} = params;
 
     const ids = [id, 62455];
     let products = null,
         variants = [];
 
-    // product = await utils.getProductByWooId(id);
-    // if (product && product.type === "simple") {
-    //     component[0] = {...product};
-    // } else if (product && product.type === "variable") {
-    //     component[0] = {...product};
-    //     variant[0] = await utils.getVariantByWooProductId(id);
-    // }
-
     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
 
 
-    // return {
-    //     product: product,
-    //     productComponent: component,
-    //     productVariant: variant,
-    // };
-
     return {
-        products: products,
-        variants: variants,
-        fullPage: true
+        props: {
+            products: products,
+            variants: variants,
+            fullPage: true
+        },
+        revalidate: 10, // In seconds
     };
-};
+}
 
 export default withRouter(Umbrella);
