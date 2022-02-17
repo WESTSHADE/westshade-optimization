@@ -225,24 +225,18 @@ function Accessories({router, product, productComponent, productVariant}) {
     };
 
     useEffect(async () => {
-        if (uProduct.id) {
+        if (product && product.id) {
             setProductId(uProduct.id.toString());
-        } else {
-            let id = urlFn.getParam("id");
-            if (id) {
-                setProductId(id.toString());
-                let p = await utils.getProductByWooId(id);
-                setProduct(p);
-            } else {
-                router.push("/")
-            }
         }
 
         if (router.query.type) {
             setWallType(router.query.type);
         } else {
             let type = urlFn.getParam("type");
-            setWallType(type);
+
+            if (type) {
+                setWallType(type);
+            }
         }
     }, []);
 

@@ -289,18 +289,22 @@ function Custom_printed_Package({router, product, productComponent, productVaria
     useEffect(async () => {
         setTabsRefs((tabsRefs) => Array(3).fill(null).map((_, i) => tabsRefs[i] || createRef()));
 
-        if (uProduct.id) {
+        if (product && product.id) {
             setProductId(uProduct.id.toString());
-        } else {
-            let id = urlFn.getParam("id");
-            if (id) {
-                setProductId(id.toString());
-                let p = await utils.getProductByWooId(id);
-                setProduct(p);
-            } else {
-                router.push("/")
-            }
         }
+
+        // if (product.id) {
+        //     setProductId(uProduct.id.toString());
+        // } else {
+        //     let id = urlFn.getParam("id");
+        //     if (id) {
+        //         setProductId(id.toString());
+        //         let p = await utils.getProductByWooId(id);
+        //         setProduct(p);
+        //     } else {
+        //         router.push("/")
+        //     }
+        // }
 
         let series = router.query.series || urlFn.getParam("series");
         if (series) {
