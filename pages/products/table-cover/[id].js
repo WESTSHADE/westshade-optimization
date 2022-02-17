@@ -18,11 +18,11 @@ import {NumberFn, StringFn, UrlFn} from "Utils/tools";
 import Utils from "Utils/utils";
 import {EventEmitter} from "Utils/events";
 
-import {viewItem, addToCart} from "../../redux/actions/gtagActions";
-import {updateUser} from "../../redux/actions/userActions";
-import {modifyCart} from "../../redux/actions/cartActions";
+import {viewItem, addToCart} from "../../../redux/actions/gtagActions";
+import {updateUser} from "../../../redux/actions/userActions";
+import {modifyCart} from "../../../redux/actions/cartActions";
 
-import styles from "./Product.module.scss";
+import styles from "../Product.module.scss";
 
 const numberFn = new NumberFn();
 const stringFn = new StringFn();

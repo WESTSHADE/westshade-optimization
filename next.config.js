@@ -103,7 +103,7 @@ const nextConfig = {
             // "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella": {page: "/products/umbrella", query: {id: "30361"}},
             // "/products/tilt-umbrellas/kapri-umbrella": {page: "/products/umbrella", query: {id: "59850"}},
             // "/products/cantilever-umbrellas/catalina-umbrella": {page: "/products/umbrella", query: {id: "30441"}},
-            "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: "57917"}},
+            // "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: "57917"}},
             // "/products/accessories": {page: "/products/accessories"},
             // 功能页
             "/search": {page: "/search"},
