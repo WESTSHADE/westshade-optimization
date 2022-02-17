@@ -202,7 +202,7 @@ const nextConfig = {
                 destination: '/products/umbrella/30441'
             }, {
                 source: '/custom-print/table-cover/buy',
-                destination: '/products/table-cover/57917'
+                destination: '/products/table-cover'
             }, {
                 source: '/westshade-terms-and-conditions',
                 destination: '/terms-and-conditions'
