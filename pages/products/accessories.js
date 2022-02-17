@@ -515,7 +515,8 @@ function Accessories({router, product, productComponent, productVariant}) {
     );
 }
 
-Accessories.getInitialProps = async (context) => {
+// Accessories.getInitialProps = async (context) => {
+Accessories.getServerSideProps = async (context) => {
     const {query} = context;
     const {id} = query;
     let product = null,
@@ -530,12 +531,21 @@ Accessories.getInitialProps = async (context) => {
         variant[0] = await utils.getVariantByWooProductId(id);
     }
 
+    // return {
+    //     product: product,
+    //     productComponent: component,
+    //     productVariant: variant,
+    //     noFooter: true,
+    // };
+
     return {
-        product: product,
-        productComponent: component,
-        productVariant: variant,
-        noFooter: true,
-    };
+        props: {
+            product: product,
+            productComponent: component,
+            productVariant: variant,
+            noFooter: true,
+        }, // will be passed to the page component as props
+    }
 };
 
 export default withRouter(Accessories);
