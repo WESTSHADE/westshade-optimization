@@ -167,7 +167,7 @@ export async function getStaticProps() {
             products: products,
             fullPage: true
         },
-        revalidate: 20, // In seconds
+        revalidate: 240, // In seconds
     };
 }
 

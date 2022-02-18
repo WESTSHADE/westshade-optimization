@@ -940,7 +940,7 @@ export async function getStaticProps({params}) {
             productVariant: variant,
             fullPage: true
         },
-        revalidate: 60,
+        revalidate: 480,
     }
 }
 
