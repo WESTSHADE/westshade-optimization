@@ -178,7 +178,7 @@ const nextConfig = {
                 destination: '/products/canopy-tent?series=y6'
             }, {
                 source: '/y7-heavy-duty/buy',
-                destination: '/products/canopy-tent?series=y6'
+                destination: '/products/canopy-tent?series=y7'
             }, {
                 source: '/products/canopy-tent/buy',
                 destination: '/products/canopy-tent'
