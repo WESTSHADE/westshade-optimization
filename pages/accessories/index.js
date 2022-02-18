@@ -154,7 +154,24 @@ function Accessories({router, products}) {
 //     };
 // };
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//     const ids = [26553, 26523, 26804, 26774, 26744];
+//     let products = [];
+//
+//     products[0] = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     products[1] = await utils.getProductByCategoryId(167);
+//     products[2] = await utils.getProductByCategoryId(483);
+//
+//     return {
+//         props: {
+//             products: products,
+//             fullPage: true
+//         },
+//         // revalidate: 240, // In seconds
+//     };
+// }
+
+export const getServerSideProps = async () => {
     const ids = [26553, 26523, 26804, 26774, 26744];
     let products = [];
 
@@ -169,6 +186,6 @@ export async function getStaticProps() {
         },
         // revalidate: 240, // In seconds
     };
-}
+};
 
 export default withRouter(Accessories);
