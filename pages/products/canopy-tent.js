@@ -1964,7 +1964,7 @@ export async function getStaticProps() {
             variants: variants,
             fullPage: true
         },
-        revalidate: 1800, // In seconds
+        // revalidate: 1800, // In seconds
     };
 }
 

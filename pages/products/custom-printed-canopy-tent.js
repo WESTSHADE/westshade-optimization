@@ -800,7 +800,7 @@ export async function getStaticProps() {
             tentSizes,
             fullPage: true
         },
-        revalidate: 1200, // In seconds
+        // revalidate: 1200, // In seconds
     };
 }
 

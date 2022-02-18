@@ -507,7 +507,7 @@ export async function getStaticProps() {
             productVariant: variant,
             fullPage: true
         },
-        revalidate: 3600, // In seconds
+        // revalidate: 3600, // In seconds
     };
 }
 
