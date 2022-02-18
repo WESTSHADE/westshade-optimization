@@ -172,13 +172,13 @@ const nextConfig = {
                 destination: '/umbrella/spec'
             }, {
                 source: '/y5-economic/buy',
-                destination: '/products/canopy-tent?series=25649'
+                destination: '/products/canopy-tent?series=y5'
             }, {
                 source: '/y6-commercial/buy',
-                destination: '/products/canopy-tent?series=24229'
+                destination: '/products/canopy-tent?series=y6'
             }, {
                 source: '/y7-heavy-duty/buy',
-                destination: '/products/canopy-tent?series=25659'
+                destination: '/products/canopy-tent?series=y6'
             }, {
                 source: '/products/canopy-tent/buy',
                 destination: '/products/canopy-tent'

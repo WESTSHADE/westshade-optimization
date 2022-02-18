@@ -774,6 +774,8 @@ function Canopy_Tent({router, products, variants, phone}) {
 
     useEffect(() => {
         let series = router.query.series || urlFn.getParam("series");
+        console.log(series);
+
         if (series) {
             setSelectedFrame(series);
 
