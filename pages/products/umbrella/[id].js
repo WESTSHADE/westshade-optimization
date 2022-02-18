@@ -1213,21 +1213,43 @@ function Umbrella({router, products, variants, phone}) {
     );
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [
-            {params: {id: '49555'}},
-            {params: {id: '47943'}},
-            {params: {id: '30361'}},
-            {params: {id: '59850'}},
-            {params: {id: '30441'}},
-        ],
-        fallback: false // false or 'blocking'
-    };
-}
+// export async function getStaticPaths() {
+//     return {
+//         paths: [
+//             {params: {id: '49555'}},
+//             {params: {id: '47943'}},
+//             {params: {id: '30361'}},
+//             {params: {id: '59850'}},
+//             {params: {id: '30441'}},
+//         ],
+//         fallback: false // false or 'blocking'
+//     };
+// }
+//
+// export async function getStaticProps({params}) {
+//     const {id} = params;
+//
+//     const ids = [id, 62455];
+//     let products = null,
+//         variants = [];
+//
+//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+//
+//
+//     return {
+//         props: {
+//             products: products,
+//             variants: variants,
+//             fullPage: true
+//         },
+//         // revalidate: 600, // In seconds
+//     };
+// }
 
-export async function getStaticProps({params}) {
-    const {id} = params;
+export const getServerSideProps = async (context) => {
+    const {query} = context;
+    const {id} = query;
 
     const ids = [id, 62455];
     let products = null,
@@ -1243,8 +1265,7 @@ export async function getStaticProps({params}) {
             variants: variants,
             fullPage: true
         },
-        // revalidate: 600, // In seconds
-    };
-}
+    }
+};
 
 export default withRouter(Umbrella);

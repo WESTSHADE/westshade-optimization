@@ -773,8 +773,8 @@ function Canopy_Tent({router, products, variants, phone}) {
     //////////////////////////////////////
 
     useEffect(() => {
-        let series = router.query.series || urlFn.getParam("series");
-        console.log(series);
+        // let series = router.query.series || urlFn.getParam("series");
+        let series = router.asPath.includes("/y7-heavy-duty/buy") ? "y7" : router.asPath.includes("/y6-commercial/buy") ? "y6" : router.asPath.includes("/y5-economic/buy") ? "y5" : "y7";
 
         if (series) {
             setSelectedFrame(series);
@@ -1952,7 +1952,25 @@ function Canopy_Tent({router, products, variants, phone}) {
 //     };
 // };
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//     const ids = [26338, 26385, 26405, 26516];
+//     let products = null,
+//         variants = [];
+//
+//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+//
+//     return {
+//         props: {
+//             products: products,
+//             variants: variants,
+//             fullPage: true
+//         },
+//         // revalidate: 1800, // In seconds
+//     };
+// }
+
+export const getServerSideProps = async () => {
     const ids = [26338, 26385, 26405, 26516];
     let products = null,
         variants = [];

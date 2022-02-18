@@ -904,33 +904,55 @@ function Custom_printed_Package({router, product, productComponent, productVaria
 //     };
 // };
 
-export default withRouter(Custom_printed_Package);
+//
+// export function getStaticPaths() {
+//     return {
+//         paths: [
+//             {params: {id: "61953"}},
+//             {params: {id: "62002"}},
+//             {params: {id: "62031"}},
+//             {params: {id: "62060"}},
+//             {params: {id: "62089"}},
+//             {params: {id: "62118"}},
+//             {params: {id: "62147"}},
+//             {params: {id: "62205"}},
+//             {params: {id: "62176"}},
+//         ],
+//         fallback: false
+//         // fallback: true
+//     };
+// }
+//
+// export async function getStaticProps({params}) {
+//     let product, component = [], variant = [];
+//
+//     product = await utils.getProductByWooId(params.id);
+//     if (product && product.type === "variable") {
+//         component[0] = {...product};
+//         variant[0] = await utils.getVariantByWooProductId(params.id);
+//     }
+//
+//     return {
+//         props: {
+//             product: product,
+//             productComponent: component,
+//             productVariant: variant,
+//             fullPage: true
+//         },
+//         // revalidate: 480,
+//     }
+// }
 
-export function getStaticPaths() {
-    return {
-        paths: [
-            {params: {id: "61953"}},
-            {params: {id: "62002"}},
-            {params: {id: "62031"}},
-            {params: {id: "62060"}},
-            {params: {id: "62089"}},
-            {params: {id: "62118"}},
-            {params: {id: "62147"}},
-            {params: {id: "62205"}},
-            {params: {id: "62176"}},
-        ],
-        fallback: false
-        // fallback: true
-    };
-}
+export const getServerSideProps = async (context) => {
+    const {query} = context;
+    const {id} = query;
 
-export async function getStaticProps({params}) {
-    let product, component = [], variant = [];
+    let product = null, component = [], variant = [];
 
-    product = await utils.getProductByWooId(params.id);
+    product = await utils.getProductByWooId(id);
     if (product && product.type === "variable") {
         component[0] = {...product};
-        variant[0] = await utils.getVariantByWooProductId(params.id);
+        variant[0] = await utils.getVariantByWooProductId(id);
     }
 
     return {
@@ -940,7 +962,8 @@ export async function getStaticProps({params}) {
             productVariant: variant,
             fullPage: true
         },
-        // revalidate: 480,
     }
-}
+};
+
+export default withRouter(Custom_printed_Package);
 

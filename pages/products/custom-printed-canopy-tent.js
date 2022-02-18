@@ -773,7 +773,38 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
 //     };
 // }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//     let product = null,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(61289);
+//     if (product && product.type === "composite") {
+//         let cc = [product.composite_components[0], product.composite_components[1]];
+//         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
+//         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
+//     }
+//
+//     return {
+//         props: {
+//             product: product,
+//             productComponent: [component[0], component[1]],
+//             productVariant: [variant[0], variant[1]],
+//             pageState: {
+//                 initialState,
+//                 initialSteps,
+//                 initialProduct
+//             },
+//             printingMethods,
+//             frameTypes,
+//             tentSizes,
+//             fullPage: true
+//         },
+//         // revalidate: 1200, // In seconds
+//     };
+// }
+
+export const getServerSideProps = async () => {
     let product = null,
         component = [],
         variant = [];
@@ -803,5 +834,6 @@ export async function getStaticProps() {
         // revalidate: 1200, // In seconds
     };
 }
+
 
 export default Index;
