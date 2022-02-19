@@ -1952,25 +1952,7 @@ function Canopy_Tent({router, products, variants, phone}) {
 //     };
 // };
 
-// export async function getStaticProps() {
-//     const ids = [26338, 26385, 26405, 26516];
-//     let products = null,
-//         variants = [];
-//
-//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
-//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
-//
-//     return {
-//         props: {
-//             products: products,
-//             variants: variants,
-//             fullPage: true
-//         },
-//         // revalidate: 1800, // In seconds
-//     };
-// }
-
-export const getServerSideProps = async () => {
+export async function getStaticProps() {
     const ids = [26338, 26385, 26405, 26516];
     let products = null,
         variants = [];
@@ -1987,5 +1969,23 @@ export const getServerSideProps = async () => {
         // revalidate: 1800, // In seconds
     };
 }
+
+// export const getServerSideProps = async () => {
+//     const ids = [26338, 26385, 26405, 26516];
+//     let products = null,
+//         variants = [];
+//
+//     products = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     variants = await Promise.all(ids.map((id) => utils.getVariantByWooProductId(id)));
+//
+//     return {
+//         props: {
+//             products: products,
+//             variants: variants,
+//             fullPage: true
+//         },
+//         // revalidate: 1800, // In seconds
+//     };
+// }
 
 export default withRouter(Canopy_Tent);
