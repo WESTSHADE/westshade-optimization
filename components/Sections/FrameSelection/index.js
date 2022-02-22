@@ -44,19 +44,19 @@ const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
                 </Block>
                 <Block display="grid" gridRowGap={["16px", null, "24px"]} width="100%">
                     <Block font="MinXSubtitle20">+ ${framePrice.price || frame.price}</Block>
-                    <Button type="outline" color="MinXPrimaryText" width="100%" height="48px" font="MinXParagraph14" text={`Select ${frame.value}`}
-                            buttonStyle={{
-                                borderColor: "#BFBFBF"
-                            }}
-                            onClick={onClick}
-                    />
+                    {/*<Button type="outline" color="MinXPrimaryText" width="100%" height="48px" font="MinXParagraph14" text={`Select ${frame.value}`}*/}
+                    {/*        buttonStyle={{*/}
+                    {/*            borderColor: "#BFBFBF"*/}
+                    {/*        }}*/}
+                    {/*        onClick={onClick}*/}
+                    {/*/>*/}
                 </Block>
             </Block>
         </>
     )
 }
 
-const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
+const FrameSelection = ({steps, prevClick, nextClick, frameTypes, acceptedFrameTypes = [], framePrices, frameValue, setFrame}) => {
     const [showFrameCompare, setShowFrameCompare] = useState(false);
     const [frames, setFrames] = useState([]);
 
@@ -69,11 +69,22 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
 
     return (
         <>
-            <Block display="grid" gridRowGap="8px" width="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["16px", null, null, "24px 20px"]}>
+            <Block display="grid" gridRowGap="16px" width="100%" maxWidth={process.env.maxWidth + "px"} margin="auto" padding={["16px", null, null, "24px 20px"]}>
                 <Block font="MinXParagraph16" color="MinXTitle" $style={{fontWeight: 500}}>Please select the frame of the tent.</Block>
-                <Block display="flex" justifyContent="space-between" alignItems="center" font="MinXParagraph16" color="MinXSecondaryText">
+                <Block display="flex" flexDirection={["row", null, null, "column"]} justifyContent="space-between" alignItems="flex-start" font="MinXParagraph16" color="MinXSecondaryText" $style={{gap: "16px"}}>
                     <Block>{frameTypes.length} frames available</Block>
-                    <Button type="solid" height="32px" text='Compare' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowFrameCompare(true)}/>
+                    <Block display="flex" width={[null, null, null, "100%"]} justifyContent="space-between" alignItems="center">
+                        <Button type="solid" height="32px" text='Compare' color="MinXSecondaryText" buttonBackgroundColor="rgb(242, 242, 242)" buttonHoverBackgroundColor="rgb(242, 242, 242)" onClick={() => setShowFrameCompare(true)}/>
+                        <Block display={["none", null, null, "flex"]} alignItems="center" $style={{gap: "16px"}}>
+                            <Button type="outline" bundle="primary" width="108px" height="36px" text="Previous" onClick={() => prevClick()} disabled={steps.currentStep === 0}
+                                    buttonStyle={{
+                                        color: steps.currentStep === 0 ? "#BFBFBF !important" : "#23A4AD !important",
+                                        borderColor: "#BFBFBF !important",
+                                    }}
+                            />
+                            <Button bundle="primary" width="108px" height="36px" text="Next" onClick={() => nextClick()}/>
+                        </Block>
+                    </Block>
                 </Block>
                 <Block display="flex" paddingTop="20px">
                     <Block display={["none", null, "block"]} flex={1}>
@@ -94,7 +105,7 @@ const FrameSelection = ({frameTypes, acceptedFrameTypes = [], framePrices, frame
                     </Block>
                 </Block>
             </Block>
-            <Modal type="alertdialog" isOpen={showFrameCompare} onClose={() => setShowFrameCompare(false)} content="frame"/>
+            <Modal type="alertdialog" isOpen={showFrameCompare} onClose={() => setShowFrameCompare(false)} content="frame_canopy"/>
         </>
     )
 }

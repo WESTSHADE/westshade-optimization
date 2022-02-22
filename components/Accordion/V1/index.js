@@ -29,7 +29,11 @@ const AccordionMX = (props) => {
                            }
                        }}
             >
-                {list.map((item, index) => <Panel key={index} title={item.title}>{item.content}</Panel>)}
+                {list.map((item, index) => (
+                    <Panel key={index} title={item.title}>
+                        <Block dangerouslySetInnerHTML={{__html: item.content}}/>
+                    </Panel>
+                ))}
             </Accordion>
         </Block>
     )

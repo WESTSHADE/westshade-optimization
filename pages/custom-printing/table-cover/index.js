@@ -46,7 +46,7 @@ function Custom_Printing_Table_Cover({router, size}) {
             </Head>
             <Block display="grid" gridTemplateColumns="100%" gridRowGap={["60px", "80px", "120px"]}>
                 <Hero.V1 size={size}/>
-                <Section title={<>DESIGNED FOR<br/>YOUR SPECIALLY</>}
+                <Section title={<>DESIGNED SPECIALLY<br/>FOR YOUR</>}
                          subtitle="Westshade provides free mockup service. Give us your idea and we will give you the product you want."
                          content={
                              <Block position="relative" width="100%" marginBottom={["12px", "24px", "32px"]}>
@@ -82,14 +82,14 @@ function Custom_Printing_Table_Cover({router, size}) {
                                     }}
                              >
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="a1">
-                                     320 gsm, 500D polyester with PVC coating
+                                     288 gsm, 600D PU Coated Polyester
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="a2">This long-lasting fabric is used for canopy tent.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="a3" marginBottom={["16px", "0px"]}>
                                      <Image src="/images/custom-printing/table-cover/fabric.webp" alt="fabric" layout="fill" objectFit="cover"/>
                                  </Block>
                                  <Block maxWidth={["232px", "216px", "376px"]} marginRight="auto" marginLeft="auto" font={["MinXHeading20", "MinXHeading20", "MinXHeading28"]} color={"MinXPrimaryText"} gridArea="b1">
-                                     229 gsm stretch fabric
+                                     210 gsm stretch fabric
                                  </Block>
                                  <Block font="MinXParagraph16" color={"MinXPrimaryText"} gridArea="b2">This stretch fabric is firm fitting and lightweight.</Block>
                                  <Block position="relative" width="100%" height={["165px", "210px", "250px"]} gridArea="b3">
@@ -136,13 +136,15 @@ function Custom_Printing_Table_Cover({router, size}) {
                 />
                 <Section upperContainerDirection="column"
                          title="Get a free mockup"
-                         subtitle="Not sure about what it will look like? Just fill out the form and our graphic team will make a free mockup for you."
+                         subtitle="Want to know what your brand or logo looks like on our product? Just fill out the form and a graphic team member will reach out to you."
                          content={<FreeMockupForm/>}
                          containerClassName="m-wrap-side-full"
                          upperContainerProps={{marginBottom: ["32px", "32px", "40px"], padding: ["0 16px", "0 32px",]}}
                          subtitleStyles={{maxWidth: "unset !important"}}
                 />
-                <Benefit.V1/>
+                <Block className="section-full-width" backgroundColor="#F7F7F7">
+                    <Benefit.V2 as="section"/>
+                </Block>
             </Block>
         </React.Fragment>
     )

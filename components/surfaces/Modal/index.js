@@ -1,5 +1,4 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import clsx from "clsx";
 
 import {Block} from "baseui/block";
@@ -13,6 +12,9 @@ import Loading from "./parts/loading";
 import CustomPrintingRoof from "./parts/custom_printing_roof";
 import CustomPrintingRoofDetail from "./parts/custom_printing_roof_detail";
 import FabricCompare from "./parts/fabric_compare";
+import Contact from "./parts/contact";
+import FreeItem from "./parts/free_item";
+import PriceBeat from "./parts/price_beat";
 
 import styles from "./modal.module.scss";
 
@@ -25,6 +27,7 @@ const modal = (props) => {
         header,
         children,
         footer,
+        containerStyles,
         dialogContainerStyles,
         dialogClassName,
         dialogStyles,
@@ -36,7 +39,8 @@ const modal = (props) => {
         openDetailModal, removeDetail,
         selectedRoofSlide, selectedSlidePart, onSelectedRoofSlide, onSelectedSlidePart,
         applyToFullSide, setApplyToFullSide,
-        closeStyles
+        closeStyles,
+        phone
     } = props;
 
     return (
@@ -46,6 +50,7 @@ const modal = (props) => {
                        props: {
                            className: type === "alertdialog" ? styles["container-root-alert"] : type === "dialog" ? clsx(styles["container-root-dialog"], "hideScrollBar") : clsx(styles["container-root"], "hideScrollBar"),
                        },
+                       style: {...containerStyles}
                    },
                    DialogContainer: {
                        props: {
@@ -67,27 +72,33 @@ const modal = (props) => {
                    },
                }}
         >
-            {content ? content === "size" ? (
-                <ModalHeader className={styles["container-header"]}><Block font="MinXLabel20">Size Guide</Block></ModalHeader>
+            {content ? content === "size_canopy" || content === "size_umbrella" ? (
+                <ModalHeader className={styles["container-header"]}><Block className="text-center" font="MinXLabel20">Size Guide</Block></ModalHeader>
             ) : null : header ? (
                 <ModalHeader className={styles["container-header"]}>{header}</ModalHeader>
             ) : null}
             <ModalBody className={clsx([styles["container-body"], "hideScrollBar", bodyClassName])}>
-                {content ? content === "frame" ? <FrameCompare/> :
-                    content === "fabric" ? <FabricCompare/> :
-                        content === "size" ? <SizeGuide/> :
-                            content === "summary" ? <OrderSummary dataTable={dataTable}/> :
-                                content === "loading" ? <Loading/> :
-                                    content === "technique" ? <Technique/> :
-                                        content === "customPrintingRoof" ?
-                                            <CustomPrintingRoof selectedListTemp={selectedRoofListTemp} openDetailModal={openDetailModal} removeDetail={removeDetail}
-                                                                selectedRoofSlide={selectedRoofSlide} onSelectedRoofSlide={onSelectedRoofSlide}
-                                            /> :
-                                            content === "customPrintingRoofDetail" ?
-                                                <CustomPrintingRoofDetail selectedListTemp={selectedRoofListTemp} setSelectedRoofListTemp={setSelectedRoofListTemp}
-                                                                        selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
-                                                                        applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}
-                                                /> : null : children}
+                {content ? content === "frame_canopy" ? <FrameCompare product="canopy"/> :
+                    content === "frame_umbrella" ? <FrameCompare product="umbrella"/> :
+                        content === "fabric" ? <FabricCompare/> :
+                            content === "size_canopy" ? <SizeGuide product="canopy"/> :
+                                content === "size_umbrella" ? <SizeGuide product="umbrella"/> :
+                                    content === "summary" ? <OrderSummary dataTable={dataTable}/> :
+                                        content === "loading" ? <Loading/> :
+                                            content === "technique" ? <Technique/> :
+                                                content === "customPrintingRoof" ?
+                                                    <CustomPrintingRoof selectedListTemp={selectedRoofListTemp} openDetailModal={openDetailModal} removeDetail={removeDetail}
+                                                                        selectedRoofSlide={selectedRoofSlide} onSelectedRoofSlide={onSelectedRoofSlide}
+                                                    /> :
+                                                    content === "customPrintingRoofDetail" ?
+                                                        <CustomPrintingRoofDetail selectedListTemp={selectedRoofListTemp} setSelectedRoofListTemp={setSelectedRoofListTemp}
+                                                                                  selectedRoofSlide={selectedRoofSlide} selectedSlidePart={selectedSlidePart}
+                                                                                  applyToFullSide={applyToFullSide} setApplyToFullSide={setApplyToFullSide}
+                                                        /> :
+                                                        content === "priceBeat" ? <PriceBeat/> :
+                                                            content === "freeItem" ? <FreeItem/> :
+                                                                content === "contact" ? <Contact phone={phone}/> :
+                                                                    null : children}
             </ModalBody>
             {footer ? (
                 <ModalFooter className={clsx([styles["container-footer"], footerClassName])}>

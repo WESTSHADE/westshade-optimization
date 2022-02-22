@@ -1,10 +1,15 @@
 .container-nav {
   position: relative;
   z-index: 99;
-  height: 92px;
+  //height: 116px;
+  height: 64px;
+
+  @media screen and (min-width: 672px) {
+    height: 116px;
+  }
 
   .root-navigation-top {
-    display: flex;
+    //display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +43,7 @@
 
   .root-navigation {
     width: 100%;
-    height: 52px;
+    height: 40px;
     margin: auto;
     padding: 0 16px;
     border-bottom: none;
@@ -103,6 +108,10 @@
       overflow: hidden;
     }
 
+    @media screen and (min-width: 672px) {
+      height: 52px;
+    }
+
     @media screen and (min-width: 1056px) {
       padding-right: 20px;
       padding-left: 20px;
@@ -123,6 +132,8 @@
     height: 32px;
     aspect-ratio: 5;
   }
+
+
 }
 
 

@@ -1,12 +1,9 @@
 import React from "react";
-// import loadable from '@loadable/component'
 
 import {withRouter} from "next/router";
 import Head from "next/head";
 
-import {Block} from "baseui/block"
-
-import Banner from "Components/Sections/Banner";
+import Banner from "components/Sections/Banner";
 
 function Home({router}) {
     return (
@@ -15,14 +12,14 @@ function Home({router}) {
                 <title>WESTSHADE | #1 Canopy and Umbrella in Southern California</title>
                 <meta name="description" content="#1 canopy and umbrella in Southern California. Industry leading quality instant canopies and market umbrellas for all occasions. Easy set up."/>
             </Head>
-            <Banner title="CUSTOM PRINTING" subtitle="Custom the product to light up your special occasions." url="/images/home/custom-printing-1.webp" router={router} destination="/custom-printing" home
-                    containerBackground={null}
+            <Banner title="CUSTOM PRINTING" subtitle="Custom the product to amplify up your special occasions." url="/images/home/custom-printing-1.webp" router={router} destination="/custom-printing" home
+                    textColor="MinXPrimaryText" buttonBackgroundColor="#262626" containerBackground={null}
             />
-            <Banner title="CANOPY TENT" subtitle="The most heavy duty canopy on the market with unchallenged strength and durability." url="/images/home/tent.webp" router={router} destination="/canopy-tent" home
+            <Banner title="CANOPY TENT" subtitle="The exceptional heavy duty canopy with distinguished strength and durability." url="/images/home/tent-1.webp" router={router} destination="/canopy-tent" home
                     containerBackgroundPosition="bottom"
             />
-            <Banner title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella.webp" router={router} destination="/umbrella" home
-                    containerBackgroundPosition="bottom"
+            <Banner title="UMBRELLA" subtitle="Easy to adjust any desired angle for shade coverage with a simple push button." url="/images/home/umbrella-1.webp" router={router} destination="/umbrella" home
+                    containerBackgroundPosition="top"
             />
         </React.Fragment>
     )

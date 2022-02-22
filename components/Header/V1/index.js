@@ -48,7 +48,8 @@ function Header({hideCategories}) {
         <ThemeProvider.V2>
             <div className={`${styles["container-nav"]} main-container-nav`}>
                 <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
-                    <Block className={styles["root-navigation-top"]}>
+                    <Block className="text-center" display="flex" alignItems="center" justifyContent="center" height="24px" color="white" backgroundColor="#262626" font="MinXParagraph12">Free shipping on orders over $149.</Block>
+                    <Block display={["none", null, "flex"]} className={styles["root-navigation-top"]}>
                         <Link href="/" passHref>
                             <Block className={clsx([styles["site-logo"], "cursor"])}>
                                 <Image src={"/images/icon/logo-site.webp"} alt="Site Logo" layout="responsive" width={594} height={117} objectFit="contain" priority={true}/>
@@ -154,6 +155,25 @@ function Header({hideCategories}) {
                 <MobileMenu isOpen={isMenuDrawerOpen} onClose={() => setMenuDrawerOpen(false)}/>
                 <Cart isOpen={isCartDrawerOpen} onClose={() => setCartDrawerOpen(false)}/>
             </div>
+            <Block display={["block", null, "none"]} position="fixed" right="-30px" top="200px" $style={{zIndex: 10}}>
+                <Button shape={SHAPE.pill}
+                        startEnhancer={() =>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path
+                                    d="M15.4999 10.8833L11.1083 10.375L9.00825 12.475C6.64992 11.275 4.71659 9.35 3.51659 6.98333L5.62492 4.875L5.11659 0.5H0.524919C0.0415854 8.98333 7.01659 15.9583 15.4999 15.475V10.8833Z"
+                                    fill="#FAFAFA"/>
+                            </svg>
+                        }
+                        $as="a" href={"tel:+1-" + process.env.businessPhone}
+                        overrides={{
+                            BaseButton: {
+                                style: {height: "36px", paddingLeft: "16px", paddingRight: "25px", color: "#FFF !important", backgroundColor: "#23A4AD", ":hover": {backgroundColor: "#5FBDBE"}}
+                            },
+                        }}
+                >
+                    <Block id='businessPhone' font="MinXParagraph14" display="none">{process.env.businessPhone}</Block>
+                </Button>
+            </Block>
         </ThemeProvider.V2>
     );
 }

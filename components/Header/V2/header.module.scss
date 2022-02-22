@@ -1,7 +1,12 @@
 .container-nav {
   position: relative;
   z-index: 99;
-  height: 92px;
+  //height: 116px;
+  height: 64px;
+
+  @media screen and (min-width: 672px) {
+    height: 116px;
+  }
 
   .root-navigation-top {
     display: flex;

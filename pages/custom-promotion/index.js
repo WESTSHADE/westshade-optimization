@@ -134,7 +134,7 @@ const Custom_Promotion = () => {
                          }
                 />
                 <Block className="section-full-width" backgroundColor="#F7F7F7">
-                    <Benefit.V2 as={"section"}/>
+                    <Benefit.V2 as="section"/>
                 </Block>
                 <Section upperContainerProps={{hidden: true}}
                          containerProps={{maxWidth: ["467px", null, "840px"]}}

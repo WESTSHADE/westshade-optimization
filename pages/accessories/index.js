@@ -29,12 +29,12 @@ const Product = ({name, product, showDesc = true, onClick}) => {
 
     return (
         <Block className='cursor' display="grid" gridTemplateColumns="1fr" gridTemplateRows="auto 1fr" gridRowGap={["12px", "16px"]} width="100%" marginRight="auto" marginLeft="auto" paddingRight={["0", "16px"]} paddingLeft={["0", "16px"]}
-               onClick={() => onClick(product.id === 26553 ? {pathname: "/products/accessories/", query: {id: 26516, type: "half"}} :
-                   product.id === 26523 ? {pathname: "/products/accessories/", query: {id: 26516, type: "full"}} :
-                       product.id === 26804 ? {pathname: "/products/accessories/", query: {id: 26516, type: "rollup"}} :
-                           product.id === 26774 ? {pathname: "/products/accessories/", query: {id: 26516, type: "pvc"}} :
-                               product.id === 26744 ? {pathname: "/products/accessories/", query: {id: 26516, type: "mesh"}} :
-                                   "/products/accessories?id=" + product.id)}
+               onClick={() => onClick(product.id === 26553 ? {pathname: "/products/accessories/26516", query: {type: "half"}} :
+                   product.id === 26523 ? {pathname: "/products/accessories/26516", query: {type: "full"}} :
+                       product.id === 26804 ? {pathname: "/products/accessories/26516", query: {type: "rollup"}} :
+                           product.id === 26774 ? {pathname: "/products/accessories/26516", query: {type: "pvc"}} :
+                               product.id === 26744 ? {pathname: "/products/accessories/26516", query: {type: "mesh"}} :
+                                   "/products/accessories/" + product.id)}
         >
             <Block position="relative" width="inherit" margin="auto" $style={{aspectRatio: 1}}>
                 {url ? (
@@ -140,7 +140,38 @@ function Accessories({router, products}) {
     )
 }
 
-Accessories.getInitialProps = async () => {
+// Accessories.getInitialProps = async () => {
+//     const ids = [26553, 26523, 26804, 26774, 26744];
+//     let products = [];
+//
+//     products[0] = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     products[1] = await utils.getProductByCategoryId(167);
+//     products[2] = await utils.getProductByCategoryId(483);
+//
+//     return {
+//         products: products,
+//         fullPage: true
+//     };
+// };
+
+// export async function getStaticProps() {
+//     const ids = [26553, 26523, 26804, 26774, 26744];
+//     let products = [];
+//
+//     products[0] = await Promise.all(ids.map((id) => utils.getProductByWooId(id)));
+//     products[1] = await utils.getProductByCategoryId(167);
+//     products[2] = await utils.getProductByCategoryId(483);
+//
+//     return {
+//         props: {
+//             products: products,
+//             fullPage: true
+//         },
+//         // revalidate: 240, // In seconds
+//     };
+// }
+
+export const getServerSideProps = async () => {
     const ids = [26553, 26523, 26804, 26774, 26744];
     let products = [];
 
@@ -149,8 +180,11 @@ Accessories.getInitialProps = async () => {
     products[2] = await utils.getProductByCategoryId(483);
 
     return {
-        products: products,
-        fullPage: true
+        props: {
+            products: products,
+            fullPage: true
+        },
+        // revalidate: 240, // In seconds
     };
 };
 

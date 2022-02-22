@@ -9,19 +9,13 @@ import Image from "next/image";
 
 import {Block} from "baseui/block";
 import {Button, KIND, SHAPE} from "baseui/button";
-import {Input} from 'baseui/input';
 import {CheckIndeterminate, Plus} from 'baseui/icon'
 
-import Shipping from "Components/Sections/ShippingNote";
+import {OrderSummary, ShippingNote} from "Components/Sections";
 import {Modal} from "Components/surfaces";
 
-import Utils from "Utils/utils";
-import {NumberFn} from "Utils/tools";
 
-const numberFn = new NumberFn();
-const utils = new Utils();
-
-import {removeFromCart, clearCart, beginCheckout} from "../../redux/actions/gtagActions";
+import {removeFromCart, clearCart} from "../../redux/actions/gtagActions";
 import {modifyCart} from "../../redux/actions/cartActions";
 import {updateUser} from "../../redux/actions/userActions";
 
@@ -30,20 +24,16 @@ import styles from "./cart.module.scss";
 import Cart from "./cart.svg";
 
 function Cart_Page({router}) {
-    const [lineItem, setLineItem] = useState([]);
-    const [addressesDone, setAddressesDone] = useState(true);
-    const [showError, setShowError] = useState(false);
-    const [error, setError] = useState("");
+    const [availableCheckout, setAvailableCheckout] = useState(false);
 
     const [showClear, setShowClear] = useState(false);
-
     const [showLoading, setShowLoading] = useState(false);
 
     ////////////////////////////////////////
 
     const dispatch = useDispatch();
 
-    const {loggedIn, token, user} = useSelector(({user}) => user);
+    const {loggedIn, token} = useSelector(({user}) => user);
     const {cart, cartProduct} = useSelector(({cart}) => cart);
 
     const handlePlusToCart = (index) => {
@@ -98,91 +88,12 @@ function Cart_Page({router}) {
         }
     }
 
-    const getSubtotal = () => {
-        let price = 0;
-        if (cart.length === cartProduct.length) {
-            cartProduct.forEach((p, index) => {
-                price += numberFn.strToFloat(p.price) * cart[index].quantity;
-            });
-        }
-        return price;
-    };
-
-    const checkout = () => {
-        setShowLoading(true);
-
-        let checkoutData = {
-            payment_method: "bacs",
-            payment_method_title: "Credit Card",
-            billing: null,
-            shipping: null,
-            // coupon_lines: lineCoupon,
-            line_items: lineItem,
-        };
-
-        // if (token) {
-        //     checkoutData.billing = {...user.billing};
-        //     checkoutData.shipping = {...user.shipping};
-        // }
-
-        utils.createOrder(token, checkoutData).then(async (res) => {
-            setShowLoading(false);
-            if (res.message) {
-                setShowError(true);
-                setError(res.message);
-                setTimeout(function () {
-                    setShowError(false);
-                    setError("");
-                }, 4000);
-            } else {
-                beginCheckout(cartProduct, lineItem);
-
-                let result = await Promise.all(cart.filter(item => item.entryId).map((item) => utils.updateContact({id: item.entryId, 71: res.id})));
-
-                router.push({pathname: "/checkout/", query: {id: res.id}})
-            }
-        });
-    };
-
-    // useEffect(() => {
-    //     if (!user) return;
-    //     if (
-    //         !user.billing.first_name ||
-    //         !user.billing.last_name ||
-    //         !user.billing.address_1 ||
-    //         !user.billing.city ||
-    //         !user.billing.state ||
-    //         !user.billing.postcode ||
-    //         !user.billing.country ||
-    //         !user.billing.email ||
-    //         !user.billing.phone
-    //         // !user.shipping.first_name ||
-    //         // !user.shipping.last_name ||
-    //         // !user.shipping.address_1 ||
-    //         // !user.shipping.city ||
-    //         // !user.shipping.state ||
-    //         // !user.shipping.postcode ||
-    //         // !user.shipping.country
-    //     ) {
-    //         setAddressesDone(false);
-    //     } else {
-    //         setAddressesDone(true);
-    //     }
-    // }, [user]);
+    const goPreCheckout = () => router.push("/pre-checkout/");
 
     useEffect(() => {
         if (cart.length < 1 || cartProduct.length < 1 || cart.length !== cartProduct.length) return;
 
-        const itemList = cartProduct.map(({parent_id, id}, idx) => parent_id ? {
-            product_id: parent_id,
-            variation_id: id,
-            quantity: cart[idx].quantity,
-        } : {
-            product_id: id,
-            quantity: cart[idx].quantity,
-        });
-
-        setLineItem(itemList);
+        setAvailableCheckout(true);
     }, [cart, cartProduct]);
 
     return (
@@ -191,21 +102,12 @@ function Cart_Page({router}) {
                 <title>Shopping Cart - Proceed to Checkout | WESTSHADE</title>
                 <meta name="description" content="Free shipping on orders over $100. Add products to your shopping cart and proceed to checkout to place your order."/>
             </Head>
-            <Block paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} marginRight="auto" marginLeft="auto"
-                   overrides={{
-                       Block: {
-                           props: {
-                               className: "container-display"
-                           },
-                           style: {maxWidth: "1152px !important"}
-                       },
-                   }}
-            >
+            <Block className="container-display" maxWidth="1152px !important" paddingRight={["16px", "16px", "24px"]} paddingLeft={["16px", "16px", "24px"]} marginRight="auto" marginLeft="auto">
                 {cart.length > 0 ? (
                     <Block display={["block", "block", "grid"]} flexDirection={["column", "column", "row"]} gridTemplateColumns={["", "", "auto 332px"]}
                            gridColumnGap="64px">
                         <Block position="relative" marginBottom="24px">
-                            <Block position="sticky" top="92px" display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
+                            <Block position="sticky" top={["64px", null, "116px"]} display="flex" alignItems="center" justifyContent="space-between" padding={["8px 0", "16px 0"]} backgroundColor="white" font="MinXHeading20"
                                    color="MinXPrimaryText"
                                    $style={{zIndex: "9"}}>
                                 <Block>Shopping cart</Block>
@@ -320,75 +222,7 @@ function Cart_Page({router}) {
                         </Block>
                         <Block marginTop="24px" marginBottom="24px">
                             <Block position={["relative", "relative", "sticky"]} top={["", "", "120px"]}>
-                                <Block marginBottom={["16px", "16px", "24px"]} font="MinXHeading20" color="MinXPrimaryText">Order summary</Block>
-                                <Block marginBottom={["16px", "16px", "24px"]}
-                                       overrides={{
-                                           Block: {
-                                               props: {
-                                                   className: styles["divider"]
-                                               }
-                                           },
-                                       }}
-                                >
-                                    <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="12px">
-                                        <Block font="MinXParagraph14" color="MinXPrimaryText">Subtotal</Block>
-                                        <Block font="MinXParagraph14" color="MinXPrimaryText">{`$` + getSubtotal()}</Block>
-                                    </Block>
-                                    {/*<Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="12px">*/}
-                                    {/*    <Block font="MinXParagraph14" color="MinXPrimaryText">Shipping</Block>*/}
-                                    {/*    <Block font="MinXParagraph14" color="MinXPrimaryText">{`$` + getSubtotal()}</Block>*/}
-                                    {/*</Block>*/}
-                                    {/*<Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom="12px">*/}
-                                    {/*    <Block font="MinXParagraph14" color="MinXPrimaryText">Estimated Tax</Block>*/}
-                                    {/*    <Block font="MinXParagraph14" color="MinXPrimaryText">{`$` + getSubtotal()}</Block>*/}
-                                    {/*</Block>*/}
-                                    <Block display="flex" flexDirection="row" justifyContent="space-between" marginBottom={["16px", "16px", "24px"]}>
-                                        <Block font="MinXParagraph14" color="MinXPrimaryText"><strong>Total</strong></Block>
-                                        <Block font="MinXParagraph14" color="MinXPrimaryText"><strong>{`$` + getSubtotal()}</strong></Block>
-                                    </Block>
-                                </Block>
-                                {/*<Block display="flex" flexDirection="row" height={["25px", "40px"]} font="MinXLabel12" marginBottom={["16px", "16px", "24px"]}>*/}
-                                {/*    <Input placeholder="Coupon code"*/}
-                                {/*           overrides={{*/}
-                                {/*               Root: {*/}
-                                {/*                   style: {fontSize: "inherit", borderTopLeftRadius: "4px", borderBottomLeftRadius: "4px", backgroundColor: "transparent"}*/}
-                                {/*               },*/}
-                                {/*               InputContainer: {*/}
-                                {/*                   style: {fontSize: "inherit", backgroundColor: "transparent"}*/}
-                                {/*               },*/}
-                                {/*               Input: {*/}
-                                {/*                   style: ({$theme}) => ({*/}
-                                {/*                       fontSize: "inherit",*/}
-                                {/*                       "::placeholder": {color: $theme.colors.MinXSecondaryText},*/}
-                                {/*                       ":-ms-input-placeholder": {color: $theme.colors.MinXSecondaryText},*/}
-                                {/*                       "::-ms-input-placeholder": {color: $theme.colors.MinXSecondaryText},*/}
-                                {/*                   })*/}
-                                {/*               },*/}
-                                {/*           }}*/}
-                                {/*    />*/}
-                                {/*    <Block height="100%" color="MinXPrimaryText">*/}
-                                {/*        <Button*/}
-                                {/*            overrides={{*/}
-                                {/*                BaseButton: {*/}
-                                {/*                    style: ({$theme}) => ({*/}
-                                {/*                        width: "120px",*/}
-                                {/*                        height: "100%",*/}
-                                {/*                        paddingRight: "0px",*/}
-                                {/*                        paddingLeft: "0px",*/}
-                                {/*                        fontSize: "inherit",*/}
-                                {/*                        color: "inherit",*/}
-                                {/*                        borderTopRightRadius: "4px",*/}
-                                {/*                        borderBottomRightRadius: "4px",*/}
-                                {/*                        backgroundColor: "#F0F0F0",*/}
-                                {/*                        ":hover": {backgroundColor: $theme.colors.MinXDividers},*/}
-                                {/*                        ":active": {backgroundColor: $theme.colors.MinXBackground},*/}
-                                {/*                    }),*/}
-                                {/*                },*/}
-                                {/*            }}*/}
-                                {/*            onClick={() => {*/}
-                                {/*            }}>APPLY COUPON</Button>*/}
-                                {/*    </Block>*/}
-                                {/*</Block>*/}
+                                <OrderSummary.V1 cart={cart} cartProduct={cartProduct} bottomDivider/>
                                 <Block width="100%" height="40px" marginBottom="24px" font="MinXLabel16" color="MinXPrimaryTextAlt">
                                     <Button shape={SHAPE.pill}
                                             overrides={{
@@ -397,19 +231,19 @@ function Cart_Page({router}) {
                                                         className: styles["checkout-button"],
                                                     },
                                                     style: ({$theme}) => ({
-                                                        backgroundColor: !addressesDone || lineItem.length === 0 ? "#e0e0e0" : $theme.colors.MinXButton,
-                                                        ":hover": !addressesDone || lineItem.length === 0 ? {} : {backgroundColor: $theme.colors.MinXButtonHover},
-                                                        ":active": !addressesDone || lineItem.length === 0 ? {} : {backgroundColor: $theme.colors.MinXButtonActive},
+                                                        backgroundColor: !availableCheckout ? "#e0e0e0" : $theme.colors.MinXButton,
+                                                        ":hover": !availableCheckout ? {} : {backgroundColor: $theme.colors.MinXButtonHover},
+                                                        ":active": !availableCheckout ? {} : {backgroundColor: $theme.colors.MinXButtonActive},
                                                     }),
                                                 },
                                             }}
-                                            onClick={checkout}
-                                            disabled={!addressesDone || lineItem.length === 0}
+                                            onClick={goPreCheckout}
+                                            disabled={!availableCheckout}
                                     >
                                         CHECKOUT
                                     </Button>
                                 </Block>
-                                <Shipping direction="column"/>
+                                <ShippingNote.V1 direction="column"/>
                             </Block>
                         </Block>
                     </Block>

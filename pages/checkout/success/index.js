@@ -23,7 +23,7 @@ function Success({router, orderDetail}) {
         }
         return price;
     };
-    
+
     useEffect(() => {
         if (!router) return;
 
@@ -62,7 +62,7 @@ function Success({router, orderDetail}) {
         <React.Fragment>
             {display && orderDetail ? (
                 //  主屏部分
-                <Block height="calc(100vh - 92px)" paddingTop={["48px", null, "86px"]} display="flex" justifyContent="center" overflow="scroll">
+                <Block height={["calc(100vh - 64px)", null, "calc(100vh - 116px)"]} paddingTop={["48px", null, "86px"]} display="flex" justifyContent="center" overflow="scroll">
                     {/* 主要显示区域 */}
                     <Block width={["100%", "480px"]} display={"flex"} flexDirection={"column"}>
                         <div className="container-selection" style={{paddingLeft: 16, paddingRight: 16, marginBottom: "60px", alignItems: "center"}}>

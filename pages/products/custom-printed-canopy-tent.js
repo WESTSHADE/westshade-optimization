@@ -12,10 +12,10 @@ import {ArrowLeft, ArrowRight} from 'baseui/icon'
 import {Modal} from "Components/surfaces";
 import Button from "Components/Button/V1"
 import ProgressBar from "Components/ProgressBar"
-import TentSizeSelection from "Components/Sections/TentSizeSelection"
-import FrameSelection from "Components/Sections/FrameSelection"
-import PrintingMethodSelection from "Components/Sections/PrintingMethodSelection"
-import RequirementSelection from "Components/Sections/RequirementSelection"
+import TentSizeSelection from "components/Sections/TentSizeSelection"
+import FrameSelection from "components/Sections/FrameSelection"
+import PrintingMethodSelection from "components/Sections/PrintingMethodSelection"
+import RequirementSelection from "components/Sections/RequirementSelection"
 import Checkout from "Components/Checkout";
 import ThemeProvider from "Components/ThemeProvider";
 
@@ -77,12 +77,28 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         dispatch({type: "SET_PRINTING_METHOD", payload});
         stepDispatch({type: "SET_OPTION_IS_DONE"});
     }
-    const selectPrintingRequirement = (key, side, payload, allSides) => {
+    // const selectPrintingRequirement = (key, side, payload, allSides) => {
+    //     if (!allSides) {
+    //         dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], [side]: payload}}});
+    //         stepDispatch({type: "SET_OPTION_IS_DONE"});
+    //     } else {
+    //         dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], LEFT: payload, RIGHT: payload, FRONT: payload, BACK: payload}}});
+    //         stepDispatch({type: "SET_OPTION_IS_DONE"});
+    //     }
+    // }
+    const selectPrintingRequirement = (keys, side, payloads, allSides) => {
         if (!allSides) {
-            dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], [side]: payload}}});
+            dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [keys[0]]: {...state.printReq[keys[0]], [side]: payloads[0]}, [keys[1]]: {...state.printReq[keys[1]], [side]: payloads[1]}}});
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         } else {
-            dispatch({type: "SET_PRINTING_REQUIREMENTS", payload: {...state.printReq, [key]: {...state.printReq[key], LEFT: payload, RIGHT: payload, FRONT: payload, BACK: payload}}});
+            dispatch({
+                type: "SET_PRINTING_REQUIREMENTS",
+                payload: {
+                    ...state.printReq,
+                    [keys[0]]: {...state.printReq[keys[0]], LEFT: payloads[0], RIGHT: payloads[0], FRONT: payloads[0], BACK: payloads[0]},
+                    [keys[1]]: {...state.printReq[keys[1]], LEFT: payloads[1], RIGHT: payloads[1], FRONT: payloads[1], BACK: payloads[1]}
+                }
+            });
             stepDispatch({type: "SET_OPTION_IS_DONE"});
         }
     }
@@ -232,23 +248,52 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
             attribute: "Printing Method",
             value: state.printingMethod
         }];
+        const roofAttributes = productState.roofVariant.attributes.map((attr) => ({
+            name: attr.name,
+            option: attr.option
+        }));
 
         const frameVariation = productState.frameVariant.attributes.map((attr) => ({
             attribute: attr.name,
             value: attr.option
         }));
+        const frameAttributes = productState.frameVariant.attributes.map((attr) => ({
+            name: attr.name,
+            option: attr.option
+        }));
+
+
+        // productList.push({
+        //     id: productState.roofVariant.id,
+        //     quantity: productState.bag.totalCount,
+        //     variation: roofVariation,
+        //     entryId: productState.entryId
+        // }, {
+        //     id: productState.frameVariant.id,
+        //     quantity: productState.bag.totalCount,
+        //     variation: frameVariation,
+        //     entryId: productState.entryId
+        // });
 
         productList.push({
-            id: productState.roofVariant.id,
+            id: 61289,
             quantity: productState.bag.totalCount,
+            entryId: productState.entryId,
             variation: roofVariation,
-            entryId: productState.entryId
-        }, {
-            id: productState.frameVariant.id,
-            quantity: productState.bag.totalCount,
-            variation: frameVariation,
-            entryId: productState.entryId
-        });
+            component: [{
+                id: productState.roofVariant.id,
+                quantity: 1,
+                variation: roofVariation,
+                attributes: roofAttributes,
+                entryId: productState.entryId
+            }, {
+                id: productState.frameVariant.id,
+                quantity: 1,
+                variation: frameVariation,
+                attributes: frameAttributes,
+                entryId: productState.entryId
+            }]
+        })
 
         return productList;
     }
@@ -285,6 +330,8 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     }
 
     const handleSendDetails = async () => {
+        return;
+
         if (productState.entryId) {
             const res = await utils.updateContact({
                 form_id: "6",
@@ -526,7 +573,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         }
     }, [productState.frameVariant, productState.bag.totalCount, productState.roofVariant, steps.allSteps.frame, steps.allSteps.size])
 
-    //useEffect for submitting printing requirement to wordpress forms and adding all selected variants to an array
+    //useEffect for submitting printing requirement to WordPress forms and adding all selected variants to an array
     useEffect(() => {
         if (steps.done) {
             handleSendDetails();
@@ -537,7 +584,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
         }
     }, [steps.done])
 
-    //useEffect for hiding the talk-to-us section when customizion is ongoing
+    //useEffect for hiding the talk-to-us section when customization is ongoing
     useEffect(() => {
         const thirdPartySection = document.querySelectorAll("#refreshPlaceholder");
         if (state.activeCustomizer) {
@@ -608,7 +655,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                                         }
                                     </Block>
                                     <Block className="text-left" marginBottom={["24px", "40px"]} font="MinXParagraph14" color="MinXTitle">
-                                        All custom printing orders will get a mockup before production. You can also <Block as="span" color="MinXButton" $style={{textDecoration: "underline"}}><Link href="/custom-printing">get a free
+                                        All custom printing orders will get a mockup before production. You can also <Block as="span" color="MinXButton" $style={{textDecoration: "underline"}}><Link href="/custom-printing/#form">get a free
                                         mockup </Link></Block> without ordering.
                                     </Block>
                                     <Block padding="11px" $style={{borderRadius: "24px", border: "1px solid #D9D9D9"}}>
@@ -636,19 +683,22 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                             </Block>
                         </Block>
                         <Block margin={["44px auto 52px", null, "44px auto 70px", "70px auto 44px"]} flex="1">
-                            {steps.currentStep === 0 && <TentSizeSelection tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
-                            {steps.currentStep === 1 && <FrameSelection framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame} setFrame={selectFrame}/>}
-                            {steps.currentStep === 2 && <RequirementSelection activeTentImage={images[0].src} tentFrame={state.frame}
+                            {steps.currentStep === 0 && <TentSizeSelection steps={steps} prevClick={prevStep} nextClick={nextStep} tentSizes={tentSizes} error={steps.error} sizeValue={state.size} setSize={selectSize} frame={state.frame}/>}
+                            {steps.currentStep === 1 &&
+                                <FrameSelection steps={steps} prevClick={prevStep} nextClick={nextStep} framePrices={framePrices} frameTypes={frameTypes} acceptedFrameTypes={acceptedFrameTypes} error={steps.error} frameValue={state.frame}
+                                                setFrame={selectFrame}/>}
+                            {steps.currentStep === 2 && <RequirementSelection steps={steps} prevClick={prevStep} nextClick={nextStep} activeTentImage={images[0].src} tentFrame={state.frame}
                                                                               tentSize={state.size} error={steps.error} requirement={state.printReq} activeSide={state.activeSide} setSide={selectSide}
                                                                               setRequirement={selectPrintingRequirement} clearRequirement={clearRequirement}/>}
-                            {steps.currentStep === 3 && <PrintingMethodSelection printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod} setMethod={selectPrintingMethod}/>}
+                            {steps.currentStep === 3 && <PrintingMethodSelection steps={steps} prevClick={prevStep} nextClick={nextStep} printingMethods={printingMethods} error={steps.error} printingMethodValue={state.printingMethod}
+                                                                                 setMethod={selectPrintingMethod}/>}
                         </Block>
                         <Block display="flex" justifyContent="space-between" width="100%" height={["52px", null, "70px"]} minWidth="320px" backgroundColor="MinXBackground"
                                padding={"8px clamp(16px, 50vw - " + process.env.maxWidth / 2 + "px, 50vw - " + process.env.maxWidth / 2 + "px)"}
                                position="fixed" top={["unset", null, null, "0"]} bottom={[0, null, null, "unset"]} left={0}
                                $style={{borderTop: "1px solid #D9D9D9", borderBottom: "1px solid #D9D9D9", zIndex: 9}}
                         >
-                            <Button type="outline" bundle="primary" width="60px" height="36px" onClick={() => prevStep()} disabled={steps.currentStep === 0}
+                            <Button type="outline" bundle="primary" display={["block", null, null, "none"]} width="60px" height="36px" onClick={() => prevStep()} disabled={steps.currentStep === 0}
                                     buttonStyle={{
                                         paddingRight: "0 !important",
                                         paddingLeft: "0 !important",
@@ -661,7 +711,7 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
                             <Block flex="1" padding={["0 16px", null, "18px 64px"]} alignSelf={["center", null, "unset"]}>
                                 <ProgressBar.V1 steps={steps.allSteps} currentStep={steps.currentStep}/>
                             </Block>
-                            <Button bundle="primary" width="60px" height="36px" onClick={() => nextStep()}
+                            <Button bundle="primary" display={["block", null, null, "none"]} width="60px" height="36px" onClick={() => nextStep()} disabled={!state.size}
                                     buttonStyle={{
                                         paddingRight: "0 !important",
                                         paddingLeft: "0 !important",
@@ -694,9 +744,67 @@ const Index = ({product, productVariant, productComponent, pageState, printingMe
     )
 }
 
-export default Index;
+//
+// Index.getInitialProps = async (context) => {
+//     let product = null,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(61289);
+//     if (product && product.type === "composite") {
+//         let cc = [product.composite_components[0], product.composite_components[1]];
+//         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
+//         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
+//     }
+//
+//     return {
+//         product: product,
+//         productComponent: [component[0], component[1]],
+//         productVariant: [variant[0], variant[1]],
+//         pageState: {
+//             initialState,
+//             initialSteps,
+//             initialProduct
+//         },
+//         printingMethods,
+//         frameTypes,
+//         tentSizes,
+//         fullPage: true
+//     };
+// }
 
-Index.getInitialProps = async (context) => {
+// export async function getStaticProps() {
+//     let product = null,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(61289);
+//     if (product && product.type === "composite") {
+//         let cc = [product.composite_components[0], product.composite_components[1]];
+//         component = await Promise.all(cc.map(({default_option_id}) => utils.getProductByWooId(default_option_id)));
+//         variant = await Promise.all(component.map(({id}) => utils.getVariantByWooProductId(id)));
+//     }
+//
+//     return {
+//         props: {
+//             product: product,
+//             productComponent: [component[0], component[1]],
+//             productVariant: [variant[0], variant[1]],
+//             pageState: {
+//                 initialState,
+//                 initialSteps,
+//                 initialProduct
+//             },
+//             printingMethods,
+//             frameTypes,
+//             tentSizes,
+//             fullPage: true
+//         },
+//         // revalidate: 1200, // In seconds
+//     };
+// }
+
+export const getServerSideProps = async () => {
     let product = null,
         component = [],
         variant = [];
@@ -709,17 +817,23 @@ Index.getInitialProps = async (context) => {
     }
 
     return {
-        product: product,
-        productComponent: [component[0], component[1]],
-        productVariant: [variant[0], variant[1]],
-        pageState: {
-            initialState,
-            initialSteps,
-            initialProduct
+        props: {
+            product: product,
+            productComponent: [component[0], component[1]],
+            productVariant: [variant[0], variant[1]],
+            pageState: {
+                initialState,
+                initialSteps,
+                initialProduct
+            },
+            printingMethods,
+            frameTypes,
+            tentSizes,
+            fullPage: true
         },
-        printingMethods,
-        frameTypes,
-        tentSizes,
-        fullPage: true
+        // revalidate: 1200, // In seconds
     };
 }
+
+
+export default Index;

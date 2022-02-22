@@ -49,7 +49,7 @@ const canopyFeatures = [{
     content: "Our waterproof pop tents are designed to offer the ideal coverage and protection needed for all your events."
 }, {
     order: "03",
-    title: "Fire retartdant",
+    title: "Fire retardant",
     content: "Our canopies are certified under the California State Fire Marshal. Each fire retardant canopy is specially treated and complies with all NFPA 701 and CPAI-84."
 }];
 
@@ -93,8 +93,20 @@ function Custom_Printing() {
     const [ptComparisonStyle, setPtComparisonStyle] = useState({visibility: "hidden", opacity: 0});
 
     const goToFreeMockup = () => {
-        if (window) window.scrollTo({top: mockupRef.current.offsetTop, behavior: 'smooth'});
+        if (window) window.scrollTo({top: mockupRef.current.offsetTop + 60, behavior: 'smooth'});
     };
+
+    useEffect(() => {
+        let currentLocation = window.location.href;
+        const hasCommentAnchor = currentLocation.includes("/#");
+
+        if (hasCommentAnchor) {
+            const anchorCommentId = `${currentLocation.substring(currentLocation.indexOf("#") + 1)}`;
+            if (anchorCommentId === "form") {
+                goToFreeMockup();
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (ptComparisonRef.current) {
@@ -119,7 +131,7 @@ function Custom_Printing() {
                          content={
                              <Block display="grid" gridRowGap={["32px", null, "64px"]} maxWidth={["467px", null, "840px"]} margin="auto">
                                  <SectionTitle.V2 category="printing technology" title="high fidelity & resolution"
-                                                  content="Westshade only prints high-fidelity and high-resolution pieces. You can find the one meet your needs and budgets from two printing technologies."/>
+                                                  content="Westshade only prints high-fidelity and high-resolution pieces. You can find the one meet your needs and budgets from two printing technologies - Dye Sublimation or UV Printing."/>
                                  <Block className="text-center">
                                      <Block font={["MinXTitle20", "MinXTitle20", "MinXTitle32"]} $style={{fontWeight: "500 !important", lineHeight: "1 !important"}}>Check out real samples below</Block>
                                      <PrintingTechnologySample/>
@@ -139,7 +151,7 @@ function Custom_Printing() {
                          }
                 />
                 <Block className="section-full-width" backgroundColor="#F7F7F7">
-                    <Benefit.V2 as={"section"}/>
+                    <Benefit.V2 as="section"/>
                 </Block>
                 <Section upperContainerProps={{hidden: true}}
                          containerProps={{maxWidth: ["467px", null, "840px"]}}

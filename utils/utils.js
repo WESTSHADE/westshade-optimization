@@ -2,68 +2,44 @@ import axios from "axios";
 
 export default class Utils {
     async createOrder(token, data) {
-        try {
-            const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/order", {
-                method: "POST",
-                headers: {
-                    "Access-Control-Allow-Headers": "*",
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    Authorization: "Bearer " + token,
-                },
-                body: JSON.stringify(data),
-            });
-            const json = await res.json();
-            return json;
-        } catch (error) {
-            console.error(error);
-            // expected output: ReferenceError: nonExistentFunction is not defined
-            // Note - error messages will vary depending on browser
-        }
+        return await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/order", {
+            method: "POST",
+            headers: {
+                "Access-Control-Allow-Headers": "*",
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(data),
+        }).then(response => response.ok ? response.json() : Promise.reject(response)).catch((error) => console.error('Error:', error));
     }
 
     async updateOrder(token, data) {
-        try {
-            const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/order", {
-                method: "PUT",
-                headers: {
-                    "Access-Control-Allow-Headers": "*",
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    Authorization: "Bearer " + token,
-                },
-                body: JSON.stringify(data),
-            });
-            const json = await res.json();
-            return json;
-        } catch (error) {
-            console.error(error);
-            // expected output: ReferenceError: nonExistentFunction is not defined
-            // Note - error messages will vary depending on browser
-        }
+        return await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/order", {
+            method: "PUT",
+            headers: {
+                "Access-Control-Allow-Headers": "*",
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(data),
+        }).then(response => response.ok ? response.json() : Promise.reject(response)).catch((error) => console.error('Error:', error));
     }
 
     async checkout(data) {
-        try {
-            const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/checkout", {
-                method: "POST",
-                headers: {
-                    "Access-Control-Allow-Headers": "*",
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify(data),
-            });
-            const json = await res.json();
-            return json;
-        } catch (error) {
-            console.error(error);
-            // expected output: ReferenceError: nonExistentFunction is not defined
-            // Note - error messages will vary depending on browser
-        }
+        return await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/checkout", {
+            method: "POST",
+            headers: {
+                "Access-Control-Allow-Headers": "*",
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(data),
+        }).then(response => response.json()).catch((error) => console.error('Error:', error));
     }
 
     async getProductByWooId(pid) {
@@ -85,27 +61,21 @@ export default class Utils {
 
             return data;
         } catch (error) {
-            console.error(error);
-            // expected output: ReferenceError: nonExistentFunction is not defined
-            // Note - error messages will vary depending on browser
+            console.error('Error:', error);
         }
     }
 
     async getProductByTagId(pid) {
         try {
-            const res = await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/products?tagId=" + pid, {
+            return await fetch("https://43kjv8b4z4.execute-api.us-west-2.amazonaws.com/v1/products?tagId=" + pid, {
                 method: "GET",
                 headers: {
                     "Access-Control-Allow-Headers": "*",
                     "Access-Control-Allow-Origin": "*",
                 },
-            });
-            const json = await res.json();
-            return json;
+            }).then(response => response.ok ? response.json() : Promise.reject(response)).catch((error) => console.error('Error:', error));
         } catch (error) {
-            console.error(error);
-            // expected output: ReferenceError: nonExistentFunction is not defined
-            // Note - error messages will vary depending on browser
+            console.error('Error:', error);
         }
     }
 

@@ -18,14 +18,17 @@ const id_attribute_printing_tech = 44;
 const id_attribute_qty_peak = 45;
 const id_attribute_qty_valance = 46;
 
-function Selection({id, name, value, onChange, attributes = [], children}) {
+function Selection({id, name, value, onChange, attributes = [], children, radioGroupStyle, radioStyle, labelStyle}) {
     return (
         <RadioGroup name={name} align={ALIGN.horizontal} value={value} onChange={onChange}
                     overrides={{
                         RadioGroupRoot: {
                             props: {
-                                className: clsx(styles["container-radio-group"], (id === id_attribute_frameSeries || id === id_attribute_wallPrintedType || id === id_attribute_printing_tech) ? styles["attr-frame"] : (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? styles["attr-color"] : null)
+                                className: clsx(styles["container-radio-group"], (id === id_attribute_frameSeries || id === id_attribute_wallPrintedType || id === id_attribute_printing_tech) ? styles["attr-frame"] : (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? styles["attr-color"] : id === id_attribute_wallType ? styles["attr-wall-type"] : null)
                             },
+                            style: {
+                                ...radioGroupStyle
+                            }
                         },
                         Root: {
                             props: {
@@ -34,6 +37,7 @@ function Selection({id, name, value, onChange, attributes = [], children}) {
                             style: ({$checked}) => ({
                                 padding: (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? $checked ? "4px" : "6px" : $checked ? "14px 0" : "16px 0",
                                 border: (id === id_attribute_canopyColor || id === id_attribute_roofColor) ? $checked ? "3px solid #23A4AD" : "1px solid transparent" : $checked ? "3px solid #23A4AD" : "1px solid #D9D9D9",
+                                ...radioStyle
                             }),
                         },
                         RadioMarkOuter: {
@@ -45,7 +49,7 @@ function Selection({id, name, value, onChange, attributes = [], children}) {
                             props: {
                                 className: styles["radio"]
                             },
-                            style: ({$checked}) => ({fontWeight: $checked ? "bold" : 400}),
+                            style: ({$checked}) => ({fontWeight: $checked ? "bold" : 400, ...labelStyle}),
                         },
                     }}
         >

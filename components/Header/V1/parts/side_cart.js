@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import NumberFormat from "react-number-format";
 
 import {useRouter} from "next/router";
 import Image from "next/image";
@@ -20,6 +21,8 @@ const Cart = ({isOpen, onClose}) => {
 
     const {cart, cartProduct} = useSelector(({cart}) => cart);
 
+    const [index, setIndex] = useState(0);
+
     const getSubtotal = () => {
         let subtotal = 0;
         if (cartProduct.length === cart.length) {
@@ -27,6 +30,13 @@ const Cart = ({isOpen, onClose}) => {
         }
         return subtotal;
     };
+
+    useEffect(() => {
+        if (cart.length < 1 || cartProduct.length < 1 || cart.length !== cartProduct.length) return;
+
+        setIndex(index + 1);
+
+    }, [cart, cartProduct]);
 
     return (
         <Drawer anchor={ANCHOR.right} isOpen={isOpen} onClose={onClose}
@@ -53,6 +63,7 @@ const Cart = ({isOpen, onClose}) => {
                 <Block>
                     <Block display="grid" gridRowGap={["32px", "40px"]} marginBottom={["32px", "40px"]}>
                         {cart.length > 0 && cartProduct.length > 0 ? cartProduct.map((product, index) => {
+                            // console.log(product);
                             return (
                                 <Block key={index} className="divider" display="flex" flexDirection="row" paddingBottom={["32px", "40px"]}>
                                     <Block position="relative" width="60px" height="60px" marginRight="15px">
@@ -72,7 +83,8 @@ const Cart = ({isOpen, onClose}) => {
                                         <Block font="MinXParagraph14" color="MinXPrimaryText">Quantity: {cart[index].quantity}</Block>
                                     </Block>
                                     <Block display="flex" alignItems={["flex-end", "flex-start"]} marginBottom={["-3px", "unset"]} font="MinXLabel16" color="MinXPrimaryText" $style={{fontWeight: 700}}>
-                                        {`$` + product.price * cart[index].quantity}
+                                        {/*<NumberFormat thousandSeparator={true} prefix={"$"} value={product.price * cart[index].quantity + ""} displayType={"text"}/>*/}
+                                        <NumberFormat thousandSeparator={true} prefix={"$"} value={product.price + ""} displayType={"text"}/>
                                     </Block>
                                 </Block>
                             )

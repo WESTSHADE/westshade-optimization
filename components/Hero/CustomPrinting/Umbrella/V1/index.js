@@ -32,7 +32,7 @@ const Hero = ({size, onClick}) => {
         >
             <Block font={["MinXTitle32", "MinXTitle44", "MinXTitle64"]} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>Customize It Your Way</Block>
             <Block maxWidth={["260px", "420px", "580px", "640px"]} font={["MinXSubtitle16", "MinXSubtitle24", 'MinXSubtitle28']} color="MinXPrimaryTextAlt" $style={{zIndex: 1}}>
-                You can print your own artwork on any umbrellas
+                You can print your own artwork on umbrellas
             </Block>
             <Button bundle="white" type="outline" height={["36px", "48px", "56px"]} marginBottom={["8px", "12px", "20px"]} font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]} text="Pick an umbrella below" $style={{zIndex: 1}}
                     startEnhancer={() => <ArrowDown size={36}/>} onClick={onClick}

@@ -463,9 +463,31 @@ function Table_Cover({router, product, productComponent, productVariant}) {
     );
 }
 
-Table_Cover.getInitialProps = async (context) => {
-    const {query} = context;
-    const {id} = query;
+// Table_Cover.getInitialProps = async (context) => {
+//     const {query} = context;
+//     const {id} = query;
+//     let product,
+//         component = [],
+//         variant = [];
+//
+//     product = await utils.getProductByWooId(id);
+//     if (product && product.type === "simple") {
+//         component[0] = {...product};
+//     } else if (product && product.type === "variable") {
+//         component[0] = {...product};
+//         variant[0] = await utils.getVariantByWooProductId(id);
+//     }
+//
+//     return {
+//         product: product,
+//         productComponent: component,
+//         productVariant: variant,
+//         noFooter: true,
+//     };
+// };
+
+export async function getStaticProps() {
+    const id = 57917;
     let product,
         component = [],
         variant = [];
@@ -479,11 +501,14 @@ Table_Cover.getInitialProps = async (context) => {
     }
 
     return {
-        product: product,
-        productComponent: component,
-        productVariant: variant,
-        noFooter: true,
+        props: {
+            product: product,
+            productComponent: component,
+            productVariant: variant,
+            fullPage: true
+        },
+        // revalidate: 3600, // In seconds
     };
-};
+}
 
 export default withRouter(Table_Cover);

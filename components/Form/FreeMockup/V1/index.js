@@ -381,7 +381,7 @@ const Form = () => {
                             }}
                         >
                             <CustomTextarea
-                                placeholder="Tell us how do you want to get these text and image printed."
+                                placeholder="Let us know how you want your text and image to be printed."
                                 id="form-instruction-message"
                                 backgroundColor="#ededed"
                                 value={formState.printInstruction}

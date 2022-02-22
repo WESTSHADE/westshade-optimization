@@ -105,20 +105,20 @@ function Marco({router, size}) {
                 {/*             </Block>*/}
                 {/*         }*/}
                 {/*/>*/}
-                <Section title={<>NO DETAILS<br/>WILL BE MISSED</>}
+                <Section title={<>ALL OF OUR PRODUCTS<br/>ARE HIGHLY DETAILED</>}
                          subtitle={"Features with UPF 50+ protected premium fabric cover. Available in two fabrics, European made Acrylic Polyester."}
                          content={
                              <Block className="text-center" width="100%" maxWidth="960px" display="grid" gridTemplateColumns={["repeat(2, 1fr)", null, "repeat(3, 1fr)"]} gridColumnGap={["16px", "48px", "40px"]} gridRowGap={["24px", "40px"]}
                                     justifyItems="center" margin="auto" font={["MinXLabel14", "MinXLabel16", "MinXLabel20"]}
                              >
                                  <Block width={["136px", "200px", "212px"]}>
-                                     <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
+                                     <AspectRatioBox className="section-round-corner" aspectRatio={327 / 211} width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
                                          <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail1.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Stainless Steel Fixings
                                  </Block>
                                  <Block width={["136px", "200px", "212px"]}>
-                                     <AspectRatioBox className="section-round-corner" width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
+                                     <AspectRatioBox className="section-round-corner" aspectRatio={241 / 317} width="inherit" marginRight="auto" marginLeft="auto" marginBottom={["12px", "16px", "24px"]}>
                                          <AspectRatioBoxBody as={Image} src="/images/umbrella/marco/detail2.webp" alt="santorini detail" layout="fill" objectFit="contain"/>
                                      </AspectRatioBox>
                                      Nylon Hub & <span style={{color: "#23A4AD"}}>Aluminum</span> Frame

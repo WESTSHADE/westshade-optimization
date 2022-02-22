@@ -106,25 +106,22 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
         printInstruction: toCustomize.printInstruction || "",
         applyToFullSide: toCustomize.applyToFullSide || false
     })
-    const [css] = useStyletron();
 
     const saveEntries = () => {
         setIsSaving(true)
         handleUpload()
             .then((res) => {
-                console.log(res)
                 setRequirement(part, side, inputState, inputState.applyToFullSide);
                 setIsSaving(false)
                 cancelAction();
             })
     }
 
-
     const handleFile = (files, key) => {
-        console.log(files, key);
+        // console.log(files, key);
         let fileExt = files[0].name.substring(files[0].name.lastIndexOf('.') + 1, files[0].name.length) || files[0].name;
         let fileName = key + "-" + side + "-" + new Date().valueOf() + "-" + files[0].name.split(' ').join('-');
-        console.log(fileName)
+        // console.log(fileName)
         if (key === "logo") {
             setInputState({...inputState, logo: {file: files[0], filename: fileName}})
         } else if (key === "background") {
@@ -249,7 +246,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                         <Block className="text-center" marginTop="8px" font="MinXParagraph14">File format: .ai, .psd, png, jpg</Block>
                                     </Panel>
                                     <Panel title="Note">
-                                        <Textarea placeholder="Tell us how do you want it printed."
+                                        <Textarea placeholder="Let us know how you want your text and image to be printed."
                                                   value={inputState.printInstruction}
                                                   onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
                                                   overrides={{
@@ -392,7 +389,7 @@ export default function RoofDetail({requirement, setRequirement, part, side, can
                                         </Block>
                                     </Panel>
                                     <Panel title="Note">
-                                        <Textarea placeholder="Tell us how do you want it printed."
+                                        <Textarea placeholder="Let us know how you want your text and image to be printed."
                                                   value={inputState.printInstruction}
                                                   onChange={(e) => setInputState({...inputState, printInstruction: e.target.value})}
                                                   overrides={{

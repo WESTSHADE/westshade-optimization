@@ -49,6 +49,7 @@ function Header({hideCategories}) {
         <ThemeProvider.V2>
             <div className={`${styles["container-nav"]} main-container-nav`}>
                 <Block position="fixed" top={0} right={0} left={0} height="auto" backgroundColor="#FBFBFB">
+                    <Block className="text-center" display="flex" alignItems="center" justifyContent="center" height="24px" color="white" backgroundColor="#262626" font="MinXParagraph12">Free shipping on orders over $149.</Block>
                     <Block className={styles["root-navigation-top"]}>
                         <Link href="/" passHref>
                             <Block className={clsx([styles["site-logo"], "cursor"])}>

@@ -20,7 +20,7 @@ const CustomCheckbox = ({children, checked, onChange}) => (
     </Checkbox>
 );
 
-const CustomCheckboxLabel = ({children, active, backgroundColor}) => {
+const CustomCheckboxLabel = ({children, active, backgroundColor, style}) => {
     return (
         <Block className="text-center" font="MinXLabel16" color="MinXPrimaryText"
                $style={{
@@ -42,6 +42,7 @@ const CustomCheckboxLabel = ({children, active, backgroundColor}) => {
                    borderColor: active ? "#23A4AD" : "#b2b2b2",
                    backgroundColor: backgroundColor ? backgroundColor : "#ffffff",
                    fontWeight: active ? "500" : "400",
+                   ...style
                }}
         >
             {children}
@@ -49,7 +50,7 @@ const CustomCheckboxLabel = ({children, active, backgroundColor}) => {
     )
 }
 
-const CustomInput = ({startEnhancer, endEnhancer, type, value, onChange, error, required, placeholder, pattern, backgroundColor}) => {
+const CustomInput = ({startEnhancer, endEnhancer, type, value, onChange, error, required, placeholder, pattern, backgroundColor, inputStyle}) => {
 
     return (
         <Input
@@ -92,7 +93,8 @@ const CustomInput = ({startEnhancer, endEnhancer, type, value, onChange, error, 
                         borderLeftStyle: "solid",
                         borderRightStyle: "solid",
                         borderColor: "transparent",
-                        ":focus": {borderColor: "#23A4AD"}
+                        ":focus": {borderColor: "#23A4AD"},
+                        ...inputStyle
                     }
                 },
                 InputContainer: {style: {backgroundColor: backgroundColor ? backgroundColor : "#ffffff", borderTopLeftRadius: "8px", borderTopRightRadius: "8px", borderBottomLeftRadius: "8px", borderBottomRightRadius: "8px"}}
@@ -211,7 +213,7 @@ const CustomFilePreview = ({type, file, removeHandler}) => {
 
 }
 
-const CustomSubmitButton = ({children, isLoading}) => {
+const CustomSubmitButton = ({children, isLoading, style}) => {
 
     return <Button
         shape={SHAPE.pill}
@@ -221,6 +223,7 @@ const CustomSubmitButton = ({children, isLoading}) => {
                 style: {
                     width: "100%", backgroundColor: "#23A4AD", ":hover": {backgroundColor: "#5FBDBE"},
                     ":active": {backgroundColor: "#43878C"},
+                    ...style
                 }
             }
         }}

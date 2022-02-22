@@ -89,11 +89,7 @@ function Search({router}) {
                                                          <Block>
                                                              <Block display="grid" gridTemplateRows="max-content max-content" gridRowGap="8px" marginBottom="8px" color="MinXPrimaryText">
                                                                  <Block font="MinXLabel16" $style={{fontWeight: "500", lineHeight: 1}}>{item.name}</Block>
-                                                                 <Block className="text-ellipsis-search"
-                                                                     // height={item.short_description ? "60px" : "unset"}
-                                                                        height="60px"
-                                                                        font="MinXParagraph14" overflow="hidden"
-                                                                        dangerouslySetInnerHTML={{__html: item.short_description}}/>
+                                                                 <Block className="text-ellipsis-search" height="60px" font="MinXParagraph14" color="MinXSecondaryText" overflow="hidden" dangerouslySetInnerHTML={{__html: item.short_description}}/>
                                                              </Block>
                                                              {item.price && item.price !== "0" ? (
                                                                  <Block font="MinXLabel14" color="MinXPrimaryText" $style={{fontWeight: "500", lineHeight: 1}}>

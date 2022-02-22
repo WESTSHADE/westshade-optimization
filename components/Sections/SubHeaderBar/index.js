@@ -9,7 +9,7 @@ import Button from "../../Button/V1";
 
 const Bar = ({size, containerClassName, title, subTitle, subTitleDestination, buttonText, onClick}) => {
     return (
-        <Block position="sticky" top="92px" width="calc(100vw + 2px)" font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
+        <Block position="sticky" top={["64px", null, "116px"]} width="calc(100vw + 2px)" font={["MinXLabel14", "MinXLabel14", "MinXLabel16"]} color="MinXPrimaryText"
                overrides={{
                    Block: {
                        props: {

@@ -6,18 +6,16 @@ import {Block} from "baseui/block";
 
 import {TableBuilder, TableBuilderColumn} from "baseui/table-semantic";
 
-import Shipping from "../../../Sections/ShippingNote";
+import ShippingNote from "../../../Sections/ShippingNote";
 
 import styles from "./parts.module.scss";
 
 export default function content({dataTable}) {
     const {productComponent, selectedVariant, totalSalePrice, totalRegularPrice, totalCount} = dataTable;
-    console.log(dataTable);
 
     let rowDate = [];
 
     selectedVariant.map((variant, index) => {
-        console.log(variant);
         if (!variant) return
 
         let cell = {
@@ -28,6 +26,15 @@ export default function content({dataTable}) {
             price: variant.price,
             on_sale: variant.on_sale,
         };
+
+        if (index === 3 || index === 4) {
+            variant.attributes.map(attr => {
+                if (attr.id === 14 && attr.option === "13ft") {
+                    cell.quantity = 2;
+                }
+            })
+        }
+
         rowDate.push(cell);
     });
 
@@ -53,7 +60,6 @@ export default function content({dataTable}) {
                     <TableBuilderColumn header="Quantity" numeric overrides={{TableHeadCell: {props: {className: "text-center"}}}}>{(row) => <QuantityCell value={row.quantity}/>}</TableBuilderColumn>
                     <TableBuilderColumn header="Price" overrides={{TableHeadCell: {props: {className: "text-right"}}}}>
                         {(row) => {
-                            console.log(row);
                             return <PriceCell priceRegular={row.on_sale ? row.regular_price : row.price} priceSale={row.sale_price} onSale={row.on_sale}/>
                         }}
                     </TableBuilderColumn>
@@ -63,7 +69,7 @@ export default function content({dataTable}) {
                     <NumberFormat thousandSeparator={true} prefix={"$"} value={totalSalePrice ? totalSalePrice : totalRegularPrice} displayType={"text"} style={{fontSize: 16, fontWeight: "bold"}}/>
                 </Block>
             </Block>
-            <Shipping/>
+            <ShippingNote.V1/>
         </Block>
     )
 }

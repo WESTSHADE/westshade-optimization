@@ -1,5 +1,6 @@
 import {Block} from "baseui/block"
 import Image from "next/image";
+
 import styles from "./parts.module.scss";
 
 const data = [
@@ -77,7 +78,7 @@ const fabric_compare = () => {
                                 <Block marginTop="8px" as="h3">{item.quality}</Block>
                             </Block>
                             <Block display="flex" flexDirection="column" alignItems="center">
-                                <Block as="h4" marginTop="4px">Frame warranty</Block>
+                                <Block as="h4" marginTop="4px">Warranty</Block>
                                 <Block marginTop="8px" as="h3">{item.frameWarranty} years</Block>
                             </Block>
                         </Block>

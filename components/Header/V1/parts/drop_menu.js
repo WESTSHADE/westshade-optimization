@@ -15,7 +15,7 @@ const Menu = ({menuList, learnMoreText = "Learn more >", learnMoreUrl = "/", pic
     const handleGoPage = (href) => router.push(href)
 
     return (
-        <Block position="absolute" top="92px" right={0} left={0} minHeight="250px" backgroundColor="white"
+        <Block position="absolute" top={["64px", null, "116px"]} right={0} left={0} minHeight="250px" backgroundColor="white"
                display="grid" gridTemplateColumns={"repeat(" + (menuList.length + 1) + ", max-content)"} gridColumnGap="80px" justifyContent="center"
                overrides={{
                    Block: {

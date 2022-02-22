@@ -27,7 +27,7 @@ const BlockVideo = ({src, isSelected, step}) => {
             const rect = refBlockVideo.current.children[0].getBoundingClientRect();
 
             if (box) {
-                box.muted = true; // without this line it's not working although I have "muted" in HTML
+                box.muted = true; // without this line it's not working, so I have "muted" in HTML
 
                 // 全部显现
                 if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
@@ -101,7 +101,7 @@ const BlockDisplay = ({title, content, src, button}) => {
 };
 
 function Canopy_Tent({router, size}) {
-    const goBuyingPage = () => router.push({pathname: "/products/canopy-tent/buy"});
+    const goBuyingPage = () => router.push("/products/canopy-tent", "/products/canopy-tent/buy");
 
     const onChangeCarousel = (index) => {
         if (refs.length > 0) {
@@ -322,8 +322,10 @@ function Canopy_Tent({router, size}) {
                              </>
                          }
                 />
-                <Benefit.V1/>
-                <Block backgroundColor={"var(--secondary-background)"} paddingRight="16px" paddingLeft="16px" display="flex" justifyContent="center"
+                <Block className="section-full-width" backgroundColor="#F7F7F7">
+                    <Benefit.V2 as="section"/>
+                </Block>
+                <Block className="section-full-width" backgroundColor="#F7F7F7" paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "20px"]} display="flex" justifyContent="center"
                        marginTop={["-60px", "-80px", "-120px"]}>
                     <Block width="100%" maxWidth={process.env.maxWidth + "px"} font="MinXParagraph14" color="MinXSecondaryText" paddingTop="24px" paddingBottom="24px" $style={{borderBottom: "1px solid #D9D9D9"}}>
                         <div>1. Although the tent has passed wind test in the speed of 50 mph, we highly recommend you to not use the product in high wind.</div>

@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
     // basePath: '',
-    reactStrictMode: true,
+    // reactStrictMode: true,
     // swcMinify: true,
     compress: true,
     poweredByHeader: false,
@@ -18,7 +18,7 @@ const nextConfig = {
         minWidth: 320,
         maxWidth: 1312,
         businessPhone: "877-702-1872",
-        version: "2.0.31"
+        version: "2.1.38"
     },
     trailingSlash: true,
     webpack: function (config) {
@@ -98,17 +98,18 @@ const nextConfig = {
             // 购买页
             "/products/canopy-tent/buy": {page: "/products/canopy-tent"},
             "/products/custom-printed-canopy-tent/buy": {page: "/products/custom-printed-canopy-tent"},
-            "/products/market-umbrellas/marco-umbrella": {page: "/products/umbrella", query: {id: "49555"}},
-            "/products/market-umbrellas/santorini-umbrella": {page: "/products/umbrella", query: {id: "47943"}},
-            "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella": {page: "/products/umbrella", query: {id: "30361"}},
-            "/products/tilt-umbrellas/kapri-umbrella": {page: "/products/umbrella", query: {id: "59850"}},
-            "/products/cantilever-umbrellas/catalina-umbrella": {page: "/products/umbrella", query: {id: "30441"}},
-            "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: "57917"}},
-            "/products/accessories": {page: "/products/accessories"},
+            // "/products/market-umbrellas/marco-umbrella": {page: "/products/umbrella", query: {id: "49555"}},
+            // "/products/market-umbrellas/santorini-umbrella": {page: "/products/umbrella", query: {id: "47943"}},
+            // "/products/tilt-umbrellas/bali-crank-lift-patio-umbrella": {page: "/products/umbrella", query: {id: "30361"}},
+            // "/products/tilt-umbrellas/kapri-umbrella": {page: "/products/umbrella", query: {id: "59850"}},
+            // "/products/cantilever-umbrellas/catalina-umbrella": {page: "/products/umbrella", query: {id: "30441"}},
+            // "/custom-print/table-cover/buy": {page: "/products/table-cover", query: {id: "57917"}},
+            // "/products/accessories": {page: "/products/accessories"},
             // 功能页
             "/search": {page: "/search"},
             "/my-account": {page: "/my-account"},
             "/cart": {page: "/cart"},
+            "/pre-checkout": {page: "/pre-checkout"},
             "/checkout": {page: "/checkout"},
             "/checkout/success": {page: "/checkout/success"},
             // 被替换页
@@ -171,13 +172,13 @@ const nextConfig = {
                 destination: '/umbrella/spec'
             }, {
                 source: '/y5-economic/buy',
-                destination: '/products/canopy-tent?id=25649'
+                destination: '/products/canopy-tent'
             }, {
                 source: '/y6-commercial/buy',
-                destination: '/products/canopy-tent?id=24229'
+                destination: '/products/canopy-tent'
             }, {
                 source: '/y7-heavy-duty/buy',
-                destination: '/products/canopy-tent?id=25659'
+                destination: '/products/canopy-tent'
             }, {
                 source: '/products/canopy-tent/buy',
                 destination: '/products/canopy-tent'
@@ -186,22 +187,22 @@ const nextConfig = {
                 destination: '/products/custom-printed-canopy-tent'
             }, {
                 source: '/products/market-umbrellas/marco-umbrella/',
-                destination: '/products/umbrella?id=49555'
+                destination: '/products/umbrella/49555'
             }, {
                 source: '/products/market-umbrellas/santorini-umbrella/',
-                destination: '/products/umbrella?id=47943'
+                destination: '/products/umbrella/47943'
             }, {
                 source: '/products/tilt-umbrellas/bali-crank-lift-patio-umbrella/',
-                destination: '/products/umbrella?id=30361'
+                destination: '/products/umbrella/30361'
             }, {
                 source: '/products/tilt-umbrellas/kapri-umbrella/',
-                destination: '/products/umbrella?id=59850'
+                destination: '/products/umbrella/59850'
             }, {
                 source: '/products/cantilever-umbrellas/catalina-umbrella/',
-                destination: '/products/umbrella?id=30441'
+                destination: '/products/umbrella/30441'
             }, {
                 source: '/custom-print/table-cover/buy',
-                destination: '/products/table-cover?id=57917'
+                destination: '/products/table-cover'
             }, {
                 source: '/westshade-terms-and-conditions',
                 destination: '/terms-and-conditions'

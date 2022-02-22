@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Provider} from 'react-redux';
 import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 import {Provider as StyletronProvider} from "styletron-react";
+import TagManager from 'react-gtm-module'
 
 import Script from 'next/script'
 
@@ -52,6 +53,19 @@ function useWindowSize() {
     return windowSize;
 }
 
+function initGTM() {
+    if (window.gtmDidInit) {
+        return;
+    }
+    window.gtmDidInit = true;
+    TagManager.initialize({gtmId: 'GTM-MCQP54N'});
+}
+
+function initGTMOnEvent(event) {
+    initGTM();
+    event.currentTarget.removeEventListener(event.type, initGTMOnEvent);
+}
+
 function MyApp({Component, pageProps}) {
     const size = useWindowSize();
 
@@ -68,6 +82,13 @@ function MyApp({Component, pageProps}) {
     });
 
     useEffect(() => {
+        setTimeout(() => initGTM(), 3500);
+
+        window.addEventListener("mousemove", initGTMOnEvent);
+        window.addEventListener("keydown", initGTMOnEvent);
+        window.addEventListener("scroll", initGTMOnEvent);
+        window.addEventListener("touchstart", initGTMOnEvent);
+
         const jssStyles = document.querySelector("#jss-server-side");
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
@@ -91,6 +112,11 @@ function MyApp({Component, pageProps}) {
         observer.observe(targetNode, config);
 
         return () => {
+            window.removeEventListener("mousemove", initGTMOnEvent);
+            window.addEventListener("keydown", initGTMOnEvent);
+            window.removeEventListener("scroll", initGTMOnEvent);
+            window.removeEventListener("touchstart", initGTMOnEvent);
+
             // stop tracking changes
             observer.disconnect();
         }
@@ -102,12 +128,12 @@ function MyApp({Component, pageProps}) {
                 <StyletronProvider value={styletron}>
                     <ThemeProvider.V1>
                         {/* Google Tag Manager */}
-                        <Script id="create-dataLayer">{`window.dataLayer = window.dataLayer || [];`}</Script>
-                        <Script id="gmt"
-                                dangerouslySetInnerHTML={{
-                                    __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', 'GTM-MCQP54N');`,
-                                }}
-                        />
+                        {/*<Script id="create-dataLayer">{`window.dataLayer = window.dataLayer || [];`}</Script>*/}
+                        {/*<Script id="gmt"*/}
+                        {/*        dangerouslySetInnerHTML={{*/}
+                        {/*            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', 'GTM-MCQP54N');`,*/}
+                        {/*        }}*/}
+                        {/*/>*/}
                         {/* End Google Tag Manager*/}
                         <div id="WestShadeFrame" className={pageProps.homePage ? "scroll-container" : ""} style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "320px"}}>
                             <Header.V1/>
