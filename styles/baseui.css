@@ -725,7 +725,7 @@ ul.bullet-warranty.sub > li {
 
 @media screen and (min-width: 672px) {
     .scroll-container {
-        height: 116px;
+        padding-top: 116px;
     }
 }
 

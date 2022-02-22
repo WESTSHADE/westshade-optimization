@@ -1301,7 +1301,7 @@ function Canopy_Tent({router, products, variants, phone}) {
                                     >
                                         <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Frame</Block>
                                         <Block gridArea="b">
-                                            <MButton type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Frame Spec'
+                                            <MButton type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Compare Frame'
                                                      font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
                                                      color="MinXSecondaryText" buttonStyle={{borderWidth: "1px !important", borderColor: "#D9D9D9"}} onClick={() => setFrameCompareOpen(true)}
                                             />
@@ -1453,9 +1453,9 @@ function Canopy_Tent({router, products, variants, phone}) {
                                         >
                                             <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Color</Block>
                                             <Block gridArea="b">
-                                                <MButton type="rainbow" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Customize'
+                                                <MButton type="rainbow" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Custom Printing Canopy Tent'
                                                          font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
-                                                         color="MinXPrimaryText" buttonBackgroundColor="#FFF" buttonStyle={{padding: "1px !important", zIndex: 1}}
+                                                         color="MinXPrimaryText" buttonBackgroundColor="#FFF" buttonStyle={{padding: "1px !important", zIndex: 1, whiteSpace: "normal !important", lineHeight: "1 !important"}}
                                                          buttonHoverStyle={{color: "#8C8C8C"}}
                                                          onClick={() => router.push("/products/custom-printed-canopy-tent", "/products/custom-printed-canopy-tent/buy")}
                                                 />
@@ -1701,10 +1701,9 @@ function Canopy_Tent({router, products, variants, phone}) {
                        </Block>
                    }
             >
-                <Block padding={["0 16px", null, "0 20px"]}>
-                    <Block marginTop={["16px", null, "32px"]} padding="0 16px" font={["MinXLabel16", "MinXLabel16", "MinXLabel20"]}
-                           $style={{textAlign: "center", lineHeight: "1 !important", fontWeight: "700 !important", '@media (min-width: 1056px)': {textAlign: "left"}}}
-                    >Please select walls for each side.</Block>
+                <Block width={["100%", null, "fit-content"]} margin="auto" padding={["0 16px", null, "0 20px"]}>
+                    <Block marginTop={["16px", null, "32px"]} marginBottom="8px" font={["MinXLabel16", "MinXLabel16", "MinXLabel18"]}
+                           $style={{textAlign: "center", lineHeight: "1 !important", fontWeight: "700 !important", '@media (min-width: 1056px)': {textAlign: "left"}}}>Please select walls for each side.</Block>
                     <Block width="100%" display="flex" flexDirection="column" marginLeft="auto" marginRight="auto" paddingBottom={["94px", null, "134px"]}>
                         {/* 图片区域 */}
                         <Block className="modalGallery modalGallery-wall" position="relative" display="flex" alignItems="center" justifyContent="center" width={["fit-content", null, "456px"]} margin="auto">
@@ -1875,7 +1874,6 @@ function Canopy_Tent({router, products, variants, phone}) {
                                                                 flexDirection: "column",
                                                                 width: "100%",
                                                                 height: "130px",
-                                                                // minWidth: "98px",
                                                                 margin: "auto",
                                                                 paddingTop: "8px",
                                                                 padding: activeTempWallTypeRadio === indexWall ? "6px 0 14px" : "8px 0 16px",
@@ -1893,7 +1891,8 @@ function Canopy_Tent({router, products, variants, phone}) {
                                                                 borderRightStyle: "solid",
                                                                 borderColor: activeTempWallTypeRadio === indexWall ? "rgb(35, 164, 173)" : "rgb(217, 217, 217)",
                                                                 backgroundColor: "white",
-                                                                ":hover": {backgroundColor: "white"}
+                                                                ":hover": {backgroundColor: "white"},
+                                                                '@media (min-width: 1056px)': {minWidth: "104px"}
                                                             }
                                                         }
                                                     }}

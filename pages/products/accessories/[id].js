@@ -12,6 +12,7 @@ import {Block} from "baseui/block";
 import {ALIGN, Radio, RadioGroup} from "baseui/radio";
 import {AspectRatioBox, AspectRatioBoxBody} from "baseui/aspect-ratio-box";
 
+import {ProductImages} from "Components/Sections";
 import Checkout from "Components/Checkout";
 import Selection from "Components/selection-n";
 
@@ -465,8 +466,9 @@ function Accessories({router, product, productComponent, productVariant}) {
             <Block height={["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh - 96px)"]} display="flex" justifyContent="center" overflow={["scroll", "scroll", "hidden"]}>
                 <Block width={["100%", "480px", "100%"]} height={["max-content", "max-content", "100%"]} display="flex" flexDirection={["column", "column", "row"]}>
                     {/* 图片区域 */}
-                    <Block className="product images" flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
+                    <Block className="product images" maxHeight={[null, null, "100vh"]} flex={[0, 0, 1]} paddingTop={["0", "24px", "48px"]} paddingRight={["16px", "16px", "0"]} paddingLeft={["16px", "16px", "24px"]}>
                         <ImageGallery showNav={false} items={productImageGallery} thumbnailPosition="left" showPlayButton={false} showFullscreenButton={false}/>
+                        {/*<ProductImages gallery={productImageGallery}/>*/}
                     </Block>
                     {/* 选择区域 */}
                     <Block width={["auto", "auto", "440px"]} overflow={["unset", "unset", "scroll"]}

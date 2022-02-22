@@ -44,12 +44,12 @@ const FrameTypeCard = ({frame, framePrice, active, onClick}) => {
                 </Block>
                 <Block display="grid" gridRowGap={["16px", null, "24px"]} width="100%">
                     <Block font="MinXSubtitle20">+ ${framePrice.price || frame.price}</Block>
-                    <Button type="outline" color="MinXPrimaryText" width="100%" height="48px" font="MinXParagraph14" text={`Select ${frame.value}`}
-                            buttonStyle={{
-                                borderColor: "#BFBFBF"
-                            }}
-                            onClick={onClick}
-                    />
+                    {/*<Button type="outline" color="MinXPrimaryText" width="100%" height="48px" font="MinXParagraph14" text={`Select ${frame.value}`}*/}
+                    {/*        buttonStyle={{*/}
+                    {/*            borderColor: "#BFBFBF"*/}
+                    {/*        }}*/}
+                    {/*        onClick={onClick}*/}
+                    {/*/>*/}
                 </Block>
             </Block>
         </>

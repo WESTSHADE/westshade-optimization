@@ -34,11 +34,12 @@ const Banner = ({
                     textButton,
                     textColor,
                     subTextColor,
+                    buttonTextColor,
                     buttonBackgroundColor,
                     buttonHoverColor,
                     buttonActiveColor,
                     renderButton,
-                    containerTextPosition = "absolute"
+                    containerTextPosition = "absolute",
                 }) => {
 
     return (
@@ -70,25 +71,25 @@ const Banner = ({
                 {renderButton ? renderButton : (
                     <>
                         <Button type="outline" display={arrowButton ? "block" : textButton ? "none" : ["block", "block", "block", "none"]} width="88px" height="46px"
-                                color="white"
+                                color={buttonTextColor ? buttonTextColor : "white"}
                                 buttonStyle={{
                                     borderColor: `${textColor ? textColor : 'white'} !important`,
                                     backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
                                     ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
                                     ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
                                 }}
-                                iconStyle={{marginLeft: "0px"}} endEnhancer={() => <ArrowRight size={36} color={textColor ? textColor : "white"}/>}
+                                iconStyle={{marginLeft: "0px"}} endEnhancer={() => <ArrowRight size={36} color={buttonTextColor ? buttonTextColor : "white"}/>}
                                 onClick={() => router.push(destination)}
                         />
                         <Button type="outline" display={arrowButton ? "none" : textButton ? "block" : ["none", "none", "none", "block"]} width="240px" height="56px"
-                                font="MinXLabel20" color={textColor ? textColor : "white"}
+                                font="MinXLabel20" color={buttonTextColor ? buttonTextColor : "white"}
                                 buttonStyle={{
                                     borderColor: `${textColor ? textColor : 'white'} !important`,
                                     backgroundColor: `${buttonBackgroundColor ? buttonBackgroundColor : 'rgba(255,255,255,0.2)'} !important`,
                                     ":hover": {backgroundColor: `${buttonHoverColor ? buttonHoverColor : 'rgba(255,255,255,0.5)'} !important`},
                                     ":active": {backgroundColor: `${buttonActiveColor ? buttonActiveColor : 'rgba(255,255,255,0.8)'} !important`}
                                 }}
-                                endEnhancer={() => <ChevronRight size={24} color={textColor ? textColor : "white"}/>}
+                                endEnhancer={() => <ChevronRight size={24} color={buttonTextColor ? buttonTextColor : "white"}/>}
                                 onClick={() => router.push(destination)} text="Learn More"
                         />
                     </>

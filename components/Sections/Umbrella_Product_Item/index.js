@@ -17,7 +17,7 @@ const ProductItem = ({detail}) => {
 
     const setMainImage = (images) => {
         if (!images || images.length === 0) return;
-        imageSrc = images[0].src.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+        imageSrc = images[0].src;
     };
 
     if (detail.hasOwnProperty("image")) {
@@ -29,7 +29,7 @@ const ProductItem = ({detail}) => {
     return (
         <Block display="grid" gridRowGap="14px" justifyItems="center" width="100%" maxWidth="120px" margin="auto">
             <AspectRatioBox width="inherit">
-                <AspectRatioBoxBody as={Image} src={imageSrc} alt="umbrella accessories" layout="fill" objectFit="contain"/>
+                <AspectRatioBoxBody as={Image} src={imageSrc} alt="umbrella accessories" layout="fill" objectFit="contain" loader={({src, width}) => src}/>
             </AspectRatioBox>
             <Block className="text-center" font="MinXLabel14" color="MinXPrimaryText">{detail.name}</Block>
             <Button height="28px" font="MinXLabel12" text='Learn More' bundle="primary" onClick={() => router.push(link)}/>

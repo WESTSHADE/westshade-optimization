@@ -59,25 +59,17 @@ const SectionPrice = (props) => {
         <>
             {totalRegularPrice !== totalSalePrice ? (
                 <Block className="text-center">
-                    <Block marginBottom={["4px", null, null, "8px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel12", "MinXLabel14"]}
-                           $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}
-                    >
+                    <Block marginBottom={["4px", null, null, "8px"]} font={["MinXLabel14", "MinXLabel14", "MinXLabel12", "MinXLabel14"]} $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}>
                         ( <NumberFormat decimalScale={0} suffix={"%"} value={((totalRegularPrice - totalSalePrice) / totalRegularPrice * 100)} displayType="text"/> OFF )
                     </Block>
-                    <Block font={["MinXLabel16", "MinXLabel16", "MinXLabel14", "MinXLabel16"]} color="#E51717"
-                           $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}
-                    >
+                    <Block font={["MinXLabel16", "MinXLabel16", "MinXLabel14", "MinXLabel16"]} color="#E51717" $style={{fontFamily: "Gothic A1 !important", fontWeight: "700 !important", lineHeight: "1 !important"}}>
                         Save <NumberFormat thousandSeparator={true} decimalScale={2} prefix={"$"} value={totalRegularPrice - totalSalePrice} displayType="text"/>
                     </Block>
                 </Block>
             ) : null}
             <Block>
-                <Block display="flex" alignItems="flex-start" font={["MinXLabel28", "MinXLabel28", "MinXLabel30", "MinXLabel40"]}
-                       $style={{fontFamily: "Gothic A1 !important", fontWeight: "900 !important", lineHeight: "1 !important"}}
-                >
-                    <Block as="span" marginTop={["2px", "2px", "4px", "5px"]} font={["MinXLabel18", "MinXLabel18", "MinXLabel18", "MinXLabel24"]}
-                           $style={{fontFamily: "Gothic A1 !important",}}
-                    >$</Block>
+                <Block display="flex" alignItems="flex-start" font={["MinXLabel28", "MinXLabel28", "MinXLabel30", "MinXLabel40"]} $style={{fontFamily: "Gothic A1 !important", fontWeight: "900 !important", lineHeight: "1 !important"}}>
+                    <Block as="span" marginTop={["2px", "2px", "4px", "5px"]} font={["MinXLabel18", "MinXLabel18", "MinXLabel18", "MinXLabel24"]} $style={{fontFamily: "Gothic A1 !important",}}>$</Block>
                     <NumberFormat thousandSeparator={true} value={totalRegularPrice !== totalSalePrice ? totalSalePrice : totalRegularPrice} displayType="text"/>
                 </Block>
                 {totalRegularPrice !== totalSalePrice ? (
@@ -87,9 +79,7 @@ const SectionPrice = (props) => {
                     </Block>
                 ) : null}
             </Block>
-            <Block className="cursor" display="flex" alignItems="center" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="#356DB6" $style={{gap: "8px"}}
-                   onClick={priceBeatOnClick}
-            >
+            <Block className="cursor" display="flex" alignItems="center" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph14", "MinXParagraph16"]} color="#356DB6" $style={{gap: "8px"}} onClick={priceBeatOnClick}>
                 <Block position="relative" width={["16px", null, null, "20px"]} height={["16px", null, null, "20px"]}>
                     <Image src="/images/icon/icon-price-beat.png" alt="icon-price-beat" layout="fill" objectFit="contain"/>
                 </Block>
@@ -143,18 +133,14 @@ function Umbrella({router, products, variants, phone}) {
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productType, setProductType] = useState("");
-    const [productImage, setProductImage] = useState([]);
+
     const [productImageGallery, setProductImageGallery] = useState([]);
-    const [productImageGalleryTemp, setProductImageGalleryTemp] = useState([]);
 
     const [selectedAttribute, setSelectedAttribute] = useState([]);
     const [selectedVariant, setSelectedVariant] = useState([]);
 
     const [initProductVariant, setInitProductVariant] = useState(false);
     const [initSelectedAttribute, setInitSelectedAttribute] = useState(false);
-
-    const [regularPrice, setRegularPrice] = useState(0);
-    const [salePrice, setSalePrice] = useState(0);
 
     const [totalRegularPrice, setTotalRegularPrice] = useState(0);
     const [totalSalePrice, setTotalSalePrice] = useState(0);
@@ -193,18 +179,14 @@ function Umbrella({router, products, variants, phone}) {
     const {loggedIn, token} = useSelector(({user}) => user);
     const {cart} = useSelector(({cart}) => cart);
 
-    const openSummaryModal = () => {
-        setSummaryIsOpen(true);
-    };
+    const openSummaryModal = () => setSummaryIsOpen(true);
 
-    const closeSummaryModal = () => {
-        setSummaryIsOpen(false);
-    };
+    const closeSummaryModal = () => setSummaryIsOpen(false);
 
     const renderCustomImage = (props) => {
         return (
-            <AspectRatioBox aspectRatio={16 / 9} minHeight="230px">
-                <Image src={props.original} alt="product image" layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
+            <AspectRatioBox aspectRatio={1} minHeight="230px">
+                <AspectRatioBoxBody as={Image} src={props.original} alt={props.originalAlt} layout="fill" objectFit="contain" loader={({src, width}) => src} unoptimized/>
             </AspectRatioBox>
         );
     }
@@ -215,7 +197,7 @@ function Umbrella({router, products, variants, phone}) {
         let i = [];
         images.map((img, index) => {
             let url = img.src;
-            url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
+            // url = url.replace(/^http:\/\/54\.212\.246\.17/i, "https://checkout.westshade.com");
             i[index] = {
                 original: url,
                 thumbnail: url,
@@ -423,9 +405,6 @@ function Umbrella({router, products, variants, phone}) {
         } else if (products[0].hasOwnProperty("images")) {
             setMainImage(products[0].images);
         }
-
-        setRegularPrice(products[0].regular_price);
-        setSalePrice(products[0].sale_price);
     }, [products]);
 
     useEffect(() => {
@@ -546,9 +525,6 @@ function Umbrella({router, products, variants, phone}) {
                 } else if (variant.hasOwnProperty("images") && variant.images.length > 0) {
                     setMainImage(variant.images);
                 }
-
-                setRegularPrice(variant.regular_price);
-                setSalePrice(variant.sale_price);
             }
         });
 
@@ -687,7 +663,7 @@ function Umbrella({router, products, variants, phone}) {
                             <Block display={["grid", null, "none"]} gridTemplateColumns="repeat(3, max-content)" gridColumnGap="12px" alignItems="baseline">
                                 <SectionPrice totalRegularPrice={totalRegularPrice} totalSalePrice={totalSalePrice} priceBeatOnClick={() => setPriceBeatIsOpen(true)}/>
                             </Block>
-                            <ProductImages gallery={productImageGallery}/>
+                            <ProductImages gallery={productImageGallery} video="https://youtu.be/iAh2garzQHQ"/>
                         </Block>
                         <Block display={["none", null, "flex"]} alignItems="flex-end" font="MinXParagraph12" color="MinXSecondaryText">
                             Your event whether it is a farmers market, trade show, art show, or pet show would not be complete without the coverage of a high quality water and scratch resistant pop-up tent. Our pop up tents come
@@ -739,7 +715,7 @@ function Umbrella({router, products, variants, phone}) {
                                         >
                                             <Block gridArea="a" font={["MinXParagraph14", "MinXParagraph14", "MinXParagraph12", "MinXParagraph14"]}>Frame</Block>
                                             <Block gridArea="b">
-                                                <Button.V1 type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Compare frame'
+                                                <Button.V1 type="outline" width={["86px", null, "90px", "128px"]} height={["24px", null, null, "30px"]} text='Compare Frame'
                                                            font={["MinXParagraph10", "MinXParagraph10", "MinXParagraph10", "MinXParagraph12"]}
                                                            color="MinXSecondaryText" buttonStyle={{borderWidth: "1px !important", borderColor: "#D9D9D9"}} onClick={() => setFrameCompareOpen(true)}
                                                 />
@@ -989,7 +965,8 @@ function Umbrella({router, products, variants, phone}) {
                                                                 if (productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass") return;
                                                                 return (
                                                                     <Radio key={i} value={option.toLowerCase()} disabled={productId === id_product_umbrella_santorini && umbrellaFrame === "fiberglass"}>
-                                                                        <Block id="recommended" display="block" position="absolute" top="-5px" left="9px" padding="0 1px" backgroundColor="white" font="MinXParagraph10" color="#23A4AD"
+                                                                        <Block id="recommended" display="block" position="absolute" top="-5px" left="9px" padding="0 1px" backgroundColor="white"
+                                                                               font="MinXParagraph10" color="#23A4AD"
                                                                                $style={{lineHeight: 1}}>RECOMMENDED</Block>
                                                                         <Block position="relative" width="60px" height="16px">
                                                                             <Image src="/images/icon/icon-agora.png" alt="icon-agora" layout="fill" objectFit="contain"/>
