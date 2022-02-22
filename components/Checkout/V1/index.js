@@ -5,7 +5,7 @@ import {Block} from "baseui/block";
 import {CheckIndeterminate, Plus} from "baseui/icon";
 
 import Button from "Components/Button/V1";
-import ShippingNote from "components/Sections/ShippingNote";
+import ShippingNote from "Components/Sections/ShippingNote";
 
 import styles from "./checkout.module.scss";
 

@@ -3,7 +3,7 @@ import React from "react";
 import {withRouter} from "next/router";
 import Head from "next/head";
 
-import Banner from "components/Sections/Banner";
+import Banner from "Components/Sections/Banner";
 
 function Home({router}) {
     return (

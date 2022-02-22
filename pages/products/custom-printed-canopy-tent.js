@@ -12,10 +12,10 @@ import {ArrowLeft, ArrowRight} from 'baseui/icon'
 import {Modal} from "Components/surfaces";
 import Button from "Components/Button/V1"
 import ProgressBar from "Components/ProgressBar"
-import TentSizeSelection from "components/Sections/TentSizeSelection"
-import FrameSelection from "components/Sections/FrameSelection"
-import PrintingMethodSelection from "components/Sections/PrintingMethodSelection"
-import RequirementSelection from "components/Sections/RequirementSelection"
+import TentSizeSelection from "Components/Sections/TentSizeSelection"
+import FrameSelection from "Components/Sections/FrameSelection"
+import PrintingMethodSelection from "Components/Sections/PrintingMethodSelection"
+import RequirementSelection from "Components/Sections/RequirementSelection"
 import Checkout from "Components/Checkout";
 import ThemeProvider from "Components/ThemeProvider";
 
