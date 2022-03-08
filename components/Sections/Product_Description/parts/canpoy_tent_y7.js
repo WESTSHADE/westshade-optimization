@@ -422,7 +422,7 @@ export default function Description() {
                     <Block as="h3" className="section-full-width text-center" display="flex" justifyContent="center" alignItems="center" height={["32px", null, "52px"]} font={["MinXHeading16", "MinXHeading16", "MinXHeading24"]}
                            backgroundColor="#E4F4F5" $style={{fontWeight: "400 !important"}}
                     >How to set up</Block>
-                    <Block position="relative" paddingTop={["16px", null, "24px"]}>
+                    {/* <Block position="relative" paddingTop={["16px", null, "24px"]}>
                         <Block display={["block", "block", "none"]}>
                             <Block display="flex" flexDirection="column" alignItems="center" paddingBottom={["36px", "60px"]} overflow="hidden" backgroundColor={"MinXBackground"}
                                    overrides={{
@@ -523,7 +523,7 @@ export default function Description() {
                                 <VideoSlide key={7} url="/images/canopy-tent/set-up-tent/step_8.mp4" step={16}/>
                             </Carousel>
                         </Block>
-                    </Block>
+                    </Block> */}
                 </Block>
                 <Block ref={refFaq} paddingRight={["16px", null, "20px"]} paddingLeft={["16px", null, "20px"]}>
                     <Block as="h3" className="section-full-width text-center" display="flex" justifyContent="center" alignItems="center" height={["32px", null, "52px"]} font={["MinXHeading16", "MinXHeading16", "MinXHeading24"]}
